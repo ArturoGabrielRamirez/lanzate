@@ -72,7 +72,7 @@ function FeedItem({ item }: FeedItemProps) {
                 <CardContent className="flex flex-col gap-2 md:flex-row md:items-center">
                     <p className="flex items-center gap-2">
                         <span className="text-muted-foreground">
-                            {item.activity_type === "PRODUCT_LIKE" && "Le dio me gusta a"}
+                            {item.activity_type === "PRODUCT_LIKE" && "Le gustó"}
                             {item.activity_type === "PRODUCT_COMMENT" && "Comentó en"}
                             {item.activity_type === "ORDER_CREATED" && "Creó una orden"}
                             {item.activity_type === "CONTRACT_ASSIGNED" && "Asignó un contrato"}
