@@ -10,7 +10,7 @@ export function validateCardInfo(paymentMethod: string, value: Record<string, un
         const missingFields = cardFields.filter(field => !value[field])
         
         if (missingFields.length > 0) {
-            return 'Card information is required for credit/debit payment'
+            return 'La información de la tarjeta es obligatoria para el pago con crédito/débito'
         }
     }
     return true
