@@ -14,13 +14,13 @@ function OrderItemComponent({ item }: OrderItemComponentProps) {
                             className="w-full h-full object-cover rounded-md"
                         />
                     ) : (
-                        <span className="text-muted-foreground text-xs">No img</span>
+                        <span className="text-muted-foreground text-xs">No hay imagen disponible</span>
                     )}
                 </div>
                 <div>
                     <p className="font-medium text-sm">{item.product.name}</p>
                     <p className="text-muted-foreground text-xs">
-                        Qty: {item.quantity}
+                        Cantidad: {item.quantity}
                     </p>
                 </div>
             </div>

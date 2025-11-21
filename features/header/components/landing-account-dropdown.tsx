@@ -1,8 +1,8 @@
 "use client"
 
-import { useTranslations } from "next-intl"
 import { User } from "lucide-react"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { handleSignOut as handleSignOutAction } from "@/features/auth/actions"

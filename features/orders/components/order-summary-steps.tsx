@@ -21,15 +21,15 @@ function OrderSummarySteps({ order, employeePermissions }: OrderSummaryStepsProp
 
     if (isCompleted) {
         if (isPickup) {
-            thirdStepTitle = "Order Picked Up"
-            thirdStepDescription = "The customer has picked up their order"
+            thirdStepTitle = "Pedido Retirado"
+            thirdStepDescription = "El cliente retiró su pedido"
         } else {
-            thirdStepTitle = "Order Delivered"
-            thirdStepDescription = "The order has been delivered to the customer"
+            thirdStepTitle = "Pedido Entregado"
+            thirdStepDescription = "El pedido fue entregado al cliente"
         }
     } else {
-        thirdStepTitle = isPickup ? "Ready for Pickup" : "Delivery Tracking"
-        thirdStepDescription = isPickup ? "The order is ready for pickup" : "Track where the order is"
+        thirdStepTitle = isPickup ? "Listo para Retirar" : "Seguimiento de Entrega"
+        thirdStepDescription = isPickup ? "El pedido está listo para retirar" : "Seguimiento de dónde está el pedido"
     }
 
     // Show full details only for completed or cancelled orders
@@ -42,15 +42,15 @@ function OrderSummarySteps({ order, employeePermissions }: OrderSummaryStepsProp
     // Configuration for each step trigger
     const stepTriggerConfigs = [
         {
-            title: "Order Placed",
-            description: "Someone made a new order!",
+            title: "Pedido Realizado",
+            description: "¡Alguien hizo un nuevo pedido!",
             completed: true,
             icon: Package,
             step: 1
         },
         {
-            title: "Confirm Order",
-            description: "Tell the customer their order is ready!",
+            title: "Confirmar Pedido",
+            description: "Informá al cliente que su pedido está listo",
             completed: isProcessingCompleted,
             icon: Settings,
             step: 2
@@ -70,8 +70,8 @@ function OrderSummarySteps({ order, employeePermissions }: OrderSummaryStepsProp
                 <InteractiveStepperItem completed>
                     <DynamicStepperTrigger
                         config={{
-                            title: "Order Completed",
-                            description: "This order has been completed successfully",
+                            title: "Pedido Completado",
+                            description: "Este pedido ha sido completado con éxito",
                             completed: true
                         }}
                     />

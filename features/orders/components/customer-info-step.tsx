@@ -33,7 +33,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
 
     const handleEmailClick = () => {
         // TODO: Implement email functionality
-        console.log("Email functionality to be implemented")
+        console.log("Funcionalidad de email por implementar")
     }
 
     const handleTrackingUpdate = (newStatus: OrderTrackingStatus) => {
@@ -47,11 +47,11 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                 if (result.hasError) {
                     toast.error(result.message)
                 } else {
-                    toast.success("Order tracking updated successfully")
+                    toast.success("Seguimiento de la orden actualizado con éxito")
                 }
             } catch (error) {
                 console.error("Error updating order tracking:", error)
-                toast.error("Failed to update order tracking")
+                toast.error("Error al actualizar el seguimiento de la orden")
             }
         })
     }
@@ -67,12 +67,12 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                 if (result.hasError) {
                     toast.error(result.message)
                 } else {
-                    const actionText = isPickup ? "picked up" : "delivered"
-                    toast.success(`Order successfully finalized! The order has been marked as ${actionText}.`)
+                    const actionText = isPickup ? "recogida" : "entregada"
+                    toast.success(`Orden finalizada con éxito! La orden ha sido marcada como ${actionText}.`)
                 }
             } catch (error) {
                 console.error("Error finalizing order:", error)
-                toast.error("Failed to finalize order")
+                toast.error("Error al finalizar la orden")
             }
         })
     }
@@ -83,44 +83,44 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
         const statusConfig = {
             PREPARING_ORDER: {
                 icon: Package,
-                title: "Preparing Order",
-                description: "The order is being prepared and will be ready soon. Mark as ready when the order is ready for pickup or delivery",
+                title: "Preparando Orden",
+                description: "La orden está siendo preparada y estará lista pronto. Marcar como lista cuando la orden esté lista para ser recogida o entregada",
                 color: "text-blue-600"
             },
             WAITING_FOR_PICKUP: {
                 icon: Clock,
-                title: "Ready for Pickup",
-                description: "The order is ready! The customer has been notified and can come to pick it up",
+                title: "Lista para Buscar",
+                description: "La orden está lista! El cliente fue notificado y puede venir a buscarla",
                 color: "text-green-600"
             },
             PICKED_UP: {
                 icon: CheckCircle2,
-                title: "Order Picked Up",
-                description: "The order has been successfully picked up by the customer",
+                title: "Orden Recogida",
+                description: "La orden fue recogida con éxito por el cliente",
                 color: "text-green-600"
             },
             WAITING_FOR_DELIVERY: {
                 icon: Package,
-                title: "Ready for Delivery",
-                description: "The order is ready and waiting to be delivered",
+                title: "Lista para Entregar",
+                description: "La orden está lista y esperando ser entregada",
                 color: "text-green-600"
             },
             ON_THE_WAY: {
                 icon: Truck,
-                title: "On the Way",
-                description: "The order is on its way to the customer",
+                title: "En Camino",
+                description: "La orden está en camino hacia el cliente",
                 color: "text-orange-600"
             },
             DELIVERED: {
                 icon: CheckCircle2,
-                title: "Order Delivered",
-                description: "The order has been successfully delivered to the customer",
+                title: "Orden Entregada",
+                description: "La orden fue entregada con éxito al cliente",
                 color: "text-green-600"
             },
             CANCELLED: {
                 icon: Check,
-                title: "Order Cancelled",
-                description: "The order has been cancelled",
+                title: "Orden Cancelada",
+                description: "La orden fue cancelada",
                 color: "text-red-600"
             }
         }
@@ -136,7 +136,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                 <Alert>
                     <AlertTriangle className="h-4 w-4" />
                     <AlertDescription>
-                        You don&apos;t have sufficient permissions to update the status of this order. Please contact an administrator.
+                        No tenés permisos suficientes para actualizar el estado de esta orden. Por favor, contactá a un administrador.
                     </AlertDescription>
                 </Alert>
             )
@@ -153,7 +153,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                             variant="outline"
                         >
                             <Clock className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "Lista para Buscar"}
+                            {isPending ? "Actualizando..." : "Lista para Buscar"}
                         </Button>
                     )}
                     {currentTrackingStatus === "WAITING_FOR_PICKUP" && (
@@ -164,7 +164,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                             variant="outline"
                         >
                             <Package className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "Volver a Preparar"}
+                            {isPending ? "Actualizando..." : "Volver a Preparar"}
                         </Button>
                     )}
                     <Button
@@ -174,7 +174,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                         variant="default"
                     >
                         <CheckCircle2 className="w-4 h-4 mr-2" />
-                        {isFinalizing ? "Finalizing..." : "Finalizar"}
+                        {isFinalizing ? "Finalizando..." : "Finalizar"}
                     </Button>
                 </div>
             )
@@ -189,7 +189,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                             variant="outline"
                         >
                             <Package className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "Esperando Delivery"}
+                            {isPending ? "Actualizando..." : "Esperando Delivery"}
                         </Button>
                     )}
                     {currentTrackingStatus === "WAITING_FOR_DELIVERY" && (
@@ -200,7 +200,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                             variant="outline"
                         >
                             <Truck className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "En Camino"}
+                            {isPending ? "Actualizando..." : "En Camino"}
                         </Button>
                     )}
                     {currentTrackingStatus !== "ON_THE_WAY" && (
@@ -211,7 +211,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                             variant="default"
                         >
                             <CheckCircle2 className="w-4 h-4 mr-2" />
-                            {isFinalizing ? "Finalizing..." : "Finalizar"}
+                            {isFinalizing ? "Finalizando..." : "Finalizar"}
                         </Button>
                     )}
                 </div>
@@ -245,12 +245,12 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                         </div>
                         <div>
                             <h3 className="text-green-800 font-medium">
-                                Order Successfully Completed!
+                                ¡Orden Finalizada con Éxito!
                             </h3>
                             <p className="text-green-700 text-sm mt-1">
                                 {isPickup
-                                    ? "The customer has picked up their order successfully."
-                                    : "The order has been delivered to the customer successfully."
+                                    ? "El cliente recogió su orden con éxito."
+                                    : "La orden fue entregada al cliente con éxito."
                                 }
                             </p>
                         </div>
@@ -263,7 +263,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
             {/* Order Tracking Controls */}
             {currentTrackingStatus && !isCompleted && (
                 <div className="space-y-3">
-                    <h4 className="font-medium">Order Tracking</h4>
+                    <h4 className="font-medium">Seguimiento de la Orden</h4>
                     {trackingInfo && (
                         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                             <div className="flex items-start gap-3">
@@ -286,29 +286,29 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
             )}
 
             <div>
-                <h3 className="text-lg font-semibold mb-4">Customer Information</h3>
+                <h3 className="text-lg font-semibold mb-4">Información del Cliente</h3>
 
                 <div className="space-y-2">
                     <div className="flex items-center gap-2">
                         <User className="size-4 text-muted-foreground" />
-                        <span className="font-medium">{order.customer_name || 'No name provided'}</span>
+                        <span className="font-medium">{order.customer_name || 'No se proporcionó el nombre'}</span>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <Mail className="size-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">{order.customer_email || "No email provided"}</span>
+                        <span className="text-muted-foreground">{order.customer_email || "No se proporcionó el email"}</span>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <Phone className="size-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">{order.customer_phone || "No phone provided"}</span>
+                        <span className="text-muted-foreground">{order.customer_phone || "No se proporcionó el teléfono"}</span>
                     </div>
 
                     {!isPickup && order.address_one && (
                         <div className="flex items-start gap-2">
                             <MapPin className="size-4 text-muted-foreground mt-0.5" />
                             <div className="text-muted-foreground">
-                                <p className="font-medium">Delivery Address:</p>
+                                <p className="font-medium">Dirección de Entrega:</p>
                                 <p>{formatAddress()}</p>
                             </div>
                         </div>
@@ -328,7 +328,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
 
             {isPickup ? (
                 <div className="space-y-3">
-                    <h4 className="font-medium">Contact Customer</h4>
+                    <h4 className="font-medium">Contactar al Cliente</h4>
                     <div className="flex gap-2">
                         <div className={cn(
                             "w-full",
@@ -341,7 +341,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                                 disabled={!order.customer_phone}
                             >
                                 <MessageCircle className="w-4 h-4 mr-2" />
-                                Send WhatsApp Message
+                                Enviar Mensaje de WhatsApp (Próximamente)
                             </Button>
                         </div>
                         <div className={cn(
@@ -355,20 +355,20 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                                 disabled={!order.customer_email}
                             >
                                 <Mail className="w-4 h-4 mr-2" />
-                                Send Email (Coming Soon)
+                                Enviar Email (Próximamente)
                             </Button>
                         </div>
                     </div>
                 </div>
             ) : (
                 <div className="space-y-3">
-                    <h4 className="font-medium">Delivery Map</h4>
+                    <h4 className="font-medium">Mapa de Entrega</h4>
                     <div className="border rounded-lg p-4 bg-muted/50">
                         <div className="aspect-video bg-muted rounded flex items-center justify-center">
                             <div className="text-center text-muted-foreground">
                                 <MapPin className="w-8 h-8 mx-auto mb-2" />
-                                <p className="text-sm">Google Maps Integration</p>
-                                <p className="text-xs">Coming Soon</p>
+                                <p className="text-sm">Integración con Google Maps</p>
+                                <p className="text-xs">Próximamente</p>
                             </div>
                         </div>
                     </div>
@@ -377,10 +377,10 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
 
             {(order.created_by_employee || order.updated_by_employee) && (
                 <div className="space-y-3">
-                    <h4 className="font-medium">Order Management</h4>
+                    <h4 className="font-medium">Gestión de Pedidos</h4>
                     {order.created_by_employee && (
                         <div className="text-sm">
-                            <span className="text-muted-foreground">Created by: </span>
+                            <span className="text-muted-foreground">Creado por: </span>
                             <span className="font-medium">
                                 {order.created_by_employee.user?.first_name
                                     ? `${order.created_by_employee.user.first_name} ${order.created_by_employee.user.last_name || ''}`
@@ -391,7 +391,7 @@ function CustomerInfoStep({ order, employeePermissions }: CustomerInfoStepProps)
                     )}
                     {order.updated_by_employee && (
                         <div className="text-sm">
-                            <span className="text-muted-foreground">Last updated by: </span>
+                            <span className="text-muted-foreground">Última actualización por: </span>
                             <span className="font-medium">
                                 {order.updated_by_employee.user?.first_name
                                     ? `${order.updated_by_employee.user.first_name} ${order.updated_by_employee.user.last_name || ''}`

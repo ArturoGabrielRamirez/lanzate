@@ -28,16 +28,16 @@ function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
                 <AccordionContent>
                     <div className="space-y-2">
                         <div className="flex justify-between items-center">
-                            <span className="text-xs md:text-sm text-muted-foreground">Name</span>
-                            <span className="text-sm md:text-base font-medium">{order.customer_name || "Name not available"}</span>
+                            <span className="text-xs md:text-sm text-muted-foreground">Nombre</span>
+                            <span className="text-sm md:text-base font-medium">{order.customer_name || "Nombre no disponible"}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-xs md:text-sm text-muted-foreground">Email</span>
-                            <span className="text-sm md:text-base font-medium">{order.customer_email || "Email not available"}</span>
+                            <span className="text-xs md:text-sm text-muted-foreground">Correo electrónico</span>
+                            <span className="text-sm md:text-base font-medium">{order.customer_email || "Correo no disponible"}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-xs md:text-sm text-muted-foreground">Phone</span>
-                            <span className="text-sm md:text-base font-medium">{order.customer_phone || "Phone not available"}</span>
+                            <span className="text-xs md:text-sm text-muted-foreground">Teléfono</span>
+                            <span className="text-sm md:text-base font-medium">{order.customer_phone || "Teléfono no disponible"}</span>
                         </div>
                     </div>
                 </AccordionContent>
@@ -46,7 +46,7 @@ function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
                 <AccordionTrigger>
                     <AlertTitle className="flex items-center gap-2 text-lg font-medium">
                         <Box className="size-4" />
-                        Order Items
+                        Artículos del pedido
                     </AlertTitle>
                 </AccordionTrigger>
                 <AccordionContent>
@@ -84,24 +84,24 @@ function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
                 <AccordionTrigger>
                     <AlertTitle className="flex items-center gap-2 text-lg font-medium">
                         <ShoppingCart className="size-4" />
-                        Order Details
+                        Detalles del pedido
                     </AlertTitle>
                 </AccordionTrigger>
                 <AccordionContent>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Order ID</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">ID del pedido</span>
                         <span className="text-sm md:text-base font-medium">#{order.id}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Total Amount</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Monto total</span>
                         <span className="text-lg md:text-xl font-bold">{formatCurrency(order.total_price)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Total Items</span>
-                        <span className="text-sm md:text-base font-medium">{order.total_quantity} {order.total_quantity === 1 ? "item" : "items"}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Total de artículos</span>
+                        <span className="text-sm md:text-base font-medium">{order.total_quantity} {order.total_quantity === 1 ? "artículo" : "artículos"}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Payment Status</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Estado del pago</span>
                         <Badge variant={"outline"} className={cn(
                             "text-xs md:text-sm",
                             order.payment?.status === "PAID" && "bg-green-500 text-white"
@@ -111,7 +111,7 @@ function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
                         </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Shipping Method</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Método de envío</span>
                         {order.shipping_method === "PICKUP" ? (
                             <Badge variant="outline">
                                 <MapPin className="w-4 h-4" />
@@ -125,7 +125,7 @@ function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
                         )}
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Order Date</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Fecha del pedido</span>
                         <span className="text-sm md:text-base font-medium">{formatDate(order.created_at)}</span>
                     </div>
                 </AccordionContent>
@@ -134,11 +134,11 @@ function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
                 <AccordionTrigger>
                     <AlertTitle className="flex items-center gap-2 text-lg font-medium">
                         <Calendar className="size-4" />
-                        Order Timeline
+                        Línea de tiempo del pedido
                     </AlertTitle>
                 </AccordionTrigger>
                 <AccordionContent>
-                    coming soon
+                    próximamente
                 </AccordionContent>
             </AccordionItem>
         </Accordion>

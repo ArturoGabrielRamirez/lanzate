@@ -11,7 +11,7 @@ export async function updateCompletedOrderData({ orderId }: UpdateCompletedOrder
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
-        throw new Error(userMessage || "User not authenticated")
+        throw new Error(userMessage || "Usuario no autenticado")
     }
 
     // Use transaction for consistency
@@ -38,24 +38,24 @@ export async function updateCompletedOrderData({ orderId }: UpdateCompletedOrder
         })
 
         if (!order) {
-            throw new Error("Order not found")
+            throw new Error("Pedido no encontrado")
         }
 
         const oldStatus = order.status
 
         // Validate status change
         if (oldStatus === 'COMPLETED') {
-            throw new Error("Order is already in COMPLETED status")
+            throw new Error("El pedido ya está en estado COMPLETADO")
         }
 
         // Business rule: Can only complete from DELIVERED
         if (oldStatus !== 'DELIVERED') {
-            throw new Error(`Cannot change order status from ${oldStatus} to COMPLETED. Order must be in DELIVERED status.`)
+            throw new Error(`No se puede cambiar el estado del pedido de ${oldStatus} a COMPLETADO. El pedido debe estar en estado ENTREGADO.`)
         }
 
         // Validate that order was delivered successfully
         if (!order.is_paid) {
-            throw new Error("Cannot complete unpaid order")
+            throw new Error("No se puede completar un pedido no pagado")
         }
 
         // Update order status
@@ -89,12 +89,12 @@ export async function updateCompletedOrderData({ orderId }: UpdateCompletedOrder
         entity_type: "ORDER",
         entity_id: parseInt(orderId),
         user_id: user.id,
-        action_initiator: "Order status update",
-        details: `Order status changed to COMPLETED. Order has been successfully finalized.`
+        action_initiator: "Actualización del estado del pedido",
+        details: `El estado del pedido cambió a COMPLETADO. El pedido ha sido finalizado con éxito.`
     })
 
     if (logError) {
-        console.warn("Order status updated but failed to create log entry:", logError)
+        console.warn("El estado del pedido se actualizó pero no se pudo crear la entrada de registro:", logError)
     }
 
     // TODO: Send completion notification to customer
@@ -107,5 +107,5 @@ export async function updateCompletedOrderData({ orderId }: UpdateCompletedOrder
     //     await sendSatisfactionSurvey(updatedOrder)
     // }
 
-    return formatSuccessResponse("Order has been completed successfully", updatedOrder)
+    return formatSuccessResponse("El pedido ha sido completado con éxito", updatedOrder)
 } 

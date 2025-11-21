@@ -8,13 +8,13 @@ export async function getOrderDetailsAction(id: string) {
 
         const parsedId = parseInt(id)
 
-        if (isNaN(parsedId)) throw new Error("Invalid order id")
+        if (isNaN(parsedId)) throw new Error("Se requiere un ID de orden válido")
 
         const { payload: order, hasError: error, message } = await selectOrderByIdData(parsedId)
 
         if (error) throw new Error(message)
 
-        return formatSuccessResponse("Order details fetched successfully", order)
+        return formatSuccessResponse("Detalles de la orden obtenidos con éxito", order)
 
     })
 } 

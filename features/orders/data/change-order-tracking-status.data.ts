@@ -18,7 +18,7 @@ export async function changeOrderTrackingStatusData({
 
     return {
         hasError: false,
-        message: "Order tracking status changed successfully",
+        message: "Estado de seguimiento del pedido cambiado con éxito",
         payload: updatedTracking
     }
 }

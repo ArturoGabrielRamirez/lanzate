@@ -13,6 +13,6 @@ export async function getUserOrdersAction(userId: number) {
 
         if (hasError) throw new Error(message)
 
-        return formatSuccessResponse("Orders fetched successfully", payload)
+        return formatSuccessResponse("Órdenes obtenidas con éxito", payload)
     })
 } 

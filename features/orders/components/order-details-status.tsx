@@ -10,9 +10,9 @@ import { Progress } from "@/features/shadcn/components/ui/progress"
 function OrderDetailsStatus({ order }: OrderDetailsStatusProps) {
 
     const orderDescriptions = {
-        PROCESSING: "Be patient, your order is being processed.",
-        READY: "Be patient, your order was confirmed and is being prepared.",
-        COMPLETED: "Enjoy your purchase!",
+        PROCESSING: "Tené paciencia, tu pedido está siendo procesado.",
+        READY: "Tené paciencia, tu pedido fue confirmado y está siendo preparado.",
+        COMPLETED: "¡Disfrutá tu compra!",
     }
 
     const progress = useMemo(() => {
@@ -80,7 +80,7 @@ function OrderDetailsStatus({ order }: OrderDetailsStatusProps) {
                         ) : (
                             <>
                                 <MapPin />
-                                at store
+                                en la tienda
                             </>
                         )}
                     </Badge>

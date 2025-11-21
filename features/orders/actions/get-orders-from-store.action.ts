@@ -15,6 +15,6 @@ export async function getOrdersFromStoreAction(slug: string, limit?: number) {
 
         if (ordersError || !orders) throw new Error(ordersMessage)
 
-        return formatSuccessResponse("Orders fetched successfully", orders)
+        return formatSuccessResponse("Órdenes obtenidas con éxito", orders)
     })
 }

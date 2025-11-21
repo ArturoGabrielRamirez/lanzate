@@ -10,20 +10,20 @@ function OrderDetailsArrival({ order }: OrderDetailsArrivalProps) {
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 justify-between">
                     <h3 className="text-xl font-medium">
-                        Order {order.shipping_method === "DELIVERY" ? "Arrival" : "Pickup"}
+                        Pedido {order.shipping_method === "DELIVERY" ? "Llegada" : "Recogida"}
                     </h3>
                     <Timer />
                 </CardTitle>
             </CardHeader>
             <CardContent className="grow">
                 <p className="text-muted-foreground">
-                    {order.shipping_method === "DELIVERY" ? "Your order will arrive at your address in the next 24 hours." : "Your order will be ready for pickup in the next 24 hours."}
+                    {order.shipping_method === "DELIVERY" ? "Tu pedido llegará a tu dirección en las próximas 24 horas." : "Tu pedido estará listo para recoger en las próximas 24 horas."}
                 </p>
             </CardContent>
             <CardFooter className="flex justify-end">
                 <Button className="w-full md:w-auto">
                     <MapPin className="size-4" />
-                    View on map
+                    Ver en el mapa
                 </Button>
             </CardFooter>
         </Card>

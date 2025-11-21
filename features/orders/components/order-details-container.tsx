@@ -13,9 +13,9 @@ async function OrderDetailsContainer({ orderId }: OrderDetailsContainerProps) {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-medium mb-2">Authentication Required</h3>
+                <h3 className="text-lg font-medium mb-2">Autenticación requerida</h3>
                 <p className="text-muted-foreground">
-                    Please log in to view order details.
+                    Por favor, iniciá sesión para ver los detalles del pedido.
                 </p>
             </div>
         )

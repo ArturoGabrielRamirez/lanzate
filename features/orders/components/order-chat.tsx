@@ -10,7 +10,7 @@ async function OrderChat({ storeSlug, orderId }: OrderChatProps) {
     const { payload: messages } = await getMessagesFromOrderAction({ storeSlug, orderId })
 
     return (
-        <Suspense fallback={<div className="flex-1 flex items-center justify-center">Loading messages...</div>}>
+        <Suspense fallback={<div className="flex-1 flex items-center justify-center">Cargando mensajes...</div>}>
             <OrderChatWrapper 
                 messages={messages || []} 
                 currentUser={user} 

@@ -11,7 +11,7 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
         const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
         if (userError || !user) {
-            throw new Error(userMessage || "User not authenticated")
+            throw new Error(userMessage || "Usuario no autenticado")
         }
 
         // Use transaction for consistency
@@ -37,24 +37,24 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
             })
 
             if (!order) {
-                throw new Error("Order not found")
+                throw new Error("Pedido no encontrado")
             }
 
             const oldStatus = order.status
 
             // Validate status change
             if (oldStatus === 'CANCELLED') {
-                throw new Error("Order is already in CANCELLED status")
+                throw new Error("El pedido ya está en estado CANCELADO")
             }
 
             // Business rule: Cannot cancel completed orders
             if (oldStatus === 'COMPLETED') {
-                throw new Error("Cannot cancel completed orders")
+                throw new Error("No se pueden cancelar pedidos completados")
             }
 
             // Business rule: Cannot cancel delivered orders
             if (oldStatus === 'DELIVERED') {
-                throw new Error("Cannot cancel delivered orders")
+                throw new Error("No se pueden cancelar pedidos entregados")
             }
 
             // Restore stock for all items if order was in PROCESSING or READY
@@ -114,11 +114,11 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
                         amount: order.total_price,
                         balance_before: currentBalance,
                         balance_after: newBalance,
-                        description: `Order ${order.id} cancelled - refund`,
+                        description: `Pedido ${order.id} cancelado - reembolso`,
                         reference_type: "order",
                         reference_id: order.id,
                         created_by: user.id,
-                        notes: `Order ${order.id} cancelled and refunded`,
+                        notes: `Pedido ${order.id} cancelado y reembolsado`,
                         branch_id: order.branch_id
                     }
                 })
@@ -167,12 +167,12 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
             entity_type: "ORDER",
             entity_id: parseInt(orderId),
             user_id: user.id,
-            action_initiator: "Order status update",
-            details: `Order status changed to CANCELLED. Stock restored and balance reversed.`
+            action_initiator: "Actualización del estado del pedido",
+            details: `El estado del pedido cambió a CANCELADO. Stock restaurado y saldo revertido.`
         })
 
         if (logError) {
-            console.warn("Order status updated but failed to create log entry:", logError)
+            console.warn("El estado del pedido se actualizó pero no se pudo crear la entrada de registro:", logError)
         }
 
         // TODO: Send cancellation notification to customer
@@ -181,7 +181,7 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
         // }
 
         return formatSuccessResponse(
-            "Order has been cancelled. Stock restored and payment refunded if applicable.",
+            "El pedido ha sido cancelado. Stock restaurado y pago reembolsado si corresponde.",
             updatedOrder
         )
 } 

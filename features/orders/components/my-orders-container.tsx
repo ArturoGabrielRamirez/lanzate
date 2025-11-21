@@ -13,9 +13,9 @@ async function MyOrdersContainer() {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-medium mb-2">Authentication Required</h3>
+                <h3 className="text-lg font-medium mb-2">Autenticación Requerida</h3>
                 <p className="text-muted-foreground">
-                    Please log in to view your orders.
+                    Por favor, iniciá sesión para ver tus pedidos.
                 </p>
             </div>
         )
@@ -27,9 +27,9 @@ async function MyOrdersContainer() {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-medium mb-2">Error Loading Orders</h3>
+                <h3 className="text-lg font-medium mb-2">Error al Cargar Pedidos</h3>
                 <p className="text-muted-foreground">
-                    There was an error loading your orders. Please try again later.
+                    Hubo un error al cargar tus pedidos. Por favor, intentá nuevamente más tarde.
                 </p>
             </div>
         )
@@ -39,9 +39,9 @@ async function MyOrdersContainer() {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-center">
                 <Package className="w-12 h-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-medium mb-2">No Orders Found</h3>
+                <h3 className="text-lg font-medium mb-2">No se Encontraron Pedidos</h3>
                 <p className="text-muted-foreground">
-                    You haven&apos;t placed any orders yet.
+                    Aún no realizaste ningún pedido.
                 </p>
             </div>
         )

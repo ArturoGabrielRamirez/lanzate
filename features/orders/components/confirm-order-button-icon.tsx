@@ -15,7 +15,7 @@ function ConfirmOrderButtonIcon({ orderId }: ConfirmOrderButtonIconProps) {
 
     const handleConfirmOrder = () => {
         if (isPending) return
-        toast.loading("Confirming order, please wait...", { richColors: true })
+        toast.loading("Confirmando la orden, por favor espera...", { richColors: true })
         startTransition(async () => {
             try {
                 const { hasError, message } = await confirmOrderAction({
@@ -26,10 +26,10 @@ function ConfirmOrderButtonIcon({ orderId }: ConfirmOrderButtonIconProps) {
                     throw new Error(message)
                 }
                 toast.dismiss()
-                toast.success("Order confirmed successfully! The customer has been notified.", { richColors: true })
+                toast.success("Orden confirmada con éxito! El cliente ha sido notificado.", { richColors: true })
             } catch (error) {
                 toast.dismiss()
-                toast.error(error instanceof Error ? error.message : "Failed to confirm order", { richColors: true })
+                toast.error(error instanceof Error ? error.message : "Error al confirmar la orden", { richColors: true })
             }
         })
     }
@@ -45,7 +45,7 @@ function ConfirmOrderButtonIcon({ orderId }: ConfirmOrderButtonIconProps) {
                 />
             </TooltipTrigger>
             <TooltipContent>
-                {isPending ? "Confirming order..." : "Confirm order"}
+                {isPending ? "Confirmando la orden..." : "Confirmar orden"}
             </TooltipContent>
         </Tooltip>
     )

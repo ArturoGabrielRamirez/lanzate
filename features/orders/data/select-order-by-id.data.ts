@@ -60,8 +60,8 @@ export async function selectOrderByIdData(orderId: number) {
     })
 
     if (!order) {
-        throw new Error("Order not found")
+        throw new Error("Pedido no encontrado")
     }
 
-    return formatSuccessResponse("Order details fetched successfully", order)
+    return formatSuccessResponse("Detalles del pedido obtenidos con éxito", order)
 } 

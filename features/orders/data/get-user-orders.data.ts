@@ -23,7 +23,7 @@ export async function getUserOrdersData(userId: number) {
         }
     })
 
-    if (!orders) throw new Error("Orders not found")
+    if (!orders) throw new Error("Pedidos no encontrados")
 
-    return formatSuccessResponse("Orders fetched successfully", orders)
+    return formatSuccessResponse("Pedidos obtenidos con éxito", orders)
 }

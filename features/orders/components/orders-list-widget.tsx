@@ -6,7 +6,7 @@ async function OrdersListWidget({ slug }: { slug: string }) {
     const { payload: orders, hasError, message } = await getOrdersFromStoreAction(slug, 5)
 
     if (hasError) {
-        return <div>Error loading orders: {message || "Unknown error"}</div>
+        return <div>Error cargando pedidos: {message || "Error desconocido"}</div>
     }
 
     if (orders && orders.length === 0) {

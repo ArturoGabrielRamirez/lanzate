@@ -34,7 +34,7 @@ export async function finalizeOrderData({
 
     return {
         hasError: false,
-        message: "Order finalized successfully",
+        message: "Pedido finalizado con éxito",
         payload: {
             order: updatedOrder,
             tracking: updatedOrder.tracking
