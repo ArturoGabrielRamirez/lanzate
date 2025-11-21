@@ -11,10 +11,10 @@ export async function getStoresFromSlugAction(slug: string){
         if (hasError) throw new Error(message)
 
         if (!store)
-            throw new Error("Store not found")
+            throw new Error("Tienda no encontrada")
 
         return {
-            message: "Store fetched successfully from db",
+            message: "Tienda recuperada con éxito desde la base de datos",
             payload: store,
             hasError: false
         }

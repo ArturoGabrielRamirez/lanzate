@@ -12,7 +12,7 @@ export async function deleteStoreAction(storeId: number, userId: number) {
 
         const canDelete = await canDeleteStoreAccess(storeId, userId)
 
-        if (!canDelete) throw new Error("User does not own store")
+        if (!canDelete) throw new Error("No tenés permiso para eliminar esta tienda.")
 
         await deleteStoreData(storeId)
 
@@ -24,16 +24,15 @@ export async function deleteStoreAction(storeId: number, userId: number) {
             entity_type: "STORE",
             entity_id: storeId,
             user_id: userId,
-            action_initiator: "Delete store button",
-            details: "User deleted store using the delete store button in danger zone"
+            action_initiator: "Se eliminó una tienda",
+            details: "El usuario eliminó una tienda usando el botón de eliminación en la zona de peligro"
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
-
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear un registro de esta.")
 
         return {
             hasError: false,
-            message: "Store deleted successfully",
+            message: "Tienda eliminada exitosamente",
             payload: null
         }
 

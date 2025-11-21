@@ -11,8 +11,8 @@ import { NewStoreCardProps } from "@/features/stores/types"
 function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
 
     const isAddMore = variant === "add-more"
-    const title = isAddMore ? "New store" : "No stores yet"
-    const description = isAddMore ? "Take your business to another level!" : "Be the first to claim your custom domain!"
+    const title = isAddMore ? "Nueva tienda" : "No tenés tiendas creadas"
+    const description = isAddMore ? "¡Lleva tu negocio a otro nivel!" : "¡Creala ahora!"
 
     return (
         <Card className="p-0 md:p-0 lg:p-0 xl:p-0 opacity-50 hover:opacity-100 transition-all">

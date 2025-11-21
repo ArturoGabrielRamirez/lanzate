@@ -99,17 +99,17 @@ function WelcomeTutorial() {
                     <DialogFooter className="!flex-col justify-end md:!flex-row">
                         {currentStep > 1 && (
                             <Button onClick={goToPrevStep} variant="secondary">
-                                Previous
+                                Anterior
                             </Button>
                         )}
                         {currentStep < 4 && (
                             <Button onClick={goToNextStep}>
-                                Next
+                                Siguiente
                             </Button>
                         )}
                         {currentStep === 4 && (
                             <Button onClick={handleFinishTutorial}>
-                                Finish Tutorial
+                                Finalizar Tutorial
                             </Button>
                         )}
                     </DialogFooter>

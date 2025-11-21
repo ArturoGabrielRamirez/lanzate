@@ -38,7 +38,7 @@ export async function updateStoreContactAction(storeId: number, data: EditContac
         revalidatePath(`/stores/${store.slug}`, "page")
 
         return {
-            message: "Contact information updated successfully",
+            message: "Información de contacto actualizada con éxito",
             hasError: false,
             payload: data
         }

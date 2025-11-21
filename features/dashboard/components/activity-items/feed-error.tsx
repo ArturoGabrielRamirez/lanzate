@@ -30,7 +30,7 @@ async function FeedError({ message }: FeedErrorProps) {
                     <EmptyContent>
                         <div className="flex gap-2">
                             <Button asChild>
-                                <Link href="/stores">Reload page</Link>
+                                <Link href="/stores">Recargar página</Link>
                             </Button>
                         </div>
                     </EmptyContent>

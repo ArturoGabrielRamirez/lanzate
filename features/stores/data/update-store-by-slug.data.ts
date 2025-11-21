@@ -92,7 +92,7 @@ export async function updateStoreBySlugData(slug: string, data: StoreUpdateData)
     })
 
     return {
-        message: "Store updated successfully",
+        message: "Tienda actualizada con éxito",
         payload: finalStore,
         hasError: false
     }

@@ -101,7 +101,7 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                     <CardTitle>
                         <span className="flex items-center gap-2">
                             <Truck className="size-4" />
-                            Operational Settings
+                            Configuración Operacional
                         </span>
                     </CardTitle>
                     <CardAction>
@@ -120,7 +120,7 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                         <div className="space-y-3">
                             <h4 className="font-medium text-sm text-muted-foreground flex items-center gap-2">
                                 <Truck className="size-3" />
-                                Delivery Service
+                                Servicio de Delivery
                             </h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1 md:col-span-2">
@@ -172,7 +172,7 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                         <div className="space-y-3">
                             <h4 className="font-medium text-sm text-muted-foreground flex items-center gap-2">
                                 <CreditCard className="size-3" />
-                                Payment Methods
+                                Métodos de Pago
                             </h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
@@ -189,7 +189,7 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                                                     </Badge>
                                                 ))
                                             ) : (
-                                                <p className="text-sm text-muted-foreground">No payment methods configured</p>
+                                                <p className="text-sm text-muted-foreground">No hay métodos de pago configurados</p>
                                             )}
                                         </div>
                                     )}

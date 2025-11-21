@@ -11,7 +11,7 @@ export async function getStoreLogsBySlugData(slug: string) {
     if (!store) {
         return {
             hasError: true,
-            message: "Store not found",
+            message: "Tienda no encontrada",
             payload: null
         }
     }
@@ -94,7 +94,7 @@ export async function getStoreLogsBySlugData(slug: string) {
 
     return {
         hasError: false,
-        message: "Store logs retrieved successfully",
+        message: "Registros de la tienda recuperados con éxito",
         payload: logs
     }
 

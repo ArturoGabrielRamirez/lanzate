@@ -31,10 +31,10 @@ function InfiniteScroll({ isLoading, hasMore, next }: InfiniteScrollProps) {
             {isLoading && hasMore && (
                 <>
                     <Loader className="size-4 animate-spin" />
-                    <p className="text-sm text-muted-foreground">Loading more content...</p>
+                    <p className="text-sm text-muted-foreground">Cargando más contenido...</p>
                 </>
             )}
-            {!isLoading && !hasMore && <p className="text-sm text-muted-foreground">No more content</p>}
+            {!isLoading && !hasMore && <p className="text-sm text-muted-foreground">No hay más contenido</p>}
         </motion.div>
     )
 }

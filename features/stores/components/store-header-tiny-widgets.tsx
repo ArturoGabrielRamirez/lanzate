@@ -11,7 +11,7 @@ function StoreHeaderTinyWidgets({ slug }: StoreHeaderTinyWidgetsProps) {
                 <Box className="size-8" />
                 <span className="flex flex-col">
                     <span className="font-bold text-xl leading-4">10</span>
-                    <span className="text-background/70 group-hover/item:text-foreground dark:text-primary-foreground/70 text-xs leading-4">items</span>
+                    <span className="text-background/70 group-hover/item:text-foreground dark:text-primary-foreground/70 text-xs leading-4">artículos</span>
                 </span>
             </TinyWidget>
             <TinyWidget title="Ordenes" href={`/stores/${slug}/orders`}>

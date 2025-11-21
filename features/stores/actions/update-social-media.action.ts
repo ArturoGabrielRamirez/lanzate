@@ -38,7 +38,7 @@ export async function updateStoreSocialMediaAction(storeId: number, data: EditSo
         revalidatePath(`/stores/${store.slug}`, "page")
 
         return {
-            message: "Social media information updated successfully",
+            message: "Información de redes sociales actualizada con éxito",
             hasError: false,
             payload: data
         }

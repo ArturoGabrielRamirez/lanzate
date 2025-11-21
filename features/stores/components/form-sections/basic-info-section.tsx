@@ -22,8 +22,8 @@ function BasicInfoSection({ store, subdomain, onSubdomainChange, mode, onNameCha
             <AccordionContent className="space-y-4">
                 <InputField
                     name="name"
-                    label={t("name")}
-                    placeholder={t("name")}
+                    label={t("nombre")}
+                    placeholder={t("nombre")}
                     type="text"
                     defaultValue={store?.name}
                     onChange={onNameChange ?? undefined}
@@ -38,9 +38,9 @@ function BasicInfoSection({ store, subdomain, onSubdomainChange, mode, onNameCha
                 <div className="relative grid grid-cols-[1fr_auto] gap-2 items-end">
                     <InputField
                         name="subdomain"
-                        label={t("subdomain")}
+                        label={t("subdominio")}
                         type="text"
-                        placeholder={t("subdomain")}
+                        placeholder={t("subdominio")}
                         onChange={onSubdomainChange}
                         defaultValue={subdomain}
                     />

@@ -24,7 +24,7 @@ export async function updateOperationalSettingsData(storeId: number, payload: Up
 
         return {
             hasError: false,
-            message: "Operational settings updated successfully",
+            message: "Configuración operativa actualizada con éxito",
             payload: updatedSettings
         }
     } else {
@@ -43,7 +43,7 @@ export async function updateOperationalSettingsData(storeId: number, payload: Up
 
         return {
             hasError: false,
-            message: "Operational settings created successfully",
+            message: "Configuración operativa creada con éxito",
             payload: newSettings
         }
     }

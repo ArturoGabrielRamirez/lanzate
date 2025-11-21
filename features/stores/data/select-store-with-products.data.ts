@@ -128,7 +128,7 @@ export async function selectStoreWithProductsData(subdomain: string, category: s
     })
 
     return {
-        message: "Store with products fetched successfully from db",
+        message: "Tienda con productos recuperada con éxito desde la base de datos",
         payload: result,
         hasError: false
     };

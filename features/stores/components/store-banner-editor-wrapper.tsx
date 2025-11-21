@@ -15,7 +15,7 @@ function StoreBannerEditorWrapper({ currentBanner, storeName, storeId }: StoreBa
         try {
             setBanner(newBannerUrl)
             if (newBannerUrl) {
-                toast.loading('Updating store banner...')
+                toast.loading('Actualizando banner de la tienda...')
                 const { hasError, message } = await updateStoreBannerAction(storeId, newBannerUrl)
                 if (hasError) {
                     toast.dismiss()
@@ -27,7 +27,7 @@ function StoreBannerEditorWrapper({ currentBanner, storeName, storeId }: StoreBa
             }
         } catch (error) {
             console.error('Error updating store banner:', error)
-            toast.error('Error updating store banner')
+            toast.error('Error al actualizar el banner de la tienda')
         }
     }
 

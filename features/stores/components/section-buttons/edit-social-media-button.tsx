@@ -24,20 +24,20 @@ function EditSocialMediaButton({ store, onSuccess }: EditSocialMediaButtonProps)
 
         try {
             setIsLoading(true)
-            toast.loading("Updating social media...")
+            toast.loading("Actualizando redes sociales...")
             const { hasError, message } = await updateStoreSocialMediaAction(store.id, payload)
 
             if (hasError) {
                 throw new Error(message)
             }
             toast.dismiss()
-            toast.success("Social media updated successfully!")
+            toast.success("Redes sociales actualizadas con éxito!")
             if (onSuccess) onSuccess()
 
         } catch (error) {
             console.error(error)
             toast.dismiss()
-            toast.error("Failed to update social media")
+            toast.error("Error al actualizar las redes sociales")
         } finally {
             setIsLoading(false)
         }

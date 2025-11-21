@@ -16,7 +16,7 @@ export async function selectAllCategoriesData(storeId?: number) {
   }));
 
   return {
-    message: "Categories fetched successfully from db",
+    message: "Categorías recuperadas con éxito",
     payload: categories,
     hasError: false,
   };

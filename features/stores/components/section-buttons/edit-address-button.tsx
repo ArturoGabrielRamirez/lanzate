@@ -26,20 +26,20 @@ function EditAddressButton({ store, userId, onSuccess }: EditAddressButtonProps)
 
         try {
             setIsLoading(true)
-            toast.loading("Updating address information...")
+            toast.loading("Actualizando información de dirección...")
             const { hasError, message } = await updateStoreAddressAction(store.slug, payload, userId)
 
             if (hasError) {
                 throw new Error(message)
             }
             toast.dismiss()
-            toast.success("Address information updated successfully!")
+            toast.success("Información de dirección actualizada con éxito!")
             if (onSuccess) onSuccess()
 
         } catch (error) {
             console.error(error)
             toast.dismiss()
-            toast.error("Failed to update address information")
+            toast.error("Error al actualizar la información de dirección")
         } finally {
             setIsLoading(false)
         }

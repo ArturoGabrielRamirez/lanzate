@@ -23,19 +23,19 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
     const handleDeleteStore = async () => {
         try {
             setIsDeleting(true)
-            toast.loading("Deleting store...")
+            toast.loading("Eliminando tienda...")
 
-            if (!store || !store.id) throw new Error("Store not found")
+            if (!store || !store.id) throw new Error("Tienda no encontrada")
 
             const { hasError, message } = await deleteStoreAction(store.id, userId)
 
             if (hasError) throw new Error(message)
 
             toast.dismiss()
-            toast.success("Store deleted successfully")
+            toast.success("Tienda eliminada con éxito")
 
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "An unknown error occurred")
+            toast.error(error instanceof Error ? error.message : "Ocurrió un error desconocido")
         } finally {
             setIsDeleting(false)
         }
@@ -69,22 +69,22 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
                             <DropDrawerGroup>
                                 <DropDrawerItem icon={<StoreIcon className="size-6 lg:size-4" />}>
                                     <Link href={`/stores/${store?.slug || ""}`}>
-                                        Manage store
+                                        Administrar tienda
                                     </Link>
                                 </DropDrawerItem>
                                 <DropDrawerItem icon={<Boxes className="size-6 lg:size-4" />}>
                                     <Link href={`/stores/${store?.slug || ""}/products`}>
-                                        Products
+                                        Productos
                                     </Link>
                                 </DropDrawerItem>
                                 <DropDrawerItem icon={<ShoppingCart className="size-6 lg:size-4" />}>
                                     <Link href={`/stores/${store?.slug || ""}/orders`}>
-                                        Orders
+                                        Pedidos
                                     </Link>
                                 </DropDrawerItem>
                                 <DropDrawerItem icon={<Globe className="size-6 lg:size-4" />}>
                                     <Link href={`https://${store?.subdomain || ""}.lanzate.app`} target="_blank">
-                                        Go to website
+                                        Ir al sitio web
                                     </Link>
                                 </DropDrawerItem>
                             </DropDrawerGroup>
@@ -140,27 +140,27 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
                         <DropDrawerGroup>
                             <DropDrawerItem icon={<StoreIcon className="size-6 lg:size-4" />}>
                                 <Link href={`/stores/${store?.slug || ""}`}>
-                                    Manage store
+                                    Administrar tienda
                                 </Link>
                             </DropDrawerItem>
                             <DropDrawerItem icon={<Boxes className="size-6 lg:size-4" />}>
                                 <Link href={`/stores/${store?.slug || ""}/products`}>
-                                    Products
+                                    Productos
                                 </Link>
                             </DropDrawerItem>
                             <DropDrawerItem icon={<ShoppingCart className="size-6 lg:size-4" />}>
                                 <Link href={`/stores/${store?.slug || ""}/orders`}>
-                                    Orders
+                                    Pedidos
                                 </Link>
                             </DropDrawerItem>
                             <DropDrawerItem icon={<Globe className="size-6 lg:size-4" />}>
                                 <Link href={`https://${store?.subdomain || ""}.lanzate.app`} target="_blank">
-                                    Go to website
+                                    Ir al sitio web
                                 </Link>
                             </DropDrawerItem>
                         </DropDrawerGroup>
                         <DropDrawerItem icon={isDeleting ? <Loader2 className="size-6 lg:size-4 text-destructive animate-spin" /> : <Trash2 className="size-6 lg:size-4 text-destructive" />} className="text-destructive" onClick={handleDeleteStore} disabled={isDeleting}>
-                            {isDeleting ? "Deleting..." : "Delete Store"}
+                            {isDeleting ? "Eliminando..." : "Eliminar Tienda"}
                         </DropDrawerItem>
                     </DropDrawerContent>
                 </DropDrawer>

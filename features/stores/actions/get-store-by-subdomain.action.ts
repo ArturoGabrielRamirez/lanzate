@@ -11,7 +11,7 @@ export async function getStoreBySubdomainAction(subdomain: string) {
         if (hasError) throw new Error(message);
 
         return {
-            message: "Store fetched successfully",
+            message: "Tienda recuperada con éxito desde la base de datos",
             payload: store,
             hasError: false
         };

@@ -23,20 +23,20 @@ function EditContactButton({ store, onSuccess }: EditContactButtonProps) {
 
         try {
             setIsLoading(true)
-            toast.loading("Updating contact information...")
+            toast.loading("Actualizando información de contacto...")
             const { hasError, message } = await updateStoreContactAction(store.id, payload)
 
             if (hasError) {
                 throw new Error(message)
             }
             toast.dismiss()
-            toast.success("Contact information updated successfully!")
+            toast.success("Información de contacto actualizada con éxito!")
             if (onSuccess) onSuccess()
 
         } catch (error) {
             console.error(error)
             toast.dismiss()
-            toast.error("Failed to update contact information")
+            toast.error("Error al actualizar la información de contacto")
         } finally {
             setIsLoading(false)
         }

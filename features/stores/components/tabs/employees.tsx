@@ -40,7 +40,7 @@ async function EmployeesTab({ slug }: EmployeesTabProps) {
     }
 
     if (permissionsError || !employeePermissions) {
-        return console.log("Error loading employee permissions")
+        return console.log("Error al cargar los permisos del empleado")
     }
 
     return (

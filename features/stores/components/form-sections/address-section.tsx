@@ -35,32 +35,32 @@ function AddressSection({ store, mode }: AddressSectionProps) {
                 />
                 <InputField
                     name="address"
-                    label={t("address")}
-                    placeholder={t("address")}
+                    label={t("dirección")}
+                    placeholder={t("dirección")}
                     type="text"
                     defaultValue={mainBranch?.address || ""}
                     disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="city"
-                    label={t("city")}
-                    placeholder={t("city")}
+                    label={t("ciudad")}
+                    placeholder={t("ciudad")}
                     type="text"
                     defaultValue={mainBranch?.city || ""}
                     disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="province"
-                    label={t("province")}
-                    placeholder={t("province")}
+                    label={t("provincia")}
+                    placeholder={t("provincia")}
                     type="text"
                     defaultValue={mainBranch?.province || ""}
                     disabled={!isPhysicalStore}
                 />
                 <InputField
                     name="country"
-                    label={t("country")}
-                    placeholder={t("country")}
+                    label={t("país")}
+                    placeholder={t("país")}
                     type="text"
                     defaultValue={mainBranch?.country || ""}
                     disabled={!isPhysicalStore}
