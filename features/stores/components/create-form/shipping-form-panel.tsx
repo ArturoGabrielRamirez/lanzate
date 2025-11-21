@@ -1,6 +1,5 @@
 import { Store, Truck } from "lucide-react"
-/* 
-import { AnimatePresence, motion } from "motion/react" */
+import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
@@ -12,7 +11,7 @@ import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 /* import { ShippingMethodFormPanel } from "@/features/stores/components/create-form/shipping-method-form-panel" */
 import { CreateStoreFormValues/* , ShippingMethod */ } from "@/features/stores/types"
-/* import { cn } from "@/lib/utils" */
+import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
 
@@ -23,8 +22,8 @@ export function ShippingFormPanel() {
     const { values, setValues: setCtxValues } = useCreateStoreContext()
     /* const setValueAny = setValue as unknown as (name: string, value: unknown, options?: { shouldValidate?: boolean; shouldDirty?: boolean }) => void */
     const [offersDelivery, setOffersDelivery] = useState(false)
-    /* const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([]) */
-    /* const [isAddingMethod, setIsAddingMethod] = useState(false) */
+    const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
+    const [isAddingMethod, setIsAddingMethod] = useState(false)
     /* const [editingIndex, setEditingIndex] = useState<number | null>(null) */
     const [paymentMethods, setPaymentMethods] = useState<string[]>(() => (getValues("payment_info.payment_methods") as string[] | undefined) || [])
 
@@ -46,6 +45,7 @@ export function ShippingFormPanel() {
         seededRef.current = true
 
         if (values.payment_info) {
+
             const p = values.payment_info
 
             const safe = {
@@ -55,6 +55,20 @@ export function ShippingFormPanel() {
             setValue("payment_info", safe, { shouldValidate: true })
             setPaymentMethods(safe.payment_methods)
             setCtxValues({ payment_info: safe })
+        }
+
+        if (values.shipping_info) {
+
+            const s = values.shipping_info
+
+            const safe = {
+                offers_delivery: s.offers_delivery || false
+            }
+
+            setValue("shipping_info", safe, { shouldValidate: true })
+            setOffersDelivery(safe.offers_delivery)
+            setCtxValues({ shipping_info: safe })
+
         }
         /* if (values.shipping_info) {
             const s = values.shipping_info
@@ -106,11 +120,17 @@ export function ShippingFormPanel() {
     /* useEffect(() => { setStepValid(5, isValid) }, [isValid, setStepValid]) */
 
     const handleOffersDelivery = () => {
+        setCtxValues({ shipping_info: { offers_delivery: true, methods: [] } })
+        setOffersDelivery(true)
+        setValue("shipping_info.offers_delivery", true, { shouldValidate: true, shouldDirty: true })
         /* setOffersDelivery(true)
         setValueAny("shipping_info.offers_delivery", true, { shouldValidate: true, shouldDirty: true }) */
     }
 
     const handleNotOffersDelivery = () => {
+        setCtxValues({ shipping_info: { offers_delivery: false, methods: [] } })
+        setOffersDelivery(false)
+        setValue("shipping_info.offers_delivery", false, { shouldValidate: true, shouldDirty: true })
         /* setOffersDelivery(false)
         setIsAddingMethod(false)
         setEditingIndex(null)
@@ -208,7 +228,7 @@ export function ShippingFormPanel() {
                     <ChoiceBoxDescription>This store offers delivery as well as pickup.</ChoiceBoxDescription>
                 </ChoiceBoxItem>
             </ChoiceBox>
-            {/* 
+
 
             <AnimatePresence>
                 {offersDelivery && (
@@ -234,6 +254,7 @@ export function ShippingFormPanel() {
                                 </p>
                             </div>
                         )}
+                        {/* 
                         <AnimatePresence key={"inset"}>
                             {isAddingMethod && editingIndex !== null && shippingMethods[editingIndex] && (
                                 <ShippingMethodFormPanel
@@ -278,11 +299,11 @@ export function ShippingFormPanel() {
                                 <Plus />
                                 Agregar modo de envío
                             </Button>
-                        )}
+                        )} */}
 
                     </motion.div>
                 )}
-            </AnimatePresence> */}
+            </AnimatePresence>
 
         </>
     )
