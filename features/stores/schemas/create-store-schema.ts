@@ -77,7 +77,7 @@ export const shippingPaymentSchema = yup.object({
     shipping_info: yup.object({
         offers_delivery: yup.boolean().default(false),
         methods: yup.array().of(yup.object({
-            providers: yup.array().of(yup.string()).min(1, "Seleccione al menos un proveedor"),
+            providers: yup.array().of(yup.string()).min(1, "Seleccione al menos un proveedor").required("Seleccione al menos un proveedor"),
             minPurchase: yup.string(),
             freeShippingMin: yup.string(),
             estimatedTime: yup.string(),
