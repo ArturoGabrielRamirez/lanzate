@@ -37,7 +37,7 @@ export async function assignContractToEmployeeData(contractId: number, employeeI
     })
 
     return {
-        message: "Contract assigned successfully",
+        message: "Contrato asignado exitosamente",
         payload: result,
         hasError: false
     }

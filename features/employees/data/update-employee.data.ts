@@ -19,7 +19,7 @@ export async function updateEmployeeData(employeeId: number, data: EditEmployeeP
         }
     })
 
-    if (!employee) throw new Error("Employee not found")
+    if (!employee) throw new Error("Empleado no encontrado")
 
     const updatedEmployee = await prisma.employee.update({
         where: { id: employeeId },
@@ -53,7 +53,7 @@ export async function updateEmployeeData(employeeId: number, data: EditEmployeeP
     })
 
     return {
-        message: "Employee updated successfully",
+        message: "Empleado actualizado exitosamente",
         payload: updatedEmployee,
         hasError: false
     }

@@ -14,8 +14,8 @@ type InsertContractPayload = {
 }
 
 export async function insertContractData(
-    payload: InsertContractPayload, 
-    storeId: number, 
+    payload: InsertContractPayload,
+    storeId: number,
     userId: number
 ) {
     const supabase = createServerSideClient()
@@ -28,7 +28,7 @@ export async function insertContractData(
             }
         })
 
-        if (!store) throw new Error("Store not found")
+        if (!store) throw new Error("Tienda no encontrada")
 
         // Si hay archivo PDF, subirlo primero antes de crear el contrato
         let fileUrl: string | null = null
@@ -42,7 +42,7 @@ export async function insertContractData(
                 .from("contracts")
                 .upload(fileName, file)
 
-            if (error) throw new Error(`Error uploading file: ${error.message}`)
+            if (error) throw new Error(`Error al subir el archivo: ${error.message}`)
 
             const { data: { publicUrl } } = supabase.storage
                 .from("contracts")
@@ -51,7 +51,7 @@ export async function insertContractData(
             fileUrl = publicUrl
         }
 
-        if (!fileUrl) throw new Error("No file uploaded")
+        if (!fileUrl) throw new Error("No se subió ningún archivo para el contrato")
 
         const contract = await tx.contract.create({
             data: {
@@ -83,8 +83,8 @@ export async function insertContractData(
                 activity_type: "CONTRACT_ASSIGNED",
                 entity_type: "EMPLOYEE",
                 entity_id: contract.id,
-                title: `Contract ${contract.title} assigned`,
-                description: `Contract ${contract.title} assigned to @${contract.responses[0].employee.user.username}`,
+                title: `Contrato ${contract.title} asignado`,
+                description: `Contrato ${contract.title} asignado a @${contract.responses[0].employee.user.username} (${contract.responses[0].employee.user.first_name} ${contract.responses[0].employee.user.last_name})`,
                 store_id: store.id,
             }
         })
@@ -92,5 +92,5 @@ export async function insertContractData(
         return contract
     })
 
-    return formatSuccessResponse("Contract created successfully", contract)
+    return formatSuccessResponse("Contrato creado exitosamente", contract)
 }

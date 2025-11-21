@@ -11,7 +11,7 @@ export async function getEmployeesByFilterAction(filter: string, storeId: number
         if (usersError || !users) throw new Error(usersMessage)
 
         return {
-            message: "Users fetched successfully",
+            message: "Usuarios obtenidos con éxito",
             payload: users,
             hasError: false
         }

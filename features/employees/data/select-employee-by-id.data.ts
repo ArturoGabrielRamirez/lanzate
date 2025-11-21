@@ -28,11 +28,11 @@ export async function selectEmployeeByIdData(id: number) {
         }
     })
 
-    if (!employee) throw new Error("Employee not found")
+    if (!employee) throw new Error("Empleado no encontrado")
 
     return {
         payload: employee,
         hasError: false,
-        message: "Employee details fetched successfully"
+        message: "Detalles del empleado recuperados exitosamente"
     }
 }

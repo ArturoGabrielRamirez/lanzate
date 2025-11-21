@@ -17,7 +17,7 @@ export async function deleteEmployeeData(employeeId: number) {
         }
     })
 
-    if (!employee) throw new Error("Employee not found")
+    if (!employee) throw new Error("Empleado no encontrado")
 
     // Delete employee - related orders will automatically have their employee fields set to NULL
     await prisma.employee.delete({
@@ -27,7 +27,7 @@ export async function deleteEmployeeData(employeeId: number) {
     })
 
     return {
-        message: "Employee deleted successfully from db",
+        message: "Empleado eliminado exitosamente de la base de datos",
         payload: employee,
         hasError: false
     }

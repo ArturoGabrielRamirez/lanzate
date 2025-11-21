@@ -12,7 +12,7 @@ export async function getEmployeePermissionsAction(userId: number, slug: string)
 
         return {
             hasError: false,
-            message: "Employee permissions fetched successfully",
+            message: "Permisos obtenidos con éxito",
             payload: payload
         }
     })

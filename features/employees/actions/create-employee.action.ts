@@ -16,12 +16,12 @@ export async function createEmployeeAction(userId: number, storeId: number, role
             entity_type: "EMPLOYEE",
             entity_id: employee.id,
             user_id: userId,
-            action_initiator: "Employee creation",
-            details: `Employee created with role ${role}`
+            action_initiator: "Creación de empleado",
+            details: `Empleado creado con el rol de ${role}`
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear una entrada de registro para esto.")
 
-        return formatSuccessResponse("Employee created successfully", employee)
+        return formatSuccessResponse("Empleado creado correctamente", employee)
     })
 } 

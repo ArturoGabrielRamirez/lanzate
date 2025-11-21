@@ -13,7 +13,7 @@ export async function deleteEmployeeAction(employeeId: number, slug: string, use
         // Check user can delete employee (must be store owner)
         const canDelete = await canDeleteEmployee(employeeId, userId)
 
-        if (!canDelete) throw new Error("User does not have permission to delete this employee")
+        if (!canDelete) throw new Error("No tenés permisos para eliminar este empleado.")
 
         // Delete employee from database
         const { hasError, message, payload } = await deleteEmployeeFromDb(employeeId)
@@ -28,15 +28,14 @@ export async function deleteEmployeeAction(employeeId: number, slug: string, use
             entity_type: "EMPLOYEE",
             entity_id: employeeId,
             user_id: userId,
-            action_initiator: "Delete employee button",
-            details: "Employee deleted using delete employee button. Related orders maintain their data but employee references are set to NULL."
+            action_initiator: "Botón eliminar empleado presionado",
+            details: "Empleado eliminado usando el botón eliminar empleado. Las órdenes relacionadas mantienen sus datos pero las referencias al empleado se establecen en NULL."
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
-
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear una entrada de registro para esto.")
         return {
             hasError: false,
-            message: "Employee deleted successfully",
+            message: "Empleado eliminado correctamente",
             payload: payload
         }
     })

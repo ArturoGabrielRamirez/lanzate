@@ -62,7 +62,7 @@ export async function selectUsersByFilterData(filter: string, storeId: number, u
     }))
 
     return {
-        message: "Users fetched successfully",
+        message: "Usuarios recuperados exitosamente",
         payload: usersWithEmployeeStatus,
         hasError: false
     }
