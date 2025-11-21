@@ -76,7 +76,7 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
     const store = await prisma.store.create({
         data: {
             name: payload.basic_info.name,
-            slug: randomstring.generate(8),
+            slug: slug,
             subdomain: payload.basic_info.subdomain,
             description: payload.basic_info.description,
             user_id: userId,

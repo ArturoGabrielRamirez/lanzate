@@ -54,7 +54,7 @@ export function CreateStoreContent({ userId }: { userId: number }) {
         2: "Choose whether this is a physical store or an online store and add your address information.",
         3: "Add your contact information and social media links so customers can contact you.",
         4: "Choose attention dates and hours so customers know when you are open.",
-        5: "Choose your shipping methods and add your payment methods so customers can buy your products.",
+        5: "Choose shipping methods and add your payment methods so customers can buy your products.",
         6: "Creating your store…",
         7: "All set! Redirecting…",
     }
@@ -69,8 +69,8 @@ export function CreateStoreContent({ userId }: { userId: number }) {
     }
 
     return (
-        <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:!rounded-lg max-h-dvh !grid-rows-[auto_1fr]">
-            <div className="space-y-4">
+        <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:!rounded-lg max-h-dvh !grid-rows-[auto_1fr] gap-4">
+            <div className="flex flex-col gap-4">
                 <DialogHeader>
                     <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
                 </DialogHeader>

@@ -44,7 +44,6 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
     return (
         <Stepper
             initialStep={1}
-            className="p-0 outer-container flex flex-col gap-4 md:gap-8"
             contentClassName="!p-0"
             stepContainerClassName="!p-0"
             stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"

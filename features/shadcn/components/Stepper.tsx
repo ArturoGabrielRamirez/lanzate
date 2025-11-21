@@ -87,10 +87,7 @@ export default function Stepper({
   };
 
   return (
-    <div className="outer-container" {...rest}>
-
-
-
+    <div className="outer-container flex flex-col gap-4" {...rest}>
 
       <StepContentWrapper
         isCompleted={isCompleted}
@@ -98,7 +95,7 @@ export default function Stepper({
         direction={direction}
         className={`step-content-default w-full ${contentClassName}`}
       >
-        <ScrollArea className="h-[calc(100dvh_-_15rem)] md:max-h-96 !overflow-x-visible w-full">
+        <ScrollArea className="h-[calc(100vh_-_12rem)] md:max-h-96 !overflow-x-visible w-full">
           {stepsArray[currentStep - 1]}
         </ScrollArea>
       </StepContentWrapper>
