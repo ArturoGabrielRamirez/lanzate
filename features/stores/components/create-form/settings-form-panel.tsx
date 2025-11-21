@@ -1,89 +1,18 @@
-import { TimePicker } from "antd"
-import dayjs, { Dayjs } from "dayjs"
-import { Calendar, Check, Plus, Trash } from "lucide-react"
+import dayjs from "dayjs"
+import { Calendar, Plus, Trash } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { Button } from "@/features/shadcn/components/button"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { AttentionDateFormPanel } from "@/features/stores/components/create-form/attention-date-form-panel"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { AttentionDateFormPanelProps, AttentionDateType, CreateStoreFormValues } from "@/features/stores/types"
+import { AttentionDateType, CreateStoreFormValues } from "@/features/stores/types"
 
 import type { Selection } from "react-aria-components"
-
-function AttentionDateFormPanel({ date, onCancel, onSave, index }: AttentionDateFormPanelProps) {
-
-    const initialTags = [
-        "lunes",
-        "martes",
-        "miercoles",
-        "jueves",
-        "viernes",
-        "sabado",
-        "domingo",
-    ]
-
-    const [selected, setSelected] = useState<string[]>(date.days || [])
-    const [startTime, setStartTime] = useState<dayjs.Dayjs>(dayjs(date.startTime))
-    const [endTime, setEndTime] = useState<dayjs.Dayjs>(dayjs(date.endTime))
-    const format = 'HH:mm';
-
-    const handleTimeChange = (value: (Dayjs | null)[] | null) => {
-        if (!value || value.length !== 2) return
-        const [start, end] = value
-        setStartTime(dayjs(start))
-        setEndTime(dayjs(end))
-    }
-
-    const handleCancel = () => {
-        if (onCancel) onCancel(index)
-    }
-
-    const handleSave = () => {
-        if (onSave) onSave(index, startTime, endTime, selected)
-    }
-
-    return (
-        <>
-            <AnimatedTags
-                initialTags={initialTags}
-                selectedTags={selected}
-                onChange={setSelected}
-            />
-            <div className="space-y-2">
-                <p className="text-sm font-medium">Horarios de apertura</p>
-                <TimePicker.RangePicker
-                    defaultValue={[startTime, endTime]}
-                    format={format}
-                    popupClassName="!z-50"
-                    rootClassName="!z-50 w-full"
-                    changeOnScroll
-                    hourStep={1}
-                    minuteStep={5}
-                    showNow
-                    variant="outlined"
-                    size="large"
-                    className="!bg-transparent !text-primary-foreground !border-muted-foreground/50"
-                    onChange={handleTimeChange}
-                />
-            </div>
-            <div className="flex gap-2">
-                <Button className="grow" type="button" onClick={handleCancel}>
-                    <Trash />
-                    Cancel
-                </Button>
-                <Button className="grow" type="button" onClick={handleSave}>
-                    <Check />
-                    Save
-                </Button>
-            </div>
-        </>
-    )
-}
 
 export function SettingsFormPanel() {
 
