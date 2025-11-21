@@ -15,7 +15,7 @@ export async function updateCategory({ storeId, categoryId, payload }: UpdateCat
         })
 
         if (!existingCategory) {
-            throw new Error("Category not found or does not belong to this store")
+            throw new Error("La categoría no existe o no pertenece a la tienda")
         }
 
         // Si se está cambiando el nombre, generar nuevo slug
