@@ -440,6 +440,9 @@ export type CreateStoreContextType = {
     setStepValid: (step: number, valid: boolean) => void
     step: number
     setStep: (step: number) => void
+    isOpen: boolean
+    openDialog: () => void
+    closeDialog: () => void
 }
 
 export type DeliverySwitchProps = {

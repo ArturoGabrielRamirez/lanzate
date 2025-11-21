@@ -17,6 +17,7 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
     const [values, setValuesState] = useState<Partial<CreateStoreFormValues>>({})
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
     const [step, { setStep }] = useStep(7)
+    const [isOpen, setIsOpen] = useState(false)
 
     const setValues = useCallback((partial: Partial<CreateStoreFormValues>) => {
         setValuesState(prev => ({ ...prev, ...partial }))
@@ -26,8 +27,21 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
         setIsStepValid(prev => ({ ...prev, [step]: valid }))
     }, [])
 
+    const openDialog = useCallback(() => {
+        setIsOpen(true)
+    }, [])
+
+    const closeDialog = useCallback(() => {
+        setIsOpen(false)
+        // Reset to step 1 when closing
+        setStep(1)
+        // Reset form values
+        setValuesState({})
+        setIsStepValid({})
+    }, [setStep])
+
     return (
-        <CreateStoreContext.Provider value={{ values, setValues, isStepValid, setStepValid, step, setStep }}>
+        <CreateStoreContext.Provider value={{ values, setValues, isStepValid, setStepValid, step, setStep, isOpen, openDialog, closeDialog }}>
             {children}
         </CreateStoreContext.Provider>
     )
