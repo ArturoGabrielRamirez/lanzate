@@ -70,7 +70,7 @@ export function BasicInfoFormPanel() {
                         </EmptyMedia>
                     </Empty>
                 </div>
-                <div className="space-y-4">
+                <div className="flex flex-col gap-4">
                     <InputField
                         name="basic_info.name"
                         label="Name"

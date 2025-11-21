@@ -45,9 +45,10 @@ export function AttentionDateFormPanel({ date, onCancel, onSave, index }: Attent
                 initialTags={initialTags}
                 selectedTags={selected}
                 onChange={setSelected}
+                isRequired
             />
             <div className="flex flex-col gap-4 justify-between">
-                <div className="space-y-1">
+                <div className="flex flex-col gap-1">
                     <p className="text-sm font-medium">Horarios de apertura</p>
                     <TimePicker.RangePicker
                         defaultValue={[startTime, endTime]}

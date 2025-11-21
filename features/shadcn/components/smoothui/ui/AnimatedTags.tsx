@@ -11,6 +11,7 @@ export interface AnimatedTagsProps {
   className?: string
   title?: string
   emptyMessage?: string
+  isRequired?: boolean
 }
 
 export default function AnimatedTags({
@@ -19,6 +20,7 @@ export default function AnimatedTags({
   onChange,
   className = "",
   title = "Dias de atencion",
+  isRequired = false,
 }: AnimatedTagsProps) {
   const [internalSelected, setInternalSelected] = useState<string[]>([])
   /* const [internalTags, setInternalTags] = useState<string[]>(initialTags) */
@@ -45,7 +47,10 @@ export default function AnimatedTags({
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
       <div className="flex flex-col items-start justify-center gap-1">
-        <p className="text-sm font-medium">{title}</p>
+        <p className="text-sm font-medium flex items-center gap-1">
+          {title}
+          {isRequired && <span className="text-red-500">*</span>}
+        </p>
         <AnimatePresence>
           {selectedTag.length > 0 && (
             <div className="bg-background flex min-h-10 w-full flex-wrap items-center gap-1 rounded-md border p-2">

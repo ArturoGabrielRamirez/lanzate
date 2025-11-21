@@ -178,13 +178,13 @@ export function SettingsFormPanel() {
             <AnimatePresence>
                 {!isOpen24Hours && (
                     <motion.div
-                        className="space-y-4"
+                        className="flex flex-col gap-4"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.2 }}
                     >
-                        {(errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>) || (attentionDates.length === 0 && !isAddingDate)) && (
+                        {!isAddingDate && (errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>) || (attentionDates.length === 0 && !isAddingDate)) && (
                             <div className={cn(
                                 "text-sm border p-6 rounded-md text-center border-dashed",
                                 errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)

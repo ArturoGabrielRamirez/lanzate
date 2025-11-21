@@ -33,58 +33,53 @@ export function ContactFormPanel() {
 
     return (
         <>
-            <div className="space-y-8">
-                <div className="space-y-4">
-                    <h3 className="text-muted-foreground text-base font-medium">Contact Information</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <InputField
-                            name="contact_info.contact_phone"
-                            label="Phone"
-                            placeholder="Ej: 1234567890"
-                            startIcon={<Phone />}
-                            isRequired
-                            tooltip="This is the phone number of your store. It will be used to contact your store."
-                        />
-                        <InputField
-                            name="contact_info.contact_email"
-                            label="Email"
-                            placeholder="Ej: test@example.com"
-                            startIcon={<Mail />}
-                            type="email"
-                            isRequired
-                            tooltip="This is the email of your store. It will be used to contact your store."
-                        />
-                    </div>
+            <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InputField
+                        name="contact_info.contact_phone"
+                        label="Phone"
+                        placeholder="Ej: 1234567890"
+                        startIcon={<Phone />}
+                        isRequired
+                        tooltip="This is the phone number of your store. It will be used to contact your store."
+                    />
+                    <InputField
+                        name="contact_info.contact_email"
+                        label="Email"
+                        placeholder="Ej: test@example.com"
+                        startIcon={<Mail />}
+                        type="email"
+                        isRequired
+                        tooltip="This is the email of your store. It will be used to contact your store."
+                    />
                 </div>
                 <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="social-media" className="border-none">
-                        <AccordionTrigger className="text-muted-foreground text-base font-medium hover:no-underline">Social Media</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="grid grid-cols-1 gap-4 pt-2">
-                                <InputField
-                                    name="contact_info.facebook_url"
-                                    label="Facebook"
-                                    placeholder="Ej: https://www.facebook.com/your-page"
-                                    startIcon={<Facebook />}
-                                    tooltip="This is the Facebook URL of your store. It will be used to display your store on Facebook."
-                                />
-                                <InputField
-                                    name="contact_info.instagram_url"
-                                    label="Instagram"
-                                    placeholder="Ej: https://www.instagram.com/your-page"
-                                    startIcon={<Instagram />}
-                                    type="email"
-                                    tooltip="This is the Instagram URL of your store. It will be used to display your store on Instagram."
-                                />
-                                <InputField
-                                    name="contact_info.x_url"
-                                    label="X (Twitter)"
-                                    placeholder="Ej: https://x.com/your-page"
-                                    startIcon={<Twitter />}
-                                    type="url"
-                                    tooltip="This is the X (Twitter) URL of your store. It will be used to display your store on X (Twitter)."
-                                />
-                            </div>
+                        <AccordionTrigger className="text-muted-foreground text-base font-medium hover:no-underline py-2">Social Media</AccordionTrigger>
+                        <AccordionContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <InputField
+                                name="contact_info.facebook_url"
+                                label="Facebook"
+                                placeholder="Ej: https://www.facebook.com/your-page"
+                                startIcon={<Facebook />}
+                                tooltip="This is the Facebook URL of your store. It will be used to display your store on Facebook."
+                            />
+                            <InputField
+                                name="contact_info.instagram_url"
+                                label="Instagram"
+                                placeholder="Ej: https://www.instagram.com/your-page"
+                                startIcon={<Instagram />}
+                                type="email"
+                                tooltip="This is the Instagram URL of your store. It will be used to display your store on Instagram."
+                            />
+                            <InputField
+                                name="contact_info.x_url"
+                                label="X (Twitter)"
+                                placeholder="Ej: https://x.com/your-page"
+                                startIcon={<Twitter />}
+                                type="url"
+                                tooltip="This is the X (Twitter) URL of your store. It will be used to display your store on X (Twitter)."
+                            />
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
