@@ -34,11 +34,15 @@ export function ShippingFormPanel() {
         if (values.payment_info) {
             const p = values.payment_info
             const safe = {
-                payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : []
+                payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : ["Efectivo"]
             }
             setValue("payment_info", safe, { shouldValidate: true })
             setPaymentMethods(safe.payment_methods)
             setCtxValues({ payment_info: safe })
+        } else {
+            setValue("payment_info", { payment_methods: ["Efectivo"] }, { shouldValidate: true })
+            setPaymentMethods(["Efectivo"])
+            setCtxValues({ payment_info: { payment_methods: ["Efectivo"] } })
         }
 
         if (values.shipping_info) {
