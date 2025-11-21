@@ -14,7 +14,7 @@ export async function cancelUserAccountData(suscriptionId: string) {
     })
 
     if (!account) {
-        throw new Error("Account not found")
+        throw new Error("Cuenta no encontrada")
     }
 
     await prisma.account.update({
@@ -30,6 +30,6 @@ export async function cancelUserAccountData(suscriptionId: string) {
     return {
         payload: account,
         hasError: false,
-        message: "Account cancelled successfully"
+        message: "Cuenta cancelada exitosamente"
     }
 }

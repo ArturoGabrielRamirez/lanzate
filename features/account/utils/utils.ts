@@ -177,7 +177,7 @@ export const initialDeletionStatus: UserDeletionStatus = {
 export const validators = {
   deletionReason: (reason: string): { isValid: boolean; error?: string } => {
     if (!reason.trim()) {
-      return { isValid: false, error: 'El motivo es requerido' };
+      return { isValid: false, error: 'El motivo es obligatorio' };
     }
     if (reason.length < DELETION_CONSTANTS.MIN_REASON_LENGTH) {
       return { isValid: false, error: `El motivo debe tener al menos ${DELETION_CONSTANTS.MIN_REASON_LENGTH} caracteres` };
@@ -187,7 +187,7 @@ export const validators = {
 
   password: (password: string): { isValid: boolean; error?: string } => {
     if (!password.trim()) {
-      return { isValid: false, error: 'La contraseña es requerida' };
+      return { isValid: false, error: 'La contraseña es obligatoria' };
     }
     return { isValid: true };
   }
@@ -200,13 +200,13 @@ export const DELETION_CONSTANTS = {
   MESSAGES: {
     DELETION_REQUESTED: 'Solicitud de eliminación enviada correctamente.',
     DELETION_CANCELLED: 'Eliminación cancelada correctamente',
-    PASSWORD_REQUIRED: 'La contraseña es requerida',
+    PASSWORD_REQUIRED: 'La contraseña es obligatoria',
     REASON_TOO_SHORT: 'El motivo debe tener al menos 10 caracteres',
     CONNECTION_ERROR: 'Error de conexión',
     ACCOUNT_DELETED: 'Cuenta eliminada - limpiando estado y redirigiendo...',
     ACTION_WINDOW_EXPIRED: 'El período para realizar esta acción ha expirado',
     ACTION_WINDOW_CLOSING: 'Últimos minutos para realizar esta acción',
-    PENDING_REQUEST_EXISTS: 'Ya tienes una solicitud de eliminación pendiente',
+    PENDING_REQUEST_EXISTS: 'Ya tenés una solicitud de eliminación pendiente',
   }
 } as const;
 

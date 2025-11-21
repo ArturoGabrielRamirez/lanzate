@@ -1,7 +1,7 @@
-import { Clock } from "lucide-react";
+import { Clock } from "lucide-react"
 
-import { TimeBlock } from "@/features/account/components/delete-user/index";
-import { CountdownDisplayProps, } from "@/features/account/types/index";
+import { TimeBlock } from "@/features/account/components/delete-user/index"
+import { CountdownDisplayProps, } from "@/features/account/types/index"
 
 export function MainCountdownDisplay({
     timeLeft,
@@ -14,7 +14,7 @@ export function MainCountdownDisplay({
             <div className="flex items-center gap-2 mb-4">
                 <Clock className={`h-4 w-4 ${urgencyTextColor}`} />
                 <h3 className={`font-medium ${urgencyTextColor}`}>
-                    Tiempo hasta Eliminación Final
+                    Tiempo hasta la Eliminación Final
                 </h3>
             </div>
 

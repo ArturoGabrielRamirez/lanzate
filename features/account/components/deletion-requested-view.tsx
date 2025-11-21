@@ -36,8 +36,8 @@ export function DeletionRequestedView({
                                 Tu cuenta está programada para ser eliminada
                             </h3>
                             <p className="text-red-700 mt-1 text-sm">
-                                Solo tienes acceso a la zona de peligro para gestionar la eliminación de tu cuenta.
-                                {deletionStatus.canCancel && " Aún puedes cancelar la eliminación."}
+                                Solo tenés acceso a la zona de peligro para gestionar la eliminación de tu cuenta.
+                                {deletionStatus.canCancel && "Todavía podés cancelar la eliminación."}
                             </p>
                         </div>
                     </div>

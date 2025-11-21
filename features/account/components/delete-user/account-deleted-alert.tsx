@@ -9,7 +9,7 @@ export function AccountDeletedAlert() {
             <Alert className="bg-red-500/10 border-red-500/30">
                 <AlertCircle className="h-5 w-5 text-red-400" />
                 <AlertDescription className="text-red-400 font-medium">
-                    Tu cuenta ha sido eliminada permanentemente.
+                    Tu cuenta fue eliminada permanentemente.
                     Serás redirigido automáticamente en unos momentos...
                 </AlertDescription>
             </Alert>

@@ -14,7 +14,7 @@ export async function updateUserAccountData({ suscriptionId, email }: { suscript
     })
 
     if (!user) {
-        throw new Error("User not found")
+        throw new Error("Usuario no encontrado")
     }
 
     await prisma.account.update({
@@ -30,6 +30,6 @@ export async function updateUserAccountData({ suscriptionId, email }: { suscript
     return {
         payload: user,
         hasError: false,
-        message: "User account updated successfully"
+        message: "Cuenta de usuario actualizada exitosamente"
     }
 }

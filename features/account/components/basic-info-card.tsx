@@ -25,7 +25,7 @@ export function BasicInfoCard({ user, immediateData }: { user: UserType; immedia
                     <div className="space-y-1">
                         <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                             <User className="h-3 w-3" />
-                            Username
+                            Nombre de usuario
                         </div>
                         <div className="p-2 bg-muted/50 border rounded text-sm min-h-[36px] flex items-center">
                             {(immediateData?.username || user.username) ||
