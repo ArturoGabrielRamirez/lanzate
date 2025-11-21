@@ -86,7 +86,7 @@ export function DeliveryConfigPanel({
                             </div>
                         )}
                         <AnimatePresence key={"inset"}>
-                            {isAddingMethod && editingIndex !== null && shippingMethods[editingIndex!] && (
+                            {isAddingMethod && editingIndex !== null && shippingMethods[editingIndex!] && onCancelMethod && onSaveMethod && (
                                 <ShippingMethodFormPanel
                                     method={shippingMethods[editingIndex!]}
                                     index={editingIndex!}
