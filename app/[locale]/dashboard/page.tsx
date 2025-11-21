@@ -59,7 +59,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                         <StoreListContainer />
                     </Suspense>
                     <HelpCard />
-                <WelcomeTutorial />
+                    <WelcomeTutorial />
                 </div>
                 <div className="flex flex-col gap-4">
                     <Suspense fallback={<ActivityFeedSkeleton />} key={type}>

@@ -664,6 +664,47 @@
                     "loading": "Sending message..."
                 }
             }
+        },
+        "welcome-tutorial": {
+            "section-title": "Feeling lost?",
+            "dialog-title": "Welcome to Lanzate!",
+            "steps": {
+                "1": {
+                    "title": "Welcome!",
+                    "descriptions": {
+                        "0": "This is a brief tutorial to help you get started with your business.",
+                        "1": "Once you have completed the tutorial, you will be able to start using Lanzate."
+                    }
+                },
+                "2": {
+                    "title": "Create a store",
+                    "descriptions": {
+                        "0": "Create a store to start selling your products.",
+                        "1": "Choose a name, logo and shipping methods to get started; you can edit your store details later."
+                    }
+                },
+                "3": {
+                    "title": "Create a product",
+                    "descriptions": {
+                        "0": "Add products to your store to start selling.",
+                        "1": "Add as many details as you want such as images, descriptions, prices, and more."
+                    }
+                },
+                "4": {
+                    "title": "Share your store",
+                    "descriptions": {
+                        "0": "Share your store's custom link with your customers!",
+                        "1": "They'll be able to see your products, add them to their cart, and checkout with ease.",
+                        "2": "You can also share your store on social media, send it to customers, or add it to your business cards."
+                    }
+                }
+            },
+            "buttons": {
+                "previous": "Previous",
+                "next": "Next",
+                "finish": "Finish Tutorial"
+            },
+            "alt-image": "Welcome Image"
         }
     },
     "error": {

@@ -661,6 +661,47 @@
                     "loading": "Enviando mensaje..."
                 }
             }
+        },
+        "welcome-tutorial": {
+            "section-title": "¿Te sentís perdido?",
+            "dialog-title": "¡Bienvenido a Lanzate!",
+            "steps": {
+                "1": {
+                    "title": "¡Bienvenido!",
+                    "descriptions": {
+                        "0": "Este es un breve tutorial para ayudarte a comenzar con tu negocio.",
+                        "1": "Una vez que hayas completado el tutorial, podrás comenzar a usar Lanzate."
+                    }
+                },
+                "2": {
+                    "title": "Crear una tienda",
+                    "descriptions": {
+                        "0": "Creá una tienda para comenzar a vender tus productos.",
+                        "1": "Elegí un nombre, logo y métodos de envío para comenzar; podés editar los detalles de tu tienda más tarde."
+                    }
+                },
+                "3": {
+                    "title": "Crear un producto",
+                    "descriptions": {
+                        "0": "Agregá productos a tu tienda para comenzar a vender.",
+                        "1": "Agregá tantos detalles como quieras, como imágenes, descripciones, precios y más."
+                    }
+                },
+                "4": {
+                    "title": "Compartir tu tienda",
+                    "descriptions": {
+                        "0": "¡Compartí el enlace personalizado de tu tienda con tus clientes!",
+                        "1": "Podrán ver tus productos, agregarlos a su carrito y realizar el checkout con facilidad.",
+                        "2": "También podés compartir tu tienda en redes sociales, enviarla a clientes o agregarla a tus tarjetas de presentación."
+                    }
+                }
+            },
+            "buttons": {
+                "previous": "Anterior",
+                "next": "Siguiente",
+                "finish": "Finalizar Tutorial"
+            },
+            "alt-image": "Imagen de bienvenida"
         }
     },
     "error": {
