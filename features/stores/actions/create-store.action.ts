@@ -38,7 +38,7 @@ export async function createStoreAction(payload: ProcessedCreateStoreData, userI
             entity_id: newStore.id,
             user_id: userId,
             action_initiator: "Se creó una nueva tienda",
-            details: "El usuario creó una nueva tienda"
+            details: "El usuario creó una nueva tienda usando el botón de creación de tienda."
         })
 
         if (logError) throw new Error("La acción se realizó pero hubo un error al crear un registro de esta.")

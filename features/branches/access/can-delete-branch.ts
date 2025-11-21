@@ -15,7 +15,7 @@ export async function canDeleteBranch(branchId: number, userId: number) {
             }
         })
 
-        if (!branch) throw new Error("Branch not found")
+        if (!branch) throw new Error("Sucursal no encontrada")
 
         const isOwner = branch.store.user_id === userId
         const isMainBranch = branch.is_main
@@ -23,7 +23,7 @@ export async function canDeleteBranch(branchId: number, userId: number) {
 
         return {
             hasError: false,
-            message: canDelete ? "User can delete branch" : "User cannot delete branch",
+            message: canDelete ? "El usuario puede eliminar la sucursal" : "El usuario no puede eliminar la sucursal",
             payload: canDelete
         }
     })

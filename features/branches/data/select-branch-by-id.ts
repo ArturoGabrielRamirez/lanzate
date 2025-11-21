@@ -44,11 +44,11 @@ export async function selectBranchByIdData({ id }: SelectBranchByIdProps) {
         }
     })
 
-    if (!branch) throw new Error("Branch not found")
+    if (!branch) throw new Error("Sucursal no encontrada")
 
     return {
         payload: branch,
         hasError: false,
-        message: "Branch details fetched successfully"
+        message: "Detalles de la sucursal obtenidos con éxito"
     }
 } 

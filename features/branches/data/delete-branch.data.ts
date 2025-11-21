@@ -11,10 +11,10 @@ export async function deleteBranchData({ branchId }: DeleteBranchDataProps) {
         }
     })
 
-    if (!branch) throw new Error("Branch not found")
+    if (!branch) throw new Error("Sucursal no encontrada")
 
     if (branch.is_main) {
-        throw new Error("Cannot delete the main branch. You must designate another branch as main before deleting this one.")
+        throw new Error("No se puede eliminar la sucursal principal. Debe designar otra sucursal como principal antes de eliminar esta.")
     }
 
     const deletedBranch = await prisma.branch.delete({
@@ -25,7 +25,7 @@ export async function deleteBranchData({ branchId }: DeleteBranchDataProps) {
 
     return {
         hasError: false,
-        message: "Branch deleted successfully",
+        message: "Sucursal eliminada con éxito",
         payload: deletedBranch
     }
 } 

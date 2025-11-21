@@ -16,8 +16,8 @@ export async function editBranchAction({ branchId, data, slug, userId }: EditBra
             include: { store: true }
         })
 
-        if (!branch) throw new Error("Branch not found")
-        if (branch.store.user_id !== userId) throw new Error("User does not have permission to edit this branch")
+        if (!branch) throw new Error("Sucursal no encontrada")
+        if (branch.store.user_id !== userId) throw new Error("No tenés permiso para editar esta sucursal")
 
         const { error, payload, message } = await updateBranchData({ branchId, data })
 
@@ -30,14 +30,13 @@ export async function editBranchAction({ branchId, data, slug, userId }: EditBra
             entity_type: "BRANCH",
             entity_id: branchId,
             user_id: userId,
-            action_initiator: "Edit branch form",
-            details: "Branch updated using edit branch form"
+            action_initiator: "Formulario de edición de sucursal",
+            details: "Sucursal actualizada usando el formulario de edición de sucursal"
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
-
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear una entrada de registro para esto.")
         return {
-            message: "Branch updated successfully",
+            message: "Sucursal actualizada con éxito",
             payload: payload,
             hasError: false
         }

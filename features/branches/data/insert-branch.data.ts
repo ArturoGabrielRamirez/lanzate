@@ -27,7 +27,7 @@ export async function insertBranchData({ name, address, email, phone, storeId }:
 
     return {
         hasError: false,
-        message: "Branch created successfully",
+        message: "Sucursal creada con éxito",
         payload: branch
     }
 }
