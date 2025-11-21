@@ -47,7 +47,6 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                     <ActivityFeed userId={user.id} type={type} page={page || 1} />
                 </Suspense>
                 <HelpCard />
-                <WelcomeTutorial />
             </div>
             <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
                 <div className="flex flex-col gap-8">
@@ -60,7 +59,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                         <StoreListContainer />
                     </Suspense>
                     <HelpCard />
-                    <WelcomeTutorial />
+                <WelcomeTutorial />
                 </div>
                 <div className="flex flex-col gap-4">
                     <Suspense fallback={<ActivityFeedSkeleton />} key={type}>

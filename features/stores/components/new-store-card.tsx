@@ -21,7 +21,7 @@ function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
                         <EmptyMedia variant="icon">
                             <Plus className="size-4 md:size-5 lg:size-6" />
                         </EmptyMedia>
-                        <EmptyTitle className="leading-5">
+                        <EmptyTitle className="leading-5 hidden md:block">
                             {title}
                         </EmptyTitle>
                         <EmptyDescription className="leading-4">

@@ -59,6 +59,7 @@ function WelcomeTutorial() {
         } else {
             setOpen(true)
         }
+        
     }, [])
 
     const handleFinishTutorial = () => {
