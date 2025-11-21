@@ -95,22 +95,63 @@ export default function Stepper({
         direction={direction}
         className={`step-content-default w-full ${contentClassName}`}
       >
-        <ScrollArea className="h-[calc(100vh_-_12rem)] md:max-h-96 !overflow-x-visible w-full">
+        <ScrollArea className="h-[calc(100vh_-_15rem)] md:h-[calc(100vh_-_12rem)] md:max-h-96 !overflow-x-visible w-full">
           {stepsArray[currentStep - 1]}
         </ScrollArea>
       </StepContentWrapper>
 
+      <div className={`step-circle-container md:hidden ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
+
+        <div className={`step-indicator-row ${stepContainerClassName}`}>
+          {stepsArray.map((_, index) => {
+            const stepNumber = index + 1;
+            const isNotLastStep = index < totalSteps - 1;
+            return (
+              <React.Fragment key={stepNumber}>
+                {renderStepIndicator ? (
+                  renderStepIndicator({
+                    step: stepNumber,
+                    currentStep,
+                    onStepClick: clicked => {
+                      setDirection(clicked > currentStep ? 1 : -1);
+                      updateStep(clicked);
+                    }
+                  })
+                ) : (
+                  <StepIndicator
+                    step={stepNumber}
+                    disableStepIndicators={disableStepIndicators}
+                    currentStep={currentStep}
+                    onClickStep={clicked => {
+                      setDirection(clicked > currentStep ? 1 : -1);
+                      updateStep(clicked);
+                    }}
+                  />
+                )}
+                {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </div>
 
       {!isCompleted && (
         <div className={`footer-container ${footerClassName}`}>
-          <div className={`footer-nav justify-between gap-8`}>
+          <div className={`footer-nav justify-between gap-4 md:gap-8`}>
 
-            <Button disabled={currentStep === 1} variant="outline" onClick={handleBack} {...backButtonProps}>
-              <ArrowLeft />
-              {backButtonText}
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button disabled={currentStep === 1} variant="outline" onClick={handleBack} {...backButtonProps}>
+                  <ArrowLeft />
+                  {backButtonText}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                Go back to the previous step
+              </TooltipContent>
+            </Tooltip>
 
-            <div className={`step-circle-container !hidden md:!block ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
+            <div className={`step-circle-container hidden md:block ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
 
               <div className={`step-indicator-row ${stepContainerClassName}`}>
                 {stepsArray.map((_, index) => {
@@ -153,9 +194,10 @@ export default function Stepper({
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : nextButtonText}
+                {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : "Continue to the next step"}
               </TooltipContent>
             </Tooltip>
+
           </div>
         </div>
       )}
@@ -308,7 +350,7 @@ function StepConnector({ isComplete }: StepConnectorProps) {
   };
 
   return (
-    <div className="step-connector">
+    <div className="step-connector ">
       <motion.div
         className="step-connector-inner"
         variants={lineVariants}

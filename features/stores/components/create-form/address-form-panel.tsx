@@ -68,24 +68,27 @@ export function AddressFormPanel() {
 
     return (
         <>
-            <ChoiceBox
-                columns={2}
-                gap={4}
-                selectionMode="single"
-                selectedKeys={[isPhysicalStore ? "physical" : "online"]}
-                onSelectionChange={handleSelectionChange}
-            >
-                <ChoiceBoxItem id="online" textValue="Online Store">
-                    <Globe />
-                    <ChoiceBoxLabel>Online Store</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>This is an online store.</ChoiceBoxDescription>
-                </ChoiceBoxItem>
-                <ChoiceBoxItem id="physical" textValue="Physical Store">
-                    <Store />
-                    <ChoiceBoxLabel>Physical Store</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>This is a physical store.</ChoiceBoxDescription>
-                </ChoiceBoxItem>
-            </ChoiceBox>
+            <div className="flex flex-col gap-1">
+                <p className="text-sm font-medium">Tipo de tienda</p>
+                <ChoiceBox
+                    columns={2}
+                    gap={4}
+                    selectionMode="single"
+                    selectedKeys={[isPhysicalStore ? "physical" : "online"]}
+                    onSelectionChange={handleSelectionChange}
+                >
+                    <ChoiceBoxItem id="online" textValue="Online Store">
+                        <Globe />
+                        <ChoiceBoxLabel>Online Store</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>This is an online store.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                    <ChoiceBoxItem id="physical" textValue="Physical Store">
+                        <Store />
+                        <ChoiceBoxLabel>Physical Store</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>This is a physical store.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                </ChoiceBox>
+            </div>
             <AnimatePresence>
                 {isPhysicalStore && (
                     <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4"

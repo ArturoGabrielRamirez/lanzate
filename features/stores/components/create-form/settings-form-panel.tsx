@@ -155,26 +155,29 @@ export function SettingsFormPanel() {
 
     return (
         <>
-            <ChoiceBox
-                columns={2}
-                gap={4}
-                selectionMode="single"
-                selectedKeys={[isOpen24Hours ? "24hours" : "schedule"]}
-                onSelectionChange={handleSelectionChange}
-            >
-                <ChoiceBoxItem id="24hours" textValue="24 Hours">
-                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" className="size-9">
-                        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12a9 9 0 0 0 5.998 8.485M21 12a9 9 0 1 0-18 0m9-5v5m0 3h2a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h2m3-6v2a1 1 0 0 0 1 1h1m1-3v6"></path>
-                    </svg>
-                    <ChoiceBoxLabel>24 Hours</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>This store is open 24 hours.</ChoiceBoxDescription>
-                </ChoiceBoxItem>
-                <ChoiceBoxItem id="schedule" textValue="Schedule">
-                    <Calendar className="size-9" />
-                    <ChoiceBoxLabel>Schedule</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>This store works on schedule.</ChoiceBoxDescription>
-                </ChoiceBoxItem>
-            </ChoiceBox>
+            <div className="flex flex-col gap-1">
+                <p className="text-sm font-medium">Tipo de atención</p>
+                <ChoiceBox
+                    columns={2}
+                    gap={4}
+                    selectionMode="single"
+                    selectedKeys={[isOpen24Hours ? "24hours" : "schedule"]}
+                    onSelectionChange={handleSelectionChange}
+                >
+                    <ChoiceBoxItem id="24hours" textValue="24 Hours">
+                        <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" className="size-9">
+                            <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12a9 9 0 0 0 5.998 8.485M21 12a9 9 0 1 0-18 0m9-5v5m0 3h2a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h2m3-6v2a1 1 0 0 0 1 1h1m1-3v6"></path>
+                        </svg>
+                        <ChoiceBoxLabel>24 Hours</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>This store is open 24 hours.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                    <ChoiceBoxItem id="schedule" textValue="Schedule">
+                        <Calendar className="size-9" />
+                        <ChoiceBoxLabel>Schedule</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>This store works on schedule.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                </ChoiceBox>
+            </div>
             <AnimatePresence>
                 {!isOpen24Hours && (
                     <motion.div
