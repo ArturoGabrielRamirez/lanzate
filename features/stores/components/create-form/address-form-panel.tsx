@@ -8,7 +8,7 @@ import { useFormContext } from "react-hook-form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { CreateStoreFormValues } from "@/features/stores/types"
+import { AddressFormValues, CreateStoreFormValues } from "@/features/stores/types"
 
 import type { Selection } from "react-aria-components"
 
@@ -19,16 +19,19 @@ export function AddressFormPanel() {
     const [isPhysicalStore, setIsPhysicalStore] = useState(getValues("address_info.is_physical_store") || false)
 
     const isPhysicalStoreValue = watch("address_info.is_physical_store") as boolean | undefined
+
     useEffect(() => {
         setIsPhysicalStore(!!isPhysicalStoreValue)
     }, [isPhysicalStoreValue])
 
     const seededRefAddress = useRef(false)
+
     useEffect(() => {
         if (seededRefAddress.current) return
         seededRefAddress.current = true
+        setCtxValues({ address_info: values.address_info || { is_physical_store: false } as AddressFormValues })
         if (values.address_info) setValue("address_info", values.address_info, { shouldValidate: true })
-    }, [values.address_info, setValue])
+    }, [values.address_info, setValue, setCtxValues])
 
     useEffect(() => {
         const sub = watch((v) => setCtxValues({ address_info: (v as CreateStoreFormValues).address_info }))

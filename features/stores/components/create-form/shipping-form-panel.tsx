@@ -19,8 +19,6 @@ export function ShippingFormPanel() {
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
     const [paymentMethods, setPaymentMethods] = useState<string[]>(() => (getValues("payment_info.payment_methods") as string[] | undefined) || [])
 
-    console.log("🚀 ~ ShippingFormPanel ~ paymentMethods:", paymentMethods)
-    console.log("🚀 ~ ShippingFormPanel ~ values:", values)
 
     // Sync payment methods state with form value when it changes
     /* const paymentMethodsValue = watch("payment_info.payment_methods") as string[] | undefined */
@@ -54,17 +52,21 @@ export function ShippingFormPanel() {
         }
 
         if (values.shipping_info) {
+            /* console.log("🚀 ~ ShippingFormPanel ~ values.shipping_info:", values.shipping_info) */
 
             const s = values.shipping_info
 
             const safe = {
-                offers_delivery: s.offers_delivery || false
+                offers_delivery: s.offers_delivery || false,
+                methods: Array.isArray(s.methods) ? (s.methods.filter(Boolean) as ShippingMethod[]) : []
             }
+            console.log("🚀 ~ ShippingFormPanel ~ safe:", safe)
 
             setValue("shipping_info", safe, { shouldValidate: true })
             setOffersDelivery(safe.offers_delivery)
-            setCtxValues({ shipping_info: safe })
-
+            setCtxValues({ shipping_info: { offers_delivery: safe.offers_delivery, methods: safe.methods } })
+            setShippingMethods(safe.methods)
+            setOffersDelivery(safe.offers_delivery)
         }
         /* if (values.shipping_info) {
             const s = values.shipping_info
@@ -161,6 +163,12 @@ export function ShippingFormPanel() {
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
         setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
+        setCtxValues({
+            shipping_info: {
+                offers_delivery: offersDelivery,
+                methods: next
+            }
+        })
         setEditingIndex(null)
     }
 
@@ -168,6 +176,12 @@ export function ShippingFormPanel() {
         const next = shippingMethods.map((m, i) => i === index ? method : m)
         setShippingMethods(next)
         setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
+        setCtxValues({
+            shipping_info: {
+                offers_delivery: offersDelivery,
+                methods: next
+            }
+        })
         setIsAddingMethod(false)
         setEditingIndex(null)
     }
@@ -176,6 +190,12 @@ export function ShippingFormPanel() {
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
         setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
+        setCtxValues({
+            shipping_info: {
+                offers_delivery: offersDelivery,
+                methods: next
+            }
+        })
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
     }
 

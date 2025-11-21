@@ -15,6 +15,11 @@ import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
 
+interface SettingsFormValues {
+    is_open_24_hours: boolean
+    attention_dates: { days: string[], startTime: string, endTime: string }[]
+}
+
 export function SettingsFormPanel() {
 
     const { setValue, getValues, formState: { isValid, errors }, watch, trigger } = useFormContext()
@@ -57,7 +62,8 @@ export function SettingsFormPanel() {
         if (seededRefSettings.current) return
         seededRefSettings.current = true
         if (values.settings) setValue("settings", values.settings, { shouldValidate: true })
-    }, [values.settings, setValue])
+        setCtxValues({ settings: values.settings || { is_open_24_hours: true, attention_dates: [] } as SettingsFormValues })
+    }, [values.settings, setValue, setCtxValues])
 
     useEffect(() => {
         const sub = watch((v) => setCtxValues({ settings: (v as CreateStoreFormValues).settings }))
