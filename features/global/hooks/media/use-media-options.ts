@@ -43,7 +43,7 @@ export function useMediaOptions({ type, loadApiAvatars }: UseMediaOptionsProps) 
             setBannerLoadError(
                 error instanceof Error
                     ? error.message
-                    : 'Error desconocido cargando banners'
+                    : 'Error desconocido al intentar cargar los banners'
             )
             toast.error('Error cargando opciones de banner')
         } finally {

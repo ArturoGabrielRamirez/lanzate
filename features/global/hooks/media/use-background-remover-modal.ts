@@ -16,7 +16,7 @@ export function useBackgroundRemoverModal({
    */
   const openBackgroundRemover = useCallback((file: File | null) => {
     if (!file) {
-      toast.error('Selecciona una imagen primero')
+      toast.error('Primero seleccioná una imagen')
       return
     }
 

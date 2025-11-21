@@ -25,13 +25,13 @@ export async function getUserById(id: number): Promise<{
         })
 
         if (!user) {
-            throw new Error("User not found")
+            throw new Error("Usuario no encontrado")
         }
 
         return {
             payload: user,
             hasError: false,
-            message: "User found",
+            message: "Usuario encontrado",
         }
 
     })

@@ -19,7 +19,7 @@ export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMedia
     // 1. Autenticación
     const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
     if (!currentUserResponse || currentUserResponse.hasError) {
-      return formatErrorResponse('Debes iniciar sesión')
+      return formatErrorResponse('Por favor, iniciá sesión para poder eliminar este archivo')
     }
 
     const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })

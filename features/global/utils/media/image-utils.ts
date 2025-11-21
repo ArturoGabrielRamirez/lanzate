@@ -15,7 +15,7 @@ export async function resizeImage(
     const ctx = canvas.getContext('2d')
 
     if (!ctx) {
-      reject(new Error('No se pudo crear contexto del canvas'))
+      reject(new Error('No se pudo crear el contexto de canvas'))
       return
     }
 

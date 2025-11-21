@@ -10,7 +10,7 @@ export async function getUserUploadsAction({ type }: GetUserUploadsParams) {
     return actionWrapper<GetUserUploadsResponse>(async () => {
         const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
         if (!currentUserResponse || currentUserResponse.hasError) {
-            return formatErrorResponse('Debes iniciar sesión')
+            return formatErrorResponse('Por favor, iniciá sesión para poder ver tus uploads')
         }
 
         const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })
@@ -27,7 +27,7 @@ export async function getUserUploadsAction({ type }: GetUserUploadsParams) {
             })
 
         if (!files?.length) {
-            return formatSuccessResponse('No hay uploads', {
+            return formatSuccessResponse('No hay archivos', {
                 uploads: [],
                 count: 0
             })
@@ -44,7 +44,7 @@ export async function getUserUploadsAction({ type }: GetUserUploadsParams) {
             return publicUrlData.publicUrl
         }).filter(Boolean)
 
-        return formatSuccessResponse('Uploads obtenidos', {
+        return formatSuccessResponse('Archivos de usuario obtenidos exitosamente', {
             uploads,
             count: uploads.length
         })

@@ -64,7 +64,7 @@ export function EditorToolbar({
                 disabled={disabled}
             >
                 <RotateCcw className="w-4 h-4 mr-2" />
-                Reset
+                Reiniciar Cambios
             </Button>
         </div>
     )

@@ -12,7 +12,7 @@ export function validateUploadType(type: string | null): asserts type is UploadT
 
     if (!type || !allowedTypes.includes(type)) {
         throw new ValidationError(
-            `Tipo debe ser uno de: ${allowedTypes.join(', ')}`
+            `El tipo de subida no es válido. Debe ser: ${allowedTypes.join(', ')}`
         )
     }
 }
@@ -26,7 +26,7 @@ export function validateFile(file: File | null): asserts file is File {
 export function validateFileSize(file: File): void {
     if (file.size > MAX_FILE_SIZE) {
         throw new ValidationError(
-            `Archivo muy grande. Máximo ${MAX_FILE_SIZE / 1024 / 1024}MB`
+            `EL tamaño de la imagen supera el límite permitido. El límite es de ${MAX_FILE_SIZE / 1024}KB.`
         )
     }
 }
