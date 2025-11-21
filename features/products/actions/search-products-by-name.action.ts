@@ -7,7 +7,7 @@ export async function searchProductsByNameAction(searchTerm: string, storeId: nu
     return actionWrapper(async () => {
         
         if (!storeId) {
-            throw new Error("Store ID is required")
+            throw new Error("Se requiere el ID de la tienda")
         }
 
         const { error, payload, message } = await searchProductsByNameData(searchTerm, storeId)

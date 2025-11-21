@@ -8,7 +8,7 @@ export async function getProductDetailsAction(id: string) {
 
         const parsedId = parseInt(id)
 
-        if (isNaN(parsedId)) throw new Error("Invalid product id")
+        if (isNaN(parsedId)) throw new Error("ID de producto inválido")
 
         const { payload: product, hasError, message } = await selectProductByIdData(parsedId)
 
@@ -17,7 +17,7 @@ export async function getProductDetailsAction(id: string) {
         return {
             payload: product,
             hasError: false,
-            message: "Product details fetched successfully"
+            message: "Detalles del producto obtenidos exitosamente"
         }
 
     })

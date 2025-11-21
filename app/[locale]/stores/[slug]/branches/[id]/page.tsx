@@ -149,7 +149,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                         {/* Creation Date */}
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <Calendar className="w-4 h-4" />
-                            <span>Created on {formatDate(branch.created_at)}</span>
+                            <span>Creado el {formatDate(branch.created_at)}</span>
                         </div>
 
                         {/* Recent Orders */}

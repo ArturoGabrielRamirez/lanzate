@@ -38,11 +38,11 @@ export default async function StorePage({ params, searchParams }: Props) {
                 <div className="container mx-auto py-8 group">
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-2xl font-bold text-primary-foreground/50 group-hover:text-primary-foreground transition-all duration-300">
-                            Browse by Category
+                            Explorar por categoría
                         </h2>
                         <Link href="/categories" className="flex items-center gap-2 text-sm text-primary-foreground/50 hover:text-primary transition-all duration-300">
                             <ArrowRight className="size-4" />
-                            View All
+                            Ver todo
                         </Link>
                     </div>
                     <div className="flex gap-4">
@@ -51,7 +51,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <Candy className="size-10" />
                                     <p>
-                                        Candy
+                                        Golosinas
                                     </p>
                                 </CardContent>
                             </Card>
@@ -61,7 +61,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <Utensils className="size-10" />
                                     <p>
-                                        Food
+                                        Alimentos
                                     </p>
                                 </CardContent>
                             </Card>
@@ -71,7 +71,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <Milk className="size-10" />
                                     <p>
-                                        Drinks
+                                        Bebidas
                                     </p>
                                 </CardContent>
                             </Card>
@@ -81,7 +81,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <BookA className="size-10" />
                                     <p>
-                                        Library
+                                        Librería
                                     </p>
                                 </CardContent>
                             </Card>
@@ -91,7 +91,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <Eye className="size-10" />
                                     <p>
-                                        View All
+                                        Ver todo
                                     </p>
                                 </CardContent>
                             </Card>
@@ -107,7 +107,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                         </h2>
                         <Link href="/products?best-sellers=true" className="flex items-center gap-2 text-sm text-primary-foreground/50 hover:text-primary transition-all duration-300">
                             <ArrowRight className="size-4" />
-                            View All
+                            Ver todo
                         </Link>
                     </div>
                     <div className="flex gap-4 grid-rows-[min-content_1fr_min-content] container mx-auto pt-4">

@@ -218,7 +218,7 @@ function ReplyForm() {
               required
             />
             <p style={{ fontSize: "0.75rem", color: "#737373", marginTop: "0.25rem" }}>
-              💡 Copia el mensaje desde el email que recibiste
+              💡 Copiá el mensaje desde el email que recibiste
             </p>
           </div>
 

@@ -22,7 +22,7 @@ export async function distributeProductStockData(data: DistributeStockData) {
         if (!product) {
             return {
                 hasError: true,
-                message: "Product not found",
+                message: "Producto no encontrado",
                 payload: null
             }
         }
@@ -37,7 +37,7 @@ export async function distributeProductStockData(data: DistributeStockData) {
         if (totalRequestedDistribution > totalCurrentStock) {
             return {
                 hasError: true,
-                message: "Cannot distribute more stock than currently available across all branches",
+                message: "No se puede distribuir más stock del que está disponible actualmente en todas las sucursales",
                 payload: null
             }
         }
@@ -80,14 +80,14 @@ export async function distributeProductStockData(data: DistributeStockData) {
 
         return {
             hasError: false,
-            message: "Stock redistributed successfully",
+            message: "Stock redistribuido correctamente",
             payload: null
         }
     } catch (error) {
-        console.error("Error redistributing stock:", error)
+        console.error("Error redistribuyendo stock:", error)
         return {
             hasError: true,
-            message: "Failed to redistribute stock",
+            message: "Error al redistribuir stock",
             payload: null
         }
     }

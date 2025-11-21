@@ -39,11 +39,11 @@ export async function selectProductByIdAndSubdomainData(id: number, subdomain: s
         }
     })
 
-    if (!product) throw new Error("Product not found or not available")
+    if (!product) throw new Error("Producto no encontrado o no disponible")
 
     return {
         payload: product,
         hasError: false,
-        message: "Product details fetched successfully"
+        message: "Detalles del producto obtenidos correctamente"
     }
 } 

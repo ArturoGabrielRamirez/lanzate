@@ -32,7 +32,7 @@ export async function updateProductsPricesData(payload: UpdatePricesPayload) {
                 }
             }
         } else {
-            throw new Error("Either productIds or categoryId must be provided")
+            throw new Error("Se debe proporcionar productIds o categoryId")
         }
 
         // First, get the products that will be updated to calculate new prices
@@ -50,7 +50,7 @@ export async function updateProductsPricesData(payload: UpdatePricesPayload) {
         if (productsToUpdate.length === 0) {
             return {
                 error: false,
-                message: "No products found to update",
+                message: "No se encontraron productos para actualizar",
                 payload: {
                     updatedCount: 0,
                     products: []
@@ -88,17 +88,17 @@ export async function updateProductsPricesData(payload: UpdatePricesPayload) {
 
         return {
             error: false,
-            message: `Successfully updated ${updatedProducts.length} products`,
+            message: `Se actualizaron correctamente ${updatedProducts.length} productos`,
             payload: {
                 updatedCount: updatedProducts.length,
                 products: updatedProducts
             }
         }
     } catch (error) {
-        console.error("Error updating product prices:", error)
+        console.error("Error actualizando los precios de los productos:", error)
         return {
             error: true,
-            message: error instanceof Error ? error.message : "Error updating product prices",
+            message: error instanceof Error ? error.message : "Error actualizando los precios de los productos",
             payload: null
         }
     }

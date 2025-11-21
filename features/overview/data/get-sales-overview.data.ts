@@ -28,7 +28,7 @@ export async function getSalesOverviewData(storeId: number) {
     }
 
     return {
-        message: "Sales overview fetched successfully",
+        message: "Resumen de ventas obtenido correctamente",
         payload: salesOverview,
         error: false
     }

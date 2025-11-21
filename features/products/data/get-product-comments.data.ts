@@ -25,7 +25,7 @@ export async function getProductCommentsData(productId: number) {
 
     return {
         hasError: false,
-        message: "Comments fetched successfully",
+        message: "Comentarios obtenidos correctamente",
         payload: comments
     }
 } 

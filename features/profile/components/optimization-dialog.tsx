@@ -42,7 +42,7 @@ function OptimizationDialog({
             Tu imagen es más grande que el tamaño recomendado. ¿Cómo te gustaría procesarla?
             <br />
             <span className="text-xs text-muted-foreground">
-              También puedes cerrar este diálogo para usar la imagen tal como está.
+              También podés cerrar este diálogo para usar la imagen tal como está, pero tené en cuenta que podría afectar el resultado final.
             </span>
           </DialogDescription>
         </DialogHeader>

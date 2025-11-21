@@ -10,7 +10,7 @@ export async function deleteProductVariantAction(variantId: number, slug: string
         const { payload, hasError, message } = await deleteVariantFromDb(variantId)
         if (hasError) throw new Error(message)
         revalidatePath(`/stores/${slug}`)
-        return { hasError: false, message: "Variant soft deleted successfully", payload }
+        return { hasError: false, message: "Variante eliminada exitosamente. Las órdenes relacionadas mantienen sus datos pero las referencias al producto se establecen en NULL.", payload }
     })
 }
 

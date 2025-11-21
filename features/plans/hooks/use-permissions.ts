@@ -1,5 +1,5 @@
-import { useAccessManager } from "@/features/shadcn/components/gate";
-import { PERMISSIONS } from "../utils/constants";
+import { PERMISSIONS } from "@/features/plans/utils/constants"
+import { useAccessManager } from "@/features/shadcn/components/gate"
 
 export function usePermissions() {
     const { hasPermission, user } = useAccessManager();

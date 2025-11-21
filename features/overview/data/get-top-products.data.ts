@@ -56,7 +56,7 @@ export async function getTopProductsData(storeId: number, limit: number = 5) {
         .slice(0, limit)
 
     return {
-        message: "Top products fetched successfully",
+        message: "Los productos más vendidos se obtuvieron correctamente",
         payload: topProducts,
         error: false
     }

@@ -131,7 +131,7 @@ function FinalizeSaleButton({
           <span className="font-medium">{formatPrice(cartTotal)}</span>
         </div>
         <div className="flex justify-between items-center text-sm">
-          <span className="text-muted-foreground">Cant. items</span>
+          <span className="text-muted-foreground">Cant. unidades</span>
           <span className="font-medium">{cartItemCount} {cartItemCount === 1 ? t('item') : t('items')}</span>
         </div>
         <div className="w-full grid grid-cols-2 gap-2">
@@ -174,9 +174,9 @@ function FinalizeSaleButton({
 
             <InputField
               name="email"
-              label="Email"
+              label="Correo electrónico"
               type="email"
-              placeholder="Ingrese el email del cliente"
+              placeholder="Ingrese el correo electrónico del cliente"
             />
           </div>
         )}

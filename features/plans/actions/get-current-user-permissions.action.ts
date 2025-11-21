@@ -13,14 +13,14 @@ export async function getCurrentUserPermissionsAction() {
             return {
                 payload: null,
                 hasError: false,
-                message: "No user session"
+                message: "No hay sesión de usuario activa"
             };
         }
 
         return {
             payload: user,
             hasError: false,
-            message: "User permissions fetched successfully"
+            message: "Permisos de usuario obtenidos correctamente"
         };
     });
 }

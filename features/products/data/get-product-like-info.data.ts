@@ -15,7 +15,7 @@ export async function getProductLikeInfoData(userId: number | null, productId: n
     if (!userId) {
         return {
             error: false,
-            message: "Product like info retrieved successfully",
+            message: "Información de likes del producto obtenida correctamente",
             payload: { isLiked: false, count }
         }
     }
@@ -30,7 +30,7 @@ export async function getProductLikeInfoData(userId: number | null, productId: n
 
     return {
         hasError: false,
-        message: "Product like info retrieved successfully",
+        message: "Información de likes del producto obtenida correctamente",
         payload: { isLiked, count }
     }
 } 

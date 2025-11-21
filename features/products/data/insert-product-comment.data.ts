@@ -39,7 +39,7 @@ export async function insertProductCommentData(userId: number, productId: number
             activity_type: "PRODUCT_COMMENT",
             entity_type: "PRODUCT",
             entity_id: productId,
-            title: `Product ${product?.name} commented`,
+            title: `Producto ${product?.name} comentado`,
             store_id: product?.store.id,
             product_id: productId
         }
@@ -47,7 +47,7 @@ export async function insertProductCommentData(userId: number, productId: number
 
     return {
         hasError: false,
-        message: "Comment added successfully",
+        message: "Comentario agregado correctamente",
         payload: comment
     }
 } 

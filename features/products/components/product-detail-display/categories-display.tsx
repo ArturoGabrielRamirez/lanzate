@@ -91,7 +91,7 @@ function CategoriesDisplay({ product }: CategoriesDisplayProps) {
                             <div className="border-2 border-dashed border-muted-foreground/25 rounded-md p-4 text-center">
                                 <Tags className="size-8 mx-auto text-muted-foreground mb-2" />
                                 <p className="text-sm text-muted-foreground">
-                                    Selecciona las categorías para este producto
+                                    Seleccioná las categorías para este producto
                                 </p>
                             </div>
                         </div>

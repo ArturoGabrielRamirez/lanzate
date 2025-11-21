@@ -24,7 +24,7 @@ async function OrderDetailPage({ params }: OrderDetailPageProps) {
                     <Link href={`/stores/${slug}/orders`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    Order Details
+                    Detalles del pedido
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex grow gap-4 flex-col md:flex-row">

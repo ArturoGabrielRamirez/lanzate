@@ -61,7 +61,7 @@ export async function updateProductData(productId: number, data: UpdateProductPa
     }
 
     return {
-        message: "Product updated successfully",
+        message: "Producto actualizado correctamente",
         payload: updatedProduct,
         hasError: false
     }

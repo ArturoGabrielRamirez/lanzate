@@ -26,8 +26,8 @@ function UserNotFound() {
               Usuario no encontrado
             </h2>
             <p className="text-gray-400 leading-relaxed">
-              El perfil que buscas no existe o no está disponible públicamente.
-              Verifica que el nombre de usuario esté escrito correctamente.
+              El perfil que buscás no existe o no está disponible públicamente.
+              Verificá que el nombre de usuario esté escrito correctamente.
             </p>
           </div>
 
@@ -60,7 +60,7 @@ function UserNotFound() {
           {/* Mensaje adicional */}
           <div className="mt-8 pt-6 border-t border-gray-700/50">
             <p className="text-sm text-gray-500 text-center">
-              ¿Necesitas ayuda? Contacta con{' '}
+              ¿Necesitas ayuda? Contacta con el {' '}
               <Link href="/support" className="text-orange-400 hover:text-orange-300 underline transition-colors">
                 soporte técnico
               </Link>

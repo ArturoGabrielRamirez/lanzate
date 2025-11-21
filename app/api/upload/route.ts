@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     if (!currentUserResponse || currentUserResponse.hasError) {
       return NextResponse.json(
-        { error: 'Debes iniciar sesión para subir archivos' },
+        { error: 'Tenés que iniciar sesión para poder subir archivos' },
         { status: 401 }
       )
     }

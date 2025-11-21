@@ -24,5 +24,5 @@ export async function updateVariantBasicInfoData(variantId: number, data: Update
         revalidatePath(`/stores/${ref.product.store.slug}/products/${ref.product.id}/${variantId}`, "page")
     }
 
-    return { hasError: false, message: "Variant updated successfully", payload: variant }
+    return { hasError: false, message: "Variante actualizada correctamente", payload: variant }
 }
