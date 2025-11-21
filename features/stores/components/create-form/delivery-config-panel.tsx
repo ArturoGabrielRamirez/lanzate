@@ -40,7 +40,7 @@ export function DeliveryConfigPanel({
     onDeleteMethod
 }: DeliveryConfigPanelProps) {
     return (
-        <>
+        <div className="flex flex-col gap-4">
             <ChoiceBox
                 columns={2}
                 gap={6}
@@ -135,7 +135,7 @@ export function DeliveryConfigPanel({
                     </motion.div>
                 )}
             </AnimatePresence>
-        </>
+        </div>
     )
 }
 

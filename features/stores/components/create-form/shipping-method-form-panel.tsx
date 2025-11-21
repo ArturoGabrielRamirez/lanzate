@@ -56,14 +56,14 @@ export function ShippingMethodFormPanel({ method, index, onCancel, onSave }: Shi
     }
 
     return (
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10"
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
         >
 
-            <div className="space-y-4">
+            <div className="flex flex-col gap-4">
                 <InputField
                     label="Precio envío"
                     name={`${formBase}.deliveryPrice`}

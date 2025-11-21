@@ -53,7 +53,7 @@ export function ShippingFormPanel() {
             setShippingMethods(safe.methods)
             setOffersDelivery(safe.offers_delivery)
         }
-       
+
     }, [getValues, setValue, values.shipping_info, values.payment_info, setCtxValues])
 
     useEffect(() => { setStepValid(5, isValid) }, [isValid, setStepValid])
@@ -157,7 +157,7 @@ export function ShippingFormPanel() {
 
     return (
         <>
-            <div className="space-y-3 mb-8">
+            <div className="flex flex-col gap-2">
                 <AnimatedTags
                     initialTags={["Efectivo", "Credito", "Debito", "Mercado Pago", "Transferencia"]}
                     selectedTags={paymentMethods}
@@ -168,20 +168,21 @@ export function ShippingFormPanel() {
                     <p className="text-sm text-red-500">{errors.payment_info.payment_methods.message as string}</p>
                 )}
             </div>
-            <p className="text-sm font-medium mb-2">Metodos de envio</p>
-            <DeliveryConfigPanel
-                offersDelivery={offersDelivery}
-                onSelectionChange={handleSelectionChange}
-                isAddingMethod={isAddingMethod}
-                shippingMethods={shippingMethods}
-                errors={errors}
-                onAddMethod={handleAddMethod}
-                editingIndex={editingIndex}
-                onCancelMethod={handleCancelMethod}
-                onSaveMethod={handleSaveMethod}
-                onDeleteMethod={handleDeleteMethod}
-            />
-
+            <div className="flex flex-col gap-1">
+                <p className="text-sm font-medium">Metodos de envio</p>
+                <DeliveryConfigPanel
+                    offersDelivery={offersDelivery}
+                    onSelectionChange={handleSelectionChange}
+                    isAddingMethod={isAddingMethod}
+                    shippingMethods={shippingMethods}
+                    errors={errors}
+                    onAddMethod={handleAddMethod}
+                    editingIndex={editingIndex}
+                    onCancelMethod={handleCancelMethod}
+                    onSaveMethod={handleSaveMethod}
+                    onDeleteMethod={handleDeleteMethod}
+                />
+            </div>
         </>
     )
 }
