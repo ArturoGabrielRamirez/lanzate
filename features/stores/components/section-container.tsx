@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 function SectionContainer({ children, title, className, moreLink }: SectionContainerProps) {
     return (
-        <div className={cn("grow", className)}>
+        <div className={cn( className)}>
             <div className="flex items-center justify-between">
                 <h2 className="text-base text-muted-foreground/50 mb-2">
                     {title}
