@@ -16,7 +16,7 @@ export function ShippingFormPanel() {
     const [offersDelivery, setOffersDelivery] = useState(false)
     const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([])
     const [isAddingMethod, setIsAddingMethod] = useState(false)
-    /* const [editingIndex, setEditingIndex] = useState<number | null>(null) */
+    const [editingIndex, setEditingIndex] = useState<number | null>(null)
     const [paymentMethods, setPaymentMethods] = useState<string[]>(() => (getValues("payment_info.payment_methods") as string[] | undefined) || [])
 
     console.log("🚀 ~ ShippingFormPanel ~ paymentMethods:", paymentMethods)
@@ -122,13 +122,11 @@ export function ShippingFormPanel() {
     const handleNotOffersDelivery = () => {
         setCtxValues({ shipping_info: { offers_delivery: false, methods: [] } })
         setOffersDelivery(false)
-        setValue("shipping_info.offers_delivery", false, { shouldValidate: true, shouldDirty: true })
-        /* setOffersDelivery(false)
         setIsAddingMethod(false)
         setEditingIndex(null)
         setShippingMethods([])
-        setValueAny("shipping_info.offers_delivery", false, { shouldValidate: true, shouldDirty: true })
-        setValueAny("shipping_info.methods", [], { shouldValidate: true, shouldDirty: true }) */
+        setValue("shipping_info.offers_delivery", false, { shouldValidate: true, shouldDirty: true })
+        setValue("shipping_info.methods", [], { shouldValidate: true, shouldDirty: true })
     }
 
     const handleAddMethod = () => {
@@ -150,32 +148,32 @@ export function ShippingFormPanel() {
                 methods: next
             }
         })
-        /* const newIndex = shippingMethods.length
-        setEditingIndex(newIndex) */
+        const newIndex = shippingMethods.length
+        setEditingIndex(newIndex)
     }
 
-    /* const handleCancelMethod = (index: number) => {
+    const handleCancelMethod = (index: number) => {
         setIsAddingMethod(false)
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
-        setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
+        setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setEditingIndex(null)
-    } */
+    }
 
-    /* const handleSaveMethod = (index: number, method: ShippingMethod) => {
+    const handleSaveMethod = (index: number, method: ShippingMethod) => {
         const next = shippingMethods.map((m, i) => i === index ? method : m)
         setShippingMethods(next)
-        setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
+        setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setIsAddingMethod(false)
         setEditingIndex(null)
-    } */
+    }
 
-    /* const handleDeleteMethod = (index: number) => {
+    const handleDeleteMethod = (index: number) => {
         const next = shippingMethods.filter((_m, i) => i !== index)
         setShippingMethods(next)
-        setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
+        setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
-    } */
+    }
 
     const handlePaymentTagsChange = (tags: string[]) => {
         setValue("payment_info.payment_methods", tags, { shouldValidate: true, shouldDirty: true })
@@ -216,6 +214,10 @@ export function ShippingFormPanel() {
                 shippingMethods={shippingMethods}
                 errors={errors}
                 onAddMethod={handleAddMethod}
+                editingIndex={editingIndex}
+                onCancelMethod={handleCancelMethod}
+                onSaveMethod={handleSaveMethod}
+                onDeleteMethod={handleDeleteMethod}
             />
 
         </>
