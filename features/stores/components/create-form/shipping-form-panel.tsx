@@ -1,16 +1,17 @@
-import { Store, Truck } from "lucide-react"
+import { Plus, Store, Truck } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-/* import { Button } from "@/features/shadcn/components/button"
+import { Button } from "@/features/shadcn/components/button"
+/* 
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button" */
 import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 /* import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip" */
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 /* import { ShippingMethodFormPanel } from "@/features/stores/components/create-form/shipping-method-form-panel" */
-import { CreateStoreFormValues/* , ShippingMethod */ } from "@/features/stores/types"
+import { CreateStoreFormValues, ShippingMethod } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
@@ -139,7 +140,7 @@ export function ShippingFormPanel() {
         setValueAny("shipping_info.methods", [], { shouldValidate: true, shouldDirty: true }) */
     }
 
-    /* const handleAddMethod = () => {
+    const handleAddMethod = () => {
         const newMethod: ShippingMethod = {
             providers: [],
             minPurchase: "",
@@ -147,13 +148,20 @@ export function ShippingFormPanel() {
             estimatedTime: "",
             deliveryPrice: ""
         }
-        const newIndex = shippingMethods.length
+        console.log("🚀 ~ handleAddMethod ~ newMethod:", newMethod)
         const next = [...shippingMethods, newMethod]
         setShippingMethods(next)
-        setValueAny("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
         setIsAddingMethod(true)
-        setEditingIndex(newIndex)
-    } */
+        setValue("shipping_info.methods", next, { shouldValidate: true, shouldDirty: true })
+        setCtxValues({
+            shipping_info: {
+                offers_delivery: offersDelivery,
+                methods: next
+            }
+        })
+        /* const newIndex = shippingMethods.length
+        setEditingIndex(newIndex) */
+    }
 
     /* const handleCancelMethod = (index: number) => {
         setIsAddingMethod(false)
@@ -294,13 +302,13 @@ export function ShippingFormPanel() {
                                 ))}
                             </div>
                         )}
+                         */}
                         {!isAddingMethod && (
                             <Button className="w-full" onClick={handleAddMethod} type="button">
                                 <Plus />
                                 Agregar modo de envío
                             </Button>
-                        )} */}
-
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
