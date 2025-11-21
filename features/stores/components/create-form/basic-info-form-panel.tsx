@@ -1,9 +1,10 @@
-import { Globe, StoreIcon } from "lucide-react"
+import { Globe, Store, StoreIcon } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
+import { Empty, EmptyMedia } from "@/features/shadcn/components/empty"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormValues } from "@/features/stores/types"
 import { slugify } from "@/features/stores/utils"
@@ -63,6 +64,11 @@ export function BasicInfoFormPanel() {
             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-10">
                 <div className="space-y-2">
                     {/* Logo upload commented out in original code */}
+                    <Empty className="border border-dashed">
+                        <EmptyMedia>
+                            <Store />
+                        </EmptyMedia>
+                    </Empty>
                 </div>
                 <div className="space-y-4">
                     <InputField

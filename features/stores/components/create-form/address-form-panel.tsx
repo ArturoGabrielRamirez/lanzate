@@ -1,4 +1,6 @@
 import { Globe, MapPin, Store } from "lucide-react"
+import { AnimatePresence } from "motion/react"
+import * as motion from "motion/react-client"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
@@ -65,7 +67,7 @@ export function AddressFormPanel() {
         <>
             <ChoiceBox
                 columns={2}
-                gap={2}
+                gap={6}
                 selectionMode="single"
                 selectedKeys={[isPhysicalStore ? "physical" : "online"]}
                 onSelectionChange={handleSelectionChange}
@@ -81,42 +83,49 @@ export function AddressFormPanel() {
                     <ChoiceBoxDescription>This is a physical store.</ChoiceBoxDescription>
                 </ChoiceBoxItem>
             </ChoiceBox>
-            {isPhysicalStore && (
-                <div className="space-y-4">
-                    <InputField
-                        name="address_info.address"
-                        label="Address"
-                        placeholder="Ej: 123 Main St"
-                        startIcon={<MapPin />}
-                        isRequired
-                        tooltip="This is the address of your store. It will be used to display your store on the map."
-                    />
-                    <InputField
-                        name="address_info.city"
-                        label="City"
-                        placeholder="Ej: New York"
-                        startIcon={<MapPin />}
-                        isRequired
-                        tooltip="This is the city of your store. It will be used to display your store on the map."
-                    />
-                    <InputField
-                        name="address_info.province"
-                        label="Province"
-                        placeholder="Ej: New York"
-                        startIcon={<MapPin />}
-                        isRequired
-                        tooltip="This is the province of your store. It will be used to display your store on the map."
-                    />
-                    <InputField
-                        name="address_info.country"
-                        label="Country"
-                        placeholder="Ej: United States"
-                        startIcon={<MapPin />}
-                        isRequired
-                        tooltip="This is the country of your store. It will be used to display your store on the map."
-                    />
-                </div>
-            )}
+            <AnimatePresence>
+                {isPhysicalStore && (
+                    <motion.div className="space-y-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <InputField
+                            name="address_info.address"
+                            label="Address"
+                            placeholder="Ej: 123 Main St"
+                            startIcon={<MapPin />}
+                            isRequired
+                            tooltip="This is the address of your store. It will be used to display your store on the map."
+                        />
+                        <InputField
+                            name="address_info.city"
+                            label="City"
+                            placeholder="Ej: New York"
+                            startIcon={<MapPin />}
+                            isRequired
+                            tooltip="This is the city of your store. It will be used to display your store on the map."
+                        />
+                        <InputField
+                            name="address_info.province"
+                            label="Province"
+                            placeholder="Ej: New York"
+                            startIcon={<MapPin />}
+                            isRequired
+                            tooltip="This is the province of your store. It will be used to display your store on the map."
+                        />
+                        <InputField
+                            name="address_info.country"
+                            label="Country"
+                            placeholder="Ej: United States"
+                            startIcon={<MapPin />}
+                            isRequired
+                            tooltip="This is the country of your store. It will be used to display your store on the map."
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     )
 }
