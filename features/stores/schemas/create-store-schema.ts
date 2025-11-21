@@ -44,7 +44,7 @@ export const addressInfoSchema = yup.object({
 
 export const contactInfoSchema = yup.object({
     contact_info: yup.object({
-        contact_phone: yup.string().max(20, "Phone must be less than 20 characters long").required("Phone is required"),
+        contact_phone: yup.string().max(20, "Phone must be less than 20 characters long").required("Phone is required").matches(/^[0-9+\-\s\(\)]*$/, "Phone must be a number"),
         contact_email: yup.string().email("Must be a valid email").max(255, "Email must be less than 255 characters long").required("Email is required"),
         facebook_url: yup.string().url("Must be a valid URL").max(255, "Facebook URL must be less than 255 characters long"),
         instagram_url: yup.string().url("Must be a valid URL").max(255, "Instagram URL must be less than 255 characters long"),
