@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
@@ -12,6 +13,7 @@ import { processOpeningHours, processPaymentMethods, processShippingMethods } fr
 export function CreateStoreContent({ userId }: { userId: number }) {
 
     const { step, setStep } = useCreateStoreContext()
+    const t = useTranslations("store.create-form")
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
         const isPhysical = !!data.address_info?.is_physical_store
@@ -44,35 +46,35 @@ export function CreateStoreContent({ userId }: { userId: number }) {
         return {
             success: true,
             error: false,
-            message: "Store created successfully",
+            message: t("messages.store-created-success"),
             data: payload
         }
     }
 
     const descriptions = {
-        1: "Choose a name, logo and shipping methods to get started; you can edit your store details later.",
-        2: "Choose whether this is a physical store or an online store and add your address information.",
-        3: "Add your contact information and social media links so customers can contact you.",
-        4: "Choose attention dates and hours so customers know when you are open.",
-        5: "Choose shipping methods and add your payment methods so customers can buy your products.",
-        6: "Creating your store…",
-        7: "All set! Redirecting…",
+        1: t("descriptions.step1"),
+        2: t("descriptions.step2"),
+        3: t("descriptions.step3"),
+        4: t("descriptions.step4"),
+        5: t("descriptions.step5"),
+        6: t("descriptions.step6"),
+        7: t("descriptions.step7"),
     }
 
     const titleSlugs = {
-        1: "Basic",
-        2: "Address",
-        3: "Contact",
-        4: "Hours",
-        5: "Delivery",
-        6: "Success",
+        1: t("steps.basic"),
+        2: t("steps.address"),
+        3: t("steps.contact"),
+        4: t("steps.hours"),
+        5: t("steps.delivery"),
+        6: t("steps.success"),
     }
 
     return (
         <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:!rounded-lg max-h-dvh !grid-rows-[auto_1fr] gap-4">
             <div className="flex flex-col gap-4">
                 <DialogHeader>
-                    <DialogTitle>Create Store - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
+                    <DialogTitle>{t("titles.create-store")} - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
                 </DialogHeader>
                 <DialogDescription asChild>
                     <p>{descriptions[step as keyof typeof descriptions]}</p>

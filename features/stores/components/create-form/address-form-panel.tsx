@@ -3,6 +3,7 @@ import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
 
 import { InputField } from "@/features/global/components/form/input-field"
@@ -13,6 +14,7 @@ import { AddressFormValues, CreateStoreFormValues } from "@/features/stores/type
 import type { Selection } from "react-aria-components"
 
 export function AddressFormPanel() {
+    const t = useTranslations("store.create-form.address")
 
     const { setValue, getValues, formState: { isValid }, watch, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -69,7 +71,7 @@ export function AddressFormPanel() {
     return (
         <>
             <div className="flex flex-col gap-1">
-                <p className="text-sm font-medium">Tipo de tienda</p>
+                <p className="text-sm font-medium">{t("store-type")}</p>
                 <ChoiceBox
                     columns={2}
                     gap={4}
@@ -77,15 +79,15 @@ export function AddressFormPanel() {
                     selectedKeys={[isPhysicalStore ? "physical" : "online"]}
                     onSelectionChange={handleSelectionChange}
                 >
-                    <ChoiceBoxItem id="online" textValue="Online Store">
+                    <ChoiceBoxItem id="online" textValue={t("online-store")}>
                         <Globe />
-                        <ChoiceBoxLabel>Online Store</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>This is an online store.</ChoiceBoxDescription>
+                        <ChoiceBoxLabel>{t("online-store")}</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>{t("online-store-description")}</ChoiceBoxDescription>
                     </ChoiceBoxItem>
-                    <ChoiceBoxItem id="physical" textValue="Physical Store">
+                    <ChoiceBoxItem id="physical" textValue={t("physical-store")}>
                         <Store />
-                        <ChoiceBoxLabel>Physical Store</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>This is a physical store.</ChoiceBoxDescription>
+                        <ChoiceBoxLabel>{t("physical-store")}</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>{t("physical-store-description")}</ChoiceBoxDescription>
                     </ChoiceBoxItem>
                 </ChoiceBox>
             </div>
@@ -99,35 +101,35 @@ export function AddressFormPanel() {
                     >
                         <InputField
                             name="address_info.address"
-                            label="Address"
-                            placeholder="Ej: 123 Main St"
+                            label={t("address")}
+                            placeholder={t("address-placeholder")}
                             startIcon={<MapPin />}
                             isRequired
-                            tooltip="This is the address of your store. It will be used to display your store on the map."
+                            tooltip={t("address-tooltip")}
                         />
                         <InputField
                             name="address_info.city"
-                            label="City"
-                            placeholder="Ej: New York"
+                            label={t("city")}
+                            placeholder={t("city-placeholder")}
                             startIcon={<MapPin />}
                             isRequired
-                            tooltip="This is the city of your store. It will be used to display your store on the map."
+                            tooltip={t("city-tooltip")}
                         />
                         <InputField
                             name="address_info.province"
-                            label="Province"
-                            placeholder="Ej: New York"
+                            label={t("province")}
+                            placeholder={t("province-placeholder")}
                             startIcon={<MapPin />}
                             isRequired
-                            tooltip="This is the province of your store. It will be used to display your store on the map."
+                            tooltip={t("province-tooltip")}
                         />
                         <InputField
                             name="address_info.country"
-                            label="Country"
-                            placeholder="Ej: United States"
+                            label={t("country")}
+                            placeholder={t("country-placeholder")}
                             startIcon={<MapPin />}
                             isRequired
-                            tooltip="This is the country of your store. It will be used to display your store on the map."
+                            tooltip={t("country-tooltip")}
                         />
                     </motion.div>
                 )}

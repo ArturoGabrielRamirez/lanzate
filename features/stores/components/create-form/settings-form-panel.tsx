@@ -3,6 +3,7 @@ import { Calendar, Plus, Trash } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/features/shadcn/components/button"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
@@ -21,6 +22,7 @@ interface SettingsFormValues {
 }
 
 export function SettingsFormPanel() {
+    const t = useTranslations("store.create-form.settings")
 
     const { setValue, getValues, formState: { isValid, errors }, watch, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -156,7 +158,7 @@ export function SettingsFormPanel() {
     return (
         <>
             <div className="flex flex-col gap-1">
-                <p className="text-sm font-medium">Tipo de atención</p>
+                <p className="text-sm font-medium">{t("attention-type")}</p>
                 <ChoiceBox
                     columns={2}
                     gap={4}
@@ -164,17 +166,17 @@ export function SettingsFormPanel() {
                     selectedKeys={[isOpen24Hours ? "24hours" : "schedule"]}
                     onSelectionChange={handleSelectionChange}
                 >
-                    <ChoiceBoxItem id="24hours" textValue="24 Hours">
+                    <ChoiceBoxItem id="24hours" textValue={t("24-hours")}>
                         <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" className="size-9">
                             <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12a9 9 0 0 0 5.998 8.485M21 12a9 9 0 1 0-18 0m9-5v5m0 3h2a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h2m3-6v2a1 1 0 0 0 1 1h1m1-3v6"></path>
                         </svg>
-                        <ChoiceBoxLabel>24 Hours</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>This store is open 24 hours.</ChoiceBoxDescription>
+                        <ChoiceBoxLabel>{t("24-hours")}</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>{t("24-hours-description")}</ChoiceBoxDescription>
                     </ChoiceBoxItem>
-                    <ChoiceBoxItem id="schedule" textValue="Schedule">
+                    <ChoiceBoxItem id="schedule" textValue={t("schedule")}>
                         <Calendar className="size-9" />
-                        <ChoiceBoxLabel>Schedule</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>This store works on schedule.</ChoiceBoxDescription>
+                        <ChoiceBoxLabel>{t("schedule")}</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>{t("schedule-description")}</ChoiceBoxDescription>
                     </ChoiceBoxItem>
                 </ChoiceBox>
             </div>
@@ -197,7 +199,7 @@ export function SettingsFormPanel() {
                                 <p>
                                     {errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
                                         ? (errors.settings as Record<string, { message?: string }>)["attention_dates"]?.message
-                                        : "No hay dias de atencion configurados"
+                                        : t("no-days-configured")
                                     }
                                 </p>
                             </div>
@@ -208,7 +210,7 @@ export function SettingsFormPanel() {
                                     (isAddingDate && editingIndex === i) ? null : (
                                         <div key={i} className="flex justify-between items-center border rounded-md p-3 text-sm">
                                             <div className="space-y-1">
-                                                <p className="font-medium">{d.days.length ? d.days.join(', ') : 'Sin días seleccionados'}</p>
+                                                <p className="font-medium">{d.days.length ? d.days.join(', ') : t("no-days-selected")}</p>
                                                 <p className="text-muted-foreground">
                                                     {dayjs(d.startTime).format('HH:mm')} - {dayjs(d.endTime).format('HH:mm')}
                                                 </p>
@@ -218,7 +220,7 @@ export function SettingsFormPanel() {
                                                     <IconButton type="button" icon={Trash} onClick={() => handleDeleteDate(i)} />
                                                 </TooltipTrigger>
                                                 <TooltipContent>
-                                                    Eliminar
+                                                    {t("delete")}
                                                 </TooltipContent>
                                             </Tooltip>
                                         </div>
@@ -240,7 +242,7 @@ export function SettingsFormPanel() {
                         {!isAddingDate && (
                             <Button className="w-full" onClick={handleAddDate} type="button">
                                 <Plus />
-                                Add date
+                                {t("add-date")}
                             </Button>
                         )}
                     </motion.div>

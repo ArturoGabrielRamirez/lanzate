@@ -1,4 +1,5 @@
 import { Check, Clock, Contact2, MapPin, StoreIcon, Truck } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
@@ -9,6 +10,7 @@ import { cn } from "@/lib/utils"
 export function StepIndicator({ step, currentStep, onStepClick, disabled }: StepIndicatorProps) {
 
     const { isStepValid } = useCreateStoreContext()
+    const t = useTranslations("store.create-form")
 
     const icons = {
         1: StoreIcon,
@@ -20,12 +22,12 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Step
     }
 
     const tooltips = {
-        1: "Basic information",
-        2: "Address information",
-        3: "Contact information",
-        4: "Hours information",
-        5: "Delivery information",
-        6: "Success",
+        1: t("step-tooltips.basic"),
+        2: t("step-tooltips.address"),
+        3: t("step-tooltips.contact"),
+        4: t("step-tooltips.hours"),
+        5: t("step-tooltips.delivery"),
+        6: t("step-tooltips.success"),
     }
 
     const isComplete = !!isStepValid[step]
@@ -81,7 +83,7 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Step
                 </div>
             </TooltipTrigger>
             <TooltipContent>
-                {disabled ? "You must complete all required previous steps to unlock this step" : tooltips[step as keyof typeof tooltips]}
+                {disabled ? t("step-locked") : tooltips[step as keyof typeof tooltips]}
             </TooltipContent>
         </Tooltip>
     )

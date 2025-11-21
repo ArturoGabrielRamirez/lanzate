@@ -1,6 +1,7 @@
 import { Globe, Store, StoreIcon } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
@@ -10,6 +11,7 @@ import { CreateStoreFormValues } from "@/features/stores/types"
 import { slugify } from "@/features/stores/utils"
 
 export function BasicInfoFormPanel() {
+    const t = useTranslations("store.create-form.basic-info")
 
     const { setValue, watch, formState: { isValid }, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -73,20 +75,20 @@ export function BasicInfoFormPanel() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <InputField
                         name="basic_info.name"
-                        label="Name"
-                        placeholder="Ej: My Store"
+                        label={t("name")}
+                        placeholder={t("name-placeholder")}
                         startIcon={<StoreIcon />}
                         isRequired
-                        tooltip="This is the name of your store. It will be used to identify your store in the system."
+                        tooltip={t("name-tooltip")}
                     />
                     <InputField
                         name="basic_info.subdomain"
-                        label="URL"
-                        placeholder="Ej: my-store"
+                        label={t("url")}
+                        placeholder={t("url-placeholder")}
                         type="url"
                         inputMode="url"
                         startIcon={<Globe />}
-                        tooltip="This is the URL of your store. People will use it to access your store."
+                        tooltip={t("url-tooltip")}
                         endText={(
                             <span>
                                 .lanzate.com
@@ -99,8 +101,8 @@ export function BasicInfoFormPanel() {
             </>
             <TextareaField
                 name="basic_info.description"
-                label="Description"
-                placeholder="Ej: My Store Description"
+                label={t("description")}
+                placeholder={t("description-placeholder")}
             />
         </>
     )

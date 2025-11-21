@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Check, Loader } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Form } from "@/features/global/components/form/form"
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
@@ -27,6 +28,7 @@ import { CreateStoreFormProps, CreateStoreFormValues } from "@/features/stores/t
 export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
 
     const { isStepValid, values, step, setStep } = useCreateStoreContext()
+    const t = useTranslations("store.create-form")
     const isValid = !!isStepValid[step]
 
     const allowedMaxStep = (() => {
@@ -93,7 +95,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Loader className="size-12 animate-spin text-primary" />
-                        <p className="text-sm text-muted-foreground">{"Creando tu tienda..."}</p>
+                        <p className="text-sm text-muted-foreground">{t("titles.creating")}</p>
                     </div>
                 </Step>
             )}
@@ -101,7 +103,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Check className="size-12 text-green-600" />
-                        <p className="text-sm text-muted-foreground">{"Tienda creada con éxito"}</p>
+                        <p className="text-sm text-muted-foreground">{t("titles.created")}</p>
                     </div>
                 </Step>
             )}

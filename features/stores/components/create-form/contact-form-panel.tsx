@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Mail, Phone, Twitter } from "lucide-react"
 import { useEffect, useRef } from "react"
 import { useFormContext } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
@@ -8,6 +9,7 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 import { CreateStoreFormValues } from "@/features/stores/types"
 
 export function ContactFormPanel() {
+    const t = useTranslations("store.create-form.contact")
 
     const { formState: { isValid }, watch, setValue, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -37,48 +39,48 @@ export function ContactFormPanel() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <InputField
                         name="contact_info.contact_phone"
-                        label="Phone"
-                        placeholder="Ej: 1234567890"
+                        label={t("phone")}
+                        placeholder={t("phone-placeholder")}
                         startIcon={<Phone />}
                         isRequired
-                        tooltip="This is the phone number of your store. It will be used to contact your store."
+                        tooltip={t("phone-tooltip")}
                     />
                     <InputField
                         name="contact_info.contact_email"
-                        label="Email"
-                        placeholder="Ej: test@example.com"
+                        label={t("email")}
+                        placeholder={t("email-placeholder")}
                         startIcon={<Mail />}
                         type="email"
                         isRequired
-                        tooltip="This is the email of your store. It will be used to contact your store."
+                        tooltip={t("email-tooltip")}
                     />
                 </div>
                 <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="social-media" className="border-none">
-                        <AccordionTrigger className="text-muted-foreground text-base font-medium hover:no-underline py-2">Social Media</AccordionTrigger>
+                        <AccordionTrigger className="text-muted-foreground text-base font-medium hover:no-underline py-2">{t("social-media")}</AccordionTrigger>
                         <AccordionContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <InputField
                                 name="contact_info.facebook_url"
-                                label="Facebook"
-                                placeholder="Ej: https://www.facebook.com/your-page"
+                                label={t("facebook")}
+                                placeholder={t("facebook-placeholder")}
                                 startIcon={<Facebook />}
-                                tooltip="This is the Facebook URL of your store. It will be used to display your store on Facebook."
+                                tooltip={t("facebook-tooltip")}
                             />
                             <InputField
                                 name="contact_info.instagram_url"
-                                label="Instagram"
-                                placeholder="Ej: https://www.instagram.com/your-page"
+                                label={t("instagram")}
+                                placeholder={t("instagram-placeholder")}
                                 startIcon={<Instagram />}
                                 type="email"
-                                tooltip="This is the Instagram URL of your store. It will be used to display your store on Instagram."
+                                tooltip={t("instagram-tooltip")}
                             />
                             <InputField
                                 name="contact_info.x_url"
-                                label="X (Twitter)"
-                                placeholder="Ej: https://x.com/your-page"
+                                label={t("x-twitter")}
+                                placeholder={t("x-twitter-placeholder")}
                                 startIcon={<Twitter />}
                                 type="url"
-                                tooltip="This is the X (Twitter) URL of your store. It will be used to display your store on X (Twitter)."
+                                tooltip={t("x-twitter-tooltip")}
                             />
                         </AccordionContent>
                     </AccordionItem>

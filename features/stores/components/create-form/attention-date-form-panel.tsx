@@ -2,21 +2,23 @@ import { TimePicker } from "antd"
 import dayjs, { Dayjs } from "dayjs"
 import { Check, Trash } from "lucide-react"
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/features/shadcn/components/button"
 import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import { AttentionDateFormPanelProps } from "@/features/stores/types"
 
 export function AttentionDateFormPanel({ date, onCancel, onSave, index }: AttentionDateFormPanelProps) {
+    const t = useTranslations("store.create-form.settings")
 
     const initialTags = [
-        "lunes",
-        "martes",
-        "miercoles",
-        "jueves",
-        "viernes",
-        "sabado",
-        "domingo",
+        t("days.monday"),
+        t("days.tuesday"),
+        t("days.wednesday"),
+        t("days.thursday"),
+        t("days.friday"),
+        t("days.saturday"),
+        t("days.sunday"),
     ]
 
     const [selected, setSelected] = useState<string[]>(date.days || [])
@@ -49,7 +51,7 @@ export function AttentionDateFormPanel({ date, onCancel, onSave, index }: Attent
             />
             <div className="flex flex-col gap-4 justify-between">
                 <div className="flex flex-col gap-1">
-                    <p className="text-sm font-medium">Horarios de apertura</p>
+                    <p className="text-sm font-medium">{t("opening-hours")}</p>
                     <TimePicker.RangePicker
                         defaultValue={[startTime, endTime]}
                         format={format}
@@ -68,11 +70,11 @@ export function AttentionDateFormPanel({ date, onCancel, onSave, index }: Attent
                 <div className="flex gap-2">
                     <Button className="grow" type="button" onClick={handleCancel}>
                         <Trash />
-                        Cancel
+                        {t("cancel")}
                     </Button>
                     <Button className="grow" type="button" onClick={handleSave}>
                         <Check />
-                        Save
+                        {t("save")}
                     </Button>
                 </div>
             </div>

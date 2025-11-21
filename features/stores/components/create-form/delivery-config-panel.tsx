@@ -1,6 +1,7 @@
 import { Plus, Store, Truck, Trash } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { FieldErrors } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/features/shadcn/components/button"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
@@ -39,6 +40,8 @@ export function DeliveryConfigPanel({
     onSaveMethod,
     onDeleteMethod
 }: DeliveryConfigPanelProps) {
+    const t = useTranslations("store.create-form.shipping")
+    
     return (
         <div className="flex flex-col gap-4">
             <ChoiceBox
@@ -48,15 +51,15 @@ export function DeliveryConfigPanel({
                 selectedKeys={[offersDelivery ? "delivery" : "pickup"]}
                 onSelectionChange={onSelectionChange}
             >
-                <ChoiceBoxItem id="pickup" textValue="Pickup Only">
+                <ChoiceBoxItem id="pickup" textValue={t("pickup-only")}>
                     <Store />
-                    <ChoiceBoxLabel>Pickup Only</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>This store does not offer delivery service; only pickup.</ChoiceBoxDescription>
+                    <ChoiceBoxLabel>{t("pickup-only")}</ChoiceBoxLabel>
+                    <ChoiceBoxDescription>{t("pickup-only-description")}</ChoiceBoxDescription>
                 </ChoiceBoxItem>
-                <ChoiceBoxItem id="delivery" textValue="Delivery & Pickup">
+                <ChoiceBoxItem id="delivery" textValue={t("delivery-pickup")}>
                     <Truck />
-                    <ChoiceBoxLabel>Delivery & Pickup</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>This store offers delivery as well as pickup.</ChoiceBoxDescription>
+                    <ChoiceBoxLabel>{t("delivery-pickup")}</ChoiceBoxLabel>
+                    <ChoiceBoxDescription>{t("delivery-pickup-description")}</ChoiceBoxDescription>
                 </ChoiceBoxItem>
             </ChoiceBox>
 
@@ -80,7 +83,7 @@ export function DeliveryConfigPanel({
                                 <p>
                                     {errors?.shipping_info && "methods" in (errors.shipping_info as Record<string, unknown>)
                                         ? (errors.shipping_info as Record<string, { message?: string }>)["methods"]?.message
-                                        : "No configuraste ninguna forma de envío"
+                                        : t("no-shipping-configured")
                                     }
                                 </p>
                             </div>
@@ -102,14 +105,14 @@ export function DeliveryConfigPanel({
                                     (isAddingMethod && editingIndex === i) ? null : (
                                         <div key={i} className="flex justify-between items-center border rounded-md p-3 text-sm">
                                             <div className="space-y-1">
-                                                <p className="font-medium">{m.providers.length ? m.providers.join(', ') : 'Sin proveedor seleccionado'}</p>
+                                                <p className="font-medium">{m.providers.length ? m.providers.join(', ') : t("no-provider-selected")}</p>
                                                 <p className="text-muted-foreground">
-                                                    {m.minPurchase ? `Mín compra: $${m.minPurchase}` : 'Sin mínimo'}
+                                                    {m.minPurchase ? `${t("min-purchase")}: $${m.minPurchase}` : t("no-minimum")}
                                                     {" • "}
-                                                    {m.freeShippingMin ? `Envío gratis desde: $${m.freeShippingMin}` : 'Sin gratis'}
+                                                    {m.freeShippingMin ? `${t("free-shipping-min")}: $${m.freeShippingMin}` : t("no-free-shipping")}
                                                     {" • "}
-                                                    {m.estimatedTime ? `ETA: ${m.estimatedTime}` : 'ETA no establecido'}
-                                                    {m.deliveryPrice ? ` • Precio: $${m.deliveryPrice}` : ''}
+                                                    {m.estimatedTime ? `ETA: ${m.estimatedTime}` : t("eta-not-set")}
+                                                    {m.deliveryPrice ? ` • ${t("price")}: $${m.deliveryPrice}` : ''}
                                                 </p>
                                             </div>
                                             <Tooltip>
@@ -117,7 +120,7 @@ export function DeliveryConfigPanel({
                                                     <IconButton type="button" icon={Trash} onClick={() => onDeleteMethod?.(i)} />
                                                 </TooltipTrigger>
                                                 <TooltipContent>
-                                                    Eliminar
+                                                    {t("delete")}
                                                 </TooltipContent>
                                             </Tooltip>
                                         </div>
@@ -129,7 +132,7 @@ export function DeliveryConfigPanel({
                         {!isAddingMethod && (
                             <Button className="w-full" onClick={onAddMethod} type="button">
                                 <Plus />
-                                Agregar modo de envío
+                                {t("add-shipping-method")}
                             </Button>
                         )}
                     </motion.div>

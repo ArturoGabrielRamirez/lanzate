@@ -4,6 +4,7 @@ import { Check, DollarSign, Trash } from "lucide-react"
 import { motion } from "motion/react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button"
@@ -11,12 +12,13 @@ import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import { CreateStoreFormValues, ShippingMethod, ShippingMethodFormPanelProps } from "@/features/stores/types"
 
 export function ShippingMethodFormPanel({ method, index, onCancel, onSave }: ShippingMethodFormPanelProps) {
+    const t = useTranslations("store.create-form.shipping")
 
     const initialTags = [
-        "Delivery propio",
-        "OCA",
-        "Correo Argentino",
-        "Otros",
+        t("providers-options.own-delivery"),
+        t("providers-options.oca"),
+        t("providers-options.correo-argentino"),
+        t("providers-options.others"),
     ]
 
     const { setValue, getValues, formState: { errors } } = useFormContext<CreateStoreFormValues>()
@@ -65,11 +67,11 @@ export function ShippingMethodFormPanel({ method, index, onCancel, onSave }: Shi
 
             <div className="flex flex-col gap-4">
                 <InputField
-                    label="Precio envío"
+                    label={t("delivery-price")}
                     name={`${formBase}.deliveryPrice`}
                     inputMode="numeric"
                     type="number"
-                    placeholder="Ej: 1500"
+                    placeholder={t("delivery-price-placeholder")}
                     defaultValue={deliveryPrice}
                     isRequired
                     onChange={(e) => {
@@ -79,23 +81,23 @@ export function ShippingMethodFormPanel({ method, index, onCancel, onSave }: Shi
                     }}
                 />
                 <InputField
-                    label="Mín. $ envío"
+                    label={t("min-purchase")}
                     name={`${formBase}.minPurchase`}
                     inputMode="numeric"
                     type="number"
-                    placeholder="Ej: 10000"
+                    placeholder={t("min-purchase-placeholder")}
                     defaultValue={minPurchase}
                     startIcon={<DollarSign />}
-                    tooltip="El precio mínimo de una orden para que el cliente pueda realizar un pedido con envío"
+                    tooltip={t("min-purchase-tooltip")}
                     onChange={(e) => setMinPurchase(e.target.value.replace(/[^0-9]/g, ""))}
                 />
 
                 <InputField
-                    label="Mín. $ envío gratis"
+                    label={t("free-shipping-min")}
                     name={`${formBase}.freeShippingMin`}
                     inputMode="numeric"
                     type="number"
-                    placeholder="Ej: 20000"
+                    placeholder={t("free-shipping-min-placeholder")}
                     defaultValue={freeShippingMin}
                     onChange={(e) => setFreeShippingMin(e.target.value.replace(/[^0-9]/g, ""))}
                 />
@@ -105,17 +107,17 @@ export function ShippingMethodFormPanel({ method, index, onCancel, onSave }: Shi
             <div className="space-y-5">
                 <div>
                     <AnimatedTags
-                        title="Proveedores"
+                        title={t("providers")}
                         initialTags={initialTags}
                         selectedTags={selectedProviders}
                         onChange={handleProvidersChange}
                     />
                     {errors.shipping_info?.methods?.[index]?.providers && (
-                        <p className="text-sm text-red-500">Seleccioná al menos un proveedor</p>
+                        <p className="text-sm text-red-500">{t("providers-error")}</p>
                     )}
                 </div>
                 <div>
-                    <p className="text-sm font-medium">Tiempo de entrega aproximado</p>
+                    <p className="text-sm font-medium">{t("estimated-time")}</p>
                     <TimePicker
                         format="HH:mm"
                         hourStep={1}
@@ -123,7 +125,7 @@ export function ShippingMethodFormPanel({ method, index, onCancel, onSave }: Shi
                         variant="outlined"
                         size="large"
                         className="!bg-transparent !text-primary-foreground !border-muted-foreground/50 w-full"
-                        placeholder="Ej: 24-48 hs"
+                        placeholder={t("estimated-time-placeholder")}
                         value={estimatedTime ? dayjs(estimatedTime, "HH:mm") : null}
                         onChange={handleETAChange}
                     />
@@ -131,11 +133,11 @@ export function ShippingMethodFormPanel({ method, index, onCancel, onSave }: Shi
                 <div className="flex gap-2">
                     <Button className="grow" type="button" onClick={handleCancel}>
                         <Trash />
-                        Cancelar
+                        {t("cancel")}
                     </Button>
                     <Button className="grow" type="button" onClick={handleSave}>
                         <Check />
-                        Guardar
+                        {t("save")}
                     </Button>
                 </div>
             </div>

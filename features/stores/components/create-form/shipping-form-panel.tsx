@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
+import { useTranslations } from "next-intl"
 
 import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
@@ -10,6 +11,7 @@ import type { Selection } from "react-aria-components"
 
 
 export function ShippingFormPanel() {
+    const t = useTranslations("store.create-form.shipping")
 
     const { setValue, getValues, trigger, formState: { errors, isValid } } = useFormContext<CreateStoreFormValues>()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
@@ -34,15 +36,15 @@ export function ShippingFormPanel() {
         if (values.payment_info) {
             const p = values.payment_info
             const safe = {
-                payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : ["Efectivo"]
+                payment_methods: Array.isArray(p.payment_methods) ? (p.payment_methods.filter(Boolean) as string[]) : [t("payment-options.cash")]
             }
             setValue("payment_info", safe, { shouldValidate: true })
             setPaymentMethods(safe.payment_methods)
             setCtxValues({ payment_info: safe })
         } else {
-            setValue("payment_info", { payment_methods: ["Efectivo"] }, { shouldValidate: true })
-            setPaymentMethods(["Efectivo"])
-            setCtxValues({ payment_info: { payment_methods: ["Efectivo"] } })
+            setValue("payment_info", { payment_methods: [t("payment-options.cash")] }, { shouldValidate: true })
+            setPaymentMethods([t("payment-options.cash")])
+            setCtxValues({ payment_info: { payment_methods: [t("payment-options.cash")] } })
         }
 
         if (values.shipping_info) {
@@ -163,17 +165,17 @@ export function ShippingFormPanel() {
         <>
             <div className="flex flex-col gap-2">
                 <AnimatedTags
-                    initialTags={["Efectivo", "Credito", "Debito", "Mercado Pago", "Transferencia"]}
+                    initialTags={[t("payment-options.cash"), t("payment-options.credit"), t("payment-options.debit"), t("payment-options.mercado-pago"), t("payment-options.transfer")]}
                     selectedTags={paymentMethods}
                     onChange={handlePaymentTagsChange}
-                    title="Metodos de pago"
+                    title={t("payment-methods")}
                 />
                 {errors.payment_info?.payment_methods?.message && (
                     <p className="text-sm text-red-500">{errors.payment_info.payment_methods.message as string}</p>
                 )}
             </div>
             <div className="flex flex-col gap-1">
-                <p className="text-sm font-medium">Metodos de envio</p>
+                <p className="text-sm font-medium">{t("shipping-methods")}</p>
                 <DeliveryConfigPanel
                     offersDelivery={offersDelivery}
                     onSelectionChange={handleSelectionChange}

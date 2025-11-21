@@ -1579,6 +1579,156 @@
                 "error": "Error al eliminar la variante",
                 "loading": "Eliminando variante..."
             }
+        },
+        "create-form": {
+            "button": "Crear Tienda",
+            "steps": {
+                "basic": "Básico",
+                "address": "Dirección",
+                "contact": "Contacto",
+                "hours": "Horarios",
+                "delivery": "Entrega",
+                "success": "Éxito"
+            },
+            "step-tooltips": {
+                "basic": "Información básica",
+                "address": "Información de dirección",
+                "contact": "Información de contacto",
+                "hours": "Información de horarios",
+                "delivery": "Información de entrega",
+                "success": "Éxito"
+            },
+            "step-locked": "Debes completar todos los pasos anteriores requeridos para desbloquear este paso",
+            "descriptions": {
+                "step1": "Elegí un nombre, logo y métodos de envío para comenzar; podés editar los detalles de tu tienda más tarde.",
+                "step2": "Elegí si esta es una tienda física o una tienda online y agregá tu información de dirección.",
+                "step3": "Agregá tu información de contacto y enlaces de redes sociales para que los clientes puedan contactarte.",
+                "step4": "Elegí fechas y horarios de atención para que los clientes sepan cuándo estás abierto.",
+                "step5": "Elegí métodos de envío y agregá tus métodos de pago para que los clientes puedan comprar tus productos.",
+                "step6": "Creando tu tienda...",
+                "step7": "¡Todo listo! Redirigiendo..."
+            },
+            "titles": {
+                "create-store": "Crear Tienda",
+                "creating": "Creando tu tienda...",
+                "created": "Tienda creada con éxito"
+            },
+            "basic-info": {
+                "name": "Nombre",
+                "name-placeholder": "Ej: Mi Tienda",
+                "name-tooltip": "Este es el nombre de tu tienda. Se usará para identificar tu tienda en el sistema.",
+                "url": "URL",
+                "url-placeholder": "Ej: mi-tienda",
+                "url-tooltip": "Esta es la URL de tu tienda. La gente la usará para acceder a tu tienda.",
+                "description": "Descripción",
+                "description-placeholder": "Ej: Descripción de Mi Tienda"
+            },
+            "address": {
+                "store-type": "Tipo de tienda",
+                "online-store": "Tienda Online",
+                "online-store-description": "Esta es una tienda online.",
+                "physical-store": "Tienda Física",
+                "physical-store-description": "Esta es una tienda física.",
+                "address": "Dirección",
+                "address-placeholder": "Ej: Calle Principal 123",
+                "address-tooltip": "Esta es la dirección de tu tienda. Se usará para mostrar tu tienda en el mapa.",
+                "city": "Ciudad",
+                "city-placeholder": "Ej: Buenos Aires",
+                "city-tooltip": "Esta es la ciudad de tu tienda. Se usará para mostrar tu tienda en el mapa.",
+                "province": "Provincia",
+                "province-placeholder": "Ej: Buenos Aires",
+                "province-tooltip": "Esta es la provincia de tu tienda. Se usará para mostrar tu tienda en el mapa.",
+                "country": "País",
+                "country-placeholder": "Ej: Argentina",
+                "country-tooltip": "Este es el país de tu tienda. Se usará para mostrar tu tienda en el mapa."
+            },
+            "contact": {
+                "phone": "Teléfono",
+                "phone-placeholder": "Ej: 1234567890",
+                "phone-tooltip": "Este es el número de teléfono de tu tienda. Se usará para contactar tu tienda.",
+                "email": "Email",
+                "email-placeholder": "Ej: test@ejemplo.com",
+                "email-tooltip": "Este es el email de tu tienda. Se usará para contactar tu tienda.",
+                "social-media": "Redes Sociales",
+                "facebook": "Facebook",
+                "facebook-placeholder": "Ej: https://www.facebook.com/tu-pagina",
+                "facebook-tooltip": "Esta es la URL de Facebook de tu tienda. Se usará para mostrar tu tienda en Facebook.",
+                "instagram": "Instagram",
+                "instagram-placeholder": "Ej: https://www.instagram.com/tu-pagina",
+                "instagram-tooltip": "Esta es la URL de Instagram de tu tienda. Se usará para mostrar tu tienda en Instagram.",
+                "x-twitter": "X (Twitter)",
+                "x-twitter-placeholder": "Ej: https://x.com/tu-pagina",
+                "x-twitter-tooltip": "Esta es la URL de X (Twitter) de tu tienda. Se usará para mostrar tu tienda en X (Twitter)."
+            },
+            "settings": {
+                "attention-type": "Tipo de atención",
+                "24-hours": "24 Horas",
+                "24-hours-description": "Esta tienda está abierta 24 horas.",
+                "schedule": "Horario",
+                "schedule-description": "Esta tienda funciona con horario.",
+                "no-days-configured": "No hay días de atención configurados",
+                "no-days-selected": "Sin días seleccionados",
+                "opening-hours": "Horarios de apertura",
+                "add-date": "Agregar fecha",
+                "delete": "Eliminar",
+                "cancel": "Cancelar",
+                "save": "Guardar",
+                "days": {
+                    "monday": "lunes",
+                    "tuesday": "martes",
+                    "wednesday": "miercoles",
+                    "thursday": "jueves",
+                    "friday": "viernes",
+                    "saturday": "sabado",
+                    "sunday": "domingo"
+                }
+            },
+            "shipping": {
+                "payment-methods": "Métodos de pago",
+                "shipping-methods": "Métodos de envío",
+                "pickup-only": "Solo Retiro",
+                "pickup-only-description": "Esta tienda no ofrece servicio de delivery; solo retiro.",
+                "delivery-pickup": "Delivery y Retiro",
+                "delivery-pickup-description": "Esta tienda ofrece delivery además de retiro.",
+                "no-shipping-configured": "No configuraste ninguna forma de envío",
+                "add-shipping-method": "Agregar modo de envío",
+                "providers": "Proveedores",
+                "providers-error": "Seleccioná al menos un proveedor",
+                "providers-options": {
+                    "own-delivery": "Delivery propio",
+                    "oca": "OCA",
+                    "correo-argentino": "Correo Argentino",
+                    "others": "Otros"
+                },
+                "delivery-price": "Precio envío",
+                "delivery-price-placeholder": "Ej: 1500",
+                "min-purchase": "Mín. $ envío",
+                "min-purchase-placeholder": "Ej: 10000",
+                "min-purchase-tooltip": "El precio mínimo de una orden para que el cliente pueda realizar un pedido con envío",
+                "free-shipping-min": "Mín. $ envío gratis",
+                "free-shipping-min-placeholder": "Ej: 20000",
+                "estimated-time": "Tiempo de entrega aproximado",
+                "estimated-time-placeholder": "Ej: 24-48 hs",
+                "no-provider-selected": "Sin proveedor seleccionado",
+                "no-minimum": "Sin mínimo",
+                "no-free-shipping": "Sin gratis",
+                "eta-not-set": "ETA no establecido",
+                "price": "Precio",
+                "payment-options": {
+                    "cash": "Efectivo",
+                    "credit": "Credito",
+                    "debit": "Debito",
+                    "mercado-pago": "Mercado Pago",
+                    "transfer": "Transferencia"
+                },
+                "cancel": "Cancelar",
+                "save": "Guardar",
+                "delete": "Eliminar"
+            },
+            "messages": {
+                "store-created-success": "Tienda creada exitosamente",
+                "creating-store": "Creando tu tienda..."
+            }
         }
     },
     "sale": {
