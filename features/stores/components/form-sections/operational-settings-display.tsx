@@ -197,14 +197,14 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                                     )}
                                 </div>
                                 <div className="space-y-1">
-                                    <InputField
+                                   {/*  <InputField
                                         name="minimum_order_amount"
                                         label="Monto mínimo de pedido"
                                         type="number"
                                         defaultValue={branchOperationalSettings?.minimum_order_amount?.toString() || storeOperationalSettings?.minimum_order_amount?.toString() || "0"}
                                         disabled={!isEditing}
                                         placeholder="Monto mínimo de pedido"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                         </div>
