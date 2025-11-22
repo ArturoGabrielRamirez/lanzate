@@ -4,9 +4,8 @@ import { Plus } from "lucide-react"
 
 import { Empty, EmptyHeader, EmptyTitle, EmptyMedia, EmptyDescription, EmptyContent } from "@/features/shadcn/components/empty"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
-import { CreateStoreButton } from "@/features/stores/components"
+import { CreateStoreButton } from "@/features/stores/components/create-form/create-store-button"
 import { NewStoreCardProps } from "@/features/stores/types"
-/* import CreateStoreButtonNew from "@/features/stores/components/create-store-button-new" */
 
 function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
 
@@ -22,7 +21,7 @@ function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
                         <EmptyMedia variant="icon">
                             <Plus className="size-4 md:size-5 lg:size-6" />
                         </EmptyMedia>
-                        <EmptyTitle className="leading-5">
+                        <EmptyTitle className="leading-5 hidden md:block">
                             {title}
                         </EmptyTitle>
                         <EmptyDescription className="leading-4">

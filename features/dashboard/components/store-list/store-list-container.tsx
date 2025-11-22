@@ -7,7 +7,7 @@ import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { SectionContainer } from "@/features/stores/components"
 import { redirect } from "@/i18n/naviation"
 
-async function StoreListContainer() {
+async function StoreListContainer({ storeCount = 2, mandatoryAddMore = false }: { storeCount?: number, mandatoryAddMore?: boolean }) {
     const t = await getTranslations("dashboard")
 
     const { payload: user, hasError: userError } = await getUserInfo()
@@ -18,7 +18,7 @@ async function StoreListContainer() {
         return <StoreListError />
     }
 
-    const { payload: dashboardData, hasError: dashboardError } = await getDashboardStoresAction(user.id, 2)
+    const { payload: dashboardData, hasError: dashboardError } = await getDashboardStoresAction(user.id, storeCount)
 
     if (dashboardError || !dashboardData) {
         return <StoreListError />
@@ -29,6 +29,7 @@ async function StoreListContainer() {
             <StoreList
                 stores={dashboardData.stores}
                 userId={user.id}
+                mandatoryAddMore={mandatoryAddMore}
             />
         </SectionContainer>
     )

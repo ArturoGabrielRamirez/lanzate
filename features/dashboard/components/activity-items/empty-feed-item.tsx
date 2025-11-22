@@ -6,7 +6,7 @@ import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTi
 import { AccessGate } from "@/features/shadcn/components/gate";
 import { Button } from "@/features/shadcn/components/ui/button";
 import { Card, CardContent } from "@/features/shadcn/components/ui/card";
-import { CreateStoreButtonNew } from "@/features/stores/components";
+import { CreateStoreButton } from "@/features/stores/components/create-form/create-store-button";
 import { Link } from "@/i18n/naviation";
 
 async function EmptyFeedItem() {
@@ -33,10 +33,10 @@ async function EmptyFeedItem() {
                             </Button>
                             <AccessGate
                                 roles={["free", "pro", "enterprise"]}
-                                permissions={[ PERMISSIONS.CREATE_STORE ]}
+                                permissions={[PERMISSIONS.CREATE_STORE]}
                                 mode="disable"
                             >
-                                <CreateStoreButtonNew userId={user?.id || 0} />
+                                <CreateStoreButton userId={user?.id || 0} />
                             </AccessGate>
                         </div>
                     </EmptyContent>

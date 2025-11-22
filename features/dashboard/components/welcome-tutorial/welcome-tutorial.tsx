@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 import shareStoreImage from "@/features/dashboard/assets/Ecommerce web page-pana.svg"
@@ -12,45 +13,27 @@ import { Button } from "@/features/shadcn/components/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 import { useStep } from "@/features/shadcn/hooks/use-step"
 import { SectionContainer } from "@/features/stores/components"
+import { CreateStoreButton } from "@/features/stores/components/create-form/create-store-button"
 
-function WelcomeTutorial() {
+function WelcomeTutorial({ userId }: { userId: number }) {
 
+    const t = useTranslations("dashboard.welcome-tutorial")
     const [open, setOpen] = useState(false)
     const [currentStep, { goToNextStep, goToPrevStep, setStep }] = useStep(4)
 
     const images = [welcomeImage, createStoreImage, createProductImage, shareStoreImage]
-    const texts = [
-        {
-            title: "Bienvenido!",
+    
+    const getStepTexts = (step: number) => {
+        const stepKey = step.toString() as "1" | "2" | "3" | "4"
+        return {
+            title: t(`steps.${stepKey}.title`),
             descriptions: [
-                "Este es un breve tutorial para ayudarte a comenzar con tu negocio.",
-                "Una vez que hayas completado el tutorial, podrás comenzar a usar Lanzate.",
-
-            ]
-        },
-        {
-            title: "Creá una tienda",
-            descriptions: [
-                "Creá una tienda para comenzar a vender tus productos.",
-                "Elegí un nombre, logo y métodos de envío para comenzar; podés editar los detalles de tu tienda más tarde.",
-            ]
-        },
-        {
-            title: "Crear un producto",
-            descriptions: [
-                "Agregá productos a tu tienda para comenzar a vender.",
-                "Agregá tantos detalles como desees, como imágenes, descripciones, precios y más.",
-            ]
-        },
-        {
-            title: "Compartí tu tienda",
-            descriptions: [
-                "Compartí el enlace personalizado de tu tienda con tus clientes.",
-                "Ellos podrán ver tus productos, agregarlos a su carrito y finalizar la compra fácilmente.",
-                "También podés compartir tu tienda en redes sociales, enviarla a clientes o agregarla a tus tarjetas de presentación.",
+                t(`steps.${stepKey}.descriptions.0`),
+                t(`steps.${stepKey}.descriptions.1`),
+                ...(step === 4 ? [t(`steps.${stepKey}.descriptions.2`)] : [])
             ]
         }
-    ]
+    }
 
     useEffect(() => {
         const tutorialFinished = localStorage.getItem("tutorial-finished")
@@ -59,6 +42,7 @@ function WelcomeTutorial() {
         } else {
             setOpen(true)
         }
+        
     }, [])
 
     const handleFinishTutorial = () => {
@@ -72,44 +56,50 @@ function WelcomeTutorial() {
         setStep(1)
     }
 
+    const currentTexts = getStepTexts(currentStep)
+
     return (
-        <SectionContainer title="Feeling lost?">
+        <SectionContainer title={t("section-title")}>
             <WelcomeTutorialWidget onRetakeTutorial={handleRetakeTutorial} />
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="w-full !max-w-full h-full md:!max-w-lg md:h-auto rounded-none md:rounded-lg">
+                <DialogContent className="w-full !max-w-full h-full md:!max-w-lg md:h-auto rounded-none md:!rounded-lg">
                     <DialogHeader>
-                        <DialogTitle>Bienvenido a Lanzate!</DialogTitle>
+                        <DialogTitle>{t("dialog-title")}</DialogTitle>
                     </DialogHeader>
 
                     <div className="text-center md:text-left">
                         <div className="relative w-full aspect-video my-8">
-                            <Image src={images[currentStep - 1]} alt="Welcome Image" fill objectFit="cover" />
+                            <Image src={images[currentStep - 1]} alt={t("alt-image")} fill objectFit="cover" />
                         </div>
                         <p className="text-3xl font-bold mb-6">
-                            {texts[currentStep - 1].title}
+                            {currentTexts.title}
                         </p>
-                        <p className="text-lg mb-2 text-balance text-muted-foreground">
-                            {texts[currentStep - 1].descriptions[0]}
-                        </p>
-                        <p className="text-lg text-balance text-muted-foreground">
-                            {texts[currentStep - 1].descriptions[1]}
-                        </p>
+                        {currentTexts.descriptions.map((description, index) => (
+                            <p key={index} className="mb-2 text-balance text-muted-foreground">
+                                {description}
+                            </p>
+                        ))}
+                        {currentStep === 2 && (
+                            <div className="mt-6 flex justify-center md:justify-start">
+                                <CreateStoreButton userId={userId} />
+                            </div>
+                        )}
                     </div>
 
                     <DialogFooter className="!flex-col justify-end md:!flex-row">
                         {currentStep > 1 && (
                             <Button onClick={goToPrevStep} variant="secondary">
-                                Anterior
+                                {t("buttons.previous")}
                             </Button>
                         )}
                         {currentStep < 4 && (
                             <Button onClick={goToNextStep}>
-                                Siguiente
+                                {t("buttons.next")}
                             </Button>
                         )}
                         {currentStep === 4 && (
                             <Button onClick={handleFinishTutorial}>
-                                Finalizar Tutorial
+                                {t("buttons.finish")}
                             </Button>
                         )}
                     </DialogFooter>

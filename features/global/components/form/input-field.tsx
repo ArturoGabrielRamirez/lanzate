@@ -102,7 +102,7 @@ function InputField({
                                 onChange={handleChange}
                             />
                             {endText && (
-                                <InputGroupText>
+                                <InputGroupText className="pr-2">
                                     {endText}
                                 </InputGroupText>
                             )}

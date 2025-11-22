@@ -378,7 +378,7 @@ export type CreateStoreShippingMethod = {
     minPurchase: string
     freeShippingMin: string
     estimatedTime: string
-    deliveryPrice?: string
+    deliveryPrice: string
 }
 
 export type AttentionDateFormPanelProps = {
@@ -403,8 +403,8 @@ export type StepIndicatorProps = {
 }
 
 export type CreateStoreFormProps = {
-    setStep: (step: number) => void
-    step: number
+    /* setStep: (step: number) => void */
+    /* step: number */
     onSubmitAll: (data: CreateStoreFormValues) => Promise<ActionResult>
 }
 
@@ -438,6 +438,11 @@ export type CreateStoreContextType = {
     setValues: (partial: Partial<CreateStoreFormValues>) => void
     isStepValid: Record<number, boolean>
     setStepValid: (step: number, valid: boolean) => void
+    step: number
+    setStep: (step: number) => void
+    isOpen: boolean
+    openDialog: () => void
+    closeDialog: () => void
 }
 
 export type DeliverySwitchProps = {
@@ -644,5 +649,5 @@ export type ShippingMethod = {
     minPurchase: string        // Requerido
     freeShippingMin: string    // Requerido
     estimatedTime: string      // Requerido
-    deliveryPrice?: string     // Opcional
+    deliveryPrice: string      // Requerido
 }
