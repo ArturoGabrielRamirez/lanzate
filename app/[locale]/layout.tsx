@@ -19,7 +19,7 @@ export default async function RootLayout({ children, params }: LayoutType) {
 
   const { locale } = await params;
   const { payload: user } = await getCurrentUserPermissionsAction();
-  
+
   return (
     <NextThemeProvider
       attribute="class"
@@ -55,7 +55,7 @@ export default async function RootLayout({ children, params }: LayoutType) {
                       {children}
                       <ChatDoc />
                       <GlobalEmailConfirmationDetector />
-                      <Toaster position="top-center" />
+                      <Toaster position="top-center" richColors />
                     </>
                   )}
                 />
