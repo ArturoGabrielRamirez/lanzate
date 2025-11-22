@@ -1,7 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { useEffect } from "react"
+/* import { useEffect } from "react" */
 import { toast } from "sonner"
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
@@ -13,11 +13,10 @@ import { processOpeningHours, processPaymentMethods, processShippingMethods } fr
 
 export function CreateStoreContent({ userId }: { userId: number }) {
 
-    const { step, setStep, closeDialog } = useCreateStoreContext()
+    const { step, setStep/* , closeDialog  */} = useCreateStoreContext()
     const t = useTranslations("store.create-form")
 
-    // Handle timeout to reset to step 1 after step 7 (success)
-    useEffect(() => {
+/*     useEffect(() => {
         if (step === 7) {
             const timeout = setTimeout(() => {
                 setStep(1)
@@ -26,7 +25,7 @@ export function CreateStoreContent({ userId }: { userId: number }) {
 
             return () => clearTimeout(timeout)
         }
-    }, [step, setStep, closeDialog])
+    }, [step, setStep, closeDialog]) */
 
     const handleCreateStore = async (data: CreateStoreFormValues) => {
         const isPhysical = !!data.address_info?.is_physical_store

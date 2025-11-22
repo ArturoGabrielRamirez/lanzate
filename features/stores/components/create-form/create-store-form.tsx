@@ -4,24 +4,24 @@ import { useTranslations } from "next-intl"
 
 import { Form } from "@/features/global/components/form/form"
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
-import { AddressFormPanel } from "@/features/stores/components/create-form/address-form-panel"
+/* import { AddressFormPanel } from "@/features/stores/components/create-form/address-form-panel" */
 import { BasicInfoFormPanel } from "@/features/stores/components/create-form/basic-info-form-panel"
-import { ContactFormPanel } from "@/features/stores/components/create-form/contact-form-panel"
+/* import { ContactFormPanel } from "@/features/stores/components/create-form/contact-form-panel" */
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { SettingsFormPanel } from "@/features/stores/components/create-form/settings-form-panel"
-import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel"
+/* import { SettingsFormPanel } from "@/features/stores/components/create-form/settings-form-panel" */
+/* import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel" */
 import { StepIndicator } from "@/features/stores/components/create-form/step-indicator"
 import {
-    addressInfoSchema,
-    AddressInfoFormType,
+/*     addressInfoSchema,
+    AddressInfoFormType, */
     BasicInfoFormType,
     basicInfoSchemaNew,
-    ContactInfoFormType,
+/*     ContactInfoFormType,
     contactInfoSchema,
     SettingsFormType,
     settingsSchema,
     ShippingPaymentFormType,
-    shippingPaymentSchema
+    shippingPaymentSchema */
 } from "@/features/stores/schemas"
 import { CreateStoreFormProps, CreateStoreFormValues } from "@/features/stores/types"
 
@@ -29,7 +29,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
 
     const { isStepValid, values, step, setStep } = useCreateStoreContext()
     const t = useTranslations("store.create-form")
-    const isValid = !!isStepValid[step]
+    /* const isValid = !!isStepValid[step] */
 
     const allowedMaxStep = (() => {
         let max = 1
@@ -62,9 +62,6 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                     />
                 )
             }}
-            nextButtonProps={{
-                disabled: !isValid,
-            }}
         >
             <Step>
                 <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchemaNew as never)}>
@@ -72,24 +69,24 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                 </Form>
             </Step>
             <Step>
-                <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
+                {/* <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
                     <AddressFormPanel />
-                </Form>
+                </Form> */}
             </Step>
             <Step>
-                <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
+                {/* <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
                     <ContactFormPanel />
-                </Form>
+                </Form> */}
             </Step>
             <Step>
-                <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
+                {/* <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
                     <SettingsFormPanel />
-                </Form>
+                </Form> */}
             </Step>
             <Step>
-                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+                {/* <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
                     <ShippingFormPanel />
-                </Form>
+                </Form> */}
             </Step>
             {step === 6 && (
                 <Step className="!p-0 !pt-10 !pb-2">
