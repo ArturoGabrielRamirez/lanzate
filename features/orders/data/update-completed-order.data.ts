@@ -107,5 +107,5 @@ export async function updateCompletedOrderData({ orderId }: UpdateCompletedOrder
     //     await sendSatisfactionSurvey(updatedOrder)
     // }
 
-    return formatSuccessResponse("El pedido finalizó con éxito.")
+    return formatSuccessResponse("El pedido finalizó con éxito.", updatedOrder)
 } 
