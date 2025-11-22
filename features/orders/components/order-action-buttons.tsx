@@ -22,10 +22,10 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
 
         if (isPending) return
 
-        toast.loading("Updating order tracking...")
+        toast.loading("Actualizando el seguimiento de la orden...")
 
         if (isCompleted) {
-            toast.error("Order is already completed")
+            toast.error("La orden ya está completada. No se puede actualizar el seguimiento.")
             return
         }
 
@@ -40,11 +40,11 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
                     throw new Error(message)
                 }
                 toast.dismiss()
-                toast.success("Order tracking updated successfully")
+                toast.success("Seguimiento de la orden actualizado con éxito")
             } catch (error) {
                 console.error("Error updating order tracking:", error)
                 toast.dismiss()
-                toast.error("Failed to update order tracking")
+                toast.error("Error al actualizar el seguimiento de la orden")
             }
         })
     }
@@ -53,7 +53,7 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
 
         if (isFinalizing) return
 
-        toast.loading("Finalizing order...")
+        toast.loading("Finalizando orden...")
 
         startFinalizeTransition(async () => {
             try {
@@ -67,11 +67,11 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
                     throw new Error(message)
                 }
                 toast.dismiss()
-                toast.success(`Order successfully finalized! The order has been marked as ${isPickup ? "picked up" : "delivered"}.`)
+                toast.success(`¡Orden finalizada con éxito! La orden fue marcada como ${isPickup ? "recogida" : "entregada"}.`)
             } catch (error) {
                 console.error("Error finalizing order:", error)
                 toast.dismiss()
-                toast.error("Failed to finalize order")
+                toast.error("Error al finalizar la orden")
             }
         })
     }
@@ -88,7 +88,7 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
                             variant="outline"
                         >
                             <Clock className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "Lista para retirar"}
+                            {isPending ? "Actualizando..." : "Lista para retirar"}
                         </Button>
                     )}
                     {currentTrackingStatus === "WAITING_FOR_PICKUP" && (
@@ -99,7 +99,7 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
                             variant="outline"
                         >
                             <Package className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "Volver a Preparar"}
+                            {isPending ? "Actualizando..." : "Volver a Preparar"}
                         </Button>
                     )}
 
@@ -115,7 +115,7 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
                             variant="outline"
                         >
                             <Package className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "Esperando Delivery"}
+                            {isPending ? "Actualizando..." : "Esperando Delivery"}
                         </Button>
                     )}
                     {currentTrackingStatus === "WAITING_FOR_DELIVERY" && (
@@ -126,7 +126,7 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
                             variant="outline"
                         >
                             <Truck className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "En Camino"}
+                            {isPending ? "Actualizando..." : "En Camino"}
                         </Button>
                     )}
                     {currentTrackingStatus === "ON_THE_WAY" && (
@@ -137,7 +137,7 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
                             variant="outline"
                         >
                             <CheckCircle2 className="w-4 h-4 mr-2" />
-                            {isPending ? "Updating..." : "Entregado"}
+                            {isPending ? "Actualizando..." : "Entregado"}
                         </Button>
                     )}
                 </>
@@ -149,7 +149,7 @@ function OrderActionButtons({ order }: OrderActionButtonsProps) {
                 variant="default"
             >
                 <CheckCircle2 className="w-4 h-4 mr-2" />
-                {isFinalizing ? "Finalizing..." : "Finalizar"}
+                {isFinalizing ? "Finalizando..." : "Finalizar"}
             </Button>
         </div>
     )

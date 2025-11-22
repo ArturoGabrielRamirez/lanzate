@@ -17,43 +17,43 @@ function OrderTimeline({ order }: OrderTimelineProps) {
                 <div className="grow flex flex-col justify-center items-center text-center">
                     {order.status === "PROCESSING" && (
                         <>
-                            <p className="text-lg font-bold">New order placed</p>
-                            <p className="text-muted-foreground mb-4">A new order was just placed. Check you have enough in-store stock and confirm the order!</p>
+                            <p className="text-lg font-bold">Nuevo pedido realizado</p>
+                            <p className="text-muted-foreground mb-4">Un nuevo pedido acaba de realizarse. Verificá que tengas suficiente stock en la tienda y confirmá el pedido.</p>
                             <ConfirmOrderButton order={order} canUpdateOrders={true} />
                         </>
                     )}
                     {order.status === "READY" && order.tracking?.tracking_status === "PREPARING_ORDER" && (
                         <>
-                            <p className="text-lg font-bold">Order confirmed</p>
-                            <p className="text-muted-foreground mb-4">The order was just marked as confirmed. You should start packing the order!</p>
+                            <p className="text-lg font-bold">Pedido confirmado</p>
+                            <p className="text-muted-foreground mb-4">El pedido acaba de ser confirmado. ¡Deberías comenzar a prepararlo!</p>
                             <OrderReadyButton order={order} />
                         </>
                     )}
                     {order.status === "READY" && order.tracking?.tracking_status === "WAITING_FOR_PICKUP" && (
                         <>
-                            <p className="text-lg font-bold">Ready for pickup</p>
-                            <p className="text-muted-foreground mb-4">The order is at store waiting for the customer to pick it up. You should contact the customer if it&apos;s been more than 10 minutes and the order hasn&apos;t been picked up.</p>
+                            <p className="text-lg font-bold">Listo para retirar</p>
+                            <p className="text-muted-foreground mb-4">El pedido está en la tienda esperando que el cliente lo retire.</p>
                             <FinalizeOrderButton order={order} />
                         </>
                     )}
                     {order.status === "READY" && order.tracking?.tracking_status === "WAITING_FOR_DELIVERY" && (
                         <>
-                            <p className="text-lg font-bold">Ready for delivery</p>
-                            <p className="text-muted-foreground mb-4">The store is waiting for the delivery driver to pick up the order. You should contact the delivery driver if it&apos;s been more than 10 minutes and the order hasn&apos;t been picked up.</p>
+                            <p className="text-lg font-bold">Listo para la entrega</p>
+                            <p className="text-muted-foreground mb-4">La tienda está esperando que el repartidor recoja el pedido.</p>
                             <PickedUpOrderButton order={order} />
                         </>
                     )}
                     {order.status === "READY" && order.tracking?.tracking_status === "ON_THE_WAY" && (
                         <>
-                            <p className="text-lg font-bold">On the way</p>
-                            <p className="text-muted-foreground mb-4">The order is on the way to the customer&apos;s address. You should contact the customer if it&apos;s been more than 15 minutes and the order hasn&apos;t arrived yet.</p>
+                            <p className="text-lg font-bold">En camino</p>
+                            <p className="text-muted-foreground mb-4">El pedido está en camino a la dirección del cliente.</p>
                             <FinalizeOrderButton order={order} />
                         </>
                     )}
                     {order.status === "COMPLETED" && (
                         <>
-                            <p className="text-lg font-bold">Order completed</p>
-                            <p className="text-muted-foreground mb-4">The order has been completed. You should contact the customer if they have any issues with the order.</p>
+                            <p className="text-lg font-bold">Pedido completado</p>
+                            <p className="text-muted-foreground mb-4">El pedido está completado.</p>
                         </>
                     )}
                 </div>

@@ -6,11 +6,11 @@ import { getOrderByIdData } from "@/features/orders/data/get-order-by-id.data"
 export async function getOrderByIdAction(orderId: number, userId: number) {
     return actionWrapper(async () => {
         if (!orderId) {
-            throw new Error("Order ID is required")
+            throw new Error("Se requiere el ID de la orden")
         }
 
         if (!userId) {
-            throw new Error("User ID is required")
+            throw new Error("Se requiere el ID del usuario")
         }
 
         const { payload, hasError: error, message } = await getOrderByIdData(orderId, userId)

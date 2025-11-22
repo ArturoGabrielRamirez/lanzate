@@ -22,5 +22,5 @@ export async function updateVariantSizesData(variantId: number, data: UpdateVari
         revalidatePath(`/stores/${ref.product.store.slug}/products/${ref.product.id}/${variantId}`, "page")
     }
 
-    return { hasError: false, message: "Variant sizes updated successfully", payload: variant }
+    return { hasError: false, message: "Variante actualizada correctamente", payload: variant }
 }

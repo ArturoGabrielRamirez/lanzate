@@ -12,7 +12,7 @@ export async function createProductMediaData(
     const mediaType = getMediaType(type, file.type)
 
     if (!mediaType) {
-        throw new Error('Tipo de media no válido')
+        throw new Error('Tipo de multimédia inválido')
     }
 
     const lastMedia = await prisma.productMedia.findFirst({

@@ -16,7 +16,7 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
         }
     })
 
-    if (existingSlugStore) throw new Error("The store slug (Internal URL) already exists. Try another one.")
+    if (existingSlugStore) throw new Error("El identificador legible de la tienda (URL interna) ya existe. Intentá con otro  .")
 
     const existingSubdomain = await prisma.store.findUnique({
         where: {
@@ -24,7 +24,7 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
         }
     })
 
-    if (existingSubdomain) throw new Error("The store subdomain (Public URL) already exists. Try another one.")
+    if (existingSubdomain) throw new Error("El subdominio de la tienda (URL pública) ya existe. Intentá con otro.")
 
     // Obtener las categorías por defecto del sistema
     const defaultCategories = await prisma.defaultCategory.findMany({
@@ -44,8 +44,8 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
     }
 
     const branchData: ExtendedBranchCreate = {
-        name: "Main Branch",
-        description: "Main starter branch",
+        name: "Sucursal principal",
+        description: "Sucursal inicial de la tienda",
         address: payload.address_info.address || null,
         city: payload.address_info.city || null,
         province: payload.address_info.province || null,
@@ -111,7 +111,7 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
     })
 
     return {
-        message: "Store created successfully",
+        message: "Tienda creada con éxito",
         payload: store,
         hasError: false
     }

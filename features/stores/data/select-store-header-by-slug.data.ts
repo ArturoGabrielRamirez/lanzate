@@ -22,11 +22,11 @@ export async function selectStoreHeaderBySlugData(slug: string) {
     })
 
     if (!store) {
-        throw new Error("Store not found")
+        throw new Error("Tienda no encontrada")
     }
 
     return {
-        message: "Store header fetched successfully from db",
+        message: "Banner de la tienda recuperado con éxito desde la base de datos",
         payload: store,
         hasError: false
     }

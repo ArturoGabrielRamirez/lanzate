@@ -21,33 +21,33 @@ function WelcomeTutorial() {
     const images = [welcomeImage, createStoreImage, createProductImage, shareStoreImage]
     const texts = [
         {
-            title: "Welcome!",
+            title: "Bienvenido!",
             descriptions: [
-                "This is a brief tutorial to help you get started with your business.",
-                "Once you have completed the tutorial, you will be able to start using Lanzate.",
+                "Este es un breve tutorial para ayudarte a comenzar con tu negocio.",
+                "Una vez que hayas completado el tutorial, podrás comenzar a usar Lanzate.",
 
             ]
         },
         {
-            title: "Create a store",
+            title: "Creá una tienda",
             descriptions: [
-                "Create a store to start selling your products.",
-                "Choose a name, logo and shipping methods to get started; you can edit your store details later.",
+                "Creá una tienda para comenzar a vender tus productos.",
+                "Elegí un nombre, logo y métodos de envío para comenzar; podés editar los detalles de tu tienda más tarde.",
             ]
         },
         {
-            title: "Create a product",
+            title: "Crear un producto",
             descriptions: [
-                "Add products to your store to start selling.",
-                "Add as many details as you want such as images, descriptions, prices, and more.",
+                "Agregá productos a tu tienda para comenzar a vender.",
+                "Agregá tantos detalles como desees, como imágenes, descripciones, precios y más.",
             ]
         },
         {
-            title: "Share your store",
+            title: "Compartí tu tienda",
             descriptions: [
-                "Share your store's custom link with your customers!",
-                "They'll be able to see your products, add them to their cart, and checkout with ease.",
-                "You can also share your store on social media, send it to customers, or add it to your business cards.",
+                "Compartí el enlace personalizado de tu tienda con tus clientes.",
+                "Ellos podrán ver tus productos, agregarlos a su carrito y finalizar la compra fácilmente.",
+                "También podés compartir tu tienda en redes sociales, enviarla a clientes o agregarla a tus tarjetas de presentación.",
             ]
         }
     ]
@@ -78,7 +78,7 @@ function WelcomeTutorial() {
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="w-full !max-w-full h-full md:!max-w-lg md:h-auto rounded-none md:rounded-lg">
                     <DialogHeader>
-                        <DialogTitle>Welcome to Lanzate!</DialogTitle>
+                        <DialogTitle>Bienvenido a Lanzate!</DialogTitle>
                     </DialogHeader>
 
                     <div className="text-center md:text-left">
@@ -99,17 +99,17 @@ function WelcomeTutorial() {
                     <DialogFooter className="!flex-col justify-end md:!flex-row">
                         {currentStep > 1 && (
                             <Button onClick={goToPrevStep} variant="secondary">
-                                Previous
+                                Anterior
                             </Button>
                         )}
                         {currentStep < 4 && (
                             <Button onClick={goToNextStep}>
-                                Next
+                                Siguiente
                             </Button>
                         )}
                         {currentStep === 4 && (
                             <Button onClick={handleFinishTutorial}>
-                                Finish Tutorial
+                                Finalizar Tutorial
                             </Button>
                         )}
                     </DialogFooter>

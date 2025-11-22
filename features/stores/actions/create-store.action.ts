@@ -17,7 +17,7 @@ export async function createStoreAction(payload: ProcessedCreateStoreData, userI
         const canCreate = await canCreateStore(userId)
 
         //Throw error if user's account is not allowed
-        if (!canCreate) throw new Error("Free plan limit reached")
+        if (!canCreate) throw new Error("Se alcanzó el límite del plan gratuito para esta cuenta. Actualizá tu plan para crear más tiendas.")
 
         //Verify slug and subdomain availability
         //Create store record
@@ -37,15 +37,15 @@ export async function createStoreAction(payload: ProcessedCreateStoreData, userI
             entity_type: "STORE",
             entity_id: newStore.id,
             user_id: userId,
-            action_initiator: "Create store button",
-            details: "User created a new store using the button"
+            action_initiator: "Se creó una nueva tienda",
+            details: "El usuario creó una nueva tienda usando el botón de creación de tienda."
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear un registro de esta.")
 
         return {
             hasError: false,
-            message: "Store created successfully",
+            message: "Tienda creada exitosamente",
             payload: newStore
         }
 

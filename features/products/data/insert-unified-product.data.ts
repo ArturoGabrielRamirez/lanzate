@@ -33,9 +33,9 @@ export async function insertUnifiedProductData(args: UnifiedArgs) {
     const result = await prisma.$transaction(async (tx) => {
         // 1) Validate store and main branch
         const store = await tx.store.findUnique({ where: { id: args.targetStoreId } })
-        if (!store) throw new Error("Store not found")
+        if (!store) throw new Error("Tienda no encontrada")
         const branches = await tx.branch.findMany({ where: { store_id: store.id } })
-        if (!branches || branches.length === 0) throw new Error("No branches found for store")
+        if (!branches || branches.length === 0) throw new Error("No se encontraron sucursales para la tienda")
 
         // 2) Create product
         // Generar un slug base y verificar si existe

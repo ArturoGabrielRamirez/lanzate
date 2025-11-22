@@ -28,11 +28,11 @@ export function validateResendParams(params: ResendEmailParams): string | null {
 
 function validateEmailRequirement(params: ResendEmailParams): string | null {
     if (['signup', 'recovery'].includes(params.type) && !params.email) {
-        return `El campo "email" es requerido para el tipo "${params.type}"`;
+        return `El campo "correo electrónico" es requerido para el tipo "${params.type}"`;
     }
 
     if (params.email && !isValidEmail(params.email)) {
-        return 'El formato del email es inválido';
+        return 'El formato del correo electrónico no es válido';
     }
 
     return null;
@@ -41,7 +41,7 @@ function validateEmailRequirement(params: ResendEmailParams): string | null {
 function validateStep(params: ResendEmailParams): string | null {
     if (params.type === 'email_change' && params.step) {
         if (!VALID_STEPS.includes(params.step)) {
-            return `Step inválido. Debe ser uno de: ${VALID_STEPS.join(', ')}`;
+            return `El campo "step" debe ser uno de: ${VALID_STEPS.join(', ')}`;
         }
     }
     return null;

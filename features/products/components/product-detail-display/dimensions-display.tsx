@@ -124,7 +124,7 @@ function DimensionsDisplay({ product }: DimensionsDisplayProps) {
                             <div className="border-2 border-dashed border-muted-foreground/25 rounded-md p-4 text-center">
                                 <Ruler className="size-8 mx-auto text-muted-foreground mb-2" />
                                 <p className="text-sm text-muted-foreground">
-                                    Especifica las dimensiones del producto
+                                    Especificá las dimensiones del producto
                                 </p>
                             </div>
                         </div>

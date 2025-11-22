@@ -148,7 +148,7 @@ export function DeletionStatusCard({
                     <Clock className={`h-3 w-3 ${actionColors.icon}`} />
                     <AlertDescription className="text-gray-300 text-xs">
                         <span className={`font-medium ${actionColors.text}`}>⚠️ Últimos minutos:</span>{' '}
-                        La eliminación es inminente. Actúa ahora si quieres cancelar.
+                        La eliminación es inminente. Actuá ahora si querés cancelar la eliminación permanente.
                     </AlertDescription>
                 </Alert>
             )}

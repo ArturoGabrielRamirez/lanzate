@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
 
     const supabase = createServerSideClient()
 
-    const { error: uploadError } = await (await supabase).storage
+    const { error: uploadError } = await supabase.storage
       .from('store-banners')
       .upload(fileName, buffer, { contentType: file.type, upsert: true })
 
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Error subiendo archivo', details: uploadError.message }, { status: 500 })
     }
 
-    const { data: publicUrlData } = (await supabase).storage
+    const { data: publicUrlData } = supabase.storage
       .from('store-banners')
       .getPublicUrl(fileName)
 

@@ -209,7 +209,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
 
       return {
         hasError: false,
-        message: "Order created successfully",
+        message: "Orden creada exitosamente",
         payload: payload
       }
     })

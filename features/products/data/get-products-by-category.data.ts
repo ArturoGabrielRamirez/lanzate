@@ -16,14 +16,14 @@ export async function getProductsCountByCategoryData(categoryId: number, storeId
 
         return {
             error: false,
-            message: "Products count retrieved successfully",
+            message: "Cantidad de productos obtenida correctamente",
             payload: count
         }
     } catch (error) {
         console.error("Error retrieving products count:", error)
         return {
             error: true,
-            message: "Error retrieving products count",
+            message: "Error al obtener la cantidad de productos",
             payload: null
         }
     }

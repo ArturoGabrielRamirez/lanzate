@@ -61,7 +61,7 @@ async function Overview({ slug }: OverviewTabProps) {
                                 <TrendingUp className="h-5 w-5 text-green-600" />
                                 <div>
                                     <p className="font-semibold text-sm">Ventas</p>
-                                    <p className="text-xs text-muted-foreground">Monitorea tu rendimiento</p>
+                                    <p className="text-xs text-muted-foreground">Monitoreá tu rendimiento</p>
                                 </div>
                             </div>
 
@@ -69,7 +69,7 @@ async function Overview({ slug }: OverviewTabProps) {
                                 <Package className="h-5 w-5 text-blue-600" />
                                 <div>
                                     <p className="font-semibold text-sm">Productos</p>
-                                    <p className="text-xs text-muted-foreground">Gestiona tu catálogo</p>
+                                    <p className="text-xs text-muted-foreground">Gestioná tu catálogo</p>
                                 </div>
                             </div>
 
@@ -77,15 +77,15 @@ async function Overview({ slug }: OverviewTabProps) {
                                 <Users className="h-5 w-5 text-purple-600" />
                                 <div>
                                     <p className="font-semibold text-sm">Equipo</p>
-                                    <p className="text-xs text-muted-foreground">Coordina tu personal</p>
+                                    <p className="text-xs text-muted-foreground">Coordiná tu personal</p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                                 <Sparkles className="h-5 w-5 text-orange-600" />
                                 <div>
-                                    <p className="font-semibold text-sm">Analytics</p>
-                                    <p className="text-xs text-muted-foreground">Toma decisiones inteligentes</p>
+                                    <p className="font-semibold text-sm">Estadísticas</p>
+                                    <p className="text-xs text-muted-foreground">Tomá decisiones inteligentes</p>
                                 </div>
                             </div>
                         </div>

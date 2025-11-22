@@ -24,13 +24,13 @@ export async function updateStoreAddressAction(slug: string, payload: UpdateAddr
         })
 
         if (!existingStore) {
-            throw new Error("Store not found or you don't have permission to edit it")
+            throw new Error("Tienda no encontrada o no tenés permiso para interactuar con ella")
         }
 
         const mainBranch = existingStore.branches.find((branch) => branch.is_main)
 
         if (!mainBranch) {
-            throw new Error("Main branch not found")
+            throw new Error("Sucursal principal no encontrada")
         }
 
         const updatedBranch = await prisma.branch.update({
@@ -53,7 +53,7 @@ export async function updateStoreAddressAction(slug: string, payload: UpdateAddr
         revalidatePath(`/stores/${existingStore.slug}`, "page")
 
         return {
-            message: "Address information updated successfully",
+            message: "Información de la dirección actualizada con éxito",
             payload: updatedBranch,
             hasError: false
         }

@@ -63,8 +63,8 @@ export function CanvasEditor({
                 <Alert>
                     <AlertDescription className="text-sm">
                         {editMode === 'erase'
-                            ? '✏️ Haz clic y arrastra para eliminar áreas del fondo'
-                            : '✏️ Haz clic y arrastra para restaurar áreas eliminadas'
+                            ? '✏️ Hacé clic y arrastra para eliminar áreas del fondo'
+                            : '✏️ Hacé clic y arrastra para restaurar áreas eliminadas'
                         }
                     </AlertDescription>
                 </Alert>

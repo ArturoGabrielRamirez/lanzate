@@ -15,13 +15,13 @@ export async function canEditBranch(branchId: number, userId: number) {
             }
         })
 
-        if (!branch) throw new Error("Branch not found")
+        if (!branch) throw new Error("Sucursal no encontrada")
 
         const isOwner = branch.store.user_id === userId
 
         return {
             hasError: false,
-            message: isOwner ? "User can edit branch" : "User cannot edit branch",
+            message: isOwner ? "El usuario puede editar la sucursal" : "El usuario no puede editar la sucursal",
             payload: isOwner
         }
     })

@@ -9,7 +9,7 @@ export const generateChallenges = (followersCount: number, followingCount: numbe
             challenges.push({
                 id: 'first_follower',
                 title: 'Primer seguidor',
-                description: 'Consigue tu primer seguidor',
+                description: 'Consegí a tu primer seguidor',
                 progress: 0,
                 max: 1,
                 reward: '+10 pts',
@@ -20,7 +20,7 @@ export const generateChallenges = (followersCount: number, followingCount: numbe
             challenges.push({
                 id: 'reach_10_followers',
                 title: 'Comunidad inicial',
-                description: 'Alcanza 10 seguidores',
+                description: 'Alcanzá 10 seguidores',
                 progress: followersCount,
                 max: 10,
                 reward: '+50 pts bonus',
@@ -31,7 +31,7 @@ export const generateChallenges = (followersCount: number, followingCount: numbe
             challenges.push({
                 id: 'reach_25_followers',
                 title: 'Crecimiento sólido',
-                description: 'Alcanza 25 seguidores',
+                description: 'Alcanzá 25 seguidores',
                 progress: followersCount,
                 max: 25,
                 reward: '+25 pts',
@@ -42,8 +42,8 @@ export const generateChallenges = (followersCount: number, followingCount: numbe
         if (followersCount >= 5 && followingCount < followersCount * 0.3) {
             challenges.push({
                 id: 'engage_community',
-                title: 'Conecta más',
-                description: 'Sigue a miembros de tu comunidad',
+                title: 'Conectá más',
+                description: 'Seguí a tus seguidores',
                 progress: followingCount,
                 max: Math.min(Math.floor(followersCount * 0.3), 15),
                 reward: '+15 pts',
@@ -57,7 +57,7 @@ export const generateChallenges = (followersCount: number, followingCount: numbe
             challenges.push({
                 id: 'discover_products',
                 title: 'Explorar productos',
-                description: 'Dale me gusta a productos',
+                description: 'Indicá que te gustan productos',
                 progress: likesCount,
                 max: 10,
                 reward: '+10 pts',

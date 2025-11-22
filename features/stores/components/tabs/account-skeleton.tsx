@@ -1,4 +1,4 @@
-import { Store, Settings, Phone, MessageCircle, Facebook, Instagram, Twitter, DollarSign, Truck } from "lucide-react"
+import { Store, Settings, Phone, MessageCircle, Facebook, Instagram, Twitter, DollarSign, Truck } from "lucide-react"//TODO: deprecaron social icons
 import * as motion from "motion/react-client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"

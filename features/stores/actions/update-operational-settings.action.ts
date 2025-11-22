@@ -15,7 +15,7 @@ export async function updateOperationalSettingsAction(storeId: number, payload: 
         revalidatePath(`/stores/${storeId}/account`)
 
         return {
-            message: "Operational settings updated successfully",
+            message: "Configuración operativa actualizada con éxito",
             payload: updatedPayload,
             hasError: false
         }

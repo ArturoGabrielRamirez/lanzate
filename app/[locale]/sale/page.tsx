@@ -7,8 +7,8 @@ import { getTranslations } from "next-intl/server"
 /* import { Title } from "@/features/layout/components" */
 
 export const metadata: Metadata = {
-    title: "New sale",
-    description: "New sale"
+    title: "Nueva venta",
+    description: "Nueva venta en el punto de venta"
 }
 
 async function SalePage() {

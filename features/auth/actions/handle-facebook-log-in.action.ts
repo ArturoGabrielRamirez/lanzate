@@ -26,7 +26,7 @@ export async function handleFacebookLoginAction() {
 
         return {
             hasError: false,
-            message: 'Facebook login initiated successfully',
+            message: 'Se inició sesión con Facebook correctamente',
             payload: { url: facebookData.url, subdomain }
         }
     })

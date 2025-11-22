@@ -7,7 +7,6 @@ import { WaitlistWelcomeProps } from '@/features/global/types'
 const logoUrl = "https://lanzate.app/logo.png";
 
 
-
 export function WaitlistWelcome({ recipientEmail }: WaitlistWelcomeProps) {
     return (
         <Html lang="es">
@@ -41,8 +40,8 @@ export function WaitlistWelcome({ recipientEmail }: WaitlistWelcomeProps) {
                                 ¡Hola! 👋
                             </Text>
                             <Text className="text-gray-300 leading-relaxed mb-4">
-                                Gracias por tu interés en <strong className="text-[#e56c43]">Lanzate</strong>. 
-                                Hemos añadido tu correo <strong className="text-[#e56c43]">{recipientEmail}</strong> a 
+                                Gracias por tu interés en <strong className="text-[#e56c43]">Lanzate</strong>.
+                                Hemos añadido tu correo <strong className="text-[#e56c43]">{recipientEmail}</strong> a
                                 nuestra lista de espera.
                             </Text>
                             <Text className="text-gray-300 leading-relaxed mb-4">
@@ -63,7 +62,7 @@ export function WaitlistWelcome({ recipientEmail }: WaitlistWelcomeProps) {
                             <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border={0}>
                                 <tr>
                                     <td style={{ padding: '0 8px' }}>
-                                        <a 
+                                        <a
                                             href="https://x.com/Lanzate_app"
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -83,7 +82,7 @@ export function WaitlistWelcome({ recipientEmail }: WaitlistWelcomeProps) {
                                         </a>
                                     </td>
                                     <td style={{ padding: '0 8px' }}>
-                                        <a 
+                                        <a
                                             href="https://www.facebook.com/profile.php?id=61583496417536"
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -103,8 +102,8 @@ export function WaitlistWelcome({ recipientEmail }: WaitlistWelcomeProps) {
                                         </a>
                                     </td>
                                     <td style={{ padding: '0 8px' }}>
-                                        <a 
-                                            href="https://instagram.com/lanzate.app"
+                                        <a
+                                            href="https://www.instagram.com/lanzate_app"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             style={{
@@ -130,7 +129,7 @@ export function WaitlistWelcome({ recipientEmail }: WaitlistWelcomeProps) {
                         <Hr className="border-gray-700 my-6" />
                         <Section className="text-center">
                             <div className="flex items-center justify-center gap-2 mb-2">
-                                <Img 
+                                <Img
                                     src={logoUrl}
                                     width="16"
                                     height="16"
@@ -145,12 +144,12 @@ export function WaitlistWelcome({ recipientEmail }: WaitlistWelcomeProps) {
                                 </Text>
                             </div>
                             <Text className="text-xs text-gray-600 m-0">
-                                {new Date().toLocaleDateString("es-ES", { 
-                                    year: "numeric", 
-                                    month: "long", 
-                                    day: "numeric", 
-                                    hour: "2-digit", 
-                                    minute: "2-digit" 
+                                {new Date().toLocaleDateString("es-ES", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit"
                                 })}
                             </Text>
                         </Section>

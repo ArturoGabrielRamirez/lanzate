@@ -10,7 +10,7 @@ export async function getEmployeesFromStoreAction(slug: string) {
         const { payload: employees, hasError: employeesError, message: employeesMessage } = await selectEmployeesFromStoreData(Number(store.id))
         if (employeesError || !employees) throw new Error(employeesMessage)
         return {
-            message: "Employees fetched successfully",
+            message: "Empleados obtenidos con éxito",
             payload: employees,
             hasError: false
         }

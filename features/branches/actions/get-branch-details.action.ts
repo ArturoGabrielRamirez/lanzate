@@ -7,7 +7,7 @@ export async function getBranchDetailsAction(id: string) {
     return actionWrapper(async () => {
         const parsedId = parseInt(id)
 
-        if (isNaN(parsedId)) throw new Error("Invalid branch id")
+        if (isNaN(parsedId)) throw new Error("ID de sucursal inválido")
 
         const { payload: branch, hasError, message } = await selectBranchByIdData({ id: parsedId })
 
@@ -16,7 +16,7 @@ export async function getBranchDetailsAction(id: string) {
         return {
             payload: branch,
             hasError: false,
-            message: "Branch details fetched successfully"
+            message: "Detalles de la sucursal obtenidos con éxito"
         }
 
     })

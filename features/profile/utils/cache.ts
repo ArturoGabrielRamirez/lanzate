@@ -10,12 +10,12 @@ export async function revalidateCache(options: {
         })
 
         if (!response.ok) {
-            throw new Error(`Revalidation failed: ${response.statusText}`)
+            throw new Error(`Revalidación fallida: ${response.statusText}`)
         }
 
         return true
     } catch (error) {
-        console.warn('Error invalidating cache:', error)
+        console.warn('Error invalidando caché:', error)
         return false
     }
 }

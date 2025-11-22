@@ -55,7 +55,7 @@ export async function getSalesByMonthData(storeId: number) {
     }))
 
     return {
-        message: "Sales by month fetched successfully",
+        message: "Ventas por mes obtenidas correctamente",
         payload: result,
         error: false
     }

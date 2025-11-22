@@ -4,34 +4,34 @@ const lengthUnits = ["MM", "CM", "M", "IN", "FT"] as const
 const weightUnits = ["MG", "G", "KG", "OZ", "LB"] as const
 
 const productBaseSchema = {
-    name: yup.string().min(3, 'Name must be at least 3 characters long').max(50, 'Name must be less than 50 characters long').matches(/^[a-zA-Z0-9\s\.\-\_\,]+$/, 'Name must contain only letters, numbers, spaces, dots, dashes and underscores'),
+    name: yup.string().min(3, 'El nombre debe tener al menos 3 caracteres').max(50, 'El nombre debe tener menos de 50 caracteres').matches(/^[a-zA-Z0-9\s\.\-\_\,]+$/, 'El nombre solo puede contener letras, números, espacios, puntos, guiones y guiones bajos'),
     slug: yup.string()
         .trim()
         .transform((v) => (v === '' ? undefined : v))
-        .matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, { message: 'Slug must be lowercase, numbers and hyphens', excludeEmptyString: true })
-        .max(60, 'Slug must be less than 60 characters long')
+        .matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, { message: 'El slug debe contener solo minúsculas, números y guiones', excludeEmptyString: true })
+        .max(60, 'El slug debe tener menos de 60 caracteres')
         .optional(),
-    price: yup.number().min(0, 'Price must be greater than 0'),
-    stock: yup.number().min(0, 'Stock must be greater than 0'),
-    description: yup.string().max(255, 'Description must be less than 255 characters long').optional(),
+    price: yup.number().min(0, 'El precio debe ser mayor o igual a 0'),
+    stock: yup.number().min(0, 'El stock debe ser mayor o igual a 0'),
+    description: yup.string().max(255, 'La descripción debe tener menos de 255 caracteres').optional(),
     sku: yup.string()
         .trim()
         .transform((v) => (v === '' ? undefined : v))
-        .matches(/^[A-Za-z0-9\-\_\.]+$/, { message: 'SKU must be alphanumeric and can include - _ .', excludeEmptyString: true })
-        .max(64, 'SKU must be less than 64 characters long')
+        .matches(/^[A-Za-z0-9\-\_\.]+$/, { message: 'El SKU debe ser alfanumérico y puede incluir - _ .', excludeEmptyString: true })
+        .max(64, 'El SKU debe tener menos de 64 caracteresq')
         .optional(),
     barcode: yup.string()
         .trim()
         .transform((v) => (v === '' ? undefined : v))
-        .matches(/^[0-9]*$/, { message: 'Barcode must contain only numbers', excludeEmptyString: true })
-        .max(64, 'Barcode must be less than 64 characters long')
+        .matches(/^[0-9]*$/, { message: 'El código de barras debe contener solo números', excludeEmptyString: true })
+        .max(64, 'El código de barras debe tener menos de 64 caracteres')
         .optional(),
     is_active: yup.boolean().optional(),
     is_featured: yup.boolean().optional(),
     is_published: yup.boolean().optional(),
     categories: yup.array().of(yup.object({
-        value: yup.string().required('Category is required'),
-        label: yup.string().required('Category is required'),
+        value: yup.string().required('La categoría es obligatoria'),
+        label: yup.string().required('La categoría es obligatoria'),
     })).optional(),
     /* image: yup.mixed().optional(), */
 
@@ -47,51 +47,51 @@ const productBaseSchema = {
     // Optional dimensions (non-negative)
     height: yup.number()
         .transform((v, o) => (o === '' || o === null ? undefined : v))
-        .min(0, 'Height must be greater than or equal to 0')
+        .min(0, 'La altura debe ser mayor o igual a 0')
         .optional(),
     heightUnit: yup.string()
         .transform((v) => (v === '' ? undefined : v))
-        .oneOf(lengthUnits as unknown as string[], 'Invalid height unit')
+        .oneOf(lengthUnits as unknown as string[], 'Unidad de altura inválida')
         .optional(),
     width: yup.number()
         .transform((v, o) => (o === '' || o === null ? undefined : v))
-        .min(0, 'Width must be greater than or equal to 0')
+        .min(0, 'El ancho debe ser mayor o igual a 0')
         .optional(),
     widthUnit: yup.string()
         .transform((v) => (v === '' ? undefined : v))
-        .oneOf(lengthUnits as unknown as string[], 'Invalid width unit')
+        .oneOf(lengthUnits as unknown as string[], 'Unidad de ancho inválida')
         .optional(),
     depth: yup.number()
         .transform((v, o) => (o === '' || o === null ? undefined : v))
-        .min(0, 'Depth must be greater than or equal to 0')
+        .min(0, 'La profundidad debe ser mayor o igual a 0')
         .optional(),
     depthUnit: yup.string()
         .transform((v) => (v === '' ? undefined : v))
-        .oneOf(lengthUnits as unknown as string[], 'Invalid depth unit')
+        .oneOf(lengthUnits as unknown as string[], 'Unidad de profundidad inválida')
         .optional(),
     diameter: yup.number()
         .transform((v, o) => (o === '' || o === null ? undefined : v))
-        .min(0, 'Diameter must be greater than or equal to 0')
+        .min(0, 'El diámetro debe ser mayor o igual a 0')
         .optional(),
     diameterUnit: yup.string()
         .transform((v) => (v === '' ? undefined : v))
-        .oneOf(lengthUnits as unknown as string[], 'Invalid diameter unit')
+        .oneOf(lengthUnits as unknown as string[], 'Unidad de diámetro inválida')
         .optional(),
     weight: yup.number()
         .transform((v, o) => (o === '' || o === null ? undefined : v))
-        .min(0, 'Weight must be greater than or equal to 0')
+        .min(0, 'El peso debe ser mayor o igual a 0')
         .optional(),
     weightUnit: yup.string()
         .transform((v) => (v === '' ? undefined : v))
-        .oneOf(weightUnits as unknown as string[], 'Invalid weight unit')
+        .oneOf(weightUnits as unknown as string[], 'Unidad de peso inválida')
         .optional(),
 }
 
 export const productCreateSchema = yup.object({
     ...productBaseSchema,
-    name: productBaseSchema.name.required('Name is required'),
-    price: productBaseSchema.price.required('Price is required'),
-    stock: productBaseSchema.stock.required('Stock is required'),
+    name: productBaseSchema.name.required('El nombre es obligatorio'),
+    price: productBaseSchema.price.required('El precio es obligatorio'),
+    stock: productBaseSchema.stock.required('El stock es obligatorio'),
 })
 
 export const productUpdateSchema = yup.object({
@@ -99,12 +99,12 @@ export const productUpdateSchema = yup.object({
 })
 
 export const editProductSchema = yup.object({
-    name: productBaseSchema.name.required('Name is required'),
+    name: productBaseSchema.name.required('El nombre es obligatorio'),
     description: productBaseSchema.description,
     sku: productBaseSchema.sku,
     barcode: productBaseSchema.barcode,
-    price: productBaseSchema.price.required('Price is required'),
-    stock: productBaseSchema.stock.required('Stock is required'),
+    price: productBaseSchema.price.required('El precio es obligatorio'),
+    stock: productBaseSchema.stock.required('El stock es obligatorio'),
 })
 
 export const editVariantSchema = yup.object({

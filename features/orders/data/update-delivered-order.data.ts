@@ -11,7 +11,7 @@ export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrder
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
-        throw new Error(userMessage || "User not authenticated")
+        throw new Error(userMessage || "Usuario no autenticado")
     }
 
     // Use transaction for consistency
@@ -38,14 +38,14 @@ export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrder
         })
 
         if (!order) {
-            throw new Error("Order not found")
+            throw new Error("Pedido no encontrado")
         }
 
         const oldStatus = order.status
 
         // Validate status change
         if (oldStatus === 'DELIVERED') {
-            throw new Error("Order is already in DELIVERED status")
+            throw new Error("El pedido ya está en estado ENTREGADO")
         }
 
         // Business rule: Can only deliver from READY (pickup) or SHIPPED (delivery)
@@ -54,7 +54,7 @@ export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrder
             : ['SHIPPED']
 
         if (!allowedFromStatuses.includes(oldStatus)) {
-            throw new Error(`Cannot change order status from ${oldStatus} to DELIVERED. Order must be in ${allowedFromStatuses.join(' or ')} status.`)
+            throw new Error(`No se puede cambiar el estado del pedido de ${oldStatus} a ENTREGADO. El pedido debe estar en estado ${allowedFromStatuses.join(' o ')}.`)
         }
 
         // Update order status
@@ -88,12 +88,12 @@ export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrder
         entity_type: "ORDER",
         entity_id: parseInt(orderId),
         user_id: user.id,
-        action_initiator: "Order status update",
-        details: `Order status changed to DELIVERED. Order has been ${updatedOrder.shipping_method === 'PICKUP' ? 'picked up' : 'delivered'} to customer.`
+        action_initiator: "Actualización del estado del pedido",
+        details: `El estado del pedido cambió a ENTREGADO. El pedido fue ${updatedOrder.shipping_method === 'PICKUP' ? 'recogido' : 'entregado'} al cliente.`
     })
 
     if (logError) {
-        console.warn("Order status updated but failed to create log entry:", logError)
+        console.warn("El estado del pedido se actualizó pero no se pudo crear la entrada de registro:", logError)
     }
 
     // TODO: Send delivery confirmation to customer
@@ -102,7 +102,7 @@ export async function updateDeliveredOrderData({ orderId }: UpdateDeliveredOrder
     // }
 
     return formatSuccessResponse(
-        `Order has been ${updatedOrder.shipping_method === 'PICKUP' ? 'picked up' : 'delivered'} successfully`,
+        `El pedido fue ${updatedOrder.shipping_method === 'PICKUP' ? 'recogido' : 'entregado'} con éxito`,
         updatedOrder
     )
 } 

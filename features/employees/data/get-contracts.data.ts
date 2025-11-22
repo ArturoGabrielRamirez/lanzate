@@ -56,6 +56,6 @@ export async function getContractsData(storeId: number) {
         }
     })
 
-    return formatSuccessResponse("Contracts retrieved successfully", contracts)
+    return formatSuccessResponse("Contratos recuperados exitosamente", contracts)
 
 } 

@@ -16,7 +16,7 @@ function ConfirmedContent({ type = 'signup' }: ConfirmedContentProps) {
             case 'signup':
                 return {
                     title: '¡Email confirmado!',
-                    message: 'Tu cuenta ha sido activada exitosamente.',
+                    message: 'Tu cuenta fue activada exitosamente.',
                     action: 'Ir al dashboard',
                     href: '/dashboard'
                 }

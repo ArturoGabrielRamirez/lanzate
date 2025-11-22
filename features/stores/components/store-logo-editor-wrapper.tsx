@@ -17,7 +17,7 @@ function StoreLogoEditorWrapper({ currentLogo, storeName, storeId }: StoreLogoEd
 
             // Update in database
             if (newLogoUrl) {
-                toast.loading('Updating store logo...')
+                toast.loading('Actualizando logo de la tienda...')
                 const { hasError, message } = await updateStoreLogoAction(storeId, newLogoUrl)
                 if (hasError) {
                     toast.dismiss()

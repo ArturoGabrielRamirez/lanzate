@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     if (storeError || !store) {
         return {
-            title: "Store not found"
+            title: "Tienda no encontrada"
         }
     }
 
@@ -61,7 +61,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                     </Suspense>
                     {children}
                     <Suspense>
-                        <SectionContainer title="Looking for something?">
+                        <SectionContainer title="¿Buscas algo?">
                             <GlobalSearch userId={user.id} />
                         </SectionContainer>
                     </Suspense>
@@ -101,7 +101,7 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                             <StoreHeaderServer slug={slug} />
                         </Suspense>
                         <Suspense>
-                            <SectionContainer title="Looking for something?">
+                            <SectionContainer title="¿Buscas algo?">
                                 <GlobalSearch userId={user.id} />
                             </SectionContainer>
                         </Suspense>

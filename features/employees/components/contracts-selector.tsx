@@ -20,7 +20,7 @@ function ContractsSelector({ storeId, selectedContractId, onContractSelect, empl
 
             try {
                 const result = {
-                    message: "Contracts fetched successfully",
+                    message: "Contratos obtenidos con éxito",
                     payload: contracts,
                     hasError: false
                 }

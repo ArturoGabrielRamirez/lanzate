@@ -42,7 +42,7 @@ function NextStepButton({ goToNextStep, className }: { goToNextStep: () => void,
 
     return (
         <Button onClick={handleNext} disabled={!isValid} className={className}>
-            Next
+            Siguiente
         </Button>
     )
 }
@@ -61,19 +61,19 @@ function CreateStoreButton({ }: { userId: number }) {
                     <DialogTrigger asChild>
                         <Button>
                             <Plus className="size-4" />
-                            <span>Create Store</span>
+                            <span>Crear Tienda</span>
                         </Button>
                     </DialogTrigger>
                     <DialogContent className="w-full !max-w-full md:!max-w-2xl h-full rounded-none md:h-auto md:rounded-lg max-h-dvh !grid-rows-[auto_1fr_auto]">
                         <DialogHeader>
-                            <DialogTitle>New Store</DialogTitle>
+                            <DialogTitle>Nueva Tienda</DialogTitle>
                         </DialogHeader>
                         <ScrollArea className="h-[calc(100dvh_-_12rem)] md:max-h-96 !overflow-x-visible">
                             {currentStep === 1 && (
                                 <div className="space-y-4">
-                                    <InputField name="name" label="Name" placeholder="Ej: My Store" startIcon={<Store />} tooltip="The name of your store" isRequired />
-                                    <InputField name="subdomain" label="Subdomain" placeholder="Ej: my-store" startIcon={<Globe />} tooltip="The subdomain of your store" isRequired />
-                                    <TextareaField name="description" label="Description" placeholder="Ej: My Store Description" tooltip="The description of your store" />
+                                    <InputField name="name" label="Nombre de la tienda" placeholder="Ej: Mi Tienda" startIcon={<Store />} tooltip="El nombre de tu tienda" isRequired />
+                                    <InputField name="subdomain" label="Subdominio" placeholder="Ej: mi-tienda" startIcon={<Globe />} tooltip="El subdominio de tu tienda" isRequired />
+                                    <TextareaField name="description" label="Descripción de la tienda" placeholder="Ej: Describí tu tienda..." tooltip="La descripción de tu tienda" />
                                 </div>
                             )}
                             {currentStep === 2 && (
@@ -93,7 +93,7 @@ function CreateStoreButton({ }: { userId: number }) {
                             <div className="flex flex-col md:flex-row items-center gap-2 justify-end w-full md:w-auto">
                                 {currentStep > 1 && (
                                     <Button onClick={goToPrevStep} variant="secondary" className="w-full md:w-auto">
-                                        Previous
+                                        Anterior
                                     </Button>
                                 )}
                                 {currentStep < 4 && (
@@ -101,7 +101,7 @@ function CreateStoreButton({ }: { userId: number }) {
                                 )}
                                 {currentStep === 4 && (
                                     <Button onClick={() => setOpen(false)} className="w-full md:w-auto">
-                                        Save Store
+                                        Guardar Tienda
                                     </Button>
                                 )}
                             </div>

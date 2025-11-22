@@ -30,7 +30,7 @@ export async function insertOrderMessageAction({
         // Revalidate the path to refresh the messages
         revalidatePath(pathname)
 
-        return formatSuccessResponse("Message sent successfully", newMessage)
+        return formatSuccessResponse("Mensaje enviado con éxito", newMessage)
 
     })
 } 

@@ -11,12 +11,12 @@ export async function getStoreWithProductsAction(subdomain: string, category: st
         if (hasError) throw new Error(message);
 
         return {
-            message: "Store with products fetched successfully",
+            message: "Tienda con productos recuperada con éxito desde la base de datos",
             payload: storeData,
             hasError: false
         };
 
     } catch (error) {
-        return formatErrorResponse("Error fetching store with products");
+        return formatErrorResponse("Error al recuperar la tienda con productos");
     }
 }

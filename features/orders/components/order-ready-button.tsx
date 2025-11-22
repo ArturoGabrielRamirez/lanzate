@@ -17,7 +17,7 @@ function OrderReadyButton({ order }: OrderReadyButtonProps) {
 
         if (isPending) return
 
-        toast.loading("Marking order as ready, please wait...")
+        toast.loading("Marcando el pedido como listo, por favor esperá...")
 
         startTransition(async () => {
             try {
@@ -28,11 +28,11 @@ function OrderReadyButton({ order }: OrderReadyButtonProps) {
                 await changeOrderTrackingStatusAction({ orderId: order.id, newStatus })
 
                 toast.dismiss()
-                toast.success("Order marked as ready", { richColors: true })
+                toast.success("Pedido marcado como listo", { richColors: true })
 
             } catch (error) {
                 toast.dismiss()
-                toast.error(error instanceof Error ? error.message : "Failed to mark order as ready", { richColors: true })
+                toast.error(error instanceof Error ? error.message : "Error al marcar el pedido como listo", { richColors: true })
             }
         })
 
@@ -43,8 +43,8 @@ function OrderReadyButton({ order }: OrderReadyButtonProps) {
         <div>
             <Button onClick={handleMarkAsReady} disabled={isPending}>
                 {isPending ? <Loader2 className="size-4 animate-spin" /> : <CheckCircle className="size-4" />}
-                {order.shipping_method === "PICKUP" && "Ready for pickup"}
-                {order.shipping_method === "DELIVERY" && "Ready and waiting delivery"}
+                {order.shipping_method === "PICKUP" && "Listo para recoger"}
+                {order.shipping_method === "DELIVERY" && "Listo y esperando entrega"}
             </Button>
         </div>
     )

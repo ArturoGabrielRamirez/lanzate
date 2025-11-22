@@ -32,14 +32,14 @@ export async function getLogDetailsByIdData(id: number) {
     if (!log) {
         return {
             hasError: true,
-            message: "Log not found",
+            message: "Actividad no encontrada",
             payload: null
         }
     }
 
     return {
         hasError: false,
-        message: "Log details retrieved successfully",
+        message: "Detalles de la actividad recuperados con éxito",
         payload: log
     }
 

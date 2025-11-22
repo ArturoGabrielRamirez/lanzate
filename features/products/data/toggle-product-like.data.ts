@@ -59,7 +59,7 @@ export async function toggleProductLikeData(userId: number, productId: number) {
 
     return {
         error: false,
-        message: isLiked ? "Like added successfully" : "Like removed successfully",
+        message: isLiked ? "Like agregado correctamente" : "Like eliminado correctamente",
         payload: { isLiked, count }
     }
 } 

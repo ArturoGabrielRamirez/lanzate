@@ -10,7 +10,7 @@ export async function deleteStoreData(storeId: number) {
         }
     })
 
-    if (!store) throw new Error("Store not found")
+    if (!store) throw new Error("Tienda no encontrada")
 
     await prisma.store.delete({
         where: {
@@ -26,7 +26,7 @@ export async function deleteStoreData(storeId: number) {
     })
 
     return {
-        message: "Store deleted successfully",
+        message: "Tienda eliminada con éxito",
         payload: null,
         hasError: false
     }

@@ -80,7 +80,7 @@ export function useBackgroundRemover() {
 
             const errorMessage = err instanceof Error
                 ? err.message
-                : 'Error al procesar la imagen. Por favor, intenta de nuevo.'
+                : 'Error al procesar la imagen. Por favor, intentá de nuevo.'
             setError(errorMessage)
             throw new Error(errorMessage)
         } finally {

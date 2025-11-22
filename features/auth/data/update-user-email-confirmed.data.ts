@@ -31,7 +31,7 @@ export async function updateUserEmailConfirmedData({ newEmail, email, redirectTo
                 entity_id: changeRequestId,
                 user_id: userId,
                 action_initiator: 'USER',
-                details: `Email change requested from ${newEmail} to ${email}`
+                details: `Cambio de correo electrónico solicitado de ${newEmail} a ${email}`
             }
         });
     } catch (logError) {
@@ -40,7 +40,7 @@ export async function updateUserEmailConfirmedData({ newEmail, email, redirectTo
 
     return {
         hasError: false,
-        message: "Email actualizado correctamente",
+        message: "Correo electrónico confirmado exitosamente",
         payload: data
     };
 }

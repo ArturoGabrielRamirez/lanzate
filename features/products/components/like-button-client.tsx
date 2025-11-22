@@ -55,7 +55,7 @@ function LikeButtonGuest({ initialCount }: { initialCount: number }) {
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Inicia sesión para dar like</DialogTitle>
+                        <DialogTitle>Iniciá sesión para dar like</DialogTitle>
                         <DialogDescription>
                             Necesitas tener una cuenta para dar like a los productos.
                         </DialogDescription>

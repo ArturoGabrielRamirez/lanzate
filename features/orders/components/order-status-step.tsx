@@ -26,12 +26,12 @@ function OrderStatusStep({ order, employeePermissions }: OrderStatusStepProps) {
                 if (result.hasError) {
                     toast.error(result.message)
                 } else {
-                    toast.success("Order confirmed successfully! The customer has been notified.")
+                    toast.success("Pedido confirmado con éxito! El cliente ya fue notificado.")
                     window.location.reload()
                 }
             } catch (error) {
                 console.error("Error confirming order:", error)
-                toast.error("Failed to confirm order")
+                toast.error("Error al confirmar el pedido")
             }
         })
     }
@@ -41,27 +41,27 @@ function OrderStatusStep({ order, employeePermissions }: OrderStatusStepProps) {
 
     return (
         <div className="grow flex flex-col justify-center">
-            <h3 className="text-lg font-semibold mb-2">Confirm Order</h3>
+            <h3 className="text-lg font-semibold mb-2">Confirmar Pedido</h3>
             <p className="text-sm text-muted-foreground mb-4">
-                Review all order information before confirming
+                Revisá toda la información del pedido antes de confirmar
             </p>
             {isOrderReady && (
                 <p className=" text-green-600 font-medium text-center mb-4">
-                    ✓ This order has already been confirmed and the customer has been notified
+                    ✓ Este pedido ya fue confirmado y el cliente ya fue notificado
                 </p>
             )}
             <div className={cn("bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6", isOrderReady || isOrderCompleted && "opacity-30")}>
                 <div className="flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <div className="text-sm text-blue-800">
-                        <p className="font-medium mb-2">Important Information:</p>
+                        <p className="font-medium mb-2">Información Importante:</p>
                         <ul className="space-y-1 text-blue-700">
-                            <li>• Please review all order details carefully before confirming</li>
-                            <li>• Once confirmed, the customer will be notified that their order is ready</li>
-                            <li>• For <strong>pickup orders</strong>: Customer will be informed their order is ready for pickup</li>
-                            <li>• For <strong>delivery orders</strong>: Customer will be informed their order is ready for delivery</li>
-                            <li>• Any changes to the order can still be made after confirmation</li>
-                            <li>• Order tracking will be automatically created for customer updates</li>
+                            <li>• Por favor revisá todos los detalles del pedido cuidadosamente antes de confirmar</li>
+                            <li>• Una vez confirmado, el cliente será notificado que su pedido está listo</li>
+                            <li>• Para <strong>pedidos para recoger</strong>: El cliente será informado que su pedido está listo para recoger</li>
+                            <li>• Para <strong>pedidos para entrega</strong>: El cliente será informado que su pedido está listo para entrega</li>
+                            <li>• Cualquier cambio en el pedido aún puede realizarse después de la confirmación</li>
+                            <li>• El seguimiento del pedido se creará automáticamente para las actualizaciones del cliente</li>
                         </ul>
                     </div>
                 </div>
@@ -82,7 +82,7 @@ function OrderStatusStep({ order, employeePermissions }: OrderStatusStepProps) {
                     <Alert className="w-full max-w-md">
                         <AlertTriangle className="h-4 w-4" />
                         <AlertDescription>
-                            You don&apos;t have sufficient permissions to change the status of this order. Please contact an administrator.
+                            No tenés permisos suficientes para cambiar el estado de este pedido. Por favor contactá a un administrador.
                         </AlertDescription>
                     </Alert>
                 )}

@@ -64,8 +64,8 @@ export default function DangerZone({
           Zona de Peligro
         </h3>
         <p className="text-gray-300 mb-4">
-          Eliminar tu cuenta es una acción irreversible. Todos tus datos serán
-          eliminados permanentemente.
+          Eliminar tu cuenta es una acción irreversible, tu cuenta sera puesta en un periodo de eliminación por 30 días.
+          Durante este tiempo, podrás cancelar la eliminación si cambias de opinión. Después de este periodo, tu cuenta y todos tus datos serán eliminados permanentemente. Exeptuando aquellos datos que deban ser retenidos por obligaciones legales.
         </p>
         <button
           onClick={() => setShowDeleteDialog(true)}
@@ -111,7 +111,7 @@ export default function DangerZone({
       {deletionStatus.canCancel && deletionStatus.canCancelUntil && (
         <div className="bg-blue-900/40 border border-blue-600 rounded-lg p-4">
           <p className="text-sm text-blue-300">
-            ✅ Puedes cancelar la eliminación de tu cuenta hasta el{' '}
+            ✅ Podés cancelar la eliminación de tu cuenta hasta el{' '}
             <strong>
               {new Date(deletionStatus.canCancelUntil).toLocaleString()}
             </strong>
@@ -123,7 +123,7 @@ export default function DangerZone({
       {deletionStatus.isWithinActionWindow && deletionStatus.canCancel && (
         <div className="bg-red-900/40 border border-red-600 rounded-lg p-4">
           <p className="text-sm text-red-300">
-            ⚠️ <strong>Últimos minutos:</strong> La eliminación está próxima. Si quieres cancelar, hazlo ahora.
+            ⚠️ <strong>Últimos minutos:</strong> La eliminación está próxima. Si querés cancelar, hacelo ahora.
           </p>
         </div>
       )}

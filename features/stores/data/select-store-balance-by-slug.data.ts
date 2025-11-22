@@ -13,7 +13,7 @@ export async function selectStoreBalanceBySlugData(slug: string) {
     })
 
     return {
-        message: "Store balance fetched successfully from db",
+        message: "Balance de la tienda recuperado con éxito desde la base de datos",
         payload: store,
         hasError: false
     }

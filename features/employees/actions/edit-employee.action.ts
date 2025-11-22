@@ -14,7 +14,7 @@ export async function editEmployeeAction(employeeId: number, data: EditEmployeeP
         // Check user can edit employee (must be store owner)
         const canEdit = await canEditEmployee(employeeId, userId)
 
-        if (!canEdit) throw new Error("User does not have permission to edit this employee")
+        if (!canEdit) throw new Error("No tenés permisos para editar este empleado.")
 
         // Update employee in database
         const { hasError, payload, message } = await updateEmployeeInDb(employeeId, data)

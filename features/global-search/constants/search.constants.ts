@@ -6,20 +6,20 @@ export const SEARCH_CONFIG = {
         CUSTOMERS: 3,
     },
     MAX_TOTAL_RESULTS: 10,
-    SEARCH_PLACEHOLDER: "Products, orders, customers...",
+    SEARCH_PLACEHOLDER: "Productos, órdenes, clientes...",
 } as const
 
 export const SEARCH_ICONS = {
     PRODUCT: '📦',
     ORDER: '🛒',
     CUSTOMER: '👤',
-    LOADING: 'Search',
+    LOADING: 'Buscar',
 } as const
 
 export const SEARCH_MESSAGES = {
-    SEARCHING: "Searching...",
-    NO_RESULTS: "No results found for",
-    SHOWING_RESULTS: "Showing",
-    RESULT: "result",
-    RESULTS: "results",
+    SEARCHING: "Buscando...",
+    NO_RESULTS: "No se encontraron resultados para",
+    SHOWING_RESULTS: "Mostrando",
+    RESULT: "resultado",
+    RESULTS: "resultados",
 } as const

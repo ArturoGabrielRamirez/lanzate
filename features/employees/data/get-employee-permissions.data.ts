@@ -16,7 +16,7 @@ export async function getEmployeePermissionsData(userId: number, slug: string): 
     // Check if user is the store owner (admin)
     if (store.user_id === userId) {
         return {
-            message: "User is admin of this store",
+            message: "El usuario es administrador de esta tienda",
             payload: {
                 isAdmin: true,
                 permissions: undefined
@@ -46,11 +46,11 @@ export async function getEmployeePermissionsData(userId: number, slug: string): 
     })
 
     if (!employee) {
-        throw new Error("User is not an employee of this store")
+        throw new Error("El usuario no es un empleado de esta tienda")
     }
 
     return {
-        message: "Employee permissions fetched successfully",
+        message: "Permisos del empleado recuperados exitosamente",
         payload: {
             isAdmin: false,
             permissions: employee

@@ -11,7 +11,7 @@ export async function toggleLikeAction(productId: number, userId: number, pathna
         const { payload, error, message } = await toggleProductLikeData(userId, productId)
 
         if (error || !payload) {
-            throw new Error(message || "Failed to toggle like")
+            throw new Error(message || "Error al alternar el like")
         }
 
         revalidatePath(pathname)

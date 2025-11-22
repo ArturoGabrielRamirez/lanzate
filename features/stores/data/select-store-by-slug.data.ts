@@ -40,7 +40,7 @@ export async function selectStoreBySlugData(slug: string) {
     })
 
     return {
-        message: "Store fetched successfully from db",
+        message: "Tienda recuperada con éxito desde la base de datos",
         payload: store,
         hasError: false
     }

@@ -32,18 +32,18 @@ export async function handleSignup(payload: SignupFormPayload) {
             const validation = await validateNewUserCreationAction(emailStr)
 
             if (!validation.payload?.canCreate && validation.payload?.conflict) {
-                throw new Error('El usuario con este correo electrónico ya existe')
+                throw new Error('Ya existe una cuenta activa con este correo electrónico')
             }
 
         } catch (validationError) {
-            if (validationError instanceof Error && validationError.message.includes('El usuario con este correo electrónico ya existe')) {
+            if (validationError instanceof Error && validationError.message.includes('Ya existe una cuenta activa con este correo electrónico')) {
                 throw new Error('Error en validación:', validationError)
             }
         }
 
         const activeUser = await findUserAnonymizedData({ email: emailStr })
 
-        if (activeUser) throw new Error('El usuario con este correo electrónico ya existe')
+        if (activeUser) throw new Error('Ya existe una cuenta activa con este correo electrónico')
 
 
         const { hasError: signUpError, payload: signUpData, message: signUpMessage } = await getSignUpPermissionData({ email: emailStr, password: passwordStr })
@@ -64,8 +64,8 @@ export async function handleSignup(payload: SignupFormPayload) {
             entity_type: "USER",
             entity_id: user.id,
             user_id: user.id,
-            action_initiator: "Signup form",
-            details: `User signed up using sign up form${activeUser ? ' (email previously anonymized)' : ''}`
+            action_initiator: "Formulario de registro",
+            details: `Usuario se registró usando el formulario de registro${activeUser ? ' (correo electrónico previamente anonimizado)' : ''}`
         })
 
         return {

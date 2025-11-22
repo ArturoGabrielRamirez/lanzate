@@ -51,7 +51,7 @@ export async function getOverviewInfoAction(slug: string) {
 
         return {
             hasError: false,
-            message: "Overview data fetched successfully",
+            message: "Datos de resumen obtenidos correctamente",
             payload: overviewData
         }
 

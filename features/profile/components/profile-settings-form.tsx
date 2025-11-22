@@ -12,7 +12,7 @@ function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
         <ButtonWithPopup
             text={<><Settings className="w-4 h-4 mr-2" />Configurar Perfil</>}
             title="Configuración del Perfil"
-            description="Personaliza tu información pública y configuraciones de privacidad"
+            description="Personalizá tu información pública y configuraciones de privacidad"
             action={updateProfileSettingsAction}
             messages={{
                 success: "Perfil actualizado correctamente",
@@ -43,7 +43,7 @@ function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
                         name="profile_bio"
                         label="Biografía"
                         defaultValue={user.profile_bio || ''}
-                        placeholder="Cuéntanos sobre ti..."
+                        placeholder="Contanos sobre vos..."
                         isTextArea
                         maxLength={500}
                     />

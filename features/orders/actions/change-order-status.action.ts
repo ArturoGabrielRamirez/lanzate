@@ -31,11 +31,11 @@ export async function changeOrderStatusAction(orderId: number, data: ChangeOrder
             entity_type: "ORDER",
             entity_id: orderId,
             user_id: user.id,
-            action_initiator: "Order status change",
-            details: `Order status changed to ${data.newStatus}`
+            action_initiator: "Cambio de estado de orden",
+            details: `Estado de la orden cambiado a ${data.newStatus}`
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear una entrada de registro para esto.")
 
         return formatSuccessResponse(message, updatedOrder)
 

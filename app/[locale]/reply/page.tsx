@@ -102,7 +102,7 @@ function ReplyForm() {
             {/* Email del destinatario */}
             <div>
               <label style={{ display: "block", fontSize: "0.875rem", color: "#a3a3a3", marginBottom: "0.5rem" }}>
-                Email del destinatario *
+                Correo electrónico del destinatario *
               </label>
               <input
                 type="email"
@@ -218,7 +218,7 @@ function ReplyForm() {
               required
             />
             <p style={{ fontSize: "0.75rem", color: "#737373", marginTop: "0.25rem" }}>
-              💡 Copia el mensaje desde el email que recibiste
+              💡 Copiá el mensaje desde el email que recibiste
             </p>
           </div>
 

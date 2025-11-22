@@ -54,7 +54,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                             <div className="flex flex-col gap-4 bg-gray-100 rounded-lg p-2">
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2 aspect-square">
                                     <ImageIcon className="size-10" />
-                                    <p className="text-sm text-muted-foreground text-center">No image</p>
+                                    <p className="text-sm text-muted-foreground text-center">No hay imagen disponible</p>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                             ) : (
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2">
                                     <ImageIcon className="size-16" />
-                                    <p className="text-sm text-muted-foreground">No image available</p>
+                                    <p className="text-sm text-muted-foreground">No hay imagen disponible</p>
                                 </div>
                             )}
                         </div>
@@ -89,7 +89,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                         <div className="flex flex-col gap-2 border-b border-muted-foreground pb-4">
                             {product.description && (
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Descripción</h3>
                                     <p className="text-gray-700">{product.description}</p>
                                 </div>
                             )}

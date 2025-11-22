@@ -9,7 +9,7 @@ export async function getPublicStoreProductDetailsAction(productId: string, subd
         const parsedProductId = parseInt(productId)
         const parsedVariantId = variantId ? parseInt(variantId) : undefined
 
-        if (isNaN(parsedProductId)) throw new Error("Invalid product id")
+        if (isNaN(parsedProductId)) throw new Error("ID de producto inválido")
 
         const { payload: product, hasError, message } = parsedVariantId
             ? await selectProductByIdsAndSubdomainData(parsedProductId, parsedVariantId, subdomain)
@@ -20,7 +20,7 @@ export async function getPublicStoreProductDetailsAction(productId: string, subd
         return {
             payload: product,
             hasError: false,
-            message: "Product details fetched successfully"
+            message: "Detalles del producto obtenidos exitosamente"
         }
 
     })

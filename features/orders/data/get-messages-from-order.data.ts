@@ -18,7 +18,7 @@ export async function getMessagesFromOrderData({ storeSlug, orderId }: GetMessag
     })
 
     if (!order) {
-        throw new Error("Order not found or doesn't belong to this store")
+        throw new Error("Pedido no encontrado o no pertenece a esta tienda")
     }
 
     const messages = await prisma.orderMessage.findMany({
@@ -42,7 +42,7 @@ export async function getMessagesFromOrderData({ storeSlug, orderId }: GetMessag
     })
 
     return {
-        message: "Messages fetched successfully",
+        message: "Mensajes obtenidos con éxito",
         payload: messages,
         hasError: false
     }

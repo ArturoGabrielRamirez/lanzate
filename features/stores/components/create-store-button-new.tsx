@@ -674,7 +674,7 @@ function ContactFormPanel() {
                         />
                         <InputField
                             name="contact_info.contact_email"
-                            label="Email"
+                            label="Correo electrónico"
                             placeholder="Ej: test@example.com"
                             startIcon={<Mail />}
                             type="email"
@@ -982,15 +982,15 @@ function BasicInfoFormPanel() {
                 <div className="space-y-4">
                     <InputField
                         name="basic_info.name"
-                        label="Name"
-                        placeholder="Ej: My Store"
+                        label="Nombre de la tienda"
+                        placeholder="Ej: Mi Tienda"
                         startIcon={<StoreIcon />}
                         isRequired
                     />
                     <InputField
                         name="basic_info.subdomain"
                         label="URL"
-                        placeholder="Ej: my-store"
+                        placeholder="Ej: mi-tienda"
                         type="url"
                         inputMode="url"
                         startIcon={<Globe />}
@@ -1010,8 +1010,8 @@ function BasicInfoFormPanel() {
             </div>
             <TextareaField
                 name="basic_info.description"
-                label="Description"
-                placeholder="Ej: My Store Description"
+                label="Descripción de la tienda"
+                placeholder="Ej: Describí tu tienda..."
             />
         </>
     )

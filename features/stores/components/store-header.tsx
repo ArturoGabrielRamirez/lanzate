@@ -93,11 +93,11 @@ function StoreHeader({ slug }: StoreHeaderProps) {
     }
  */
     if (loading) {
-        return <div>Loading store header...</div>
+        return <div>Cargando banners de la tienda...</div>
     }
 
     if (error || !store) {
-        return <div>Error loading store header</div>
+        return <div>Error al cargar el banner de la tienda</div>
     }
 
     return (

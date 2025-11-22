@@ -18,16 +18,16 @@ export async function handleLogInAction(formData: LoginFormPayload) {
 
     const { payload: localUser, hasError: localUserError } = await getCurrentUserWithIdAndEmailAction()
 
-    if (localUserError) throw new Error('User not found')
-    if (!localUser) throw new Error('User not found')
+    if (localUserError) throw new Error('El usuario no existe')
+    if (!localUser) throw new Error('El usuario no existe')
 
     insertLogEntry({
       action: "LOGIN",
       entity_type: "USER",
       entity_id: localUser.id,
       user_id: localUser.id,
-      action_initiator: "Signin form",
-      details: "User signed in using sign in form"
+      action_initiator: "Formulario de inicio de sesión",
+      details: "Usuario inició sesión usando el formulario de inicio de sesión"
     })
 
     return {

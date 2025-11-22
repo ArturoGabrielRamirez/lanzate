@@ -24,7 +24,7 @@ export async function selectStoreBySubdomainData(subdomain: string) {
     })
 
     return {
-        message: "Store fetched successfully from db",
+        message: "Tienda recuperada con éxito desde la base de datos",
         payload: store,
         hasError: false
     }

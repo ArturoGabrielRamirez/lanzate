@@ -1,8 +1,8 @@
 import * as yup from "yup"
 
 export const editSocialMediaSchema = yup.object({
-    facebook_url: yup.string().url("Invalid Facebook URL format").optional(),
-    instagram_url: yup.string().url("Invalid Instagram URL format").optional(),
-    x_url: yup.string().url("Invalid X (Twitter) URL format").optional()
+    facebook_url: yup.string().url("Formato de URL de Facebook inválido").optional(),
+    instagram_url: yup.string().url("Formato de URL de Instagram inválido").optional(),
+    x_url: yup.string().url("Formato de URL de X (Twitter) inválido").optional()
 })
 

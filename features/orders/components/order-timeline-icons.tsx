@@ -25,7 +25,7 @@ function OrderTimelineIcons({ order }: OrderTimelineIconsProps) {
                     />
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>The order was just placed and is waiting for confirmation</p>
+                    <p>El pedido acaba de realizarse y está esperando confirmación</p>
                 </TooltipContent>
             </Tooltip>
             <Skeleton className={cn("w-5 h-1", isProcessing && "bg-green-600")} />
@@ -37,7 +37,7 @@ function OrderTimelineIcons({ order }: OrderTimelineIconsProps) {
                     />
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>The order was just confirmed and is waiting for the store to start packing it</p>
+                    <p>El pedido acaba de ser confirmado y está esperando que la tienda comience a prepararlo</p>
                 </TooltipContent>
             </Tooltip>
             <Skeleton className={cn("w-5 h-1", isReady && order.tracking?.tracking_status === "PREPARING_ORDER" && "bg-green-600")} />
@@ -49,7 +49,7 @@ function OrderTimelineIcons({ order }: OrderTimelineIconsProps) {
                     />
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>The order is being packed. Once it&apos;s done packing, it will be ready for {order.shipping_method === "DELIVERY" ? "delivery" : "pickup"}</p>
+                    <p>El pedido está siendo preparado. Una vez que termine de prepararse, estará listo para {order.shipping_method === "DELIVERY" ? "la entrega" : "el retiro"}</p>
                 </TooltipContent>
             </Tooltip>
 
@@ -79,7 +79,7 @@ function OrderTimelineIcons({ order }: OrderTimelineIconsProps) {
                             />
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>The order is ready for delivery and is waiting for the delivery driver to pick it up</p>
+                            <p>El pedido está listo para la entrega y está esperando que el repartidor lo recoja</p>
                         </TooltipContent>
                     </Tooltip>
                     <Skeleton className={cn("w-5 h-1", isWaitingForDelivery && "bg-green-600")} />
@@ -111,7 +111,7 @@ function OrderTimelineIcons({ order }: OrderTimelineIconsProps) {
                             />
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>The order is on the way to the customer&apos;s address</p>
+                            <p>El pedido está en camino a la dirección del cliente</p>
                         </TooltipContent>
                     </Tooltip>
                     <Skeleton className={cn("w-5 h-1", isOnTheWay && "bg-green-600")} />
@@ -134,7 +134,7 @@ function OrderTimelineIcons({ order }: OrderTimelineIconsProps) {
                             />
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>The order is ready for pickup and is waiting for the customer to pick it up</p>
+                            <p>El pedido está listo para retirar y está esperando que el cliente lo retire</p>
                         </TooltipContent>
                     </Tooltip>
                     <Skeleton className={cn("w-5 h-1", isWaitingForPickup && "bg-green-600")} />
@@ -155,7 +155,7 @@ function OrderTimelineIcons({ order }: OrderTimelineIconsProps) {
                     />
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>The order was just completed. Enjoy your purchase!</p>
+                    <p>El pedido acaba de completarse. ¡Disfrutá tu compra!</p>
                 </TooltipContent>
             </Tooltip>
 

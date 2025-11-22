@@ -72,7 +72,7 @@ function BasicInfoDisplay({ store, userId }: BasicInfoDisplayProps) {
                     <CardTitle>
                         <span className="flex items-center gap-2 text-lg md:text-xl">
                             <StoreIcon className="size-5" />
-                            Basic info
+                             Información básica
                         </span>
                     </CardTitle>
                     <CardAction>
@@ -91,7 +91,7 @@ function BasicInfoDisplay({ store, userId }: BasicInfoDisplayProps) {
                         <div className="space-y-1">
                             <InputField
                                 name="name"
-                                label={"Name"}
+                                label={"Nombre"}
                                 defaultValue={store.name}
                                 disabled={!isEditing}
                             />
@@ -99,15 +99,15 @@ function BasicInfoDisplay({ store, userId }: BasicInfoDisplayProps) {
                         <div className="space-y-1">
                             <InputField
                                 name="description"
-                                label={"Description"}
-                                defaultValue={store.description || "No description"}
+                                label={"Descripción"}
+                                defaultValue={store.description || "Sin descripción"}
                                 disabled={!isEditing}
                             />
                         </div>
                         <div className="space-y-1">
                             <InputField
                                 name="subdomain"
-                                label={"Subdomain"}
+                                label={"Subdominio"}
                                 defaultValue={store.subdomain}
                                 disabled={!isEditing}
                             />

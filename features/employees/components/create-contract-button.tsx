@@ -66,52 +66,52 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
 
 
     const handleCreateContract = async (data: FormData) => {
-    try {
-        // Validar que se haya subido un archivo
-        if (files.length === 0) {
+        try {
+            // Validar que se haya subido un archivo
+            if (files.length === 0) {
+                return {
+                    hasError: true,
+                    message: "Tenés que subir un archivo PDF",
+                    payload: null
+                }
+            }
+
+            // ✅ Extraer los valores de FormData correctamente
+            const payload: InsertContractPayload = {
+                title: data.get('title') as string,
+                comments: data.get('comments') as string | null,
+                file: files
+            }
+
+            const result = await insertContractData(payload, storeId, userId)
+
+            // Si hay error, retornarlo
+            if (result.hasError) {
+                return {
+                    hasError: true,
+                    message: result.message,
+                    payload: null
+                }
+            }
+
+            // Limpiar archivos y recargar contratos
+            setFiles([])
+            await loadContracts()
+
+            return {
+                hasError: false,
+                message: "Contrato creado exitosamente",
+                payload: result.payload
+            }
+        } catch (error) {
+            console.error("Error creating contract:", error)
             return {
                 hasError: true,
-                message: "Debes subir un archivo PDF",
+                message: error instanceof Error ? error.message : "Error al crear el contrato",
                 payload: null
             }
-        }
-
-        // ✅ Extraer los valores de FormData correctamente
-        const payload: InsertContractPayload = {
-            title: data.get('title') as string,
-            comments: data.get('comments') as string | null,
-            file: files
-        }
-
-        const result = await insertContractData(payload, storeId, userId)
-
-        // Si hay error, retornarlo
-        if (result.hasError) {
-            return {
-                hasError: true,
-                message: result.message,
-                payload: null
-            }
-        }
-
-        // Limpiar archivos y recargar contratos
-        setFiles([])
-        await loadContracts()
-
-        return {
-            hasError: false,
-            message: "Contrato creado exitosamente",
-            payload: result.payload
-        }
-    } catch (error) {
-        console.error("Error creating contract:", error)
-        return {
-            hasError: true,
-            message: error instanceof Error ? error.message : "Error creating contract",
-            payload: null
         }
     }
-}
     const handleOpenChange = (isOpen: boolean) => {
         setOpen(isOpen)
         if (!isOpen) {
@@ -165,7 +165,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                 <DialogHeader>
                     <DialogTitle>Gestionar Contratos</DialogTitle>
                     <DialogDescription>
-                        Sube nuevos contratos y revisa los existentes
+                        Subí nuevos contratos y revisá los existentes
                     </DialogDescription>
                 </DialogHeader>
 
@@ -191,7 +191,7 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                     <div className="text-center py-4">Cargando contratos...</div>
                                 ) : contracts.length === 0 ? (
                                     <div className="text-center py-4 text-muted-foreground">
-                                        No hay contratos subidos aún
+                                        De momento, no hay contratos subidos.
                                     </div>
                                 ) : (
                                     <div className="space-y-3">
@@ -284,10 +284,10 @@ function CreateContractButton({ storeId, userId }: CreateContractButtonProps) {
                                                                 <FileText className="size-6 text-muted-foreground" />
                                                             </div>
                                                             <p className="font-medium text-sm">
-                                                                Arrastra y suelta tu PDF aquí
+                                                                Arrastrá y soltá tu PDF acá
                                                             </p>
                                                             <p className="text-muted-foreground text-xs">
-                                                                O haz clic para buscar archivos
+                                                                O hacé clic para buscar archivos
                                                             </p>
                                                         </div>
                                                         <FileUploadTrigger asChild>

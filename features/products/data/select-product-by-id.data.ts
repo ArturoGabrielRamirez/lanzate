@@ -32,7 +32,7 @@ export async function selectProductByIdData(id: number) {
         }
     })
 
-    if (!product) throw new Error("Product not found")
+    if (!product) throw new Error("Producto no encontrado")
 
     // derive total stock from variants
     const enriched = product && {
@@ -43,6 +43,6 @@ export async function selectProductByIdData(id: number) {
     return {
         payload: enriched,
         hasError: false,
-        message: "Product details fetched successfully"
+        message: "Detalles del producto obtenidos correctamente"
     }
 }

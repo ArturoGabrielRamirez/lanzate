@@ -36,7 +36,7 @@ export async function createNewCheckoutOrderAction({
 
         return {
             hasError: false,
-            message: "Order created successfully",
+            message: "Orden creada exitosamente",
             payload: payload
         }
     })

@@ -1,11 +1,11 @@
 import * as yup from 'yup'
 
 const employeeBaseSchema = {
-    role: yup.string().oneOf(['OWNER', 'MANAGER', 'SUPERVISOR', 'EMPLOYEE', 'CASHIER', 'STOCKIST', 'SALES'], 'Invalid role'),
-    position: yup.string().max(100, 'Position must be less than 100 characters long'),
-    department: yup.string().max(100, 'Department must be less than 100 characters long'),
-    salary: yup.number().min(0, 'Salary must be greater than or equal to 0'),
-    notes: yup.string().max(500, 'Notes must be less than 500 characters long'),
+    role: yup.string().oneOf(['OWNER', 'MANAGER', 'SUPERVISOR', 'EMPLOYEE', 'CASHIER', 'STOCKIST', 'SALES'], 'Rol inválido'),
+    position: yup.string().max(100, 'El puesto debe tener menos de 100 caracteres'),
+    department: yup.string().max(100, 'El departamento debe tener menos de 100 caracteres'),
+    salary: yup.number().min(0, 'El salario debe ser mayor o igual a 0'),
+    notes: yup.string().max(500, 'Las notas deben tener menos de 500 caracteres'),
     can_create_orders: yup.boolean(),
     can_update_orders: yup.boolean(),
     can_create_products: yup.boolean(),
@@ -19,8 +19,8 @@ const employeeBaseSchema = {
 }
 
 export const contractCreateSchema = yup.object({
-    title: yup.string().required('Title is required'),
-    comments: yup.string().max(500, 'Comments must be less than 500 characters long').optional(),
+    title: yup.string().required('El título es obligatorio'),
+    comments: yup.string().max(500, 'Los comentarios deben tener menos de 500 caracteres').optional(),
 })
 
 export const employeeUpdateSchema = yup.object({

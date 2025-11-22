@@ -15,6 +15,6 @@ export async function checkSubdomainExistsData(subdomain: string) {
 
     const exists = !error && data !== null;
 
-    return formatSuccessResponse(exists ? "Subdomain exists" : "Subdomain does not exist", exists);
+    return formatSuccessResponse(exists ? "El subdominio existe" : "El subdominio no existe", exists);
 
 }

@@ -18,7 +18,7 @@ function FinalizeOrderButton({ order }: FinalizeOrderButtonProps) {
 
         if (isFinalizing) return
 
-        toast.loading("Finalizing order...")
+        toast.loading("Finalizando orden...")
 
         startFinalizeTransition(async () => {
             try {
@@ -31,11 +31,11 @@ function FinalizeOrderButton({ order }: FinalizeOrderButtonProps) {
                     throw new Error(message)
                 }
                 toast.dismiss()
-                toast.success(`Order successfully finalized! The order has been marked as ${isPickup ? "picked up" : "delivered"}.`)
+                toast.success(`¡Orden finalizada con éxito! La orden fue marcada como ${isPickup ? "recogida" : "entregada"}.`)
             } catch (error) {
                 console.error("Error finalizing order:", error)
                 toast.dismiss()
-                toast.error("Failed to finalize order")
+                toast.error("Error al finalizar la orden")
             }
         })
     }
@@ -43,7 +43,7 @@ function FinalizeOrderButton({ order }: FinalizeOrderButtonProps) {
     return (
         <Button onClick={handleFinalize} disabled={isFinalizing}>
             {isFinalizing ? <Loader2 className="size-4 animate-spin" /> : <CheckCircle className="size-4" />}
-            {isFinalizing ? "Finalizing..." : "Finalize Order"}
+            {isFinalizing ? "Finalizando..." : "Finalizar Orden"}
         </Button>
     )
 }

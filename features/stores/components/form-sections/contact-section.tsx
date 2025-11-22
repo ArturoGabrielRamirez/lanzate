@@ -29,8 +29,8 @@ function ContactSection({ store, mode }: ContactSectionProps) {
                 />
                 <InputField
                     name="contact_email"
-                    label="Email"
-                    placeholder="Email"
+                    label="Correo electrónico"
+                    placeholder="Correo electrónico"
                     type="email"
                     defaultValue={store?.branches?.[0]?.email || ""}
                 />

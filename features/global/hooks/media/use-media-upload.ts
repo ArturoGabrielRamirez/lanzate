@@ -174,7 +174,7 @@ export function useMediaUpload({
         return
       }
 
-      toast.error('Selecciona una imagen primero')
+      toast.error('Primero seleccioná una imagen para recortar.')
     } catch (error) {
       console.error('Error opening cropper:', error)
       toast.error('No se pudo abrir el recortador')
@@ -191,7 +191,7 @@ export function useMediaUpload({
     }
 
     if (!uploadHistory.canUploadMore) {
-      toast.error(`Has alcanzado el límite de 4 ${type}s. Elimina uno existente para subir uno nuevo.`)
+      toast.error(`Alcanzaste el límite de 4 ${type}s. Elimina uno existente para subir uno nuevo o actualiza tu plan para subir más.`)
       return
     }
 

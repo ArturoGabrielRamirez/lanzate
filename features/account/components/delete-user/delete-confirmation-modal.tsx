@@ -124,7 +124,7 @@ export function DeleteConfirmationModal({
 
                     <div className="space-y-2">
                         <Label htmlFor="password" className="text-gray-300">
-                            Confirma tu contraseña *
+                            Confirmá tu contraseña *
                         </Label>
                         <Input
                             id="password"
@@ -142,7 +142,7 @@ export function DeleteConfirmationModal({
 
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                         <p className="text-blue-300 text-sm">
-                            💡 <span className="font-semibold">Período de gracia:</span> Tendrás {DELETION_CONSTANTS.GRACE_PERIOD_DAYS} días
+                            💡 <span className="font-semibold">Período de gracia:</span> Vas a tenér {DELETION_CONSTANTS.GRACE_PERIOD_DAYS} días
                             para cambiar de opinión y cancelar la eliminación.
                         </p>
                     </div>

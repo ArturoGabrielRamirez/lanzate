@@ -10,11 +10,11 @@ export async function createNewOrderMessageAction({ orderId, message, messageTyp
 
         const newMessage = await insertNewOrderMessageData({ orderId, message, messageType })
 
-        if (!newMessage) throw new Error("Error creating message")
+        if (!newMessage) throw new Error("Error al crear el mensaje")
 
         return {
             hasError: false,
-            message: "Message created successfully",
+            message: "Mensaje creado exitosamente",
             payload: null
         }
 

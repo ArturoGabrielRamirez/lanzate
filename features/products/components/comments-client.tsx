@@ -115,7 +115,7 @@ function CommentsClient({ productId, user, initialComments }: CommentsClientProp
                 </Form>
             ) : (
                 <p className="text-sm text-muted-foreground">
-                    Inicia sesión para dejar un comentario
+                    Iniciá sesión para dejar un comentario
                 </p>
             )}
 

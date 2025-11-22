@@ -13,7 +13,7 @@ function OrderChatMessages({ messages, currentUser }: OrderChatMessagesProps) {
         return (
             <div className="flex-1 flex items-center justify-center p-8">
                 <div className="text-center text-muted-foreground">
-                    <p>No hay mensajes aún</p>
+                    <p>De momento no tenés mensajes</p>
                     <p className="text-sm">Sé el primero en enviar un mensaje</p>
                 </div>
             </div>

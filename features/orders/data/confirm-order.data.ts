@@ -20,7 +20,7 @@ export async function confirmOrderData({ orderId }: ConfirmOrderDataProps) {
 
     return {
         hasError: false,
-        message: "Order confirmed successfully",
+        message: "Pedido confirmado con éxito",
         payload: {
             order: updatedOrder,
             tracking: orderTracking

@@ -17,7 +17,7 @@ function WelcomeTutorialWidget({ onRetakeTutorial }: { onRetakeTutorial: () => v
                 <BadgeCheckIcon className="size-5" />
             </ItemMedia>
             <ItemContent className="opacity-50 group-hover:opacity-100 transition-all">
-                <ItemTitle>Retake the welcome tutorial</ItemTitle>
+                <ItemTitle>Retomar el tutorial de bienvenida</ItemTitle>
             </ItemContent>
             <ItemActions className="opacity-50 group-hover:opacity-100 transition-all">
                 <IconButton

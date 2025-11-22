@@ -22,16 +22,16 @@ export async function createBranchAction({ payload, storeId, userId }: CreateBra
             entity_type: "BRANCH",
             entity_id: branch.id,
             user_id: userId,
-            action_initiator: "Branch creation form",
-            details: "Branch created using branch creation form"
+            action_initiator: "Formulario de creación de sucursal",
+            details: "Sucursal creada usando el formulario de creación de sucursal"
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear una entrada de registro para esto.")
 
 
         return {
             hasError: false,
-            message: "Branch created successfully",
+            message: "Sucursal creada con éxito",
             payload: branch
         }
 

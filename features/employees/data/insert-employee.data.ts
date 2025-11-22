@@ -15,7 +15,7 @@ export async function insertEmployeeData(userId: number, storeId: number, role: 
     })
 
     if (existingEmployee) {
-        throw new Error("User is already an employee in this store")
+        throw new Error("El usuario ya es un empleado en esta tienda")
     }
 
     const employee = await prisma.employee.create({
@@ -47,7 +47,7 @@ export async function insertEmployeeData(userId: number, storeId: number, role: 
     })
 
     return {
-        message: "Employee created successfully",
+        message: "Empleado creado exitosamente",
         payload: employee,
         hasError: false
     }

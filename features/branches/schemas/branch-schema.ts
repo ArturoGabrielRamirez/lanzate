@@ -1,19 +1,19 @@
 import * as yup from "yup"
 
 export const branchCreateSchema = yup.object().shape({
-    name: yup.string().required("Name is required"),
-    address: yup.string().required("Address is required"),
-    phone: yup.string().required("Phone is required"),
-    email: yup.string().email("Email must be valid").required("Email is required")
+    name: yup.string().required("El nombre es obligatorio"),
+    address: yup.string().required("La dirección es obligatoria"),
+    phone: yup.string().required("El teléfono es obligatorio"),
+    email: yup.string().email("El correo electrónico debe ser válido").required("El correo electrónico es obligatorio")
 })
 
 export const branchUpdateSchema = yup.object({
-    name: yup.string().required("Name is required"),
+    name: yup.string().required("El nombre es obligatorio"),
     description: yup.string().optional(),
-    address: yup.string().required("Address is required"),
-    phone: yup.string().required("Phone is required"),
-    email: yup.string().email("Email must be valid").required("Email is required"),
-    is_main: yup.boolean().required("Is main is required").default(false)
+    address: yup.string().required("La dirección es obligatoria"),
+    phone: yup.string().required("El teléfono es obligatorio"),
+    email: yup.string().email("El correo electrónico debe ser válido").required("El correo electrónico es obligatorio"),
+    is_main: yup.boolean().required("Es obligatorio indicar si es la sucursal principal").default(false)
 }).required()
 
 // Define el tipo explícitamente
@@ -30,11 +30,11 @@ export type BranchUpdateData = {
 export const branchUpdatePayloadSchema = yup.object({
     branchId: yup.number().required(),
     data: yup.object({
-        name: yup.string().required("Name is required"),
+        name: yup.string().required("El nombre es obligatorio"),
         description: yup.string().optional(),
-        address: yup.string().required("Address is required"),
-        phone: yup.string().required("Phone is required"),
-        email: yup.string().email("Email must be valid").required("Email is required"),
+        address: yup.string().required("La dirección es obligatoria"),
+        phone: yup.string().required("El teléfono es obligatorio"),
+        email: yup.string().email("El correo electrónico debe ser válido").required("El correo electrónico es obligatorio"),
         is_main: yup.boolean().required().default(false)
     }).required() as yup.ObjectSchema<BranchUpdateData>,
     slug: yup.string().required(),
