@@ -9,13 +9,13 @@ import { branchUpdatePayloadSchema/* , branchUpdateSchema */ } from "@/features/
 import { EditBranchButtonProps } from "@/features/branches/types"
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import InputField from "@/features/global/components/form/input"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+/* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Textarea } from "@/features/shadcn/components/ui/textarea"
 
 function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButtonProps) {
 
-    const [isMain, setIsMain] = useState(branch.is_main)
+    const [isMain,/*  setIsMain */] = useState(branch.is_main)
     const t = useTranslations("store.edit-branch")
 
     const handleEditBranch = async (payload: {
@@ -97,11 +97,11 @@ function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButton
             />
 
             <div className="flex items-center space-x-2">
-                <Checkbox
+                {/* <Checkbox
                     id="is_main"
                     checked={isMain}
                     onCheckedChange={(checked) => setIsMain(checked as boolean)}
-                />
+                /> */}
                 <Label htmlFor="is_main" className="text-sm">
                     {t("set-as-main")}
                 </Label>
