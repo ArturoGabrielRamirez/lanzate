@@ -4,7 +4,7 @@ import * as motion from "motion/react-client"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+/* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Select, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
@@ -53,7 +53,7 @@ function TableSkeleton() {
                 <TableRow>
                   {/* Checkbox Column */}
                   <TableHead className="w-12">
-                    <Checkbox disabled />
+                  {/*   <Checkbox disabled /> */}
                   </TableHead>
 
                   {/* ID Column */}
@@ -118,7 +118,7 @@ function TableSkeleton() {
                   >
                     {/* Checkbox */}
                     <TableCell>
-                      <Checkbox disabled />
+                     {/*  <Checkbox disabled /> */}
                     </TableCell>
 
                     {/* ID */}

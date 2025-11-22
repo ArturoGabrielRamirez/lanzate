@@ -2,7 +2,7 @@ import { Store, Settings, Phone, MessageCircle, Facebook, Instagram, Twitter, Do
 import * as motion from "motion/react-client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+/* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
 import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 import { Switch } from "@/features/shadcn/components/ui/switch"
 
@@ -189,7 +189,7 @@ function AccountSkeleton() {
                                                     animate={{ y: 0 }}
                                                     transition={{ duration: 0.2, delay: 0.2 + index * 0.05 }}
                                                 >
-                                                    <Checkbox disabled />
+                                                  {/*   <Checkbox disabled /> */}
                                                     <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                                         {method}
                                                     </label>

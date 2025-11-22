@@ -14,7 +14,7 @@ import { DeleteVariantButton } from "@/features/products/components/delete-varia
 import type { ProductsTableProps, ProductsTableVariantRow } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+/* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
 import { DropdownMenu } from "@/features/shadcn/components/ui/dropdown-menu"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
@@ -69,7 +69,7 @@ function ProductsTable({ data, userId, slug, employeePermissions/* , branches */
     const columns: ColumnDef<ProductsTableVariantRow>[] = [
         {
             id: "select",
-            header: ({ table }) => (
+   /*          header: ({ table }) => (
                 <Checkbox
                     checked={
                         table.getIsAllPageRowsSelected() ||
@@ -78,14 +78,14 @@ function ProductsTable({ data, userId, slug, employeePermissions/* , branches */
                     onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                     aria-label="Select all"
                 />
-            ),
-            cell: ({ row }) => (
+            ), */
+           /*  cell: ({ row }) => (
                 <Checkbox
                     checked={row.getIsSelected()}
                     onCheckedChange={(value) => row.toggleSelected(!!value)}
                     aria-label="Select row"
                 />
-            ),
+            ), */
         },
         {
             accessorKey: "name",
