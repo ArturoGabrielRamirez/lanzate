@@ -1,5 +1,7 @@
 "use client"
 
+//TODO: Migrar minimum_order_amount al metodo correcto de Prisma.
+
 import { yupResolver } from "@hookform/resolvers/yup"
 import { PaymentMethod } from "@prisma/client"
 import { Truck, CreditCard, Edit as EditIcon, X } from "lucide-react"
@@ -57,21 +59,21 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
     }
 
     function ToggleEditButton() {
-        const { reset } = useFormContext<EditOperationalSettingsData>()
+        const { /* reset */ } = useFormContext<EditOperationalSettingsData>()
 
-        const initialValues: EditOperationalSettingsData = {
-            offers_delivery: Boolean(effectiveOffersDelivery),
+   /*      const initialValues: EditOperationalSettingsData = {
+            offers_delivery: Boolean(effectiveOffersDelivery), */
             // The following remain store-level while we migrate UI to per-method settings
             /*  delivery_price: storeOperationalSettings?.delivery_price?.toString() || "0",
              free_delivery_minimum: storeOperationalSettings?.free_delivery_minimum?.toString() || "",
              delivery_radius_km: storeOperationalSettings?.delivery_radius_km?.toString() || "5", */
-            minimum_order_amount: branchOperationalSettings?.minimum_order_amount?.toString() || "0" /* storeOperationalSettings?.minimum_order_amount?.toString() || "0", */
-        }
+            /* minimum_order_amount: branchOperationalSettings?.minimum_order_amount?.toString() || "0" */ /* storeOperationalSettings?.minimum_order_amount?.toString() || "0", */
+       /*  } */
 
         const onClick = () => {
             if (isEditing) {
-                reset(initialValues)
-                setOffersDelivery(initialValues.offers_delivery)
+              /*   reset(initialValues) */
+              /*   setOffersDelivery(initialValues.offers_delivery) */
                 handleCloseEdit()
                 return
             }
@@ -197,11 +199,11 @@ function OperationalSettingsDisplay({ store }: OperationalSettingsDisplayProps) 
                                 <div className="space-y-1">
                                     <InputField
                                         name="minimum_order_amount"
-                                        label="Minimum Order Amount"
+                                        label="Monto mínimo de pedido"
                                         type="number"
                                         defaultValue={branchOperationalSettings?.minimum_order_amount?.toString() || storeOperationalSettings?.minimum_order_amount?.toString() || "0"}
                                         disabled={!isEditing}
-                                        placeholder="Minimum Order Amount"
+                                        placeholder="Monto mínimo de pedido"
                                     />
                                 </div>
                             </div>
