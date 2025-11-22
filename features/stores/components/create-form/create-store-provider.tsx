@@ -40,8 +40,26 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
         setIsStepValid({})
     }, [setStep])
 
+    const resetForm = useCallback(() => {
+        setValuesState({})
+        setIsStepValid({})
+    }, [])
+
+    const contextValue: CreateStoreContextType = {
+        values,
+        setValues,
+        isStepValid,
+        setStepValid,
+        step,
+        setStep,
+        isOpen,
+        openDialog,
+        closeDialog,
+        resetForm,
+    }
+
     return (
-        <CreateStoreContext.Provider value={{ values, setValues, isStepValid, setStepValid, step, setStep, isOpen, openDialog, closeDialog }}>
+        <CreateStoreContext.Provider value={contextValue}>
             {children}
         </CreateStoreContext.Provider>
     )

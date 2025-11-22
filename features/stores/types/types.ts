@@ -443,6 +443,7 @@ export type CreateStoreContextType = {
     isOpen: boolean
     openDialog: () => void
     closeDialog: () => void
+    resetForm: () => void
 }
 
 export type DeliverySwitchProps = {
