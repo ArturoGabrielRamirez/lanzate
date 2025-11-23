@@ -76,6 +76,12 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                 </Form>
             </Step>
             <Step>
+                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+                    <PaymentMethodsFormPanel />
+                </Form>
+            </Step>
+            
+            <Step>
                 <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
                     <AddressFormPanel />
                 </Form>
@@ -85,12 +91,6 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                     <SettingsFormPanel />
                 </Form>
             </Step>
-            <Step>
-                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
-                    <PaymentMethodsFormPanel />
-                </Form>
-            </Step>
-            
             <Step>
                 <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
                     <ShippingFormPanel />

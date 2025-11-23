@@ -28,7 +28,7 @@ export function SettingsFormPanel() {
     }, [])
 
     useEffect(() => {
-        setStepValid(4, isValid)
+        setStepValid(5, isValid)
     }, [isValid, setStepValid])
 
     const handleIsOpen24Hours = () => {

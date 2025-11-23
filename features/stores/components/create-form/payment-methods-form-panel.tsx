@@ -77,7 +77,7 @@ export function PaymentMethodsFormPanel() {
     }, [])
 
     useEffect(() => {
-        setStepValid(5, isValid)
+        setStepValid(3, isValid)
     }, [isValid, setStepValid])
 
     useEffect(() => {

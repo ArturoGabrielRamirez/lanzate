@@ -32,7 +32,7 @@ export function AddressFormPanel() {
     }, [])
 
     useEffect(() => {
-        setStepValid(3, isValid)
+        setStepValid(4, isValid)
     }, [isValid, setStepValid])
 
     const handleSelectionChange = (selection: Selection) => {

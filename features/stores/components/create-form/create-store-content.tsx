@@ -68,20 +68,22 @@ export function CreateStoreContent({ /* userId */ }: { userId: number }) {
     const descriptions = {
         1: t("descriptions.step1"),
         2: t("descriptions.step3"),
-        3: t("descriptions.step2"),
-        4: t("descriptions.step4"),
-        5: t("descriptions.step5"),
-        6: t("descriptions.step6"),
-        7: t("descriptions.step7"),
+        3: t("descriptions.step5"),
+        4: t("descriptions.step2"),
+        5: t("descriptions.step4"),
+        6: "Elige si tu tienda ofrece delivery o solo retiro en persona",
+        7: t("descriptions.step6"),
+        8: t("descriptions.step7"),
     }
 
     const titleSlugs = {
         1: t("steps.basic"),
         2: t("steps.contact"),
-        3: t("steps.address"),
-        4: t("steps.hours"),
-        5: t("steps.delivery"),
-        6: t("steps.success"),
+        3: t("steps.delivery"),
+        4: t("steps.address"),
+        5: t("steps.hours"),
+        6: "Delivery",
+        7: t("steps.success"),
     }
 
     return (

@@ -56,7 +56,7 @@ export function ShippingFormPanel() {
     }, [watchedOffersDelivery])
 
     useEffect(() => {
-        setStepValid(5, isValid)
+        setStepValid(6, isValid)
     }, [isValid, setStepValid])
 
     useEffect(() => {
