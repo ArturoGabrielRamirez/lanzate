@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import { Calendar, Plus, Trash } from "lucide-react"
+import { Calendar, Plus, Trash2 } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
@@ -217,7 +217,7 @@ export function SettingsFormPanel() {
                                             </div>
                                             <Tooltip>
                                                 <TooltipTrigger asChild>
-                                                    <IconButton type="button" icon={Trash} onClick={() => handleDeleteDate(i)} />
+                                                    <IconButton type="button" icon={Trash2} onClick={() => handleDeleteDate(i)} iconClassName="text-red-500" />
                                                 </TooltipTrigger>
                                                 <TooltipContent>
                                                     {t("delete")}
