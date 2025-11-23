@@ -12,16 +12,16 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 /* import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel" */
 import { StepIndicator } from "@/features/stores/components/create-form/step-indicator"
 import {
-/*     addressInfoSchema,
-    AddressInfoFormType, */
+    /*     addressInfoSchema,
+        AddressInfoFormType, */
     BasicInfoFormType,
     basicInfoSchemaNew,
-/*     ContactInfoFormType,
-    contactInfoSchema,
-    SettingsFormType,
-    settingsSchema,
-    ShippingPaymentFormType,
-    shippingPaymentSchema */
+    /*     ContactInfoFormType,
+        contactInfoSchema,
+        SettingsFormType,
+        settingsSchema,
+        ShippingPaymentFormType,
+        shippingPaymentSchema */
 } from "@/features/stores/schemas"
 import { CreateStoreFormProps, CreateStoreFormValues } from "@/features/stores/types"
 
@@ -29,7 +29,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
 
     const { isStepValid, values, step, setStep } = useCreateStoreContext()
     const t = useTranslations("store.create-form")
-    /* const isValid = !!isStepValid[step] */
+    const isValid = !!isStepValid[step]
 
     const allowedMaxStep = (() => {
         let max = 1
@@ -52,6 +52,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
             footerClassName="!p-0"
             onStepChange={setStep}
             onFinalStepCompleted={handleFinalStepCompleted}
+            nextButtonProps={{ disabled: !isValid }}
             renderStepIndicator={(props: { step: number; currentStep: number; onStepClick: (step: number) => void }) => {
                 return (
                     <StepIndicator
@@ -73,21 +74,24 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                     <AddressFormPanel />
                 </Form> */}
             </Step>
+            {/* 
             <Step>
-                {/* <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
+                <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
                     <ContactFormPanel />
-                </Form> */}
+                </Form>
             </Step>
             <Step>
-                {/* <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
+                <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
                     <SettingsFormPanel />
-                </Form> */}
+                </Form>
             </Step>
             <Step>
-                {/* <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
                     <ShippingFormPanel />
-                </Form> */}
+                </Form>
             </Step>
+            
+             */}
             {step === 6 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">

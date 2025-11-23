@@ -2,16 +2,16 @@
 
 import { useTranslations } from "next-intl"
 /* import { useEffect } from "react" */
-import { toast } from "sonner"
+/* import { toast } from "sonner" */
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
-import { createStoreAction } from "@/features/stores/actions"
+/* import { createStoreAction } from "@/features/stores/actions" */
 import { CreateStoreForm } from "@/features/stores/components/create-form/create-store-form"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { CreateStoreFormValues } from "@/features/stores/types"
-import { processOpeningHours, processPaymentMethods, processShippingMethods } from "@/features/stores/utils"
+/* import { CreateStoreFormValues } from "@/features/stores/types"
+import { processOpeningHours, processPaymentMethods, processShippingMethods } from "@/features/stores/utils" */
 
-export function CreateStoreContent({ userId }: { userId: number }) {
+export function CreateStoreContent({ /* userId */ }: { userId: number }) {
 
     const { step, setStep/* , closeDialog  */} = useCreateStoreContext()
     const t = useTranslations("store.create-form")
@@ -27,8 +27,11 @@ export function CreateStoreContent({ userId }: { userId: number }) {
         }
     }, [step, setStep, closeDialog]) */
 
-    const handleCreateStore = async (data: CreateStoreFormValues) => {
-        const isPhysical = !!data.address_info?.is_physical_store
+    const handleCreateStore = async (/* data: CreateStoreFormValues */) => {
+        setStep(6)
+        await new Promise(resolve => setTimeout(resolve, 2000))
+        setStep(7)
+        /* const isPhysical = !!data.address_info?.is_physical_store
         const processedData = {
             ...data,
             // If online store, clear address fields to avoid backend validations
@@ -38,7 +41,6 @@ export function CreateStoreContent({ userId }: { userId: number }) {
             processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
         }
 
-        setStep(6)
 
         const { hasError, message, payload } = await createStoreAction(processedData, userId)
 
@@ -53,13 +55,13 @@ export function CreateStoreContent({ userId }: { userId: number }) {
             }
         }
 
-        setStep(7)
+        setStep(7) */
 
         return {
             success: true,
             error: false,
             message: t("messages.store-created-success"),
-            data: payload
+            /* data: payload */
         }
     }
 
