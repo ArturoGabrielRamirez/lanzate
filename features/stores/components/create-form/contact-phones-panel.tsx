@@ -162,7 +162,7 @@ export function ContactPhonesPanel() {
             {!isAddingPhone && (
                 <Button type="button" variant="outline" onClick={handleAddPhone} >
                     <Plus />
-                    Agregar teléfono
+                    Agregar nuevo
                 </Button>
             )}
         </div>

@@ -162,7 +162,7 @@ export function ContactEmailsPanel() {
             {!isAddingEmail && (
                 <Button type="button" variant="outline" onClick={handleAddEmail} >
                     <Plus />
-                    Agregar email
+                    Agregar nuevo
                 </Button>
             )}
         </div>
