@@ -11,7 +11,7 @@ export function ContactFormPanel() {
     const { setStepValid } = useCreateStoreContext()
 
     useEffect(() => {
-        setStepValid(3, isValid)
+        setStepValid(2, isValid)
     }, [isValid, setStepValid])
 
     return (
