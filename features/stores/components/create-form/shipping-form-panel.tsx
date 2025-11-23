@@ -11,10 +11,11 @@ import { Button } from "@/features/shadcn/components/button"
 import { Empty, EmptyDescription } from "@/features/shadcn/components/empty"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemHeader, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormValues } from "@/features/stores/types"
+import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
 
@@ -180,6 +181,22 @@ export function ShippingFormPanel() {
         })
     }
 
+    const handleToggleProvider = (index: number, provider: string) => {
+        const currentMethods = getValues("shipping_info.methods") || []
+        const currentMethod = currentMethods[index]
+        const currentProviders = currentMethod?.providers || []
+        let newProviders = []
+        
+        if (currentProviders.includes(provider)) {
+            newProviders = currentProviders.filter(p => p !== provider)
+        } else {
+            newProviders = [...currentProviders, provider]
+        }
+        
+        setValue(`shipping_info.methods.${index}.providers`, newProviders, { shouldValidate: true, shouldDirty: true })
+        handleMethodChange(index, 'providers', newProviders)
+    }
+
     const initialTags = [
         t("providers-options.own-delivery"),
         t("providers-options.oca"),
@@ -266,18 +283,30 @@ export function ShippingFormPanel() {
                                 }
 
                                 return (
-                                    <div key={field.id} className="flex gap-2 items-start w-full relative group flex-col border p-4 rounded-md border-muted-foreground/20">
+                                    <div key={field.id} className="flex gap-2 items-start w-full relative group flex-col">
                                         <div className="flex-1 space-y-4 w-full">
-                                            <div>
-                                                <AnimatedTags
-                                                    title={t("providers")}
-                                                    initialTags={initialTags}
-                                                    selectedTags={method?.providers || []}
-                                                    onChange={(tags) => {
-                                                        setValue(`shipping_info.methods.${index}.providers`, tags, { shouldValidate: true, shouldDirty: true })
-                                                        handleMethodChange(index, 'providers', tags)
-                                                    }}
-                                                />
+                                            <div className="flex flex-col gap-2">
+                                                <p className="text-sm font-medium">{t("providers")}</p>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {initialTags.map((provider) => {
+                                                        const isSelected = method?.providers?.includes(provider)
+                                                        return (
+                                                            <Badge
+                                                                key={provider}
+                                                                variant={isSelected ? "default" : "outline"}
+                                                                className={cn(
+                                                                    "cursor-pointer select-none px-4 py-1.5",
+                                                                    !isSelected && "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                                                                )}
+                                                                onClick={() => handleToggleProvider(index, provider)}
+                                                            >
+                                                                {provider}
+                                                                {isSelected && <X className="ml-2 size-3" />}
+                                                                {!isSelected && <Plus className="ml-2 size-3" />}
+                                                            </Badge>
+                                                        )
+                                                    })}
+                                                </div>
                                                  {errors.shipping_info?.methods?.[index]?.providers && (
                                                     <p className="text-sm text-red-500 mt-1">{t("providers-error") || "Required"}</p>
                                                 )}
