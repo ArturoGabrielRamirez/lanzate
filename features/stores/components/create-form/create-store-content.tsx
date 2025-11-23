@@ -28,9 +28,9 @@ export function CreateStoreContent({ /* userId */ }: { userId: number }) {
     }, [step, setStep, closeDialog]) */
 
     const handleCreateStore = async (/* data: CreateStoreFormValues */) => {
-        setStep(6)
-        await new Promise(resolve => setTimeout(resolve, 2000))
         setStep(7)
+        await new Promise(resolve => setTimeout(resolve, 2000))
+        setStep(8)
         /* const isPhysical = !!data.address_info?.is_physical_store
         const processedData = {
             ...data,

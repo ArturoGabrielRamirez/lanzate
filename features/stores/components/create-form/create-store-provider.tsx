@@ -33,6 +33,17 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
             emails: [],
             social_media: [],
         },
+        shipping_info: {
+            offers_delivery: false,
+            methods: [],
+        },
+        payment_info: {
+            payment_methods: [],
+        },
+        settings: {
+            is_open_24_hours: true,
+            attention_dates: [],
+        },
     })
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
     const [step, { setStep }] = useStep(7)

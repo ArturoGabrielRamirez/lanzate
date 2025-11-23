@@ -1,4 +1,4 @@
-import { Check, Clock, Contact2, MapPin, StoreIcon, Truck } from "lucide-react"
+import { Check, Clock, Contact2, DollarSign, MapPin, StoreIcon, Truck } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
@@ -14,20 +14,22 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Step
 
     const icons = {
         1: StoreIcon,
-        2: MapPin,
-        3: Contact2,
-        4: Clock,
-        5: Truck,
-        6: Check,
+        2: Contact2,
+        3: DollarSign,
+        4: MapPin,
+        5: Clock,
+        6: Truck,
+        7: Check,
     }
 
     const tooltips = {
         1: t("step-tooltips.basic"),
-        2: t("step-tooltips.address"),
-        3: t("step-tooltips.contact"),
-        4: t("step-tooltips.hours"),
-        5: t("step-tooltips.delivery"),
-        6: t("step-tooltips.success"),
+        2: t("step-tooltips.contact"),
+        3: "Información de pago",
+        4: t("step-tooltips.address"),
+        5: "Información de horarios",
+        6: "Información de entrega",
+        7: "Éxito",
     }
 
     const isComplete = !!isStepValid[step]

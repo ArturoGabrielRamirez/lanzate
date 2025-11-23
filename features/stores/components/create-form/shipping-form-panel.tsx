@@ -22,6 +22,8 @@ import type { Selection } from "react-aria-components"
 export function ShippingFormPanel() {
     const t = useTranslations("store.create-form.shipping")
     const { control, formState: { isValid, errors }, setValue, getValues, trigger, watch } = useFormContext<CreateStoreFormValues>()
+    console.log("🚀 ~ ShippingFormPanel ~ errors:", errors)
+    console.log("🚀 ~ ShippingFormPanel ~ isValid:", isValid)
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { shipping_info } = values
 
