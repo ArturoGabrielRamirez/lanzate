@@ -1,4 +1,4 @@
-import { Check, DollarSign, List, Percent, Plus, Tag, Trash2 } from "lucide-react"
+import { Check, CreditCard, DollarSign, List, Percent, Plus, Tag, Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useFieldArray, useFormContext } from "react-hook-form"
@@ -8,6 +8,7 @@ import { SelectField } from "@/features/global/components/form/select-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
 import { Button } from "@/features/shadcn/components/button"
 import { Empty, EmptyDescription } from "@/features/shadcn/components/empty"
+import { Item, ItemActions, ItemContent, ItemDescription, ItemHeader, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
@@ -71,7 +72,7 @@ export function PaymentMethodsFormPanel() {
     const handleAddMethod = () => {
         append({
             name: "",
-            type: "",
+            type: "efectivo",
             commission_percent: undefined,
             commission_amount: undefined,
             cbu_cvu: "",
@@ -153,9 +154,43 @@ export function PaymentMethodsFormPanel() {
                 const isConfirmed = confirmedIds.has(field.id)
                 const isCurrentAdding = isAddingMethod && index === fields.length - 1
                 const methodType = paymentMethods?.[index]?.type
+                
+                if (isConfirmed && !isCurrentAdding) {
+                    return (
+                        <Item key={field.id} className="border rounded-md p-4 border-muted-foreground/50">
+                            <ItemMedia>
+                                <CreditCard className="size-5 text-muted-foreground" />
+                            </ItemMedia>
+                            <ItemContent>
+                                <ItemHeader>
+                                    <ItemTitle>{paymentMethods?.[index]?.name}</ItemTitle>
+                                </ItemHeader>
+                                <ItemDescription>
+                                    {paymentTypes.find(t => t.value === methodType)?.label || methodType}
+                                    {(paymentMethods?.[index]?.commission_percent || paymentMethods?.[index]?.commission_amount) && (
+                                        <span className="ml-2 text-xs text-muted-foreground">
+                                            ({paymentMethods?.[index]?.commission_percent ? `${paymentMethods?.[index]?.commission_percent}%` : ''}
+                                            {paymentMethods?.[index]?.commission_percent && paymentMethods?.[index]?.commission_amount ? ' + ' : ''}
+                                            {paymentMethods?.[index]?.commission_amount ? `$${paymentMethods?.[index]?.commission_amount}` : ''})
+                                        </span>
+                                    )}
+                                </ItemDescription>
+                            </ItemContent>
+                            <ItemActions>
+                                <IconButton
+                                    icon={Trash2}
+                                    onClick={() => handleRemoveMethod(index)}
+                                    color={[255, 0, 0]}
+                                    className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
+                                    tooltip="Eliminar"
+                                />
+                            </ItemActions>
+                        </Item>
+                    )
+                }
 
                 return (
-                    <div key={field.id} className="flex gap-2 items-start w-full relative group">
+                    <div key={field.id} className="flex gap-2 items-start w-full relative group border rounded-lg p-4">
                         <div className="flex-1 space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <InputField
@@ -249,16 +284,14 @@ export function PaymentMethodsFormPanel() {
                                 className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
                                 tooltip="Eliminar"
                             />
-                            {(!isConfirmed || isCurrentAdding) && (
-                                <IconButton
-                                    icon={Check}
-                                    onClick={() => handleConfirmMethod(index)}
-                                    color={[0, 200, 0]}
-                                    className="text-green-600 hover:bg-green-600/10 active:bg-green-600/20"
-                                    tooltip="Confirmar"
-                                    disabled={!!errors?.payment_info?.payment_methods?.[index]}
-                                />
-                            )}
+                            <IconButton
+                                icon={Check}
+                                onClick={() => handleConfirmMethod(index)}
+                                color={[0, 200, 0]}
+                                className="text-green-600 hover:bg-green-600/10 active:bg-green-600/20"
+                                tooltip="Confirmar"
+                                disabled={!!errors?.payment_info?.payment_methods?.[index]}
+                            />
                         </div>
                     </div>
                 )
