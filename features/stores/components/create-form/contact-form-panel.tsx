@@ -1,4 +1,4 @@
-import { Check, Phone, Plus, Trash2 } from "lucide-react";
+import { Check, Phone, Plus, Star, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form"
@@ -6,21 +6,25 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button";
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
+import { cn } from "@/lib/utils"
 
 export function ContactFormPanel() {
     const t = useTranslations("store.create-form.contact")
-    const { control, formState: { isValid, errors }, setValue, getValues, trigger } = useFormContext()
+    const { control, formState: { isValid, errors }, setValue, getValues, trigger, watch } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { fields, append, remove } = useFieldArray({ control, name: "contact_info.phones" })
     const { contact_info } = values
 
     const [isAddingPhone, setIsAddingPhone] = useState(false)
     const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
+    
+    const phones = watch("contact_info.phones")
 
     useEffect(() => {
         if (contact_info?.phones) {
             setValue("contact_info.phones", contact_info.phones)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -39,6 +43,7 @@ export function ContactFormPanel() {
                  setConfirmedIds(newConfirmed)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fields.length])
 
     useEffect(() => {
@@ -78,6 +83,22 @@ export function ContactFormPanel() {
         setIsAddingPhone(false)
     }
 
+    const handleSetPrimary = (index: number) => {
+        const currentPhones = getValues("contact_info.phones") || []
+        const updatedPhones = currentPhones.map((item: { phone: string; is_primary: boolean }, i: number) => ({
+            ...item,
+            is_primary: i === index
+        }))
+
+        setValue("contact_info.phones", updatedPhones)
+        setCtxValues({
+            contact_info: {
+                ...values.contact_info,
+                phones: updatedPhones
+            }
+        })
+    }
+
     const handlePhoneChange = (index: number, value: string) => {
         const currentPhones = getValues("contact_info.phones") || []
 
@@ -112,6 +133,18 @@ export function ContactFormPanel() {
                             disabled={confirmedIds.has(field.id)}
                             onChange={(e) => handlePhoneChange(index, e.target.value)}
                         />
+                        <Button 
+                            type="button" 
+                            size="lg" 
+                            variant="ghost"
+                            className={cn(
+                                "px-2 hover:bg-transparent",
+                                phones?.[index]?.is_primary ? "text-yellow-500 hover:text-yellow-600" : "text-muted-foreground/30 hover:text-yellow-500"
+                            )}
+                            onClick={() => handleSetPrimary(index)}
+                        >
+                            <Star className="h-5 w-5" fill={phones?.[index]?.is_primary ? "currentColor" : "none"} />
+                        </Button>
                         <Button type="button" size="lg" variant="destructive" onClick={() => handleRemovePhone(index)} >
                             <Trash2 />
                         </Button>
