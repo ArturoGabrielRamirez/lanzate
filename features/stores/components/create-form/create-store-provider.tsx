@@ -26,6 +26,13 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
             province: "",
             country: "",
         },
+        contact_info: {
+            contact_phone: "",
+            contact_email: "",
+            phones: [],
+            emails: [],
+            social_media: [],
+        },
     })
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
     const [step, { setStep }] = useStep(7)

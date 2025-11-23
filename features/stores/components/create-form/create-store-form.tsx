@@ -6,7 +6,7 @@ import { Form } from "@/features/global/components/form/form"
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
 import { AddressFormPanel } from "@/features/stores/components/create-form/address-form-panel"
 import { BasicInfoFormPanel } from "@/features/stores/components/create-form/basic-info-form-panel"
-/* import { ContactFormPanel } from "@/features/stores/components/create-form/contact-form-panel" */
+import { ContactFormPanel } from "@/features/stores/components/create-form/contact-form-panel"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 /* import { SettingsFormPanel } from "@/features/stores/components/create-form/settings-form-panel" */
 /* import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel" */
@@ -16,8 +16,9 @@ import {
     AddressInfoFormType,
     BasicInfoFormType,
     basicInfoSchemaNew,
-    /*     ContactInfoFormType,
-        contactInfoSchema,
+    ContactInfoFormType,
+    contactInfoSchema,
+    /*    
         SettingsFormType,
         settingsSchema,
         ShippingPaymentFormType,
@@ -74,12 +75,12 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                     <AddressFormPanel />
                 </Form>
             </Step>
-            {/* 
             <Step>
                 <Form<ContactInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(contactInfoSchema as never)}>
                     <ContactFormPanel />
                 </Form>
             </Step>
+            {/* 
             <Step>
                 <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
                     <SettingsFormPanel />

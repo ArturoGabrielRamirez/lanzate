@@ -56,6 +56,9 @@ function InputField({
             name={name}
             control={control}
             render={({ field, fieldState }) => {
+                console.log("🚀 ~ InputField ~ field:", field)
+                console.log("🚀 ~ InputField ~ fieldState:", fieldState)
+                /* console.log("🚀 ~ InputField ~ field:", field) */
                 // Función que combina el onChange de react-hook-form con el onChange custom
                 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                     // Primero ejecuta el onChange de react-hook-form (crítico para la validación)

@@ -1,91 +1,109 @@
-import { Facebook, Instagram, Mail, Phone, Twitter } from "lucide-react"
-import { useEffect, useRef } from "react"
-import { useFormContext } from "react-hook-form"
+import { Check, Phone, Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react";
+import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { Button } from "@/features/shadcn/components/button";
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { CreateStoreFormValues } from "@/features/stores/types"
+/* import { CreateStoreFormValues } from "@/features/stores/types" */
 
 export function ContactFormPanel() {
     const t = useTranslations("store.create-form.contact")
-
-    const { formState: { isValid }, watch, setValue, trigger } = useFormContext()
+    const { control, formState: { isValid }, setValue, getValues } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
+    const { fields, append, remove } = useFieldArray({ control, name: "contact_info.phones" })
+    const { contact_info } = values
 
-    const seededRefContact = useRef(false)
+    const [isAddingPhone, setIsAddingPhone] = useState(false)
+    const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
 
     useEffect(() => {
-        if (seededRefContact.current) return
-        seededRefContact.current = true
-        if (values.contact_info) {
-            setValue("contact_info", values.contact_info, { shouldValidate: true })
-        } else {
-            trigger(["contact_info.contact_phone", "contact_info.contact_email"])
+        if (contact_info) {
+            setValue("contact_info", contact_info)
         }
-    }, [values.contact_info, setValue, trigger])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
-        const sub = watch((v) => setCtxValues({ contact_info: (v as CreateStoreFormValues).contact_info }))
-        return () => sub.unsubscribe()
-    }, [watch, setCtxValues])
+        setStepValid(3, isValid)
+    }, [isValid, setStepValid])
 
-    useEffect(() => { setStepValid(3, isValid) }, [isValid, setStepValid])
+    const handleAddPhone = () => {
+        append({ phone: "", is_primary: fields.length === 0 })
+        setIsAddingPhone(true)
+    }
+
+    const handleRemovePhone = (index: number) => {
+        remove(index)
+        setIsAddingPhone(false)
+    }
+
+    const handleConfirmPhone = (index: number) => {
+        const field = fields[index]
+        if (field && field.id) {
+            setConfirmedIds(prev => {
+                const next = new Set(prev)
+                next.add(field.id)
+                return next
+            })
+        }
+        setIsAddingPhone(false)
+    }
+
+    const handlePhoneChange = (index: number, value: string) => {
+        const currentPhones = getValues("contact_info.phones") || []
+
+        const updatedPhones = currentPhones.map((item: { phone: string; is_primary: boolean }, i: number) => {
+            if (i === index) return { ...item, phone: value }
+            return item
+        })
+
+        setCtxValues({
+            contact_info: {
+                ...values.contact_info,
+                phones: updatedPhones
+            }
+        })
+    }
 
     return (
-        <>
-            <div className="flex flex-col gap-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <InputField
-                        name="contact_info.contact_phone"
-                        label={t("phone")}
-                        placeholder={t("phone-placeholder")}
-                        startIcon={<Phone />}
-                        isRequired
-                        tooltip={t("phone-tooltip")}
-                    />
-                    <InputField
-                        name="contact_info.contact_email"
-                        label={t("email")}
-                        placeholder={t("email-placeholder")}
-                        startIcon={<Mail />}
-                        type="email"
-                        isRequired
-                        tooltip={t("email-tooltip")}
-                    />
+        <div className="space-y-4">
+            <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium">{t("phone")}</label>
                 </div>
-                <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="social-media" className="border-none">
-                        <AccordionTrigger className="text-muted-foreground text-base font-medium hover:no-underline py-2">{t("social-media")}</AccordionTrigger>
-                        <AccordionContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <InputField
-                                name="contact_info.facebook_url"
-                                label={t("facebook")}
-                                placeholder={t("facebook-placeholder")}
-                                startIcon={<Facebook />}
-                                tooltip={t("facebook-tooltip")}
-                            />
-                            <InputField
-                                name="contact_info.instagram_url"
-                                label={t("instagram")}
-                                placeholder={t("instagram-placeholder")}
-                                startIcon={<Instagram />}
-                                type="email"
-                                tooltip={t("instagram-tooltip")}
-                            />
-                            <InputField
-                                name="contact_info.x_url"
-                                label={t("x-twitter")}
-                                placeholder={t("x-twitter-placeholder")}
-                                startIcon={<Twitter />}
-                                type="url"
-                                tooltip={t("x-twitter-tooltip")}
-                            />
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
+
+                {fields.map((field, index) => (
+                    <div key={field.id} className="flex gap-2 items-start">
+                        <InputField
+                            startIcon={<Phone />}
+                            name={`contact_info.phones.${index}.phone`}
+                            label=""
+                            placeholder={t("phone-placeholder")}
+                            hideLabel
+                            onChange={(e) => handlePhoneChange(index, e.target.value)}
+                        />
+                        <Button type="button" size="lg" variant="destructive" onClick={() => handleRemovePhone(index)} >
+                            <Trash2 />
+                        </Button>
+                        {!confirmedIds.has(field.id) && (
+                            <Button type="button" size="lg" variant="outline" onClick={() => handleConfirmPhone(index)} >
+                                <Check />
+                            </Button>
+                        )}
+                    </div>
+                ))}
+
+                {!isAddingPhone && (
+                    <Button type="button" variant="outline" onClick={handleAddPhone} >
+                        <Plus />
+                        Agregar teléfono
+                    </Button>
+                )}
+
+
             </div>
-        </>
+        </div>
     )
 }

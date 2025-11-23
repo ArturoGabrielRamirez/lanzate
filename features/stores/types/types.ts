@@ -414,14 +414,17 @@ export type CreateStoreFormValues = {
     }
     address_info: AddressFormValues
     contact_info: {
-        contact_phone: string
-        contact_email: string
+        contact_phone?: string
+        contact_email?: string
         facebook_url?: string
         instagram_url?: string
         x_url?: string
+        phones?: { phone: string; is_primary: boolean }[]
+        emails?: { email: string; is_primary: boolean }[]
+        social_media?: { social_media: string; is_primary: boolean }[]
     }
     settings: {
-        is_open_24_hours: boolean
+        is_open_24_hours: boolean   
         attention_dates?: { days?: string[]; startTime?: string; endTime?: string }[]
     }
     shipping_info: {

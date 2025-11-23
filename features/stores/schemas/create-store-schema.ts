@@ -49,6 +49,24 @@ export const contactInfoSchema = yup.object({
         facebook_url: yup.string().url("Debe ser una URL válida").max(255, "La URL de Facebook debe tener menos de 255 caracteres"),
         instagram_url: yup.string().url("Debe ser una URL válida").max(255, "La URL de Instagram debe tener menos de 255 caracteres"),
         x_url: yup.string().url("Debe ser una URL válida").max(255, "La URL de X debe tener menos de 255 caracteres"),
+        phones: yup.array().of(
+            yup.object({
+                phone: yup.string().max(20, "El número de teléfono debe tener menos de 20 caracteres").required("El número de teléfono es obligatorio"),
+                is_primary: yup.boolean().default(false),
+            })
+        ).min(1, "Al menos un teléfono es obligatorio"),
+        emails: yup.array().of(
+            yup.object({
+                email: yup.string().email("Formato de correo electrónico inválido").max(255, "El correo electrónico debe tener menos de 255 caracteres").required("El correo electrónico es obligatorio"),
+                is_primary: yup.boolean().default(false),
+            })
+        ).min(1, "Al menos un correo electrónico es obligatorio"),
+        social_media: yup.array().of(
+            yup.object({
+                social_media: yup.string().url("Debe ser una URL válida").max(255, "La URL de la red social debe tener menos de 255 caracteres").required("La URL de la red social es obligatoria"),
+                is_primary: yup.boolean().default(false),
+            })
+        ).min(1, "Al menos una red social es obligatoria"),
     })
 })
 
