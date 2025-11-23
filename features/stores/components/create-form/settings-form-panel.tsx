@@ -10,7 +10,7 @@ import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { AttentionDateFormPanel } from "@/features/stores/components/create-form/attention-date-form-panel"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { AttentionDateType } from "@/features/stores/types"
+/* import { AttentionDateType } from "@/features/stores/types" */
 import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
@@ -149,7 +149,7 @@ export function SettingsFormPanel() {
     }
 
     // Helper to convert form data to AttentionDateType for the form panel
-    const getAttentionDateForPanel = (index: number): AttentionDateType => {
+    /* const getAttentionDateForPanel = (index: number): AttentionDateType => {
         const dateData = getValues(`settings.attention_dates.${index}`)
         // Fallback or default if creating new
         return {
@@ -159,7 +159,7 @@ export function SettingsFormPanel() {
             endTime: dateData?.endTime ? dayjs(dateData.endTime, "HH:mm") : dayjs('12:00', 'HH:mm'),
         }
     }
-
+ */
     return (
         <>
             <div className="flex flex-col gap-1">
@@ -235,11 +235,16 @@ export function SettingsFormPanel() {
 
                         {isAddingDate && editingIndex !== null && (
                             <AttentionDateFormPanel
-                                date={getAttentionDateForPanel(editingIndex)}
                                 key={`edit-${editingIndex}`}
                                 onCancel={handleCancelDate}
                                 onSave={handleSaveDate}
                                 index={editingIndex}
+                                date={{
+                                    date: dayjs().format("YYYY-MM-DD"),
+                                    days: [],
+                                    startTime: dayjs('10:00', 'HH:mm'),
+                                    endTime: dayjs('12:00', 'HH:mm'),
+                                }}
                             />
                         )}
 
