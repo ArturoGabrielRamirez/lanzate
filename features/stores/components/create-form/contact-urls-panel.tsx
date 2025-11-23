@@ -16,7 +16,7 @@ export function ContactUrlsPanel() {
 
     const [isAddingUrl, setIsAddingUrl] = useState(false)
     const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
-    
+
     const urls = watch("contact_info.social_media")
 
     useEffect(() => {
@@ -30,25 +30,23 @@ export function ContactUrlsPanel() {
         if (fields.length > 0 && confirmedIds.size === 0) {
             const newConfirmed = new Set<string>()
             const currentUrls = getValues("contact_info.social_media") || []
-            
+
             fields.forEach((field, index) => {
-                 const urlData = currentUrls[index];
-                 if (urlData && urlData.url) {
-                     newConfirmed.add(field.id)
-                 }
+                const urlData = currentUrls[index];
+                if (urlData && urlData.url) {
+                    newConfirmed.add(field.id)
+                }
             })
-            
+
             if (newConfirmed.size > 0) {
-                 setConfirmedIds(newConfirmed)
+                setConfirmedIds(newConfirmed)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fields.length])
 
     const handleAddUrl = () => {
-        // URLs no tienen concepto de "primary" en este panel según requerimiento, 
-        // pero mantenemos consistencia en estructura si es necesario
-        append({ url: "", type: "other" }) 
+        append({ url: "", type: "other" })
         setIsAddingUrl(true)
         trigger("contact_info.social_media")
     }
@@ -107,13 +105,15 @@ export function ContactUrlsPanel() {
                     <InputField
                         startIcon={<Link />}
                         name={`contact_info.social_media.${index}.url`}
+                        type="url"
+                        inputMode="url"
                         label=""
                         placeholder="https://..."
                         hideLabel
                         disabled={confirmedIds.has(field.id) || (!!urls?.[index]?.url && urls?.[index]?.url.length > 0 && !isAddingUrl)}
                         onChange={(e) => handleUrlChange(index, e.target.value)}
                     />
-                    
+
                     <Button type="button" size="lg" variant="destructive" onClick={() => handleRemoveUrl(index)} >
                         <Trash2 />
                     </Button>

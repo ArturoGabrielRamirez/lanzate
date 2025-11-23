@@ -63,7 +63,7 @@ export const contactInfoSchema = yup.object({
         ).min(1, "Al menos un correo electrónico es obligatorio"),
         social_media: yup.array().of(
             yup.object({
-                social_media: yup.string().url("Debe ser una URL válida").max(255, "La URL de la red social debe tener menos de 255 caracteres").required("La URL de la red social es obligatoria"),
+                url: yup.string().url("Debe ser una URL válida").max(255, "La URL de la red social debe tener menos de 255 caracteres").required("La URL de la red social es obligatoria"),
                 is_primary: yup.boolean().default(false),
             })
         ).min(1, "Al menos una red social es obligatoria"),
