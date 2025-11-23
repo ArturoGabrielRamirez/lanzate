@@ -98,7 +98,19 @@ export const shippingPaymentSchema = yup.object({
         })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregá al menos un modo de envío") : schema.notRequired())
     }),
     payment_info: yup.object({
-        payment_methods: yup.array().of(yup.string()).min(1, "Seleccioná al menos un método de pago").required(),
+        payment_methods: yup.array().of(
+            yup.object({
+                name: yup.string().required("El nombre del método es obligatorio"),
+                commission_percent: yup.number().min(0, "La comisión (%) no puede ser negativa").max(100, "La comisión (%) no puede ser mayor a 100").typeError("Debe ser un número"),
+                commission_amount: yup.number().min(0, "La comisión ($) no puede ser negativa").typeError("Debe ser un número"),
+                type: yup.string().oneOf(['transferencia', 'efectivo', 'billetera_virtual', 'credito', 'debito', 'otro'], "Tipo de método inválido").required("El tipo de método es obligatorio"),
+                cbu_cvu: yup.string().when('type', ([type], schema) => 
+                    (type === 'transferencia' || type === 'billetera_virtual') ? schema.required('El CBU/CVU es obligatorio para transferencias') : schema.optional()
+                ),
+                alias: yup.string().optional(),
+                instructions: yup.string().max(500, "Las instrucciones no pueden superar los 500 caracteres").optional(),
+            })
+        ).min(1, "Seleccioná al menos un método de pago").required("La información de pago es obligatoria"),
     })
 })
 

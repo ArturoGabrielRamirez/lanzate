@@ -120,7 +120,7 @@ export function ContactPhonesPanel() {
                 <label className="text-sm font-medium">{t("phone")}</label>
             </div>
 
-            {fields.length === 0 && (
+            {fields.length === 0 && !isAddingPhone && (
                 <Empty className="border-dashed border-muted-foreground/50 border !py-2">
                     <EmptyDescription className="!text-xs">
                         <p>No hay telefonos configurados</p>

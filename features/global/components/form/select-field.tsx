@@ -17,7 +17,8 @@ export function SelectField({
     tooltip,
     isRequired = false,
     disabled = false,
-    startIcon
+    startIcon,
+    onChange
 }: SelectFieldProps) {
     const { control } = useFormContext();
 
@@ -39,7 +40,12 @@ export function SelectField({
                         )}
                         <Select
                             value={field.value || ''}
-                            onValueChange={field.onChange}
+                            onValueChange={(value) => {
+                                field.onChange(value);
+                                if (onChange) {
+                                    onChange(value);
+                                }
+                            }}
                             disabled={disabled}
                             data-slot="input-group-control"
                         >

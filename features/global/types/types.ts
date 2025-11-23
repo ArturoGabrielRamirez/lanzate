@@ -49,6 +49,7 @@ export type SelectFieldProps = {
     isRequired?: boolean
     disabled?: boolean
     startIcon?: React.ReactNode
+    onChange?: (value: string) => void
 }
 
 export interface ReplyData {

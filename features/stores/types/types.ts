@@ -421,7 +421,7 @@ export type CreateStoreFormValues = {
         x_url?: string
         phones?: { phone: string; is_primary: boolean }[]
         emails?: { email: string; is_primary: boolean }[]
-        social_media?: { social_media: string; is_primary: boolean }[]
+        social_media?: { url: string; is_primary: boolean }[]
     }
     settings: {
         is_open_24_hours: boolean   
@@ -432,7 +432,15 @@ export type CreateStoreFormValues = {
         methods?: { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
     }
     payment_info: {
-        payment_methods: string[]
+        payment_methods: {
+            name: string
+            commission_percent?: number
+            commission_amount?: number
+            type: string
+            cbu_cvu?: string
+            alias?: string
+            instructions?: string
+        }[]
     }
 }
 
