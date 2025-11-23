@@ -5,8 +5,8 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button";
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button";
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { cn } from "@/lib/utils"
 
 export function ContactEmailsPanel() {
     const t = useTranslations("store.create-form.contact")
@@ -17,7 +17,7 @@ export function ContactEmailsPanel() {
 
     const [isAddingEmail, setIsAddingEmail] = useState(false)
     const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
-    
+
     const emails = watch("contact_info.emails")
 
     useEffect(() => {
@@ -31,16 +31,16 @@ export function ContactEmailsPanel() {
         if (fields.length > 0 && confirmedIds.size === 0) {
             const newConfirmed = new Set<string>()
             const currentEmails = getValues("contact_info.emails") || []
-            
+
             fields.forEach((field, index) => {
-                 const emailData = currentEmails[index];
-                 if (emailData && emailData.email) {
-                     newConfirmed.add(field.id)
-                 }
+                const emailData = currentEmails[index];
+                if (emailData && emailData.email) {
+                    newConfirmed.add(field.id)
+                }
             })
-            
+
             if (newConfirmed.size > 0) {
-                 setConfirmedIds(newConfirmed)
+                setConfirmedIds(newConfirmed)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,14 +81,14 @@ export function ContactEmailsPanel() {
 
     const handleSetPrimary = (index: number) => {
         const currentEmails = getValues("contact_info.emails") || []
-        
+
         const updatedEmails = currentEmails.map((item: { email: string; is_primary: boolean }, i: number) => ({
             ...item,
             is_primary: i === index
         }))
 
         setValue("contact_info.emails", updatedEmails)
-        
+
         setCtxValues({
             contact_info: {
                 ...values.contact_info,
@@ -129,33 +129,36 @@ export function ContactEmailsPanel() {
                         hideLabel
                         disabled={confirmedIds.has(field.id) || (!!emails?.[index]?.email && emails?.[index]?.email.length > 0 && !isAddingEmail)}
                         onChange={(e) => handleEmailChange(index, e.target.value)}
+                        endIcon={
+                            <div className="flex">
+                                <IconButton
+                                    icon={Star}
+                                    onClick={() => handleSetPrimary(index)}
+                                    color={emails?.[index]?.is_primary ? [255, 215, 0] : [80, 40, 0]}
+                                    iconClassName={emails?.[index]?.is_primary ? "text-yellow-500 fill-yellow-500" : "text-yellow-500"}
+                                    tooltip={"Marcar como principal"}
+                                />
+                                <IconButton
+                                    icon={Trash2}
+                                    onClick={() => handleRemoveEmail(index)}
+                                    color={[255, 0, 0]}
+                                    iconClassName="text-red-500"
+                                    tooltip={"Eliminar"}
+                                />
+                                {(!confirmedIds.has(field.id) && (!emails?.[index]?.email || (isAddingEmail && index === fields.length - 1))) && (
+                                    <IconButton
+                                        icon={Check}
+                                        onClick={() => handleConfirmEmail(index)}
+                                        color={[0, 200, 0]}
+                                        iconClassName="text-green-500"
+                                        tooltip={"Confirmar"}
+                                        disabled={!!(errors?.contact_info as unknown as { emails: { email: string }[] })?.emails?.[index]?.email}
+                                    />
+                                )}
+                            </div>
+                        }
                     />
-                    <Button 
-                        type="button" 
-                        size="lg" 
-                        variant="ghost"
-                        className={cn(
-                            "px-2 hover:bg-transparent",
-                            emails?.[index]?.is_primary ? "text-yellow-500 hover:text-yellow-600" : "text-muted-foreground/30 hover:text-yellow-500"
-                        )}
-                        onClick={() => handleSetPrimary(index)}
-                    >
-                        <Star className="h-5 w-5" fill={emails?.[index]?.is_primary ? "currentColor" : "none"} />
-                    </Button>
-                    <Button type="button" size="lg" variant="destructive" onClick={() => handleRemoveEmail(index)} >
-                        <Trash2 />
-                    </Button>
-                    {(!confirmedIds.has(field.id) && (!emails?.[index]?.email || (isAddingEmail && index === fields.length - 1))) && (
-                        <Button
-                            type="button"
-                            size="lg"
-                            variant="outline"
-                            onClick={() => handleConfirmEmail(index)}
-                            disabled={!!(errors?.contact_info as unknown as { emails: { email: string }[] })?.emails?.[index]?.email}
-                        >
-                            <Check />
-                        </Button>
-                    )}
+
                 </div>
             ))}
 

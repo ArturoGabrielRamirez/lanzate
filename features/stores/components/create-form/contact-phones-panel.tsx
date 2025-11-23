@@ -5,8 +5,8 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button";
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button";
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { cn } from "@/lib/utils"
 
 export function ContactPhonesPanel() {
     const t = useTranslations("store.create-form.contact")
@@ -17,7 +17,7 @@ export function ContactPhonesPanel() {
 
     const [isAddingPhone, setIsAddingPhone] = useState(false)
     const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
-    
+
     const phones = watch("contact_info.phones")
 
     useEffect(() => {
@@ -31,16 +31,16 @@ export function ContactPhonesPanel() {
         if (fields.length > 0 && confirmedIds.size === 0) {
             const newConfirmed = new Set<string>()
             const currentPhones = getValues("contact_info.phones") || []
-            
+
             fields.forEach((field, index) => {
-                 const phoneData = currentPhones[index];
-                 if (phoneData && phoneData.phone) {
-                     newConfirmed.add(field.id)
-                 }
+                const phoneData = currentPhones[index];
+                if (phoneData && phoneData.phone) {
+                    newConfirmed.add(field.id)
+                }
             })
-            
+
             if (newConfirmed.size > 0) {
-                 setConfirmedIds(newConfirmed)
+                setConfirmedIds(newConfirmed)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,14 +81,14 @@ export function ContactPhonesPanel() {
 
     const handleSetPrimary = (index: number) => {
         const currentPhones = getValues("contact_info.phones") || []
-        
+
         const updatedPhones = currentPhones.map((item: { phone: string; is_primary: boolean }, i: number) => ({
             ...item,
             is_primary: i === index
         }))
 
         setValue("contact_info.phones", updatedPhones)
-        
+
         setCtxValues({
             contact_info: {
                 ...values.contact_info,
@@ -129,33 +129,35 @@ export function ContactPhonesPanel() {
                         hideLabel
                         disabled={confirmedIds.has(field.id) || (!!phones?.[index]?.phone && phones?.[index]?.phone.length > 0 && !isAddingPhone)}
                         onChange={(e) => handlePhoneChange(index, e.target.value)}
+                        endIcon={
+                            <div className="flex">
+                                <IconButton
+                                    icon={Star}
+                                    onClick={() => handleSetPrimary(index)}
+                                    color={phones?.[index]?.is_primary ? [255, 215, 0] : [80, 40, 0]}
+                                    iconClassName={phones?.[index]?.is_primary ? "text-yellow-500 fill-yellow-500" : "text-yellow-500"}
+                                    tooltip={"Marcar como principal"}
+                                />
+                                <IconButton
+                                    icon={Trash2}
+                                    onClick={() => handleRemovePhone(index)}
+                                    color={[255, 0, 0]}
+                                    iconClassName="text-red-500"
+                                    tooltip={"Eliminar"}
+                                />
+                                {(!confirmedIds.has(field.id) && (!phones?.[index]?.phone || (isAddingPhone && index === fields.length - 1))) && (
+                                    <IconButton
+                                        icon={Check}
+                                        onClick={() => handleConfirmPhone(index)}
+                                        color={[0, 200, 0]}
+                                        iconClassName="text-green-500"
+                                        tooltip={"Confirmar"}
+                                        disabled={!!(errors?.contact_info as unknown as { phones: { phone: string }[] })?.phones?.[index]?.phone}
+                                    />
+                                )}
+                            </div>
+                        }
                     />
-                    <Button 
-                        type="button" 
-                        size="lg" 
-                        variant="ghost"
-                        className={cn(
-                            "px-2 hover:bg-transparent",
-                            phones?.[index]?.is_primary ? "text-yellow-500 hover:text-yellow-600" : "text-muted-foreground/30 hover:text-yellow-500"
-                        )}
-                        onClick={() => handleSetPrimary(index)}
-                    >
-                        <Star className="h-5 w-5" fill={phones?.[index]?.is_primary ? "currentColor" : "none"} />
-                    </Button>
-                    <Button type="button" size="lg" variant="destructive" onClick={() => handleRemovePhone(index)} >
-                        <Trash2 />
-                    </Button>
-                    {(!confirmedIds.has(field.id) && (!phones?.[index]?.phone || (isAddingPhone && index === fields.length - 1))) && (
-                        <Button
-                            type="button"
-                            size="lg"
-                            variant="outline"
-                            onClick={() => handleConfirmPhone(index)}
-                            disabled={!!(errors?.contact_info as unknown as { phones: { phone: string }[] })?.phones?.[index]?.phone}
-                        >
-                            <Check />
-                        </Button>
-                    )}
                 </div>
             ))}
 

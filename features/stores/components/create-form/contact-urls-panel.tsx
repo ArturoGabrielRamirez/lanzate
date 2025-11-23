@@ -5,6 +5,7 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button";
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button";
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 
 export function ContactUrlsPanel() {
@@ -112,22 +113,30 @@ export function ContactUrlsPanel() {
                         hideLabel
                         disabled={confirmedIds.has(field.id) || (!!urls?.[index]?.url && urls?.[index]?.url.length > 0 && !isAddingUrl)}
                         onChange={(e) => handleUrlChange(index, e.target.value)}
+                        endIcon={
+                            <div className="flex">
+                                <IconButton
+                                    icon={Trash2}
+                                    onClick={() => handleRemoveUrl(index)}
+                                    color={[255, 0, 0]}
+                                    iconClassName="text-red-500"
+                                    tooltip={"Eliminar"}
+                                />
+                                {(!confirmedIds.has(field.id) && (!urls?.[index]?.url || (isAddingUrl && index === fields.length - 1))) && (
+                                    <IconButton
+                                        icon={Check}
+                                        onClick={() => handleConfirmUrl(index)}
+                                        color={[0, 200, 0]}
+                                        iconClassName="text-green-500"
+                                        tooltip={"Confirmar"}
+                                        disabled={!!(errors?.contact_info as unknown as { social_media: { url: string }[] })?.social_media?.[index]?.url}
+                                    />
+                                )}
+                            </div>
+                        }
                     />
 
-                    <Button type="button" size="lg" variant="destructive" onClick={() => handleRemoveUrl(index)} >
-                        <Trash2 />
-                    </Button>
-                    {(!confirmedIds.has(field.id) && (!urls?.[index]?.url || (isAddingUrl && index === fields.length - 1))) && (
-                        <Button
-                            type="button"
-                            size="lg"
-                            variant="outline"
-                            onClick={() => handleConfirmUrl(index)}
-                            disabled={!!(errors?.contact_info as unknown as { social_media: { url: string }[] })?.social_media?.[index]?.url}
-                        >
-                            <Check />
-                        </Button>
-                    )}
+
                 </div>
             ))}
 

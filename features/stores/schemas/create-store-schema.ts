@@ -51,7 +51,7 @@ export const contactInfoSchema = yup.object({
         x_url: yup.string().url("Debe ser una URL válida").max(255, "La URL de X debe tener menos de 255 caracteres"),
         phones: yup.array().of(
             yup.object({
-                phone: yup.string().max(20, "El número de teléfono debe tener menos de 20 caracteres").required("El número de teléfono es obligatorio"),
+                phone: yup.string().max(20, "El número de teléfono debe tener menos de 20 caracteres").required("El número de teléfono es obligatorio").matches(/^[0-9+\-\s\(\)]*$/, "Debe ser un número telefónico válido"),
                 is_primary: yup.boolean().default(false),
             })
         ).min(1, "Al menos un teléfono es obligatorio"),
