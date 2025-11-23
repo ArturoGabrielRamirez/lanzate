@@ -1,4 +1,4 @@
-import { Check, CreditCard, DollarSign, List, Percent, Plus, Tag, Trash2, X } from "lucide-react"
+import { ArrowLeftRight, Banknote, Check, CircleQuestionMark, CreditCard, DollarSign, List, Percent, Plus, Tag, Trash2, Wallet2, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useFieldArray, useFormContext } from "react-hook-form"
@@ -15,12 +15,42 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 import { CreateStoreFormValues } from "@/features/stores/types"
 
 const paymentTypes = [
-    { label: "Transferencia", value: "transferencia" },
-    { label: "Efectivo", value: "efectivo" },
-    { label: "Billetera Virtual", value: "billetera_virtual" },
-    { label: "Crédito", value: "credito" },
-    { label: "Débito", value: "debito" },
-    { label: "Otro", value: "otro" },
+    { label: (
+        <div className="flex items-center gap-2">
+            <ArrowLeftRight />
+            <p>Transferencia</p>
+        </div>
+    ), value: "transferencia" },
+    { label: (
+        <div className="flex items-center gap-2">
+            <Banknote />
+            <p>Efectivo</p>
+        </div>
+    ), value: "efectivo" },
+    { label: (
+        <div className="flex items-center gap-2">
+            <Wallet2 />
+            <p>Billetera Virtual</p>
+        </div>
+    ), value: "billetera_virtual" },
+    { label: (
+        <div className="flex items-center gap-2">
+            <CreditCard />
+            <p>Crédito</p>
+        </div>
+    ), value: "credito" },
+    { label: (
+        <div className="flex items-center gap-2">
+            <CreditCard />
+            <p>Débito</p>
+        </div>
+    ), value: "debito" },
+    { label: (
+        <div className="flex items-center gap-2">
+            <CircleQuestionMark />
+            <p>Otro</p>
+        </div>
+    ), value: "otro" },
 ]
 
 export function PaymentMethodsFormPanel() {
@@ -154,7 +184,7 @@ export function PaymentMethodsFormPanel() {
                 const isConfirmed = confirmedIds.has(field.id)
                 const isCurrentAdding = isAddingMethod && index === fields.length - 1
                 const methodType = paymentMethods?.[index]?.type
-                
+
                 if (isConfirmed && !isCurrentAdding) {
                     return (
                         <Item key={field.id} className="border rounded-md p-4 border-muted-foreground/50">
@@ -275,7 +305,7 @@ export function PaymentMethodsFormPanel() {
                                 </AccordionItem>
                             </Accordion>
                         </div>
-                        
+
                         <div className="flex gap-2 justify-end w-full">
                             <Button variant="destructive" onClick={() => handleRemoveMethod(index)} disabled={!isValid || !!errors?.payment_info?.payment_methods?.[index]?.name || !!errors?.payment_info?.payment_methods?.[index]?.type}>
                                 <X />
@@ -285,21 +315,6 @@ export function PaymentMethodsFormPanel() {
                                 <Check />
                                 Guardar
                             </Button>
-                            {/* <IconButton
-                                icon={Trash2}
-                                onClick={() => handleRemoveMethod(index)}
-                                color={[255, 0, 0]}
-                                className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
-                                tooltip="Eliminar"
-                            />
-                            <IconButton
-                                icon={Check}
-                                onClick={() => handleConfirmMethod(index)}
-                                color={[0, 200, 0]}
-                                className="text-green-600 hover:bg-green-600/10 active:bg-green-600/20"
-                                tooltip="Confirmar"
-                                disabled={!!errors?.payment_info?.payment_methods?.[index]}
-                            /> */}
                         </div>
                     </div>
                 )
