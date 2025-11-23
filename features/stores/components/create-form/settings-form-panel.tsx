@@ -240,7 +240,7 @@ export function SettingsFormPanel() {
                             </div>
                         )}
                         {!isAddingDate && (
-                            <Button className="w-full" onClick={handleAddDate} type="button">
+                            <Button className="w-full" onClick={handleAddDate} type="button" variant="outline">
                                 <Plus />
                                 {t("add-date")}
                             </Button>

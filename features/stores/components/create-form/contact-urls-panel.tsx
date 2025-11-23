@@ -143,7 +143,7 @@ export function ContactUrlsPanel() {
             {!isAddingUrl && (
                 <Button type="button" variant="outline" onClick={handleAddUrl} >
                     <Plus />
-                    Agregar enlace
+                    Agregar nuevo
                 </Button>
             )}
         </div>
