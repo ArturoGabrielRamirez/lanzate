@@ -10,7 +10,7 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 
 export function ContactFormPanel() {
     const t = useTranslations("store.create-form.contact")
-    const { control, formState: { isValid }, setValue, getValues } = useFormContext()
+    const { control, formState: { isValid, errors }, setValue, getValues, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { fields, append, remove } = useFieldArray({ control, name: "contact_info.phones" })
     const { contact_info } = values
@@ -32,11 +32,30 @@ export function ContactFormPanel() {
     const handleAddPhone = () => {
         append({ phone: "", is_primary: fields.length === 0 })
         setIsAddingPhone(true)
+        trigger("contact_info.phones")
+
+        const currentPhones = getValues("contact_info.phones") || []
+
+        setCtxValues({
+            contact_info: {
+                ...values.contact_info,
+                phones: [...currentPhones, { phone: "", is_primary: fields.length === 0 }]
+            }
+        })
     }
 
     const handleRemovePhone = (index: number) => {
         remove(index)
         setIsAddingPhone(false)
+
+        const currentPhones = getValues("contact_info.phones") || []
+        const updatedPhones = currentPhones.filter((_: { phone: string; is_primary: boolean }, i: number) => i !== index)
+        setCtxValues({
+            contact_info: {
+                ...values.contact_info,
+                phones: updatedPhones
+            }
+        })
     }
 
     const handleConfirmPhone = (index: number) => {
@@ -82,13 +101,21 @@ export function ContactFormPanel() {
                             label=""
                             placeholder={t("phone-placeholder")}
                             hideLabel
+                            disabled={confirmedIds.has(field.id)}
                             onChange={(e) => handlePhoneChange(index, e.target.value)}
                         />
                         <Button type="button" size="lg" variant="destructive" onClick={() => handleRemovePhone(index)} >
                             <Trash2 />
                         </Button>
                         {!confirmedIds.has(field.id) && (
-                            <Button type="button" size="lg" variant="outline" onClick={() => handleConfirmPhone(index)} >
+                            <Button
+                                type="button"
+                                size="lg"
+                                variant="outline"
+                                onClick={() => handleConfirmPhone(index)}
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                disabled={!!(errors?.contact_info as any)?.phones?.[index]?.phone}
+                            >
                                 <Check />
                             </Button>
                         )}
