@@ -110,8 +110,8 @@ export function ShippingFormPanel() {
             providers: [],
             minPurchase: "",
             freeShippingMin: "",
-            estimatedTime: "",
-            deliveryPrice: ""
+            estimatedTime: "00:30",
+            deliveryPrice: "1000"
         })
         setIsAddingMethod(true)
     }
