@@ -15,7 +15,7 @@ export function ContactFormPanel() {
     }, [isValid, setStepValid])
 
     return (
-        <div className="space-y-8">
+        <div className="flex flex-col gap-4">
             <ContactPhonesPanel />
             <ContactEmailsPanel />
             <ContactUrlsPanel />

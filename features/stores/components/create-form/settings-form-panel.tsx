@@ -191,7 +191,7 @@ export function SettingsFormPanel() {
                     >
                         {!isAddingDate && (errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>) || (attentionDates.length === 0 && !isAddingDate)) && (
                             <div className={cn(
-                                "text-sm border p-6 rounded-md text-center border-dashed",
+                                "text-sm border p-2 rounded-md text-center border-dashed",
                                 errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
                                     ? "text-red-500 border-red-500 bg-red-500/5"
                                     : "text-muted-foreground border-muted-foreground/50"
@@ -204,7 +204,7 @@ export function SettingsFormPanel() {
                                 </p>
                             </div>
                         )}
-                        {attentionDates.length > 0 && (
+                        {attentionDates.length > 0 && !isAddingDate && (
                             <div className="space-y-2">
                                 {attentionDates.map((d, i) => (
                                     (isAddingDate && editingIndex === i) ? null : (

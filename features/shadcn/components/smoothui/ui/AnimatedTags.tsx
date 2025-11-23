@@ -45,7 +45,7 @@ export default function AnimatedTags({
     }
   }
   return (
-    <div className={`flex flex-col gap-1 ${className}`}>
+    <div className={`flex flex-col gap-2 ${className}`}>
       <div className="flex flex-col items-start justify-center gap-1">
         <p className="text-sm font-medium flex items-center gap-1">
           {title}
@@ -72,7 +72,6 @@ export default function AnimatedTags({
                   layout
                   className="group bg-primary text-primary-foreground group-hover:bg-primary group-hover:text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-full border px-2 py-1 text-xs"
                   onClick={() => handleDeleteTag(tag)}
-
                 >
                   {tag}{" "}
                   <CircleX

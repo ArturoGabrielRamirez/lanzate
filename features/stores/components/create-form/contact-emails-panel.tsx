@@ -5,6 +5,7 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button";
+import { Empty, EmptyDescription } from "@/features/shadcn/components/empty";
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button";
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 
@@ -118,6 +119,14 @@ export function ContactEmailsPanel() {
             <div className="flex items-center justify-between">
                 <label className="text-sm font-medium">{t("email")}</label>
             </div>
+
+            {fields.length === 0 && (
+                <Empty className="border-dashed border-muted-foreground/50 border !py-2">
+                    <EmptyDescription className="!text-xs">
+                        <p>No hay emails configurados</p>
+                    </EmptyDescription>
+                </Empty>
+            )}
 
             {fields.map((field, index) => (
                 <div key={field.id} className="flex gap-2 items-start">
