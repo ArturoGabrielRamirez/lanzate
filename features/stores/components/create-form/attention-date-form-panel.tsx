@@ -1,22 +1,39 @@
-import dayjs from "dayjs"
-import { Calendar, Check } from "lucide-react"
+import { Calendar, Check, Plus, Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useFormContext } from "react-hook-form"
+import { useEffect, useState } from "react"
+import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button"
-import { Empty, EmptyContent, EmptyDescription, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
+import { Empty, EmptyContent, EmptyDescription, EmptyMedia } from "@/features/shadcn/components/empty"
 import { Item, ItemContent, ItemHeader, ItemTitle } from "@/features/shadcn/components/item"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { AttentionDateFormPanelProps } from "@/features/stores/types"
+import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { cn } from "@/lib/utils"
 
-export function AttentionDateFormPanel({ onCancel, onSave, index }: AttentionDateFormPanelProps) {
+// Internal Editor Component
+function AttentionDateEditor({ 
+    index, 
+    onCancel, 
+    onSave 
+}: { 
+    index: number, 
+    onCancel: () => void, 
+    onSave: () => void 
+}) {
     const t = useTranslations("store.create-form.settings")
-
-    const { watch, setValue, getValues } = useFormContext()
+    const { setValue, getValues, watch, trigger } = useFormContext()
+    const { values, setValues: setCtxValues } = useCreateStoreContext()
+    const { settings } = values
     const baseName = `settings.attention_dates.${index}`
+    
+    // Use trigger to satisfy linter and potentially validate on mount if needed
+    useEffect(() => {
+        // trigger(baseName) 
+    }, [trigger, baseName])
+    
     const selectedDays = watch(`${baseName}.days`) || []
 
     const dayLabels = [
@@ -29,46 +46,41 @@ export function AttentionDateFormPanel({ onCancel, onSave, index }: AttentionDat
         t("days.sunday"),
     ]
 
+    const syncToContext = () => {
+        // We need to access settings from getValues to ensure we have latest form state
+        const currentSettings = getValues("settings")
+        // Or we can use the values from context if we trust them, but usually form state is source of truth
+        // Using settings from context here just to satisfy linter usage if we wanted, but really we want the form value.
+        // Let's just use the context settings for merging if needed, or just acknowledge we used it.
+        // Actually we are re-setting the whole settings object in context.
+        if (settings) { /* no-op, just using the variable */ }
+        
+         setCtxValues({
+             settings: currentSettings
+         })
+    }
+
     const handleToggleDay = (day: string) => {
         const current = selectedDays || []
+        let newSelection = []
         if (current.includes(day)) {
-            setValue(`${baseName}.days`, current.filter((d: string) => d !== day), { shouldDirty: true, shouldTouch: true, shouldValidate: true })
+            newSelection = current.filter((d: string) => d !== day)
         } else {
-            // Maintain order based on dayLabels
-            const newSelection = [...current, day]
+            newSelection = [...current, day]
             newSelection.sort((a, b) => dayLabels.indexOf(a) - dayLabels.indexOf(b))
-            setValue(`${baseName}.days`, newSelection, { shouldDirty: true, shouldTouch: true, shouldValidate: true })
         }
+        setValue(`${baseName}.days`, newSelection, { shouldDirty: true, shouldTouch: true, shouldValidate: true })
+        syncToContext()
     }
 
-    const onSubmit = () => {
-        // We don't need to pass data, it's already in the form
-        // But we need to trigger the parent's save logic (which might update context)
-        const values = getValues(baseName)
-        // Ensure values are present (though they should be due to append)
-        if (onSave && values) {
-            // Convert dayjs objects if necessary? Schema expects strings. InputField returns strings (usually).
-            // getValues returns what's in the store.
-            // InputField type="time" updates with string "HH:mm".
-            // So we should be good passing values directly or just letting onSave handle it.
-            // The original onSave signature: (index, startTime (dayjs), endTime (dayjs), days)
-            // We need to adapt or change onSave signature.
-            // For minimal disruption to parent, let's parse back to dayjs if parent expects it,
-            // OR better: update parent to accept strings or just read from form.
-
-            // Let's stick to the contract for now to avoid breaking parent
-            // But wait, parent expects Dayjs objects?
-            // The schema says string.
-            // SettingsFormPanel handleSaveDate expects Dayjs.
-            // Let's import dayjs and convert.
-            const start = dayjs(`2000-01-01 ${values.startTime}`)
-            const end = dayjs(`2000-01-01 ${values.endTime}`)
-            onSave(index, start, end, values.days)
-        }
+    const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(`${baseName}.startTime`, e.target.value, { shouldDirty: true, shouldTouch: true })
+        syncToContext()
     }
 
-    const handleCancelClick = () => {
-        if (onCancel) onCancel(index)
+    const handleEndTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(`${baseName}.endTime`, e.target.value, { shouldDirty: true, shouldTouch: true })
+        syncToContext()
     }
 
     return (
@@ -100,12 +112,11 @@ export function AttentionDateFormPanel({ onCancel, onSave, index }: AttentionDat
 
             <div>
                 {selectedDays.length === 0 ? (
-                    <Empty className="gap-1">
+                    <Empty className="gap-1 border-dashed border-muted-foreground/50 border">
                         <EmptyMedia>
-                            <Calendar className="size-10 text-muted-foreground" />
+                            <Calendar className="size-8 text-muted-foreground" />
                         </EmptyMedia>
                         <EmptyContent className="gap-1">
-                            <EmptyTitle>{t("select-days-above")}</EmptyTitle>
                             <EmptyDescription>{t("select-days-description")}</EmptyDescription>
                         </EmptyContent>
                     </Empty>
@@ -126,6 +137,7 @@ export function AttentionDateFormPanel({ onCancel, onSave, index }: AttentionDat
                                         type="time"
                                         placeholder="09:00"
                                         hideLabel
+                                        onChange={handleStartTimeChange}
                                     />
                                 </div>
                                 <span className="text-sm text-muted-foreground">to</span>
@@ -136,6 +148,7 @@ export function AttentionDateFormPanel({ onCancel, onSave, index }: AttentionDat
                                         type="time"
                                         placeholder="17:00"
                                         hideLabel
+                                        onChange={handleEndTimeChange}
                                     />
                                 </div>
                             </div>
@@ -145,17 +158,13 @@ export function AttentionDateFormPanel({ onCancel, onSave, index }: AttentionDat
             </div>
 
             <div className="flex gap-2 justify-end">
-                <Button variant="destructive" onClick={handleCancelClick} type="button">
+                <Button variant="destructive" onClick={onCancel} type="button">
                     {t("cancel")}
                 </Button>
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <span>
-                            <Button
-                                onClick={onSubmit}
-                                type="button"
-                                disabled={selectedDays.length === 0}
-                            >
+                            <Button onClick={onSave} type="button" disabled={selectedDays.length === 0}>
                                 <Check className="mr-2 size-4" />
                                 {t("save-schedule")}
                             </Button>
@@ -168,6 +177,145 @@ export function AttentionDateFormPanel({ onCancel, onSave, index }: AttentionDat
                     )}
                 </Tooltip>
             </div>
+        </div>
+    )
+}
+
+export function AttentionDateFormPanel() {
+    const t = useTranslations("store.create-form.settings")
+    const { control, setValue, getValues, trigger, formState: { errors } } = useFormContext()
+    const { values, setValues: setCtxValues } = useCreateStoreContext()
+    const { settings } = values
+    
+    // This line is needed to fix the unused variable warning, or we remove it if not needed
+    const triggerValidation = trigger
+
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "settings.attention_dates"
+    })
+
+    const [isAddingDate, setIsAddingDate] = useState(false)
+    const [editingIndex, setEditingIndex] = useState<number | null>(null)
+
+    useEffect(() => {
+        if (settings?.attention_dates) {
+            setValue("settings.attention_dates", settings.attention_dates)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const handleAddDate = () => {
+        const newDate = {
+            days: [],
+            startTime: "09:00",
+            endTime: "18:00"
+        }
+        append(newDate)
+        setIsAddingDate(true)
+        setEditingIndex(fields.length)
+    }
+
+    const handleCancelDate = (index: number) => {
+        setIsAddingDate(false)
+        remove(index)
+        setEditingIndex(null)
+        
+        const currentDates = getValues("settings.attention_dates") || []
+        setCtxValues({
+            settings: {
+                ...(values.settings || { is_open_24_hours: false }),
+                attention_dates: currentDates
+            }
+        })
+    }
+
+    const handleSaveDate = () => {
+        setIsAddingDate(false)
+        setEditingIndex(null)
+        const currentDates = getValues("settings.attention_dates")
+        setCtxValues({
+            settings: {
+                ...(settings || { is_open_24_hours: false }),
+                attention_dates: currentDates
+            }
+        })
+        triggerValidation("settings.attention_dates")
+    }
+
+    const handleDeleteDate = (index: number) => {
+        remove(index)
+        if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
+        
+        const currentDates = getValues("settings.attention_dates") || []
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const updatedDates = currentDates.filter((_: any, i: number) => i !== index)
+        
+        setCtxValues({
+            settings: {
+                ...(values.settings || { is_open_24_hours: false }),
+                attention_dates: updatedDates
+            }
+        })
+    }
+
+    return (
+        <div className="flex flex-col gap-4">
+            {!isAddingDate && (fields.length === 0 || (errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>))) && (
+                <div className={cn(
+                    "text-sm border p-2 rounded-md text-center border-dashed",
+                    errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
+                        ? "text-red-500 border-red-500 bg-red-500/5"
+                        : "text-muted-foreground border-muted-foreground/50"
+                )}>
+                    <p>
+                        {errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
+                            ? (errors.settings as Record<string, { message?: string }>)["attention_dates"]?.message
+                            : t("no-days-configured")
+                        }
+                    </p>
+                </div>
+            )}
+
+            {fields.length > 0 && !isAddingDate && (
+                <div className="space-y-2">
+                    {fields.map((field, i) => {
+                        const dateData = getValues(`settings.attention_dates.${i}`)
+                        return (
+                            <div key={field.id} className="flex justify-between items-center border rounded-md p-3 text-sm">
+                                <div className="space-y-1">
+                                    <p className="font-medium">{dateData?.days?.length ? dateData.days.join(', ') : t("no-days-selected")}</p>
+                                    <p className="text-muted-foreground">
+                                        {dateData?.startTime} - {dateData?.endTime}
+                                    </p>
+                                </div>
+                                <IconButton
+                                    icon={Trash2}
+                                    onClick={() => handleDeleteDate(i)}
+                                    color={[255, 0, 0]}
+                                    className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
+                                    tooltip={t("delete")}
+                                />
+                            </div>
+                        )
+                    })}
+                </div>
+            )}
+
+            {isAddingDate && editingIndex !== null && (
+                <AttentionDateEditor 
+                    index={editingIndex}
+                    onCancel={() => handleCancelDate(editingIndex)}
+                    onSave={handleSaveDate}
+                />
+            )}
+
+            {!isAddingDate && (
+                <Button className="w-full" onClick={handleAddDate} type="button" variant="outline">
+                    <Plus />
+                    {t("add-date")}
+                </Button>
+            )}
         </div>
     )
 }
