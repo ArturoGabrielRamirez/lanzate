@@ -8,7 +8,7 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button"
-import { Empty, EmptyDescription } from "@/features/shadcn/components/empty"
+import { Empty, EmptyContent, EmptyDescription, EmptyMedia } from "@/features/shadcn/components/empty"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemHeader, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
@@ -286,7 +286,12 @@ export function ShippingFormPanel() {
                                     <div key={field.id} className="flex gap-2 items-start w-full relative group flex-col">
                                         <div className="flex-1 space-y-4 w-full">
                                             <div className="flex flex-col gap-2">
-                                                <p className="text-sm font-medium">{t("providers")}</p>
+                                                <div className="flex justify-between items-center">
+                                                    <p className="text-sm font-medium">{t("providers")}</p>
+                                                    <span className="text-sm text-muted-foreground">
+                                                        {method?.providers?.length || 0} {method?.providers?.length === 1 ? "Provider" : "Providers"}
+                                                    </span>
+                                                </div>
                                                 <div className="flex flex-wrap gap-2">
                                                     {initialTags.map((provider) => {
                                                         const isSelected = method?.providers?.includes(provider)
@@ -301,8 +306,6 @@ export function ShippingFormPanel() {
                                                                 onClick={() => handleToggleProvider(index, provider)}
                                                             >
                                                                 {provider}
-                                                                {isSelected && <X className="ml-2 size-3" />}
-                                                                {!isSelected && <Plus className="ml-2 size-3" />}
                                                             </Badge>
                                                         )
                                                     })}
@@ -312,62 +315,77 @@ export function ShippingFormPanel() {
                                                 )}
                                             </div>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <InputField
-                                                    name={`shipping_info.methods.${index}.deliveryPrice`}
-                                                    label={t("delivery-price")}
-                                                    placeholder={t("delivery-price-placeholder")}
-                                                    type="number"
-                                                    inputMode="decimal"
-                                                    disabled={isConfirmed && !isCurrentAdding}
-                                                    onChange={(e) => handleMethodChange(index, 'deliveryPrice', e.target.value)}
-                                                    startIcon={<DollarSign />}
-                                                />
-                                                <InputField
-                                                    name={`shipping_info.methods.${index}.minPurchase`}
-                                                    label={t("min-purchase")}
-                                                    placeholder={t("min-purchase-placeholder")}
-                                                    type="number"
-                                                    inputMode="decimal"
-                                                    disabled={isConfirmed && !isCurrentAdding}
-                                                    onChange={(e) => handleMethodChange(index, 'minPurchase', e.target.value)}
-                                                    startIcon={<DollarSign />}
-                                                />
-                                            </div>
+                                            {(!method?.providers || method.providers.length === 0) ? (
+                                                <Empty className="gap-1 border-dashed border-muted-foreground/50 border">
+                                                    <EmptyMedia>
+                                                        <Package className="size-8 text-muted-foreground" />
+                                                    </EmptyMedia>
+                                                    <EmptyContent className="gap-1">
+                                                        <EmptyDescription>
+                                                            Seleccioná al menos un proveedor
+                                                        </EmptyDescription>
+                                                    </EmptyContent>
+                                                </Empty>
+                                            ) : (
+                                                <>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <InputField
+                                                            name={`shipping_info.methods.${index}.deliveryPrice`}
+                                                            label={t("delivery-price")}
+                                                            placeholder={t("delivery-price-placeholder")}
+                                                            type="number"
+                                                            inputMode="decimal"
+                                                            disabled={isConfirmed && !isCurrentAdding}
+                                                            onChange={(e) => handleMethodChange(index, 'deliveryPrice', e.target.value)}
+                                                            startIcon={<DollarSign />}
+                                                        />
+                                                        <InputField
+                                                            name={`shipping_info.methods.${index}.minPurchase`}
+                                                            label={t("min-purchase")}
+                                                            placeholder={t("min-purchase-placeholder")}
+                                                            type="number"
+                                                            inputMode="decimal"
+                                                            disabled={isConfirmed && !isCurrentAdding}
+                                                            onChange={(e) => handleMethodChange(index, 'minPurchase', e.target.value)}
+                                                            startIcon={<DollarSign />}
+                                                        />
+                                                    </div>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                 <InputField
-                                                    name={`shipping_info.methods.${index}.freeShippingMin`}
-                                                    label={t("free-shipping-min")}
-                                                    placeholder={t("free-shipping-min-placeholder")}
-                                                    type="number"
-                                                    inputMode="decimal"
-                                                    disabled={isConfirmed && !isCurrentAdding}
-                                                    onChange={(e) => handleMethodChange(index, 'freeShippingMin', e.target.value)}
-                                                    startIcon={<DollarSign />}
-                                                />
-                                                <div>
-                                                    <p className="text-sm font-medium mb-1.5 flex items-center gap-2">
-                                                        <Clock className="size-4 text-muted-foreground" />
-                                                        {t("estimated-time")}
-                                                    </p>
-                                                    <TimePicker
-                                                        format="HH:mm"
-                                                        hourStep={1}
-                                                        minuteStep={15}
-                                                        variant="outlined"
-                                                        size="large"
-                                                        className="!bg-transparent !text-primary-foreground !border-input w-full hover:!border-ring focus:!border-ring"
-                                                        placeholder={t("estimated-time-placeholder")}
-                                                        value={method?.estimatedTime ? dayjs(method.estimatedTime, "HH:mm") : null}
-                                                        onChange={(value) => {
-                                                            const formatted = value ? dayjs(value).format("HH:mm") : ""
-                                                            setValue(`shipping_info.methods.${index}.estimatedTime`, formatted, { shouldValidate: true, shouldDirty: true })
-                                                            handleMethodChange(index, 'estimatedTime', formatted)
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <InputField
+                                                            name={`shipping_info.methods.${index}.freeShippingMin`}
+                                                            label={t("free-shipping-min")}
+                                                            placeholder={t("free-shipping-min-placeholder")}
+                                                            type="number"
+                                                            inputMode="decimal"
+                                                            disabled={isConfirmed && !isCurrentAdding}
+                                                            onChange={(e) => handleMethodChange(index, 'freeShippingMin', e.target.value)}
+                                                            startIcon={<DollarSign />}
+                                                        />
+                                                        <div>
+                                                            <p className="text-sm font-medium mb-1.5 flex items-center gap-2">
+                                                                <Clock className="size-4 text-muted-foreground" />
+                                                                {t("estimated-time")}
+                                                            </p>
+                                                            <TimePicker
+                                                                format="HH:mm"
+                                                                hourStep={1}
+                                                                minuteStep={15}
+                                                                variant="outlined"
+                                                                size="large"
+                                                                className="!bg-transparent !text-primary-foreground !border-input w-full hover:!border-ring focus:!border-ring"
+                                                                placeholder={t("estimated-time-placeholder")}
+                                                                value={method?.estimatedTime ? dayjs(method.estimatedTime, "HH:mm") : null}
+                                                                onChange={(value) => {
+                                                                    const formatted = value ? dayjs(value).format("HH:mm") : ""
+                                                                    setValue(`shipping_info.methods.${index}.estimatedTime`, formatted, { shouldValidate: true, shouldDirty: true })
+                                                                    handleMethodChange(index, 'estimatedTime', formatted)
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
 
                                         <div className="flex gap-2 justify-end w-full mt-2">

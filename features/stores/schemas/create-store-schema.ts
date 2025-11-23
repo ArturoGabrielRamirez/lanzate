@@ -110,7 +110,7 @@ export const shippingPaymentSchema = yup.object({
                 alias: yup.string().optional(),
                 instructions: yup.string().max(500, "Las instrucciones no pueden superar los 500 caracteres").optional(),
             })
-        ).min(1, "Seleccioná al menos un método de pago").required("La información de pago es obligatoria"),
+        ),
     })
 })
 
