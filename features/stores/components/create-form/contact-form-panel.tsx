@@ -6,7 +6,6 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button";
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-/* import { CreateStoreFormValues } from "@/features/stores/types" */
 
 export function ContactFormPanel() {
     const t = useTranslations("store.create-form.contact")
@@ -19,11 +18,28 @@ export function ContactFormPanel() {
     const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
 
     useEffect(() => {
-        if (contact_info) {
-            setValue("contact_info", contact_info)
+        if (contact_info?.phones) {
+            setValue("contact_info.phones", contact_info.phones)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (fields.length > 0 && confirmedIds.size === 0) {
+            const newConfirmed = new Set<string>()
+            const currentPhones = getValues("contact_info.phones") || []
+            
+            fields.forEach((field, index) => {
+                 const phoneData = currentPhones[index];
+                 if (phoneData && phoneData.phone) {
+                     newConfirmed.add(field.id)
+                 }
+            })
+            
+            if (newConfirmed.size > 0) {
+                 setConfirmedIds(newConfirmed)
+            }
+        }
+    }, [fields.length])
 
     useEffect(() => {
         setStepValid(3, isValid)
@@ -33,15 +49,6 @@ export function ContactFormPanel() {
         append({ phone: "", is_primary: fields.length === 0 })
         setIsAddingPhone(true)
         trigger("contact_info.phones")
-
-        const currentPhones = getValues("contact_info.phones") || []
-
-        setCtxValues({
-            contact_info: {
-                ...values.contact_info,
-                phones: [...currentPhones, { phone: "", is_primary: fields.length === 0 }]
-            }
-        })
     }
 
     const handleRemovePhone = (index: number) => {
@@ -50,6 +57,7 @@ export function ContactFormPanel() {
 
         const currentPhones = getValues("contact_info.phones") || []
         const updatedPhones = currentPhones.filter((_: { phone: string; is_primary: boolean }, i: number) => i !== index)
+
         setCtxValues({
             contact_info: {
                 ...values.contact_info,
@@ -113,8 +121,7 @@ export function ContactFormPanel() {
                                 size="lg"
                                 variant="outline"
                                 onClick={() => handleConfirmPhone(index)}
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                disabled={!!(errors?.contact_info as any)?.phones?.[index]?.phone}
+                                disabled={!!(errors?.contact_info as unknown as { phones: { phone: string }[] })?.phones?.[index]?.phone}
                             >
                                 <Check />
                             </Button>
