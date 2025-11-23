@@ -234,15 +234,13 @@ export function SettingsFormPanel() {
                         )}
 
                         {isAddingDate && editingIndex !== null && (
-                            <div className="grid md:grid-cols-2 gap-4">
-                                <AttentionDateFormPanel
-                                    date={getAttentionDateForPanel(editingIndex)}
-                                    key={`edit-${editingIndex}`}
-                                    onCancel={handleCancelDate}
-                                    onSave={handleSaveDate}
-                                    index={editingIndex}
-                                />
-                            </div>
+                            <AttentionDateFormPanel
+                                date={getAttentionDateForPanel(editingIndex)}
+                                key={`edit-${editingIndex}`}
+                                onCancel={handleCancelDate}
+                                onSave={handleSaveDate}
+                                index={editingIndex}
+                            />
                         )}
 
                         {!isAddingDate && (
