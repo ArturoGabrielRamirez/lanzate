@@ -1,4 +1,4 @@
-import { Check, CreditCard, DollarSign, List, Percent, Plus, Tag, Trash2 } from "lucide-react"
+import { Check, CreditCard, DollarSign, List, Percent, Plus, Tag, Trash2, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useFieldArray, useFormContext } from "react-hook-form"
@@ -190,8 +190,8 @@ export function PaymentMethodsFormPanel() {
                 }
 
                 return (
-                    <div key={field.id} className="flex gap-2 items-start w-full relative group border rounded-lg p-4">
-                        <div className="flex-1 space-y-4">
+                    <div key={field.id} className="flex gap-2 items-start w-full relative group flex-col">
+                        <div className="flex-1 space-y-4 w-full">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <InputField
                                     name={`payment_info.payment_methods.${index}.name`}
@@ -275,9 +275,17 @@ export function PaymentMethodsFormPanel() {
                                 </AccordionItem>
                             </Accordion>
                         </div>
-
-                        <div className="flex flex-col gap-2">
-                            <IconButton
+                        
+                        <div className="flex gap-2 justify-end w-full">
+                            <Button variant="destructive" onClick={() => handleRemoveMethod(index)} disabled={!isValid || !!errors?.payment_info?.payment_methods?.[index]?.name || !!errors?.payment_info?.payment_methods?.[index]?.type}>
+                                <X />
+                                Cancelar
+                            </Button>
+                            <Button variant="default" onClick={() => handleConfirmMethod(index)} disabled={!isValid || !!errors?.payment_info?.payment_methods?.[index]?.name || !!errors?.payment_info?.payment_methods?.[index]?.type}>
+                                <Check />
+                                Guardar
+                            </Button>
+                            {/* <IconButton
                                 icon={Trash2}
                                 onClick={() => handleRemoveMethod(index)}
                                 color={[255, 0, 0]}
@@ -291,7 +299,7 @@ export function PaymentMethodsFormPanel() {
                                 className="text-green-600 hover:bg-green-600/10 active:bg-green-600/20"
                                 tooltip="Confirmar"
                                 disabled={!!errors?.payment_info?.payment_methods?.[index]}
-                            />
+                            /> */}
                         </div>
                     </div>
                 )

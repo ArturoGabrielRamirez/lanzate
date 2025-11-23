@@ -1768,7 +1768,7 @@
                 "address": "Address",
                 "contact": "Contact",
                 "hours": "Hours",
-                "delivery": "Delivery",
+                "delivery": "Payment methods",
                 "success": "Success"
             },
             "step-tooltips": {
@@ -1785,7 +1785,7 @@
                 "step2": "Choose whether this is a physical store or an online store and add your address information.",
                 "step3": "Add your contact information and social media links so customers can contact you.",
                 "step4": "Choose attention dates and hours so customers know when you are open.",
-                "step5": "Choose shipping methods and add your payment methods so customers can buy your products.",
+                "step5": "Set up your payment methods so customers can pay for their orders.",
                 "step6": "Creating your store…",
                 "step7": "All set! Redirecting…"
             },
@@ -1863,7 +1863,7 @@
                 "select-days-description": "Choose operating days to configure hours.",
                 "start-time": "Start Time",
                 "end-time": "End Time",
-                "save-schedule": "Save Schedule",
+                "save-schedule": "Save",
                 "select-at-least-one-day": "Select at least one day to save",
                 "days": {
                     "monday": "Monday",

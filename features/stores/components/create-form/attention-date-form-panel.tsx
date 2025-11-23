@@ -1,4 +1,4 @@
-import { Calendar, Check, Plus, Trash2 } from "lucide-react"
+import { Calendar, Check, Plus, Trash2, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useFieldArray, useFormContext } from "react-hook-form"
@@ -159,6 +159,7 @@ function AttentionDateEditor({
 
             <div className="flex gap-2 justify-end">
                 <Button variant="destructive" onClick={onCancel} type="button">
+                    <X />
                     {t("cancel")}
                 </Button>
                 <Tooltip>
