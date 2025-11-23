@@ -373,13 +373,6 @@ export type AttentionDateType = {
     days: string[]
 }
 
-export type CreateStoreShippingMethod = {
-    providers: string[]
-    minPurchase: string
-    freeShippingMin: string
-    estimatedTime: string
-    deliveryPrice: string
-}
 
 export type AttentionDateFormPanelProps = {
     date: AttentionDateType
@@ -388,12 +381,6 @@ export type AttentionDateFormPanelProps = {
     index: number
 }
 
-export type ShippingMethodFormPanelProps = {
-    method: CreateStoreShippingMethod
-    index: number
-    onCancel: (index: number) => void
-    onSave: (index: number, method: CreateStoreShippingMethod) => void
-}
 
 export type StepIndicatorProps = {
     step: number
@@ -656,10 +643,3 @@ export type StoreContextType = {
     setDisplayType: (displayType: "grid" | "list") => void
 }
 
-export type ShippingMethod = {
-    providers: string[]        // Requerido
-    minPurchase: string        // Requerido
-    freeShippingMin: string    // Requerido
-    estimatedTime: string      // Requerido
-    deliveryPrice: string      // Requerido
-}

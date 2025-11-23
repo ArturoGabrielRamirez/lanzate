@@ -10,7 +10,7 @@ import { ContactFormPanel } from "@/features/stores/components/create-form/conta
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { PaymentMethodsFormPanel } from "@/features/stores/components/create-form/payment-methods-form-panel"
 import { SettingsFormPanel } from "@/features/stores/components/create-form/settings-form-panel"
-/* import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel" */
+import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel"
 import { StepIndicator } from "@/features/stores/components/create-form/step-indicator"
 import {
     addressInfoSchema,
@@ -90,14 +90,14 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                     <PaymentMethodsFormPanel />
                 </Form>
             </Step>
-            {/* 
+            
             <Step>
                 <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
                     <ShippingFormPanel />
                 </Form>
             </Step>
             
-             */}
+            
             {step === 7 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
