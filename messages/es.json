@@ -1724,6 +1724,7 @@
                 "start-time": "Hora Inicio",
                 "end-time": "Hora Fin",
                 "save-schedule": "Guardar Horario",
+                "select-at-least-one-day": "Seleccioná al menos un día para guardar",
                 "days": {
                     "monday": "lunes",
                     "tuesday": "martes",

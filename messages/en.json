@@ -1864,6 +1864,7 @@
                 "start-time": "Start Time",
                 "end-time": "End Time",
                 "save-schedule": "Save Schedule",
+                "select-at-least-one-day": "Select at least one day to save",
                 "days": {
                     "monday": "Monday",
                     "tuesday": "Tuesday",

@@ -8,6 +8,7 @@ import { Button } from "@/features/shadcn/components/button"
 import { Empty, EmptyContent, EmptyDescription, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
 import { Item, ItemContent, ItemHeader, ItemTitle } from "@/features/shadcn/components/item"
 import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { AttentionDateFormPanelProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 
@@ -171,13 +172,28 @@ export function AttentionDateFormPanel({ date, onCancel, onSave, index }: Attent
                 </div>
 
                 <div className="flex gap-2 justify-end mt-2">
-                    <Button variant="outline" onClick={handleCancel} type="button">
+                    <Button variant="destructive" onClick={handleCancel} type="button">
                         {t("cancel")}
                     </Button>
-                    <Button onClick={handleSubmit(onSubmit)} type="button">
-                        <Check className="mr-2 size-4" />
-                        {t("save-schedule")}
-                    </Button>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <span>
+                                <Button 
+                                    onClick={handleSubmit(onSubmit)} 
+                                    type="button" 
+                                    disabled={selectedDays.length === 0}
+                                >
+                                    <Check className="mr-2 size-4" />
+                                    {t("save-schedule")}
+                                </Button>
+                            </span>
+                        </TooltipTrigger>
+                        {selectedDays.length === 0 && (
+                            <TooltipContent>
+                                <p>{t("select-at-least-one-day")}</p>
+                            </TooltipContent>
+                        )}
+                    </Tooltip>
                 </div>
             </div>
         </FormProvider>

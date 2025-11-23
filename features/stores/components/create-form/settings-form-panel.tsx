@@ -192,7 +192,7 @@ export function SettingsFormPanel() {
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.2 }}
                     >
-                        {!isAddingDate && (
+                        {!isAddingDate && (fields.length === 0 || (errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>))) && (
                             <div className={cn(
                                 "text-sm border p-2 rounded-md text-center border-dashed",
                                 errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
