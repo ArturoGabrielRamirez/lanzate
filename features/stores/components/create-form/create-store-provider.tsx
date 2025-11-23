@@ -19,6 +19,13 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
             name: "",
             subdomain: "",
         },
+        address_info: {
+            is_physical_store: false,
+            address: "",
+            city: "",
+            province: "",
+            country: "",
+        },
     })
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
     const [step, { setStep }] = useStep(7)
