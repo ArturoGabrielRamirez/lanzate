@@ -85,12 +85,14 @@ export function ContactFormPanel() {
 
     const handleSetPrimary = (index: number) => {
         const currentPhones = getValues("contact_info.phones") || []
+        
         const updatedPhones = currentPhones.map((item: { phone: string; is_primary: boolean }, i: number) => ({
             ...item,
             is_primary: i === index
         }))
 
         setValue("contact_info.phones", updatedPhones)
+        
         setCtxValues({
             contact_info: {
                 ...values.contact_info,
@@ -130,7 +132,7 @@ export function ContactFormPanel() {
                             label=""
                             placeholder={t("phone-placeholder")}
                             hideLabel
-                            disabled={confirmedIds.has(field.id)}
+                            disabled={confirmedIds.has(field.id) || (!!phones?.[index]?.phone && phones?.[index]?.phone.length > 0 && !isAddingPhone)}
                             onChange={(e) => handlePhoneChange(index, e.target.value)}
                         />
                         <Button 
@@ -148,7 +150,7 @@ export function ContactFormPanel() {
                         <Button type="button" size="lg" variant="destructive" onClick={() => handleRemovePhone(index)} >
                             <Trash2 />
                         </Button>
-                        {!confirmedIds.has(field.id) && (
+                        {(!confirmedIds.has(field.id) && (!phones?.[index]?.phone || (isAddingPhone && index === fields.length - 1))) && (
                             <Button
                                 type="button"
                                 size="lg"
