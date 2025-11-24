@@ -18,6 +18,8 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
         basic_info: {
             name: "",
             subdomain: "",
+            description: "",
+            logo: null,
         },
         address_info: {
             is_physical_store: false,
@@ -27,8 +29,6 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
             country: "",
         },
         contact_info: {
-            contact_phone: "",
-            contact_email: "",
             phones: [],
             emails: [],
             social_media: [],
