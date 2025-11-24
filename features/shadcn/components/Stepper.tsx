@@ -23,6 +23,7 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   backButtonText?: string;
   nextButtonText?: string;
   disableStepIndicators?: boolean;
+  disableStepConnectors?: boolean;
   renderStepIndicator?: (props: RenderStepIndicatorProps) => ReactNode;
 }
 
@@ -46,6 +47,7 @@ export default function Stepper({
   backButtonText = 'Back',
   nextButtonText = 'Continue',
   disableStepIndicators = false,
+  disableStepConnectors = false,
   renderStepIndicator,
   ...rest
 }: StepperProps) {
@@ -102,7 +104,7 @@ export default function Stepper({
 
       <div className={`step-circle-container md:hidden ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
 
-        <div className={`step-indicator-row ${stepContainerClassName}`}>
+        <div className={`step-indicator-row gap-2 ${stepContainerClassName}`}>
           {stepsArray.map((_, index) => {
             const stepNumber = index + 1;
             const isNotLastStep = index < totalSteps - 1;
@@ -128,7 +130,7 @@ export default function Stepper({
                     }}
                   />
                 )}
-                {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
+                {isNotLastStep && !disableStepConnectors && <StepConnector isComplete={currentStep > stepNumber} />}
               </React.Fragment>
             );
           })}
@@ -153,7 +155,7 @@ export default function Stepper({
 
             <div className={`step-circle-container hidden md:block ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
 
-              <div className={`step-indicator-row ${stepContainerClassName}`}>
+              <div className={`step-indicator-row gap-2 ${stepContainerClassName}`}>
                 {stepsArray.map((_, index) => {
                   const stepNumber = index + 1;
                   const isNotLastStep = index < totalSteps - 1;
@@ -179,7 +181,7 @@ export default function Stepper({
                           }}
                         />
                       )}
-                      {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
+                      {isNotLastStep && !disableStepConnectors && <StepConnector isComplete={currentStep > stepNumber} />}
                     </React.Fragment>
                   );
                 })}

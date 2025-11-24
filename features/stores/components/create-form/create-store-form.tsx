@@ -53,6 +53,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
             stepContainerClassName="!p-0"
             stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
             footerClassName="!p-0"
+            disableStepConnectors={true}
             onStepChange={setStep}
             onFinalStepCompleted={handleFinalStepCompleted}
             nextButtonProps={{ disabled: !isValid }}

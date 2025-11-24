@@ -129,7 +129,7 @@ function AttentionDateEditor({
                                     {selectedDays.length > 1 && ` + ${selectedDays.length - 1} more`}
                                 </ItemTitle>
                             </ItemHeader>
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2 md:gap-4">
                                 <div className="flex-1">
                                     <InputField
                                         name={`${baseName}.startTime`}
