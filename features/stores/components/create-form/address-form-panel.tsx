@@ -15,7 +15,9 @@ import type { Selection } from "react-aria-components"
 export function AddressFormPanel() {
     const t = useTranslations("store.create-form.address")
 
-    const { setValue, formState: { isValid }, trigger } = useFormContext()
+    const { setValue, formState: { isValid, errors }, trigger } = useFormContext()
+    console.log("🚀 ~ AddressFormPanel ~ isValid:", isValid)
+    console.log("🚀 ~ AddressFormPanel ~ errors:", errors)
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { address_info } = values
 

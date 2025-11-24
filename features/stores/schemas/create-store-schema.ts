@@ -86,7 +86,7 @@ export const settingsSchema = yup.object({
     })
 })
 
-export const shippingPaymentSchema = yup.object({
+export const shippingSchema = yup.object({
     shipping_info: yup.object({
         offers_delivery: yup.boolean().default(false),
         methods: yup.array().of(yup.object({
@@ -95,8 +95,13 @@ export const shippingPaymentSchema = yup.object({
             freeShippingMin: yup.string(),
             estimatedTime: yup.string(),
             deliveryPrice: yup.string().matches(/^\d*$/, "Debe ser un número").required("Precio del delivery es requerido"),
-        })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregá al menos un modo de envío") : schema.notRequired())
+        })).when("offers_delivery", ([offers], schema) => {
+            return offers ? schema.min(1, "Agregá al menos un modo de envío") : schema.notRequired()
+        })
     }),
+})
+
+export const paymentSchema = yup.object({
     payment_info: yup.object({
         payment_methods: yup.array().of(
             yup.object({
@@ -104,7 +109,7 @@ export const shippingPaymentSchema = yup.object({
                 commission_percent: yup.number().min(0, "La comisión (%) no puede ser negativa").max(100, "La comisión (%) no puede ser mayor a 100").typeError("Debe ser un número"),
                 commission_amount: yup.number().min(0, "La comisión ($) no puede ser negativa").typeError("Debe ser un número"),
                 type: yup.string().oneOf(['transferencia', 'efectivo', 'billetera_virtual', 'credito', 'debito', 'otro'], "Tipo de método inválido").required("El tipo de método es obligatorio"),
-                cbu_cvu: yup.string().when('type', ([type], schema) => 
+                cbu_cvu: yup.string().when('type', ([type], schema) =>
                     (type === 'transferencia' || type === 'billetera_virtual') ? schema.required('El CBU/CVU es obligatorio para transferencias') : schema.optional()
                 ),
                 alias: yup.string().optional(),
@@ -114,9 +119,13 @@ export const shippingPaymentSchema = yup.object({
     })
 })
 
+export const shippingPaymentSchema = shippingSchema.concat(paymentSchema)
+
 // Form type inference
 export type BasicInfoFormType = yup.InferType<typeof basicInfoSchemaNew>
 export type AddressInfoFormType = yup.InferType<typeof addressInfoSchema>
 export type ContactInfoFormType = yup.InferType<typeof contactInfoSchema>
 export type SettingsFormType = yup.InferType<typeof settingsSchema>
+export type ShippingFormType = yup.InferType<typeof shippingSchema>
+export type PaymentFormType = yup.InferType<typeof paymentSchema>
 export type ShippingPaymentFormType = yup.InferType<typeof shippingPaymentSchema>

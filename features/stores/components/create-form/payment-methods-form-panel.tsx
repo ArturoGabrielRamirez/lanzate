@@ -307,7 +307,7 @@ export function PaymentMethodsFormPanel() {
                         </div>
 
                         <div className="flex gap-2 justify-end w-full">
-                            <Button variant="destructive" onClick={() => handleRemoveMethod(index)} disabled={!isValid || !!errors?.payment_info?.payment_methods?.[index]?.name || !!errors?.payment_info?.payment_methods?.[index]?.type}>
+                            <Button variant="destructive" onClick={() => handleRemoveMethod(index)}>
                                 <X />
                                 Cancelar
                             </Button>

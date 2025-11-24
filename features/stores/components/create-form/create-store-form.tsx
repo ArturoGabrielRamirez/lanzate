@@ -21,8 +21,10 @@ import {
     contactInfoSchema,
     SettingsFormType,
     settingsSchema,
-    ShippingPaymentFormType,
-    shippingPaymentSchema
+    ShippingFormType,
+    shippingSchema,
+    PaymentFormType,
+    paymentSchema
 } from "@/features/stores/schemas"
 import { CreateStoreFormProps, CreateStoreFormValues } from "@/features/stores/types"
 
@@ -76,7 +78,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                 </Form>
             </Step>
             <Step>
-                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+                <Form<PaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(paymentSchema as never)}>
                     <PaymentMethodsFormPanel />
                 </Form>
             </Step>
@@ -92,7 +94,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                 </Form>
             </Step>
             <Step>
-                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+                <Form<ShippingFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingSchema as never)}>
                     <ShippingFormPanel />
                 </Form>
             </Step>
