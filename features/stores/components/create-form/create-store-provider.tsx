@@ -46,7 +46,7 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
         },
     })
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
-    const [step, { setStep }] = useStep(7)
+    const [step, { setStep }] = useStep(8)
     const [isOpen, setIsOpen] = useState(false)
 
     const setValues = useCallback((partial: Partial<CreateStoreFormValues>) => {

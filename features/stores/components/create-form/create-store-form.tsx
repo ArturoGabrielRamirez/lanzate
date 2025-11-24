@@ -39,7 +39,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
         for (let s = 1; s <= 6; s++) {
             if (isStepValid[s]) max = s + 1; else break
         }
-        return Math.min(max, 6)
+        return Math.min(max, 8)
     })()
 
     const handleFinalStepCompleted = async () => {
