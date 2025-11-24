@@ -26,7 +26,7 @@ import {
     PaymentFormType,
     paymentSchema
 } from "@/features/stores/schemas"
-import { CreateStoreFormProps, CreateStoreFormValues } from "@/features/stores/types"
+import { CreateStoreFormProps } from "@/features/stores/types"
 
 export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
 
@@ -43,7 +43,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
     })()
 
     const handleFinalStepCompleted = async () => {
-        await onSubmitAll(values as CreateStoreFormValues)
+        await onSubmitAll(values)
     }
 
     return (

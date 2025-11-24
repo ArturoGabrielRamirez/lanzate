@@ -5,33 +5,35 @@ import { useTranslations } from "next-intl"
 /* import { toast } from "sonner" */
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
-/* import { createStoreAction } from "@/features/stores/actions" */
+import { createStoreAction } from "@/features/stores/actions"
 import { CreateStoreForm } from "@/features/stores/components/create-form/create-store-form"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { CreateStoreFormValues } from "@/features/stores/types"
+import { CreateStoreFormType } from "@/features/stores/schemas"
 /* 
 import { processOpeningHours, processPaymentMethods, processShippingMethods } from "@/features/stores/utils" */
 
-export function CreateStoreContent({ /* userId */ }: { userId: number }) {
+export function CreateStoreContent({ userId }: { userId: number }) {
 
-    const { step, setStep/* , closeDialog  */} = useCreateStoreContext()
+    const { step, setStep/* , closeDialog  */ } = useCreateStoreContext()
     const t = useTranslations("store.create-form")
 
-/*     useEffect(() => {
-        if (step === 7) {
-            const timeout = setTimeout(() => {
-                setStep(1)
-                closeDialog()
-            }, 2000) // 2 seconds timeout
+    /*     useEffect(() => {
+            if (step === 7) {
+                const timeout = setTimeout(() => {
+                    setStep(1)
+                    closeDialog()
+                }, 2000) // 2 seconds timeout
+    
+                return () => clearTimeout(timeout)
+            }
+        }, [step, setStep, closeDialog]) */
 
-            return () => clearTimeout(timeout)
-        }
-    }, [step, setStep, closeDialog]) */
-
-    const handleCreateStore = async (data: CreateStoreFormValues) => {
+    const handleCreateStore = async (data: CreateStoreFormType) => {
         console.log("🚀 ~ handleCreateStore ~ data:", data)
         setStep(7)
-        await new Promise(resolve => setTimeout(resolve, 2000))
+
+        const { /* hasError, message, payload */ } = await createStoreAction(data, userId)
+
         setStep(8)
         /* const isPhysical = !!data.address_info?.is_physical_store
         const processedData = {
@@ -44,7 +46,7 @@ export function CreateStoreContent({ /* userId */ }: { userId: number }) {
         }
 
 
-        const { hasError, message, payload } = await createStoreAction(processedData, userId)
+        
 
         if (hasError) {
             toast.error(message)

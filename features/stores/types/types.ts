@@ -6,7 +6,7 @@ import * as yup from "yup"
 
 import { DashboardStore } from "@/features/dashboard/types"
 import { ServerResponse } from "@/features/global/types"
-import { editOperationalSettingsSchema, editSocialMediaSchema, editContactSchema } from "@/features/stores/schemas"
+import { editOperationalSettingsSchema, editSocialMediaSchema, editContactSchema, CreateStoreFormType } from "@/features/stores/schemas"
 
 // ============================================================================
 // BASE TYPES AND UTILITIES
@@ -392,7 +392,7 @@ export type StepIndicatorProps = {
 export type CreateStoreFormProps = {
     /* setStep: (step: number) => void */
     /* step: number */
-    onSubmitAll: (data: CreateStoreFormValues) => Promise<ActionResult>
+    onSubmitAll: (data: CreateStoreFormType) => Promise<ActionResult>
 }
 
 export type CreateStoreFormValues = {
@@ -432,8 +432,8 @@ export type CreateStoreFormValues = {
 }
 
 export type CreateStoreContextType = {
-    values: Partial<CreateStoreFormValues>
-    setValues: (partial: Partial<CreateStoreFormValues>) => void
+    values: CreateStoreFormType
+    setValues: (partial: CreateStoreFormType) => void
     isStepValid: Record<number, boolean>
     setStepValid: (step: number, valid: boolean) => void
     step: number

@@ -14,26 +14,26 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 import { cn } from "@/lib/utils"
 
 // Internal Editor Component
-function AttentionDateEditor({ 
-    index, 
-    onCancel, 
-    onSave 
-}: { 
-    index: number, 
-    onCancel: () => void, 
-    onSave: () => void 
+function AttentionDateEditor({
+    index,
+    onCancel,
+    onSave
+}: {
+    index: number,
+    onCancel: () => void,
+    onSave: () => void
 }) {
     const t = useTranslations("store.create-form.settings")
     const { setValue, getValues, watch, trigger } = useFormContext()
     const { values, setValues: setCtxValues } = useCreateStoreContext()
     const { settings } = values
     const baseName = `settings.attention_dates.${index}`
-    
+
     // Use trigger to satisfy linter and potentially validate on mount if needed
     useEffect(() => {
         // trigger(baseName) 
     }, [trigger, baseName])
-    
+
     const selectedDays = watch(`${baseName}.days`) || []
 
     const dayLabels = [
@@ -54,10 +54,11 @@ function AttentionDateEditor({
         // Let's just use the context settings for merging if needed, or just acknowledge we used it.
         // Actually we are re-setting the whole settings object in context.
         if (settings) { /* no-op, just using the variable */ }
-        
-         setCtxValues({
-             settings: currentSettings
-         })
+
+        setCtxValues({
+            ...values,
+            settings: currentSettings
+        })
     }
 
     const handleToggleDay = (day: string) => {
@@ -187,7 +188,7 @@ export function AttentionDateFormPanel() {
     const { control, setValue, getValues, trigger, formState: { errors } } = useFormContext()
     const { values, setValues: setCtxValues } = useCreateStoreContext()
     const { settings } = values
-    
+
     // This line is needed to fix the unused variable warning, or we remove it if not needed
     const triggerValidation = trigger
 
@@ -221,11 +222,12 @@ export function AttentionDateFormPanel() {
         setIsAddingDate(false)
         remove(index)
         setEditingIndex(null)
-        
+
         const currentDates = getValues("settings.attention_dates") || []
         setCtxValues({
+            ...values,
             settings: {
-                ...(values.settings || { is_open_24_hours: false }),
+                ...(settings || { is_open_24_hours: false }),
                 attention_dates: currentDates
             }
         })
@@ -236,6 +238,7 @@ export function AttentionDateFormPanel() {
         setEditingIndex(null)
         const currentDates = getValues("settings.attention_dates")
         setCtxValues({
+            ...values,
             settings: {
                 ...(settings || { is_open_24_hours: false }),
                 attention_dates: currentDates
@@ -247,12 +250,13 @@ export function AttentionDateFormPanel() {
     const handleDeleteDate = (index: number) => {
         remove(index)
         if (editingIndex !== null && index === editingIndex) setEditingIndex(null)
-        
+
         const currentDates = getValues("settings.attention_dates") || []
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const updatedDates = currentDates.filter((_: any, i: number) => i !== index)
-        
+
         setCtxValues({
+            ...values,
             settings: {
                 ...(values.settings || { is_open_24_hours: false }),
                 attention_dates: updatedDates
@@ -304,7 +308,7 @@ export function AttentionDateFormPanel() {
             )}
 
             {isAddingDate && editingIndex !== null && (
-                <AttentionDateEditor 
+                <AttentionDateEditor
                     index={editingIndex}
                     onCancel={() => handleCancelDate(editingIndex)}
                     onSave={handleSaveDate}

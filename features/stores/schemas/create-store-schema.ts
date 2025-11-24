@@ -119,7 +119,12 @@ export const paymentSchema = yup.object({
     })
 })
 
-export const shippingPaymentSchema = shippingSchema.concat(paymentSchema)
+export const createStoreSchema = basicInfoSchemaNew
+    .concat(addressInfoSchema)
+    .concat(contactInfoSchema)
+    .concat(settingsSchema)
+    .concat(shippingSchema)
+    .concat(paymentSchema)
 
 // Form type inference
 export type BasicInfoFormType = yup.InferType<typeof basicInfoSchemaNew>
@@ -128,4 +133,4 @@ export type ContactInfoFormType = yup.InferType<typeof contactInfoSchema>
 export type SettingsFormType = yup.InferType<typeof settingsSchema>
 export type ShippingFormType = yup.InferType<typeof shippingSchema>
 export type PaymentFormType = yup.InferType<typeof paymentSchema>
-export type ShippingPaymentFormType = yup.InferType<typeof shippingPaymentSchema>
+export type CreateStoreFormType = yup.InferType<typeof createStoreSchema>

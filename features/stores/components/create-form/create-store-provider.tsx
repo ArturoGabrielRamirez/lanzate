@@ -3,7 +3,8 @@
 import { createContext, useContext, useState, useCallback } from "react"
 
 import { useStep } from "@/features/shadcn/hooks/use-step"
-import { CreateStoreFormValues, CreateStoreContextType } from "@/features/stores/types"
+import { CreateStoreFormType } from "@/features/stores/schemas"
+import { CreateStoreContextType } from "@/features/stores/types"
 
 const CreateStoreContext = createContext<CreateStoreContextType | null>(null)
 
@@ -13,43 +14,46 @@ function useCreateStoreContext() {
     return ctx
 }
 
+const initialValues: CreateStoreFormType = {
+    basic_info: {
+        name: "",
+        subdomain: "",
+        description: "",
+        logo: null,
+    },
+    address_info: {
+        is_physical_store: false,
+        address: "",
+        city: "",
+        province: "",
+        country: "",
+    },
+    contact_info: {
+        phones: [],
+        emails: [],
+        social_media: [],
+    },
+    settings: {
+        is_open_24_hours: true,
+        attention_dates: [],
+    },
+    shipping_info: {
+        offers_delivery: false,
+        methods: [],
+    },
+    payment_info: {
+        payment_methods: [],
+    },
+}
+
 function CreateStoreProvider({ children }: { children: React.ReactNode }) {
-    const [values, setValuesState] = useState<Partial<CreateStoreFormValues>>({
-        basic_info: {
-            name: "",
-            subdomain: "",
-            description: "",
-            logo: null,
-        },
-        address_info: {
-            is_physical_store: false,
-            address: "",
-            city: "",
-            province: "",
-            country: "",
-        },
-        contact_info: {
-            phones: [],
-            emails: [],
-            social_media: [],
-        },
-        shipping_info: {
-            offers_delivery: false,
-            methods: [],
-        },
-        payment_info: {
-            payment_methods: [],
-        },
-        settings: {
-            is_open_24_hours: true,
-            attention_dates: [],
-        },
-    })
+    const [values, setValuesState] = useState<CreateStoreFormType>(initialValues)
+    
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
     const [step, { setStep }] = useStep(8)
     const [isOpen, setIsOpen] = useState(false)
 
-    const setValues = useCallback((partial: Partial<CreateStoreFormValues>) => {
+    const setValues = useCallback((partial: CreateStoreFormType) => {
         setValuesState(prev => ({ ...prev, ...partial }))
     }, [])
 
@@ -62,7 +66,7 @@ function CreateStoreProvider({ children }: { children: React.ReactNode }) {
     const closeDialog = useCallback(() => { setIsOpen(false) }, [])
 
     const resetForm = useCallback(() => {
-        setValuesState({})
+        setValuesState(initialValues)
         setIsStepValid({})
     }, [])
 
