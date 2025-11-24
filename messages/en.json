@@ -1920,6 +1920,9 @@
             "messages": {
                 "store-created-success": "Store created successfully",
                 "creating-store": "Creating your store…"
+            },
+            "payment": {
+                "cbu-cvu-placeholder": "Ex: 0000003100061234567890"
             }
         }
     },
