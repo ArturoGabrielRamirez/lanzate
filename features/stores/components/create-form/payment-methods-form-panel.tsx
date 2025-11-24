@@ -16,40 +16,40 @@ import { CreateStoreFormValues } from "@/features/stores/types"
 
 const paymentTypes = [
     { label: (
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
             <ArrowLeftRight />
-            <p>Transferencia</p>
-        </div>
+            <span>Transferencia</span>
+        </span>
     ), value: "transferencia" },
     { label: (
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
             <Banknote />
-            <p>Efectivo</p>
-        </div>
+            <span>Efectivo</span>
+        </span>
     ), value: "efectivo" },
     { label: (
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
             <Wallet2 />
-            <p>Billetera Virtual</p>
-        </div>
+            <span>Billetera Virtual</span>
+        </span>
     ), value: "billetera_virtual" },
     { label: (
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
             <CreditCard />
-            <p>Crédito</p>
-        </div>
+            <span>Crédito</span>
+        </span>
     ), value: "credito" },
     { label: (
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
             <CreditCard />
-            <p>Débito</p>
-        </div>
+            <span>Débito</span>
+        </span>
     ), value: "debito" },
     { label: (
-        <div className="flex items-center gap-2">
+        <span className="flex items-center gap-2">
             <CircleQuestionMark />
-            <p>Otro</p>
-        </div>
+            <span>Otro</span>
+        </span>
     ), value: "otro" },
 ]
 
