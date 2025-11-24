@@ -8,7 +8,8 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/f
 /* import { createStoreAction } from "@/features/stores/actions" */
 import { CreateStoreForm } from "@/features/stores/components/create-form/create-store-form"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-/* import { CreateStoreFormValues } from "@/features/stores/types"
+import { CreateStoreFormValues } from "@/features/stores/types"
+/* 
 import { processOpeningHours, processPaymentMethods, processShippingMethods } from "@/features/stores/utils" */
 
 export function CreateStoreContent({ /* userId */ }: { userId: number }) {
@@ -27,7 +28,8 @@ export function CreateStoreContent({ /* userId */ }: { userId: number }) {
         }
     }, [step, setStep, closeDialog]) */
 
-    const handleCreateStore = async (/* data: CreateStoreFormValues */) => {
+    const handleCreateStore = async (data: CreateStoreFormValues) => {
+        console.log("🚀 ~ handleCreateStore ~ data:", data)
         setStep(7)
         await new Promise(resolve => setTimeout(resolve, 2000))
         setStep(8)
