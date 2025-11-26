@@ -196,7 +196,7 @@ export default function Stepper({
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : "Continue to the next step"}
+                {nextButtonProps.disabled ? "Te faltan campos por completar" : isLastStep ? 'Completar' : "Continuar al siguiente paso"}
               </TooltipContent>
             </Tooltip>
 

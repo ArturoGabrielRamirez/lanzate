@@ -111,7 +111,6 @@ export function AccountBannerHeader({
                 }}
                 width={32}
                 height={32}
-                fill
               />
 
               {isUpdating && (

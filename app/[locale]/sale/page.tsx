@@ -47,10 +47,10 @@ async function SalePage() {
                 href: "/sale"
             }]} showDate/> */}
 
-            <div className="flex-1 flex items-center justify-center min-h-[400px]">
-                <div className="border-2 border-dashed border-muted-foreground/50 rounded-lg p-8 w-full max-w-md">
+           {/*  <div className="flex-1 flex items-center justify-center min-h-[400px]"> */}
+               {/*  <div className="border-2 border-dashed border-muted-foreground/50 rounded-lg p-8 w-full max-w-md"> */}
                     <Suspense /* fallback={<StoreSelectorSkeleton />} */>
-                       {/*  <SaleInterface
+                        <SaleInterface
                             storeId={store.id}
                             branchId={store.branches[0].id}
                      
@@ -58,10 +58,10 @@ async function SalePage() {
                             processed_by_user_id={user.id}
                             branchName={store.branches[0].name}
                             storeName={store.name}
-                        /> */}
+                        />
                     </Suspense>
-                </div>
-            </div>
+             {/*    </div>
+            </div> */}
         </section>
     )
 }

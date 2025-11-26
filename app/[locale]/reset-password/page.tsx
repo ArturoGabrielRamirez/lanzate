@@ -72,7 +72,6 @@ export default async function ResetPage() {
             alt={t('image.alt')}
             width={5}
             className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20"
-            fill
           />
         </div>
       </div>
