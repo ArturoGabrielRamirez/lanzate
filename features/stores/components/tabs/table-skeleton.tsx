@@ -31,7 +31,7 @@ function TableSkeleton() {
               {/* Search Input */}
               <div className="relative max-w-sm grow">
                 <Input
-                  placeholder="Filter..."
+                  placeholder="Filtrar..."
                   disabled
                   className="pl-9"
                 />

@@ -11,10 +11,9 @@ import { HeaderProps } from "@/features/layout/types/types"
 
 async function Header({ title = "Store Name", socialMedia, showSocialLinks = true, logo }: HeaderProps) {
 
-    const t = await getTranslations("auth.buttons");
+    const t = await getTranslations("auth.buttons")
 
     const { payload: user } = await getUserInfo()
-
 
     const hasSocialMedia = socialMedia && (
         socialMedia.facebook_url ||
@@ -26,7 +25,7 @@ async function Header({ title = "Store Name", socialMedia, showSocialLinks = tru
         <div className="container mx-auto flex items-center justify-between ">
             <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
                 {logo ? (
-                    <Image src={logo} alt={title} width={32} height={32} />
+                    <Image src={logo} alt={title} width={32} height={32} fill/>
                 ) : (
                     <Rocket className="text-primary [display:var(--show-brand-logo)]" />
                 )}

@@ -101,7 +101,7 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
                         <EmptyMedia variant="icon">
                             <Avatar className="aspect-square size-8 lg:size-10 shrink-0 border-2 border-primary hidden md:block">
                                 <AvatarImage src={store?.logo || ""} alt={store?.name || ""} asChild className="aspect-square">
-                                    <Image src={store?.logo || ""} alt={store?.name || ""} width={32} height={32} unoptimized className="aspect-square" />
+                                    <Image src={store?.logo || ""} alt={store?.name || ""} width={32} height={32} unoptimized className="aspect-square" fill />
                                 </AvatarImage>
                                 <AvatarFallback>
                                     <StoreIcon className="size-4 md:size-5 lg:size-6 text-primary/50 group-hover:text-primary transition-all" />

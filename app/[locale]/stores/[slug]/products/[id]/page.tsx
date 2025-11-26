@@ -4,27 +4,26 @@ import { getTranslations } from "next-intl/server"
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
-import { DeleteProductButton } from "@/features/products/components"
+import { CreateProductButton, DeleteProductButton } from "@/features/products/components"
 import { ProductDetailForm } from "@/features/products/components/product-detail-display"
 import { ProductDetailPageProps } from "@/features/products/types"
 import { Card, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-
-
 async function ProductDetailPage({ params }: ProductDetailPageProps) {
-
     const { slug, id } = await params
 
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
-        return console.error(userMessage)
+        console.error(userMessage)
+        return null
     }
 
-    const { payload: product, hasError: error } = await getProductDetailsAction(id)
+    const { payload: product, hasError: error, message: errorMessage } = await getProductDetailsAction(id)
 
     if (error || !product) {
-        return console.log(error)
+        console.error(errorMessage)
+        return null
     }
 
     const t = await getTranslations("store.products")
@@ -36,12 +35,22 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <CardTitle className="flex items-center gap-2">
-                            <Link href={`/stores/${slug}/products`}>
+                            <Link 
+                                href={`/stores/${slug}/products`}
+                                className="hover:opacity-70 transition-opacity"
+                            >
                                 <ArrowLeft className="size-4" />
                             </Link>
                             {t("product-details")}
                         </CardTitle>
-                        <div className="flex gap-2">
+                        
+                        {/* ✅ Botones de acción */}
+                        <div className="flex items-center gap-2">
+                            <CreateProductButton 
+                                storeId={product.store_id}
+                                userId={user.id}
+                                onlyIcon={true}
+                            />
                             <DeleteProductButton
                                 productId={product.id}
                                 slug={slug}

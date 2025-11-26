@@ -13,7 +13,6 @@ import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features
 import { FileUpload, FileUploadDropzone, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
-
 function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [pendingPrimaryId, setPendingPrimaryId] = useState<number | null>(null)
@@ -126,6 +125,7 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
                                         src={effectivePrimaryUrl}
                                         alt="Variant image"
                                         className="object-cover h-full w-full"
+                                        fill
                                     />
                                 ) : (
                                     <div className="flex flex-col items-center justify-center h-full p-4">
@@ -167,6 +167,7 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
                                             src={media.url}
                                             alt="Product media"
                                             className="object-cover h-full w-full"
+                                            fill
                                         />
                                         {effectivePrimaryId === media.id && (
                                             <div className="absolute inset-0 bg-primary/15 flex items-center justify-center">
@@ -208,8 +209,8 @@ function VariantMediaDisplay({ variant, product }: VariantMediaDisplayProps) {
                                         <div className="flex items-center justify-center rounded-full border p-2.5">
                                             <Upload className="size-6 text-muted-foreground" />
                                         </div>
-                                        <p className="font-medium text-sm">Arrastra y suelta una imagen aquí</p>
-                                        <p className="text-muted-foreground text-xs">O haz click para explorar</p>
+                                        <p className="font-medium text-sm">Arrastrá y soltá una imagen acá</p>
+                                        <p className="text-muted-foreground text-xs">O hacé click para explorar</p>
                                     </div>
                                     <FileUploadTrigger asChild>
                                         <Button variant="outline" size="sm" className="mt-2 w-fit">

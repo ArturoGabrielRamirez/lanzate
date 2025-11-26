@@ -1,11 +1,11 @@
-import { Info } from "lucide-react";
-import { Metadata } from "next";
-import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { Info } from "lucide-react"
+import { Metadata } from "next"
+import Image from "next/image"
+import { getTranslations } from "next-intl/server"
 
 import aboutImage from '@/features/auth/assets/Good team-pana.svg'
-import { LandingSectionIconTitle, LandingText } from "@/features/global/components";
-import { BackgroundPattern, SectionSubtitle } from "@/features/landing/components";
+import { LandingSectionIconTitle, LandingText } from "@/features/global/components"
+import { BackgroundPattern, SectionSubtitle } from "@/features/landing/components"
 
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -49,6 +49,7 @@ export default async function AboutPage() {
                         src={aboutImage}
                         alt="About Us"
                         className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20"
+                        fill
                     />
                 </div>
             </div>

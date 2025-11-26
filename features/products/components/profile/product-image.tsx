@@ -11,6 +11,7 @@ function ProductImage({ src, alt }: ProductImageProps) {
                     src={src}
                     alt={alt}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    fill
                 />
             ) : (
                 <div className="w-full h-full flex items-center justify-center text-gray-400">

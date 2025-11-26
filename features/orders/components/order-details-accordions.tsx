@@ -60,6 +60,7 @@ function OrderDetailsAccordions({ order }: OrderDetailsAccordionsProps) {
                                                 src={item.product.image}
                                                 alt={item.product.name}
                                                 className="object-cover w-full h-full"
+                                                fill
                                             />
                                         ) : (
                                             <Package className="w-6 h-6 text-muted-foreground" />

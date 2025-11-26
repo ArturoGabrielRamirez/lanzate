@@ -9,6 +9,9 @@ export function MediaSelectorDialogs({
   type,
   mediaUpload
 }: MediaSelectorDialogsProps) {
+
+  const optimizationType: 'avatar' | 'banner' | 'store-logo' | 'store-banner' | "product-image" | "product-video" =
+    type === 'store-logo' ? 'avatar' : (type as 'avatar' | 'banner') //TODO: Verificar si esto es correcto para product-image y product-video
   return (
     <>
       <CameraComponent {...mediaUpload.cameraProps} />
@@ -22,7 +25,7 @@ export function MediaSelectorDialogs({
         onDecision={mediaUpload.handleOptimizationDecision}
         onClose={mediaUpload.handleOptimizationDialogClose}
         imageFile={mediaUpload.pendingFile}
-        type={type}
+        type={optimizationType}
         maxWidth={mediaUpload.resolvedValidationOptions.maxWidth}
         maxHeight={mediaUpload.resolvedValidationOptions.maxHeight}
       />

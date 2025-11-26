@@ -83,14 +83,14 @@ function VariantDetailClient({ product, initialVariantId }: Props) {
       <div className="grid grid-cols-[minmax(240px,380px)_minmax(64px,96px)] gap-4 items-start">
         <div className="bg-muted rounded-md overflow-hidden aspect-square flex items-center justify-center">
           {galleryImages[0] ? (
-            <Image src={galleryImages[0]} alt={displayName} className="object-cover w-full h-full" />
+            <Image src={galleryImages[0]} alt={displayName} className="object-cover w-full h-full" fill />
           ) : (
             <div className="text-muted-foreground/60">No image available</div>
           )}
         </div>
         <div className="flex flex-col gap-2 max-h-[380px] overflow-auto pr-1">
           {galleryImages.slice(1).map((src) => (
-            <Image key={src} src={src} alt={displayName} className="rounded-md object-cover aspect-square w-full cursor-pointer hover:opacity-90" />
+            <Image key={src} src={src} alt={displayName} className="rounded-md object-cover aspect-square w-full cursor-pointer hover:opacity-90" fill />
           ))}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { Globe, Store, StoreIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { useTranslations } from "next-intl"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"

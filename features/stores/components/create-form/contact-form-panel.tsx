@@ -1,7 +1,7 @@
 import { Facebook, Instagram, Mail, Phone, Twitter } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { useFormContext } from "react-hook-form"
-import { useTranslations } from "next-intl"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"

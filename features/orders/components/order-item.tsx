@@ -12,6 +12,7 @@ function OrderItemComponent({ item }: OrderItemComponentProps) {
                             src={item.product.image}
                             alt={item.product.name}
                             className="w-full h-full object-cover rounded-md"
+                            fill
                         />
                     ) : (
                         <span className="text-muted-foreground text-xs">No hay imagen disponible</span>

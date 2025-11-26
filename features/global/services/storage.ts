@@ -1,4 +1,4 @@
-import type { UploadType } from '@/features/global/types/media'
+import { UploadType } from '@/features/global/types/media'
 import { extractFilePathFromUrl } from '@/features/global/utils/media/extract-file-path-from-url'
 import { generateFileName } from '@/features/global/utils/media/generate-file-name'
 import { getStoragePath } from '@/features/global/utils/media/get-storege-path'
@@ -14,25 +14,29 @@ export class StorageService {
     async uploadFile(file: File, type: UploadType, userId: number): Promise<string> {
         const fileExtension = file.name.split('.').pop() || 'jpg'
         const fileName = generateFileName(type, userId, fileExtension)
-        const { bucket, folder } = getStoragePath(type)
-        const filePath = folder ? `${folder}/${fileName}` : fileName
+        
+        // Obtenemos la configuración del bucket dinámicamente
+        const { bucket/* , folder */ } = getStoragePath(type)
+        
+        // Si hay folder (casos legacy o específicos) lo usamos, si no, va a la raíz
+  /*       const filePath = folder ? `${folder}/${fileName}` : fileName */
 
-        const { /* data, */ error } = await this.supabase.storage
+        const { error } = await this.supabase.storage
             .from(bucket)
-            .upload(filePath, file, {
+            .upload(fileName, file, {
                 contentType: file.type,
                 upsert: true,
                 cacheControl: '3600'
             })
 
         if (error) {
-            console.error('❌ Error Supabase Storage:', error)
+            console.error(`❌ Error Supabase Storage [${bucket}]:`, error)
             throw new Error(`Error subiendo archivo: ${error.message}`)
         }
 
         const { data: publicUrlData } = this.supabase.storage
             .from(bucket)
-            .getPublicUrl(filePath)
+            .getPublicUrl(fileName)
 
         if (!publicUrlData?.publicUrl) {
             throw new Error('No se pudo obtener la URL pública del archivo')
@@ -42,26 +46,22 @@ export class StorageService {
     }
 
     async deleteFile(url: string, bucket: string): Promise<void> {
-
-        // Si la URL es solo un path relativo, construir la ruta completa
         let filePath: string | null = null
 
         if (url.includes('.supabase.')) {
-            // Es una URL completa, extraer el path
+            // Verificamos que la URL pertenezca al bucket que intentamos borrar
             if (!url.includes(bucket)) {
-
+                console.warn(`⚠️ La URL no coincide con el bucket esperado: ${bucket}`)
                 return
             }
             filePath = extractFilePathFromUrl(url, bucket)
         } else {
-            // Es un path relativo, usarlo directamente
             filePath = url
         }
 
-        console.log('🔍 filePath a eliminar:', filePath)
+        console.log(`🔍 Eliminando de bucket '${bucket}': ${filePath}`)
 
         if (filePath) {
-
             const { error } = await this.supabase.storage
                 .from(bucket)
                 .remove([filePath])
@@ -70,14 +70,9 @@ export class StorageService {
                 console.error('❌ Error eliminando archivo:', error)
                 throw new Error(`Error eliminando archivo: ${error.message}`)
             }
-
         } else {
             console.warn('⚠️ No se pudo extraer filePath de la URL:', url)
         }
-    }
-
-    async deleteUserFile(url: string): Promise<void> {
-        await this.deleteFile(url, 'user-uploads')
     }
 }
 

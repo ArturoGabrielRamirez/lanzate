@@ -1,6 +1,6 @@
+import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { useTranslations } from "next-intl"
 
 import AnimatedTags from "@/features/shadcn/components/smoothui/ui/AnimatedTags"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
@@ -60,7 +60,7 @@ export function ShippingFormPanel() {
             setOffersDelivery(safe.offers_delivery)
         }
 
-    }, [getValues, setValue, values.shipping_info, values.payment_info, setCtxValues])
+    }, [getValues, setValue, values.shipping_info, values.payment_info, setCtxValues, t])
 
     useEffect(() => { setStepValid(5, isValid) }, [isValid, setStepValid])
 

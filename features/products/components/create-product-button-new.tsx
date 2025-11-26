@@ -9,7 +9,7 @@ function CreateProductButtonNew() {
             <DialogTrigger>
                 <Button>
                     <Plus />
-                    <span>Create Product</span>
+                    <span>Crear Producto</span>
                 </Button>
             </DialogTrigger>
         </Dialog>

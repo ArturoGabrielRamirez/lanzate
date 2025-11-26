@@ -20,7 +20,7 @@ export * from "@/features/products/data/select-product-by-ids-and-subdomain.data
 export * from "@/features/products/data/select-related-products.data"
 export * from "@/features/products/data/toggle-product-like.data"
 export * from "@/features/products/data/update-product-prices.data"
-export * from "@/features/products/data/update-product-primary-image.data"
+/* export * from "@/features/products/data/update-product-primary-image.data" */
 export * from "@/features/products/data/update-product.data"
 export * from "@/features/products/data/update-variant-basic-info.data"
 export * from "@/features/products/data/update-variant-color.data"
@@ -32,3 +32,4 @@ export * from "@/features/products/data/update-variant-sizes.data"
 export * from "@/features/products/data/update-variant-stocks.data"
 export * from "@/features/products/data/upload-product-image.data"
 export * from "@/features/products/data/verify-product-ownership.data"
+export * from "@/features/products/data/set-media-as-primary.data"

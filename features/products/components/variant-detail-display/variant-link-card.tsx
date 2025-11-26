@@ -6,7 +6,6 @@ import Link from "next/link"
 
 import type { VariantLinkCardProps } from "@/features/products/types"
 
-
 function VariantLinkCard({ variant, slug, productId, productPrice }: VariantLinkCardProps) {
     const total = (variant.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
     const size = variant.size
@@ -23,6 +22,7 @@ function VariantLinkCard({ variant, slug, productId, productPrice }: VariantLink
                     src={variant.primary_media.url}
                     alt={variantName}
                     className="h-12 w-12 rounded object-cover"
+                    fill
                 />
             ) : (
                 <div className="h-12 w-12 rounded bg-secondary flex items-center justify-center">

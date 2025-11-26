@@ -7,29 +7,35 @@ import { updateStoreLogoAction } from "@/features/stores/actions"
 import { StoreLogoEditor } from "@/features/stores/components"
 import { StoreLogoEditorWrapperProps } from "@/features/stores/types"
 
-function StoreLogoEditorWrapper({ currentLogo, storeName, storeId }: StoreLogoEditorWrapperProps) {
+export function StoreLogoEditorWrapper({
+    currentLogo,
+    storeName,
+    storeId
+}: StoreLogoEditorWrapperProps) {
     const [logo, setLogo] = useState<string | null>(currentLogo)
 
     const handleLogoUpdate = async (newLogoUrl: string | null) => {
         try {
-            // Update local state
             setLogo(newLogoUrl)
 
-            // Update in database
             if (newLogoUrl) {
-                toast.loading('Actualizando logo de la tienda...')
-                const { hasError, message } = await updateStoreLogoAction(storeId, newLogoUrl)
-                if (hasError) {
-                    toast.dismiss()
-                    toast.error(message)
+                const loadingToast = toast.loading('Actualizando logo de la tienda...')
+
+                const result = await updateStoreLogoAction(storeId, newLogoUrl)
+
+                toast.dismiss(loadingToast)
+
+                if (result.hasError) {
+                    toast.error(result.message)
+                    setLogo(currentLogo)
                 } else {
-                    toast.dismiss()
-                    toast.success(message)
+                    toast.success(result.message)
                 }
             }
         } catch (error) {
             console.error('Error updating store logo:', error)
-            toast.error('Error updating store logo')
+            toast.error('Error al actualizar el logo de la tienda')
+            setLogo(currentLogo)
         }
     }
 
@@ -37,9 +43,8 @@ function StoreLogoEditorWrapper({ currentLogo, storeName, storeId }: StoreLogoEd
         <StoreLogoEditor
             currentLogo={logo}
             storeName={storeName}
+            storeId={storeId}
             onLogoUpdate={handleLogoUpdate}
         />
     )
 }
-
-export { StoreLogoEditorWrapper }

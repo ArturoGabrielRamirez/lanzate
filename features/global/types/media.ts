@@ -3,15 +3,11 @@
 import { User, Store, ProductMedia } from '@prisma/client'
 import { Dispatch, RefObject, SetStateAction } from "react"
 
-
 import { FileValidationOptions } from '@/features/profile/types'
-
-
-// Agregar al final de tu archivo de tipos existente
 
 export interface CameraComponentProps {
   isOpen: boolean
-  onCapture: (file: File) => void  // ✅ Solo 1 parámetro (el componente lo espera así)
+  onCapture: (file: File) => void
   onClose: () => void
   onRetake?: () => void
   aspectRatio?: number
@@ -25,9 +21,11 @@ export interface UseUploadHistoryReturn {
   addUpload: (url: string) => void
   removeUpload: (url: string) => void
   canUploadMore: boolean
+  remainingSlots: number
+  reload: () => Promise<void>
+  isLoading: boolean
 }
 export interface UseMediaUploadReturn {
-  // Estados principales
   isUploading: boolean
   uploadProgress: number
   isLoadingPreset: boolean
@@ -39,7 +37,6 @@ export interface UseMediaUploadReturn {
   isFromCamera: boolean
   needsCropping: boolean
 
-  // Estados de componentes
   isCameraOpen: boolean
   isCropperOpen: boolean
   showCropDialog: boolean
@@ -63,7 +60,7 @@ export interface UseMediaUploadReturn {
   cancelUpload: () => void
 
   // Métodos de cropping
-  openCropper: () => Promise<void>  // ← ✅ NUEVO: Agregado aquí
+  openCropper: () => Promise<void>
   handleCropComplete: (croppedFile: File) => void
 
   // Métodos de optimización
@@ -148,6 +145,8 @@ export interface MediaSelectorProps {
   className?: string
   loadApiAvatars?: boolean
   userEmail?: string
+  storeId?: number
+  productId?: number
 }
 
 export interface UploadProgressProps {
@@ -222,6 +221,7 @@ export interface FileUploadData {
   type: UploadType
   productId?: number | null
   storeId?: number | null
+  variantId: number | undefined
 }
 
 export interface DeleteRequest {
@@ -246,7 +246,7 @@ export interface CurrentUserResponse {
 }
 
 export interface MediaPreviewProps {
-  type: 'avatar' | 'banner'
+  type: MediaType
   previewUrl: string | null
 }
 
@@ -257,7 +257,80 @@ export interface BackgroundRemoverProps {
   onProcessed: (file: File) => void
 }
 
-export type MediaType = 'avatar' | 'banner'
+export type MediaType =
+  | 'avatar'
+  | 'banner'
+  | 'store-logo'
+  | 'store-banner'
+  | 'product-image'
+  | 'product-video'
+
+export interface MediaConfig {
+  aspectRatio: number
+  maxWidth: number
+  maxHeight: number
+  maxSize: number
+  allowedTypes: string[]
+  quality: number
+  minWidth?: number
+  minHeight?: number
+  aspectRatioTolerance?: number
+}
+
+export const MEDIA_CONFIGS: Record<MediaType, MediaConfig> = {
+  'avatar': {
+    aspectRatio: 1,
+    maxWidth: 800,
+    maxHeight: 800,
+    maxSize: 2 * 1024 * 1024, // 2MB
+    allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+    quality: 0.9,
+  },
+  'banner': {
+    aspectRatio: 16 / 9,
+    maxWidth: 1920,
+    maxHeight: 1080,
+    maxSize: 5 * 1024 * 1024, // 5MB
+    allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+    quality: 0.85,
+  },
+  'store-logo': {
+    aspectRatio: 1,
+    maxWidth: 500,
+    maxHeight: 500,
+    maxSize: 2 * 1024 * 1024, // 2MB
+    allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml'],
+    quality: 0.9,
+  },
+  'store-banner': {
+    aspectRatio: 3, // 3:1 más horizontal
+    maxWidth: 1920,
+    maxHeight: 640,
+    maxSize: 5 * 1024 * 1024, // 5MB
+    allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+    quality: 0.85,
+  },
+  'product-image': {
+    aspectRatio: 1,
+    maxWidth: 1200,
+    maxHeight: 1200,
+    maxSize: 3 * 1024 * 1024, // 3MB
+    allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+    quality: 0.85,
+  },
+  'product-video': {
+    aspectRatio: 16 / 9,
+    maxWidth: 1920,
+    maxHeight: 1080,
+    maxSize: 50 * 1024 * 1024, // 50MB
+    allowedTypes: ['video/mp4', 'video/webm'],
+    quality: 0.8,
+  },
+}
+
+export function getMediaConfig(type: MediaType): MediaConfig {
+  return MEDIA_CONFIGS[type] || MEDIA_CONFIGS['avatar']
+}
 
 export interface UploadFileOptions {
   file: File
@@ -288,35 +361,40 @@ export interface CapturedFile {
   timestamp: number
 }
 
-export interface UseMediaUploadOptions {
+export interface DeferredFile {
+  id: string
+  file: File
+  preview: string
+  isPrimary: boolean
+}
+
+interface UseMediaUploadOptions {
   type: MediaType
   onSuccess?: (url: string, method: UploadMethod) => void
   onError?: (error: string) => void
-  validationOptions?: FileValidationOptions
+  validationOptions?: ValidationOptions
   autoRevalidate?: boolean
+  deferredMode?: boolean
+  maxFiles?: number
+  onFilesChange?: (files: DeferredFile[]) => void
+  value?: string
 }
 
 export interface ValidationOptions {
-  /** Tamaño máximo del archivo en bytes */
   maxFileSize?: number
-  /** Ancho máximo en píxeles */
   maxWidth?: number
-  /** Alto máximo en píxeles */
   maxHeight?: number
-  /** Ancho mínimo en píxeles */
   minWidth?: number
-  /** Alto mínimo en píxeles */
   minHeight?: number
-  /** Tipos MIME permitidos */
   allowedTypes?: string[]
-  /** Aspect ratio esperado (opcional) */
   aspectRatio?: number
-  /** Tolerancia para aspect ratio */
   aspectRatioTolerance?: number
+  quality?: number
+  maxSize?: number
 }
 
 export interface UseCameraCaptureProps {
-  type: 'avatar' | 'banner'
+  type: MediaType
   validationOptions: ValidationOptions
   onCapture?: (file: File) => void
 }
@@ -329,7 +407,7 @@ export interface UseFileSelectionProps {
 }
 
 export interface UseFileUploadProps {
-  type: 'avatar' | 'banner'
+  type: MediaType
   onSuccess?: (url: string, method: UploadMethod) => void
   onError?: (error: string) => void
 }
@@ -475,8 +553,6 @@ export interface UseBackgroundRemoverProps {
   onProcessed?: (processedFile: File) => void
 }
 
-
-
 // ============================================
 // Media Options (API Loading)
 // ============================================
@@ -520,7 +596,7 @@ export interface MediaSelectorContentProps {
   currentUrl: string | null
   allOptions: PresetOption[]
   mediaOptions: UseMediaOptionsReturn
-  mediaUpload: UseMediaUploadReturn  // ✅ Tipado con tu tipo existente
+  mediaUpload: UseMediaUploadReturn
   allowRemove: boolean
   isActionDisabled: boolean
   showUploadButton: boolean
@@ -530,7 +606,7 @@ export interface MediaSelectorContentProps {
 
 export interface MediaSelectorDialogsProps {
   type: MediaType
-  mediaUpload: UseMediaUploadReturn  // ✅ Tipado con tu tipo existente
+  mediaUpload: UseMediaUploadReturn
 }
 
 // ============================================
@@ -574,6 +650,8 @@ export interface RemoveMediaOptions {
   showConfirm?: boolean
   onSuccess?: () => void
   onError?: (error: Error) => void
+  storeId?: number
+  productId?: number
 }
 
 export interface UsePresetLoaderProps {
@@ -594,25 +672,32 @@ export interface UsePresetLoaderReturn {
 }
 
 export interface DeleteMediaParams {
-  type: 'avatar' | 'banner'
+  type: MediaType
+  mediaUrl?: string
   mediaId?: number
+  storeId?: number
+  productId?: number
 }
 
+
 export interface UpdateMediaPresetParams {
-  type: 'avatar' | 'banner'
+  type: MediaType
   presetUrl: string
+  storeId?: number
+  productId?: number
 }
 
 export interface DeleteMediaParams {
-  type: 'avatar' | 'banner'
+  type: MediaType
   mediaUrl?: string
   mediaId?: number
 }
 
 export interface GetUserUploadsParams {
-  type: 'avatar' | 'banner'
+  type: MediaType
+  storeId?: number
+  productId?: number
 }
-
 export interface CollapsiblePresetsProps {
   type: MediaType
   options: PresetOption[]
@@ -642,7 +727,7 @@ export interface AvatarLayoutProps {
 }
 
 export interface GalleryTabProps {
-  type: 'avatar' | 'banner'
+  type: MediaType
   previewUrl: string | null
   allOptions: PresetOption[]
   mediaOptions: UseMediaOptionsReturn
@@ -664,7 +749,7 @@ export interface ConfirmDialogProps {
 
 export interface EmptyStateProps {
   type: 'empty' | 'loading' | 'error'
-  mediaType: 'avatar' | 'banner'
+  mediaType: MediaType
   message?: string
   onAction?: () => void
   actionLabel?: string
@@ -673,7 +758,7 @@ export interface EmptyStateProps {
 
 export interface MediaGridProps {
   items: Array<PresetOption | { id?: string; url: string; name?: string }>
-  type: 'avatar' | 'banner'
+  type: MediaType
   onSelect: (url: string) => void | Promise<void>
   onDelete?: (url: string) => void | Promise<void>
   selectedUrl: string | null
@@ -696,7 +781,7 @@ export interface BannerLayoutProps {
 }
 
 export interface MyFilesTabProps {
-  type: 'avatar' | 'banner'
+  type: MediaType
   previewUrl: string | null
   mediaUpload: UseMediaUploadReturn
   isActionDisabled: boolean
@@ -730,5 +815,29 @@ export type DeleteMediaResponse = {
     id: number
     username: string
   }
+  store?: StoreUploadResponse
   deletedFromStorage?: boolean
 }
+
+
+export interface StoreLogoOption extends MediaOption {
+  storeId?: number
+  storeName?: string
+}
+
+export interface StoreBannerOption extends MediaOption {
+  storeId?: number
+  storeName?: string
+}
+
+export interface UseMediaUploadHookOptions extends Omit<UseMediaUploadOptions, 'value'> {
+  value?: DeferredFile[]; // El tipo que necesitamos para la entrada controlada
+}
+
+/* export interface RemoveMediaOptions {
+    showConfirm?: boolean
+    onSuccess?: () => void
+    onError?: (error: Error) => void
+    storeId?: number
+    productId?: number
+} */

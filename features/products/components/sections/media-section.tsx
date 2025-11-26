@@ -1,95 +1,89 @@
 "use client"
 
-import { Upload, X } from "lucide-react"
-import { useCallback, useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
+import type { DeferredFile } from "@/features/global/types/media"
+import { ProductMediaSelector } from "@/features/products/components/product-media-selector"
+import { useProductForm } from "@/features/products/contexts/product-form-context"
 import type { MediaSectionProps } from "@/features/products/types"
-import { Button } from "@/features/shadcn/components/ui/button"
-import { FileUpload, FileUploadCameraTrigger, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/features/shadcn/components/ui/file-upload"
-import { Label } from "@/features/shadcn/components/ui/label"
-import { Switch } from "@/features/shadcn/components/ui/switch"
 
-function MediaSection({ value, onChange, onFileReject }: MediaSectionProps) {
-    const { setValue } = useFormContext()
-    const [files, setFiles] = useState<File[]>(value?.files ?? [])
-    const [primaryIndex, setPrimaryIndex] = useState<number | null>(value?.primaryIndex ?? null)
-    const [error, setError] = useState("")
-    // no-op ref (reserved for future diff logic)
+export function MediaSection({ value, onChange }: MediaSectionProps) {
+  const { setValue } = useFormContext()
+  const { state, updateMedia } = useProductForm()
 
-    const handleChange = useCallback((next: File[]) => {
-        setFiles(next)
-        if (next.length > 0) setError("")
-        onChange?.({ files: next, primaryIndex })
-    }, [onChange, primaryIndex])
+  const currentFiles = state.media.deferredFiles || []
 
-    useEffect(() => {
-        setValue("images", files, { shouldDirty: true, shouldTouch: true })
-        setValue("primary-image", primaryIndex, { shouldDirty: true, shouldTouch: true })
-    }, [files, primaryIndex, setValue])
+  //TODO: Revisar el debug para ver si esta haciendo lo debido
 
-    return (
-        <div className="space-y-4">
-            <FileUpload
-                maxFiles={5}
-                maxSize={2 * 1024 * 1024}
-                className="w-full"
-                value={files}
-                onValueChange={handleChange}
-                onFileReject={(f, m) => { setError(m); onFileReject?.(f, m) }}
-                multiple={true}
-                disabled={files.length >= 5}
-                accept="image/jpg, image/png, image/jpeg"
-            >
-                <FileUploadDropzone>
-                    <div className="flex flex-col items-center gap-1 text-center">
-                        <div className="flex items-center justify-center rounded-full border p-2.5">
-                            <Upload className="size-6 text-muted-foreground" />
-                        </div>
-                        <p className="font-medium text-sm">Arrastra y suelta archivos aquí</p>
-                        <p className="text-muted-foreground text-xs">O haz click para explorar</p>
-                    </div>
-                    <FileUploadTrigger asChild>
-                        <Button variant="outline" size="sm" className="mt-2 w-fit">
-                            Explorar archivos
-                        </Button>
-                    </FileUploadTrigger>
-                    <FileUploadCameraTrigger />
-                </FileUploadDropzone>
-                <FileUploadList className="w-full">
-                    {files.map((file, index) => (
-                        <FileUploadItem key={index} value={file}>
-                            <FileUploadItemPreview />
-                            <FileUploadItemMetadata />
-                            <div className="ml-auto flex items-center gap-2">
-                                <Label htmlFor={`primary-${index}`} className="text-xs">Primaria</Label>
-                                <Switch
-                                    id={`primary-${index}`}
-                                    checked={primaryIndex === index || (files.length === 1 && index === 0)}
-                                    disabled={files.length === 1}
-                                    onCheckedChange={(checked) => {
-                                        const next = checked ? index : (files.length > 1 ? null : 0)
-                                        setPrimaryIndex(next)
-                                        onChange?.({ files, primaryIndex: next })
-                                    }}
-                                />
-                            </div>
-                            <FileUploadItemDelete asChild>
-                                <Button variant="ghost" size="icon" className="size-7">
-                                    <X />
-                                </Button>
-                            </FileUploadItemDelete>
-                        </FileUploadItem>
-                    ))}
-                </FileUploadList>
-            </FileUpload>
-            {error && (
-                <p className="text-destructive text-sm">{error}</p>
-            )}
-        </div>
-    )
+  // 🔍 DEBUG: Log para ver qué pasa
+  useEffect(() => {
+    console.log('🖼️ MediaSection mount - currentFiles:', currentFiles.length)
+    console.log('🖼️ MediaSection mount - state.media:', state.media)
+  }, [currentFiles.length, state.media])
+
+  useEffect(() => {
+    console.log('🖼️ MediaSection update - currentFiles:', currentFiles.length)
+  }, [currentFiles.length])
+
+  useEffect(() => {
+    if (value && currentFiles.length === 0) {
+      const initialFiles: DeferredFile[] = (() => {
+        // Si tiene files (archivos nuevos)
+        if ("files" in value && Array.isArray(value.files) && value.files.length > 0) {
+          return value.files.map((file, index) => ({
+            id: `file-${index}-${Date.now()}`,
+            file,
+            preview: URL.createObjectURL(file),
+            isPrimary: index === (value.primaryIndex ?? 0)
+          }))
+        }
+
+        // Si tiene urls (archivos existentes)
+        if (value.urls && Array.isArray(value.urls) && value.urls.length > 0) {
+          return value.urls.map((url, index) => ({
+            id: `url-${index}-${Date.now()}`,
+            file: new File([], `image-${index}`),
+            preview: url,
+            isPrimary: index === (value.primaryIndex ?? 0)
+          }))
+        }
+
+        return []
+      })()
+
+      if (initialFiles.length > 0) {
+        updateMedia({ deferredFiles: initialFiles })
+      }
+    }
+  }, [ currentFiles.length, value, updateMedia ]) // Solo al montar
+
+  return (
+    <ProductMediaSelector
+      value={currentFiles}
+      onChange={(deferredFiles) => {
+        const files = deferredFiles.map(df => df.file)
+        const primaryIndex = deferredFiles.findIndex(df => df.isPrimary)
+
+        // ✅ Actualizar el contexto (esto persiste entre navegaciones)
+        updateMedia({
+          files,
+          urls: deferredFiles.map(df => df.preview),
+          primaryIndex: primaryIndex >= 0 ? primaryIndex : null,
+          deferredFiles // ✅ Guardar los DeferredFile completos
+        })
+
+        // ✅ Notificar al componente padre (si existe)
+        onChange?.({
+          urls: deferredFiles.map(df => df.preview),
+          primaryIndex: primaryIndex >= 0 ? primaryIndex : null
+        })
+
+        // ✅ Sync con React Hook Form
+        setValue("images", files, { shouldDirty: true })
+        setValue("primary-image", primaryIndex >= 0 ? primaryIndex : null, { shouldDirty: true })
+      }}
+      maxFiles={5}
+    />
+  )
 }
-
-export { MediaSection }
-
-

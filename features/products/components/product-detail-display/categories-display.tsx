@@ -1,6 +1,6 @@
 "use client"
 
-import { Tags, EditIcon, X } from "lucide-react"
+import { Tags, EditIcon, X, Check } from "lucide-react"
 import { useState } from "react"
 
 import type { CategoriesDisplayProps } from "@/features/products/types"
@@ -8,7 +8,6 @@ import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-
 
 function CategoriesDisplay({ product }: CategoriesDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
@@ -40,7 +39,7 @@ function CategoriesDisplay({ product }: CategoriesDisplayProps) {
                     />
                 </TooltipTrigger>
                 <TooltipContent>
-                    Editar categorías
+                    {isEditing ? "Cancelar edición" : "Editar categorías"}
                 </TooltipContent>
             </Tooltip>
         )
@@ -56,14 +55,21 @@ function CategoriesDisplay({ product }: CategoriesDisplayProps) {
                     </span>
                 </CardTitle>
                 <CardAction>
+                    {/* ✅ Botón de guardar (opcional: mejora visual) */}
                     {isEditing && (
-                        <button
-                            type="button"
-                            onClick={handleCloseEdit}
-                            className="text-sm bg-primary text-primary-foreground hover:bg-primary/90 px-3 py-1 rounded-md"
-                        >
-                            Guardar
-                        </button>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <IconButton
+                                    icon={Check}
+                                    onClick={handleCloseEdit}
+                                    color={[99, 102, 241]} // Color primario
+                                    className="opacity-0 group-hover/categories-display:opacity-100 transition-opacity duration-300"
+                                />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                Guardar cambios
+                            </TooltipContent>
+                        </Tooltip>
                     )}
                     <ToggleEditButton />
                 </CardAction>
@@ -93,6 +99,7 @@ function CategoriesDisplay({ product }: CategoriesDisplayProps) {
                                 <p className="text-sm text-muted-foreground">
                                     Seleccioná las categorías para este producto
                                 </p>
+                                {/* ✅ Aquí iría tu selector de categorías */}
                             </div>
                         </div>
                     )}

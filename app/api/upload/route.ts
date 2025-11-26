@@ -18,10 +18,8 @@ import {
 import { handleProductUploadAction } from '@/features/products/actions/handle-product-upload.action'
 import { handleStoreUploadAction } from '@/features/stores/actions/handle-store-upload.action'
 
-
 export async function POST(request: NextRequest) {
   try {
-
     const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
 
     if (!currentUserResponse || currentUserResponse.hasError) {
@@ -31,12 +29,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    /*    const user = await getUserId({
-         ...currentUserResponse,
-         error: currentUserResponse.message
-       }) */
+    const user = await getUserId({
+      payload: { id: currentUserResponse.payload?.id },
+      error: currentUserResponse.message
+    })
 
-    const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })
     const contentType = request.headers.get('content-type')
 
     if (contentType?.includes('application/json')) {
@@ -78,10 +75,18 @@ export async function POST(request: NextRequest) {
     const productId = formData.get('productId')
       ? parseInt(formData.get('productId') as string)
       : null
+    const variantId = formData.get('variantId')
+      ? parseInt(formData.get('variantId') as string)
+      : undefined
     const storeId = formData.get('storeId')
       ? parseInt(formData.get('storeId') as string)
       : null
+    const isPrimary = formData.get('isPrimary') === 'true'
+    const sortOrder = formData.get('sortOrder')
+      ? parseInt(formData.get('sortOrder') as string)
+      : 0
 
+    console.log('📤 Upload request:', { type, productId, isPrimary, sortOrder, fileName: file?.name })
 
     try {
       validateFile(file)
@@ -92,6 +97,7 @@ export async function POST(request: NextRequest) {
       const uploadData: FileUploadData = {
         file,
         type,
+        variantId,
         productId,
         storeId
       }
@@ -102,7 +108,15 @@ export async function POST(request: NextRequest) {
       if (type === UPLOAD_TYPES.AVATAR || type === UPLOAD_TYPES.BANNER) {
         actionResult = await handleUserUploadAction(uploadData, user.id, user.username, storage)
       } else if (type === UPLOAD_TYPES.PRODUCT_IMAGE || type === UPLOAD_TYPES.PRODUCT_VIDEO) {
-        actionResult = await handleProductUploadAction(uploadData, user.id, user.username, storage)
+        // ✅ Pasar isPrimary y sortOrder
+        actionResult = await handleProductUploadAction(
+          uploadData,
+          user.id,
+          user.username,
+          storage,
+          isPrimary,
+          sortOrder
+        )
       } else if (type === UPLOAD_TYPES.STORE_LOGO || type === UPLOAD_TYPES.STORE_BANNER) {
         actionResult = await handleStoreUploadAction(uploadData, user.id, user.username, storage)
       } else {
@@ -110,12 +124,14 @@ export async function POST(request: NextRequest) {
       }
 
       if (actionResult.hasError) {
+        console.error('❌ Upload error:', actionResult.message) // ✅ Debug
         return NextResponse.json(
           { error: actionResult.message },
           { status: 500 }
         )
       }
 
+      console.log('✅ Upload success:', actionResult.payload) // ✅ Debug
       return NextResponse.json(actionResult.payload)
 
     } catch (error) {
@@ -129,7 +145,7 @@ export async function POST(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error('Error crítico en API:', error)
+    console.error('💥 Error crítico en API:', error)
     return NextResponse.json(
       {
         error: 'Error interno del servidor',

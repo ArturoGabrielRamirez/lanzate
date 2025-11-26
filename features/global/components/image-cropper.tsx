@@ -362,6 +362,7 @@ export function ImageCropper({
                       height: 'auto',
                     }}
                     onLoad={onImageLoad}
+                    fill
                   />
                 </ReactCrop>
               </div>

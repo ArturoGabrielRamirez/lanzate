@@ -7,27 +7,22 @@ export async function getStorageAvatarsData(
     userId: number
 ) {
     const { data: files } = await supabase.storage
-        .from('user-uploads')
-        .list('avatars', {
+        .from('avatars')
+        .list('', {
             limit: 50,
             sortBy: { column: 'updated_at', order: 'desc' }
         })
 
     if (!files?.length) return []
 
-    // Filtro estricto: solo archivos en formato avatar-<userId>-<timestamp>
     const regex = new RegExp(`^avatar-${userId}-\\d+`, 'i')
     const userFiles = files.filter(file => regex.test(file.name))
-
-    console.log(
-        `Usuario ${userId} tiene ${userFiles.length} avatares personalizados de ${files.length} archivos totales`
-    )
 
     const avatars = []
     for (const file of userFiles) {
         const { data: publicUrlData } = supabase.storage
-            .from('user-uploads')
-            .getPublicUrl(`avatars/${file.name}`)
+            .from('avatars')
+            .getPublicUrl(file.name)
 
         if (publicUrlData?.publicUrl) {
             avatars.push({

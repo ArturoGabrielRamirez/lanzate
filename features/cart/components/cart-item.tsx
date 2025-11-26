@@ -29,7 +29,7 @@ function CartItem({ item }: CartItemProps) {
                         className="rounded-md"
                     />
                 ) : (
-                    <Image src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md max-w-20" width={48} height={48} />
+                    <Image src="https://api.dicebear.com/9.x/icons/svg?seed=boxes" alt="Product Image" className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 scale-y-95 scale-x-93 rounded-md max-w-20" width={48} height={48} fill />
                 )}
             </div>
             <div className="flex justify-between items-start">

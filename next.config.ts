@@ -3,10 +3,9 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 import type { NextConfig } from "next";
 
-
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["lanzate.app", "lodemauri.lanzate.app", "www.lanzate.app"],
+  allowedDevOrigins: ["lanzate.app", "lodemauri.lanzate.app", "www.lanzate.app", "lanzate.lanzate.app"],
   experimental: {
     serverActions: {
       bodySizeLimit: '3mb',
@@ -33,6 +32,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
         pathname: "/**",
+      },
+      // 👇👇 AQUÍ ESTÁ LO NUEVO 👇👇
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
       }
     ]
   },

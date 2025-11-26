@@ -64,6 +64,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                     src={product.image}
                                     alt={product.name}
                                     className="w-full h-full object-cover rounded-lg"
+                                    fill
                                 />
                             ) : (
                                 <div className="text-gray-400 flex flex-col items-center justify-center gap-2">
