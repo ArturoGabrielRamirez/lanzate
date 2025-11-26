@@ -7,6 +7,7 @@ import { useFormContext, Controller } from "react-hook-form"
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/features/shadcn/components/field"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText } from "@/features/shadcn/components/input-group"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
+import { cn } from "@/lib/utils"
 
 function InputField({
     name,
@@ -22,9 +23,11 @@ function InputField({
     isRequired = false,
     defaultValue,
     disabled = false,
+    readOnly = false,
     inputMode = "text",
     hideLabel = false,
     onChange,
+    className,
 }: {
     name: string,
     label: string,
@@ -39,9 +42,11 @@ function InputField({
     defaultValue?: string,
     isRequired?: boolean,
     disabled?: boolean,
+    readOnly?: boolean,
     inputMode?: "text" | "email" | "search" | "tel" | "url" | "none" | "decimal" | "numeric" | undefined
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     hideLabel?: boolean
+    className?: string
 }) {
 
     const { control } = useFormContext();
@@ -71,7 +76,7 @@ function InputField({
                                 {label}{isRequired && <span className="text-red-500">*</span>}
                             </FieldLabel>
                         )}
-                        <InputGroup className="bg-background">
+                        <InputGroup className={cn("bg-background", className)}>
                             {startIcon && (
                                 <InputGroupAddon>
                                     {startIcon}
@@ -92,11 +97,13 @@ function InputField({
                                 onBlur={field.onBlur}
                                 ref={field.ref}
                                 type={showPassword ? "text" : type}
-                                className=""
+                                className={cn(readOnly && "cursor-pointer focus-visible:ring-0")}
                                 defaultValue={defaultValue}
                                 disabled={disabled}
+                                readOnly={readOnly}
                                 inputMode={inputMode}
                                 onChange={handleChange}
+                                tabIndex={readOnly ? -1 : 0}
                             />
                             {endText && (
                                 <InputGroupText className="pr-2">

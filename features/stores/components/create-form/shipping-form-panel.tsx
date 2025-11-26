@@ -376,6 +376,7 @@ export function ShippingFormPanel() {
                                                                 placeholder={t("estimated-time-placeholder")}
                                                                 startIcon={<Clock className="size-4" />}
                                                                 onChange={(e) => handleMethodChange(index, 'estimatedTime', e.target.value)}
+                                                                tooltip={"Tiempo estimado de entrega"}
                                                             />
                                                         </div>
                                                     </div>
