@@ -416,7 +416,7 @@ export type CreateStoreFormValues = {
     }
     shipping_info: {
         offers_delivery: boolean
-        methods?: { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
+        methods?: { providers: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
     }
     payment_info: {
         payment_methods: {
