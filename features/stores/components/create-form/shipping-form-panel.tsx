@@ -345,6 +345,7 @@ export function ShippingFormPanel() {
                                                             disabled={isConfirmed && !isCurrentAdding}
                                                             onChange={(e) => handleMethodChange(index, 'deliveryPrice', e.target.value)}
                                                             startIcon={<DollarSign />}
+                                                            tooltip={"Precio de envío"}
                                                         />
                                                         <InputField
                                                             name={`shipping_info.methods.${index}.minPurchase`}
@@ -355,6 +356,7 @@ export function ShippingFormPanel() {
                                                             disabled={isConfirmed && !isCurrentAdding}
                                                             onChange={(e) => handleMethodChange(index, 'minPurchase', e.target.value)}
                                                             startIcon={<DollarSign />}
+                                                            tooltip={"Precio mínimo de compra para envío gratis"}
                                                         />
                                                     </div>
 
@@ -368,6 +370,7 @@ export function ShippingFormPanel() {
                                                             disabled={isConfirmed && !isCurrentAdding}
                                                             onChange={(e) => handleMethodChange(index, 'freeShippingMin', e.target.value)}
                                                             startIcon={<DollarSign />}
+                                                            tooltip={"Precio mínimo de compra para envío gratis"}
                                                         />
                                                         <div>
                                                             <p className="text-sm font-medium mb-1.5 flex items-center gap-2">

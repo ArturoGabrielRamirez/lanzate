@@ -61,6 +61,7 @@ export function ContactEmailsPanel() {
         const updatedEmails = currentEmails.filter((_: { email: string; is_primary: boolean }, i: number) => i !== index)
 
         setCtxValues({
+            ...values,
             contact_info: {
                 ...values.contact_info,
                 emails: updatedEmails
@@ -91,6 +92,7 @@ export function ContactEmailsPanel() {
         setValue("contact_info.emails", updatedEmails)
 
         setCtxValues({
+            ...values,
             contact_info: {
                 ...values.contact_info,
                 emails: updatedEmails
@@ -107,6 +109,7 @@ export function ContactEmailsPanel() {
         })
 
         setCtxValues({
+            ...values,
             contact_info: {
                 ...values.contact_info,
                 emails: updatedEmails
@@ -138,6 +141,7 @@ export function ContactEmailsPanel() {
                         hideLabel
                         disabled={confirmedIds.has(field.id) || (!!emails?.[index]?.email && emails?.[index]?.email.length > 0 && !isAddingEmail)}
                         onChange={(e) => handleEmailChange(index, e.target.value)}
+                        tooltip={"Un email de contacto de la tienda"}
                         endIcon={
                             <div className="flex">
                                 <IconButton

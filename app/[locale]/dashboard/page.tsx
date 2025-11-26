@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
 
-import { WelcomeTutorial, WelcomeWidget, DashboardError, ActivityFeed, ActivityFeedSkeleton, HelpCard, StoreListContainer, StoreListSkeleton, TestStoreCreator } from "@/features/dashboard/components"
+import { WelcomeTutorial, WelcomeWidget, DashboardError, ActivityFeed, ActivityFeedSkeleton, HelpCard, StoreListContainer, StoreListSkeleton } from "@/features/dashboard/components"
 import { loadFeedParams } from "@/features/dashboard/utils"
 import { getUserInfo } from "@/features/global/actions"
 import { GlobalSearch } from "@/features/global-search/components"
@@ -43,7 +43,6 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                 <Suspense fallback={<StoreListSkeleton />}>
                     <StoreListContainer />
                 </Suspense>
-                <TestStoreCreator userId={user.id} />
                 <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
                     <ActivityFeed userId={user.id} type={type} page={page || 1} />
                 </Suspense>
@@ -63,7 +62,6 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
                     <WelcomeTutorial userId={user.id} />
                 </div>
                 <div className="flex flex-col gap-4">
-                    <TestStoreCreator userId={user.id} />
                     <Suspense fallback={<ActivityFeedSkeleton />} key={type}>
                         <ActivityFeed userId={user.id} type={type} page={page || 1} />
                     </Suspense>

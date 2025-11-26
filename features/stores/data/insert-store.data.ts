@@ -9,6 +9,7 @@ import { prisma } from "@/utils/prisma"
 
 export async function insertStoreData(payload: ProcessedCreateStoreData, userId: number): Promise<{ message: string; payload: Store | null; hasError: boolean }> {
 
+    //TODO : si la tienda es fisica o no ya no se guarda, hay que revisar eso. Tambien que se guarde como "medio de envio" si es fisica o no, algo como "pickup"
     // 1. Generate Slug
     const slug = randomstring.generate({ length: 8, charset: 'alphabetic', capitalization: 'lowercase' })
 

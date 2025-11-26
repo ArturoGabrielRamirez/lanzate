@@ -15,42 +15,54 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 import { CreateStoreFormValues } from "@/features/stores/types"
 
 const paymentTypes = [
-    { label: (
-        <span className="flex items-center gap-2">
-            <ArrowLeftRight />
-            <span>Transferencia</span>
-        </span>
-    ), value: "transferencia" },
-    { label: (
-        <span className="flex items-center gap-2">
-            <Banknote />
-            <span>Efectivo</span>
-        </span>
-    ), value: "efectivo" },
-    { label: (
-        <span className="flex items-center gap-2">
-            <Wallet2 />
-            <span>Billetera Virtual</span>
-        </span>
-    ), value: "billetera_virtual" },
-    { label: (
-        <span className="flex items-center gap-2">
-            <CreditCard />
-            <span>Crédito</span>
-        </span>
-    ), value: "credito" },
-    { label: (
-        <span className="flex items-center gap-2">
-            <CreditCard />
-            <span>Débito</span>
-        </span>
-    ), value: "debito" },
-    { label: (
-        <span className="flex items-center gap-2">
-            <CircleQuestionMark />
-            <span>Otro</span>
-        </span>
-    ), value: "otro" },
+    {
+        label: (
+            <span className="flex items-center gap-2">
+                <ArrowLeftRight />
+                <span>Transferencia</span>
+            </span>
+        ), value: "transferencia"
+    },
+    {
+        label: (
+            <span className="flex items-center gap-2">
+                <Banknote />
+                <span>Efectivo</span>
+            </span>
+        ), value: "efectivo"
+    },
+    {
+        label: (
+            <span className="flex items-center gap-2">
+                <Wallet2 />
+                <span>Billetera Virtual</span>
+            </span>
+        ), value: "billetera_virtual"
+    },
+    {
+        label: (
+            <span className="flex items-center gap-2">
+                <CreditCard />
+                <span>Crédito</span>
+            </span>
+        ), value: "credito"
+    },
+    {
+        label: (
+            <span className="flex items-center gap-2">
+                <CreditCard />
+                <span>Débito</span>
+            </span>
+        ), value: "debito"
+    },
+    {
+        label: (
+            <span className="flex items-center gap-2">
+                <CircleQuestionMark />
+                <span>Otro</span>
+            </span>
+        ), value: "otro"
+    },
 ]
 
 export function PaymentMethodsFormPanel() {
@@ -73,7 +85,6 @@ export function PaymentMethodsFormPanel() {
         if (payment_info?.payment_methods) {
             setValue("payment_info.payment_methods", payment_info.payment_methods)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -96,8 +107,7 @@ export function PaymentMethodsFormPanel() {
                 setConfirmedIds(newConfirmed)
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fields.length])
+    }, [fields.length, confirmedIds.size, fields, getValues])
 
     const handleAddMethod = () => {
         append({
@@ -117,9 +127,13 @@ export function PaymentMethodsFormPanel() {
         setIsAddingMethod(false)
 
         const currentMethods = getValues("payment_info.payment_methods") || []
-        const updatedMethods = currentMethods.filter((_, i) => i !== index)
+        const updatedMethods = currentMethods.filter((_, i) => i !== index).map((method) => ({
+            ...method,
+            type: method.type as PaymentMethodData["data"]["type"]
+        }))
 
         setCtxValues({
+            ...values,
             payment_info: {
                 payment_methods: updatedMethods
             }
@@ -140,25 +154,32 @@ export function PaymentMethodsFormPanel() {
             setIsAddingMethod(false)
 
             const currentMethods = getValues("payment_info.payment_methods") || []
+
+            const updatedMethods = currentMethods.map((method) => ({
+                ...method,
+                type: method.type as PaymentMethodData["data"]["type"]
+            }))
+
             setCtxValues({
+                ...values,
                 payment_info: {
-                    payment_methods: currentMethods
+                    payment_methods: updatedMethods
                 }
             })
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleMethodChange = (index: number, field: string, value: any) => {
+    const handleMethodChange = (index: number, field: string, value: string | number) => {
         const currentMethods = getValues("payment_info.payment_methods") || []
         const updatedMethods = currentMethods.map((item, i) => {
             if (i === index) {
-                return { ...item, [field]: value }
+                return { ...item, [field]: value, type: item.type as PaymentMethodData["data"]["type"] }
             }
             return item
         })
 
         setCtxValues({
+            ...values,
             payment_info: {
                 payment_methods: updatedMethods
             }

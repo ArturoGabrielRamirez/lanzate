@@ -1,4 +1,4 @@
-import { Calendar, Check, Plus, Trash2, X } from "lucide-react"
+import { Calendar, Check, ClockIcon, Plus, Trash2, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useFieldArray, useFormContext } from "react-hook-form"
@@ -137,6 +137,9 @@ function AttentionDateEditor({
                                         label={t("start-time")}
                                         type="time"
                                         placeholder="09:00"
+                                        inputMode="numeric"
+                                        tooltip={"Hora de apertura del día"}
+                                        startIcon={<ClockIcon />}
                                         hideLabel
                                         onChange={handleStartTimeChange}
                                     />
@@ -148,6 +151,9 @@ function AttentionDateEditor({
                                         label={t("end-time")}
                                         type="time"
                                         placeholder="17:00"
+                                        inputMode="numeric"
+                                        tooltip={"Hora de cierre del día"}
+                                        startIcon={<ClockIcon />}
                                         hideLabel
                                         onChange={handleEndTimeChange}
                                     />
