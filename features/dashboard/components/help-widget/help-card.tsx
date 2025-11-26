@@ -7,11 +7,11 @@ import { HelpDialogButton } from "@/features/dashboard/components"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { SectionContainer } from "@/features/stores/components"
 
-function HelpCard() {
+function HelpCard({ className }: { className?: string }) {
     const t = useTranslations("dashboard.help")
 
     return (
-        <SectionContainer title={t("title")}>
+        <SectionContainer title={t("title")} className={className}>
             <Card className="group/help !gap-2 opacity-50 hover:opacity-100 transition-all">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
