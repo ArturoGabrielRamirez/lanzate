@@ -1,0 +1,2 @@
+- Le agregue @default(now()) a updated_at en user
+- 
