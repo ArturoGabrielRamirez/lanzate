@@ -1162,6 +1162,7 @@ enum PaymentMethod {
   MERCADO_PAGO
   PAYPAL
   CRYPTO
+  VIRTUAL_WALLET
 }
 
 enum HeaderPosition {

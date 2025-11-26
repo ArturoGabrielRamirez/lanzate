@@ -2,11 +2,18 @@ import { ProcessedOpeningHour, ProcessedShippingMethod, ProcessedPaymentMethod }
 
 export const mapPaymentMethod = (label: string): string | null => {
   switch (label) {
-    case 'Efectivo': return 'CASH'
-    case 'Credito': return 'CREDIT_CARD'
-    case 'Debito': return 'DEBIT_CARD'
-    case 'Mercado Pago': return 'MERCADO_PAGO'
-    case 'Transferencia': return 'TRANSFER'
+    case 'Efectivo':
+    case 'efectivo': return 'CASH'
+    case 'Credito':
+    case 'credito': return 'CREDIT_CARD'
+    case 'Debito':
+    case 'debito': return 'DEBIT_CARD'
+    case 'Mercado Pago':
+    case 'mercado_pago': return 'MERCADO_PAGO'
+    case 'Transferencia':
+    case 'transferencia': return 'TRANSFER'
+    case 'Billetera Virtual':
+    case 'billetera_virtual': return 'VIRTUAL_WALLET'
     default: return null
   }
 }

@@ -7,3 +7,4 @@ export * from "@/features/dashboard/components/help-widget"
 export * from "@/features/dashboard/components/welcome-widget"
 
 export * from "@/features/dashboard/components/page-header"
+export * from "@/features/dashboard/components/test-store-creator"

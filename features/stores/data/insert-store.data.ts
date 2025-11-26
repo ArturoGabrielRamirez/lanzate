@@ -1,9 +1,10 @@
 "use server"
 
-import { PaymentMethod, Prisma, Store } from '@prisma/client'
+import { Prisma, Store } from '@prisma/client'
 import randomstring from "randomstring"
 
 import { ProcessedCreateStoreData } from '@/features/stores/types'
+import { mapPaymentMethodType } from '@/features/stores/utils'
 import { prisma } from "@/utils/prisma"
 
 export async function insertStoreData(payload: ProcessedCreateStoreData, userId: number): Promise<{ message: string; payload: Store | null; hasError: boolean }> {
@@ -129,7 +130,7 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
                 payment_configs: payload.payment_info?.payment_methods && payload.payment_info.payment_methods.length > 0
                     ? {
                         create: payload.payment_info.payment_methods.map((pm) => ({
-                            type: pm.type as PaymentMethod,
+                            type: mapPaymentMethodType(pm.type),
                             name: pm.name,
                             commission_percent: pm.commission_percent || 0,
                             commission_amount: pm.commission_amount || 0,
