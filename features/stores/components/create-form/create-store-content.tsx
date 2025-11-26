@@ -1,7 +1,6 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-/* import { useEffect } from "react" */
 import { toast } from "sonner"
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
@@ -9,31 +8,21 @@ import { createStoreAction } from "@/features/stores/actions"
 import { CreateStoreForm } from "@/features/stores/components/create-form/create-store-form"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormType } from "@/features/stores/schemas"
-/* 
-import { processOpeningHours, processPaymentMethods, processShippingMethods } from "@/features/stores/utils" */
 
 export function CreateStoreContent({ userId }: { userId: number }) {
 
-    const { step, setStep/* , closeDialog  */ } = useCreateStoreContext()
+    const { step, setStep, closeDialog } = useCreateStoreContext()
     const t = useTranslations("store.create-form")
 
-    /*     useEffect(() => {
-            if (step === 7) {
-                const timeout = setTimeout(() => {
-                    setStep(1)
-                    closeDialog()
-                }, 2000) // 2 seconds timeout
-    
-                return () => clearTimeout(timeout)
-            }
-        }, [step, setStep, closeDialog]) */
-
     const handleCreateStore = async (data: CreateStoreFormType) => {
-        
+
+        setStep(7)
+
         const { hasError, message, payload } = await createStoreAction(data, userId)
 
         if (hasError) {
             toast.error(message)
+            setStep(6)
             return {
                 success: false,
                 error: true,
@@ -42,7 +31,13 @@ export function CreateStoreContent({ userId }: { userId: number }) {
             }
         }
 
-        setStep(7)
+        setStep(8)
+        toast.success(t("messages.store-created-success"))
+
+        setTimeout(() => {
+            setStep(1)
+            closeDialog()
+        }, 2000)
 
         return {
             success: true,
