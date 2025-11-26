@@ -17,6 +17,7 @@ export function CompareView({ originalUrl, editor }: CompareViewProps) {
                                 src={originalUrl}
                                 alt="Original"
                                 className="w-full h-full object-contain"
+                                fill
                             />
                         )}
                     </div>
@@ -51,6 +52,7 @@ export function CompareView({ originalUrl, editor }: CompareViewProps) {
                                     alt="Procesada"
                                     className="relative w-full h-full object-contain"
                                     style={{ opacity: editor.opacity / 100 }}
+                                    fill
                                 />
                             )
                         )}

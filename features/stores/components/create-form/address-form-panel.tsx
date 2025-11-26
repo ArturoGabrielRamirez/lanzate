@@ -1,9 +1,9 @@
 import { Globe, MapPin, Store } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { useTranslations } from "next-intl"
 
 
 import { InputField } from "@/features/global/components/form/input-field"

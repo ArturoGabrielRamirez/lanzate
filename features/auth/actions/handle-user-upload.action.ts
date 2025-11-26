@@ -20,7 +20,7 @@ export async function handleUserUploadAction(
             : currentUser?.banner
         const publicUrl = await storage.uploadFile(file, type, userId)
         if (currentUrl && currentUrl.includes('.supabase.')) {
-            await storage.deleteUserFile(currentUrl)
+            await storage.deleteFile(currentUrl, type === UPLOAD_TYPES.AVATAR ? 'avatars' : 'banners')
         }
         const updatedUser = type === UPLOAD_TYPES.BANNER
             ? await updateUserBannerData(userId, publicUrl)

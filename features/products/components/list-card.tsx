@@ -22,6 +22,7 @@ function ListCard({ product, href }: ListCardProps) {
                             src="https://api.dicebear.com/9.x/icons/svg?seed=boxes"
                             alt="Product Image"
                             className="rounded-md w-full h-full object-cover"
+                            fill
                         />
                     )}
                 </div>
@@ -31,7 +32,7 @@ function ListCard({ product, href }: ListCardProps) {
                             {product.name}
                         </CardTitle>
                         <CardDescription className="text-xs text-muted-foreground line-clamp-2 leading-tight">
-                            {product.description || "No description available for this product"}
+                            {product.description || "No hay descripción disponible para este producto"}
                         </CardDescription>
                     </div>
                 </div>

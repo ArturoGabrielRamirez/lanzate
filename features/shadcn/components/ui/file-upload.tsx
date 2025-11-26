@@ -1166,7 +1166,7 @@ function FileUploadItemPreview(props: FileUploadItemPreviewProps) {
 
         return (
           <div className="relative">
-            <Image src={url} alt={file.name} className="object-cover absolute" />
+            <Image src={url} alt={file.name} className="object-cover absolute" fill />
           </div>
         );
       }

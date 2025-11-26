@@ -33,32 +33,29 @@ import {
 } from "@/features/shadcn/components/ui/table"
 import { cn } from "@/lib/utils"
 
-
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     filterKey: string
     topActions?: React.ReactNode | ((table: RowModel<TData>) => React.ReactNode)
+    headerActions?: React.ReactNode // ✅ NUEVO: Para botón de crear
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     filterKey,
-    topActions
+    topActions,
+    headerActions // ✅ NUEVO
 }: DataTableProps<TData, TValue>) {
 
     const [rowSelection, setRowSelection] = useState({})
-
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-
     const [sorting, setSorting] = useState<SortingState>([])
-
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: 10,
     })
-
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
     const table = useReactTable({
@@ -99,17 +96,15 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="flex flex-col grow gap-4">
+            {/* ✅ Header con filtro y acciones */}
             <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-1">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <IconButton
                                 icon={Filter}
                                 size="md"
                             />
-                            {/* <Button variant="outline" size="lg">
-                                <Filter />
-                            </Button> */}
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             {table
@@ -143,15 +138,20 @@ export function DataTable<TData, TValue>({
                         startContent={<Search />}
                     />
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
-                        <>
-                            <div className={cn("text-muted-foreground flex-1 text-sm", table.getFilteredSelectedRowModel().rows.length === 0 && "text-muted-foreground/50")}>
-                                {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} selected.
-                            </div>
-                        </>
+                        <div className={cn("text-muted-foreground flex-1 text-sm", table.getFilteredSelectedRowModel().rows.length === 0 && "text-muted-foreground/50")}>
+                            {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} selected.
+                        </div>
                     )}
                 </div>
-                {typeof topActions === "function" ? topActions(table.getFilteredSelectedRowModel()) : topActions}
+
+                {/* ✅ Acciones del header (botón crear + topActions) */}
+                <div className="flex items-center gap-2">
+                    {headerActions}
+                    {typeof topActions === "function" ? topActions(table.getFilteredSelectedRowModel()) : topActions}
+                </div>
             </div>
+
+            {/* Tabla */}
             <div className="rounded-md border bg-card grow">
                 <Table>
                     <TableHeader>
@@ -189,14 +189,16 @@ export function DataTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    No hay resultados.
                                 </TableCell>
                             </TableRow>
                         )}
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center  justify-center gap-2 mt-auto">
+
+            {/* Paginación */}
+            <div className="flex items-center justify-center gap-2 mt-auto">
                 <Button variant="outline" onClick={handlePreviousPage} disabled={!table.getCanPreviousPage()}>
                     <ChevronLeft />
                 </Button>

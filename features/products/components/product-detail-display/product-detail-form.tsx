@@ -23,7 +23,7 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                         <label className="text-sm font-medium">Imagen principal</label>
                         <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-lg border bg-secondary">
                             {product.primary_media?.url ? (
-                                <Image src={product.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
+                                <Image src={product.primary_media.url} alt="Primary image" className="object-cover h-full w-full" fill />
                             ) : (
                                 <div className="flex items-center justify-center h-full text-sm text-muted-foreground">Sin imagen principal</div>
                             )}
@@ -35,7 +35,7 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                             <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                                 {product.media.map((m) => (
                                     <div key={m.id} className="relative aspect-square overflow-hidden rounded-md bg-secondary border">
-                                        <Image src={m.url} alt="Product media" className="object-cover h-full w-full" />
+                                        <Image src={m.url} alt="Product media" className="object-cover h-full w-full" fill />
                                     </div>
                                 ))}
                             </div>
@@ -98,7 +98,7 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                                 return (
                                     <Link key={v.id} href={`/stores/${slug}/products/${product.id}/${v.id}`} className="rounded-md relative border p-3 flex items-center gap-3 hover:bg-muted">
                                         {v.primary_media?.url ? (
-                                            <Image src={v.primary_media.url} alt={label} className="rounded object-cover" />
+                                            <Image src={v.primary_media.url} alt={label} className="rounded object-cover" fill />
                                         ) : (
                                             <div className="h-12 w-12 rounded bg-secondary" />
                                         )}

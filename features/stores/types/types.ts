@@ -506,6 +506,7 @@ export type StoreBannerEditorWrapperProps = {
 export type StoreBannerEditorProps = {
     currentBanner: string | null
     storeName: string
+    storeId: number
     onBannerUpdate: (newBannerUrl: string | null) => void
 }
 
@@ -582,6 +583,7 @@ export type StoreLogoOption = {
 export type StoreLogoEditorProps = {
     currentLogo: string | null
     storeName: string
+    storeId: number
     onLogoUpdate: (newLogoUrl: string | null) => void
 }
 

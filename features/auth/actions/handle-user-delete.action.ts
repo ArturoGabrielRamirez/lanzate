@@ -22,7 +22,7 @@ export async function handleUserDeleteAction(
         // Eliminar archivo físico del storage si existe
         if (currentUrl && currentUrl.includes('.supabase.')) {
             console.log(`Eliminando archivo físico de ${type}:`, currentUrl)
-            await storage.deleteUserFile(currentUrl)
+            await storage.deleteFile(currentUrl, type)
             console.log(`Archivo físico eliminado correctamente`)
         }
 

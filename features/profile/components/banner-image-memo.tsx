@@ -22,14 +22,13 @@ const BannerImage = memo(({
         <Image
             src={bannerUrl}
             alt="Banner del perfil"
-            className="w-full h-full object-cover transition-all duration-300"
-            style={{
-                backgroundPosition: 'center center',
-                backgroundSize: 'cover'
-            }}
+            fill
+            sizes="100vw"
+            className="object-cover transition-all duration-300 size-8"
             onLoad={onLoad}
             onError={onError}
-            loading="eager"
+            priority
+            unoptimized={true}
         />
     )
 })

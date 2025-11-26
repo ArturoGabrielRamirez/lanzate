@@ -69,7 +69,7 @@ function WelcomeTutorial({ userId }: { userId: number }) {
 
                     <div className="text-center md:text-left">
                         <div className="relative w-full aspect-video my-8">
-                            <Image src={images[currentStep - 1]} alt={t("alt-image")} fill objectFit="cover" />
+                            <Image src={images[currentStep - 1]} alt={t("alt-image")} fill objectFit="cover" unoptimized={true} />
                         </div>
                         <p className="text-3xl font-bold mb-6">
                             {currentTexts.title}

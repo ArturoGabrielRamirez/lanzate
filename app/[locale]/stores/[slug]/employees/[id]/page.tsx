@@ -68,12 +68,14 @@ async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
                                 src={employee.user.avatar}
                                 alt={`${employee.user.first_name || 'Employee'} avatar`}
                                 className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 rounded-md"
+                                fill
                             />
                         ) : (
                             <Image
                                 src={`https://api.dicebear.com/9.x/initials/svg?seed=${employee.user?.first_name || 'Employee'} ${employee.user?.last_name || ''}`}
                                 alt="Employee Avatar"
                                 className="object-cover h-full w-full bg-center group-hover:scale-105 transition-all duration-300 rounded-md"
+                                fill
                             />
                         )}
                     </div>

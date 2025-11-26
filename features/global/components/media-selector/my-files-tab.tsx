@@ -53,6 +53,7 @@ export function MyFilesTab({
                             src={url}
                             alt="Upload"
                             className="w-full h-full object-cover"
+                            fill
                         />
                     </button>
 

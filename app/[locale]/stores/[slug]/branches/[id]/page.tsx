@@ -63,6 +63,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                             className="object-cover w-full h-full transition-all duration-300 bg-center rounded-md group-hover:scale-105"
                             height={24}
                             width={24}
+                            fill
                         />
                     </div>
 

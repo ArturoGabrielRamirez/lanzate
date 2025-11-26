@@ -6,10 +6,10 @@ import { toast } from 'sonner'
 import { MediaSelectorTrigger, MediaSelectorContent, MediaSelectorDialogs } from '@/features/global/components/media-selector'
 import { useMediaOptions } from '@/features/global/hooks/media/use-media-options'
 import { useMediaUpload } from '@/features/global/hooks/media/use-media-upload'
-import { MediaSelectorProps, PresetOption } from '@/features/global/types/media'
+import { MediaSelectorProps, PresetOption, UPLOAD_TYPES } from '@/features/global/types/media'
+import { getMediaConfig } from '@/features/global/types/media'
 import { removeMedia } from '@/features/global/utils/media/remove-media'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/features/shadcn/components/ui/dialog'
-
 
 export function MediaSelector({
   type,
@@ -22,17 +22,42 @@ export function MediaSelector({
   allowRemove = true,
   className = '',
   loadApiAvatars = false,
+  storeId, // ✅ Agregar
+  productId, // ✅ Agregar
 }: MediaSelectorProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [/* optimisticUrl */, setOptimisticUrl] = useOptimistic(currentUrl)
 
+  // ✅ Obtener configuración automática
+  const config = getMediaConfig(type)
 
+  // ✅ Título y descripción por defecto según tipo
+  const getDefaultContent = () => {
+    switch (type) {
+      case UPLOAD_TYPES.AVATAR:
+        return { title: 'Cambiar Avatar', description: 'Seleccioná una nueva imagen para tu avatar' }
+      case UPLOAD_TYPES.BANNER:
+        return { title: 'Cambiar Banner', description: 'Seleccioná una nueva imagen para tu banner' }
+      case UPLOAD_TYPES.STORE_LOGO:
+        return { title: 'Cambiar Logo de Tienda', description: 'Seleccioná o subí el logo de tu tienda' }
+      case UPLOAD_TYPES.STORE_BANNER:
+        return { title: 'Cambiar Banner de Tienda', description: 'Personalizá el banner de tu tienda' }
+      case UPLOAD_TYPES.PRODUCT_IMAGE:
+        return { title: 'Imagen de Producto', description: 'Subí la imagen principal del producto' }
+      case UPLOAD_TYPES.PRODUCT_VIDEO:
+        return { title: 'Video de Producto', description: 'Subí un video para mostrar tu producto' }
+      default:
+        return { title: 'Cambiar Imagen', description: 'Seleccioná una nueva imagen' }
+    }
+  }
+
+  const defaultContent = getDefaultContent()
 
   const mediaOptions = useMediaOptions({ type, loadApiAvatars })
 
-
   const mediaUpload = useMediaUpload({
     type,
+    validationOptions: config,
     onSuccess: (url: string) => {
       onUpdate(url)
       setIsDialogOpen(false)
@@ -48,18 +73,33 @@ export function MediaSelector({
   useEffect(() => {
     if (!isDialogOpen) return
 
-    if (loadApiAvatars && mediaOptions.apiAvatars.length === 0 && !mediaOptions.avatarLoadError) {
+    // ✅ Cargar avatares solo para avatar y store-logo
+    if (
+      (type === UPLOAD_TYPES.AVATAR || type === UPLOAD_TYPES.STORE_LOGO) &&
+      loadApiAvatars &&
+      mediaOptions.apiAvatars.length === 0 &&
+      !mediaOptions.avatarLoadError
+    ) {
       mediaOptions.loadAvatarOptions()
     }
 
-    if (type === 'banner' && mediaOptions.apiBanners.length === 0 && !mediaOptions.bannerLoadError) {
+    // ✅ Cargar banners para banner y store-banner
+    if (
+      (type === UPLOAD_TYPES.BANNER || type === UPLOAD_TYPES.STORE_BANNER) &&
+      mediaOptions.apiBanners.length === 0 &&
+      !mediaOptions.bannerLoadError
+    ) {
       mediaOptions.loadBannerOptions()
     }
   }, [isDialogOpen, type, loadApiAvatars, mediaOptions])
 
   // Combinar opciones de presets con API
   const allOptions = useMemo((): PresetOption[] => {
-    if (type === 'banner' && mediaOptions.apiBanners.length > 0) {
+    // ✅ Banners para banner y store-banner
+    if (
+      (type === UPLOAD_TYPES.BANNER || type === UPLOAD_TYPES.STORE_BANNER) &&
+      mediaOptions.apiBanners.length > 0
+    ) {
       return mediaOptions.apiBanners.map((banner) => ({
         id: banner.id,
         url: banner.url,
@@ -68,7 +108,11 @@ export function MediaSelector({
       }))
     }
 
-    if (type === 'avatar' && mediaOptions.apiAvatars.length > 0) {
+    // ✅ Avatares para avatar y store-logo
+    if (
+      (type === UPLOAD_TYPES.AVATAR || type === UPLOAD_TYPES.STORE_LOGO) &&
+      mediaOptions.apiAvatars.length > 0
+    ) {
       return mediaOptions.apiAvatars.map((avatar) => ({
         id: avatar.id,
         url: avatar.url,
@@ -80,9 +124,7 @@ export function MediaSelector({
     return [...presets]
   }, [presets, mediaOptions.apiAvatars, mediaOptions.apiBanners, type])
 
-  const defaultTitle = type === 'avatar' ? 'Cambiar Avatar' : 'Cambiar Banner'
-
-  // Handler para eliminar media del servidor
+  // ✅ Handler para eliminar media del servidor
   const handleRemove = async () => {
     try {
       // Actualización optimista
@@ -91,10 +133,22 @@ export function MediaSelector({
       // Llamar al endpoint correcto
       await removeMedia(type, {
         showConfirm: false, // Ya mostramos confirmación en el UI
+        storeId, // ✅ Pasar storeId
+        productId, // ✅ Pasar productId
         onSuccess: () => {
           onUpdate(null)
           setIsDialogOpen(false)
-          toast.success(`${type === 'avatar' ? 'Avatar' : 'Banner'} eliminado correctamente.`)
+
+          // ✅ Mensaje contextual según tipo
+          const messages = {
+            [UPLOAD_TYPES.AVATAR]: 'Avatar eliminado correctamente.',
+            [UPLOAD_TYPES.BANNER]: 'Banner eliminado correctamente.',
+            [UPLOAD_TYPES.STORE_LOGO]: 'Logo de tienda eliminado correctamente.',
+            [UPLOAD_TYPES.STORE_BANNER]: 'Banner de tienda eliminado correctamente.',
+            [UPLOAD_TYPES.PRODUCT_IMAGE]: 'Imagen de producto eliminada correctamente.',
+          }
+
+          toast.success(messages[type as keyof typeof messages] || 'Imagen eliminada correctamente.')
         },
         onError: (error) => {
           // Revertir actualización optimista
@@ -136,16 +190,17 @@ export function MediaSelector({
         <DialogTrigger asChild>
           <MediaSelectorTrigger
             triggerButton={triggerButton}
-            defaultTitle={defaultTitle}
+            defaultTitle={title || defaultContent.title}
             className={className}
           />
         </DialogTrigger>
-
         <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{title || defaultTitle}</DialogTitle>
-            {description && (
-              <p className="text-sm text-muted-foreground">{description}</p>
+            <DialogTitle>{title || defaultContent.title}</DialogTitle>
+            {(description || defaultContent.description) && (
+              <p className="text-sm text-muted-foreground">
+                {description || defaultContent.description}
+              </p>
             )}
           </DialogHeader>
 

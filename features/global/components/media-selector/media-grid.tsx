@@ -41,13 +41,20 @@ export function MediaGrid({
                             type="button"
                             onClick={() => handleSelect(item.url)}
                             disabled={deletingUrl === item.url}
-                            className={`w-full rounded-lg overflow-hidden border-2 transition-all hover:scale-105 hover:z-10 disabled:opacity-50 ${selectedUrl === item.url
+                            className={`relative w-full rounded-lg overflow-hidden border-2 transition-all hover:scale-105 hover:z-10 disabled:opacity-50 ${selectedUrl === item.url
                                 ? 'border-primary ring-2 ring-primary/50'
                                 : 'border-border hover:border-primary/50'
                                 }`}
                             style={{ aspectRatio: type === 'avatar' ? '1/1' : '16/9' }}
                         >
-                            <Image src={item.url} alt={item.name || 'Media'} className="w-full h-full object-cover" />
+                            <Image
+                                src={item.url}
+                                alt={item.name || 'Media'}
+                                fill
+                                sizes="(max-width: 768px) 33vw, 20vw"
+                                className="object-cover"
+                                unoptimized={true}
+                            />
                         </button>
 
                         {onDelete && (

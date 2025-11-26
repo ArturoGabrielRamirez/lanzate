@@ -78,6 +78,7 @@ function MediaDisplay({ product }: MediaDisplayProps) {
                                     src={product.primary_media.url}
                                     alt={`${product.name} image`}
                                     className="object-cover h-full w-full"
+                                    fill
                                 />
                             ) : (
                                 <div className="flex items-center justify-center h-full">
@@ -97,6 +98,7 @@ function MediaDisplay({ product }: MediaDisplayProps) {
                                             src={media.url}
                                             alt={`${product.name} media`}
                                             className="object-cover h-full w-full"
+                                            fill
                                         />
                                     </div>
                                 ))}

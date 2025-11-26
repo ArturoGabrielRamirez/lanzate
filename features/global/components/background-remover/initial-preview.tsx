@@ -12,6 +12,7 @@ export function InitialPreview({ originalUrl }: InitialPreviewProps) {
                         src={originalUrl}
                         alt="Original"
                         className="w-full h-full object-contain"
+                        fill
                     />
                 )}
             </div>

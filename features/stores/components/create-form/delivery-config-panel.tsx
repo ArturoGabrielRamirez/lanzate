@@ -1,7 +1,7 @@
 import { Plus, Store, Truck, Trash } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
-import { FieldErrors } from "react-hook-form"
 import { useTranslations } from "next-intl"
+import { FieldErrors } from "react-hook-form"
 
 import { Button } from "@/features/shadcn/components/button"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"

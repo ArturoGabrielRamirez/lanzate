@@ -7,27 +7,22 @@ export async function getStorageBannersData(
     userId: number
 ) {
     const { data: files } = await supabase.storage
-        .from('user-uploads')
-        .list('banners', {
+        .from('banners')
+        .list('', {
             limit: 50,
             sortBy: { column: 'updated_at', order: 'desc' }
         })
 
     if (!files?.length) return []
 
-    // Filtro estricto: solo archivos en formato banner-<userId>-<timestamp>
     const regex = new RegExp(`^banner-${userId}-\\d+`, 'i')
     const userFiles = files.filter(file => regex.test(file.name))
-
-    console.log(
-        `Usuario ${userId} tiene ${userFiles.length} banners personalizados de ${files.length} archivos totales`
-    )
 
     const banners = []
     for (const file of userFiles) {
         const { data: publicUrlData } = supabase.storage
-            .from('user-uploads')
-            .getPublicUrl(`banners/${file.name}`)
+            .from('banners')
+            .getPublicUrl(file.name)
 
         if (publicUrlData?.publicUrl) {
             banners.push({

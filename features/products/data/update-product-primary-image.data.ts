@@ -1,4 +1,4 @@
-import { prisma } from "@/utils/prisma";
+/* import { prisma } from "@/utils/prisma";
 
 export async function updateProductPrimaryImageData(
     productId: number,
@@ -13,4 +13,4 @@ export async function updateProductPrimaryImageData(
             updated_at: new Date()
         }
     })
-}
+} */

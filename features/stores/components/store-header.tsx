@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { Card, CardAction, CardContent } from "@/features/shadcn/components/ui/card"
-/* import { Title } from "@/features/layout/components" */
 import { getStoreHeaderBySlugAction/* , updateStoreBannerAction */, updateStoreLogoAction } from "@/features/stores/actions"
 import { /* StoreBannerEditor, */ StoreLogoEditor } from "@/features/stores/components"
 import { StoreHeaderProps, StoreHeaderData } from "@/features/stores/types"
@@ -134,12 +133,13 @@ function StoreHeader({ slug }: StoreHeaderProps) {
 
                                 src={store.logo || `https://api.dicebear.com/9.x/initials/svg?seed=${store.name}`}
                                 alt="Store logo"
-                                className="size-24 rounded-full object-cover"
-
+                                className="size-24 rounded-full object-cover absolute"
+                                fill
                             />
                             <StoreLogoEditor
                                 currentLogo={store.logo}
                                 storeName={store.name}
+                                storeId={store.id}
                                 onLogoUpdate={handleLogoUpdate}
                             />
                         </div>
@@ -154,7 +154,7 @@ function StoreHeader({ slug }: StoreHeaderProps) {
                             </p>
                         </div>
                         <CardAction className="group-hover/store-banner:opacity-100 opacity-0 transition-opacity duration-300">
-                           {/*  <StoreBannerEditor
+                            {/*  <StoreBannerEditor
                                 currentBanner={store.banner}
                                 storeName={store.name}
                                 onBannerUpdate={handleBannerUpdate}

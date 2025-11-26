@@ -1,9 +1,9 @@
 import dayjs from "dayjs"
 import { Calendar, Plus, Trash } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { useTranslations } from "next-intl"
 
 import { Button } from "@/features/shadcn/components/button"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
