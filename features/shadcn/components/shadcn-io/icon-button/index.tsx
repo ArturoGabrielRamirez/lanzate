@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, type HTMLMotionProps, type Transition } from 'motion/react';
 import * as React from 'react';
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shadcn/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 const sizes = {
@@ -21,6 +22,7 @@ type IconButtonProps = Omit<HTMLMotionProps<'button'>, 'color'> & {
   color?: [number, number, number];
   transition?: Transition;
   iconClassName?: string;
+  tooltip?: string | React.ReactNode;
 };
 
 function IconButton({
@@ -32,9 +34,10 @@ function IconButton({
   color = [80, 40, 0],
   transition = { type: 'spring', stiffness: 300, damping: 15 },
   iconClassName,
+  tooltip,
   ...props
 }: IconButtonProps) {
-  return (
+  const button = (
     <motion.button
       data-slot="icon-button"
       className={cn(
@@ -103,7 +106,7 @@ function IconButton({
                   y: `calc(50% + ${Math.sin((i * Math.PI) / 3) * 30}px)`,
                   scale: [0, 1, 0],
                   opacity: [0, 1, 0],
-                }}
+                  }}
                 transition={{ duration: 0.8, delay: i * 0.05, ease: 'easeOut' }}
               />
             ))}
@@ -112,6 +115,21 @@ function IconButton({
       </AnimatePresence>
     </motion.button>
   );
+
+  if (tooltip) {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          {button}
+        </TooltipTrigger>
+        <TooltipContent>
+          {tooltip}
+        </TooltipContent>
+      </Tooltip>
+    );
+  }
+
+  return button;
 }
 
 export { IconButton, sizes, type IconButtonProps };

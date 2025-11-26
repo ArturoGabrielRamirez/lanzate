@@ -1,4 +1,4 @@
-import { Check, Clock, Contact2, MapPin, StoreIcon, Truck } from "lucide-react"
+import { Check, Clock, Contact2, DollarSign, MapPin, StoreIcon, Truck } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
@@ -14,24 +14,25 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Step
 
     const icons = {
         1: StoreIcon,
-        2: MapPin,
-        3: Contact2,
-        4: Clock,
-        5: Truck,
-        6: Check,
+        2: Contact2,
+        3: DollarSign,
+        4: MapPin,
+        5: Clock,
+        6: Truck,
+        7: Check,
     }
 
     const tooltips = {
         1: t("step-tooltips.basic"),
-        2: t("step-tooltips.address"),
-        3: t("step-tooltips.contact"),
-        4: t("step-tooltips.hours"),
-        5: t("step-tooltips.delivery"),
-        6: t("step-tooltips.success"),
+        2: t("step-tooltips.contact"),
+        3: "Información de pago",
+        4: t("step-tooltips.address"),
+        5: "Información de horarios",
+        6: "Información de entrega",
+        7: "Éxito",
     }
 
     const isComplete = !!isStepValid[step]
-    const isInvalid = step <= 5 && !isComplete
     const isCurrentActive = step === currentStep
 
     const handleStepClick = () => {
@@ -45,21 +46,25 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Step
         return (
             <div
                 className={cn("aspect-square rounded-full size-8 lg:size-10 flex items-center justify-center cursor-pointer",
-                    isInvalid ? "bg-destructive/20" : "bg-muted"
+                    "bg-muted"
                 )}
                 onClick={handleStepClick}
             >
-                <IconButton
-                    icon={Icon}
-                    active={isCurrentActive}
-                    onClick={handleStepClick}
-                    iconClassName={cn(disabled ? "opacity-50" : "")}
-                    disabled={disabled}
-                    className={cn(
-                        isCurrentActive ? "text-primary" : "text-muted-foreground",
-                        disabled ? "opacity-50" : ""
-                    )}
-                />
+                {isComplete ? (
+                    <Check className="size-5 text-primary" />
+                ) : (
+                    <IconButton
+                        icon={Icon}
+                        active={isCurrentActive}
+                        onClick={handleStepClick}
+                        iconClassName={cn(disabled ? "opacity-50" : "")}
+                        disabled={disabled}
+                        className={cn(
+                            isCurrentActive ? "text-primary" : "text-muted-foreground",
+                            disabled ? "opacity-50" : ""
+                        )}
+                    />
+                )}
             </div>
         )
     }
@@ -69,16 +74,16 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Step
             <TooltipTrigger asChild>
                 <div
                     className={cn(
-                        "aspect-square rounded-full size-6 lg:size-8 flex items-center justify-center text-xs cursor-pointer text-muted-foreground hover:text-primary",
-                        isInvalid ? "bg-destructive/20" : "bg-muted",
+                        "aspect-square rounded-full size-3 lg:size-5 flex items-center justify-center text-xs cursor-pointer text-muted-foreground hover:text-primary",
+                        "bg-muted",
                         disabled ? "opacity-50" : ""
                     )}
                     onClick={handleStepClick}
                 >
                     {isComplete ? (
-                        <Check className="size-4" />
+                        <Check className="size-3 hidden md:block" />
                     ) : (
-                        step
+                        null
                     )}
                 </div>
             </TooltipTrigger>

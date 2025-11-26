@@ -44,11 +44,24 @@ export const addressInfoSchema = yup.object({
 
 export const contactInfoSchema = yup.object({
     contact_info: yup.object({
-        contact_phone: yup.string().max(20, "El número de teléfono debe tener menos de 20 caracteres").required("El número de teléfono es obligatorio"),
-        contact_email: yup.string().email("Formato de correo electrónico inválido").max(255, "El correo electrónico debe tener menos de 255 caracteres").required("El correo electrónico es obligatorio"),
-        facebook_url: yup.string().url("Debe ser una URL válida").max(255, "La URL de Facebook debe tener menos de 255 caracteres"),
-        instagram_url: yup.string().url("Debe ser una URL válida").max(255, "La URL de Instagram debe tener menos de 255 caracteres"),
-        x_url: yup.string().url("Debe ser una URL válida").max(255, "La URL de X debe tener menos de 255 caracteres"),
+        phones: yup.array().of(
+            yup.object({
+                phone: yup.string().max(20, "El número de teléfono debe tener menos de 20 caracteres").required("El número de teléfono es obligatorio").matches(/^[0-9+\-\s\(\)]*$/, "Debe ser un número telefónico válido"),
+                is_primary: yup.boolean().default(false),
+            })
+        ),
+        emails: yup.array().of(
+            yup.object({
+                email: yup.string().email("Formato de correo electrónico inválido").max(255, "El correo electrónico debe tener menos de 255 caracteres").required("El correo electrónico es obligatorio"),
+                is_primary: yup.boolean().default(false),
+            })
+        ),
+        social_media: yup.array().of(
+            yup.object({
+                url: yup.string().url("Debe ser una URL válida").max(255, "La URL de la red social debe tener menos de 255 caracteres").required("La URL de la red social es obligatoria"),
+                is_primary: yup.boolean().default(false),
+            })
+        ),
     })
 })
 
@@ -73,7 +86,7 @@ export const settingsSchema = yup.object({
     })
 })
 
-export const shippingPaymentSchema = yup.object({
+export const shippingSchema = yup.object({
     shipping_info: yup.object({
         offers_delivery: yup.boolean().default(false),
         methods: yup.array().of(yup.object({
@@ -82,16 +95,42 @@ export const shippingPaymentSchema = yup.object({
             freeShippingMin: yup.string(),
             estimatedTime: yup.string(),
             deliveryPrice: yup.string().matches(/^\d*$/, "Debe ser un número").required("Precio del delivery es requerido"),
-        })).when("offers_delivery", (offers, schema) => offers ? schema.min(1, "Agregá al menos un modo de envío") : schema.notRequired())
+        })).when("offers_delivery", ([offers], schema) => {
+            return offers ? schema.min(1, "Agregá al menos un modo de envío") : schema.notRequired()
+        })
     }),
+})
+
+export const paymentSchema = yup.object({
     payment_info: yup.object({
-        payment_methods: yup.array().of(yup.string()).min(1, "Seleccioná al menos un método de pago").required(),
+        payment_methods: yup.array().of(
+            yup.object({
+                name: yup.string().required("El nombre del método es obligatorio"),
+                commission_percent: yup.number().min(0, "La comisión (%) no puede ser negativa").max(100, "La comisión (%) no puede ser mayor a 100").typeError("Debe ser un número"),
+                commission_amount: yup.number().min(0, "La comisión ($) no puede ser negativa").typeError("Debe ser un número"),
+                type: yup.string().oneOf(['transferencia', 'efectivo', 'billetera_virtual', 'credito', 'debito', 'otro'], "Tipo de método inválido").required("El tipo de método es obligatorio"),
+                cbu_cvu: yup.string().when('type', ([type], schema) =>
+                    (type === 'transferencia' || type === 'billetera_virtual') ? schema.required('El CBU/CVU es obligatorio para transferencias') : schema.optional()
+                ),
+                alias: yup.string().optional(),
+                instructions: yup.string().max(500, "Las instrucciones no pueden superar los 500 caracteres").optional(),
+            })
+        ),
     })
 })
+
+export const createStoreSchema = basicInfoSchemaNew
+    .concat(addressInfoSchema)
+    .concat(contactInfoSchema)
+    .concat(settingsSchema)
+    .concat(shippingSchema)
+    .concat(paymentSchema)
 
 // Form type inference
 export type BasicInfoFormType = yup.InferType<typeof basicInfoSchemaNew>
 export type AddressInfoFormType = yup.InferType<typeof addressInfoSchema>
 export type ContactInfoFormType = yup.InferType<typeof contactInfoSchema>
 export type SettingsFormType = yup.InferType<typeof settingsSchema>
-export type ShippingPaymentFormType = yup.InferType<typeof shippingPaymentSchema>
+export type ShippingFormType = yup.InferType<typeof shippingSchema>
+export type PaymentFormType = yup.InferType<typeof paymentSchema>
+export type CreateStoreFormType = yup.InferType<typeof createStoreSchema>

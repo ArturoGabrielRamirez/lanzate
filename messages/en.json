@@ -1768,7 +1768,7 @@
                 "address": "Address",
                 "contact": "Contact",
                 "hours": "Hours",
-                "delivery": "Delivery",
+                "delivery": "Payment methods",
                 "success": "Success"
             },
             "step-tooltips": {
@@ -1785,7 +1785,7 @@
                 "step2": "Choose whether this is a physical store or an online store and add your address information.",
                 "step3": "Add your contact information and social media links so customers can contact you.",
                 "step4": "Choose attention dates and hours so customers know when you are open.",
-                "step5": "Choose shipping methods and add your payment methods so customers can buy your products.",
+                "step5": "Set up your payment methods so customers can pay for their orders.",
                 "step6": "Creating your store…",
                 "step7": "All set! Redirecting…"
             },
@@ -1806,10 +1806,10 @@
             },
             "address": {
                 "store-type": "Store Type",
-                "online-store": "Online Store",
-                "online-store-description": "This is an online store.",
-                "physical-store": "Physical Store",
-                "physical-store-description": "This is a physical store.",
+                "online-store": "Online",
+                "online-store-description": "Your store operates online only using an e-commerce platform.",
+                "physical-store": "Physical",
+                "physical-store-description": "Your store has a physical location available for public attention.",
                 "address": "Address",
                 "address-placeholder": "Ej: 123 Main St",
                 "address-tooltip": "This is the address of your store. It will be used to display your store on the map.",
@@ -1844,9 +1844,9 @@
             "settings": {
                 "attention-type": "Attention Type",
                 "24-hours": "24 Hours",
-                "24-hours-description": "This store is open 24 hours.",
+                "24-hours-description": "This store is open 24 hours and customers can place orders at any time.",
                 "schedule": "Schedule",
-                "schedule-description": "This store works on schedule.",
+                "schedule-description": "This store operates on a schedule and customers can only place orders during specified hours.",
                 "no-days-configured": "No attention days configured",
                 "no-days-selected": "No days selected",
                 "opening-hours": "Opening Hours",
@@ -1854,6 +1854,17 @@
                 "delete": "Delete",
                 "cancel": "Cancel",
                 "save": "Save",
+                "operating-days-hours": "Operating Days & Hours",
+                "day-selected": "day selected",
+                "days-selected": "days selected",
+                "set-mon-fri": "Mon-Fri",
+                "set-fri-sun": "Fri-Sun",
+                "select-days-above": "Select days above",
+                "select-days-description": "Choose operating days to configure hours.",
+                "start-time": "Start Time",
+                "end-time": "End Time",
+                "save-schedule": "Save",
+                "select-at-least-one-day": "Select at least one day to save",
                 "days": {
                     "monday": "Monday",
                     "tuesday": "Tuesday",
@@ -1909,6 +1920,9 @@
             "messages": {
                 "store-created-success": "Store created successfully",
                 "creating-store": "Creating your store…"
+            },
+            "payment": {
+                "cbu-cvu-placeholder": "Ex: 0000003100061234567890"
             }
         }
     },

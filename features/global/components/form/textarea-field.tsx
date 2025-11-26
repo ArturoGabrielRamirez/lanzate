@@ -18,6 +18,8 @@ function TextareaField({
   description,
   tooltip,
   isRequired = false,
+  disabled = false,
+  onChange,
 }: {
   name: string,
   label: string,
@@ -29,6 +31,8 @@ function TextareaField({
   description?: string | React.ReactNode,
   tooltip?: string | React.ReactNode
   isRequired?: boolean
+  disabled?: boolean
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }) {
 
   const { control } = useFormContext();
@@ -57,6 +61,8 @@ function TextareaField({
               autoComplete="off"
               id={field.name}
               className=""
+              onChange={onChange}
+              disabled={disabled}
             />
             {endText && (
               <InputGroupText>

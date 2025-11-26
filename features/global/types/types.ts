@@ -42,13 +42,14 @@ export interface ContactFormProps {
 export type SelectFieldProps = {
     name: string
     label: string
-    options: { value: string, label: string }[]
+    options: { value: string, label: string | React.ReactNode }[]
     placeholder?: string
     description?: string | React.ReactNode
     tooltip?: string | React.ReactNode
     isRequired?: boolean
     disabled?: boolean
     startIcon?: React.ReactNode
+    onChange?: (value: string) => void
 }
 
 export interface ReplyData {

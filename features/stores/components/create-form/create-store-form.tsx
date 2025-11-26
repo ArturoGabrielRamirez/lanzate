@@ -8,6 +8,7 @@ import { AddressFormPanel } from "@/features/stores/components/create-form/addre
 import { BasicInfoFormPanel } from "@/features/stores/components/create-form/basic-info-form-panel"
 import { ContactFormPanel } from "@/features/stores/components/create-form/contact-form-panel"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
+import { PaymentMethodsFormPanel } from "@/features/stores/components/create-form/payment-methods-form-panel"
 import { SettingsFormPanel } from "@/features/stores/components/create-form/settings-form-panel"
 import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel"
 import { StepIndicator } from "@/features/stores/components/create-form/step-indicator"
@@ -20,10 +21,12 @@ import {
     contactInfoSchema,
     SettingsFormType,
     settingsSchema,
-    ShippingPaymentFormType,
-    shippingPaymentSchema
+    ShippingFormType,
+    shippingSchema,
+    PaymentFormType,
+    paymentSchema
 } from "@/features/stores/schemas"
-import { CreateStoreFormProps, CreateStoreFormValues } from "@/features/stores/types"
+import { CreateStoreFormProps } from "@/features/stores/types"
 
 export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
 
@@ -33,14 +36,14 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
 
     const allowedMaxStep = (() => {
         let max = 1
-        for (let s = 1; s <= 5; s++) {
+        for (let s = 1; s <= 6; s++) {
             if (isStepValid[s]) max = s + 1; else break
         }
-        return Math.min(max, 5)
+        return Math.min(max, 8)
     })()
 
     const handleFinalStepCompleted = async () => {
-        await onSubmitAll(values as CreateStoreFormValues)
+        await onSubmitAll(values)
     }
 
     return (
@@ -50,8 +53,10 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
             stepContainerClassName="!p-0"
             stepCircleContainerClassName="!rounded-lg !max-w-full !w-full !border-none"
             footerClassName="!p-0"
+            disableStepConnectors={true}
             onStepChange={setStep}
             onFinalStepCompleted={handleFinalStepCompleted}
+            nextButtonProps={{ disabled: !isValid }}
             renderStepIndicator={(props: { step: number; currentStep: number; onStepClick: (step: number) => void }) => {
                 return (
                     <StepIndicator
@@ -62,18 +67,10 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                     />
                 )
             }}
-            nextButtonProps={{
-                disabled: !isValid,
-            }}
         >
             <Step>
                 <Form<BasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(basicInfoSchemaNew as never)}>
                     <BasicInfoFormPanel />
-                </Form>
-            </Step>
-            <Step>
-                <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
-                    <AddressFormPanel />
                 </Form>
             </Step>
             <Step>
@@ -82,16 +79,29 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                 </Form>
             </Step>
             <Step>
+                <Form<PaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(paymentSchema as never)}>
+                    <PaymentMethodsFormPanel />
+                </Form>
+            </Step>
+            
+            <Step>
+                <Form<AddressInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(addressInfoSchema as never)}>
+                    <AddressFormPanel />
+                </Form>
+            </Step>
+            <Step>
                 <Form<SettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(settingsSchema as never)}>
                     <SettingsFormPanel />
                 </Form>
             </Step>
             <Step>
-                <Form<ShippingPaymentFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingPaymentSchema as never)}>
+                <Form<ShippingFormType> contentButton="" submitButton={false} resolver={yupResolver(shippingSchema as never)}>
                     <ShippingFormPanel />
                 </Form>
             </Step>
-            {step === 6 && (
+            
+            
+            {step === 7 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Loader className="size-12 animate-spin text-primary" />
@@ -99,7 +109,7 @@ export function CreateStoreForm({ onSubmitAll }: CreateStoreFormProps) {
                     </div>
                 </Step>
             )}
-            {step === 7 && (
+            {step === 8 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Check className="size-12 text-green-600" />

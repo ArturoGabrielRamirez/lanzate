@@ -2,71 +2,116 @@ import { Globe, MapPin, Store } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { AddressFormValues, CreateStoreFormValues } from "@/features/stores/types"
 
 import type { Selection } from "react-aria-components"
 
 export function AddressFormPanel() {
     const t = useTranslations("store.create-form.address")
 
-    const { setValue, getValues, formState: { isValid }, watch, trigger } = useFormContext()
+    const { setValue, formState: { isValid, errors }, trigger } = useFormContext()
+    console.log("🚀 ~ AddressFormPanel ~ isValid:", isValid)
+    console.log("🚀 ~ AddressFormPanel ~ errors:", errors)
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
-    const [isPhysicalStore, setIsPhysicalStore] = useState(getValues("address_info.is_physical_store") || false)
+    const { address_info } = values
 
-    const isPhysicalStoreValue = watch("address_info.is_physical_store") as boolean | undefined
-
-    useEffect(() => {
-        setIsPhysicalStore(!!isPhysicalStoreValue)
-    }, [isPhysicalStoreValue])
-
-    const seededRefAddress = useRef(false)
+    const [isPhysicalStore, setIsPhysicalStore] = useState(address_info?.is_physical_store || false)
 
     useEffect(() => {
-        if (seededRefAddress.current) return
-        seededRefAddress.current = true
-        setCtxValues({ address_info: values.address_info || { is_physical_store: false } as AddressFormValues })
-        if (values.address_info) setValue("address_info", values.address_info, { shouldValidate: true })
-    }, [values.address_info, setValue, setCtxValues])
+        if (address_info) {
+            setValue("address_info", address_info)
+            setIsPhysicalStore(address_info.is_physical_store)
+            if (address_info.is_physical_store) {
+                trigger("address_info")
+            }
+        }
+    }, [])
 
     useEffect(() => {
-        const sub = watch((v) => setCtxValues({ address_info: (v as CreateStoreFormValues).address_info }))
-        return () => sub.unsubscribe()
-    }, [watch, setCtxValues])
-
-    useEffect(() => { setStepValid(2, isValid) }, [isValid, setStepValid])
-
-    const handlePhysicalStore = () => {
-        setIsPhysicalStore(true)
-        setValue("address_info.is_physical_store", true, { shouldValidate: true, shouldDirty: true })
-        trigger("address_info")
-    }
-
-    const handleOnlineStore = () => {
-        setIsPhysicalStore(false)
-        setValue("address_info.is_physical_store", false, { shouldValidate: true, shouldDirty: true })
-        setValue("address_info.address", "", { shouldValidate: true, shouldDirty: true })
-        setValue("address_info.city", "", { shouldValidate: true, shouldDirty: true })
-        setValue("address_info.province", "", { shouldValidate: true, shouldDirty: true })
-        setValue("address_info.country", "", { shouldValidate: true, shouldDirty: true })
-        trigger("address_info")
-    }
+        setStepValid(4, isValid)
+    }, [isValid, setStepValid])
 
     const handleSelectionChange = (selection: Selection) => {
         if (selection === "all") return
         const selected = Array.from(selection)[0]
-        if (selected === "physical") {
-            handlePhysicalStore()
-        } else if (selected === "online") {
-            handleOnlineStore()
+        const isPhysical = selected === "physical"
+
+        setIsPhysicalStore(isPhysical)
+        setValue("address_info.is_physical_store", isPhysical, { shouldValidate: true, shouldDirty: true })
+
+        if (!isPhysical) {
+            setValue("address_info.address", "", { shouldValidate: true, shouldDirty: true })
+            setValue("address_info.city", "", { shouldValidate: true, shouldDirty: true })
+            setValue("address_info.province", "", { shouldValidate: true, shouldDirty: true })
+            setValue("address_info.country", "", { shouldValidate: true, shouldDirty: true })
+
+            setCtxValues({
+                ...values,
+                address_info: {
+                    ...(address_info || { is_physical_store: false, address: "", city: "", province: "", country: "" }),
+                    is_physical_store: false,
+                    address: "",
+                    city: "",
+                    province: "",
+                    country: ""
+                }
+            })
+        } else {
+            setCtxValues({
+                ...values,
+                address_info: {
+                    ...(address_info || { is_physical_store: false, address: "", city: "", province: "", country: "" }),
+                    is_physical_store: true
+                }
+            })
         }
     }
+
+    const handleAddressChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setCtxValues({
+            ...values,
+            address_info: {
+                ...(address_info || { is_physical_store: true, address: "", city: "", province: "", country: "" }),
+                address: e.target.value
+            }
+        })
+    }, [setCtxValues, address_info, values])
+
+    const handleCityChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setCtxValues({
+            ...values,
+            address_info: {
+                ...(address_info || { is_physical_store: true, address: "", city: "", province: "", country: "" }),
+                city: e.target.value
+            }
+        })
+    }, [setCtxValues, address_info, values])
+
+    const handleProvinceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setCtxValues({
+            ...values,
+            address_info: {
+                ...(address_info || { is_physical_store: true, address: "", city: "", province: "", country: "" }),
+                province: e.target.value
+            }
+        })
+    }, [setCtxValues, address_info, values])
+
+    const handleCountryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setCtxValues({
+            ...values,
+            address_info: {
+                ...(address_info || { is_physical_store: true, address: "", city: "", province: "", country: "" }),
+                country: e.target.value
+            }
+        })
+    }, [setCtxValues, address_info, values])
 
     return (
         <>
@@ -106,6 +151,7 @@ export function AddressFormPanel() {
                             startIcon={<MapPin />}
                             isRequired
                             tooltip={t("address-tooltip")}
+                            onChange={handleAddressChange}
                         />
                         <InputField
                             name="address_info.city"
@@ -114,6 +160,7 @@ export function AddressFormPanel() {
                             startIcon={<MapPin />}
                             isRequired
                             tooltip={t("city-tooltip")}
+                            onChange={handleCityChange}
                         />
                         <InputField
                             name="address_info.province"
@@ -122,6 +169,7 @@ export function AddressFormPanel() {
                             startIcon={<MapPin />}
                             isRequired
                             tooltip={t("province-tooltip")}
+                            onChange={handleProvinceChange}
                         />
                         <InputField
                             name="address_info.country"
@@ -130,6 +178,7 @@ export function AddressFormPanel() {
                             startIcon={<MapPin />}
                             isRequired
                             tooltip={t("country-tooltip")}
+                            onChange={handleCountryChange}
                         />
                     </motion.div>
                 )}

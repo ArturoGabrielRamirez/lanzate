@@ -1,0 +1,79 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearchPostgres"]
+    binaryTargets   = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("PRISMA_DATABASE_URL")
+    directUrl = env("PRISMA_DIRECT_URL")
+}
+
+model User {
+    //Base fields
+    id       Int    @id @default(autoincrement())
+    email    String @unique
+    username String @unique
+
+    //Additional fields
+    first_name String?
+    last_name  String?
+    phone      String?
+
+    //System fields
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt @default(now()) 
+
+    /**
+     * avatar                    String?
+     * banner                    String?
+     * password                  String
+     * supabase_user_id          String?   @unique
+     * account_locked_until      DateTime?
+     * anonymized_at             DateTime?
+     * deletion_cancelled_at     DateTime?
+     * deletion_cancelled_reason String?
+     * deletion_ip_address       String?
+     * deletion_reason           String?
+     * deletion_requested_at     DateTime?
+     * deletion_scheduled_at     DateTime?
+     * deletion_user_agent       String?
+     * is_anonymized             Boolean   @default(false)
+     * is_deletion_cancelled     Boolean   @default(false)
+     * last_login_at             DateTime?
+     * login_attempts_count      Int       @default(0)
+     * original_email_hash       String?
+     * government_id             String?   @unique
+     * profile_bio         String?
+     * profile_is_public   Boolean @default(true)
+     * show_liked_products Boolean @default(true)
+     * show_comments       Boolean @default(true)
+     * show_activity       Boolean @default(true)
+     * location            String?
+     * show_location       Boolean @default(false)
+     * Account                   Account[]
+     * ActionLog                 ActionLog[]
+     * contracts_assigned        ContractAssignment[]    @relation("ContractAssignedBy")
+     * contracts_created         Contract[]              @relation("ContractCreatedBy")
+     * email_change_requests     email_change_requests[]
+     * Employee                  Employee[]
+     * Notification              Notification[]
+     * order_messages            OrderMessage[]          @relation("OrderMessageSender")
+     * orders_as_customer        Order[]                 @relation("OrderCustomer")
+     * orders_processed          Order[]                 @relation("OrderProcessedBy")
+     * product_comments          product_comments[]
+     * product_likes             product_likes[]
+     * Product                   Product[]
+     * social_activities         SocialActivity[]
+     * store_reminders_completed StoreReminder[]         @relation("StoreReminderCompletedBy")
+     * store_reminders_created   StoreReminder[]         @relation("StoreReminderCreatedBy")
+     * Store                     Store[]
+     * deletion_logs             UserDeletionLog[]
+     * user_reminders            UserReminder[]
+     * user_follows              UserFollow[]            @relation("UserFollower")
+     * user_follows_following    UserFollow[]            @relation("UserFollowing")
+     */
+
+    @@map("users")
+}

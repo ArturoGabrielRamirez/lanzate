@@ -45,29 +45,33 @@ export default function AnimatedTags({
     }
   }
   return (
-    <div className={`flex flex-col gap-1 ${className}`}>
+    <div className={`flex flex-col gap-2 ${className}`}>
       <div className="flex flex-col items-start justify-center gap-1">
         <p className="text-sm font-medium flex items-center gap-1">
           {title}
           {isRequired && <span className="text-red-500">*</span>}
         </p>
         <AnimatePresence>
-          {selectedTag.length > 0 && (
-            <div className="bg-background flex min-h-10 w-full flex-wrap items-center gap-1 rounded-md border p-2">
+          {/* {selectedTag.length > 0 && ( */}
+            <motion.div className="bg-background min-h-10 flex w-full flex-wrap items-center gap-1 rounded-md border border-muted-foreground/50 p-1.5"
+              initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+              animate={{
+                y: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+              }}
+              exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+              transition={{ duration: 0.3, bounce: 0, type: "spring" }}
+            >
+              {selectedTag && selectedTag.length === 0 && (
+                <p className="text-muted-foreground text-sm">No hay dias seleccionados</p>
+              )}
               {selectedTag?.map((tag) => (
                 <motion.div
                   key={tag}
                   layout
-                  className="group bg-primary text-primary-foreground group-hover:bg-primary group-hover:text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1"
+                  className="group bg-primary text-primary-foreground group-hover:bg-primary group-hover:text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-full border px-2 py-1 text-xs"
                   onClick={() => handleDeleteTag(tag)}
-                  initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
-                  animate={{
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                  }}
-                  exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
-                  transition={{ duration: 0.3, bounce: 0, type: "spring" }}
                 >
                   {tag}{" "}
                   <CircleX
@@ -76,8 +80,8 @@ export default function AnimatedTags({
                   />
                 </motion.div>
               ))}
-            </div>
-          )}
+            </motion.div>
+          {/* )} */}
         </AnimatePresence>
       </div>
       <AnimatePresence>
@@ -86,7 +90,7 @@ export default function AnimatedTags({
             <motion.div
               layout
               key={index}
-              className="group bg-background text-primary-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1 text-sm"
+              className="group bg-background text-foreground flex cursor-pointer flex-row items-center justify-center gap-2 rounded-md border px-2 py-1 text-sm"
               onClick={() => handleTagClick(tag)}
               initial={{ y: -20, opacity: 0, filter: "blur(4px)" }}
               animate={{

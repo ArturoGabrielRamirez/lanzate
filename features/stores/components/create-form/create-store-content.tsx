@@ -1,35 +1,41 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { useEffect } from "react"
-import { toast } from "sonner"
+/* import { useEffect } from "react" */
+/* import { toast } from "sonner" */
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 import { createStoreAction } from "@/features/stores/actions"
 import { CreateStoreForm } from "@/features/stores/components/create-form/create-store-form"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { CreateStoreFormValues } from "@/features/stores/types"
-import { processOpeningHours, processPaymentMethods, processShippingMethods } from "@/features/stores/utils"
+import { CreateStoreFormType } from "@/features/stores/schemas"
+/* 
+import { processOpeningHours, processPaymentMethods, processShippingMethods } from "@/features/stores/utils" */
 
 export function CreateStoreContent({ userId }: { userId: number }) {
 
-    const { step, setStep, closeDialog } = useCreateStoreContext()
+    const { step, setStep/* , closeDialog  */ } = useCreateStoreContext()
     const t = useTranslations("store.create-form")
 
-    // Handle timeout to reset to step 1 after step 7 (success)
-    useEffect(() => {
-        if (step === 7) {
-            const timeout = setTimeout(() => {
-                setStep(1)
-                closeDialog()
-            }, 2000) // 2 seconds timeout
+    /*     useEffect(() => {
+            if (step === 7) {
+                const timeout = setTimeout(() => {
+                    setStep(1)
+                    closeDialog()
+                }, 2000) // 2 seconds timeout
+    
+                return () => clearTimeout(timeout)
+            }
+        }, [step, setStep, closeDialog]) */
 
-            return () => clearTimeout(timeout)
-        }
-    }, [step, setStep, closeDialog])
+    const handleCreateStore = async (data: CreateStoreFormType) => {
+        console.log("🚀 ~ handleCreateStore ~ data:", data)
+        setStep(7)
 
-    const handleCreateStore = async (data: CreateStoreFormValues) => {
-        const isPhysical = !!data.address_info?.is_physical_store
+        const { /* hasError, message, payload */ } = await createStoreAction(data, userId)
+
+        setStep(8)
+        /* const isPhysical = !!data.address_info?.is_physical_store
         const processedData = {
             ...data,
             // If online store, clear address fields to avoid backend validations
@@ -39,9 +45,8 @@ export function CreateStoreContent({ userId }: { userId: number }) {
             processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
         }
 
-        setStep(6)
 
-        const { hasError, message, payload } = await createStoreAction(processedData, userId)
+        
 
         if (hasError) {
             toast.error(message)
@@ -54,33 +59,35 @@ export function CreateStoreContent({ userId }: { userId: number }) {
             }
         }
 
-        setStep(7)
+        setStep(7) */
 
         return {
             success: true,
             error: false,
             message: t("messages.store-created-success"),
-            data: payload
+            /* data: payload */
         }
     }
 
     const descriptions = {
         1: t("descriptions.step1"),
-        2: t("descriptions.step2"),
-        3: t("descriptions.step3"),
-        4: t("descriptions.step4"),
-        5: t("descriptions.step5"),
-        6: t("descriptions.step6"),
-        7: t("descriptions.step7"),
+        2: t("descriptions.step3"),
+        3: t("descriptions.step5"),
+        4: t("descriptions.step2"),
+        5: t("descriptions.step4"),
+        6: "Elige si tu tienda ofrece delivery o solo retiro en persona",
+        7: t("descriptions.step6"),
+        8: t("descriptions.step7"),
     }
 
     const titleSlugs = {
         1: t("steps.basic"),
-        2: t("steps.address"),
-        3: t("steps.contact"),
-        4: t("steps.hours"),
-        5: t("steps.delivery"),
-        6: t("steps.success"),
+        2: t("steps.contact"),
+        3: t("steps.delivery"),
+        4: t("steps.address"),
+        5: t("steps.hours"),
+        6: "Delivery",
+        7: t("steps.success"),
     }
 
     return (

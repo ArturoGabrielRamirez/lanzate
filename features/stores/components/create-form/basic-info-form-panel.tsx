@@ -1,77 +1,49 @@
-import { Globe, Store, StoreIcon } from "lucide-react"
+import { Globe, StoreIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
-import { Empty, EmptyMedia } from "@/features/shadcn/components/empty"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { CreateStoreFormValues } from "@/features/stores/types"
 import { slugify } from "@/features/stores/utils"
 
 export function BasicInfoFormPanel() {
     const t = useTranslations("store.create-form.basic-info")
 
-    const { setValue, watch, formState: { isValid }, trigger } = useFormContext()
+    const { setValue, formState: { isValid }, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
-    const [isSubdomainTouched, setIsSubdomainTouched] = useState(() => {
-        if (values.basic_info?.subdomain && values.basic_info?.name) {
-            return values.basic_info.subdomain !== slugify(values.basic_info.name)
-        }
-        return false
-    })
-
-    const nameValue = watch('basic_info.name')
-
-    const seededRefBasic = useRef(false)
+    const { basic_info } = values
 
     useEffect(() => {
-        if (seededRefBasic.current) return
-        seededRefBasic.current = true
-        if (values.basic_info) {
-            setValue('basic_info', values.basic_info as never, { shouldValidate: true })
-        } else {
-            trigger("basic_info.name")
-        }
-    }, [values.basic_info, setValue, trigger])
-
-    useEffect(() => {
-        const sub = watch((v) => setCtxValues({ basic_info: (v as CreateStoreFormValues).basic_info }))
-        return () => sub.unsubscribe()
-    }, [watch, setCtxValues])
-
-    const subdomainChange = useCallback((value: string) => {
-        const sanitized = slugify(value)
-        setValue('basic_info.subdomain', sanitized, { shouldValidate: true, shouldDirty: true })
-    }, [setValue])
-
-    const handleSubdomainChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsSubdomainTouched(true)
-        subdomainChange(e.target.value)
-    }, [subdomainChange])
-
-    useEffect(() => {
-        if (!isSubdomainTouched) {
-            subdomainChange(nameValue || '')
-        }
-    }, [nameValue, isSubdomainTouched, subdomainChange])
+        trigger(["basic_info.name", "basic_info.subdomain"])
+        setValue("basic_info.name", basic_info?.name || "")
+        setValue("basic_info.subdomain", basic_info?.subdomain || "")
+    }, [])
 
     useEffect(() => {
         setStepValid(1, isValid)
     }, [isValid, setStepValid])
 
+    const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.value
+        setCtxValues({ ...values, basic_info: { name, subdomain: slugify(name) } })
+        setValue("basic_info.subdomain", slugify(name), { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleSubdomainChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const subdomain = e.target.value
+        setCtxValues({ ...values, basic_info: { name: basic_info?.name || "", subdomain } })
+    }, [setCtxValues, basic_info, values])
+
+    const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const description = e.target.value
+        setCtxValues({ ...values, basic_info: { name: basic_info?.name || "", subdomain: basic_info?.subdomain || "", description } })
+    }, [setCtxValues, basic_info, values])
+
     return (
         <>
             <>
-                <div className="space-y-2">
-                    {/* Logo upload commented out in original code */}
-                    <Empty className="border border-dashed">
-                        <EmptyMedia>
-                            <Store />
-                        </EmptyMedia>
-                    </Empty>
-                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <InputField
                         name="basic_info.name"
@@ -80,6 +52,7 @@ export function BasicInfoFormPanel() {
                         startIcon={<StoreIcon />}
                         isRequired
                         tooltip={t("name-tooltip")}
+                        onChange={handleNameChange}
                     />
                     <InputField
                         name="basic_info.subdomain"
@@ -103,6 +76,7 @@ export function BasicInfoFormPanel() {
                 name="basic_info.description"
                 label={t("description")}
                 placeholder={t("description-placeholder")}
+                onChange={handleDescriptionChange}
             />
         </>
     )

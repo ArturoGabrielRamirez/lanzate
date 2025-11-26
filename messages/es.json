@@ -1628,7 +1628,7 @@
                 "address": "Dirección",
                 "contact": "Contacto",
                 "hours": "Horarios",
-                "delivery": "Entrega",
+                "delivery": "Medios de pago",
                 "success": "Éxito"
             },
             "step-tooltips": {
@@ -1643,9 +1643,9 @@
             "descriptions": {
                 "step1": "Elegí un nombre y URL para comenzar; podés editar los detalles de tu tienda más tarde.",
                 "step2": "Elegí si esta es una tienda física o una tienda online y agregá tu información de dirección.",
-                "step3": "Agregá tu información de contacto y enlaces de redes sociales para que los clientes puedan contactarte.",
+                "step3": "Agregá tu información de contacto y redes sociales para que puedan contactarte.",
                 "step4": "Elegí fechas y horarios de atención para que los clientes sepan cuándo estás abierto.",
-                "step5": "Elegí métodos de envío y agregá tus métodos de pago para que los clientes puedan comprar tus productos.",
+                "step5": "Configurá tus métodos de pago para que los clientes puedan pagar por sus pedidos.",
                 "step6": "Creando tu tienda...",
                 "step7": "¡Todo listo! Redirigiendo..."
             },
@@ -1666,10 +1666,10 @@
             },
             "address": {
                 "store-type": "Tipo de tienda",
-                "online-store": "Tienda Online",
-                "online-store-description": "Esta es una tienda online.",
-                "physical-store": "Tienda Física",
-                "physical-store-description": "Esta es una tienda física.",
+                "online-store": "Online",
+                "online-store-description": "Tu tienda opera solo en línea usando una plataforma de comercio electrónico.",
+                "physical-store": "Física",
+                "physical-store-description": "Tu tienda cuenta con un lugar fisico disponible para atención al público.",
                 "address": "Dirección",
                 "address-placeholder": "Ej: Calle Principal 123",
                 "address-tooltip": "Esta es la dirección de tu tienda. Se usará para mostrar tu tienda en el mapa.",
@@ -1704,9 +1704,9 @@
             "settings": {
                 "attention-type": "Tipo de atención",
                 "24-hours": "24 Horas",
-                "24-hours-description": "Esta tienda está abierta 24 horas.",
+                "24-hours-description": "Esta tienda está abierta 24 horas y los clientes pueden hacer pedidos en cualquier momento.",
                 "schedule": "Horario",
-                "schedule-description": "Esta tienda funciona con horario.",
+                "schedule-description": "Esta tienda funciona con horario y los clientes solo pueden hacer pedidos durante las horas especificadas.",
                 "no-days-configured": "No hay días de atención configurados",
                 "no-days-selected": "Sin días seleccionados",
                 "opening-hours": "Horarios de apertura",
@@ -1714,6 +1714,17 @@
                 "delete": "Eliminar",
                 "cancel": "Cancelar",
                 "save": "Guardar",
+                "operating-days-hours": "Días y Horarios de Atención",
+                "day-selected": "día seleccionado",
+                "days-selected": "días seleccionados",
+                "set-mon-fri": "Lun-Vie",
+                "set-fri-sun": "Vie-Dom",
+                "select-days-above": "Seleccioná los días arriba",
+                "select-days-description": "Elegí los días de atención para configurar los horarios.",
+                "start-time": "Hora Inicio",
+                "end-time": "Hora Fin",
+                "save-schedule": "Guardar",
+                "select-at-least-one-day": "Seleccioná al menos un día para guardar",
                 "days": {
                     "monday": "lunes",
                     "tuesday": "martes",
@@ -1769,6 +1780,9 @@
             "messages": {
                 "store-created-success": "Tienda creada exitosamente",
                 "creating-store": "Creando tu tienda..."
+            },
+            "payment": {
+                "cbu-cvu-placeholder": "Ej: 0000003100061234567890"
             }
         }
     },
