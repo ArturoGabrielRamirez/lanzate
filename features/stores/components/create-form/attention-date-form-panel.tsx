@@ -3,7 +3,6 @@ import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useFieldArray, useFormContext } from "react-hook-form"
 
-import { InputField } from "@/features/global/components/form/input-field"
 import { Button } from "@/features/shadcn/components/button"
 import { Empty, EmptyContent, EmptyDescription, EmptyMedia } from "@/features/shadcn/components/empty"
 import { Item, ItemContent, ItemHeader, ItemTitle } from "@/features/shadcn/components/item"
@@ -11,6 +10,7 @@ import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
+import { TimePicker } from "@/features/stores/components/create-form/time-picker"
 import { cn } from "@/lib/utils"
 
 // Internal Editor Component
@@ -132,12 +132,10 @@ function AttentionDateEditor({
                             </ItemHeader>
                             <div className="flex items-center gap-2 md:gap-4">
                                 <div className="flex-1">
-                                    <InputField
+                                    <TimePicker
                                         name={`${baseName}.startTime`}
                                         label={t("start-time")}
-                                        type="time"
                                         placeholder="09:00"
-                                        inputMode="numeric"
                                         tooltip={"Hora de apertura del día"}
                                         startIcon={<ClockIcon />}
                                         hideLabel
@@ -146,12 +144,10 @@ function AttentionDateEditor({
                                 </div>
                                 <span className="text-sm text-muted-foreground">to</span>
                                 <div className="flex-1">
-                                    <InputField
+                                    <TimePicker
                                         name={`${baseName}.endTime`}
                                         label={t("end-time")}
-                                        type="time"
                                         placeholder="17:00"
-                                        inputMode="numeric"
                                         tooltip={"Hora de cierre del día"}
                                         startIcon={<ClockIcon />}
                                         hideLabel
