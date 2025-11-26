@@ -1,56 +1,28 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-/* import { useEffect } from "react" */
-/* import { toast } from "sonner" */
+import { toast } from "sonner"
 
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 import { createStoreAction } from "@/features/stores/actions"
 import { CreateStoreForm } from "@/features/stores/components/create-form/create-store-form"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormType } from "@/features/stores/schemas"
-/* 
-import { processOpeningHours, processPaymentMethods, processShippingMethods } from "@/features/stores/utils" */
 
 export function CreateStoreContent({ userId }: { userId: number }) {
 
-    const { step, setStep/* , closeDialog  */ } = useCreateStoreContext()
+    const { step, setStep, closeDialog } = useCreateStoreContext()
     const t = useTranslations("store.create-form")
 
-    /*     useEffect(() => {
-            if (step === 7) {
-                const timeout = setTimeout(() => {
-                    setStep(1)
-                    closeDialog()
-                }, 2000) // 2 seconds timeout
-    
-                return () => clearTimeout(timeout)
-            }
-        }, [step, setStep, closeDialog]) */
-
     const handleCreateStore = async (data: CreateStoreFormType) => {
-        console.log("🚀 ~ handleCreateStore ~ data:", data)
+
         setStep(7)
 
-        const { /* hasError, message, payload */ } = await createStoreAction(data, userId)
-
-        setStep(8)
-        /* const isPhysical = !!data.address_info?.is_physical_store
-        const processedData = {
-            ...data,
-            // If online store, clear address fields to avoid backend validations
-            address_info: isPhysical ? data.address_info : { is_physical_store: false },
-            processedOpeningHours: processOpeningHours(data.settings?.attention_dates as { days?: string[]; startTime?: string; endTime?: string }[] | undefined),
-            processedShippingMethods: processShippingMethods(data.shipping_info?.methods as { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice?: string }[] | undefined),
-            processedPaymentMethods: processPaymentMethods(data.payment_info?.payment_methods as string[] | undefined),
-        }
-
-
-        
+        const { hasError, message, payload } = await createStoreAction(data, userId)
 
         if (hasError) {
             toast.error(message)
-            setStep(5)
+            setStep(6)
             return {
                 success: false,
                 error: true,
@@ -59,13 +31,19 @@ export function CreateStoreContent({ userId }: { userId: number }) {
             }
         }
 
-        setStep(7) */
+        setStep(8)
+        toast.success(t("messages.store-created-success"))
+
+        setTimeout(() => {
+            setStep(1)
+            closeDialog()
+        }, 2000)
 
         return {
             success: true,
             error: false,
             message: t("messages.store-created-success"),
-            /* data: payload */
+            data: payload
         }
     }
 

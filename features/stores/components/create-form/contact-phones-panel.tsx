@@ -61,6 +61,7 @@ export function ContactPhonesPanel() {
         const updatedPhones = currentPhones.filter((_: { phone: string; is_primary: boolean }, i: number) => i !== index)
 
         setCtxValues({
+            ...values,
             contact_info: {
                 ...values.contact_info,
                 phones: updatedPhones
@@ -91,6 +92,7 @@ export function ContactPhonesPanel() {
         setValue("contact_info.phones", updatedPhones)
 
         setCtxValues({
+            ...values,
             contact_info: {
                 ...values.contact_info,
                 phones: updatedPhones
@@ -107,6 +109,7 @@ export function ContactPhonesPanel() {
         })
 
         setCtxValues({
+            ...values,
             contact_info: {
                 ...values.contact_info,
                 phones: updatedPhones
@@ -138,6 +141,7 @@ export function ContactPhonesPanel() {
                         hideLabel
                         disabled={confirmedIds.has(field.id) || (!!phones?.[index]?.phone && phones?.[index]?.phone.length > 0 && !isAddingPhone)}
                         onChange={(e) => handlePhoneChange(index, e.target.value)}
+                        tooltip={"Un telefono de contacto de la tienda"}
                         endIcon={
                             <div className="flex">
                                 <IconButton

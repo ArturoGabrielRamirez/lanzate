@@ -61,6 +61,7 @@ export function ContactUrlsPanel() {
         const updatedUrls = currentUrls.filter((_: { url: string }, i: number) => i !== index)
 
         setCtxValues({
+            ...values,
             contact_info: {
                 ...values.contact_info,
                 social_media: updatedUrls
@@ -89,6 +90,7 @@ export function ContactUrlsPanel() {
         })
 
         setCtxValues({
+            ...values,
             contact_info: {
                 ...values.contact_info,
                 social_media: updatedUrls
@@ -122,6 +124,7 @@ export function ContactUrlsPanel() {
                         hideLabel
                         disabled={confirmedIds.has(field.id) || (!!urls?.[index]?.url && urls?.[index]?.url.length > 0 && !isAddingUrl)}
                         onChange={(e) => handleUrlChange(index, e.target.value)}
+                        tooltip={"Una URL de contacto de la tienda"}
                         endIcon={
                             <div className="flex">
                                 <IconButton
@@ -129,7 +132,7 @@ export function ContactUrlsPanel() {
                                     onClick={() => handleRemoveUrl(index)}
                                     color={[255, 0, 0]}
                                     iconClassName="text-red-500"
-                                    tooltip={"Eliminar"}
+                                    tooltip={"Eliminar URL de contacto"}
                                 />
                                 {(!confirmedIds.has(field.id) && (!urls?.[index]?.url || (isAddingUrl && index === fields.length - 1))) && (
                                     <IconButton
@@ -137,7 +140,7 @@ export function ContactUrlsPanel() {
                                         onClick={() => handleConfirmUrl(index)}
                                         color={[0, 200, 0]}
                                         iconClassName="text-green-500"
-                                        tooltip={"Confirmar"}
+                                        tooltip={"Confirmar URL de contacto"}
                                         disabled={!!(errors?.contact_info as unknown as { social_media: { url: string }[] })?.social_media?.[index]?.url}
                                     />
                                 )}

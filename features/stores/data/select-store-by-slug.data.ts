@@ -34,7 +34,6 @@ export async function selectStoreBySlugData(slug: string) {
                 }
             },
             balance: true,
-            operational_settings: true,
             customization: true
         }
     })

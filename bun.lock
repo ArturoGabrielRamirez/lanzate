@@ -10,6 +10,7 @@
         "@hookform/resolvers": "^5.1.1",
         "@imgly/background-removal": "^1.7.0",
         "@lordicon/react": "^1.11.0",
+        "@ncdai/react-wheel-picker": "^1.0.19",
         "@prisma/client": "^6.11.1",
         "@prisma/extension-accelerate": "^2.0.1",
         "@prisma/nextjs-monorepo-workaround-plugin": "^6.12.0",
@@ -421,6 +422,8 @@
     "@mswjs/interceptors": ["@mswjs/interceptors@0.39.8", "", { "dependencies": { "@open-draft/deferred-promise": "^2.2.0", "@open-draft/logger": "^0.3.0", "@open-draft/until": "^2.0.0", "is-node-process": "^1.2.0", "outvariant": "^1.4.3", "strict-event-emitter": "^0.5.1" } }, "sha512-2+BzZbjRO7Ct61k8fMNHEtoKjeWI9pIlHFTqBwZ5icHpqszIgEZbjb1MW5Z0+bITTCTl3gk4PDBxs9tA/csXvA=="],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@0.2.12", "", { "dependencies": { "@emnapi/core": "^1.4.3", "@emnapi/runtime": "^1.4.3", "@tybys/wasm-util": "^0.10.0" } }, "sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ=="],
+
+    "@ncdai/react-wheel-picker": ["@ncdai/react-wheel-picker@1.0.19", "", { "peerDependencies": { "react": "^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc" } }, "sha512-CmS81HR3Dlqi1fV7Ot7oNOv0wcdtR8i83xoM/EnEjynNvhjxe2JRkPMshLhEUUp0g7Cm6sMAi9m2/ZlEYNftew=="],
 
     "@next/env": ["@next/env@15.3.4", "", {}, "sha512-ZkdYzBseS6UjYzz6ylVKPOK+//zLWvD6Ta+vpoye8cW11AjiQjGYVibF0xuvT4L0iJfAPfZLFidaEzAOywyOAQ=="],
 

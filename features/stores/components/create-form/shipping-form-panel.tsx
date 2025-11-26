@@ -1,5 +1,3 @@
-import { TimePicker } from "antd"
-import dayjs from "dayjs"
 import { Check, Clock, DollarSign, Package, Plus, Store, Trash2, Truck, X } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useTranslations } from "next-intl"
@@ -14,6 +12,7 @@ import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
+import { TimePicker } from "@/features/stores/components/create-form/time-picker"
 import { CreateStoreFormType } from "@/features/stores/schemas"
 import { cn } from "@/lib/utils"
 
@@ -22,8 +21,6 @@ import type { Selection } from "react-aria-components"
 export function ShippingFormPanel() {
     const t = useTranslations("store.create-form.shipping")
     const { control, formState: { isValid, errors }, setValue, getValues, trigger, watch } = useFormContext<CreateStoreFormType>()
-    console.log("🚀 ~ ShippingFormPanel ~ errors:", errors)
-    console.log("🚀 ~ ShippingFormPanel ~ isValid:", isValid)
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { shipping_info } = values
 
@@ -345,6 +342,7 @@ export function ShippingFormPanel() {
                                                             disabled={isConfirmed && !isCurrentAdding}
                                                             onChange={(e) => handleMethodChange(index, 'deliveryPrice', e.target.value)}
                                                             startIcon={<DollarSign />}
+                                                            tooltip={"Precio de envío"}
                                                         />
                                                         <InputField
                                                             name={`shipping_info.methods.${index}.minPurchase`}
@@ -355,6 +353,7 @@ export function ShippingFormPanel() {
                                                             disabled={isConfirmed && !isCurrentAdding}
                                                             onChange={(e) => handleMethodChange(index, 'minPurchase', e.target.value)}
                                                             startIcon={<DollarSign />}
+                                                            tooltip={"Precio mínimo de compra para envío gratis"}
                                                         />
                                                     </div>
 
@@ -368,26 +367,16 @@ export function ShippingFormPanel() {
                                                             disabled={isConfirmed && !isCurrentAdding}
                                                             onChange={(e) => handleMethodChange(index, 'freeShippingMin', e.target.value)}
                                                             startIcon={<DollarSign />}
+                                                            tooltip={"Precio mínimo de compra para envío gratis"}
                                                         />
                                                         <div>
-                                                            <p className="text-sm font-medium mb-1.5 flex items-center gap-2">
-                                                                <Clock className="size-4 text-muted-foreground" />
-                                                                {t("estimated-time")}
-                                                            </p>
                                                             <TimePicker
-                                                                format="HH:mm"
-                                                                hourStep={1}
-                                                                minuteStep={15}
-                                                                variant="outlined"
-                                                                size="large"
-                                                                className="!bg-transparent !text-primary-foreground !border-input w-full hover:!border-ring focus:!border-ring"
+                                                                name={`shipping_info.methods.${index}.estimatedTime`}
+                                                                label={t("estimated-time")}
                                                                 placeholder={t("estimated-time-placeholder")}
-                                                                value={method?.estimatedTime ? dayjs(method.estimatedTime, "HH:mm") : null}
-                                                                onChange={(value) => {
-                                                                    const formatted = value ? dayjs(value).format("HH:mm") : ""
-                                                                    setValue(`shipping_info.methods.${index}.estimatedTime`, formatted, { shouldValidate: true, shouldDirty: true })
-                                                                    handleMethodChange(index, 'estimatedTime', formatted)
-                                                                }}
+                                                                startIcon={<Clock className="size-4" />}
+                                                                onChange={(e) => handleMethodChange(index, 'estimatedTime', e.target.value)}
+                                                                tooltip={"Tiempo estimado de entrega"}
                                                             />
                                                         </div>
                                                     </div>
