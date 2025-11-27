@@ -562,6 +562,7 @@ export type StoreInformationFormProps = {
     canManageStore?: boolean
     children?: React.ReactNode
     userId: number
+    slug: string
 }
 
 export type StoreLogoEditorWrapperProps = {
