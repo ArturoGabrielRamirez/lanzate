@@ -1,10 +1,10 @@
 export * from "@/features/stores/components/form-sections/address-display"
-export * from "@/features/stores/components/form-sections/address-section"
+/* export * from "@/features/stores/components/form-sections/address-section" */
 export * from "@/features/stores/components/form-sections/basic-info-display"
 export * from "@/features/stores/components/form-sections/basic-info-section"
-export * from "@/features/stores/components/form-sections/branches-overview-display"
+/* export * from "@/features/stores/components/form-sections/branches-overview-display"
 export * from "@/features/stores/components/form-sections/contact-display"
 export * from "@/features/stores/components/form-sections/contact-section"
 export * from "@/features/stores/components/form-sections/operational-settings-display"
-export * from "@/features/stores/components/form-sections/social-media-display"
+export * from "@/features/stores/components/form-sections/social-media-display" */
 export * from "@/features/stores/components/form-sections/social-media-section"

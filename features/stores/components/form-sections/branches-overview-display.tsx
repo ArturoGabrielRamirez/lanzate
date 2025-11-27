@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { PaymentMethod } from "@prisma/client"
 import { Truck } from "lucide-react"
@@ -53,3 +53,4 @@ function BranchesOverviewDisplay({ branches, slug }: BranchesOverviewDisplayProp
 }
 
 export { BranchesOverviewDisplay }
+ */

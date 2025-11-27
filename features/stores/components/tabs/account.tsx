@@ -5,7 +5,7 @@ import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { DeleteStoreButton } from "@/features/stores/components/delete-store-button"
-import { StoreInformationForm } from "@/features/stores/components/store-information-form"
+/* import { StoreInformationForm } from "@/features/stores/components/store-information-form" */
 import { AccountTabProps } from "@/features/stores/types"
 
 async function AccountTab({ slug }: AccountTabProps) {
@@ -39,11 +39,11 @@ async function AccountTab({ slug }: AccountTabProps) {
 
     return (
         <div className="flex flex-col gap-6">
-            <StoreInformationForm
+         {/*    <StoreInformationForm
                 store={store as never}
                 canManageStore={canManageStore}
                 userId={user.id}
-            />
+            /> */}
 
             {/* Danger Zone Card */}
             {canManageStore && (

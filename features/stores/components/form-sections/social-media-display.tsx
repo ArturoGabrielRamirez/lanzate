@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import { MessageCircle, Edit as EditIcon, X } from "lucide-react"
@@ -115,4 +115,4 @@ function SocialMediaDisplay({ store }: SocialMediaDisplayProps) {
     )
 }
 
-export { SocialMediaDisplay }
+export { SocialMediaDisplay } */

@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { Branch, BranchOperationalSettings, BranchOpeningHour } from "@prisma/client"
 
@@ -34,4 +34,4 @@ function StoreInformationForm({ store, canManageStore = false, children, userId 
     )
 }
 
-export { StoreInformationForm }
+export { StoreInformationForm } */

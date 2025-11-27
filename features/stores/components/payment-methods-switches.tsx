@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { PaymentMethod } from "@prisma/client"
 import { useTranslations } from "next-intl"
@@ -75,4 +75,4 @@ function PaymentMethodsSwitches({ defaultMethods = [PaymentMethod.CASH], onPayme
     )
 } 
 
-export { PaymentMethodsSwitches }
+export { PaymentMethodsSwitches } */

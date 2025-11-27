@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -39,4 +39,4 @@ function ContactSection({ store, mode }: ContactSectionProps) {
     )
 }
 
-export { ContactSection }
+export { ContactSection } */
