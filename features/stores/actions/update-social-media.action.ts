@@ -29,7 +29,7 @@ export async function updateStoreSocialMediaAction(storeId: number, data: EditSo
                             /* facebook_url: data.facebook_url || null,
                             instagram_url: data.instagram_url || null,
                             x_url: data.x_url || null */
-                            //TODO: Arreglar aca, apra Hori
+                            //TODO: Arreglar aca, para Hori
                         }
                     }
                 }

@@ -20,7 +20,7 @@ export async function selectStoreBySubdomainData(subdomain: string) {
             },
             balance: true,
            /*  operational_settings: true */
-           // TODO: Arreglar aca, apra Hori
+           // TODO: Arreglar aca, para Hori
         }
     })
 
