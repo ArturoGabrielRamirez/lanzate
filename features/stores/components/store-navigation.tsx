@@ -29,8 +29,8 @@ export function StoreNavigation({ slug }: StoreNavigationProps) {
                             <Item 
                                 variant="outline" 
                                 className={cn(
-                                    "p-2 group/item truncate aspect-square gap-1",
-                                    isActive && "border-primary bg-primary/5"
+                                    "p-2 group/item truncate aspect-square gap-1 bg-card opacity-50 hover:opacity-100 transition-all duration-100 hover:!bg-card",
+                                    isActive && "border-primary bg-primary/10 opacity-100 scale-105"
                                 )} 
                                 asChild
                             >

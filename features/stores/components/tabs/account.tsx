@@ -40,7 +40,7 @@ async function AccountTab({ slug }: AccountTabProps) {
 
     return (
         <div className="flex flex-col gap-6">
-            <Tabs>
+            <Tabs defaultValue="tab-1">
                 <TabsList variant="underline">
                     <TabsTab value="tab-1">Tab 1</TabsTab>
                     <TabsTab value="tab-2">Tab 2</TabsTab>
