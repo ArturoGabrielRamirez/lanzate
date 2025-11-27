@@ -27,8 +27,10 @@ export async function updateStoreContactAction(storeId: number, data: EditContac
                             id: mainBranch?.id
                         },
                         data: {
-                            phone: data.contact_phone,
-                            email: data.contact_email
+                           /*  phone: data.contact_phone,
+                            email: data.contact_email */
+
+                            //TODO: Arreglar aca, apra Hori
                         }
                     }
                 }
