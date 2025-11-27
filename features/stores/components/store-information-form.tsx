@@ -3,7 +3,9 @@ import { Suspense } from "react"
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@/features/shadcn/components/ui/tabs"
 import { CreateStoreProvider } from "@/features/stores/components/create-form/create-store-provider"
 import { BasicInfoSkeleton } from "@/features/stores/components/skeletons/basic-info-skeleton"
+import { ContactSkeleton } from "@/features/stores/components/skeletons/contact-skeleton"
 import { BasicInfoServerWrapper } from "@/features/stores/components/wrappers/basic-info-wrapper.server"
+import { ContactServerWrapper } from "@/features/stores/components/wrappers/contact-wrapper.server"
 import { StoreInformationFormProps } from "@/features/stores/types"
 
 function StoreInformationForm({ slug }: StoreInformationFormProps) {
@@ -28,6 +30,9 @@ function StoreInformationForm({ slug }: StoreInformationFormProps) {
                 </TabsPanel>
 
                 <TabsPanel value="contact">
+                    <Suspense fallback={<ContactSkeleton />}>
+                        <ContactServerWrapper slug={slug} />
+                    </Suspense>
                     {/* <Form<ContactInfoFormType> contentButton="Guardar" resolver={yupResolver(contactInfoSchema as never)}>
                         <ContactFormPanel />
                     </Form> */}
