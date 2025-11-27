@@ -25,6 +25,14 @@ export function BasicInfoFormWrapper({ data }: BasicInfoClientWrapperProps) {
         <Form<BasicInfoFormType>
             contentButton="Guardar"
             resolver={yupResolver(basicInfoSchemaNew as never)}
+            submitButtonClassName="self-end w-fit"
+            formAction={async () => {
+                return {
+                    hasError: false,
+                    message: "Información básica actualizada con éxito!",
+                    payload: null
+                }
+            }}
         >
             <BasicInfoClientWrapper data={data} />
         </Form>

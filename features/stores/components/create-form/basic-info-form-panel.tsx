@@ -60,7 +60,6 @@ export function BasicInfoFormPanel() {
                         name="basic_info.subdomain"
                         label={t("url")}
                         placeholder={t("url-placeholder")}
-                        type="url"
                         inputMode="url"
                         startIcon={<Globe />}
                         tooltip={t("url-tooltip")}
