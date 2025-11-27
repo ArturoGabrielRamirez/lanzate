@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { useTranslations } from "next-intl"
 
@@ -61,4 +61,4 @@ function CartResume({ operationalSettings }: CartResumeProps) {
     )
 }
 
-export default CartResume
+export default CartResume */
