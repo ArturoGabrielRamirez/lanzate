@@ -2,16 +2,14 @@
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Store } from "@prisma/client"
-import { CheckIcon, Loader2 } from "lucide-react"
-import { useEffect, useState, useTransition } from "react"
-import { useFormContext } from "react-hook-form"
+import { useState, useTransition } from "react"
 import { toast } from "sonner"
 
 import { Form } from "@/features/global/components/form/form"
-import { Button } from "@/features/shadcn/components/button"
 import { updateStoreBasicInfoAction } from "@/features/stores/actions/update-store-basics.action"
-import { BasicInfoFormPanel } from "@/features/stores/components/create-form/basic-info-form-panel"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
+import { BasicInfoClientWrapper } from "@/features/stores/components/wrappers/basic-info-client-wrapper"
+import { BasicInfoFormActions } from "@/features/stores/components/wrappers/basic-info-form-actions"
 import { basicInfoSchemaNew, BasicInfoFormType } from "@/features/stores/schemas"
 
 type BasicInfoClientWrapperProps = {
@@ -85,89 +83,3 @@ export function BasicInfoFormWrapper({ data, slug }: BasicInfoClientWrapperProps
         </Form>
     )
 }
-
-type BasicInfoFormActionsProps = {
-    isEditing: boolean
-    onEdit: () => void
-    onCancel: () => void
-    onSave: () => void
-    isSaving: boolean
-    initialValues: Pick<Store, "logo" | "slug" | "subdomain" | "name" | "description"> & { _count: { products: number } } | null
-}
-
-function BasicInfoFormActions({ isEditing, onEdit, onCancel, onSave, isSaving, initialValues }: BasicInfoFormActionsProps) {
-
-    const { formState: { isValid } , setValue } = useFormContext()
-    const { values, setValues } = useCreateStoreContext()
-
-    const handleCancel = () => {
-
-        if (!initialValues) {
-            return
-        }
-
-        setValues({
-            ...values,
-            basic_info: {
-                name: initialValues.name,
-                subdomain: initialValues.subdomain,
-                description: initialValues.description || "",
-                logo: initialValues.logo
-            }
-        })
-
-        setValue("basic_info.name", initialValues.name)
-        setValue("basic_info.subdomain", initialValues.subdomain)
-        setValue("basic_info.description", initialValues.description || "")
-        setValue("basic_info.logo", initialValues.logo)
-
-        onCancel()
-    }
-
-    return (
-        <div className="flex justify-end gap-2">
-            {!isEditing && (
-                <Button variant={"outline"} onClick={onEdit} type="button">Editar</Button>
-            )}
-            {isEditing && (
-                <Button onClick={handleCancel} variant="destructive" type="button">Cancelar</Button>
-            )}
-            {isEditing && (
-                <Button onClick={onSave} type="button" disabled={isSaving || !isValid}>
-                    {isSaving ? <Loader2 className="size-4 animate-spin" /> : <CheckIcon className="size-4" />}
-                    {isSaving ? "Guardando..." : "Guardar"}
-                </Button>
-            )}
-        </div>
-    )
-}
-
-export function BasicInfoClientWrapper({ data }: BasicInfoClientWrapperProps) {
-
-    const { setValues, values } = useCreateStoreContext()
-    const { setValue } = useFormContext()
-
-    useEffect(() => {
-        if (data) {
-            setValues({
-                ...values,
-                basic_info: {
-                    name: data.name,
-                    subdomain: data.subdomain,
-                    description: data.description || "",
-                    logo: data.logo || null
-                }
-            })
-
-            setValue("basic_info.name", data.name)
-            setValue("basic_info.subdomain", data.subdomain)
-            setValue("basic_info.description", data.description || "")
-            setValue("basic_info.logo", data.logo || null)
-        }
-    }, [])
-
-    return (
-        <BasicInfoFormPanel />
-    )
-}
-
