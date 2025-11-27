@@ -16,4 +16,4 @@ export * from "@/features/stores/actions/update-store-banner.action"
 export * from "@/features/stores/actions/update-store-basics.action"
 export * from "@/features/stores/actions/update-store-contact.action"
 export * from "@/features/stores/actions/update-store-logo.action"
-export * from "@/features/stores/actions/update-store.action"
+/* export * from "@/features/stores/actions/update-store.action" */
