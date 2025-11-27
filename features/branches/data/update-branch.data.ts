@@ -53,8 +53,8 @@ export async function updateBranchData({ branchId, data }: UpdateBranchProps) {
             name: data.name,
             description: data.description,
             address: data.address,
-            phone: data.phone,
-            email: data.email,
+          /*   phone: data.phone, */
+          /*   email: data.email, */
             is_main: data.is_main
         }
     })
