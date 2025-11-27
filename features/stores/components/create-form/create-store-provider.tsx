@@ -46,8 +46,17 @@ const initialValues: CreateStoreFormType = {
     },
 }
 
-function CreateStoreProvider({ children }: { children: React.ReactNode }) {
-    const [values, setValuesState] = useState<CreateStoreFormType>(initialValues)
+function CreateStoreProvider({ children, initialValues: propInitialValues }: { children: React.ReactNode; initialValues?: Partial<CreateStoreFormType> }) {
+    const [values, setValuesState] = useState<CreateStoreFormType>(() => ({
+        ...initialValues,
+        ...propInitialValues,
+        basic_info: { ...initialValues.basic_info, ...propInitialValues?.basic_info },
+        address_info: { ...initialValues.address_info, ...propInitialValues?.address_info },
+        contact_info: { ...initialValues.contact_info, ...propInitialValues?.contact_info },
+        settings: { ...initialValues.settings, ...propInitialValues?.settings },
+        shipping_info: { ...initialValues.shipping_info, ...propInitialValues?.shipping_info },
+        payment_info: { ...initialValues.payment_info, ...propInitialValues?.payment_info },
+    }))
     
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
     const [step, { setStep }] = useStep(8)
