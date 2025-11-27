@@ -102,9 +102,9 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                 <Phone className="w-4 h-4 text-muted-foreground" />
                                 <div>
                                     <p className="text-sm font-medium">{t("phone")}</p>
-                                    <p className="text-sm text-muted-foreground">
+                                    {/* <p className="text-sm text-muted-foreground">
                                         {branch.phone || t("no-phone")}
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
 
@@ -112,9 +112,9 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                 <Mail className="w-4 h-4 text-muted-foreground" />
                                 <div>
                                     <p className="text-sm font-medium">{t("email")}</p>
-                                    <p className="text-sm text-muted-foreground">
+                                    {/* <p className="text-sm text-muted-foreground">
                                         {branch.email || t("no-email")}
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
                         </div>
