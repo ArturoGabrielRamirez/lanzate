@@ -59,16 +59,6 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                     {children}
                 </div>
                 <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
-                    {/* <Tabs>
-                        <TabsList variant="underline">
-                            <TabsTab value="tab-1">Tab 1</TabsTab>
-                            <TabsTab value="tab-2">Tab 2</TabsTab>
-                            <TabsTab value="danger-zone">Danger zone</TabsTab>
-                        </TabsList>
-                        <TabsPanel value="tab-1">
-                            {children}
-                        </TabsPanel>
-                    </Tabs> */}
                     <div className="flex flex-col gap-8 sticky top-24">
                         <SectionContainer title="Tus atajos" className="@container">
                             <StoreNavigation slug={slug} />
