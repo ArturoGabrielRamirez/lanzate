@@ -183,7 +183,7 @@ export async function insertOrderData({
 
             if (!updatedStore) throw new Error("No se pudo actualizar la tienda")
 
-            const transaction = await tx.transaction.create({
+        /*     const transaction = await tx.transaction.create({
                 data: {
                     amount: total_price,
                     type: "SALE",
@@ -197,11 +197,11 @@ export async function insertOrderData({
                     reference_type: "order",
                     branch_id: branch.id
                 }
-            })
+            }) */
 
-            if (!transaction) throw new Error("No se pudo crear la transacción")
+           /*  if (!transaction) throw new Error("No se pudo crear la transacción") */
 
-            await tx.socialActivity.create({
+            /* await tx.socialActivity.create({
                 data: {
                     order_id: order.id,
                     user_id: user.id,
@@ -211,7 +211,7 @@ export async function insertOrderData({
                     title: `Order ${order.id} created`,
                     store_id: store.id,
                 }
-            })
+            }) */
 
             return order
         })
