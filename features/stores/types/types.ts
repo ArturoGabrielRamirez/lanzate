@@ -411,7 +411,7 @@ export type CreateStoreFormValues = {
         social_media?: { url: string; is_primary: boolean }[]
     }
     settings: {
-        is_open_24_hours: boolean   
+        is_open_24_hours: boolean
         attention_dates?: { days?: string[]; startTime?: string; endTime?: string }[]
     }
     shipping_info: {
@@ -556,7 +556,7 @@ export type StoreHeaderProps = {
 }
 
 export type StoreInformationFormProps = {
-    store: StoreWithBranchesAndSettings & {
+    store?: StoreWithBranchesAndSettings & {
         branches: (Branch & { operational_settings: BranchOperationalSettings | null, opening_hours: BranchOpeningHour[] })[]
     }
     canManageStore?: boolean

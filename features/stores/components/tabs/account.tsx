@@ -12,7 +12,7 @@ async function AccountTab({ slug }: AccountTabProps) {
         return null
     }
 
-    const [
+    /* const [
         { payload: store, hasError: storeError },
         { payload: employeePermissions, hasError: permissionsError }
     ] = await Promise.all([
@@ -23,21 +23,21 @@ async function AccountTab({ slug }: AccountTabProps) {
     if (storeError || !store) {
         console.error(storeError)
         return null
-    }
+    } */
 
-    if (permissionsError || !employeePermissions) {
+    /* if (permissionsError || !employeePermissions) {
         console.error("Error loading employee permissions")
         return null
-    }
+    } */
 
-    const canManageStore = employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_store
+    //const canManageStore = employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_store
 
     return (
         <div className="flex flex-col gap-6">
             
             <StoreInformationForm
-                store={store as never}
-                canManageStore={canManageStore}
+                //store={store as never}
+                canManageStore={false}
                 userId={user.id}
             />
         </div>

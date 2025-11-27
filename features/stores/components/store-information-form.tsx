@@ -1,23 +1,23 @@
-"use client"
+/* "use client" */
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Branch, BranchOperationalSettings, BranchOpeningHour, BranchEmail, BranchPhone, BranchPaymentConfig, BranchSocialMedia } from "@prisma/client"
+/* import { Branch, BranchOperationalSettings, BranchOpeningHour, BranchEmail, BranchPhone, BranchPaymentConfig, BranchSocialMedia } from "@prisma/client" */
 
 import { Form } from "@/features/global/components/form/form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@/features/shadcn/components/ui/tabs"
-import { AddressFormPanel } from "@/features/stores/components/create-form/address-form-panel"
+/* import { AddressFormPanel } from "@/features/stores/components/create-form/address-form-panel" */
 import { BasicInfoFormPanel } from "@/features/stores/components/create-form/basic-info-form-panel"
-import { ContactFormPanel } from "@/features/stores/components/create-form/contact-form-panel"
+/* import { ContactFormPanel } from "@/features/stores/components/create-form/contact-form-panel" */
 import { CreateStoreProvider } from "@/features/stores/components/create-form/create-store-provider"
-import { PaymentMethodsFormPanel } from "@/features/stores/components/create-form/payment-methods-form-panel"
+/* import { PaymentMethodsFormPanel } from "@/features/stores/components/create-form/payment-methods-form-panel"
 import { SettingsFormPanel } from "@/features/stores/components/create-form/settings-form-panel"
-import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel"
+import { ShippingFormPanel } from "@/features/stores/components/create-form/shipping-form-panel" */
 import { DeleteStoreButton } from "@/features/stores/components/delete-store-button"
 import { 
     BasicInfoFormType, 
     basicInfoSchemaNew, 
-    CreateStoreFormType,
+    /* CreateStoreFormType,
     ContactInfoFormType,
     contactInfoSchema,
     PaymentFormType,
@@ -27,11 +27,11 @@ import {
     SettingsFormType,
     settingsSchema,
     ShippingFormType,
-    shippingSchema
+    shippingSchema */
 } from "@/features/stores/schemas"
 import { StoreInformationFormProps } from "@/features/stores/types"
 
-type ExtendedBranch = Branch & {
+/* type ExtendedBranch = Branch & {
     operational_settings: BranchOperationalSettings | null
     opening_hours: BranchOpeningHour[]
     is_physical_store?: boolean
@@ -48,13 +48,13 @@ type ExtendedBranch = Branch & {
     emails: BranchEmail[]
     social_media: BranchSocialMedia[]
     payment_configs: BranchPaymentConfig[]
-}
+} */
 
-function StoreInformationForm({ store, canManageStore = false, userId }: StoreInformationFormProps) {
+function StoreInformationForm({ /* store, */ canManageStore = false, userId }: StoreInformationFormProps) {
 
-    const mainBranch = (store.branches?.find((branch) => branch.is_main) || store.branches?.[0]) as ExtendedBranch | undefined;
+    //const mainBranch = (store.branches?.find((branch) => branch.is_main) || store.branches?.[0]) as ExtendedBranch | undefined;
 
-    const storeFormData: Partial<CreateStoreFormType> = {
+    /* const storeFormData: Partial<CreateStoreFormType> = {
         basic_info: {
             name: store.name,
             subdomain: store.subdomain,
@@ -92,12 +92,12 @@ function StoreInformationForm({ store, canManageStore = false, userId }: StoreIn
                 instructions: payment_config.details?.instructions as string,
             })) : [],
         }
-    }
+    } */
 
     return (
-        <CreateStoreProvider initialValues={storeFormData}>
+        <CreateStoreProvider /* initialValues={storeFormData} */>
             <Tabs defaultValue="basic-info">
-                <TabsList variant="underline" className="w-full overflow-x-auto justify-start">
+                <TabsList variant="underline">
                     <TabsTab value="basic-info">Información Básica</TabsTab>
                     <TabsTab value="contact">Contacto</TabsTab>
                     <TabsTab value="payment">Métodos de Pago</TabsTab>
@@ -108,43 +108,43 @@ function StoreInformationForm({ store, canManageStore = false, userId }: StoreIn
                 </TabsList>
                 
                 <TabsPanel value="basic-info">
-                    <Form<BasicInfoFormType> contentButton="Guardar" resolver={yupResolver(basicInfoSchemaNew as never)}>
+                    {/* <Form<BasicInfoFormType> contentButton="Guardar" resolver={yupResolver(basicInfoSchemaNew as never)}>
                         <BasicInfoFormPanel />
-                    </Form>
+                    </Form> */}
                 </TabsPanel>
 
                 <TabsPanel value="contact">
-                    <Form<ContactInfoFormType> contentButton="Guardar" resolver={yupResolver(contactInfoSchema as never)}>
+                    {/* <Form<ContactInfoFormType> contentButton="Guardar" resolver={yupResolver(contactInfoSchema as never)}>
                         <ContactFormPanel />
-                    </Form>
+                    </Form> */}
                 </TabsPanel>
 
                 <TabsPanel value="payment">
-                    <Form<PaymentFormType> contentButton="Guardar" resolver={yupResolver(paymentSchema as never)}>
+                    {/* <Form<PaymentFormType> contentButton="Guardar" resolver={yupResolver(paymentSchema as never)}>
                         <PaymentMethodsFormPanel />
-                    </Form>
+                    </Form> */}
                 </TabsPanel>
 
                 <TabsPanel value="address">
-                    <Form<AddressInfoFormType> contentButton="Guardar" resolver={yupResolver(addressInfoSchema as never)}>
+                    {/* <Form<AddressInfoFormType> contentButton="Guardar" resolver={yupResolver(addressInfoSchema as never)}>
                         <AddressFormPanel />
-                    </Form>
+                    </Form> */}
                 </TabsPanel>
 
                 <TabsPanel value="settings">
-                    <Form<SettingsFormType> contentButton="Guardar" resolver={yupResolver(settingsSchema as never)}>
+                    {/* <Form<SettingsFormType> contentButton="Guardar" resolver={yupResolver(settingsSchema as never)}>
                         <SettingsFormPanel />
-                    </Form>
+                    </Form> */}
                 </TabsPanel>
 
                 <TabsPanel value="shipping">
-                    <Form<ShippingFormType> contentButton="Guardar" resolver={yupResolver(shippingSchema as never)}>
+                    {/* <Form<ShippingFormType> contentButton="Guardar" resolver={yupResolver(shippingSchema as never)}>
                         <ShippingFormPanel />
-                    </Form>
+                    </Form> */}
                 </TabsPanel>
 
                 <TabsPanel value="danger-zone">
-                    {canManageStore && (
+                    {/* {canManageStore && (
                         <Card className="border-destructive">
                             <CardHeader>
                                 <CardTitle className="text-destructive">Danger zone</CardTitle>
@@ -156,7 +156,7 @@ function StoreInformationForm({ store, canManageStore = false, userId }: StoreIn
                                 <DeleteStoreButton storeId={store.id} userId={userId} />
                             </CardContent>
                         </Card>
-                    )}
+                    )} */}
                 </TabsPanel>
             </Tabs>
         </CreateStoreProvider>
