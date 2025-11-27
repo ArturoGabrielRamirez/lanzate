@@ -41,8 +41,8 @@ export async function selectOrderByIdData(orderId: number) {
                     id: true,
                     name: true,
                     address: true,
-                    phone: true,
-                    email: true
+                  /*   phone: true,
+                    email: true */
                 }
             },
             payment: true,

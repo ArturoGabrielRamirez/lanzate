@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getOrderByIdAction } from "@/features/orders/actions/get-order-by-id.action"
-import { CustomerOrderTracking } from "@/features/orders/components/customer-order-tracking"
+/* import { CustomerOrderTracking } from "@/features/orders/components/customer-order-tracking" */
 import { OrderDetailsContainerProps } from "@/features/orders/types"
 
 async function OrderDetailsContainer({ orderId }: OrderDetailsContainerProps) {
@@ -30,7 +30,7 @@ async function OrderDetailsContainer({ orderId }: OrderDetailsContainerProps) {
     return (
         <div className="flex gap-6 flex-col md:flex-row">
             <div className="flex-1">
-                <CustomerOrderTracking order={order} />
+              {/*   <CustomerOrderTracking order={order} /> */}
             </div>
         </div>
     )

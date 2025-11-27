@@ -2,8 +2,8 @@ import { MapPin, Truck } from "lucide-react"
 
 import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
 import { getOrderDetailsAction } from "@/features/orders/actions"
-import { OrderDetailsAccordions } from "@/features/orders/components/order-details-accordions"
-import { OrderTimeline } from "@/features/orders/components/order-timeline"
+/* import { OrderDetailsAccordions } from "@/features/orders/components/order-details-accordions"
+import { OrderTimeline } from "@/features/orders/components/order-timeline" */
 import { OrderSummaryStepsContainerProps } from "@/features/orders/types"
 import { formatDate } from "@/lib/utils"
 
@@ -35,9 +35,9 @@ async function OrderSummaryStepsContainer({ userId, orderId, storeSlug }: OrderS
                 <p className="text-sm text-muted-foreground text-center">
                     {formatDate(order.created_at)}
                 </p>
-                <OrderTimeline order={order} />
+               {/*  <OrderTimeline order={order} /> */}
             </div>
-            <OrderDetailsAccordions order={order} />
+           {/*  <OrderDetailsAccordions order={order} /> */}
         </div>
     )
 }
