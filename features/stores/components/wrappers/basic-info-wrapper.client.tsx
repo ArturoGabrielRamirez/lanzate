@@ -1,10 +1,11 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { Form } from "@/features/global/components/form/form"
+import { Button } from "@/features/shadcn/components/button"
 import { BasicInfoFormPanel } from "@/features/stores/components/create-form/basic-info-form-panel"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { basicInfoSchemaNew, BasicInfoFormType } from "@/features/stores/schemas"
@@ -21,11 +22,28 @@ type BasicInfoClientWrapperProps = {
 }
 
 export function BasicInfoFormWrapper({ data }: BasicInfoClientWrapperProps) {
+
+    const [isEditing, setIsEditing] = useState(false)
+
+    const handleEdit = () => {
+        setIsEditing(true)
+    }
+
+    const handleSave = () => {
+        setIsEditing(false)
+    }
+
+    const handleCancel = () => {
+        setIsEditing(false)
+    }
+
     return (
         <Form<BasicInfoFormType>
             contentButton="Guardar"
             resolver={yupResolver(basicInfoSchemaNew as never)}
             submitButtonClassName="self-end w-fit"
+            submitButton={false}
+            disabled={!isEditing}
             formAction={async () => {
                 return {
                     hasError: false,
@@ -35,6 +53,17 @@ export function BasicInfoFormWrapper({ data }: BasicInfoClientWrapperProps) {
             }}
         >
             <BasicInfoClientWrapper data={data} />
+            <div className="flex justify-end gap-2">
+                {!isEditing && (
+                    <Button onClick={handleEdit} type="button">Editar</Button>
+                )}
+                {isEditing && (
+                    <Button onClick={handleCancel} variant="destructive" type="button">Cancelar</Button>
+                )}
+                {isEditing && (
+                    <Button onClick={handleSave} type="button">Guardar</Button>
+                )}
+            </div>
         </Form>
     )
 }

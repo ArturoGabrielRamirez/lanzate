@@ -26,7 +26,7 @@ function Form<T extends FieldValues>({
     resetOnSuccess = false,
     submitButtonClassName,
 }: FormPropsType<T> & { resetOnSuccess?: boolean, submitButtonClassName?: string }) {
-    const config: UseFormProps<T> = { mode: "onChange" }
+    const config: UseFormProps<T> = { mode: "onChange" , disabled }
 
     if (resolver) config.resolver = resolver as Resolver<T, unknown, T>
 

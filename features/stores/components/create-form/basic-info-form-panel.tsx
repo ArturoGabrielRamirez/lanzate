@@ -13,7 +13,7 @@ import { slugify } from "@/features/stores/utils"
 export function BasicInfoFormPanel() {
     const t = useTranslations("store.create-form.basic-info")
 
-    const { setValue, formState: { isValid }, trigger } = useFormContext()
+    const { setValue, formState: { isValid, disabled }, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { basic_info } = values
 
@@ -55,6 +55,7 @@ export function BasicInfoFormPanel() {
                         isRequired
                         tooltip={t("name-tooltip")}
                         onChange={handleNameChange}
+                        disabled={disabled}
                     />
                     <InputField
                         name="basic_info.subdomain"
@@ -70,6 +71,7 @@ export function BasicInfoFormPanel() {
                         )}
                         isRequired
                         onChange={handleSubdomainChange}
+                        disabled={disabled}
                     />
                 </div>
             </>

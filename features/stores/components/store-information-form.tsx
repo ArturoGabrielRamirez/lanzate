@@ -11,14 +11,14 @@ function StoreInformationForm({ slug }: StoreInformationFormProps) {
     return (
         <CreateStoreProvider>
             <Tabs defaultValue="basic-info">
-                <TabsList variant="underline">
+                <TabsList variant="underline" className="overflow-x-auto max-w-full overflow-y-hidden justify-start">
                     <TabsTab value="basic-info">Información Básica</TabsTab>
                     <TabsTab value="contact">Contacto</TabsTab>
-                    <TabsTab value="payment">Métodos de Pago</TabsTab>
-                    <TabsTab value="address">Dirección</TabsTab>
-                    <TabsTab value="settings">Configuración</TabsTab>
-                    <TabsTab value="shipping">Envíos</TabsTab>
-                    <TabsTab value="danger-zone">Zona de Peligro</TabsTab>
+                    <TabsTab value="payment" className="flex-1 shrink-0">Métodos de Pago</TabsTab>
+                    <TabsTab value="address" className="flex-1 shrink-0">Dirección</TabsTab>
+                    <TabsTab value="settings" className="flex-1 shrink-0">Configuración</TabsTab>
+                    <TabsTab value="shipping" className="flex-1 shrink-0">Envíos</TabsTab>
+                    <TabsTab value="danger-zone" className="flex-1 shrink-0">Zona de Peligro</TabsTab>
                 </TabsList>
                 
                 <TabsPanel value="basic-info">
