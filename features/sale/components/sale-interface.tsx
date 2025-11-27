@@ -6,15 +6,17 @@ import { useState, useRef } from 'react'
 
 import { CartItemType } from '@/features/cart/types'
 import { createNewWalkInOrderAction } from '@/features/checkout/actions/create-new-walk-in-order.action'
+import { KeyboardShortcutsHelp } from '@/features/global/components'
+import { ShortcutsStatusBar } from '@/features/global/components'
+import { useKeyboardShortcuts } from '@/features/global/hooks'
 import { actionWrapper } from '@/features/global/utils'
 import { searchProductByBarcodeAction } from '@/features/products/actions/search-product-by-barcode.action'
 import { ActionsSection, BarcodeScannerUSB, CartSection, ProductResults, SearchSection } from '@/features/sale/components'
 import type { ScannedProduct, ProductSearchResult, CartItem, ProductSearchByNameResult, SaleInterfaceProps, CustomerInfo, SearchSectionRef } from '@/features/sale/types'
 
-
 function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, branchName }: SaleInterfaceProps) {
-  /* const [scannedProducts, setScannedProducts] = useState<ScannedProduct[]>([]) */
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [isFinalizingSale, setIsFinalizingSale] = useState(false)
 
   const [barcodeResult, setBarcodeResult] = useState<ProductSearchResult>({
     product: null,
@@ -29,7 +31,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
     error: false
   })
 
-  // New state for payment method and customer info
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>('CASH')
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: '',
@@ -39,6 +40,11 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
 
   const searchSectionRef = useRef<SearchSectionRef>(null)
   const t = useTranslations('sale.messages')
+
+  const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
+  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
+
+  // ============ HANDLERS ============
 
   const handleProductScanned = async (barcode: string) => {
     setSearchResults({
@@ -66,7 +72,6 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           error: true
         })
       } else {
-        // SOLUCIÓN ERROR 1: Convertir propiedades null a undefined (solo las que existen en payload)
         const scannedProduct: ScannedProduct = {
           ...payload,
           description: payload.description ?? undefined,
@@ -74,7 +79,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
           sku: payload.sku ?? undefined,
           image: payload.image ?? undefined,
         }
-        
+
         setBarcodeResult({
           product: scannedProduct,
           message: t('product-found'),
@@ -167,11 +172,9 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
     setCartItems([])
   }
 
-  const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
-  const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-
-  // SOLUCIÓN ERROR 2: Wrapper que convierte el formato de respuesta
   const handleFinalizeSale = async (formData: { paymentMethod: PaymentMethod; customerInfo: CustomerInfo }) => {
+    setIsFinalizingSale(true)
+
     const result = await actionWrapper(async () => {
       const { hasError, message, payload } = await createNewWalkInOrderAction({
         branch_id: branchId,
@@ -214,7 +217,8 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
       }
     })
 
-    // Convertir hasError a error para cumplir con el tipo esperado
+    setIsFinalizingSale(false)
+
     return {
       error: result.hasError,
       payload: result.payload,
@@ -223,13 +227,11 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   }
 
   const handleRefund = () => {
-    // TODO: Implementar lógica de reembolso
     console.log('Procesando reembolso')
     alert(t('refund-not-implemented'))
   }
 
   const handleCalculateChange = () => {
-    // TODO: Implementar calculadora de vuelto
     console.log('Calculando vuelto para total:', cartTotal)
     const payment = prompt(t('change-calculation', { total: cartTotal.toFixed(2) }))
     if (payment) {
@@ -243,60 +245,96 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   }
 
   const handlePrintReceipt = () => {
-    // TODO: Implementar impresión de ticket
     console.log('Imprimiendo ticket')
     alert(t('print-not-implemented'))
   }
 
-  /* const handleViewOrderHistory = () => {
-    // TODO: Implementar vista de historial de órdenes
-    console.log('Viendo historial de órdenes')
-    alert('Vista de historial no implementada aún')
-  } */
+  // ============ KEYBOARD SHORTCUTS ============
+  useKeyboardShortcuts({
+    isInSale: true,
+    hasCartItems: cartItems.length > 0,
+    onFocusSearch: () => {
+      searchSectionRef.current?.focusSearch()
+    },
+    onClearSearch: handleClearResults,
+    onFinalizeSale: async () => {
+      if (cartItems.length > 0) {
+        // Simular click en el botón de finalizar venta
+        await handleFinalizeSale({ paymentMethod: selectedPaymentMethod, customerInfo })
+      }
+    },
+    onCalculateChange: handleCalculateChange,
+    onPrintReceipt: handlePrintReceipt,
+    onClearCart: handleClearCart,
+    onRefund: handleRefund,
+    onIncreaseQuantity: () => {
+      if (cartItems.length > 0) {
+        const lastItem = cartItems[cartItems.length - 1]
+        handleUpdateQuantity(lastItem.product.id, lastItem.quantity + 1)
+      }
+    },
+    onDecreaseQuantity: () => {
+      if (cartItems.length > 0) {
+        const lastItem = cartItems[cartItems.length - 1]
+        handleUpdateQuantity(lastItem.product.id, lastItem.quantity - 1)
+      }
+    }
+  })
 
   return (
-    <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] grid-rows-[min-content_min-content_1fr_auto] lg:grid-rows-[min-content_1fr_auto]">
+    <>
+      <div className="grid grid-cols-1 lg:grid-areas-[search_barcode_cart,results_results_cart,buttons_buttons_cart] gap-6 flex-1 lg:grid-cols-[1fr_1fr_350px] xl:grid-cols-[1fr_1fr_450px] grid-rows-[min-content_min-content_1fr_auto] lg:grid-rows-[min-content_1fr_auto]">
 
-      <div className='grid grid-cols-[1fr_auto] gap-4 lg:col-span-2 lg:grid-cols-2'>
-        <SearchSection
-          storeId={storeId}
+        <div className='grid grid-cols-[1fr_auto] gap-4 lg:col-span-2 lg:grid-cols-2'>
+          <SearchSection
+            storeId={storeId}
+            onAddToCart={handleAddToCart}
+            onSearchResults={handleSearchResults}
+            ref={searchSectionRef}
+          />
+
+          <BarcodeScannerUSB onProductScanned={handleProductScanned} />
+        </div>
+
+        <ProductResults
+          searchResults={searchResults}
+          barcodeResult={barcodeResult}
           onAddToCart={handleAddToCart}
-          onSearchResults={handleSearchResults}
-          ref={searchSectionRef}
+          onClearResults={handleClearResults}
         />
 
-        <BarcodeScannerUSB onProductScanned={handleProductScanned} />
+        <CartSection
+          cartItems={cartItems}
+          onUpdateQuantity={handleUpdateQuantity}
+          onRemoveItem={handleRemoveItem}
+        />
+
+        <ActionsSection
+          cartTotal={cartTotal}
+          cartItemCount={cartItemCount}
+          onFinalizeSale={handleFinalizeSale}
+          onRefund={handleRefund}
+          onClearCart={handleClearCart}
+          onCalculateChange={handleCalculateChange}
+          onPrintReceipt={handlePrintReceipt}
+          selectedPaymentMethod={selectedPaymentMethod}
+          setSelectedPaymentMethod={setSelectedPaymentMethod}
+          customerInfo={customerInfo}
+          setCustomerInfo={setCustomerInfo}
+          branchName={branchName}
+          isFinalizingSale={isFinalizingSale}
+        />
+
       </div>
 
-      <ProductResults
-        searchResults={searchResults}
-        barcodeResult={barcodeResult}
-        onAddToCart={handleAddToCart}
-        onClearResults={handleClearResults}
-      />
+      {/* Barra de atajos flotante */}
+      <ShortcutsStatusBar hasCartItems={cartItems.length > 0} />
 
-      <CartSection
-        cartItems={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-      />
-
-      <ActionsSection
-        cartTotal={cartTotal}
-        cartItemCount={cartItemCount}
-        onFinalizeSale={handleFinalizeSale}
-        onRefund={handleRefund}
-        onClearCart={handleClearCart}
-        onCalculateChange={handleCalculateChange}
-        onPrintReceipt={handlePrintReceipt}
-        selectedPaymentMethod={selectedPaymentMethod}
-        setSelectedPaymentMethod={setSelectedPaymentMethod}
-        customerInfo={customerInfo}
-        setCustomerInfo={setCustomerInfo}
-        branchName={branchName}
-      />
-
-    </div>
+      {/* Botón de ayuda flotante */}
+      <div className="fixed bottom-4 right-4 z-50">
+        <KeyboardShortcutsHelp isInSale />
+      </div>
+    </>
   )
 }
 

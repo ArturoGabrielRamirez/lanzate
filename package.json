@@ -82,6 +82,7 @@
     "react-day-picker": "^9.8.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.60.0",
+    "react-hotkeys-hook": "^5.2.1",
     "react-image-crop": "^11.0.10",
     "react-qr-barcode-scanner": "^2.1.8",
     "react-select": "^5.10.1",

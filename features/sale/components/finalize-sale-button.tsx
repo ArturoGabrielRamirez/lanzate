@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import * as Yup from 'yup'
 
+import { InlineShortcut } from '@/features/global/components'
 import { ButtonWithPopup } from '@/features/global/components/button-with-popup'
 import InputField from '@/features/global/components/form/input'
 import { SelectField } from '@/features/global/components/form/select-field'
@@ -59,7 +60,8 @@ function FinalizeSaleButton({
   onConfirm,
   setSelectedPaymentMethod,
   setCustomerInfo,
-  branchName
+  branchName,
+  isFinalizingSale = false
 }: FinalizeSaleButtonProps) {
   const t = useTranslations('sale.finalize-sale')
   const [includeCustomerInfo, setIncludeCustomerInfo] = useState(false)
@@ -101,7 +103,10 @@ function FinalizeSaleButton({
       text={
         <>
           <CreditCard className="h-5 w-5" />
-          <span className='hidden lg:block'>{t('title')}</span>
+          <span className='hidden lg:flex items-center gap-1'>
+            {isFinalizingSale ? t('processing') : t('title')}
+            {!isFinalizingSale && <InlineShortcut keys={['C']} />}
+          </span>
         </>
       }
       title={t('popup-title')}
@@ -112,7 +117,7 @@ function FinalizeSaleButton({
       })}
       action={handleFinalizeSale}
       schema={finalizeSaleSchema}
-      disabled={disabled || cartItemCount === 0}
+      disabled={disabled || cartItemCount === 0 || isFinalizingSale}
       className={className}
       variant="default"
       messages={{
@@ -153,7 +158,6 @@ function FinalizeSaleButton({
           </div>
         </div>
 
-
         {includeCustomerInfo && (
           <div className="space-y-4">
             <h4 className="text-sm font-medium">Información del cliente</h4>
@@ -180,8 +184,6 @@ function FinalizeSaleButton({
             />
           </div>
         )}
-
-
       </div>
     </ButtonWithPopup>
   )

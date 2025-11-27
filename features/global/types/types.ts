@@ -124,3 +124,38 @@ export interface ReplyEmailTemplateProps {
 export interface WaitlistWelcomeProps {
     recipientEmail: string;
 }
+
+export interface ShortcutHintProps {
+    keys: string[]
+    label?: string
+    variant?: "default" | "secondary" | "outline" | "destructive"
+    size?: "sm" | "md"
+}
+
+export interface KeyboardShortcut {
+    keys: string[]
+    description: string
+    category: 'global' | 'sale'
+    condition?: string
+}
+
+export interface KeyboardShortcutsConfig {
+    // Callbacks para acciones específicas
+    onNewSale?: () => void
+    onFinalizeSale?: () => void
+    onCalculateChange?: () => void
+    onPrintReceipt?: () => void
+    onClearCart?: () => void
+    onRefund?: () => void
+    onFocusSearch?: () => void
+    onClearSearch?: () => void
+    onIncreaseQuantity?: () => void
+    onDecreaseQuantity?: () => void
+
+    // Control de contexto
+    isInSale?: boolean
+    hasCartItems?: boolean
+
+    // Deshabilitar shortcuts globalmente
+    disabled?: boolean
+}

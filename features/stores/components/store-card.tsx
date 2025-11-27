@@ -1,4 +1,5 @@
 "use client"
+
 import { Boxes, Calendar, EllipsisVertical, Globe, Loader2, ShoppingCart, StoreIcon, Trash2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -89,7 +90,7 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
                                 </DropDrawerItem>
                             </DropDrawerGroup>
                             <DropDrawerItem icon={isDeleting ? <Loader2 className="size-6 lg:size-4 text-destructive animate-spin" /> : <Trash2 className="size-6 lg:size-4 text-destructive" />} className="text-destructive" onClick={handleDeleteStore} disabled={isDeleting}>
-                                {isDeleting ? "Deleting..." : "Delete Store"}
+                                {isDeleting ? "Eliminando..." : "Eliminar Tienda"}
                             </DropDrawerItem>
                         </DropDrawerContent>
                     </DropDrawer>
