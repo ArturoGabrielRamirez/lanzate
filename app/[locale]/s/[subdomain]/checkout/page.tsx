@@ -1,5 +1,5 @@
-import { CartResume } from "@/features/cart/components"
-import { CheckoutForm, CheckoutProvider } from "@/features/checkout/components"
+/* import { CartResume } from "@/features/cart/components"
+import { CheckoutForm, CheckoutProvider } from "@/features/checkout/components" */
 import { getUserInfo } from "@/features/global/actions"
 /* import { Title } from "@/features/layout/components" */
 import {PageContainer} from "@/features/layout/components/page-container"
@@ -25,20 +25,20 @@ async function CheckoutPage({ params }: { params: Promise<{ subdomain: string }>
     }
 
     return (
-        <CheckoutProvider>
+      /*   <CheckoutProvider> */
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
                 {/* <Title title="Checkout" breadcrumbs={breadcrumbs} homePath="/"/> */}
                 <div className="flex flex-col gap-4 lg:flex-row">
-                    <CheckoutForm 
+                   {/*  <CheckoutForm 
                         subdomain={subdomain} 
                         userId={String(user.id)} 
                         branches={store.branches}
                         operationalSettings={store.operational_settings}
                     />
-                    <CartResume operationalSettings={store.operational_settings} />
+                    <CartResume operationalSettings={store.operational_settings} /> */}
                 </div>
             </PageContainer>
-        </CheckoutProvider>
+     /*    </CheckoutProvider> */
     )
 }
 
