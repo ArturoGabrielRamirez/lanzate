@@ -23,7 +23,7 @@ export * from "@/features/products/components/product-color-row"
 export * from "@/features/products/components/product-detail"
 export * from "@/features/products/components/product-list-container"
 export * from "@/features/products/components/product-list-display"
-export * from "@/features/products/components/product-list"
+/* export * from "@/features/products/components/product-list" */
 export * from "@/features/products/components/products-card"
 export * from "@/features/products/components/products-table"
 export * from "@/features/products/components/related-products"
