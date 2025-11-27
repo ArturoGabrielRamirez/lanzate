@@ -8,6 +8,6 @@ type BasicInfoServerWrapperProps = {
 export async function BasicInfoServerWrapper({ slug }: BasicInfoServerWrapperProps) {
     const { payload: store } = await getStoreBasicsBySlugAction(slug)
 
-    return <BasicInfoFormWrapper data={store} />
+    return <BasicInfoFormWrapper data={store} slug={slug} />
 }
 
