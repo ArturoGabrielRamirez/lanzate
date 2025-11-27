@@ -1,4 +1,4 @@
-"use server"
+/* "use server"
 
 import { revalidatePath } from "next/cache"
 
@@ -20,4 +20,4 @@ export async function updateOperationalSettingsAction(storeId: number, payload: 
             hasError: false
         }
     })
-} 
+}  */
