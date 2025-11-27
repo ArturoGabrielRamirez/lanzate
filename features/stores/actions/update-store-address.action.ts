@@ -44,7 +44,8 @@ export async function updateStoreAddressAction(slug: string, payload: UpdateAddr
                 country: payload.country || null,
                 store: {
                     update: {
-                        is_physical_store: payload.is_physical_store
+                       /*  is_physical_store: payload.is_physical_store */
+                       //TODO: Arreglar aca, apra Hori
                     }
                 }
             }
