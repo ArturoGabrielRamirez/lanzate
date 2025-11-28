@@ -6,8 +6,10 @@ import { useFormContext } from "react-hook-form"
 
 import { Button } from "@/features/shadcn/components/button"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { PaymentFormType } from "@/features/stores/schemas"
+import { CreateStoreFormType, PaymentFormType } from "@/features/stores/schemas"
 import { reverseMapPaymentMethodType } from "@/features/stores/utils/payment-helpers"
+
+type PaymentMethodType = NonNullable<CreateStoreFormType["payment_info"]["payment_methods"]>[number]["type"]
 
 type PaymentMethodsFormActionsProps = {
     isEditing: boolean
@@ -29,7 +31,7 @@ export function PaymentMethodsFormActions({ isEditing, onEdit, onCancel, onSave,
             const details = method.details as { cbu?: string, alias?: string, instructions?: string } || {}
             return {
                 name: method.name,
-                type: reverseMapPaymentMethodType(method.type),
+                type: reverseMapPaymentMethodType(method.type) as PaymentMethodType,
                 commission_percent: method.commission_percent || 0,
                 commission_amount: method.commission_amount || 0,
                 cbu_cvu: details.cbu || "",
