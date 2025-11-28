@@ -196,7 +196,7 @@ export function PaymentMethodsFormPanel() {
     }
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
                 <p className="text-sm font-medium">Métodos de pago</p>
             </div>
