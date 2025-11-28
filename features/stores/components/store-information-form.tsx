@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsPanel, TabsTab } from "@/features/shadcn/components
 import { CreateStoreProvider } from "@/features/stores/components/create-form/create-store-provider"
 import { BasicInfoSkeleton } from "@/features/stores/components/skeletons/basic-info-skeleton"
 import { ContactSkeleton } from "@/features/stores/components/skeletons/contact-skeleton"
+import { AddressServerWrapper } from "@/features/stores/components/wrappers/address-wrapper.server"
 import { BasicInfoServerWrapper } from "@/features/stores/components/wrappers/basic-info-wrapper.server"
 import { ContactServerWrapper } from "@/features/stores/components/wrappers/contact-wrapper.server"
 import { PaymentMethodsServerWrapper } from "@/features/stores/components/wrappers/payment-methods-wrapper.server"
@@ -43,9 +44,9 @@ function StoreInformationForm({ slug }: StoreInformationFormProps) {
                 </TabsPanel>
 
                 <TabsPanel value="address">
-                    {/* <Form<AddressInfoFormType> contentButton="Guardar" resolver={yupResolver(addressInfoSchema as never)}>
-                        <AddressFormPanel />
-                    </Form> */}
+                    <Suspense fallback={<ContactSkeleton />}>
+                        <AddressServerWrapper slug={slug} />
+                    </Suspense>
                 </TabsPanel>
 
                 <TabsPanel value="settings">

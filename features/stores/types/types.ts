@@ -1,4 +1,4 @@
-import { Order, Store, StoreOperationalSettings, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod, ProductVariant, StoreCustomization } from "@prisma/client"
+import { Order, Store, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod, ProductVariant, StoreCustomization } from "@prisma/client"
 import { RowModel } from "@tanstack/react-table"
 import dayjs from "dayjs"
 import { ReactNode } from "react"
@@ -38,12 +38,12 @@ export type TabProps<T = Record<string, never>> = BaseTabProps & T
  * Store with common relations
  */
 export type StoreWithBranches = Store & { branches: Branch[] }
-export type StoreWithSettings = Store & { operational_settings: StoreOperationalSettings | null }
+export type StoreWithSettings = Store & { operational_settings: BranchOperationalSettings | null }
 export type StoreWithBranchesAndSettings = StoreWithBranches & StoreWithSettings
 export type StoreWithProducts = Store & {
     products: (Product & { variants: ProductVariant[] })[]
     customization: StoreCustomization | null
-    operational_settings: StoreOperationalSettings | null
+    operational_settings: BranchOperationalSettings | null
 }
 
 export type GetStoreWithProductsReturn = {
@@ -203,7 +203,7 @@ export type GetStoresFromSlugReturn = ActionResult<Store & {
     branches: (Branch & { stock: ProductStock[] })[]
     products: (Product & { categories: Category[] })[]
     balance: StoreBalance | null
-    operational_settings: StoreOperationalSettings | null
+    operational_settings: BranchOperationalSettings | null
 } | null>
 
 // ============================================================================
