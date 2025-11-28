@@ -3,7 +3,7 @@ import { BasicInfoFormWrapper } from "@/features/stores/components/wrappers/basi
 
 export async function BasicInfoServerWrapper({ slug }: { slug: string }) {
     const { payload: store } = await getStoreBasicsBySlugAction(slug)
-
+    
     return <BasicInfoFormWrapper data={store} slug={slug} />
 }
 

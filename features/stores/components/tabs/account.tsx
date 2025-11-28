@@ -14,7 +14,6 @@ async function AccountTab({ slug }: AccountTabProps) {
         <div className="flex flex-col gap-6">
             
             <StoreInformationForm
-                canManageStore={false}
                 userId={user.id}
                 slug={slug}
             />

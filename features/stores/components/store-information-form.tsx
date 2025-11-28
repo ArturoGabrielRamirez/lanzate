@@ -7,10 +7,11 @@ import { ContactSkeleton } from "@/features/stores/components/skeletons/contact-
 import { AddressServerWrapper } from "@/features/stores/components/wrappers/address-wrapper.server"
 import { BasicInfoServerWrapper } from "@/features/stores/components/wrappers/basic-info-wrapper.server"
 import { ContactServerWrapper } from "@/features/stores/components/wrappers/contact-wrapper.server"
+import { DangerZoneServerWrapper } from "@/features/stores/components/wrappers/danger-zone-wrapper.server"
 import { PaymentMethodsServerWrapper } from "@/features/stores/components/wrappers/payment-methods-wrapper.server"
 import { StoreInformationFormProps } from "@/features/stores/types"
 
-function StoreInformationForm({ slug }: StoreInformationFormProps) {
+function StoreInformationForm({ slug, userId }: StoreInformationFormProps) {
 
     return (
         <CreateStoreProvider>
@@ -20,7 +21,7 @@ function StoreInformationForm({ slug }: StoreInformationFormProps) {
                     <TabsTab value="contact">Contacto</TabsTab>
                     <TabsTab value="payment" className="flex-1 shrink-0">Métodos de Pago</TabsTab>
                     <TabsTab value="address" className="flex-1 shrink-0">Dirección</TabsTab>
-                    <TabsTab value="settings" className="flex-1 shrink-0">Configuración</TabsTab>
+                    <TabsTab value="hours" className="flex-1 shrink-0">Horarios</TabsTab>
                     <TabsTab value="shipping" className="flex-1 shrink-0">Envíos</TabsTab>
                     <TabsTab value="danger-zone" className="flex-1 shrink-0">Zona de Peligro</TabsTab>
                 </TabsList>
@@ -49,7 +50,7 @@ function StoreInformationForm({ slug }: StoreInformationFormProps) {
                     </Suspense>
                 </TabsPanel>
 
-                <TabsPanel value="settings">
+                <TabsPanel value="hours">
                     {/* <Form<SettingsFormType> contentButton="Guardar" resolver={yupResolver(settingsSchema as never)}>
                         <SettingsFormPanel />
                     </Form> */}
@@ -62,19 +63,9 @@ function StoreInformationForm({ slug }: StoreInformationFormProps) {
                 </TabsPanel>
 
                 <TabsPanel value="danger-zone">
-                    {/* {canManageStore && (
-                        <Card className="border-destructive">
-                            <CardHeader>
-                                <CardTitle className="text-destructive">Danger zone</CardTitle>
-                                <CardDescription>
-                                    Esta acción es irreversible.
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <DeleteStoreButton storeId={store.id} userId={userId} />
-                            </CardContent>
-                        </Card>
-                    )} */}
+                    <Suspense fallback={<ContactSkeleton />}>
+                        <DangerZoneServerWrapper slug={slug} userId={userId} />
+                    </Suspense>
                 </TabsPanel>
             </Tabs>
         </CreateStoreProvider>
