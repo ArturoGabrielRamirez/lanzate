@@ -10,6 +10,7 @@ import { ContactServerWrapper } from "@/features/stores/components/wrappers/cont
 import { DangerZoneServerWrapper } from "@/features/stores/components/wrappers/danger-zone-wrapper.server"
 import { OpeningHoursServerWrapper } from "@/features/stores/components/wrappers/opening-hours-wrapper.server"
 import { PaymentMethodsServerWrapper } from "@/features/stores/components/wrappers/payment-methods-wrapper.server"
+import { ShippingServerWrapper } from "@/features/stores/components/wrappers/shipping-wrapper.server"
 import { StoreInformationFormProps } from "@/features/stores/types"
 
 function StoreInformationForm({ slug, userId }: StoreInformationFormProps) {
@@ -58,9 +59,9 @@ function StoreInformationForm({ slug, userId }: StoreInformationFormProps) {
                 </TabsPanel>
 
                 <TabsPanel value="shipping">
-                    {/* <Form<ShippingFormType> contentButton="Guardar" resolver={yupResolver(shippingSchema as never)}>
-                        <ShippingFormPanel />
-                    </Form> */}
+                    <Suspense fallback={<ContactSkeleton />}>
+                        <ShippingServerWrapper slug={slug} />
+                    </Suspense>
                 </TabsPanel>
 
                 <TabsPanel value="danger-zone">
