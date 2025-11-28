@@ -8,12 +8,6 @@ export const STORES_NAVIGATION_LINKS = [
         icon: <Home className="size-[inherit]" />
     },
     {
-        label: "Configuracion",
-        description: "Gestiona la cuenta de tu tienda.",
-        href: "/account",
-        icon: <Settings className="size-[inherit]" />
-    },
-    {
         label: "Productos",
         description: "Gestiona los productos de tu tienda.",
         href: "/products",
@@ -30,6 +24,12 @@ export const STORES_NAVIGATION_LINKS = [
         description: "Gestiona las sucursales de tu tienda.",
         href: "/branches",
         icon: <Building2 className="size-[inherit]" />
+    },
+    {
+        label: "Configuracion",
+        description: "Gestiona la cuenta de tu tienda.",
+        href: "/account",
+        icon: <Settings className="size-[inherit]" />
     },
     /* {
         label: "Empleados",
