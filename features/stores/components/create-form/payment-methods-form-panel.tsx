@@ -11,10 +11,10 @@ import { Empty, EmptyDescription } from "@/features/shadcn/components/empty"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemHeader, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
-import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
-import { CreateStoreFormValues } from "@/features/stores/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
+import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
+import { CreateStoreFormValues } from "@/features/stores/types"
 
 const paymentTypes = [
     {
