@@ -36,14 +36,14 @@ function AttentionDateEditor({
 
     const selectedDays = watch(`${baseName}.days`) || []
 
-    const dayLabels = [
-        t("days.monday"),
-        t("days.tuesday"),
-        t("days.wednesday"),
-        t("days.thursday"),
-        t("days.friday"),
-        t("days.saturday"),
-        t("days.sunday"),
+    const daysMap = [
+        { key: "monday", label: t("days.monday") },
+        { key: "tuesday", label: t("days.tuesday") },
+        { key: "wednesday", label: t("days.wednesday") },
+        { key: "thursday", label: t("days.thursday") },
+        { key: "friday", label: t("days.friday") },
+        { key: "saturday", label: t("days.saturday") },
+        { key: "sunday", label: t("days.sunday") },
     ]
 
     const syncToContext = () => {
@@ -61,14 +61,18 @@ function AttentionDateEditor({
         })
     }
 
-    const handleToggleDay = (day: string) => {
+    const handleToggleDay = (dayKey: string) => {
         const current = selectedDays || []
         let newSelection = []
-        if (current.includes(day)) {
-            newSelection = current.filter((d: string) => d !== day)
+        if (current.includes(dayKey)) {
+            newSelection = current.filter((d: string) => d !== dayKey)
         } else {
-            newSelection = [...current, day]
-            newSelection.sort((a, b) => dayLabels.indexOf(a) - dayLabels.indexOf(b))
+            newSelection = [...current, dayKey]
+            newSelection.sort((a: string, b: string) => {
+                const indexA = daysMap.findIndex(d => d.key === a)
+                const indexB = daysMap.findIndex(d => d.key === b)
+                return indexA - indexB
+            })
         }
         setValue(`${baseName}.days`, newSelection, { shouldDirty: true, shouldTouch: true, shouldValidate: true })
         syncToContext()
@@ -95,17 +99,17 @@ function AttentionDateEditor({
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                    {dayLabels.map((day) => (
+                    {daysMap.map((day) => (
                         <Badge
-                            key={day}
-                            variant={selectedDays.includes(day) ? "default" : "outline"}
+                            key={day.key}
+                            variant={selectedDays.includes(day.key) ? "default" : "outline"}
                             className={cn(
                                 "cursor-pointer select-none px-4 py-1.5",
-                                !selectedDays.includes(day) && "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                                !selectedDays.includes(day.key) && "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                             )}
-                            onClick={() => handleToggleDay(day)}
+                            onClick={() => handleToggleDay(day.key)}
                         >
-                            {day.slice(0, 3)}
+                            {day.label.slice(0, 3)}
                         </Badge>
                     ))}
                 </div>
@@ -126,7 +130,7 @@ function AttentionDateEditor({
                         <ItemContent className="gap-2">
                             <ItemHeader>
                                 <ItemTitle className="text-sm font-medium">
-                                    {selectedDays.length > 0 ? selectedDays[0] : ""}
+                                    {selectedDays.length > 0 ? daysMap.find(d => d.key === selectedDays[0])?.label : ""}
                                     {selectedDays.length > 1 && ` + ${selectedDays.length - 1} more`}
                                 </ItemTitle>
                             </ItemHeader>
@@ -193,6 +197,16 @@ export function AttentionDateFormPanel() {
 
     // This line is needed to fix the unused variable warning, or we remove it if not needed
     const triggerValidation = trigger
+
+    const DAYS_MAP: Record<string, string> = {
+        "monday": t("days.monday"),
+        "tuesday": t("days.tuesday"),
+        "wednesday": t("days.wednesday"),
+        "thursday": t("days.thursday"),
+        "friday": t("days.friday"),
+        "saturday": t("days.saturday"),
+        "sunday": t("days.sunday"),
+    }
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -291,7 +305,11 @@ export function AttentionDateFormPanel() {
                         return (
                             <div key={field.id} className="flex justify-between items-center border rounded-md p-3 text-sm">
                                 <div className="space-y-1">
-                                    <p className="font-medium">{dateData?.days?.length ? dateData.days.join(', ') : t("no-days-selected")}</p>
+                                    <p className="font-medium">
+                                        {dateData?.days?.length
+                                            ? dateData.days.map((d: string) => DAYS_MAP[d] || d).join(', ')
+                                            : t("no-days-selected")}
+                                    </p>
                                     <p className="text-muted-foreground">
                                         {dateData?.startTime} - {dateData?.endTime}
                                     </p>

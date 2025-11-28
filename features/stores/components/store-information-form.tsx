@@ -8,6 +8,7 @@ import { AddressServerWrapper } from "@/features/stores/components/wrappers/addr
 import { BasicInfoServerWrapper } from "@/features/stores/components/wrappers/basic-info-wrapper.server"
 import { ContactServerWrapper } from "@/features/stores/components/wrappers/contact-wrapper.server"
 import { DangerZoneServerWrapper } from "@/features/stores/components/wrappers/danger-zone-wrapper.server"
+import { OpeningHoursServerWrapper } from "@/features/stores/components/wrappers/opening-hours-wrapper.server"
 import { PaymentMethodsServerWrapper } from "@/features/stores/components/wrappers/payment-methods-wrapper.server"
 import { StoreInformationFormProps } from "@/features/stores/types"
 
@@ -51,9 +52,9 @@ function StoreInformationForm({ slug, userId }: StoreInformationFormProps) {
                 </TabsPanel>
 
                 <TabsPanel value="hours">
-                    {/* <Form<SettingsFormType> contentButton="Guardar" resolver={yupResolver(settingsSchema as never)}>
-                        <SettingsFormPanel />
-                    </Form> */}
+                    <Suspense fallback={<ContactSkeleton />}>
+                        <OpeningHoursServerWrapper slug={slug} />
+                    </Suspense>
                 </TabsPanel>
 
                 <TabsPanel value="shipping">
