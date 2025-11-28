@@ -19,7 +19,7 @@ export function reverseMapShippingMethods(methods: BranchShippingMethod[]): Ship
         const minPurchase = method.min_order_amount?.toString() || ""
         const freeShippingMin = method.free_shipping_min?.toString() || ""
         const deliveryPrice = method.delivery_price?.toString() || ""
-        
+
         const key = `${minPurchase}-${freeShippingMin}-${deliveryPrice}`
 
         if (groupedMethods.has(key)) {

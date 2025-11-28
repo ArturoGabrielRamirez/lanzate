@@ -20,6 +20,9 @@ export function ShippingClientWrapper({ data }: ShippingClientWrapperProps) {
     useEffect(() => {
         if (data) {
             const mappedMethods = reverseMapShippingMethods(data)
+
+            if (!mappedMethods) return
+
             const offersDelivery = mappedMethods.length > 0
 
             setValues({
