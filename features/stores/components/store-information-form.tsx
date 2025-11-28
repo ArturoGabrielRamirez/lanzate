@@ -6,6 +6,7 @@ import { BasicInfoSkeleton } from "@/features/stores/components/skeletons/basic-
 import { ContactSkeleton } from "@/features/stores/components/skeletons/contact-skeleton"
 import { BasicInfoServerWrapper } from "@/features/stores/components/wrappers/basic-info-wrapper.server"
 import { ContactServerWrapper } from "@/features/stores/components/wrappers/contact-wrapper.server"
+import { PaymentMethodsServerWrapper } from "@/features/stores/components/wrappers/payment-methods-wrapper.server"
 import { StoreInformationFormProps } from "@/features/stores/types"
 
 function StoreInformationForm({ slug }: StoreInformationFormProps) {
@@ -22,7 +23,7 @@ function StoreInformationForm({ slug }: StoreInformationFormProps) {
                     <TabsTab value="shipping" className="flex-1 shrink-0">Envíos</TabsTab>
                     <TabsTab value="danger-zone" className="flex-1 shrink-0">Zona de Peligro</TabsTab>
                 </TabsList>
-                
+
                 <TabsPanel value="basic-info">
                     <Suspense fallback={<BasicInfoSkeleton />}>
                         <BasicInfoServerWrapper slug={slug} />
@@ -33,15 +34,12 @@ function StoreInformationForm({ slug }: StoreInformationFormProps) {
                     <Suspense fallback={<ContactSkeleton />}>
                         <ContactServerWrapper slug={slug} />
                     </Suspense>
-                    {/* <Form<ContactInfoFormType> contentButton="Guardar" resolver={yupResolver(contactInfoSchema as never)}>
-                        <ContactFormPanel />
-                    </Form> */}
                 </TabsPanel>
 
                 <TabsPanel value="payment">
-                    {/* <Form<PaymentFormType> contentButton="Guardar" resolver={yupResolver(paymentSchema as never)}>
-                        <PaymentMethodsFormPanel />
-                    </Form> */}
+                    <Suspense fallback={<ContactSkeleton />}>
+                        <PaymentMethodsServerWrapper slug={slug} />
+                    </Suspense>
                 </TabsPanel>
 
                 <TabsPanel value="address">

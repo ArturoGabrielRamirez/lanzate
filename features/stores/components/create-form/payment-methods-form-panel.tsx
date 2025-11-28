@@ -67,7 +67,7 @@ const paymentTypes = [
 
 export function PaymentMethodsFormPanel() {
     const t = useTranslations("store.create-form.payment")
-    const { control, formState: { isValid, errors }, setValue, getValues, trigger, watch } = useFormContext<CreateStoreFormValues>()
+    const { control, formState: { isValid, errors, disabled }, setValue, getValues, trigger, watch } = useFormContext<CreateStoreFormValues>()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { payment_info } = values
 
@@ -80,6 +80,13 @@ export function PaymentMethodsFormPanel() {
     const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
 
     const paymentMethods = watch("payment_info.payment_methods")
+
+    useEffect(() => {
+        if (disabled) {
+            setIsAddingMethod(false)
+            setConfirmedIds(new Set())
+        }
+    }, [disabled])
 
     useEffect(() => {
         if (payment_info?.payment_methods) {
@@ -341,7 +348,7 @@ export function PaymentMethodsFormPanel() {
                 )
             })}
 
-            {!isAddingMethod && (
+            {!isAddingMethod && !disabled && (
                 <Button variant="outline" onClick={handleAddMethod}>
                     <Plus />
                     Agregar nuevo
