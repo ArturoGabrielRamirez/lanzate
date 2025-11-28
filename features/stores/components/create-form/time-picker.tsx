@@ -42,13 +42,14 @@ export function TimePicker({
     startIcon,
     onChange,
 }: TimePickerProps) {
-    const { setValue, control } = useFormContext()
+    const { setValue, control, formState: { disabled } } = useFormContext()
     const [isOpen, setIsOpen] = useState(false)
     
     const value = useWatch({
         control,
         name,
-        defaultValue: "09:00"
+        defaultValue: "09:00",
+        disabled
     })
 
     const [hours, minutes] = (value || "09:00").split(":")
@@ -67,9 +68,12 @@ export function TimePicker({
     }
 
     return (
-        <Popover open={isOpen} onOpenChange={setIsOpen} modal={true}>
+        <Popover open={isOpen} onOpenChange={(open) => !disabled && setIsOpen(open)} modal={true}>
             <PopoverTrigger asChild>
-                <div onClick={() => setIsOpen(true)} className="cursor-pointer">
+                <div 
+                    onClick={() => !disabled && setIsOpen(true)} 
+                    className={cn("cursor-pointer", disabled && "pointer-events-none opacity-50")}
+                >
                      <InputField
                         name={name}
                         label={label}
@@ -80,6 +84,7 @@ export function TimePicker({
                         hideLabel={hideLabel}
                         startIcon={startIcon || <ClockIcon />}
                         readOnly
+                        disabled={disabled}
                         className={cn(isOpen && "ring-2 ring-primary ring-offset-2")}
                     />
                 </div>
