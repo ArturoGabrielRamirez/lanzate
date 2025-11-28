@@ -10,6 +10,7 @@ import { Empty, EmptyContent, EmptyDescription, EmptyMedia } from "@/features/sh
 import { Item, ItemActions, ItemContent, ItemDescription, ItemHeader, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { TimePicker } from "@/features/stores/components/create-form/time-picker"
@@ -215,26 +216,28 @@ export function ShippingFormPanel() {
 
     return (
         <div className="flex flex-col gap-4">
-            <ChoiceBox
-                columns={2}
-                gap={6}
-                selectionMode="single"
-                selectedKeys={[offersDelivery ? "delivery" : "pickup"]}
-                onSelectionChange={handleSelectionChange}
-                className={cn(disabled && "pointer-events-none")}
-            >
-                <ChoiceBoxItem id="pickup" textValue={t("pickup-only")}>
-                    <Store />
-                    <ChoiceBoxLabel>{t("pickup-only")}</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>{t("pickup-only-description")}</ChoiceBoxDescription>
-                </ChoiceBoxItem>
-                <ChoiceBoxItem id="delivery" textValue={t("delivery-pickup")}>
-                    <Truck />
-                    <ChoiceBoxLabel>{t("delivery-pickup")}</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>{t("delivery-pickup-description")}</ChoiceBoxDescription>
-                </ChoiceBoxItem>
-            </ChoiceBox>
-
+            <div className="flex flex-col gap-1">
+                <p className="text-sm font-medium">Delivery type</p>
+                <ChoiceBox
+                    columns={2}
+                    gap={4}
+                    selectionMode="single"
+                    selectedKeys={[offersDelivery ? "delivery" : "pickup"]}
+                    onSelectionChange={handleSelectionChange}
+                    className={cn(disabled && "pointer-events-none")}
+                >
+                    <ChoiceBoxItem id="pickup" textValue={t("pickup-only")}>
+                        <Store />
+                        <ChoiceBoxLabel>{t("pickup-only")}</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>{t("pickup-only-description")}</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                    <ChoiceBoxItem id="delivery" textValue={t("delivery-pickup")}>
+                        <Truck />
+                        <ChoiceBoxLabel>{t("delivery-pickup")}</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>{t("delivery-pickup-description")}</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                </ChoiceBox>
+            </div>
             <AnimatePresence>
                 {offersDelivery && (
                     <motion.div
@@ -265,33 +268,37 @@ export function ShippingFormPanel() {
 
                                 if (isConfirmed && !isCurrentAdding) {
                                     return (
-                                        <Item key={field.id} className="border rounded-md p-4 border-muted-foreground/50">
-                                            <ItemMedia>
-                                                <Package className="size-5 text-muted-foreground" />
-                                            </ItemMedia>
-                                            <ItemContent className="grow">
-                                                <ItemHeader>
-                                                    <ItemTitle>{method?.providers?.join(", ") || t("no-provider-selected")}</ItemTitle>
-                                                </ItemHeader>
-                                                <ItemDescription>
-                                                    {method?.deliveryPrice ? `${t("price")}: $${method.deliveryPrice}` : t("free")}
-                                                    {method?.minPurchase ? ` • ${t("min-purchase")}: $${method.minPurchase}` : ""}
-                                                    {method?.estimatedTime ? ` • ETA: ${method.estimatedTime}` : ""}
-                                                </ItemDescription>
-                                            </ItemContent>
-                                            <ItemActions>
-                                                {!disabled && (
-                                                    <IconButton
-                                                        icon={Trash2}
-                                                        onClick={() => handleRemoveMethod(index)}
-                                                        color={[255, 0, 0]}
-                                                        className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
-                                                        tooltip={t("delete")}
-                                                        disabled={disabled}
-                                                    />
-                                                )}
-                                            </ItemActions>
-                                        </Item>
+                                        <Card key={field.id}>
+                                            <CardContent >
+                                                <Item className="p-0">
+                                                    <ItemMedia>
+                                                        <Package className="size-5 text-muted-foreground" />
+                                                    </ItemMedia>
+                                                    <ItemContent className="grow">
+                                                        <ItemHeader>
+                                                            <ItemTitle>{method?.providers?.join(", ") || t("no-provider-selected")}</ItemTitle>
+                                                        </ItemHeader>
+                                                        <ItemDescription>
+                                                            {method?.deliveryPrice ? `${t("price")}: $${method.deliveryPrice}` : t("free")}
+                                                            {method?.minPurchase ? ` • ${t("min-purchase")}: $${method.minPurchase}` : ""}
+                                                            {method?.estimatedTime ? ` • ETA: ${method.estimatedTime}` : ""}
+                                                        </ItemDescription>
+                                                    </ItemContent>
+                                                    <ItemActions>
+                                                        {!disabled && (
+                                                            <IconButton
+                                                                icon={Trash2}
+                                                                onClick={() => handleRemoveMethod(index)}
+                                                                color={[255, 0, 0]}
+                                                                className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
+                                                                tooltip={t("delete")}
+                                                                disabled={disabled}
+                                                            />
+                                                        )}
+                                                    </ItemActions>
+                                                </Item>
+                                            </CardContent>
+                                        </Card>
                                     )
                                 }
 

@@ -90,12 +90,12 @@ export function SettingsFormPanel() {
                     className={cn(disabled && "pointer-events-none")}
                 >
                     <ChoiceBoxItem id="24hours" textValue={t("24-hours")}>
-                        <Clock className="size-9" />
+                        <Clock />
                         <ChoiceBoxLabel>{t("24-hours")}</ChoiceBoxLabel>
                         <ChoiceBoxDescription>{t("24-hours-description")}</ChoiceBoxDescription>
                     </ChoiceBoxItem>
                     <ChoiceBoxItem id="schedule" textValue={t("schedule")}>
-                        <Calendar className="size-9" />
+                        <Calendar />
                         <ChoiceBoxLabel>{t("schedule")}</ChoiceBoxLabel>
                         <ChoiceBoxDescription>{t("schedule-description")}</ChoiceBoxDescription>
                     </ChoiceBoxItem>

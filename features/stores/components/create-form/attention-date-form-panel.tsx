@@ -284,7 +284,8 @@ export function AttentionDateFormPanel() {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+            <p className="text-sm font-medium">Horarios de atención</p>
             {!isAddingDate && (fields.length === 0 || (errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>))) && (
                 <div className={cn(
                     "text-sm border p-2 rounded-md text-center border-dashed",
@@ -293,7 +294,7 @@ export function AttentionDateFormPanel() {
                         : "text-muted-foreground border-muted-foreground/50"
                 )}>
                     <p>
-                        {errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
+                        {errors?.settings && "attention_dates" in (errors.ssettings as Record<string, unknown>)
                             ? (errors.settings as Record<string, { message?: string }>)["attention_dates"]?.message
                             : t("no-days-configured")
                         }
