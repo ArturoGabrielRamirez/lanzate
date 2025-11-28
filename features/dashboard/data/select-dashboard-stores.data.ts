@@ -45,7 +45,7 @@ export async function selectDashboardStoresData(userId: number, limit?: number) 
     const storeCount = stores.length
 
     return {
-        message: "Dashboard stores fetched successfully from db",
+        message: "Tiendas del dashboard obtenidas con éxito desde la base de datos",
         payload: {
             storeCount,
             stores: stores as DashboardStore[]

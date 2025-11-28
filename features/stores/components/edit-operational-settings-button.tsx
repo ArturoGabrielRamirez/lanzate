@@ -1,8 +1,8 @@
-"use client"
+/* "use client" */
 
 //puede borrarse
 
-import { PaymentMethod } from "@prisma/client"
+/* import { PaymentMethod } from "@prisma/client"
 import { CheckIcon, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
@@ -65,4 +65,4 @@ function EditOperationalSettingsButton({ storeId, store, onSuccess }: EditOperat
     )
 }
 
-export { EditOperationalSettingsButton }
+export { EditOperationalSettingsButton } */

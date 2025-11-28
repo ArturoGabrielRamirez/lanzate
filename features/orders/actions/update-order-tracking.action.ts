@@ -20,6 +20,6 @@ export async function updateOrderTrackingAction({
 
         revalidatePath(`/dashboard/orders/${orderId}`)
 
-        return formatSuccessResponse("Order tracking updated successfully", result)
+        return formatSuccessResponse("Seguimiento de la orden actualizado con éxito", result)
     })
 }

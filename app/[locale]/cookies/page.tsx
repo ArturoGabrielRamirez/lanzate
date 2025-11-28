@@ -70,7 +70,7 @@ function CookiesPolicy() {
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Tecnologías Similares</h3>
                                 <p>
-                                    También usamos otras tecnologías similares como web beacons (a veces llamados &quot;píxeles de seguimiento&quot; o &quot;gifs transparentes&quot;). Estos son archivos gráficos diminutos que contienen un identificador único que nos permite reconocer cuando alguien ha visitado nuestros Servicios o abierto un correo electrónico que le hemos enviado. Esto nos permite, por ejemplo, monitorear los patrones de tráfico de los usuarios de una página dentro de nuestros Servicios a otra, entregar o comunicarnos con cookies, entender si has llegado a nuestros Servicios desde un anuncio en línea mostrado en un sitio web de terceros, mejorar el rendimiento del sitio y medir el éxito de las campañas de marketing por correo electrónico.
+                                    También usamos otras tecnologías similares como web beacons (a veces llamados &quot;píxeles de seguimiento&quot; o &quot;gifs transparentes&quot;). Estos son archivos gráficos diminutos que contienen un identificador único que nos permite reconocer cuando alguien visitó nuestros Servicios o abrió un correo electrónico que le enviamos. Esto nos permite, por ejemplo, monitorear los patrones de tráfico de los usuarios de una página dentro de nuestros Servicios a otra, entregar o comunicarnos con cookies, entender si llegaste a nuestros Servicios desde un anuncio en línea mostrado en un sitio web de terceros, mejorar el rendimiento del sitio y medir el éxito de las campañas de marketing por correo electrónico.
                                 </p>
 
                                 <p className="mt-4">
@@ -277,7 +277,7 @@ function CookiesPolicy() {
                             <h2 className="text-xl font-bold mb-4">7. COOKIES DE PUBLICIDAD Y MARKETING</h2>
                             <div className="text-sm leading-relaxed space-y-4">
                                 <p>
-                                    Estas cookies se utilizan para entregar anuncios más relevantes para vos y tus intereses. También se usan para limitar la cantidad de veces que ves un anuncio, así como para ayudar a medir la efectividad de la campaña publicitaria. Recuerdan que has visitado un sitio web y esta información puede ser compartida con otras organizaciones, como anunciantes.
+                                    Estas cookies se utilizan para entregar anuncios más relevantes para vos y tus intereses. También se usan para limitar la cantidad de veces que ves un anuncio, así como para ayudar a medir la efectividad de la campaña publicitaria. Recuerdan que visitaste un sitio web y esta información puede ser compartida con otras organizaciones, como anunciantes.
                                 </p>
 
                                 <p className="bg-accent text-accent-foreground p-4 rounded-lg border border-primary">
@@ -526,7 +526,7 @@ function CookiesPolicy() {
                                 </p>
 
                                 <p>
-                                    Si has deshabilitado una o más cookies, podemos seguir usando información recolectada de cookies antes de que se estableciera tu preferencia de inhabilitación. Sin embargo, dejaremos de usar la cookie inhabilitada para recolectar cualquier información adicional.
+                                    Si deshabilitaste una o más cookies, podemos seguir usando información recolectada de cookies antes de que se estableciera tu preferencia de inhabilitación. Sin embargo, dejaremos de usar la cookie inhabilitada para recolectar cualquier información adicional.
                                 </p>
                             </div>
                         </section>

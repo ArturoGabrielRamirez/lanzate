@@ -28,17 +28,17 @@ function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepPr
 
     const t = (key: string) => {
         const translations: Record<string, string> = {
-            "branches.store-pickup": "Store Pickup",
-            "branches.delivery": "Delivery",
-            "orders.item": "item",
-            "orders.items": "items",
-            "orders.quantity": "Quantity: ",
-            "orders.amount": "Amount",
-            "orders.status": "Status",
-            "orders.cash-register": "Cash Register",
-            "orders.public-store": "Online Store",
-            "orders.customer-info": "Customer Information",
-            "orders.order-type": "Order Type"
+            "branches.store-pickup": "Recogida en tienda",
+            "branches.delivery": "Entrega",
+            "orders.item": "artículo",
+            "orders.items": "artículos",
+            "orders.quantity": "Cantidad: ",
+            "orders.amount": "Monto",
+            "orders.status": "Estado",
+            "orders.cash-register": "Caja Registradora",
+            "orders.public-store": "Tienda Online",
+            "orders.customer-info": "Información del Cliente",
+            "orders.order-type": "Tipo de Pedido"
         }
         return translations[key] || key
     }
@@ -62,7 +62,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepPr
 
             <div>
                 <h3 className="text-base md:text-lg font-semibold mb-2 md:mb-4 flex items-center justify-between gap-2">
-                    <span>Order Details</span>
+                    <span>Detalles del Pedido</span>
                     <div className="flex items-center gap-2">
                         <Badge variant="outline" className="text-xs md:text-sm uppercase border-2">
                             {order.shipping_method === "PICKUP" ? t("branches.store-pickup") : t("branches.delivery")}
@@ -85,19 +85,19 @@ function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepPr
                 </h3>
                 <div className="flex flex-col gap-1 md:gap-2 border rounded-lg bg-muted/30 p-3">
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Order ID</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">ID de Pedido</span>
                         <span className="text-sm md:text-base font-medium">#{order.id}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Total Amount</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Monto Total</span>
                         <span className="text-lg md:text-xl font-bold">{formatCurrency(order.total_price)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Total Items</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Total Artículos</span>
                         <span className="text-sm md:text-base font-medium">{order.total_quantity} {order.total_quantity === 1 ? t("orders.item") : t("orders.items")}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Payment Status</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Estado de Pago</span>
                         <Badge variant={"outline"} className={cn(
                             "text-xs md:text-sm",
                             order.payment.status === "PAID" && "bg-green-500 text-white"
@@ -107,7 +107,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepPr
                         </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Order Status</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Estado del Pedido</span>
                         <Badge variant={order.status === "COMPLETED" ? "default" : "secondary"}
                             className={cn(
                                 "text-xs md:text-sm",
@@ -131,7 +131,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepPr
                         </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Shipping Method</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Método de Envío</span>
                         {order.shipping_method === "PICKUP" ? (
                             <Badge variant="outline">
                                 <MapPin className="w-4 h-4" />
@@ -154,7 +154,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepPr
 
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Order Date</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Fecha de Pedido</span>
                         <span className="text-sm md:text-base font-medium">{formatDate(order.created_at)}</span>
                     </div>
                 </div>
@@ -168,22 +168,22 @@ function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepPr
                 </h4>
                 <div className="space-y-2 p-3 border rounded-lg bg-muted/30">
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Name</span>
-                        <span className="text-sm md:text-base font-medium">{order.customer_name || "Name not available"}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Nombre</span>
+                        <span className="text-sm md:text-base font-medium">{order.customer_name || "Nombre no disponible"}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Email</span>
-                        <span className="text-sm md:text-base font-medium">{order.customer_email || "Email not available"}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Correo Electrónico</span>
+                        <span className="text-sm md:text-base font-medium">{order.customer_email || "Correo no disponible"}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-xs md:text-sm text-muted-foreground">Phone</span>
-                        <span className="text-sm md:text-base font-medium">{order.customer_phone || "Phone not available"}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground">Teléfono</span>
+                        <span className="text-sm md:text-base font-medium">{order.customer_phone || "Teléfono no disponible"}</span>
                     </div>
                 </div>
             </div>
 
             <div>
-                <h4 className="font-medium mb-3">Products</h4>
+                <h4 className="font-medium mb-3">Productos</h4>
                 <div className="space-y-3">
                     {order.items.map((item: OrderItemWithProduct) => (
                         <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
@@ -194,6 +194,7 @@ function OrderDetailsStep({ order, showFullDetails = false }: OrderDetailsStepPr
                                             src={item.product.image}
                                             alt={item.product.name}
                                             className="object-cover w-full h-full"
+                                            fill
                                         />
                                     ) : (
                                         <Package className="w-6 h-6 text-muted-foreground" />

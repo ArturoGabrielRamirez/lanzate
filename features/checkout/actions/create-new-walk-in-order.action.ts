@@ -37,7 +37,7 @@ export async function createNewWalkInOrderAction({
 
         return {
             hasError: false,
-            message: "Order created successfully",
+            message: "Orden creada exitosamente",
             payload: order
         }
     })

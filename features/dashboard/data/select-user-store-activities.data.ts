@@ -89,7 +89,7 @@ export async function selectUserStoreActivitiesData(userId: number, type: string
     })
 
     return {
-        message: "User store activities fetched successfully",
+        message: "Actividades de tiendas del usuario obtenidas con éxito desde la base de datos",
         payload: socialActivities,
         hasError: false
     }

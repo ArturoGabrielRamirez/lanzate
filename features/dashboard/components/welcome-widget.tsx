@@ -5,7 +5,7 @@ function WelcomeWidget({ user }: WelcomeWidgetProps) {
     return (
         <PageHeader
             title={`Hola, ${user.first_name}!`}
-            subtitle={<span>Welcome back to <span className="text-primary">Lanzate</span></span>}
+            subtitle={<span>Bienvenido a <span className="text-primary">Lanzate</span></span>}
         />
     )
 }

@@ -12,12 +12,13 @@ export function InitialPreview({ originalUrl }: InitialPreviewProps) {
                         src={originalUrl}
                         alt="Original"
                         className="w-full h-full object-contain"
+                        fill
                     />
                 )}
             </div>
             <Alert>
                 <AlertDescription className="text-sm">
-                    💡 <strong>Tip:</strong> Funciona mejor con fotos donde el sujeto está bien definido.
+                    💡 <strong>Tip:</strong> Funciona mejor con fotos donde el sujeto u objeto está bien definido.
                     El procesamiento puede tomar 10-30 segundos.
                 </AlertDescription>
             </Alert>

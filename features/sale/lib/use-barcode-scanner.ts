@@ -49,6 +49,8 @@ export function useBarcodeScanner(
       if (!enabled) return
 
       const currentTime = Date.now()
+
+      //TODO: event.keyCode está obsoleto, considerar usar event.key
       const character = getCharByKeyCode(event.keyCode, event.shiftKey)
 
       if (character === '') return
@@ -64,7 +66,7 @@ export function useBarcodeScanner(
       if (keyDownTimeRef.current === null) {
         keyDownTimeRef.current = currentTime
         inputTextRef.current = character
-        log('First keypress detected')
+        log('Primera pulsación de tecla detectada:'/* , character */)
       } else {
         const timeDiff = currentTime - keyDownTimeRef.current
 
@@ -74,7 +76,7 @@ export function useBarcodeScanner(
           if (isBusyRef.current === null) {
             setIsScanning(true)
             onScanStart?.()
-            log('Scanning started')
+            log('Escaneo iniciado')
           }
 
           if (isBusyRef.current) clearTimeout(isBusyRef.current)
@@ -92,7 +94,7 @@ export function useBarcodeScanner(
             setIsScanning(false)
             isBusyRef.current = null
             inputTextRef.current = ''
-            log('Scanning ended')
+            log('Escaneo finalizado')
           }, config.scanningEndTimeout)
         } else {
           inputTextRef.current = character
@@ -107,13 +109,13 @@ export function useBarcodeScanner(
   useEffect(() => {
     if (!enabled) return
 
-    log('Scanner enabled with config:', config)
+    log('Escáner habilitado con configuración:', config)
     window.addEventListener('keydown', handleKeydown)
 
     return () => {
       window.removeEventListener('keydown', handleKeydown)
       if (isBusyRef.current) clearTimeout(isBusyRef.current)
-      log('Scanner disabled')
+      log('Escáner deshabilitado')
     }
   }, [enabled, handleKeydown, log, config])
 

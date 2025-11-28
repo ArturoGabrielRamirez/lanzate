@@ -17,6 +17,7 @@ export type DashboardStoreStats = {
 export interface StoreListProps {
   stores: DashboardStore[]
   userId: number
+  mandatoryAddMore?: boolean
 }
 
 export type BusinessHours = {
@@ -142,7 +143,7 @@ type ActivityUser = Pick<User, 'id' | 'email' | 'avatar' | 'first_name' | 'last_
 type ActivityStore = Pick<Store, 'id' | 'name' | 'slug'>
 
 // ✅ Tipo base para actividad con relaciones
-export type ActivityWithRelations = SocialActivity & { 
+export type ActivityWithRelations = SocialActivity & {
   user: ActivityUser
   store: ActivityStore | null
   product: Product | null

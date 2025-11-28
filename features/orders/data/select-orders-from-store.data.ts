@@ -22,6 +22,6 @@ export async function selectOrdersFromStoreData(storeId: number, limit?: number)
         take: limit ?? undefined,
     })
 
-    return formatSuccessResponse("Orders fetched successfully", orders)
+    return formatSuccessResponse("Pedidos obtenidos con éxito", orders)
 
 }

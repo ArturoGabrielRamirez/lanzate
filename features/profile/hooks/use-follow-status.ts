@@ -24,7 +24,7 @@ export function useFollowStatus(
         try {
             const response = await toggleFollowUserAction(targetUserId)
 
-            if (!response.payload) throw new Error('No response from toggleFollowUserAction')
+            if (!response.payload) throw new Error('No hay respuesta del servidor')
 
             if (response && !response.hasError) {
                 setIsFollowing(response.payload.isFollowing)

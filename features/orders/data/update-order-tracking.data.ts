@@ -17,5 +17,5 @@ export async function updateOrderTrackingData({
         }
     })
 
-    return formatSuccessResponse("Order tracking updated successfully", updatedTracking)
+    return formatSuccessResponse("El seguimiento del pedido se actualizó correctamente", updatedTracking)
 } 

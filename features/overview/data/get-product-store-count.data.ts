@@ -16,7 +16,7 @@ export async function getProductStoreCountData(storeId: number) {
     })
 
     if (!store) {
-        throw new Error("Store not found")
+        throw new Error("Tienda no encontrada")
     }
 
     const totalProducts = store.products.length
@@ -32,7 +32,7 @@ export async function getProductStoreCountData(storeId: number) {
     }
 
     return {
-        message: "Product and store count fetched successfully",
+        message: "Cantidad de productos y tiendas obtenida correctamente",
         payload: productStoreCount,
         error: false
     }

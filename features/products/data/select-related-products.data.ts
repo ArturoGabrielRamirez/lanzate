@@ -14,7 +14,7 @@ export async function selectRelatedProductsData(productId: number) {
 
   if (!product) {
     return {
-      message: "Product not found",
+      message: "Producto no encontrado",
       payload: { sameProductVariants: [], categoryProducts: [] },
       error: false,
     }
@@ -39,7 +39,7 @@ export async function selectRelatedProductsData(productId: number) {
   })
 
   return {
-    message: "Related products fetched successfully",
+    message: "Productos relacionados obtenidos correctamente",
     payload: { sameProductVariants, categoryProducts },
     hasError: false,
   }

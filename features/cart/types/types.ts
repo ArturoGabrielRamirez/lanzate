@@ -1,4 +1,4 @@
-import { StoreOperationalSettings } from "@prisma/client"
+import { BranchOperationalSettings } from "@prisma/client"
 
 export type CartItemType = {
     id: string
@@ -26,5 +26,5 @@ export type ProviderProps = {
 }
 
 export interface CartResumeProps {
-    operationalSettings?: StoreOperationalSettings | null
+    operationalSettings?: BranchOperationalSettings | null
 }

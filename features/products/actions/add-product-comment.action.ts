@@ -9,23 +9,23 @@ export async function addProductCommentAction(formData: { content: string }, pro
     return actionWrapper(async () => {
 
         if (!formData.content || formData.content.trim().length === 0) {
-            throw new Error("Comment content is required")
+            throw new Error("El contenido del comentario es obligatorio")
         }
 
         if (formData.content.trim().length > 500) {
-            throw new Error("Comment cannot exceed 500 characters")
+            throw new Error("El comentario no puede exceder los 500 caracteres")
         }
 
         const { payload, hasError, message } = await insertProductCommentData(userId, productId, formData.content.trim())
 
         if (hasError || !payload) {
-            throw new Error(message || "Failed to add comment")
+            throw new Error(message || "No se pudo agregar el comentario al producto")
         }
 
         revalidatePath(pathname)
 
         return {
-            message: "Comment added successfully",
+            message: "Comentario agregado exitosamente",
             payload: payload,
             hasError: false
         }

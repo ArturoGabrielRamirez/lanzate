@@ -1,4 +1,4 @@
-import { Order, Store, StoreOperationalSettings, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod, ProductVariant, StoreCustomization } from "@prisma/client"
+import { Order, Store, /* StoreOperationalSettings ,*/ Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod, ProductVariant, StoreCustomization } from "@prisma/client"
 import { RowModel } from "@tanstack/react-table"
 import dayjs from "dayjs"
 import { ReactNode } from "react"
@@ -6,7 +6,7 @@ import * as yup from "yup"
 
 import { DashboardStore } from "@/features/dashboard/types"
 import { ServerResponse } from "@/features/global/types"
-import { editOperationalSettingsSchema, editSocialMediaSchema, editContactSchema } from "@/features/stores/schemas"
+import { editOperationalSettingsSchema, editSocialMediaSchema, editContactSchema, CreateStoreFormType } from "@/features/stores/schemas"
 
 // ============================================================================
 // BASE TYPES AND UTILITIES
@@ -38,12 +38,12 @@ export type TabProps<T = Record<string, never>> = BaseTabProps & T
  * Store with common relations
  */
 export type StoreWithBranches = Store & { branches: Branch[] }
-export type StoreWithSettings = Store & { operational_settings: StoreOperationalSettings | null }
+export type StoreWithSettings = Store & { operational_settings: BranchOperationalSettings | null }
 export type StoreWithBranchesAndSettings = StoreWithBranches & StoreWithSettings
 export type StoreWithProducts = Store & {
     products: (Product & { variants: ProductVariant[] })[]
     customization: StoreCustomization | null
-    operational_settings: StoreOperationalSettings | null
+    operational_settings: BranchOperationalSettings | null
 }
 
 export type GetStoreWithProductsReturn = {
@@ -203,7 +203,7 @@ export type GetStoresFromSlugReturn = ActionResult<Store & {
     branches: (Branch & { stock: ProductStock[] })[]
     products: (Product & { categories: Category[] })[]
     balance: StoreBalance | null
-    operational_settings: StoreOperationalSettings | null
+    operational_settings: BranchOperationalSettings | null
 } | null>
 
 // ============================================================================
@@ -373,13 +373,6 @@ export type AttentionDateType = {
     days: string[]
 }
 
-export type CreateStoreShippingMethod = {
-    providers: string[]
-    minPurchase: string
-    freeShippingMin: string
-    estimatedTime: string
-    deliveryPrice?: string
-}
 
 export type AttentionDateFormPanelProps = {
     date: AttentionDateType
@@ -388,12 +381,6 @@ export type AttentionDateFormPanelProps = {
     index: number
 }
 
-export type ShippingMethodFormPanelProps = {
-    method: CreateStoreShippingMethod
-    index: number
-    onCancel: (index: number) => void
-    onSave: (index: number, method: CreateStoreShippingMethod) => void
-}
 
 export type StepIndicatorProps = {
     step: number
@@ -403,9 +390,9 @@ export type StepIndicatorProps = {
 }
 
 export type CreateStoreFormProps = {
-    setStep: (step: number) => void
-    step: number
-    onSubmitAll: (data: CreateStoreFormValues) => Promise<ActionResult>
+    /* setStep: (step: number) => void */
+    /* step: number */
+    onSubmitAll: (data: CreateStoreFormType) => Promise<ActionResult>
 }
 
 export type CreateStoreFormValues = {
@@ -414,30 +401,47 @@ export type CreateStoreFormValues = {
     }
     address_info: AddressFormValues
     contact_info: {
-        contact_phone: string
-        contact_email: string
+        contact_phone?: string
+        contact_email?: string
         facebook_url?: string
         instagram_url?: string
         x_url?: string
+        phones?: { phone: string; is_primary: boolean }[]
+        emails?: { email: string; is_primary: boolean }[]
+        social_media?: { url: string; is_primary: boolean }[]
     }
     settings: {
-        is_open_24_hours: boolean
+        is_open_24_hours: boolean   
         attention_dates?: { days?: string[]; startTime?: string; endTime?: string }[]
     }
     shipping_info: {
         offers_delivery: boolean
-        methods?: { providers?: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
+        methods?: { providers: string[]; minPurchase?: string; freeShippingMin?: string; estimatedTime?: string; deliveryPrice: string }[]
     }
     payment_info: {
-        payment_methods: string[]
+        payment_methods: {
+            name: string
+            commission_percent?: number
+            commission_amount?: number
+            type: string
+            cbu_cvu?: string
+            alias?: string
+            instructions?: string
+        }[]
     }
 }
 
 export type CreateStoreContextType = {
-    values: Partial<CreateStoreFormValues>
-    setValues: (partial: Partial<CreateStoreFormValues>) => void
+    values: CreateStoreFormType
+    setValues: (partial: CreateStoreFormType) => void
     isStepValid: Record<number, boolean>
     setStepValid: (step: number, valid: boolean) => void
+    step: number
+    setStep: (step: number) => void
+    isOpen: boolean
+    openDialog: () => void
+    closeDialog: () => void
+    resetForm: () => void
 }
 
 export type DeliverySwitchProps = {
@@ -501,6 +505,7 @@ export type StoreBannerEditorWrapperProps = {
 export type StoreBannerEditorProps = {
     currentBanner: string | null
     storeName: string
+    storeId: number
     onBannerUpdate: (newBannerUrl: string | null) => void
 }
 
@@ -577,6 +582,7 @@ export type StoreLogoOption = {
 export type StoreLogoEditorProps = {
     currentLogo: string | null
     storeName: string
+    storeId: number
     onLogoUpdate: (newLogoUrl: string | null) => void
 }
 
@@ -639,10 +645,3 @@ export type StoreContextType = {
     setDisplayType: (displayType: "grid" | "list") => void
 }
 
-export type ShippingMethod = {
-    providers: string[]        // Requerido
-    minPurchase: string        // Requerido
-    freeShippingMin: string    // Requerido
-    estimatedTime: string      // Requerido
-    deliveryPrice?: string     // Opcional
-}

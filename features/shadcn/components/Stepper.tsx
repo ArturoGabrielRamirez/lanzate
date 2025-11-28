@@ -1,11 +1,13 @@
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { motion, AnimatePresence, Variants } from 'motion/react';
 import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode } from 'react';
 
+import { Button } from '@/features/shadcn/components/button';
+import { ScrollArea } from '@/features/shadcn/components/scroll-area';
+/* import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button'; */
 import '@/features/shadcn/components/Stepper.css';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shadcn/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import { IconButton } from '@/features/shadcn/components/shadcn-io/icon-button';
 
 interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -21,6 +23,7 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   backButtonText?: string;
   nextButtonText?: string;
   disableStepIndicators?: boolean;
+  disableStepConnectors?: boolean;
   renderStepIndicator?: (props: RenderStepIndicatorProps) => ReactNode;
 }
 
@@ -44,6 +47,7 @@ export default function Stepper({
   backButtonText = 'Back',
   nextButtonText = 'Continue',
   disableStepIndicators = false,
+  disableStepConnectors = false,
   renderStepIndicator,
   ...rest
 }: StepperProps) {
@@ -65,14 +69,14 @@ export default function Stepper({
 
   const handleBack = () => {
     if (currentStep > 1) {
-      setDirection(-1);
+      setDirection(1);
       updateStep(currentStep - 1);
     }
   };
 
   const handleNext = () => {
     if (!isLastStep) {
-      setDirection(1);
+      setDirection(-1);
       updateStep(currentStep + 1);
     }
     nextButtonProps.onClick?.({} as React.MouseEvent<HTMLButtonElement>)
@@ -85,9 +89,22 @@ export default function Stepper({
   };
 
   return (
-    <div className="outer-container" {...rest}>
-      <div className={`step-circle-container ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
-        <div className={`step-indicator-row ${stepContainerClassName}`}>
+    <div className="outer-container flex flex-col gap-4" {...rest}>
+
+      <StepContentWrapper
+        isCompleted={isCompleted}
+        currentStep={currentStep}
+        direction={direction}
+        className={`step-content-default w-full ${contentClassName}`}
+      >
+        <ScrollArea className="h-[calc(100vh_-_15rem)] md:h-[calc(100vh_-_12rem)] md:max-h-96 !overflow-x-visible w-full">
+          {stepsArray[currentStep - 1]}
+        </ScrollArea>
+      </StepContentWrapper>
+
+      <div className={`step-circle-container md:hidden ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
+
+        <div className={`step-indicator-row gap-2 ${stepContainerClassName}`}>
           {stepsArray.map((_, index) => {
             const stepNumber = index + 1;
             const isNotLastStep = index < totalSteps - 1;
@@ -113,51 +130,80 @@ export default function Stepper({
                     }}
                   />
                 )}
-                {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
+                {isNotLastStep && !disableStepConnectors && <StepConnector isComplete={currentStep > stepNumber} />}
               </React.Fragment>
             );
           })}
         </div>
-
-        <StepContentWrapper
-          isCompleted={isCompleted}
-          currentStep={currentStep}
-          direction={direction}
-          className={`step-content-default ${contentClassName}`}
-        >
-          {stepsArray[currentStep - 1]}
-        </StepContentWrapper>
-
-        {!isCompleted && (
-          <div className={`footer-container ${footerClassName}`}>
-            <div className={`footer-nav ${currentStep !== 1 ? 'spread' : 'end'}`}>
-              {currentStep !== 1 && (
-                <button
-                  onClick={handleBack}
-                  className={`back-button ${currentStep === 1 ? 'inactive' : ''}`}
-                  {...backButtonProps}
-                >
-                  {backButtonText}
-                </button>
-              )}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <IconButton
-                    icon={isLastStep ? Check : ArrowRight}
-                    active={isLastStep}
-                    onClick={isLastStep ? handleComplete : handleNext}
-                    className={cn(isLastStep ? "text-primary" : "text-muted-foreground")}
-                    disabled={nextButtonProps.disabled}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  {nextButtonProps.disabled ? "You must fill all required fields" : isLastStep ? 'Complete' : nextButtonText}
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          </div>
-        )}
       </div>
+
+      {!isCompleted && (
+        <div className={`footer-container ${footerClassName}`}>
+          <div className={`footer-nav justify-between gap-4 md:gap-8`}>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button disabled={currentStep === 1} variant="outline" onClick={handleBack} {...backButtonProps}>
+                  <ArrowLeft />
+                  {backButtonText}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                Go back to the previous step
+              </TooltipContent>
+            </Tooltip>
+
+            <div className={`step-circle-container hidden md:block ${stepCircleContainerClassName}`} style={{ border: '1px solid #222' }}>
+
+              <div className={`step-indicator-row gap-2 ${stepContainerClassName}`}>
+                {stepsArray.map((_, index) => {
+                  const stepNumber = index + 1;
+                  const isNotLastStep = index < totalSteps - 1;
+                  return (
+                    <React.Fragment key={stepNumber}>
+                      {renderStepIndicator ? (
+                        renderStepIndicator({
+                          step: stepNumber,
+                          currentStep,
+                          onStepClick: clicked => {
+                            setDirection(clicked > currentStep ? 1 : -1);
+                            updateStep(clicked);
+                          }
+                        })
+                      ) : (
+                        <StepIndicator
+                          step={stepNumber}
+                          disableStepIndicators={disableStepIndicators}
+                          currentStep={currentStep}
+                          onClickStep={clicked => {
+                            setDirection(clicked > currentStep ? 1 : -1);
+                            updateStep(clicked);
+                          }}
+                        />
+                      )}
+                      {isNotLastStep && !disableStepConnectors && <StepConnector isComplete={currentStep > stepNumber} />}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            </div>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button disabled={nextButtonProps.disabled} variant="default" onClick={isLastStep ? handleComplete : handleNext} {...nextButtonProps}>
+                  {isLastStep ? 'Complete' : nextButtonText}
+                  {isLastStep ? <Check /> : <ArrowRight />}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {nextButtonProps.disabled ? "Te faltan campos por completar" : isLastStep ? 'Completar' : "Continuar al siguiente paso"}
+              </TooltipContent>
+            </Tooltip>
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
@@ -253,7 +299,7 @@ interface StepProps {
 }
 
 export function Step({ children, className }: StepProps) {
-  return <div className={cn("step-default", className)}>{children}</div>;
+  return <div className={cn("p-1", className)}>{children}</div>;
 }
 
 interface StepIndicatorProps {
@@ -306,7 +352,7 @@ function StepConnector({ isComplete }: StepConnectorProps) {
   };
 
   return (
-    <div className="step-connector">
+    <div className="step-connector ">
       <motion.div
         className="step-connector-inner"
         variants={lineVariants}

@@ -114,7 +114,7 @@ function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
                             </div>
                         ) : (
                             <div className="text-sm text-muted-foreground">
-                                No se ha asignado un color a esta variante
+                                No se asignó un color a esta variante
                             </div>
                         )}
 

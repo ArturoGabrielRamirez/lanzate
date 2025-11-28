@@ -31,20 +31,20 @@ export async function updateOrderStatusData(orderId: number, data: ChangeOrderSt
                 }
             })
 
-            if (!order) throw new Error("Order not found")
+            if (!order) throw new Error("Pedido no encontrado")
 
             const oldStatus = order.status
             const newStatus = data.newStatus as never // Cast to OrderStatus enum
 
             // Validar que el status ha cambiado
             if (oldStatus === newStatus) {
-                throw new Error("New status must be different from current status")
+                throw new Error("El nuevo estado debe ser diferente al estado actual")
             }
 
             // Lógica específica para cancelación
             if (newStatus === 'CANCELLED' && oldStatus !== 'CANCELLED') {
                 if (!data.confirmStockRestore) {
-                    throw new Error("Stock restore confirmation is required for cancellation")
+                    throw new Error("Se requiere confirmación de restauración de stock para la cancelación")
                 }
 
                 // Restaurar stock para cada producto
@@ -102,11 +102,11 @@ export async function updateOrderStatusData(orderId: number, data: ChangeOrderSt
                             amount: order.total_price,
                             balance_before: currentBalance,
                             balance_after: newBalance,
-                            description: `Order ${order.id} cancelled - refund`,
+                            description: `Pedido ${order.id} cancelado - reembolso`,
                             reference_type: "order",
                             reference_id: order.id,
                             created_by: userId,
-                            notes: `Order ${order.id} cancelled and refunded`,
+                            notes: `Pedido ${order.id} cancelado y reembolsado`,
                             branch_id: order.branch_id
                         }
                     })
@@ -126,7 +126,7 @@ export async function updateOrderStatusData(orderId: number, data: ChangeOrderSt
             // Lógica para cambio de PENDING a otro status (excepto CANCELLED)
             if (oldStatus === 'PENDING' && newStatus !== 'CANCELLED') {
                 if (!data.confirmPayment) {
-                    throw new Error("Payment confirmation is required when changing from PENDING status")
+                    throw new Error("Se requiere confirmación de pago al cambiar desde el estado PENDIENTE")
                 }
 
                 // Marcar orden como pagada
@@ -179,13 +179,13 @@ export async function updateOrderStatusData(orderId: number, data: ChangeOrderSt
             entity_type: "ORDER",
             entity_id: orderId,
             user_id: userId,
-            action_initiator: "Change order status button",
-            details: `Order status changed from ${updatedOrder.status} to ${data.newStatus}. ${data.newStatus === 'CANCELLED' ? 'Stock restored and balance reversed.' : ''}`
+            action_initiator: "Botón de cambio de estado de pedido",
+            details: `El estado del pedido cambió de ${updatedOrder.status} a ${data.newStatus}. ${data.newStatus === 'CANCELLED' ? 'Stock restaurado y balance revertido.' : ''}`
         })
 
         if (logError) {
-            console.warn("Order status updated but failed to create log entry:", logError)
+            console.warn("El estado del pedido se actualizó pero no se pudo crear la entrada de registro:", logError)
         }
 
-        return formatSuccessResponse("Order status updated successfully", updatedOrder)
+        return formatSuccessResponse("El estado del pedido se actualizó correctamente", updatedOrder)
 } 

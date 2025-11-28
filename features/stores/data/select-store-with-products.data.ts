@@ -123,12 +123,13 @@ export async function selectStoreWithProductsData(subdomain: string, category: s
                 skip: limit * (page - 1)
             },
             customization: true,
-            operational_settings: true
+           /*  operational_settings: true */
+           //TODO: Arreglar aca, para Hori
         },
     })
 
     return {
-        message: "Store with products fetched successfully from db",
+        message: "Tienda con productos recuperada con éxito desde la base de datos",
         payload: result,
         hasError: false
     };

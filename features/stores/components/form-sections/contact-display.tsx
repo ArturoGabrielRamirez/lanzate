@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Phone, Edit as EditIcon, X } from "lucide-react"
@@ -94,7 +94,7 @@ function ContactDisplay({ store }: ContactDisplayProps) {
                         <div className="space-y-1">
                             <InputField
                                 name="contact_email"
-                                label="Email"
+                                label="Correo electrónico"
                                 type="email"
                                 defaultValue={mainBranch?.email || ""}
                                 disabled={!isEditing}
@@ -108,3 +108,4 @@ function ContactDisplay({ store }: ContactDisplayProps) {
 }
 
 export { ContactDisplay }
+ */

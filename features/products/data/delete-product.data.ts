@@ -14,7 +14,7 @@ export async function deleteProductData(productId: number) {
             }
         })
 
-        if (!product) throw new Error("Product not found")
+        if (!product) throw new Error("Producto no encontrado")
 
         const variantIds = product.variants.map(v => v.id)
 
@@ -36,7 +36,7 @@ export async function deleteProductData(productId: number) {
     })
 
     return {
-        message: "Product soft deleted successfully from db",
+        message: "Producto eliminado correctamente de la base de datos",
         payload: result,
         hasError: false
     }

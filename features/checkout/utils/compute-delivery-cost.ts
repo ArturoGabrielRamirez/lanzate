@@ -1,7 +1,7 @@
-import { ShippingMethod, StoreOperationalSettings } from "@prisma/client"
+/* import { ShippingMethod, BranchOperationalSettings } from "@prisma/client"
 
 export function computeDeliveryCost(
-    operationalSettings: StoreOperationalSettings | null,
+    operationalSettings: BranchOperationalSettings | null,
     shippingMethod: ShippingMethod
 ): number {
     if (!operationalSettings) return 0
@@ -10,3 +10,4 @@ export function computeDeliveryCost(
     return operationalSettings.delivery_price || 0
 }
 
+ */

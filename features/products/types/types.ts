@@ -1,5 +1,7 @@
 import { Category, Color, Product, ProductVariant, StoreCustomization, Store, ProductMedia, /* ProductVariantStock, */ Branch, ProductStock } from "@prisma/client";
 
+import { DeferredFile } from "@/features/global/types/media";
+
 // Main product types
 export type GetProductDetailsReturn = {
     message: string;
@@ -28,6 +30,7 @@ export type CategoryValue = { value: string; label: string }
 
 export type MediaSectionData = {
     files: File[]
+     urls?: string[]
     primaryIndex: number | null
 }
 
@@ -236,9 +239,12 @@ export type ColorsSectionProps = {
 
 export type DimensionsSectionProps = { onChange?: (data: DimensionsSectionData) => void }
 
-export type MediaSectionProps = {
-    value?: MediaSectionData
-    onChange?: (data: MediaSectionData) => void
+export interface MediaSectionProps {
+    value?: {
+        urls?: string[]      // ✅ Cambiar de files a urls
+        primaryIndex?: number | null
+    }
+    onChange?: (value: { urls: string[]; primaryIndex: number | null }) => void
     onFileReject?: (file: File, message: string) => void
 }
 
@@ -528,6 +534,7 @@ export type ProductsTableProps = {
     storeId: number
     employeePermissions: EmployeePermissions
     branches: (Branch & { stock: ProductStock[] })[]
+    headerActions?: React.ReactNode
 }
 
 export type ProductsTableVariantRow = (Product & { categories: Category[] }) & { variant_id?: number; variant_label?: string }
@@ -629,3 +636,21 @@ export type VariantDimensions = Pick<
     | 'diameter' | 'diameter_unit'
     | 'weight' | 'weight_unit'
 >
+
+export type EditProductPayload = {
+    name: string
+    price: number
+    stock: number
+    description?: string
+    categories: CategoryValue[]
+    image?: File
+    is_active?: boolean
+    is_featured?: boolean
+    is_published?: boolean
+}
+
+export interface ProductMediaSelectorProps {
+  value?: DeferredFile[]
+  onChange?: (files: DeferredFile[]) => void
+  maxFiles?: number
+}

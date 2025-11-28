@@ -27,8 +27,10 @@ export async function updateStoreContactAction(storeId: number, data: EditContac
                             id: mainBranch?.id
                         },
                         data: {
-                            phone: data.contact_phone,
-                            email: data.contact_email
+                           /*  phone: data.contact_phone,
+                            email: data.contact_email */
+
+                            //TODO: Arreglar aca, para Hori
                         }
                     }
                 }
@@ -38,7 +40,7 @@ export async function updateStoreContactAction(storeId: number, data: EditContac
         revalidatePath(`/stores/${store.slug}`, "page")
 
         return {
-            message: "Contact information updated successfully",
+            message: "Información de contacto actualizada con éxito",
             hasError: false,
             payload: data
         }

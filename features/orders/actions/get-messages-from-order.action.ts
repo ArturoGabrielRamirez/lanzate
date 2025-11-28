@@ -11,6 +11,6 @@ export async function getMessagesFromOrderAction({ storeSlug, orderId }: GetMess
 
         if (error) throw new Error(message)
 
-        return formatSuccessResponse("Messages fetched successfully", messages)
+        return formatSuccessResponse("Mensajes obtenidos con éxito", messages)
     })
 } 

@@ -9,11 +9,11 @@ export * from "@/features/stores/actions/get-store-logs.action"
 export * from "@/features/stores/actions/get-store-with-products.action"
 export * from "@/features/stores/actions/get-stores-from-slug.action"
 export * from "@/features/stores/actions/get-stores-from-user.action"
-export * from "@/features/stores/actions/update-operational-settings.action"
+/* export * from "@/features/stores/actions/update-operational-settings.action" */
 export * from "@/features/stores/actions/update-social-media.action"
 export * from "@/features/stores/actions/update-store-address.action"
 export * from "@/features/stores/actions/update-store-banner.action"
 export * from "@/features/stores/actions/update-store-basics.action"
 export * from "@/features/stores/actions/update-store-contact.action"
 export * from "@/features/stores/actions/update-store-logo.action"
-export * from "@/features/stores/actions/update-store.action"
+/* export * from "@/features/stores/actions/update-store.action" */

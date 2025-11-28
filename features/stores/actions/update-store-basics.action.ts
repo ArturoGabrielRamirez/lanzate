@@ -17,7 +17,7 @@ export async function updateStoreBasicInfoAction(slug: string, payload: UpdateBa
         })
 
         if (!existingStore) {
-            throw new Error("Store not found or you don't have permission to edit it")
+            throw new Error("Tienda no encontrada o no tenés permiso para interactuar con ella")
         }
 
         // Verificar que el subdomain no esté en uso por otra tienda
@@ -29,7 +29,7 @@ export async function updateStoreBasicInfoAction(slug: string, payload: UpdateBa
             })
 
             if (existingSubdomain) {
-                throw new Error("The store subdomain (Public URL) already exists. Try another one.")
+                throw new Error("El subdominio de la tienda (URL pública) ya existe. Intenta con otro.")
             }
         }
 
@@ -48,7 +48,7 @@ export async function updateStoreBasicInfoAction(slug: string, payload: UpdateBa
         revalidatePath(`/store/${slug}`)
 
         return {
-            message: "Basic information updated successfully",
+            message: "Información básica actualizada con éxito",
             payload: updatedStore,
             hasError: false
         }

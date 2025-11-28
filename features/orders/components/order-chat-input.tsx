@@ -19,17 +19,17 @@ function OrderChatInput({ orderId, user }: OrderChatInputProps) {
 
     async function handleSendMessage() {
         if (!user) {
-            toast.error("Please login to send messages")
+            toast.error("Por favor iniciá sesión para enviar mensajes")
             return
         }
 
         if (!message.trim()) {
-            toast.error("Please enter a message")
+            toast.error("Por favor ingresá un mensaje")
             return
         }
 
         if (message.trim().length > 1000) {
-            toast.error("Message cannot exceed 1000 characters")
+            toast.error("El mensaje no puede exceder los 1000 caracteres")
             return
         }
 
@@ -74,11 +74,11 @@ function OrderChatInput({ orderId, user }: OrderChatInputProps) {
                     toast.error(message)
                     setMessage(messageToSend) // Restore message on error
                 } else {
-                    toast.success("Message sent successfully")
+                    toast.success("Mensaje enviado con éxito")
                 }
             } catch (error) {
                 console.error("Error sending message:", error)
-                toast.error("Failed to send message")
+                toast.error("Error al enviar el mensaje")
                 setMessage(messageToSend) // Restore message on error
             }
         })
@@ -103,7 +103,7 @@ function OrderChatInput({ orderId, user }: OrderChatInputProps) {
             </Button>
             <AutosizeTextarea
                 className="w-full pr-22 pl-14"
-                placeholder="Type your message..."
+                placeholder="Escribí tu mensaje..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -116,7 +116,7 @@ function OrderChatInput({ orderId, user }: OrderChatInputProps) {
                 onClick={handleSendMessage}
                 disabled={isPending || !message.trim()}
             >
-                {isPending ? "Sending..." : "Send"}
+                {isPending ? "Enviando..." : "Enviar"}
             </Button>
         </div>
     )

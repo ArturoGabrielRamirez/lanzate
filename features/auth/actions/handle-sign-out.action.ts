@@ -19,7 +19,7 @@ export async function handleSignOut() {
         return {
             hasError: false,
             payload: null,
-            message: 'Sesión cerrada exitosamente'
+            message: 'Se cerró sesión correctamente'
         }
     })
 }

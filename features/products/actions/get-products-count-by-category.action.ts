@@ -13,7 +13,7 @@ export async function getProductsCountByCategoryAction(categoryId: number, store
         return {
             payload: payload,
             hasError: false,
-            message: "Products count fetched successfully"
+            message: "Cantidad de productos obtenida exitosamente"
         }
     })
 } 

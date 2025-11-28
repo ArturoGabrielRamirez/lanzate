@@ -14,7 +14,7 @@ export async function getUserStoreCountData(userId: number) {
     })
 
     return {
-        message: "User store count fetched successfully from db",
+        message: "Cantidad de tiendas del usuario obtenida con éxito desde la base de datos",
         payload: storeCount,
         hasError: false
     }

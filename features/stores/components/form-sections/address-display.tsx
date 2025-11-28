@@ -109,8 +109,8 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
                                 <div className="space-y-1">
                                     <InputField
                                         name="address"
-                                        label={t("address")}
-                                        placeholder={t("address")}
+                                        label={t("dirección")}
+                                        placeholder={t("dirección")}
                                         defaultValue={mainBranch?.address || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -118,8 +118,8 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
                                 <div className="space-y-1">
                                     <InputField
                                         name="city"
-                                        label={t("city")}
-                                        placeholder={t("city")}
+                                        label={t("ciudad")}
+                                        placeholder={t("ciudad")}
                                         defaultValue={mainBranch?.city || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -127,8 +127,8 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
                                 <div className="space-y-1">
                                     <InputField
                                         name="province"
-                                        label={t("province")}
-                                        placeholder={t("province")}
+                                        label={t("provincia")}
+                                        placeholder={t("provincia")}
                                         defaultValue={mainBranch?.province || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />
@@ -136,8 +136,8 @@ function AddressDisplay({ store, userId }: AddressDisplayProps) {
                                 <div className="space-y-1">
                                     <InputField
                                         name="country"
-                                        label={t("country")}
-                                        placeholder={t("country")}
+                                        label={t("país")}
+                                        placeholder={t("país")}
                                         defaultValue={mainBranch?.country || ""}
                                         disabled={!isEditing || !isPhysicalStore}
                                     />

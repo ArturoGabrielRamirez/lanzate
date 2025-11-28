@@ -15,7 +15,7 @@ export async function updateUserAccountAction(suscriptionId: string, email: stri
 
         revalidatePath("/account")
 
-        return formatSuccessResponse("User account updated successfully", {
+        return formatSuccessResponse("Cuenta actualizada correctamente", {
             suscriptionId: suscriptionId
         })
     })

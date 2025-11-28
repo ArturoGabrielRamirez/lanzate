@@ -1,4 +1,4 @@
-"use server"
+/* "use server"
 
 import { revalidatePath } from "next/cache"
 
@@ -14,7 +14,7 @@ export async function updateStoreAction(slug: string, data: UpdateStorePayload, 
         //Check user owns store
         const canUpdate = await canUpdateStore(slug, userId)
 
-        if (!canUpdate) throw new Error("You are not allowed to update this store")
+        if (!canUpdate) throw new Error("No tenés permiso para actualizar esta tienda.")
 
         //Check slug/subdomain availability if changed
         //Update store fields
@@ -30,17 +30,17 @@ export async function updateStoreAction(slug: string, data: UpdateStorePayload, 
             entity_type: "STORE",
             entity_id: payload.id,
             user_id: userId,
-            action_initiator: "Edit store button",
-            details: "User updated store using the edit store button"
+            action_initiator: "Se actualizó una tienda",
+            details: "El usuario actualizó la tienda usando el botón de editar tienda"
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
-
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear una entrada de registro para esto.")
 
         return {
-            message: "Store updated successfully",
+            message: "Información de la tienda actualizada con éxito",
             payload: payload,
             hasError: false
         }
     })
 }
+ */

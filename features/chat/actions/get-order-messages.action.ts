@@ -10,7 +10,7 @@ export async function fetchOrderMessagesAction({ orderId }: OrderIdProp) {
 
         return {
             hasError: false,
-            message: "Messages fetched successfully",
+            message: "Mensajes recuperados exitosamente",
             payload: messages
         }
     })

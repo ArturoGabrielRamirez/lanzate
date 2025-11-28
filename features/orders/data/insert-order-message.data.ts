@@ -17,7 +17,7 @@ export async function insertOrderMessageData({
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
 
     if (userError || !user) {
-        throw new Error(userMessage || "User not authenticated")
+        throw new Error(userMessage || "Usuario no autenticado")
     }
 
     // Verify order exists
@@ -32,7 +32,7 @@ export async function insertOrderMessageData({
     })
 
     if (!order) {
-        throw new Error("Order not found")
+        throw new Error("Pedido no encontrado")
     }
 
     // Create the message
@@ -59,5 +59,5 @@ export async function insertOrderMessageData({
         }
     })
 
-    return formatSuccessResponse("Message sent successfully", newMessage)
+    return formatSuccessResponse("Mensaje enviado con éxito", newMessage)
 }

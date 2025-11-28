@@ -32,13 +32,13 @@ function CancelOrderButton({ order, slug, onComplete, className, size = "default
 
             return {
                 hasError: false,
-                message: "Order cancelled successfully",
+                message: "Orden cancelada con éxito",
                 payload: null
             }
         } catch (error) {
             return {
                 hasError: true,
-                message: error instanceof Error ? error.message : "Failed to cancel order",
+                message: error instanceof Error ? error.message : "Error al cancelar la orden",
                 payload: null
             }
         }

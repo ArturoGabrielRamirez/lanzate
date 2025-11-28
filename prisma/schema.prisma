@@ -67,8 +67,9 @@ model User {
   Store                     Store[]
   deletion_logs             UserDeletionLog[]
   user_reminders            UserReminder[]
-  user_follows              UserFollow[] @relation("UserFollower")
-  user_follows_following    UserFollow[] @relation("UserFollowing")
+  user_follows              UserFollow[]            @relation("UserFollower")
+  user_follows_following    UserFollow[]            @relation("UserFollowing")
+
   @@map("users")
 }
 
@@ -117,46 +118,77 @@ model Notification {
 }
 
 model Store {
-  id                   Int                       @id @default(autoincrement())
-  name                 String
-  description          String?
-  logo                 String?
-  slogan               String?
-  created_at           DateTime                  @default(now())
-  updated_at           DateTime                  @updatedAt
-  user_id              Int
-  slug                 String                    @unique
-  subdomain            String                    @unique
-  is_physical_store    Boolean                   @default(false)
-  is_active            Boolean                   @default(true)
-  banner               String?
-  branches             Branch[]
-  categories           Category[]
-  colors               Color[]
-  contracts            Contract[]
-  employees            Employee[]
-  notifications        Notification[]
-  orders               Order[]
-  products             Product[]
-  social_activities    SocialActivity[]
-  balance              StoreBalance?
-  customization        StoreCustomization?
-  operational_settings StoreOperationalSettings?
-  store_reminders      StoreReminder[]
-  user                 User                      @relation(fields: [user_id], references: [id])
-  transactions         Transaction[]
+  // ============================================================
+  // 1. IDENTITY & BRANDING (Global)
+  // ============================================================
+  id          Int     @id @default(autoincrement())
+  name        String // Nombre comercial (ej. "Adidas")
+  description String? // Descripción SEO/Marketing global
+  slogan      String?
+  logo        String?
+  banner      String?
+
+  // ============================================================
+  // 2. ACCESS & DOMAINS
+  // ============================================================
+  slug      String @unique // mi-tienda
+  subdomain String @unique // mi-tienda.lanzate.app
+
+  // Dueño de la cuenta (El que paga)
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  // ============================================================
+  // 3. GLOBAL STATUS
+  // ============================================================
+  is_active Boolean @default(true) // Si false, se apagan todas las branches
+
+  // ============================================================
+  // 4. GLOBAL CATALOG (Compartido por todas las branches)
+  // ============================================================
+  products   Product[]
+  categories Category[]
+  colors     Color[]
+
+  // ============================================================
+  // 5. OPERATIONS & BRANCHES
+  // ============================================================
+  branches     Branch[] // Aquí vive la dirección, horarios, stock
+  employees    Employee[] // Empleados de la empresa (luego se asignan a branches)
+  orders       Order[] // Histórico global de ventas
+  transactions Transaction[] // Movimientos de dinero globales
+  contracts    Contract[] // Contratos legales de la empresa
+
+  // ============================================================
+  // 6. CONFIG & EXTRAS
+  // ============================================================
+  customization StoreCustomization? // Look & Feel del sitio web global
+  notifications Notification[]
+
+  // Balance Global (La "Billetera" de la empresa)
+  balance StoreBalance?
+
+  // Opcionales (Podrían moverse a Branch si se quiere granularidad)
+  social_activities SocialActivity[]
+  store_reminders   StoreReminder[]
+
+  // ============================================================
+  // 7. TIMESTAMPS
+  // ============================================================
+  created_at               DateTime                  @default(now())
+  updated_at               DateTime                  @updatedAt
 
   @@map("stores")
 }
 
 model Account {
-  id         Int         @id @default(autoincrement())
-  created_at DateTime    @default(now())
-  updated_at DateTime    @updatedAt
-  user_id    Int
-  type       AccountType @default(FREE)
-  user       User        @relation(fields: [user_id], references: [id])
-  suscription_id String?   @unique
+  id             Int         @id @default(autoincrement())
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+  user_id        Int
+  type           AccountType @default(FREE)
+  user           User        @relation(fields: [user_id], references: [id])
+  suscription_id String?     @unique
 
   @@map("accounts")
 }
@@ -213,8 +245,6 @@ model Branch {
   name                 String
   description          String?
   address              String?
-  phone                String?
-  email                String?
   created_at           DateTime                   @default(now())
   updated_at           DateTime                   @updatedAt
   store_id             Int
@@ -222,9 +252,7 @@ model Branch {
   city                 String?
   country              String?
   province             String?
-  facebook_url         String?
-  instagram_url        String?
-  x_url                String?
+  
   store                Store                      @relation(fields: [store_id], references: [id], onDelete: Cascade)
   orders               Order[]
   stock                ProductStock[]
@@ -232,28 +260,78 @@ model Branch {
   operational_settings BranchOperationalSettings?
   opening_hours        BranchOpeningHour[]
   shipping_methods     BranchShippingMethod[]
+  phones               BranchPhone[]
+  emails               BranchEmail[]
+  social_media         BranchSocialMedia[]
+  payment_configs      BranchPaymentConfig[]
+  is_physical_store    Boolean                    @default(false)
 
   @@map("branches")
 }
 
+model BranchPhone {
+  id          Int      @id @default(autoincrement())
+  branch_id   Int
+  number      String
+  type        String   @default("mobile") // mobile, landline, whatsapp
+  is_primary  Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  branch      Branch   @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  @@map("branch_phones")
+}
+
+model BranchEmail {
+  id          Int      @id @default(autoincrement())
+  branch_id   Int
+  email       String
+  type        String   @default("contact") // contact, sales, support
+  is_primary  Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  branch      Branch   @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  @@map("branch_emails")
+}
+
+model BranchSocialMedia {
+  id          Int      @id @default(autoincrement())
+  branch_id   Int
+  platform    String   // facebook, instagram, x, tiktok
+  url         String
+  handle      String?  // @username
+  is_primary  Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  branch      Branch   @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  @@map("branch_social_medias")
+}
+
+model BranchPaymentConfig {
+  id                 Int           @id @default(autoincrement())
+  branch_id          Int
+  type               PaymentMethod // Keep the enum for categorization
+  name               String        // Display name (e.g. "Transferencia Santander")
+  details            Json?         // { cbu: "...", alias: "...", instructions: "..." }
+  is_active          Boolean       @default(true)
+  commission_percent Float?        @default(0)
+  commission_amount  Float?        @default(0)
+  created_at         DateTime      @default(now())
+  updated_at         DateTime      @updatedAt
+  branch             Branch        @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  @@map("branch_payment_configs")
+}
+
 model BranchOperationalSettings {
-  id                          Int             @id @default(autoincrement())
-  branch_id                   Int             @unique
-  is_open_24_hours            Boolean         @default(true)
-  offers_delivery             Boolean         @default(false)
-  payment_methods             PaymentMethod[] @default([CASH])
-  delivery_time_min           Int?            @default(30)
-  delivery_time_max           Int?            @default(60)
-  pickup_time_min             Int?            @default(15)
-  pickup_time_max             Int?            @default(30)
-  requires_phone_for_delivery Boolean         @default(true)
-  minimum_order_amount        Float?          @default(0)
-  preparation_time_buffer     Int?            @default(10)
-  is_temporarily_closed       Boolean         @default(false)
-  temporary_closure_reason    String?
-  created_at                  DateTime        @default(now())
-  updated_at                  DateTime        @updatedAt
-  branch                      Branch          @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+  id               Int             @id @default(autoincrement())
+  branch_id        Int             @unique
+  is_open_24_hours Boolean         @default(true)
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
+  branch           Branch          @relation(fields: [branch_id], references: [id], onDelete: Cascade)
 
   @@map("branch_operational_settings")
 }
@@ -277,10 +355,9 @@ model BranchShippingMethod {
   id                Int      @id @default(autoincrement())
   branch_id         Int
   provider          String
-  min_order_amount  Float?
-  free_shipping_min Float?
-  delivery_price    Float?
-  eta_minutes       Int?
+  min_order_amount  Float?   @default(0)
+  free_shipping_min Float?   @default(0)
+  delivery_price    Float?   @default(0)
   active            Boolean  @default(true)
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
@@ -576,56 +653,6 @@ model Employee {
 
   @@unique([user_id, store_id])
   @@map("employees")
-}
-
-model StoreOperationalSettings {
-  id                          Int             @id @default(autoincrement())
-  store_id                    Int             @unique
-  offers_delivery             Boolean         @default(false)
-  delivery_price              Float?          @default(0)
-  free_delivery_minimum       Float?
-  delivery_radius_km          Float?          @default(5)
-  monday_open                 String?
-  monday_close                String?
-  tuesday_open                String?
-  tuesday_close               String?
-  wednesday_open              String?
-  wednesday_close             String?
-  thursday_open               String?
-  thursday_close              String?
-  friday_open                 String?
-  friday_close                String?
-  saturday_open               String?
-  saturday_close              String?
-  sunday_open                 String?
-  sunday_close                String?
-  delivery_time_min           Int?            @default(30)
-  delivery_time_max           Int?            @default(60)
-  pickup_time_min             Int?            @default(15)
-  pickup_time_max             Int?            @default(30)
-  payment_methods             PaymentMethod[] @default([CASH])
-  requires_phone_for_delivery Boolean         @default(true)
-  minimum_order_amount        Float?          @default(0)
-  preparation_time_buffer     Int?            @default(10)
-  is_temporarily_closed       Boolean         @default(false)
-  temporary_closure_reason    String?
-  contact_phone               String?
-  contact_whatsapp            String?
-  contact_email               String?
-  delivery_instructions       String?
-  pickup_instructions         String?
-  special_notes               String?
-  created_at                  DateTime        @default(now())
-  updated_at                  DateTime        @updatedAt
-  contact_phone_2             String?
-  contact_whatsapp_2          String?
-  facebook_url                String?
-  instagram_url               String?
-  x_url                       String?
-  country_tax_amount          Float?          @default(0)
-  store                       Store           @relation(fields: [store_id], references: [id], onDelete: Cascade)
-
-  @@map("store_operational_settings")
 }
 
 model StoreCustomization {
@@ -996,12 +1023,12 @@ model ProductMedia {
 }
 
 model Waitlist {
-  id              Int                @id @default(autoincrement())
-  email           String             @unique
-  status          WaitlistStatus     @default(PENDING)
-  contact_amount  Int                @default(0)
-  created_at      DateTime           @default(now())
-  updated_at      DateTime           @updatedAt
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  status         WaitlistStatus @default(PENDING)
+  contact_amount Int            @default(0)
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
 }
 
 enum WaitlistStatus {
@@ -1136,6 +1163,7 @@ enum PaymentMethod {
   MERCADO_PAGO
   PAYPAL
   CRYPTO
+  VIRTUAL_WALLET
 }
 
 enum HeaderPosition {
@@ -1323,4 +1351,3 @@ enum DiscountType {
   FIXED_AMOUNT
   SPECIAL
 }
-

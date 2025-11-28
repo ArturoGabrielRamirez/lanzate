@@ -10,11 +10,11 @@
             "email": "Correo electrónico",
             "password": "Contraseña",
             "change-password": "Cambiar contraseña",
-            "change-email": "Cambiar email",
+            "change-email": "Cambiar correo electrónico",
             "currently-not-available": "Actualmente no disponible"
         }
     },
-    "Auth" : {},
+    "Auth": {},
     "auth": {
         "_legacy_login": "Iniciar sesión",
         "_legacy_signup": "Registrarse",
@@ -37,15 +37,15 @@
             "or-login-with": "O iniciá sesión con"
         },
         "toast-message": {
-            "success-logged-in": "Has iniciado sesión con éxito",
-            "success-registered": "Has sido registrado con éxito",
+            "success-logged-in": "Iniciaste sesión exitosamente",
+            "success-registered": "Te registraste exitosamente",
             "success-reset-password": "¡Link de recuperación enviado!",
             "success-password-updated": "¡Contraseña actualizada!",
             "signing-in": "Iniciando sesión...",
             "signing-up": "Registrándose...",
             "reset-password": "Enviando link de recuperación...",
             "updating-password": "Actualizando contraseña...",
-            "success-joined-waitlist": "Te has unido exitosamente a la lista de espera",
+            "success-joined-waitlist": "Te uniste exitosamente a la lista de espera",
             "joining-waitlist": "Uniéndose a la lista de espera"
         },
         "reset-password": {
@@ -64,7 +64,7 @@
             "oauth": {
                 "cancelled": {
                     "title": "Inicio de sesión cancelado",
-                    "description": "Podés intentar de nuevo con el mismo método o usar tu email y contraseña."
+                    "description": "Podés intentar de nuevo con el mismo método o usar tu correo electrónico y contraseña."
                 },
                 "failed": {
                     "title": "Error de autenticación",
@@ -84,31 +84,31 @@
                 },
                 "generic": {
                     "title": "Error de autenticación",
-                    "description": "Intentá de nuevo o usá tu email y contraseña."
+                    "description": "Intentá de nuevo o usá tu correo electrónico y contraseña."
                 }
             }
         },
         "email-change": {
-            "title": "Confirmación de Cambio de Email",
+            "title": "Confirmación de Cambio de Correo Electrónico",
             "step1": {
-                "title": "Confirmar email actual",
+                "title": "Confirmar correo electrónico actual",
                 "status": {
                     "pending": "Esperando confirmación...",
                     "confirmed": "✓ Confirmado"
                 }
             },
             "step2": {
-                "title": "Confirmar nuevo email",
+                "title": "Confirmar nuevo correo electrónico",
                 "status": {
-                    "waiting": "Esperando confirmación del email actual...",
-                    "pending": "⏳ Revisá este email y confirmá",
+                    "waiting": "Esperando confirmación del correo electrónico actual...",
+                    "pending": "⏳ Revisá este correo electrónico y confirmá",
                     "confirmed": "✓ Confirmado - ¡Cambio completado!"
                 }
             },
             "instructions": {
-                "step1": "Paso 1: Revisá tu email actual ({email}) y confirmá el cambio.",
-                "step2": "Paso 2: Ahora revisá tu nuevo email ({email}) y confirmá para completar el cambio.",
-                "completed": "¡Completado! Tu email ha sido actualizado exitosamente."
+                "step1": "Paso 1: Revisá tu correo electrónico actual ({email}) y confirmá el cambio.",
+                "step2": "Paso 2: Ahora revisá tu nuevo correo electrónico ({email}) y confirmá para completar el cambio.",
+                "completed": "¡Completado! Tu correo electrónico fue actualizado exitosamente."
             },
             "actions": {
                 "back-to-account": "Volver a mi cuenta",
@@ -116,26 +116,26 @@
                 "checking": "Verificando..."
             },
             "auto-refresh": "La página se actualiza automáticamente cada 3 segundos",
-            "current-email": "Email actual:",
-            "new-email": "Nuevo email:",
-            "email-must-be-different": "El nuevo email debe ser diferente al actual",
-            "verification-emails-sent": "Emails de verificación enviados",
-            "error-changing-email": "Error al cambiar el email",
-            "sending-verification": "Enviando emails de verificación...",
+            "current-email": "Correo electrónico actual:",
+            "new-email": "Nuevo correo electrónico:",
+            "email-must-be-different": "El nuevo correo electrónico debe ser diferente al actual",
+            "verification-emails-sent": "Correos de verificación enviados",
+            "error-changing-email": "Error al cambiar el correo electrónico",
+            "sending-verification": "Enviando correos de verificación...",
             "change-in-progress": "⚠️ Hay un cambio en progreso",
             "complete-current-process": "Completá el proceso actual antes de iniciar uno nuevo.",
             "change-completed": "✅ Cambio completado",
-            "email-updated-successfully": "Tu email ha sido actualizado exitosamente. Podés iniciar un nuevo cambio si es necesario.",
-            "new-email-label": "Nuevo email",
-            "new-email-placeholder": "nuevo-email@ejemplo.com",
+            "email-updated-successfully": "Tu correo electrónico fue actualizado exitosamente. Podés iniciar un nuevo cambio si es necesario.",
+            "new-email-label": "Nuevo correo electrónico",
+            "new-email-placeholder": "nuevo-correo@ejemplo.com",
             "current-password-label": "Contraseña actual",
             "current-password-placeholder": "Tu contraseña actual",
-            "security-description": "Por seguridad, confirmá tu contraseña actual. Te enviaremos emails de verificación a ambas direcciones."
+            "security-description": "Por seguridad, confirmá tu contraseña actual. Te enviaremos correos de verificación a ambas direcciones."
         },
         "email-status": {
-            "updated-successfully": "¡Email actualizado exitosamente! Ya podés usar {email}",
-            "last-step": "Último paso: Revisá tu nuevo email ({email}) y confirmá para completar el cambio.",
-            "change-in-progress": "Cambio de email en progreso: Confirmá desde tu email actual ({email}) para continuar."
+            "updated-successfully": "¡Correo electrónico actualizado exitosamente! Ya podés usar {email}",
+            "last-step": "Último paso: Revisá tu nuevo correo electrónico ({email}) y confirmá para completar el cambio.",
+            "change-in-progress": "Cambio de correo electrónico en progreso: Confirmá desde tu correo electrónico actual ({email}) para continuar."
         },
         "password-change": {
             "security-description": "Por seguridad, confirmá tu contraseña actual antes de cambiarla.",
@@ -175,9 +175,9 @@
             "form": {
                 "fields": {
                     "email": {
-                        "label": "Email",
-                        "placeholder": "email@ejemplo.com",
-                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta."
+                        "label": "Correo electrónico",
+                        "placeholder": "correo@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de correo electrónico asociada con tu cuenta."
                     },
                     "password": {
                         "label": "Contraseña",
@@ -189,7 +189,7 @@
                     "submit": "Iniciar sesión"
                 },
                 "messages": {
-                    "success": "Has iniciado sesión exitosamente",
+                    "success": "Iniciaste sesión exitosamente",
                     "loading": "Iniciando sesión..."
                 }
             },
@@ -204,7 +204,7 @@
                 "oauth": {
                     "cancelled": {
                         "title": "Inicio de sesión cancelado",
-                        "description": "Podés intentar nuevamente con el mismo método o usar tu email y contraseña.",
+                        "description": "Podés intentar nuevamente con el mismo método o usar tu correo electrónico y contraseña.",
                         "action": "Intentar de nuevo"
                     },
                     "failed": {
@@ -225,7 +225,7 @@
                     },
                     "generic": {
                         "title": "Error de autenticación",
-                        "description": "Intentá de nuevo o usá tu email y contraseña."
+                        "description": "Intentá de nuevo o usá tu correo electrónico y contraseña."
                     }
                 },
                 "close": "Cerrar"
@@ -256,9 +256,9 @@
             "form": {
                 "fields": {
                     "email": {
-                        "label": "Email",
-                        "placeholder": "email@ejemplo.com",
-                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta."
+                        "label": "Correo electrónico",
+                        "placeholder": "correo@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de correo electrónico asociada con tu cuenta."
                     },
                     "username": {
                         "label": "Nombre de usuario",
@@ -280,7 +280,7 @@
                     "submit": "Registrarse"
                 },
                 "messages": {
-                    "success": "Te has registrado exitosamente",
+                    "success": "Te registraste exitosamente",
                     "loading": "Registrándote..."
                 }
             },
@@ -315,10 +315,10 @@
             "form": {
                 "fields": {
                     "email": {
-                        "label": "Email",
-                        "placeholder": "email@ejemplo.com",
-                        "tooltip": "Ingresá la dirección de email asociada con tu cuenta.",
-                        "description": "Por favor ingresá la dirección de email asociada con tu cuenta. Te enviaremos un link de restablecimiento a tu email."
+                        "label": "Correo electrónico",
+                        "placeholder": "correo@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de correo electrónico asociada con tu cuenta.",
+                        "description": "Por favor ingresá la dirección de correo electrónico asociada con tu cuenta. Te enviaremos un link de restablecimiento a tu correo electrónico."
                     }
                 },
                 "actions": {
@@ -361,23 +361,23 @@
         "waitlist": {
             "alert": {
                 "title": "Unite a la lista de espera",
-                "description1": "Lanzate está en desarrollo aún, pero ya podés unirte a la lista de espera.",
-                "description2": "Dejanos tu email y te notificaremos cuando el producto esté disponible.",
+                "description1": "Lanzate está en desarrollo aún, pero ya podés unirte a la lista de espera",
+                "description2": "Dejanos tu correo electrónico y te notificaremos cuando el producto esté disponible.",
                 "button": "Unite"
             },
             "form": {
                 "fields": {
                     "email": {
-                        "label": "Email",
-                        "placeholder": "email@ejemplo.com",
-                        "tooltip": "Ingresá la dirección de email para unirte a la lista de espera"
+                        "label": "Correo electrónico",
+                        "placeholder": "correo@ejemplo.com",
+                        "tooltip": "Ingresá la dirección de correo electrónico para unirte a la lista de espera"
                     }
                 },
                 "actions": {
                     "submit": "Unirse"
                 },
                 "messages": {
-                    "success": "Te has unido exitosamente a la lista de espera",
+                    "success": "Te uniste exitosamente a la lista de espera",
                     "loading": "Uniéndote a la lista de espera"
                 }
             },
@@ -439,9 +439,9 @@
                         "tooltip": "Ingresá tu nombre completo"
                     },
                     "email": {
-                        "label": "Email",
-                        "placeholder": "Email",
-                        "tooltip": "Ingresá un email al que podamos contactarnos con vos"
+                        "label": "Correo electrónico",
+                        "placeholder": "Correo electrónico",
+                        "tooltip": "Ingresá un correo electrónico al que podamos contactarnos con vos"
                     },
                     "category": {
                         "label": "Categoría",
@@ -539,13 +539,13 @@
             "title": "Crear nuevo producto",
             "description": "Descripción",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
-            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "drag-drop": "Arrastrá y soltá archivos acá",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
             "browse-files": "Explorar archivos",
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "file-rejected": "\"{filename}\" fue rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
                 "error": "Error al crear producto",
@@ -647,12 +647,12 @@
         "help": {
             "title": "¿Necesitás ayuda?",
             "contact-us": "Contactanos",
-            "description": "Nuestros expertos están aquí para ayudarte.",
+            "description": "Nuestros expertos están acá para ayudarte.",
             "send-message": "Enviar mensaje",
             "dialog": {
                 "title": "Contactanos",
                 "description": "Envianos un mensaje y te responderemos lo antes posible.",
-                "email": "Email",
+                "email": "Correo electrónico",
                 "name": "Nombre",
                 "message": "Mensaje",
                 "messages": {
@@ -661,6 +661,47 @@
                     "loading": "Enviando mensaje..."
                 }
             }
+        },
+        "welcome-tutorial": {
+            "section-title": "¿Te sentís perdido?",
+            "dialog-title": "¡Bienvenido a Lanzate!",
+            "steps": {
+                "1": {
+                    "title": "¡Bienvenido!",
+                    "descriptions": {
+                        "0": "Este es un breve tutorial para ayudarte a comenzar con tu negocio.",
+                        "1": "Una vez que hayas completado el tutorial, podrás comenzar a usar Lanzate."
+                    }
+                },
+                "2": {
+                    "title": "Crear una tienda",
+                    "descriptions": {
+                        "0": "Creá una tienda para comenzar a vender tus productos.",
+                        "1": "Elegí un nombre, logo y métodos de envío para comenzar; podés editar los detalles de tu tienda más tarde."
+                    }
+                },
+                "3": {
+                    "title": "Crear un producto",
+                    "descriptions": {
+                        "0": "Agregá productos a tu tienda para comenzar a vender.",
+                        "1": "Agregá tantos detalles como quieras, como imágenes, descripciones, precios y más."
+                    }
+                },
+                "4": {
+                    "title": "Compartir tu tienda",
+                    "descriptions": {
+                        "0": "¡Compartí el enlace personalizado de tu tienda con tus clientes!",
+                        "1": "Podrán ver tus productos, agregarlos a su carrito y realizar el checkout con facilidad.",
+                        "2": "También podés compartir tu tienda en redes sociales, enviarla a clientes o agregarla a tus tarjetas de presentación."
+                    }
+                }
+            },
+            "buttons": {
+                "previous": "Anterior",
+                "next": "Siguiente",
+                "finish": "Finalizar Tutorial"
+            },
+            "alt-image": "Imagen de bienvenida"
         }
     },
     "error": {
@@ -1048,7 +1089,7 @@
             "contact-section": "Información de Contacto",
             "contact-phone": "Teléfono",
             "contact-phone-placeholder": "Ingresá el número de teléfono",
-            "contact-email-placeholder": "Ingresá la dirección de email",
+            "contact-email-placeholder": "Ingresá la dirección de correo electrónico",
             "edit-contact": "Editar Contacto",
             "edit-contact-title": "Editar Información de Contacto",
             "edit-contact-description": "Actualizá la información de contacto de tu tienda",
@@ -1142,13 +1183,13 @@
                 "name": "Nombre",
                 "address": "Dirección",
                 "phone": "Teléfono",
-                "email": "Email",
+                "email": "Correo electrónico",
                 "actions": "Acciones"
             },
             "main-badge": "Principal",
             "no-address": "Sin dirección",
             "no-phone": "Sin teléfono",
-            "no-email": "Sin email",
+            "no-email": "Sin correo electrónico",
             "dropdown": {
                 "actions": "Acciones",
                 "view-details": "Ver detalles",
@@ -1163,7 +1204,7 @@
             "name": "Nombre",
             "address": "Dirección",
             "phone": "Teléfono",
-            "email": "Email",
+            "email": "Correo electrónico",
             "basic-info": "Información básica",
             "contact-info": "Información de contacto",
             "messages": {
@@ -1175,13 +1216,13 @@
         "edit-branch": {
             "button": "Editar Sucursal",
             "title": "Editar sucursal",
-            "description-popup": "Editá los detalles de la sucursal incluyendo nombre, dirección, teléfono y email. También podés designar esta sucursal como la principal.",
+            "description-popup": "Editá los detalles de la sucursal incluyendo nombre, dirección, teléfono y correo electrónico. También podés designar esta sucursal como la principal.",
             "name": "Nombre",
             "description": "Descripción",
             "description-placeholder": "Descripción de la sucursal",
             "address": "Dirección",
             "phone": "Teléfono",
-            "email": "Email",
+            "email": "Correo electrónico",
             "set-as-main": "Establecer como sucursal principal",
             "main-branch-note": "Esta será la sucursal principal de la tienda. Todas las otras sucursales dejarán de ser principales.",
             "messages": {
@@ -1236,7 +1277,7 @@
             "role-label": "Rol:",
             "hired-label": "Contratado:",
             "messages": {
-                "select-user-first": "Debés seleccionar un usuario primero",
+                "select-user-first": "Tenés que seleccionar un usuario primero",
                 "user-already-employee": "Este usuario ya es empleado de esta tienda",
                 "success": "¡Empleado agregado correctamente!",
                 "error": "Error al agregar empleado",
@@ -1250,11 +1291,11 @@
         "edit-employee": {
             "button": "Editar Empleado",
             "title": "Editar empleado",
-            "description": "Editá el rol, permisos y otros detalles del empleado. Nota: El email y nombre no se pueden cambiar ya que pertenecen a la cuenta del usuario.",
+            "description": "Editá el rol, permisos y otros detalles del empleado. Nota: El correo electrónico y nombre no se pueden cambiar ya que pertenecen a la cuenta del usuario.",
             "user-info-title": "Información del Usuario Empleado",
-            "email": "Email:",
+            "email": "Correo electrónico:",
             "name": "Nombre:",
-            "email-name-note": "Nota: El email y nombre no se pueden editar aquí ya que son parte de la cuenta del usuario",
+            "email-name-note": "Nota: El correo electrónico y nombre no se pueden editar acá ya que son parte de la cuenta del usuario",
             "role": "Rol",
             "role-placeholder": "Seleccionar un rol",
             "position": "Posición",
@@ -1350,8 +1391,8 @@
             "status-placeholder": "Seleccionar nuevo estado",
             "new-status-preview": "Vista Previa del Nuevo Estado",
             "payment-marked-paid": "El pago será marcado automáticamente como PAGADO",
-            "payment-explanation": "Cambiar de PENDIENTE a {status} indica que el pedido ha sido pagado. El estado del pago será actualizado en consecuencia.",
-            "confirm-payment": "Confirmo que este pedido ha sido pagado",
+            "payment-explanation": "Cambiar de PENDIENTE a {status} indica que el pedido fue pagado. El estado del pago será actualizado en consecuencia.",
+            "confirm-payment": "Confirmo que este pedido fue pagado",
             "stock-restore-warning": "Esto restaurará el stock de productos y revertirá el saldo de la tienda",
             "cancellation-consequences": "Cancelar este pedido:",
             "restore-stock": "Restaurará las cantidades de stock de productos",
@@ -1438,13 +1479,13 @@
             "title": "Crear nuevo producto",
             "description": "Descripción",
             "popup-description": "¡Seleccioná una tienda y creá un nuevo producto para comenzar a vender!",
-            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "drag-drop": "Arrastrá y soltá archivos acá",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
             "browse-files": "Explorar archivos",
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "file-rejected": "\"{filename}\" fue rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
                 "error": "Error al crear producto",
@@ -1455,13 +1496,13 @@
             "button": "Editar Producto",
             "title": "Editar producto",
             "description": "Descripción",
-            "drag-drop": "Arrastrá y soltá archivos aquí",
+            "drag-drop": "Arrastrá y soltá archivos acá",
             "click-browse": "O hacé clic para explorar (máx. 1 archivo, hasta 2MB cada uno)",
             "browse-files": "Explorar archivos",
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
-            "file-rejected": "\"{filename}\" ha sido rechazado",
+            "file-rejected": "\"{filename}\" fue rechazado",
             "validation": {
                 "name-required": "El nombre es requerido",
                 "price-required": "El precio es requerido",
@@ -1579,6 +1620,170 @@
                 "error": "Error al eliminar la variante",
                 "loading": "Eliminando variante..."
             }
+        },
+        "create-form": {
+            "button": "Crear Tienda",
+            "steps": {
+                "basic": "Básico",
+                "address": "Dirección",
+                "contact": "Contacto",
+                "hours": "Horarios",
+                "delivery": "Medios de pago",
+                "success": "Éxito"
+            },
+            "step-tooltips": {
+                "basic": "Información básica",
+                "address": "Información de dirección",
+                "contact": "Información de contacto",
+                "hours": "Información de horarios",
+                "delivery": "Información de entrega",
+                "success": "Éxito"
+            },
+            "step-locked": "Debes completar todos los pasos anteriores requeridos para desbloquear este paso",
+            "descriptions": {
+                "step1": "Elegí un nombre y URL para comenzar; podés editar los detalles de tu tienda más tarde.",
+                "step2": "Elegí si esta es una tienda física o una tienda online y agregá tu información de dirección.",
+                "step3": "Agregá tu información de contacto y redes sociales para que puedan contactarte.",
+                "step4": "Elegí fechas y horarios de atención para que los clientes sepan cuándo estás abierto.",
+                "step5": "Configurá tus métodos de pago para que los clientes puedan pagar por sus pedidos.",
+                "step6": "Creando tu tienda...",
+                "step7": "¡Todo listo! Redirigiendo..."
+            },
+            "titles": {
+                "create-store": "Crear Tienda",
+                "creating": "Creando tu tienda...",
+                "created": "Tienda creada con éxito"
+            },
+            "basic-info": {
+                "name": "Nombre",
+                "name-placeholder": "Ej: Mi Tienda",
+                "name-tooltip": "Este es el nombre de tu tienda. Se usará para identificar tu tienda en el sistema.",
+                "url": "URL",
+                "url-placeholder": "Ej: mi-tienda",
+                "url-tooltip": "Esta es la URL de tu tienda. La gente la usará para acceder a tu tienda.",
+                "description": "Descripción",
+                "description-placeholder": "Ej: Descripción de Mi Tienda"
+            },
+            "address": {
+                "store-type": "Tipo de tienda",
+                "online-store": "Online",
+                "online-store-description": "Tu tienda opera solo en línea usando una plataforma de comercio electrónico.",
+                "physical-store": "Física",
+                "physical-store-description": "Tu tienda cuenta con un lugar fisico disponible para atención al público.",
+                "address": "Dirección",
+                "address-placeholder": "Ej: Calle Principal 123",
+                "address-tooltip": "Esta es la dirección de tu tienda. Se usará para mostrar tu tienda en el mapa.",
+                "city": "Ciudad",
+                "city-placeholder": "Ej: Buenos Aires",
+                "city-tooltip": "Esta es la ciudad de tu tienda. Se usará para mostrar tu tienda en el mapa.",
+                "province": "Provincia",
+                "province-placeholder": "Ej: Buenos Aires",
+                "province-tooltip": "Esta es la provincia de tu tienda. Se usará para mostrar tu tienda en el mapa.",
+                "country": "País",
+                "country-placeholder": "Ej: Argentina",
+                "country-tooltip": "Este es el país de tu tienda. Se usará para mostrar tu tienda en el mapa."
+            },
+            "contact": {
+                "phone": "Teléfono",
+                "phone-placeholder": "Ej: 1234567890",
+                "phone-tooltip": "Este es el número de teléfono de tu tienda. Se usará para contactar tu tienda.",
+                "email": "Email",
+                "email-placeholder": "Ej: test@ejemplo.com",
+                "email-tooltip": "Este es el email de tu tienda. Se usará para contactar tu tienda.",
+                "social-media": "Redes Sociales",
+                "facebook": "Facebook",
+                "facebook-placeholder": "Ej: https://www.facebook.com/tu-pagina",
+                "facebook-tooltip": "Esta es la URL de Facebook de tu tienda. Se usará para mostrar tu tienda en Facebook.",
+                "instagram": "Instagram",
+                "instagram-placeholder": "Ej: https://www.instagram.com/tu-pagina",
+                "instagram-tooltip": "Esta es la URL de Instagram de tu tienda. Se usará para mostrar tu tienda en Instagram.",
+                "x-twitter": "X (Twitter)",
+                "x-twitter-placeholder": "Ej: https://x.com/tu-pagina",
+                "x-twitter-tooltip": "Esta es la URL de X (Twitter) de tu tienda. Se usará para mostrar tu tienda en X (Twitter)."
+            },
+            "settings": {
+                "attention-type": "Tipo de atención",
+                "24-hours": "24 Horas",
+                "24-hours-description": "Esta tienda está abierta 24 horas y los clientes pueden hacer pedidos en cualquier momento.",
+                "schedule": "Horario",
+                "schedule-description": "Esta tienda funciona con horario y los clientes solo pueden hacer pedidos durante las horas especificadas.",
+                "no-days-configured": "No hay días de atención configurados",
+                "no-days-selected": "Sin días seleccionados",
+                "opening-hours": "Horarios de apertura",
+                "add-date": "Agregar fecha",
+                "delete": "Eliminar",
+                "cancel": "Cancelar",
+                "save": "Guardar",
+                "operating-days-hours": "Días y Horarios de Atención",
+                "day-selected": "día seleccionado",
+                "days-selected": "días seleccionados",
+                "set-mon-fri": "Lun-Vie",
+                "set-fri-sun": "Vie-Dom",
+                "select-days-above": "Seleccioná los días arriba",
+                "select-days-description": "Elegí los días de atención para configurar los horarios.",
+                "start-time": "Hora Inicio",
+                "end-time": "Hora Fin",
+                "save-schedule": "Guardar",
+                "select-at-least-one-day": "Seleccioná al menos un día para guardar",
+                "days": {
+                    "monday": "lunes",
+                    "tuesday": "martes",
+                    "wednesday": "miercoles",
+                    "thursday": "jueves",
+                    "friday": "viernes",
+                    "saturday": "sabado",
+                    "sunday": "domingo"
+                }
+            },
+            "shipping": {
+                "payment-methods": "Métodos de pago",
+                "shipping-methods": "Métodos de envío",
+                "pickup-only": "Solo Retiro",
+                "pickup-only-description": "Esta tienda no ofrece servicio de delivery; solo retiro.",
+                "delivery-pickup": "Delivery y Retiro",
+                "delivery-pickup-description": "Esta tienda ofrece delivery además de retiro.",
+                "no-shipping-configured": "No configuraste ninguna forma de envío",
+                "add-shipping-method": "Agregar modo de envío",
+                "providers": "Proveedores",
+                "providers-error": "Seleccioná al menos un proveedor",
+                "providers-options": {
+                    "own-delivery": "Delivery propio",
+                    "oca": "OCA",
+                    "correo-argentino": "Correo Argentino",
+                    "others": "Otros"
+                },
+                "delivery-price": "Precio envío",
+                "delivery-price-placeholder": "Ej: 1500",
+                "min-purchase": "Mín. $ envío",
+                "min-purchase-placeholder": "Ej: 10000",
+                "min-purchase-tooltip": "El precio mínimo de una orden para que el cliente pueda realizar un pedido con envío",
+                "free-shipping-min": "Mín. $ envío gratis",
+                "free-shipping-min-placeholder": "Ej: 20000",
+                "estimated-time": "Tiempo de entrega aproximado",
+                "estimated-time-placeholder": "Ej: 24-48 hs",
+                "no-provider-selected": "Sin proveedor seleccionado",
+                "no-minimum": "Sin mínimo",
+                "no-free-shipping": "Sin gratis",
+                "eta-not-set": "ETA no establecido",
+                "price": "Precio",
+                "payment-options": {
+                    "cash": "Efectivo",
+                    "credit": "Credito",
+                    "debit": "Debito",
+                    "mercado-pago": "Mercado Pago",
+                    "transfer": "Transferencia"
+                },
+                "cancel": "Cancelar",
+                "save": "Guardar",
+                "delete": "Eliminar"
+            },
+            "messages": {
+                "store-created-success": "Tienda creada exitosamente",
+                "creating-store": "Creando tu tienda..."
+            },
+            "payment": {
+                "cbu-cvu-placeholder": "Ej: 0000003100061234567890"
+            }
         }
     },
     "sale": {
@@ -1629,7 +1834,7 @@
             "units": "unidades",
             "try-again": "Intentá nuevamente con otros términos de búsqueda",
             "search-instruction": "Buscá productos por nombre o escaneá un código de barras",
-            "results-here": "Los resultados aparecerán aquí"
+            "results-here": "Los resultados aparecerán acá"
         },
         "actions": {
             "finalize-sale": "Finalizar Venta",
@@ -1740,7 +1945,7 @@
         },
         "personal-info": {
             "name": "Nombre",
-            "email": "Email",
+            "email": "Correo electrónico",
             "phone": "Teléfono"
         },
         "delivery": {

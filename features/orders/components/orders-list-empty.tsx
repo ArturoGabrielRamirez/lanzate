@@ -12,9 +12,9 @@ function OrdersListEmpty() {
                         <EmptyMedia variant="icon">
                             <ShoppingCart />
                         </EmptyMedia>
-                        <EmptyTitle>No orders found</EmptyTitle>
+                        <EmptyTitle>Pedidos no encontrados</EmptyTitle>
                         <EmptyDescription>
-                            <p>No orders found</p>
+                            <p>No se encontraron pedidos</p>
                         </EmptyDescription>
                     </EmptyHeader>
                 </Empty>

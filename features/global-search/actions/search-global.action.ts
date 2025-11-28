@@ -13,13 +13,13 @@ export async function searchGlobalAction(query: string, userId: number) {
     return actionWrapper(async () => {
         
         if (!query.trim()) {
-            return formatSuccessResponse("Empty query", [])
+            return formatSuccessResponse("Búsqueda vacía", [])
         }
 
         const { payload: stores, hasError: storesError } = await getStoresFromUserAction(userId)
 
         if (storesError || !stores || stores.length === 0) {
-            throw new Error("Empty search. You need to create a store and create a product to search for it.")
+            throw new Error("Búsqueda vacía. Necesitás crear una tienda y un producto para poder buscar.")
         }
 
         const storeIds = stores.map(store => store.id)
@@ -48,6 +48,6 @@ export async function searchGlobalAction(query: string, userId: number) {
             results.push(createCustomerSearchResult(customer))
         })
 
-        return formatSuccessResponse("Search completed", results.slice(0, SEARCH_CONFIG.MAX_TOTAL_RESULTS))
+        return formatSuccessResponse("Búsqueda completada", results.slice(0, SEARCH_CONFIG.MAX_TOTAL_RESULTS))
     })
 } 

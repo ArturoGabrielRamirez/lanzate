@@ -7,11 +7,11 @@ export async function searchProductByBarcodeAction(barcode: string, storeId: num
     return actionWrapper(async () => {
 
         if (!barcode || barcode.trim() === '') {
-            throw new Error("Barcode is required")
+            throw new Error("Se requiere el código de barras")
         }
 
         if (!storeId) {
-            throw new Error("Store ID is required")
+            throw new Error("Se requiere el ID de la tienda")
         }
 
         const { error, payload, message } = await getProductByBarcodeData(barcode.trim(), storeId)

@@ -12,7 +12,7 @@ export async function getStoreLogsAction(slug: string) {
 
         return {
             hasError: false,
-            message: "Store logs retrieved successfully",
+            message: "Registros de la tienda recuperados con éxito",
             payload: payload
         }
 

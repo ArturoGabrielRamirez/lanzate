@@ -26,9 +26,10 @@ export async function updateStoreSocialMediaAction(storeId: number, data: EditSo
                             id: mainBranch?.id
                         },
                         data: {
-                            facebook_url: data.facebook_url || null,
+                            /* facebook_url: data.facebook_url || null,
                             instagram_url: data.instagram_url || null,
-                            x_url: data.x_url || null
+                            x_url: data.x_url || null */
+                            //TODO: Arreglar aca, para Hori
                         }
                     }
                 }
@@ -38,7 +39,7 @@ export async function updateStoreSocialMediaAction(storeId: number, data: EditSo
         revalidatePath(`/stores/${store.slug}`, "page")
 
         return {
-            message: "Social media information updated successfully",
+            message: "Información de redes sociales actualizada con éxito",
             hasError: false,
             payload: data
         }

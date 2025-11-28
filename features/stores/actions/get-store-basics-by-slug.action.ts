@@ -9,7 +9,7 @@ export async function getStoreBasicsBySlugAction(slug: string) {
         const { payload: store } = await selectStoreBasicsBySlugData(slug)
 
         return {
-            message: "Store basics fetched successfully from db",
+            message: "Datos básicos de la tienda recuperados con éxito desde la base de datos",
             payload: store,
             hasError: false
         }

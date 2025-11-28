@@ -6,7 +6,6 @@ import Link from "next/link"
 
 import type { VariantLinkCardProps } from "@/features/products/types"
 
-
 function VariantLinkCard({ variant, slug, productId, productPrice }: VariantLinkCardProps) {
     const total = (variant.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
     const size = variant.size

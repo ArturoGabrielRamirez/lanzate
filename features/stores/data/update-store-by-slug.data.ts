@@ -1,4 +1,4 @@
-"use server"
+/* "use server"
 
 import { StoreUpdateData } from '@/features/stores/types'
 import { prisma } from "@/utils/prisma"
@@ -42,12 +42,12 @@ export async function updateStoreBySlugData(slug: string, data: StoreUpdateData)
         },
         data: {
             ...storeData,
-            /* phone: storeData.contact_phone,
-            email: storeData.contact_email, */
-            /* facebook_url: facebook_url, */
-            /* instagram_url: instagram_url, */
-            /* x_url: x_url, */
-            /* is_physical_store: storeData.is_physical_store, */
+            phone: storeData.contact_phone,
+            email: storeData.contact_email,
+            facebook_url: facebook_url,
+            instagram_url: instagram_url,
+            x_url: x_url,
+            is_physical_store: storeData.is_physical_store,
             branches: {
                 update: {
                     where: {
@@ -92,9 +92,10 @@ export async function updateStoreBySlugData(slug: string, data: StoreUpdateData)
     })
 
     return {
-        message: "Store updated successfully",
+        message: "Tienda actualizada con éxito",
         payload: finalStore,
         hasError: false
     }
 
 }
+ */

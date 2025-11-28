@@ -48,7 +48,7 @@ export async function toggleFollowUserAction(targetUserId: number) {
     }
 
     if (!targetUser.profile_is_public) {
-      throw new Error('No puedes seguir perfiles privados')
+      throw new Error('No podés seguir perfiles privados')
     }
 
     // 3. ✅ Determinar acción desde JOIN (sin query adicional)
@@ -135,7 +135,7 @@ export async function toggleFollowUserAction(targetUserId: number) {
     return {
       hasError: false,
       message: isFollowing
-        ? `Ahora sigues a @${targetUser.username}`
+        ? `Ahora seguís a @${targetUser.username}`
         : `Dejaste de seguir a @${targetUser.username}`,
       payload: {
         isFollowing,

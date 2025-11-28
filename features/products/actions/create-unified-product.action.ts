@@ -16,7 +16,7 @@ export async function createUnifiedProductAction(args: CreateUnifiedProductArgs)
 
         revalidatePath("/store/" + args.targetStoreId)
 
-        return { hasError: false, message: "Product created successfully", payload }
+        return { hasError: false, message: "Producto creado exitosamente", payload }
     })
 }
 

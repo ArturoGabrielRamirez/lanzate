@@ -75,7 +75,7 @@ export default function CameraComponent({
       }
     } catch (error) {
       console.error('Error starting camera:', error)
-      setError('No se pudo acceder a la cámara. Verifica los permisos.')
+      setError('No se pudo acceder a la cámara. Verifica los permisos o si tenés una cámara conectada.')
     }
   }, [facingMode])
 
@@ -194,6 +194,7 @@ export default function CameraComponent({
               src={capturedImage}
               alt="Captured"
               className="max-w-full max-h-full object-contain"
+              fill
             />
           ) : (
             <>

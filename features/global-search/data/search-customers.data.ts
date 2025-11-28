@@ -18,7 +18,7 @@ export async function searchCustomersData(searchTerm: string, storeIds: number[]
         .limit(limit)
 
     if (customersError) {
-        throw new Error("Error fetching customers")
+        throw new Error("Error al obtener clientes: " + customersError.message)
     }
 
     if (!customers) {

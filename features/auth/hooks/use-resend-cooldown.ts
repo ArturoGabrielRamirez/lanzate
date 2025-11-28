@@ -75,7 +75,7 @@ export function useResendCooldown(
                     });
                 } else if (response.status === 401) {
                     toast.error('No autenticado', {
-                        description: 'Por favor, inicia sesión para continuar',
+                        description: 'Por favor, iniciá sesión para continuar',
                         duration: 5000
                     });
                 } else if (data.message?.includes('already confirmed') || 

@@ -14,7 +14,7 @@ function OptimizationOptionsList({
                 icon={Crop}
                 iconColor="bg-primary/10 text-primary"
                 title="Recortar manualmente"
-                description="Elige exactamente qué parte de la imagen usar. Te dará control total sobre el resultado final."
+                description="Elegí exactamente qué parte de la imagen usar. Te dará control total sobre el resultado final."
                 badges={[{ label: 'Recomendado', variant: 'secondary' }]}
                 features={['Mejor calidad', 'Control total']}
                 onClick={() => onDecision('crop')}

@@ -8,7 +8,7 @@ export async function deleteProductVariantData(variantId: number) {
             where: { id: variantId },
             include: { product: true }
         })
-        if (!variant) throw new Error("Variant not found")
+        if (!variant) throw new Error("Variante no encontrada")
 
         // Soft delete variant by setting is_deleted to true
         await tx.productVariant.update({

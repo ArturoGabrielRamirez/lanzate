@@ -44,6 +44,7 @@ export function MediaPreview({
             src={previewUrl}
             alt="Preview"
             className="w-full h-full object-cover"
+            fill
           />
           {showRemove && (
             <Button

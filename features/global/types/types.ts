@@ -42,13 +42,14 @@ export interface ContactFormProps {
 export type SelectFieldProps = {
     name: string
     label: string
-    options: { value: string, label: string }[]
+    options: { value: string, label: string | React.ReactNode }[]
     placeholder?: string
     description?: string | React.ReactNode
     tooltip?: string | React.ReactNode
     isRequired?: boolean
     disabled?: boolean
     startIcon?: React.ReactNode
+    onChange?: (value: string) => void
 }
 
 export interface ReplyData {
@@ -122,4 +123,39 @@ export interface ReplyEmailTemplateProps {
 
 export interface WaitlistWelcomeProps {
     recipientEmail: string;
+}
+
+export interface ShortcutHintProps {
+    keys: string[]
+    label?: string
+    variant?: "default" | "secondary" | "outline" | "destructive"
+    size?: "sm" | "md"
+}
+
+export interface KeyboardShortcut {
+    keys: string[]
+    description: string
+    category: 'global' | 'sale'
+    condition?: string
+}
+
+export interface KeyboardShortcutsConfig {
+    // Callbacks para acciones específicas
+    onNewSale?: () => void
+    onFinalizeSale?: () => void
+    onCalculateChange?: () => void
+    onPrintReceipt?: () => void
+    onClearCart?: () => void
+    onRefund?: () => void
+    onFocusSearch?: () => void
+    onClearSearch?: () => void
+    onIncreaseQuantity?: () => void
+    onDecreaseQuantity?: () => void
+
+    // Control de contexto
+    isInSale?: boolean
+    hasCartItems?: boolean
+
+    // Deshabilitar shortcuts globalmente
+    disabled?: boolean
 }

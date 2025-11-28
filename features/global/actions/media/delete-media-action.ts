@@ -3,102 +3,107 @@
 import { revalidatePath } from "next/cache"
 
 import { getCurrentUserWithIdAndEmailAction } from '@/features/auth/actions'
-import { getUserId } from "@/features/auth/data/get-user-id"
-import { getUserMediaByType } from "@/features/auth/data/get-user-media-by-type"
-import { updateUserMedia } from "@/features/auth/data/update-user-media"
-import { createStorageService } from "@/features/global/services/storage"
+import { getUserId } from '@/features/auth/data/get-user-id'
+import { getUserMediaByType } from '@/features/auth/data/get-user-media-by-type'
+import { updateUserMedia } from '@/features/auth/data/update-user-media'
+import { createStorageService } from '@/features/global/services/storage'
 import { DeleteMediaParams, DeleteMediaResponse, UPLOAD_TYPES } from "@/features/global/types/media"
-import { actionWrapper, formatErrorResponse, formatSuccessResponse } from "@/features/global/utils"
+import { actionWrapper, formatErrorResponse, formatSuccessResponse } from '@/features/global/utils'
+import { getStoragePath } from "@/features/global/utils/media/get-storege-path" // Importante
 import { validateUploadType } from "@/features/global/utils/media/validators"
 import { deleteProductMediaData } from "@/features/products/data/delete-product-media.data"
 import { getProductMediaByIdData } from "@/features/products/data/get-product-media-by-id.data"
 import { getDefaultBannerForUser } from "@/features/profile/utils/get-default-banner-for-user"
+import { handleStoreDeleteAction } from "@/features/stores/actions/handle-store-delete.action"
 
-export async function deleteMediaAction({ type, mediaUrl, mediaId }: DeleteMediaParams) {
+export async function deleteMediaAction({ type, mediaUrl, mediaId, storeId }: DeleteMediaParams) {
   return actionWrapper<DeleteMediaResponse>(async () => {
-    // 1. Autenticación
     const currentUserResponse = await getCurrentUserWithIdAndEmailAction()
     if (!currentUserResponse || currentUserResponse.hasError) {
-      return formatErrorResponse('Debes iniciar sesión')
+      return formatErrorResponse('Por favor, iniciá sesión para poder eliminar este archivo')
     }
 
-    const user = await getUserId({ payload: { id: currentUserResponse.payload?.id }, error: currentUserResponse.message })
+    const user = await getUserId({
+      payload: { id: currentUserResponse.payload?.id },
+      error: currentUserResponse.message
+    })
 
-    // 2. Validación
     validateUploadType(type)
     const storage = createStorageService()
+    
+    const { bucket } = getStoragePath(type)
 
-    // 3. CASO: Eliminar media de producto
+    // Eliminar media de tienda
+    if (type === UPLOAD_TYPES.STORE_LOGO || type === UPLOAD_TYPES.STORE_BANNER) {
+      if (!storeId) return formatErrorResponse('storeId requerido')
+      return await handleStoreDeleteAction(type, storeId, user.id)
+    }
+
+    // Eliminar media de producto
     if (mediaId) {
       const media = await getProductMediaByIdData(mediaId)
 
-      if (!media) {
-        return formatErrorResponse('Media no encontrada')
-      }
+      if (!media) return formatErrorResponse('Media no encontrada')
+      if (media.product.owner_id !== user.id) return formatErrorResponse('Sin permisos')
 
-      if (media.product.owner_id !== user.id) {
-        return formatErrorResponse('Sin permisos')
-      }
-
-      // Eliminar del storage si es upload personalizado
-      if (media.url?.includes('user-uploads')) {
+      // Verificar si la URL pertenece al bucket de productos
+      if (media.url?.includes(bucket)) {
         const filename = media.url.split('/').pop()
         if (filename) {
-          await storage.deleteFile(`products/${filename}`, 'user-uploads')
+          // Eliminamos directamente del bucket de productos
+          await storage.deleteFile(filename, bucket)
         }
       }
 
       await deleteProductMediaData(mediaId)
       revalidatePath('/products')
-
       return formatSuccessResponse('Media eliminado', { mediaId })
     }
 
-    // 4. CASO: Eliminar avatar/banner de usuario
+    // Eliminar avatar/banner de usuario
     if (type === UPLOAD_TYPES.AVATAR || type === UPLOAD_TYPES.BANNER) {
-      const userData = await getUserMediaByType(user.id/* , type */) //TODO: Revisar si es necesario type
-
-      if (!userData) {
-        return formatErrorResponse('Usuario no encontrado')
-      }
+      const userData = await getUserMediaByType(user.id)
+      if (!userData) return formatErrorResponse('Usuario no encontrado')
 
       const currentUrl = type === 'avatar' ? userData.avatar : userData.banner
       const urlToDelete = mediaUrl || currentUrl
 
-      // 5. Detectar si es preset o upload personalizado
-      const isUserUpload = urlToDelete?.includes('user-uploads')
+      // Detectar si es upload personalizado verificando si contiene el nombre del bucket
+      const isCustomUpload = urlToDelete?.includes(bucket)
 
-      if (isUserUpload && urlToDelete) {
-        // Extraer filename del URL
-        const match = urlToDelete.match(/user-uploads\/(.+)$/)
-        if (match) {
-          const filePath = match[1] // avatars/avatar-xxx.jpg o banners/banner-xxx.jpg
-
-          // Verificar que el archivo pertenece al usuario
-          const fileUserId = filePath.match(new RegExp(`${type}s/${type}-(\\d+)-`))
-          if (fileUserId && parseInt(fileUserId[1]) === user.id) {
-            await storage.deleteFile(filePath, 'user-uploads')
+      if (isCustomUpload && urlToDelete) {
+        // Al estar en la raíz del bucket, el nombre del archivo es la última parte
+        const filename = urlToDelete.split('/').pop()
+        
+        if (filename) {
+          // Verificar que el archivo pertenece al usuario usando regex sobre el nombre
+          // Patrón esperado: type-userId-timestamp (ej: avatar-55-123456.jpg)
+          const fileUserIdRegex = new RegExp(`^${type}-(\\d+)-`)
+          const match = filename.match(fileUserIdRegex)
+          
+          if (match && parseInt(match[1]) === user.id) {
+            await storage.deleteFile(filename, bucket)
           }
         }
       }
 
-      // 6. Actualizar BD - Solo si era el media actual
+      // Actualizar BD - Solo si era el media actual
       let updatedUser = userData
       if (currentUrl === urlToDelete) {
         const newValue = type === 'banner' ? getDefaultBannerForUser(user.id) : null
         updatedUser = await updateUserMedia(user.id, type, newValue)
       }
 
-      // 7. Revalidar
+      // Revalidar paths
       revalidatePath('/profile')
       revalidatePath(`/profile/${user.username}`)
       revalidatePath('/settings')
 
       return formatSuccessResponse(
-        isUserUpload ? `${type} eliminado del storage` : `${type} removido`,
+        isCustomUpload ? `${type} eliminado del storage` : `${type} removido`,
         {
           user: updatedUser,
-          deletedFromStorage: isUserUpload
+          deletedFromStorage: isCustomUpload
         }
       )
     }

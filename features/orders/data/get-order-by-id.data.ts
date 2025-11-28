@@ -23,7 +23,7 @@ export async function getOrderByIdData(orderId: number, userId: number) {
         }
     })
 
-    if (!order) throw new Error("Order not found")
+    if (!order) throw new Error("Pedido no encontrado")
 
-    return formatSuccessResponse("Order fetched successfully", order)
+    return formatSuccessResponse("Pedido obtenido con éxito", order)
 } 

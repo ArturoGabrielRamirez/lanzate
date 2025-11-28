@@ -664,6 +664,47 @@
                     "loading": "Sending message..."
                 }
             }
+        },
+        "welcome-tutorial": {
+            "section-title": "Feeling lost?",
+            "dialog-title": "Welcome to Lanzate!",
+            "steps": {
+                "1": {
+                    "title": "Welcome!",
+                    "descriptions": {
+                        "0": "This is a brief tutorial to help you get started with your business.",
+                        "1": "Once you have completed the tutorial, you will be able to start using Lanzate."
+                    }
+                },
+                "2": {
+                    "title": "Create a store",
+                    "descriptions": {
+                        "0": "Create a store to start selling your products.",
+                        "1": "Choose a name, logo and shipping methods to get started; you can edit your store details later."
+                    }
+                },
+                "3": {
+                    "title": "Create a product",
+                    "descriptions": {
+                        "0": "Add products to your store to start selling.",
+                        "1": "Add as many details as you want such as images, descriptions, prices, and more."
+                    }
+                },
+                "4": {
+                    "title": "Share your store",
+                    "descriptions": {
+                        "0": "Share your store's custom link with your customers!",
+                        "1": "They'll be able to see your products, add them to their cart, and checkout with ease.",
+                        "2": "You can also share your store on social media, send it to customers, or add it to your business cards."
+                    }
+                }
+            },
+            "buttons": {
+                "previous": "Previous",
+                "next": "Next",
+                "finish": "Finish Tutorial"
+            },
+            "alt-image": "Welcome Image"
         }
     },
     "error": {
@@ -1719,6 +1760,170 @@
         "products": {
             "product-details": "Product Details ",
             "no-categories": "No categories"
+        },
+        "create-form": {
+            "button": "Create Store",
+            "steps": {
+                "basic": "Basic",
+                "address": "Address",
+                "contact": "Contact",
+                "hours": "Hours",
+                "delivery": "Payment methods",
+                "success": "Success"
+            },
+            "step-tooltips": {
+                "basic": "Basic information",
+                "address": "Address information",
+                "contact": "Contact information",
+                "hours": "Hours information",
+                "delivery": "Delivery information",
+                "success": "Success"
+            },
+            "step-locked": "You must complete all required previous steps to unlock this step",
+            "descriptions": {
+                "step1": "Choose a name, logo and shipping methods to get started; you can edit your store details later.",
+                "step2": "Choose whether this is a physical store or an online store and add your address information.",
+                "step3": "Add your contact information and social media links so customers can contact you.",
+                "step4": "Choose attention dates and hours so customers know when you are open.",
+                "step5": "Set up your payment methods so customers can pay for their orders.",
+                "step6": "Creating your store…",
+                "step7": "All set! Redirecting…"
+            },
+            "titles": {
+                "create-store": "Create Store",
+                "creating": "Creating your store…",
+                "created": "Store created successfully"
+            },
+            "basic-info": {
+                "name": "Name",
+                "name-placeholder": "Ej: My Store",
+                "name-tooltip": "This is the name of your store. It will be used to identify your store in the system.",
+                "url": "URL",
+                "url-placeholder": "Ej: my-store",
+                "url-tooltip": "This is the URL of your store. People will use it to access your store.",
+                "description": "Description",
+                "description-placeholder": "Ej: My Store Description"
+            },
+            "address": {
+                "store-type": "Store Type",
+                "online-store": "Online",
+                "online-store-description": "Your store operates online only using an e-commerce platform.",
+                "physical-store": "Physical",
+                "physical-store-description": "Your store has a physical location available for public attention.",
+                "address": "Address",
+                "address-placeholder": "Ej: 123 Main St",
+                "address-tooltip": "This is the address of your store. It will be used to display your store on the map.",
+                "city": "City",
+                "city-placeholder": "Ej: New York",
+                "city-tooltip": "This is the city of your store. It will be used to display your store on the map.",
+                "province": "Province",
+                "province-placeholder": "Ej: New York",
+                "province-tooltip": "This is the province of your store. It will be used to display your store on the map.",
+                "country": "Country",
+                "country-placeholder": "Ej: United States",
+                "country-tooltip": "This is the country of your store. It will be used to display your store on the map."
+            },
+            "contact": {
+                "phone": "Phone",
+                "phone-placeholder": "Ej: 1234567890",
+                "phone-tooltip": "This is the phone number of your store. It will be used to contact your store.",
+                "email": "Email",
+                "email-placeholder": "Ej: test@example.com",
+                "email-tooltip": "This is the email of your store. It will be used to contact your store.",
+                "social-media": "Social Media",
+                "facebook": "Facebook",
+                "facebook-placeholder": "Ej: https://www.facebook.com/your-page",
+                "facebook-tooltip": "This is the Facebook URL of your store. It will be used to display your store on Facebook.",
+                "instagram": "Instagram",
+                "instagram-placeholder": "Ej: https://www.instagram.com/your-page",
+                "instagram-tooltip": "This is the Instagram URL of your store. It will be used to display your store on Instagram.",
+                "x-twitter": "X (Twitter)",
+                "x-twitter-placeholder": "Ej: https://x.com/your-page",
+                "x-twitter-tooltip": "This is the X (Twitter) URL of your store. It will be used to display your store on X (Twitter)."
+            },
+            "settings": {
+                "attention-type": "Attention Type",
+                "24-hours": "24 Hours",
+                "24-hours-description": "This store is open 24 hours and customers can place orders at any time.",
+                "schedule": "Schedule",
+                "schedule-description": "This store operates on a schedule and customers can only place orders during specified hours.",
+                "no-days-configured": "No attention days configured",
+                "no-days-selected": "No days selected",
+                "opening-hours": "Opening Hours",
+                "add-date": "Add date",
+                "delete": "Delete",
+                "cancel": "Cancel",
+                "save": "Save",
+                "operating-days-hours": "Operating Days & Hours",
+                "day-selected": "day selected",
+                "days-selected": "days selected",
+                "set-mon-fri": "Mon-Fri",
+                "set-fri-sun": "Fri-Sun",
+                "select-days-above": "Select days above",
+                "select-days-description": "Choose operating days to configure hours.",
+                "start-time": "Start Time",
+                "end-time": "End Time",
+                "save-schedule": "Save",
+                "select-at-least-one-day": "Select at least one day to save",
+                "days": {
+                    "monday": "Monday",
+                    "tuesday": "Tuesday",
+                    "wednesday": "Wednesday",
+                    "thursday": "Thursday",
+                    "friday": "Friday",
+                    "saturday": "Saturday",
+                    "sunday": "Sunday"
+                }
+            },
+            "shipping": {
+                "payment-methods": "Payment Methods",
+                "shipping-methods": "Shipping Methods",
+                "pickup-only": "Pickup Only",
+                "pickup-only-description": "This store does not offer delivery service; only pickup.",
+                "delivery-pickup": "Delivery & Pickup",
+                "delivery-pickup-description": "This store offers delivery as well as pickup.",
+                "no-shipping-configured": "No shipping methods configured",
+                "add-shipping-method": "Add shipping method",
+                "providers": "Providers",
+                "providers-error": "Select at least one provider",
+                "providers-options": {
+                    "own-delivery": "Own Delivery",
+                    "oca": "OCA",
+                    "correo-argentino": "Correo Argentino",
+                    "others": "Others"
+                },
+                "delivery-price": "Delivery Price",
+                "delivery-price-placeholder": "Ej: 1500",
+                "min-purchase": "Min. $ shipping",
+                "min-purchase-placeholder": "Ej: 10000",
+                "min-purchase-tooltip": "The minimum price of an order for the customer to be able to place an order with shipping",
+                "free-shipping-min": "Min. $ free shipping",
+                "free-shipping-min-placeholder": "Ej: 20000",
+                "estimated-time": "Estimated delivery time",
+                "estimated-time-placeholder": "Ej: 24-48 hs",
+                "no-provider-selected": "No provider selected",
+                "no-minimum": "No minimum",
+                "no-free-shipping": "No free shipping",
+                "eta-not-set": "ETA not set",
+                "price": "Price",
+                "payment-options": {
+                    "cash": "Cash",
+                    "credit": "Credit",
+                    "debit": "Debit",
+                    "mercado-pago": "Mercado Pago",
+                    "transfer": "Transfer"
+                },
+                "cancel": "Cancel",
+                "save": "Save",
+                "delete": "Delete"
+            },
+            "messages": {
+                "store-created-success": "Store created successfully",
+                "creating-store": "Creating your store…"
+            },
+            "payment": {
+                "cbu-cvu-placeholder": "Ex: 0000003100061234567890"
+            }
         }
     },
     "checkout": {

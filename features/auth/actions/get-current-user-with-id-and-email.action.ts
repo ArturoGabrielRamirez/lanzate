@@ -15,7 +15,6 @@ export async function getCurrentUserWithIdAndEmailAction() {
       supabaseUserId: supabaseUser.id
     })
 
-
     if (!localUser.payload) {
 
       const { payload: backupUser } = await getUserByEmailData({

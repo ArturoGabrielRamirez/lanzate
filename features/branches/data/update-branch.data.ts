@@ -11,7 +11,7 @@ export async function updateBranchData({ branchId, data }: UpdateBranchProps) {
             include: { store: true }
         })
 
-        if (!currentBranch) throw new Error("Branch not found")
+        if (!currentBranch) throw new Error("Sucursal no encontrada")
 
         await prisma.branch.updateMany({
             where: {
@@ -30,7 +30,7 @@ export async function updateBranchData({ branchId, data }: UpdateBranchProps) {
             include: { store: true }
         })
 
-        if (!currentBranch) throw new Error("Branch not found")
+        if (!currentBranch) throw new Error("Sucursal no encontrada")
 
         const otherMainBranches = await prisma.branch.count({
             where: {
@@ -41,7 +41,7 @@ export async function updateBranchData({ branchId, data }: UpdateBranchProps) {
         })
 
         if (otherMainBranches === 0) {
-            throw new Error("Cannot unset main branch. At least one branch must be designated as main.")
+            throw new Error("No se puede desmarcar la sucursal principal. Al menos una sucursal debe estar designada como principal. Por favor, selecciona otra sucursal como principal antes de desmarcar esta.")
         }
     }
 
@@ -53,15 +53,15 @@ export async function updateBranchData({ branchId, data }: UpdateBranchProps) {
             name: data.name,
             description: data.description,
             address: data.address,
-            phone: data.phone,
-            email: data.email,
+          /*   phone: data.phone, */
+          /*   email: data.email, */
             is_main: data.is_main
         }
     })
 
     return {
         error: false,
-        message: "Branch updated successfully",
+        message: "Sucursal actualizada con éxito",
         payload: branch
     }
 } 

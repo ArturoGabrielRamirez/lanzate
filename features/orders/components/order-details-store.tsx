@@ -12,20 +12,20 @@ function OrderDetailsStore({ order }: OrderDetailsStoreProps) {
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 justify-between">
                     <h3 className="text-xl font-medium">
-                        Store
+                        Tienda
                     </h3>
                     <StoreIcon />
                 </CardTitle>
             </CardHeader>
             <CardContent className="grow">
-                <p className="text-muted-foreground mb-4">Need help? Contact the store.</p>
+                <p className="text-muted-foreground mb-4">¿Necesitas ayuda? Contacta con la tienda.</p>
                 <div className="flex items-center gap-2">
                     <Phone className="size-4" />
-                    <p className="text-muted-foreground">{order.branch.phone || "No phone available"}</p>
+                    <p className="text-muted-foreground">{order.branch.phone || "Teléfono no disponible"}</p>
                 </div>
                 <div className="flex items-center gap-2">
                     <MapPin className="size-4" />
-                    <p className="text-muted-foreground">{order.branch.address || "No address available"}</p>
+                    <p className="text-muted-foreground">{order.branch.address || "Dirección no disponible"}</p>
                 </div>
             </CardContent>
             <CardFooter className="flex justify-end">

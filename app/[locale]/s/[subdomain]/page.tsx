@@ -1,7 +1,7 @@
 import { ArrowRight, BookA, Candy, Eye, Milk, Utensils } from "lucide-react"
 import Link from "next/link"
-import { SearchParams } from "nuqs"
-import { Suspense } from "react"
+/* import { SearchParams } from "nuqs" */
+/* import { Suspense } from "react" */
 
 /* import { Title } from "@/features/layout/components"; */
 /* import PaginationNav from "@/features/store-landing/components/pagination-nav";
@@ -12,21 +12,21 @@ import SidebarFilters from "@/features/store-landing/components/sidebar-filters"
 /* import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount"; */
 /* import Image from "next/image"; */
 import { PageContainer } from "@/features/layout/components";
-import { ProductCardLoader } from "@/features/products/components/product-card-loader";
-import { ProductList } from "@/features/products/components/product-list";
-import { loadFilterParams } from "@/features/products/utils/load-filter-params";
+/* import { ProductCardLoader } from "@/features/products/components/product-card-loader"; */
+/* import { ProductList } from "@/features/products/components/product-list"; */
+/* import { loadFilterParams } from "@/features/products/utils/load-filter-params"; */
 import { Card, CardContent } from "@/features/shadcn/components/ui/card";
 import { StoreBanner } from "@/features/stores/components/public/store-banner";
 import { TopCategoriesNavbar } from "@/features/stores/components/public/top-categories-navbar";
 
-type Props = {
+/* type Props = {
     params: Promise<{ subdomain: string }>
     searchParams: Promise<SearchParams>
-}
+} */
 
-export default async function StorePage({ params, searchParams }: Props) {
-    const { subdomain } = await params
-    const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
+export default async function StorePage(/* { params, searchParams }: Props */) {
+  /*   const { subdomain } = await params
+    const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams) */
     /* const { payload: productAmount } = await getStoreProductAmount(subdomain); */
     /* const t = await getTranslations("subdomain"); */
 
@@ -38,11 +38,11 @@ export default async function StorePage({ params, searchParams }: Props) {
                 <div className="container mx-auto py-8 group">
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-2xl font-bold text-primary-foreground/50 group-hover:text-primary-foreground transition-all duration-300">
-                            Browse by Category
+                            Explorar por categoría
                         </h2>
                         <Link href="/categories" className="flex items-center gap-2 text-sm text-primary-foreground/50 hover:text-primary transition-all duration-300">
                             <ArrowRight className="size-4" />
-                            View All
+                            Ver todo
                         </Link>
                     </div>
                     <div className="flex gap-4">
@@ -51,7 +51,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <Candy className="size-10" />
                                     <p>
-                                        Candy
+                                        Golosinas
                                     </p>
                                 </CardContent>
                             </Card>
@@ -61,7 +61,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <Utensils className="size-10" />
                                     <p>
-                                        Food
+                                        Alimentos
                                     </p>
                                 </CardContent>
                             </Card>
@@ -71,7 +71,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <Milk className="size-10" />
                                     <p>
-                                        Drinks
+                                        Bebidas
                                     </p>
                                 </CardContent>
                             </Card>
@@ -81,7 +81,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <BookA className="size-10" />
                                     <p>
-                                        Library
+                                        Librería
                                     </p>
                                 </CardContent>
                             </Card>
@@ -91,7 +91,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                 <CardContent className="grow flex justify-center flex-col items-center">
                                     <Eye className="size-10" />
                                     <p>
-                                        View All
+                                        Ver todo
                                     </p>
                                 </CardContent>
                             </Card>
@@ -107,7 +107,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                         </h2>
                         <Link href="/products?best-sellers=true" className="flex items-center gap-2 text-sm text-primary-foreground/50 hover:text-primary transition-all duration-300">
                             <ArrowRight className="size-4" />
-                            View All
+                            Ver todo
                         </Link>
                     </div>
                     <div className="flex gap-4 grid-rows-[min-content_1fr_min-content] container mx-auto pt-4">
@@ -117,7 +117,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                             <ProductListDisplay />
                             <ProductAmountDisplay amount={productAmount || 0} />
                         </div> */}
-                            <Suspense fallback={<ProductCardLoader />} key={category}>
+                         {/*    <Suspense fallback={<ProductCardLoader />} key={category}>
                                 <ProductList
                                     subdomain={subdomain}
                                     category={category}
@@ -128,7 +128,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                     limit={limit}
                                     page={page}
                                 />
-                            </Suspense>
+                            </Suspense> */}
                             {/* <PaginationNav productAmount={productAmount || 0} limit={limit} /> */}
                         </div>
                     </div>

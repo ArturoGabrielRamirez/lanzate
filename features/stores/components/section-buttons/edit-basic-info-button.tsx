@@ -25,14 +25,14 @@ function EditBasicInfoButton({ store, userId, onSuccess }: EditBasicInfoButtonPr
 
         try {
             setIsLoading(true)
-            toast.loading("Updating basic information...")
+            toast.loading("Actualizando información básica...")
             const { hasError, message } = await updateStoreBasicInfoAction(store.slug, payload, userId)
 
             if (hasError) {
                 throw new Error(message)
             }
             toast.dismiss()
-            toast.success("Basic information updated successfully!")
+            toast.success("Información básica actualizada con éxito!")
             if (onSuccess) onSuccess()
 
         } catch (error) {
@@ -41,7 +41,7 @@ function EditBasicInfoButton({ store, userId, onSuccess }: EditBasicInfoButtonPr
             if (error instanceof Error) {
                 toast.error(error.message)
             } else {
-                toast.error("Failed to update basic information")
+                toast.error("Error al actualizar la información básica")
             }
         } finally {
             setIsLoading(false)

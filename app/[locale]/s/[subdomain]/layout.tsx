@@ -2,8 +2,8 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 import CartProvider from "@/features/cart/components/cart-provider";
-import { Footer } from "@/features/layout/components/public-store/footer";
-import { Header } from "@/features/layout/components/public-store/header";
+/* import { Footer } from "@/features/layout/components/public-store/footer";
+import { Header } from "@/features/layout/components/public-store/header"; */
 import { MainContainer } from "@/features/layout/components/public-store/main-container";
 import { StoreProvider } from "@/features/layout/components/public-store/store-provider";
 import { Toaster } from "@/features/shadcn/components/ui/sonner";
@@ -75,21 +75,21 @@ export default async function Layout({ children, params }: LayoutProps) {
                     className="contents"
                 >
                     <Suspense>
-                        <Header
+                       {/*  <Header
                             logo={storeData.logo}
                             title={storeData.name}
                             socialMedia={storeData.operational_settings}
                             showSocialLinks={storeData.customization?.show_social_links ?? true}
-                        />
+                        /> */}
                     </Suspense>
                     <MainContainer>
                         {children}
                     </MainContainer>
-                    <Footer
+                    {/* <Footer
                         title={storeData.name}
                         socialMedia={storeData.operational_settings}
                         showSocialLinks={storeData.customization?.show_social_links ?? true}
-                    />
+                    /> */}
                     <Toaster />
                 </div>
             </StoreProvider>

@@ -1,6 +1,6 @@
 export * from "@/features/checkout/components/branch-selector"
 export * from "@/features/checkout/components/checkout-context"
-export * from "@/features/checkout/components/checkout-form"
+/* export * from "@/features/checkout/components/checkout-form" */ //TODO:Resolver problemas de prisma
 export * from "@/features/checkout/components/checkout-step-item"
 export * from "@/features/checkout/components/payment-information"
 export * from "@/features/checkout/components/shipping-method-selector"

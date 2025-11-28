@@ -17,36 +17,23 @@ import { CategoriesSection } from "@/features/products/components/sections/categ
 import { MediaSection } from "@/features/products/components/sections/media-section"
 import { PriceStockSection } from "@/features/products/components/sections/price-stock-section"
 import { SettingsSection } from "@/features/products/components/sections/settings-section"
-import { EditProductButtonProps } from "@/features/products/types"
+import { ProductFormProvider, useProductForm } from "@/features/products/contexts/product-form-context"
+import { EditProductButtonProps, EditProductPayload } from "@/features/products/types"
+import { uploadProductImages } from "@/features/products/utils"
 import { Accordion, AccordionContent, AccordionItem } from "@/features/shadcn/components/ui/accordion"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/features/shadcn/components/ui/dialog"
 
-type CategoryValue = { value: string; label: string }
-
-type EditProductPayload = {
-    name: string
-    price: number
-    stock: number
-    description?: string
-    categories: CategoryValue[]
-    image?: File
-    is_active?: boolean
-    is_featured?: boolean
-    is_published?: boolean
-}
-
-function EditProductButton({ product, slug, onComplete, userId }: EditProductButtonProps) {
-
-    const [categories, setCategories] = useState<CategoryValue[]>([])
-    const [files, setFiles] = useState<File[]>([])
+function EditProductButtonInner({ product, slug, onComplete, userId }: EditProductButtonProps) {
     const [storeId, setStoreId] = useState<number | null>(null)
-    const [isActive, setIsActive] = useState(product.is_active)
-    const [isFeatured, setIsFeatured] = useState(product.is_featured)
-    const [isPublished, setIsPublished] = useState(product.is_published)
     const [open, setOpen] = useState(false)
     const [productDetails, setProductDetails] = useState<{ media?: { id: number; url: string }[]; primary_media?: { id: number; url: string } | null } | null>(null)
+    const [isUploadingImages, setIsUploadingImages] = useState(false)
+
     const t = useTranslations("store.edit-product")
+
+    // Usar contexto en lugar de useState localess
+    const { state, updateCategories, updateSettings, updateMedia, resetForm } = useProductForm()
 
     // Obtener el storeId a partir del slug
     useEffect(() => {
@@ -59,38 +46,61 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
         fetchStoreId()
     }, [slug])
 
-    // Inicializar categorías con las categorías existentes del producto
+    // Inicializar contexto con categorías y settings del producto
     useEffect(() => {
-        if (product.categories && product.categories.length > 0) {
+        if (open && product.categories && product.categories.length > 0) {
             const initialCategories = product.categories.map((category: { name: string; id: number }) => ({
                 label: category.name,
                 value: category.id.toString()
             }))
-            setCategories(initialCategories)
+            updateCategories({ categories: initialCategories })
         }
-    }, [product.categories])
+
+        if (open) {
+            updateSettings({
+                isActive: product.is_active,
+                isFeatured: product.is_featured,
+                isPublished: product.is_published
+            })
+        }
+    }, [open, product.categories, product.is_active, product.is_featured, product.is_published, updateCategories, updateSettings])
 
     useEffect(() => {
         if (!open) {
-            setIsActive(product.is_active)
-            setIsFeatured(product.is_featured)
-            setIsPublished(product.is_published)
+            resetForm()
+            setIsUploadingImages(false)
         }
-    }, [open, product.is_active, product.is_featured, product.is_published])
+    }, [open, resetForm])
 
     // Load product media when dialog opens
     useEffect(() => {
         const load = async () => {
             if (!open) return
             const { payload } = await getProductDetailsAction(String(product.id))
-            if (payload) setProductDetails({ media: payload.media as { id: number; url: string }[] | undefined, primary_media: payload.primary_media as { id: number; url: string } | null })
+            if (payload) {
+                setProductDetails({
+                    media: payload.media as { id: number; url: string }[] | undefined,
+                    primary_media: payload.primary_media as { id: number; url: string } | null
+                })
+
+                // ✅ Cargar imágenes existentes al contexto si existen
+                if (payload.media && Array.isArray(payload.media) && payload.media.length > 0) {
+                    const existingFiles = (payload.media as { id: number; url: string }[]).map((m, _index) => ({
+                        id: `existing-${m.id}`,
+                        file: new File([], `image-${m.id}`),
+                        preview: m.url,
+                        isPrimary: payload.primary_media?.id === m.id
+                    }))
+                    updateMedia({
+                        deferredFiles: existingFiles,
+                        urls: existingFiles.map(f => f.preview),
+                        primaryIndex: existingFiles.findIndex(f => f.isPrimary)
+                    })
+                }
+            }
         }
         load()
-    }, [open, product.id])
-
-    const handleAddCategory = (value: CategoryValue[]) => {
-        setCategories(value)
-    }
+    }, [open, product.id, updateMedia])
 
     const onFileReject = useCallback((file: File, message: string) => {
         const filename = file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
@@ -100,19 +110,50 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     }, [t]);
 
     const handleEditProduct = async (payload: EditProductPayload) => {
-        const data = {
-            ...payload,
-            categories,
-            image: files[0],
-            is_active: isActive,
-            is_featured: isFeatured,
-            is_published: isPublished
-        }
+        try {
+            const data = {
+                ...payload,
+                categories: state.categories.categories,
+                image: undefined,
+                is_active: state.settings.isActive,
+                is_featured: state.settings.isFeatured,
+                is_published: state.settings.isPublished
+            }
 
-        if (!payload.name) return formatErrorResponse(t("validation.name-required"))
-        if (payload.price == null) return formatErrorResponse(t("validation.price-required"))
-        if (payload.stock == null) return formatErrorResponse(t("validation.stock-required"))
-        return editProductAction(product.id, data, slug, userId)
+            if (!payload.name) return formatErrorResponse(t("validation.name-required"))
+            if (payload.price == null) return formatErrorResponse(t("validation.price-required"))
+            if (payload.stock == null) return formatErrorResponse(t("validation.stock-required"))
+
+            // Actualizar producto sin imágenes
+            const result = await editProductAction(product.id, data, slug, userId)
+
+            // Subir nuevas imágenes si hay
+            const mediaFiles = state.media.files || []
+            if (mediaFiles.length > 0) {
+                setIsUploadingImages(true)
+                toast.info('Subiendo nuevas imágenes...')
+
+                try {
+                    await uploadProductImages(
+                        mediaFiles,
+                        product.id,
+                        state.media.primaryIndex ?? 0
+                    )
+                    toast.success('Imágenes actualizadas correctamente')
+                } catch (uploadError) {
+                    console.error('Error uploading images:', uploadError)
+                    toast.warning('Producto actualizado pero hubo un error al subir las imágenes')
+                } finally {
+                    setIsUploadingImages(false)
+                }
+            }
+
+            return result
+        } catch (error) {
+            setIsUploadingImages(false)
+            console.error('Error editing product:', error)
+            return formatErrorResponse(t("messages.error"))
+        }
     }
 
     const handleSuccess = async () => {
@@ -137,11 +178,11 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                 </DialogHeader>
                 <Form
                     formAction={handleEditProduct}
-                    contentButton={t("button")}
+                    contentButton={isUploadingImages ? "Subiendo imágenes..." : t("button")}
                     successMessage={t("messages.success")}
                     loadingMessage={t("messages.loading")}
                     onSuccess={handleSuccess}
-                    disabled={false}
+                    disabled={isUploadingImages}
                 >
                     <div className="space-y-4">
                         <Accordion type="single" collapsible>
@@ -159,7 +200,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                                                 <label className="text-sm font-medium">Imagen principal</label>
                                                 <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-lg border bg-secondary">
                                                     {productDetails.primary_media?.url ? (
-                                                        <Image src={productDetails.primary_media.url} alt="Primary image" className="object-cover h-full w-full" />
+                                                        <Image src={productDetails.primary_media.url} alt="Primary image" className="object-cover h-full w-full" fill />
                                                     ) : (
                                                         <div className="flex flex-col items-center justify-center h-full p-4 text-sm text-muted-foreground">Sin imagen principal</div>
                                                     )}
@@ -171,7 +212,7 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                                                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                                                         {productDetails.media.map((m) => (
                                                             <div key={m.id} className={`relative aspect-square overflow-hidden rounded-md bg-secondary border ${productDetails.primary_media?.id === m.id ? 'border-primary ring-2 ring-primary' : 'border-border'}`}>
-                                                                <Image src={m.url} alt="Product media" className="object-cover h-full w-full" />
+                                                                <Image src={m.url} alt="Product media" className="object-cover h-full w-full" fill />
                                                             </div>
                                                         ))}
                                                     </div>
@@ -179,10 +220,18 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                                             )}
                                         </div>
                                     )}
-                                    <MediaSection value={{ files, primaryIndex: null }} onChange={(d) => setFiles(d.files)} onFileReject={onFileReject} />
+                                    <MediaSection
+                                        value={state.media}
+                                        onChange={() => { }}
+                                        onFileReject={onFileReject}
+                                    />
                                     <BasicInfoSection defaults={{ name: product.name, slug: product.slug, description: product.description ?? undefined, sku: product.sku ?? undefined, barcode: product.barcode ?? undefined }} />
                                     <PriceStockSection defaults={{ price: product.price, stock: product.stock }} />
-                                    <CategoriesSection storeId={storeId || undefined} value={{ categories: categories }} onChange={({ categories }) => handleAddCategory(categories)} />
+                                    <CategoriesSection
+                                        storeId={storeId || undefined}
+                                        value={{ categories: state.categories.categories }}
+                                        onChange={updateCategories}
+                                    />
                                 </AccordionContent>
                             </AccordionItem>
 
@@ -194,7 +243,14 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
                                     </span>
                                 </AccordionTriggerWithValidation>
                                 <AccordionContent className="space-y-4">
-                                    <SettingsSection value={{ isActive, isFeatured, isPublished }} onChange={(v) => { setIsActive(v.isActive); setIsFeatured(v.isFeatured); setIsPublished(v.isPublished) }} />
+                                    <SettingsSection
+                                        value={{
+                                            isActive: state.settings.isActive,
+                                            isFeatured: state.settings.isFeatured,
+                                            isPublished: state.settings.isPublished
+                                        }}
+                                        onChange={updateSettings}
+                                    />
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
@@ -205,4 +261,12 @@ function EditProductButton({ product, slug, onComplete, userId }: EditProductBut
     )
 }
 
-export { EditProductButton } 
+function EditProductButton(props: EditProductButtonProps) {
+    return (
+        <ProductFormProvider>
+            <EditProductButtonInner {...props} />
+        </ProductFormProvider>
+    )
+}
+
+export { EditProductButton }

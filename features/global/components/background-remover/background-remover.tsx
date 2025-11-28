@@ -76,7 +76,7 @@ export function BackgroundRemover({
                         Remover Fondo con IA
                     </DialogTitle>
                     <DialogDescription>
-                        Remueve automáticamente el fondo y edita los detalles manualmente
+                        Remové automáticamente el fondo y editá los detalles manualmente
                     </DialogDescription>
                 </DialogHeader>
 

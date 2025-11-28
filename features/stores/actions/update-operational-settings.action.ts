@@ -1,4 +1,4 @@
-"use server"
+/* "use server"
 
 import { revalidatePath } from "next/cache"
 
@@ -15,9 +15,9 @@ export async function updateOperationalSettingsAction(storeId: number, payload: 
         revalidatePath(`/stores/${storeId}/account`)
 
         return {
-            message: "Operational settings updated successfully",
+            message: "Configuración operativa actualizada con éxito",
             payload: updatedPayload,
             hasError: false
         }
     })
-} 
+}  */

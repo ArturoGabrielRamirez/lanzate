@@ -37,7 +37,7 @@ export function useImageOptimization({
             // Delegar al cropper
             onNeedsCropping?.(pendingFile)
             setPendingFile(null)
-            toast.info('Puedes recortar la imagen como prefieras.')
+            toast.info('Podés recortar la imagen a tu gusto.')
             break
 
           case 'resize':

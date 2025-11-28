@@ -11,7 +11,7 @@ export async function getCategoriesAction(storeId?: number) {
     if (hasError) throw new Error(message);
 
     return {
-      message: "Categories fetched successfully",
+      message: "Categorías obtenidas exitosamente",
       payload: categories,
       hasError: false,
     };

@@ -8,7 +8,6 @@ import { Button } from "@/features/shadcn/components/ui/button"
 
 export const MediaSelectorTrigger = forwardRef<HTMLButtonElement, MediaSelectorTriggerProps>(
   ({ triggerButton, defaultTitle, className = '', ...props }, ref) => {
-    // Si hay triggerButton personalizado, clonarlo con las props necesarias
     if (triggerButton) {
       return (
         <div ref={ref as Ref<HTMLDivElement> | undefined} {...props}>
@@ -17,7 +16,7 @@ export const MediaSelectorTrigger = forwardRef<HTMLButtonElement, MediaSelectorT
       )
     }
 
-    // Botón por defecto
+
     return (
       <Button ref={ref} variant="outline" className={className} {...props}>
         <Image
@@ -26,6 +25,8 @@ export const MediaSelectorTrigger = forwardRef<HTMLButtonElement, MediaSelectorT
           alt={"Icono de " + defaultTitle}
           width={16}
           height={16}
+          unoptimized={true}
+        /*   fill */
         />
         {defaultTitle}
       </Button>

@@ -60,13 +60,13 @@ class ResendEmailService {
         const message = error || 'Error desconocido';
 
         if (message.includes('rate limit') || message.includes('too many') || message.includes('Demasiadas solicitudes')) {
-            toast.error("Demasiadas solicitudes. Espera 5 minutos antes de intentar nuevamente.");
+            toast.error("Demasiadas solicitudes. Esperá 5 minutos antes de intentar nuevamente.");
         } else if (message.includes('not found') || message.includes('no encontrado')) {
             toast.error("Usuario no encontrado.");
         } else if (message.includes('not authenticated') || message.includes('no autenticado')) {
-            toast.error("Usuario no autenticado. Por favor, inicia sesión.");
+            toast.error("Usuario no autenticado. Por favor, iniciá sesión.");
         } else if (message.includes('already confirmed') || message.includes('ya está confirmado')) {
-            toast.info("Email ya confirmado.");
+            toast.info("Correo electrónico ya confirmado.");
         } else if (message.includes('No hay confirmaciones pendientes')) {
             toast.info("No hay confirmaciones pendientes.");
         } else {
@@ -79,18 +79,18 @@ class ResendEmailService {
         if (!contentType || !contentType.includes('application/json')) {
             const text = await response.text();
             console.error('Response is not JSON. Got:', text.substring(0, 200));
-            throw new Error('Server returned non-JSON response. Check server logs.');
+            throw new Error('El servidor devolvió una respuesta no JSON. Revisá los registros del servidor.');
         }
 
         const data = await response.json();
 
         if (!response.ok || data.error) {
             this.handleErrorResponse(data.message);
-            throw new Error(data.message || `HTTP error! status: ${response.status}`);
+            throw new Error(data.message || `Error HTTP! estado: ${response.status}`);
         }
 
         return {
-            message: data.message || "Email reenviado exitosamente",
+            message: data.message || "Correo electrónico reenviado exitosamente",
             data: data.data
         };
     }
@@ -98,7 +98,6 @@ class ResendEmailService {
     async resend(params: ResendParams): Promise<ResendResponse> {
         try {
             const payload = this.buildPayload(params);
-            console.log('🔄 Resending email with payload:', payload);
 
             // 🔥 MANTENER TU FETCH ORIGINAL
             const response = await fetch('/auth/resend', {

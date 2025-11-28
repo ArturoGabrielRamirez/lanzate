@@ -12,7 +12,7 @@ export async function getStoresFromUserAction(userId: number) {
         if (hasError) throw new Error(message)
 
         return {
-            message: "Stores fetched successfully",
+            message: "Tiendas recuperadas con éxito",
             payload: payload,
             hasError: false
         }

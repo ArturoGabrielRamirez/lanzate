@@ -19,12 +19,13 @@ export async function selectStoreBySubdomainData(subdomain: string) {
                 }
             },
             balance: true,
-            operational_settings: true
+           /*  operational_settings: true */
+           // TODO: Arreglar aca, para Hori
         }
     })
 
     return {
-        message: "Store fetched successfully from db",
+        message: "Tienda recuperada con éxito desde la base de datos",
         payload: store,
         hasError: false
     }

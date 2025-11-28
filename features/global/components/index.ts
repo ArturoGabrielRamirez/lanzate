@@ -1,3 +1,6 @@
 export * from "@/features/global/components/landing-text"
 export * from "@/features/global/components/landing-section-title"
 export * from "@/features/global/components/landing-section-icon-title"
+export * from "@/features/global/components/global-shortcuts-wrapper"
+export * from "@/features/global/components/keyboard-shortcuts-help"
+export * from "@/features/global/components/shortcuts"

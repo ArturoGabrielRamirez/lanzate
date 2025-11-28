@@ -9,7 +9,7 @@ export async function getUserBannerData(supabaseUserId: string) {
         select: { id: true, email: true, banner: true }
     })
 
-    if (!user) throw new Error('User not found')
+    if (!user) throw new Error('Usuario no encontrado')
 
     return user
 

@@ -9,14 +9,14 @@ import { getStoresFromUserAction } from "@/features/stores/actions/get-stores-fr
 
 async function searchGlobalData(query: string, userId: number) {
     if (!query.trim()) {
-        return formatSuccessResponse("Empty query", [])
+        return formatSuccessResponse("Búsqueda vacía", [])
     }
 
     // Get user stores
     const { payload: stores, hasError: storesError } = await getStoresFromUserAction(userId)
 
     if (storesError || !stores || stores.length === 0) {
-        throw new Error("Empty search. You need to create a store and create a product to search for it.")
+        throw new Error("Búsqueda vacía. Necesitás crear una tienda y un producto para poder buscar.")
     }
 
     const storeIds = stores.map(store => store.id)
@@ -50,7 +50,7 @@ async function searchGlobalData(query: string, userId: number) {
         results.push(createCustomerSearchResult(customer))
     })
 
-    return formatSuccessResponse("Search completed", results.slice(0, SEARCH_CONFIG.MAX_TOTAL_RESULTS))
+    return formatSuccessResponse("Búsqueda completada", results.slice(0, SEARCH_CONFIG.MAX_TOTAL_RESULTS))
 }
 
 export { searchGlobalData }

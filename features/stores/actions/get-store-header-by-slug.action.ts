@@ -11,11 +11,11 @@ export async function getStoreHeaderBySlugAction(slug: string) {
         if (hasError) throw new Error(message)
 
         if (!store) {
-            throw new Error("Store not found")
+            throw new Error("Tienda no encontrada")
         }
 
         return {
-            message: "Store header fetched successfully",
+            message: "Banner de la tienda recuperado con éxito desde la base de datos",
             payload: store,
             hasError: false
         }

@@ -31,11 +31,11 @@ export async function getSocialActivityByIdData(activityId: number) {
     })
 
     if (!socialActivity) {
-        throw new Error("Social activity not found")
+        throw new Error("Actividad no encontrada")
     }
 
     return {
-        message: "Social activity fetched successfully",
+        message: "Actividad social obtenida con éxito",
         payload: socialActivity,
         hasError: false
     }

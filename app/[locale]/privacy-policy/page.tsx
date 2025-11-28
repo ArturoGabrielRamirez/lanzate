@@ -599,7 +599,7 @@ function PrivacyPolicy() {
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Plazo de Respuesta</h3>
                                 <p>
-                                    Intentaremos responder a todas las solicitudes legítimas dentro de los 10 días hábiles conforme establece la Ley 25.326. Ocasionalmente, podría tomarnos más tiempo si tu solicitud es particularmente compleja o si has realizado varias solicitudes. En este caso, te notificaremos y te mantendremos actualizado.
+                                    Intentaremos responder a todas las solicitudes legítimas dentro de los 10 días hábiles conforme establece la Ley 25.326. Ocasionalmente, podría tomarnos más tiempo si tu solicitud es particularmente compleja o si realizaste varias solicitudes. En este caso, te notificaremos y te mantendremos actualizado.
                                 </p>
 
                                 <h3 className="text-lg font-bold mb-3 mt-6">Reclamo ante la Autoridad</h3>
@@ -677,7 +677,7 @@ function PrivacyPolicy() {
                                 </p>
 
                                 <p>
-                                    Si sos padre, madre o tutor legal y descubrís que tu hijo/a menor de 18 años nos ha proporcionado datos personales sin tu consentimiento, por favor contactanos inmediatamente. Tomaremos medidas para eliminar esa información de nuestros servidores.
+                                    Si sos padre, madre o tutor legal y descubrís que tu hijo/a menor de 18 años nos proporcionó datos personales sin tu consentimiento, por favor contactanos inmediatamente. Tomaremos medidas para eliminar esa información de nuestros servidores.
                                 </p>
 
                                 <p>

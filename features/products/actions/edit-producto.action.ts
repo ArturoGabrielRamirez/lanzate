@@ -27,14 +27,13 @@ export async function editProductAction(productId: number, data: UpdateProductPa
             entity_type: "PRODUCT",
             entity_id: productId,
             user_id: userId,
-            action_initiator: "Edit product form",
-            details: "Product updated using edit product form"
+            action_initiator: "Formulario de edición de producto",
+            details: "Producto actualizado usando el formulario de edición de producto"
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
-
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear una entrada de registro para esto.")
         return {
-            message: "Product updated successfully",
+            message: "Producto actualizado exitosamente",
             payload: payload,
             hasError: false
         }

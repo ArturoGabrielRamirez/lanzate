@@ -2,11 +2,11 @@ import { MessageCircleDashed } from "lucide-react";
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action";
 import { PERMISSIONS } from "@/features/plans/utils/constants";
-import { AccessGate } from "@/features/shadcn/components/gate";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty";
+import { AccessGate } from "@/features/shadcn/components/gate";
 import { Button } from "@/features/shadcn/components/ui/button";
 import { Card, CardContent } from "@/features/shadcn/components/ui/card";
-import { CreateStoreButtonNew } from "@/features/stores/components";
+import { CreateStoreButton } from "@/features/stores/components/create-form/create-store-button";
 import { Link } from "@/i18n/naviation";
 
 async function EmptyFeedItem() {
@@ -21,22 +21,22 @@ async function EmptyFeedItem() {
                         <EmptyMedia variant="icon">
                             <MessageCircleDashed />
                         </EmptyMedia>
-                        <EmptyTitle>No activity</EmptyTitle>
+                        <EmptyTitle>No hay actividad</EmptyTitle>
                         <EmptyDescription>
-                            <p>Aquí podrás ver todos los likes, comentarios y pedidos de tus tiendas.</p>
+                            <p>Acá vas a poder ver todos los likes, comentarios y pedidos de tus tiendas.</p>
                         </EmptyDescription>
                     </EmptyHeader>
                     <EmptyContent>
                         <div className="flex gap-2">
                             <Button variant="outline" asChild>
-                                <Link href="/stores">Manage stores</Link>
+                                <Link href="/stores">Administrar tiendas</Link>
                             </Button>
                             <AccessGate
                                 roles={["free", "pro", "enterprise"]}
-                                permissions={[ PERMISSIONS.CREATE_STORE ]}
+                                permissions={[PERMISSIONS.CREATE_STORE]}
                                 mode="disable"
                             >
-                                <CreateStoreButtonNew userId={user?.id || 0} />
+                                <CreateStoreButton userId={user?.id || 0} />
                             </AccessGate>
                         </div>
                     </EmptyContent>

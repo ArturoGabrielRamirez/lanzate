@@ -7,7 +7,7 @@ export async function getEmployeeDetailsAction(id: string) {
     return actionWrapper(async () => {
         const parsedId = parseInt(id)
 
-        if (isNaN(parsedId)) throw new Error("Invalid employee id")
+        if (isNaN(parsedId)) throw new Error("ID de empleado inválido")
 
         const { payload: employee, hasError, message } = await selectEmployeeByIdData(parsedId)
 
@@ -16,7 +16,7 @@ export async function getEmployeeDetailsAction(id: string) {
         return {
             payload: employee,
             hasError: false,
-            message: "Employee details fetched successfully"
+            message: "Detalles del empleado obtenidos con éxito"
         }
 
     })

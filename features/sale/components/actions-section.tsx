@@ -3,6 +3,7 @@
 import { Trash2, Receipt } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
+import { InlineShortcut } from '@/features/global/components'
 import { CalculateChangeButton, FinalizeSaleButton } from '@/features/sale/components'
 import type { ActionsSectionProps } from '@/features/sale/types'
 import { Button } from '@/features/shadcn/components/ui/button'
@@ -19,7 +20,8 @@ function ActionsSection({
   setSelectedPaymentMethod,
   customerInfo,
   setCustomerInfo,
-  branchName
+  branchName,
+  isFinalizingSale
 }: ActionsSectionProps) {
   const t = useTranslations('sale.actions')
 
@@ -30,41 +32,47 @@ function ActionsSection({
           cartTotal={cartTotal}
           cartItemCount={cartItemCount}
           onConfirm={onFinalizeSale}
-          disabled={disabled}
+          disabled={disabled || isFinalizingSale}
           className="lg:w-full text-base"
           selectedPaymentMethod={selectedPaymentMethod}
           setSelectedPaymentMethod={setSelectedPaymentMethod}
           customerInfo={customerInfo}
           setCustomerInfo={setCustomerInfo}
           branchName={branchName}
+          isFinalizingSale={isFinalizingSale}
         />
 
         <CalculateChangeButton
           cartTotal={cartTotal}
-          disabled={disabled || cartItemCount === 0}
+          disabled={disabled || cartItemCount === 0 || isFinalizingSale}
           className="lg:w-full"
         />
 
         <Button
           onClick={onPrintReceipt}
-          disabled={disabled}
-          className="lg:w-full"
+          disabled={disabled || isFinalizingSale}
+          className="lg:w-full gap-2"
           variant="outline"
         >
           <Receipt className="h-4 w-4" />
-          <span className='hidden lg:block'>{t('print-receipt')}</span>
+          <span className='hidden lg:flex items-center gap-1'>
+            {t('print-receipt')}
+            <InlineShortcut keys={['P']} />
+          </span>
         </Button>
 
         <Button
           onClick={onClearCart}
-          disabled={disabled || cartItemCount === 0}
-          className="lg:w-full"
+          disabled={disabled || cartItemCount === 0 || isFinalizingSale}
+          className="lg:w-full gap-2"
           variant="destructive"
         >
           <Trash2 className="h-4 w-4" />
-          <span className='hidden lg:block'>{t('clear-cart')}</span>
+          <span className='hidden lg:flex items-center gap-1'>
+            {t('clear-cart')}
+            <InlineShortcut keys={['L']} />
+          </span>
         </Button>
-
       </CardContent>
     </Card>
   )

@@ -8,16 +8,16 @@ export async function POST(req: NextRequest) {
     const file = form.get("file") as unknown as File | null
     const storeIdRaw = form.get("storeId") as string | null
 
-    if (!file) return NextResponse.json({ error: "No file provided" }, { status: 400 })
-    if (!storeIdRaw) return NextResponse.json({ error: "Missing storeId" }, { status: 400 })
+    if (!file) return NextResponse.json({ error: "No se proporcionó ningún archivo" }, { status: 400 })
+    if (!storeIdRaw) return NextResponse.json({ error: "Falta el ID de la tienda" }, { status: 400 })
 
     const storeId = parseInt(storeIdRaw)
-    if (Number.isNaN(storeId)) return NextResponse.json({ error: "Invalid storeId" }, { status: 400 })
+    if (Number.isNaN(storeId)) return NextResponse.json({ error: "ID de tienda inválido" }, { status: 400 })
 
     const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"]
-    if (!allowed.includes(file.type)) return NextResponse.json({ error: "Invalid file type" }, { status: 400 })
+    if (!allowed.includes(file.type)) return NextResponse.json({ error: "Tipo de archivo inválido" }, { status: 400 })
 
-    if (file.size > 8 * 1024 * 1024) return NextResponse.json({ error: "File too large (max 8MB)" }, { status: 400 })
+    if (file.size > 8 * 1024 * 1024) return NextResponse.json({ error: "Archivo demasiado grande (máximo 8MB)" }, { status: 400 })
 
     const arrayBuffer = await file.arrayBuffer()
     const buffer = new Uint8Array(arrayBuffer)

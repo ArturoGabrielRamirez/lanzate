@@ -19,7 +19,7 @@ export async function insertProductData(payload: InsertProductPayload, storeId: 
         })
         console.log("2")
 
-        if (!store) throw new Error("Store not found")
+        if (!store) throw new Error("Tienda no encontrada")
 
         console.log("3")
         const mainBranch = await tx.branch.findFirst({
@@ -29,7 +29,7 @@ export async function insertProductData(payload: InsertProductPayload, storeId: 
         })
         console.log("4")
 
-        if (!mainBranch) throw new Error("Main branch not found")
+        if (!mainBranch) throw new Error("Sucursal principal no encontrada")
 
         console.log("5")
         let imageUrl: string | null = null
@@ -90,7 +90,7 @@ export async function insertProductData(payload: InsertProductPayload, storeId: 
 
     return {
         hasError: false,
-        message: "Product created successfully",
+        message: "Producto creado correctamente",
         payload: result
     }
 }

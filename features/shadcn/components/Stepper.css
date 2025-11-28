@@ -1,34 +1,18 @@
-.outer-container {
+/* .outer-container {
   display: flex;
   min-height: 100%;
   flex: 1 1 0%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-}
-
-@media (min-width: 640px) {
-  .outer-container {
-    aspect-ratio: 4 / 3;
-  }
-}
-
-@media (min-width: 768px) {
-  .outer-container {
-    aspect-ratio: 2 / 1;
-  }
-}
+} */
 
 .step-circle-container {
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: auto;
   max-width: 28rem;
   border-radius: 2rem;
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .step-indicator-row {
@@ -36,6 +20,7 @@
   width: 100%;
   align-items: center;
   padding: 2rem;
+  justify-content: center;
 }
 
 .step-content-default {
@@ -43,19 +28,14 @@
   overflow: hidden;
 }
 
-.step-default {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
 .footer-container {
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
+  width: 100%;
 }
 
 .footer-nav {
-  margin-top: 2.5rem;
   display: flex;
 }
 
@@ -136,10 +116,10 @@
 
 .step-connector {
   position: relative;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
   height: 0.125rem;
-  flex: 1;
+  min-width: 1rem;
   overflow: hidden;
   border-radius: 0.25rem;
   background-color: #52525b;

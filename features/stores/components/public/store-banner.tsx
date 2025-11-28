@@ -9,6 +9,7 @@ function StoreBanner() {
                 fill
                 objectFit="cover"
                 className="group-hover:scale-105 transition-all duration-300"
+                unoptimized={true}
             />
         </div>
     )

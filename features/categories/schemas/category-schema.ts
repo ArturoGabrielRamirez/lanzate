@@ -2,7 +2,7 @@ import * as yup from 'yup'
 
 export const createCategorySchema = yup.object({
     name: yup.string()
-        .required('El nombre de la categoría es requerido')
+        .required('El nombre de la categoría es obligatorio')
         .min(2, 'El nombre debe tener al menos 2 caracteres')
         .max(50, 'El nombre no puede exceder 50 caracteres'),
     description: yup.string()

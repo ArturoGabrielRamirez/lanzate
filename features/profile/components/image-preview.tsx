@@ -12,6 +12,7 @@ function ImagePreview({ previewUrl, width, height, size, type }: ImagePreviewPro
           src={previewUrl}
           alt="Preview"
           className="w-full h-full object-cover"
+          fill
         />
       </div>
       <div className="mt-2 text-sm text-muted-foreground">

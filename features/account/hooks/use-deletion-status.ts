@@ -31,7 +31,7 @@ export default function useDeletionStatus() {
                 setDeletionStatus(status)
             }
         } catch (error) {
-            console.error('Error fetching deletion status:', error)
+            console.error('Error al obtener el estado de la eliminación:', error)
         } finally {
             setIsDeletionLoading(false)
         }

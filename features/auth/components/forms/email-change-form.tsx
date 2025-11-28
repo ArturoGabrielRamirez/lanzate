@@ -17,9 +17,9 @@ function EmailChangeForm({
 
             <InputField
                 name="email"
-                label="Nuevo email"
+                label="Nuevo correo electrónico"
                 type="email"
-                placeholder="nuevo-email@ejemplo.com"
+                placeholder="nuevo-correo@ejemplo.com"
                 disabled={hasPendingChange && !isProcessCompleted}
             />
             <InputField

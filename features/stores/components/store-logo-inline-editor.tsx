@@ -1,4 +1,5 @@
 'use client'
+//TODO: ESTO CREO YA PODRIAMOS ELIMINARLO
 
 import {/*  Smartphone, *//*  Upload, */ Loader2, Check, Camera } from "lucide-react"
 import Image from "next/image"
@@ -217,7 +218,7 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
                       {logoOptions.map((option) => (
                         <div key={option.id} className={cn("relative cursor-pointer rounded-lg border-2 p-2 transition-all hover:bg-accent", selectedOption === option.id ? "border-primary bg-accent" : "border-muted")} onClick={() => handleOptionSelect(option.id)}>
                           <div className="flex flex-col items-center gap-2">
-                            <Image src={option.url} alt={`${option.provider} logo`} className="h-12 w-12 rounded-full object-cover" />
+                            <Image src={option.url} alt={`${option.provider} logo`} className="h-12 w-12 rounded-full object-cover" fill/>
                             <div className="text-center">
                               <p className="text-xs font-medium">{option.label}</p>
                               <p className="text-xs text-muted-foreground">{option.provider}</p>

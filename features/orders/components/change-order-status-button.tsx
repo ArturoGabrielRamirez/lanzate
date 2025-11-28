@@ -10,7 +10,7 @@ import { formatErrorResponse } from "@/features/global/utils"
 import { changeOrderStatusAction } from "@/features/orders/actions"
 import { ChangeOrderStatusButtonProps } from "@/features/orders/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+/* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { cn } from "@/lib/utils"
@@ -18,8 +18,8 @@ import { cn } from "@/lib/utils"
 function ChangeOrderStatusButton({ order, slug, onComplete }: ChangeOrderStatusButtonProps) {
 
     const [selectedStatus, setSelectedStatus] = useState<OrderStatus>(order.status)
-    const [confirmPayment, setConfirmPayment] = useState(false)
-    const [confirmStockRestore, setConfirmStockRestore] = useState(false)
+    const [confirmPayment, /* setConfirmPayment */] = useState(false)
+    const [confirmStockRestore, /* setConfirmStockRestore */] = useState(false)
     const t = useTranslations("store.change-order-status")
 
     const statusOptions = [
@@ -149,11 +149,11 @@ function ChangeOrderStatusButton({ order, slug, onComplete }: ChangeOrderStatusB
                                 {t("payment-explanation", { status: selectedStatus })}
                             </p>
                             <div className="flex items-center space-x-2">
-                                <Checkbox
+                        {/*         <Checkbox
                                     id="confirm_payment"
                                     checked={confirmPayment}
                                     onCheckedChange={(checked) => setConfirmPayment(checked === true)}
-                                />
+                                /> */}
                                 <Label
                                     htmlFor="confirm_payment"
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -182,11 +182,11 @@ function ChangeOrderStatusButton({ order, slug, onComplete }: ChangeOrderStatusB
                                 </ul>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <Checkbox
+                           {/*      <Checkbox
                                     id="confirm_stock_restore"
                                     checked={confirmStockRestore}
                                     onCheckedChange={(checked) => setConfirmStockRestore(checked === true)}
-                                />
+                                /> */}
                                 <Label
                                     htmlFor="confirm_stock_restore"
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

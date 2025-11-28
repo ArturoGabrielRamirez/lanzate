@@ -25,7 +25,7 @@ export function MyFilesTab({
             <div className="text-center py-12">
                 <ImageIcon className="w-12 h-12 mx-auto text-muted-foreground/50 mb-3" />
                 <p className="text-muted-foreground text-sm mb-4">
-                    No has subido ningún {type} aún
+                    No subiste ningún {type} aún
                 </p>
             </div>
         )
@@ -53,6 +53,7 @@ export function MyFilesTab({
                             src={url}
                             alt="Upload"
                             className="w-full h-full object-cover"
+                            fill
                         />
                     </button>
 

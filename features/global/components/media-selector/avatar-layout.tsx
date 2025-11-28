@@ -39,7 +39,7 @@ export function AvatarLayout({
                 <Alert variant="destructive">
                     <AlertCircle className="w-4 h-4 flex-shrink-0" />
                     <AlertDescription>
-                        Has alcanzado el límite de 4 avatares. Elimina uno para subir otro.
+                        Alcanzaste el límite de 4 avatares. Eliminá uno para subir otro o actualizá tu plan para aumentar el límite.
                     </AlertDescription>
                 </Alert>
             )}
@@ -116,7 +116,7 @@ export function AvatarLayout({
                                 <EmptyState
                                     type="empty"
                                     mediaType="avatar"
-                                    message="No has subido ningún avatar aún"
+                                    message="No subiste ningún avatar aún"
                                     onAction={() => onToolClick('upload')}
                                     actionLabel="Subir Ahora"
                                     disabled={uploadLimitReached}

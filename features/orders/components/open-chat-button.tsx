@@ -40,7 +40,7 @@ function OpenChatButton({
     return (
         <Button onClick={handleOpenChatWithRoomId}>
             <MessageCircle className="size-4" />
-            Open Chat
+            Abrir Chat
         </Button>
     )
 }

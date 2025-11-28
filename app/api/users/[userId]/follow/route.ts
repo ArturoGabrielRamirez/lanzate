@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     if (!currentUserResponse || currentUserResponse.hasError) {
       return NextResponse.json(
-        { error: 'Debes iniciar sesión para seguir usuarios' },
+        { error: 'Tenés que iniciar sesión para poder seguir a otros usuarios' },
         { status: 401 }
       )
     }

@@ -8,7 +8,7 @@ import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import { formatErrorResponse } from "@/features/global/utils"
 import { deleteProductVariantAction } from "@/features/products/actions/delete-product-variant.action"
 import type { DeleteVariantButtonProps } from "@/features/products/types"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
+/* import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button" */
 import { cn } from "@/lib/utils"
 
 
@@ -33,11 +33,15 @@ function DeleteVariantButton({ variantId, slug, productId, onlyIcon = false }: D
             onComplete={() => redirect(`/stores/${slug}/products/${productId}`)}
             text={
                 onlyIcon ? (
-                    <IconButton
-                        icon={Trash2}
-                        color={[239, 68, 68]} // color red del tema
-                        className="opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
-                    />
+                    <span
+                        className={cn(
+                            "flex h-9 w-9 items-center justify-center rounded-md p-2",
+                            "opacity-0 group-hover/variant-basic-info-display:opacity-100 transition-opacity duration-300"
+                        )}
+                        style={{ color: 'rgb(239, 68, 68)' }}
+                    >
+                        <Trash2 className="size-4" />
+                    </span>
                 ) : (
                     <><Trash2 className="size-4 text-muted-foreground" />{t("button")}</>
                 )

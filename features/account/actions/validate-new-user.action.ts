@@ -14,7 +14,7 @@ export async function validateNewUserCreationAction(email: string) {
         if (activeUser) {
             return formatSuccessResponse('Validación completada', {
                 canCreate: false,
-                reason: 'Email already in use by active account',
+                reason: 'El correo electrónico ya está en uso por una cuenta activa',
                 conflict: true,
             })
         }

@@ -18,7 +18,7 @@ export async function getStoreIdBySubdomainData({ subdomain }: GetStoreIdBySubdo
         return {
             payload: store?.id || null,
             hasError: false,
-            message: "Store ID obtenido exitosamente"
+            message: "ID de la tienda recuperada exitosamente"
         }
     })
 }

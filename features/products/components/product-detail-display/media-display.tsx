@@ -78,6 +78,7 @@ function MediaDisplay({ product }: MediaDisplayProps) {
                                     src={product.primary_media.url}
                                     alt={`${product.name} image`}
                                     className="object-cover h-full w-full"
+                                    fill
                                 />
                             ) : (
                                 <div className="flex items-center justify-center h-full">
@@ -97,6 +98,7 @@ function MediaDisplay({ product }: MediaDisplayProps) {
                                             src={media.url}
                                             alt={`${product.name} media`}
                                             className="object-cover h-full w-full"
+                                            fill
                                         />
                                     </div>
                                 ))}
@@ -110,7 +112,7 @@ function MediaDisplay({ product }: MediaDisplayProps) {
                             <div className="border-2 border-dashed border-muted-foreground/25 rounded-md p-4 text-center">
                                 <ImageIcon className="size-8 mx-auto text-muted-foreground mb-2" />
                                 <p className="text-sm text-muted-foreground">
-                                    Arrastra imágenes aquí o haz clic para seleccionar
+                                    Arrastrá imágenes acá o hacé clic para seleccionar
                                 </p>
                             </div>
                         </div>

@@ -58,7 +58,7 @@ export const createOrderSearchResult = (
     return {
         id: order.id,
         type: 'order',
-        title: `Order #${order.id}`,
+        title: `Orden #${order.id}`,
         subtitle: formatOrderSubtitle(order.customer_name, order.customer_email, order.total_price, order.status),
         href: generateOrderHref(order.store.slug, order.id),
         icon: SEARCH_ICONS.ORDER
@@ -74,8 +74,8 @@ export const createCustomerSearchResult = (
     return {
         id: customer.customer_email || customer.customer_name || '',
         type: 'customer',
-        title: customer.customer_name || 'Unknown Customer',
-        subtitle: customer.customer_email || 'No email',
+        title: customer.customer_name || 'Cliente desconocido',
+        subtitle: customer.customer_email || 'Sin email',
         href: null,
         icon: SEARCH_ICONS.CUSTOMER
     }

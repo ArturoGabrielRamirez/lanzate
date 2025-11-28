@@ -32,7 +32,7 @@ export async function getStoreCategoriesData({ storeId }: CreateCategoryDynamicA
 
         return {
             hasError: false,
-            message: "Categories fetched successfully",
+            message: "Categorías recuperadas exitosamente",
             payload: categories
         }
     })

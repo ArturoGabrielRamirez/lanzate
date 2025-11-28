@@ -41,6 +41,7 @@ export default async function WaitlistSuccessPage() {
                         src={waitlistSuccessImage}
                         alt={t('image.alt')}
                         className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20 size-96"
+                        fill
                     />
                 </div>
             </div>

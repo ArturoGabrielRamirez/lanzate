@@ -61,7 +61,7 @@ function ProfileActionButton({
   if (!currentUser) {
     return (
       <Button
-        onClick={() => alert('Inicia sesión para seguir usuarios')}
+        onClick={() => alert('Iniciá sesión para seguir usuarios')}
         variant="default"
         className="w-full md:w-auto"
       >

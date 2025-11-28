@@ -21,7 +21,7 @@ export async function insertLogEntry({ action, entity_id, entity_type, details, 
         return {
             payload: logEntry,
             hasError: false,
-            message: "Log entry created"
+            message: "Entrada de registro creada exitosamente"
         }
     })
 

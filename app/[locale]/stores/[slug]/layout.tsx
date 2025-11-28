@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     if (storeError || !store) {
         return {
-            title: "Store not found"
+            title: "Tienda no encontrada"
         }
     }
 
@@ -54,14 +54,14 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
 
     return (
         <PageContainer className="gap-4 flex flex-col lg:gap-8">
+            <Suspense fallback={<StoreHeaderSkeleton />}>
+                <StoreHeaderServer slug={slug} />
+            </Suspense>
             <div className="grow flex flex-col gap-8">
                 <div className="lg:hidden flex flex-col gap-4">
-                    <Suspense fallback={<StoreHeaderSkeleton />}>
-                        <StoreHeaderServer slug={slug} />
-                    </Suspense>
                     {children}
                     <Suspense>
-                        <SectionContainer title="Looking for something?">
+                        <SectionContainer title="¿Buscas algo?">
                             <GlobalSearch userId={user.id} />
                         </SectionContainer>
                     </Suspense>
@@ -97,14 +97,14 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
                 </div>
                 <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
                     <div className="flex flex-col gap-8 sticky top-24">
-                        <Suspense fallback={<StoreHeaderSkeleton />}>
+                        {/* <Suspense fallback={<StoreHeaderSkeleton />}>
                             <StoreHeaderServer slug={slug} />
-                        </Suspense>
-                        <Suspense>
+                        </Suspense> */}
+                        {/* <Suspense>
                             <SectionContainer title="Looking for something?">
                                 <GlobalSearch userId={user.id} />
                             </SectionContainer>
-                        </Suspense>
+                        </Suspense> */}
                         <SectionContainer title="Tu resumen">
                             <StoreHeaderTinyWidgets slug={slug} />
                         </SectionContainer>

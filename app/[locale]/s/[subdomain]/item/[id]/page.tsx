@@ -70,7 +70,7 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
                             <Button variant="outline" size="lg" className="text-lg p-6 !px-8" asChild>
                                 <Link href="/checkout">
                                     <ShoppingBag />
-                                    <span>Checkout</span>
+                                    <span>Finalizar compra</span>
                                 </Link>
                             </Button>
                         </div>

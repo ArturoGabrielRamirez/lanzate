@@ -37,7 +37,7 @@ async function AnalyticsOptionContainer({ params }: Props) {
                         <Link href={`/stores/${slug}/analytics`}>
                             <ArrowLeft className="size-4" />
                         </Link>
-                        Analytics - Not Found
+                            Estadísticas - No encontradas
                     </CardTitle>
                 </CardHeader>
             </Card>
@@ -53,11 +53,11 @@ async function AnalyticsOptionContainer({ params }: Props) {
                     <Link href={`/stores/${slug}/analytics`}>
                         <ArrowLeft className="size-4" />
                     </Link>
-                    Analytics
+                    Estadísticas
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <Suspense fallback={<div>Loading analytics...</div>}>
+                <Suspense fallback={<div>Cargando estadísticas...</div>}>
                     <LazyComponent slug={slug} />
                 </Suspense>
             </CardContent>

@@ -22,10 +22,10 @@ function UserLikedProducts({ userId, isOwnProfile = false }: UserLikedProductsPr
     return (
       <EmptyState
         title={isOwnProfile
-          ? 'Aún no te gusta ningún producto'
-          : 'Aún no le gusta ningún producto'
+          ? 'Todavía no te gusta ningún producto'
+          : 'Todavía no le gusta ningún producto'
         }
-        description="Los productos favoritos aparecerán aquí"
+        description="Los productos favoritos aparecerán acá."
       />
     )
   }

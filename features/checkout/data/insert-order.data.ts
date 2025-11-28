@@ -49,9 +49,9 @@ export async function insertOrderData({
                 }
             })
 
-            if (!employee) throw new Error("Employee not found")
+            if (!employee) throw new Error("Empleado no encontrado")
 
-            if (!employee.can_create_orders) throw new Error("You are not authorized to create orders")
+            if (!employee.can_create_orders) throw new Error("No estás autorizado para crear órdenes")
 
         }
 
@@ -73,19 +73,18 @@ export async function insertOrderData({
                 }
             })
 
-            if (!product) throw new Error("Product not found")
+            if (!product) throw new Error("Producto no encontrado")
 
-            if (product.is_active === false) throw new Error("Product is not active")
+            if (product.is_active === false) throw new Error("El producto no está activo")
 
-            if (!product.is_published) throw new Error(`Product ${product.name} is not published`)
+            if (!product.is_published) throw new Error(`El producto ${product.name} no está publicado`)
+            if (product.stock <= 0) throw new Error(`El producto ${product.name} está agotado`)
 
-            if (product.stock <= 0) throw new Error(`Product ${product.name} is out of stock`)
+            if (product.stock < item.quantity) throw new Error(`El producto ${product.name} está agotado`)
 
-            if (product.stock < item.quantity) throw new Error(`Product ${product.name} is out of stock`)
+            if (!productStock) throw new Error("Producto no encontrado")
 
-            if (!productStock) throw new Error("Product not found")
-
-            if (productStock.quantity < item.quantity) throw new Error("Product is out of stock")
+            if (productStock.quantity < item.quantity) throw new Error("El producto está agotado")
 
         }
 
@@ -134,7 +133,7 @@ export async function insertOrderData({
                 }
             })
 
-            if (!order) throw new Error("Order not created")
+            if (!order) throw new Error("No se pudo crear la orden")
 
             for (const item of cart) {
 
@@ -182,9 +181,9 @@ export async function insertOrderData({
                 }
             })
 
-            if (!updatedStore) throw new Error("Store not updated")
+            if (!updatedStore) throw new Error("No se pudo actualizar la tienda")
 
-            const transaction = await tx.transaction.create({
+        /*     const transaction = await tx.transaction.create({
                 data: {
                     amount: total_price,
                     type: "SALE",
@@ -198,11 +197,11 @@ export async function insertOrderData({
                     reference_type: "order",
                     branch_id: branch.id
                 }
-            })
+            }) */
 
-            if (!transaction) throw new Error("Transaction not created")
+           /*  if (!transaction) throw new Error("No se pudo crear la transacción") */
 
-            await tx.socialActivity.create({
+            /* await tx.socialActivity.create({
                 data: {
                     order_id: order.id,
                     user_id: user.id,
@@ -212,7 +211,7 @@ export async function insertOrderData({
                     title: `Order ${order.id} created`,
                     store_id: store.id,
                 }
-            })
+            }) */
 
             return order
         })
@@ -223,12 +222,12 @@ export async function insertOrderData({
             entity_id: order.id,
             user_id: user.id,
             action_initiator: isWalkIn ? "Walk-in" : "Checkout",
-            details: `Order ${order.id} created`
+            details: `Orden ${order.id} creada`
         })
 
         return {
             hasError: false,
-            message: "Order created successfully",
+            message: "Orden creada exitosamente",
             payload: order
         }
     })

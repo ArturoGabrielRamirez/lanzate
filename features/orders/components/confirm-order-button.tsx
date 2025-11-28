@@ -18,7 +18,7 @@ function ConfirmOrderButton({ order, canUpdateOrders, size = "default" }: Confir
 
     const handleConfirmOrder = () => {
         if (isPending) return
-        toast.loading("Confirming order, please wait...")
+        toast.loading("Confirmando la orden, por favor espera...")
         startTransition(async () => {
             try {
                 const { hasError, message } = await confirmOrderAction({
@@ -29,10 +29,10 @@ function ConfirmOrderButton({ order, canUpdateOrders, size = "default" }: Confir
                     throw new Error(message)
                 }
                 toast.dismiss()
-                toast.success("Order confirmed successfully! The customer has been notified.")
+                toast.success("Orden confirmada con éxito! El cliente ya fue notificado.")
             } catch (error) {
                 toast.dismiss()
-                toast.error(error instanceof Error ? error.message : "Failed to confirm order")
+                toast.error(error instanceof Error ? error.message : "Error al confirmar la orden")
             }
         })
     }
@@ -48,13 +48,13 @@ function ConfirmOrderButton({ order, canUpdateOrders, size = "default" }: Confir
                     className="min-w-[200px] w-full"
                 >
                     <CheckCircle className="w-5 h-5 mr-2" />
-                    {isPending ? "Confirming..." : isOrderReady ? "Order Already Confirmed" : "Confirm Order"}
+                    {isPending ? "Confirmando..." : isOrderReady ? "Orden ya confirmada" : "Confirmar orden"}
                 </Button>
             ) : (
                 <Alert className="w-full max-w-md">
                     <AlertTriangle className="h-4 w-4" />
                     <AlertDescription>
-                        You don&apos;t have sufficient permissions to change the status of this order. Please contact an administrator.
+                        No tenés permisos suficientes para cambiar el estado de esta orden. Por favor, contactá a un administrador.
                     </AlertDescription>
                 </Alert>
             )}

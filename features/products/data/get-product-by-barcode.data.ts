@@ -23,7 +23,7 @@ export async function getProductByBarcodeData(barcode: string, storeId: number) 
 
     if (!product) {
         return {
-            message: "Product not found",
+            message: "Producto no encontrado",
             payload: null,
             error: true
         }
@@ -33,7 +33,7 @@ export async function getProductByBarcodeData(barcode: string, storeId: number) 
     const totalStock = product.stock_entries.reduce((total, entry) => total + entry.quantity, 0)
 
     return {
-        message: "Product found successfully",
+        message: "Producto encontrado correctamente",
         payload: {
             ...product,
             totalStock

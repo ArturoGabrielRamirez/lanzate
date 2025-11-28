@@ -1,4 +1,4 @@
-
+/* 
 import { ProductListContainer } from "@/features/products/components/product-list-container";
 import { ProductsCard } from "@/features/products/components/products-card";
 import { getStoreWithProductsAction } from "@/features/stores/actions/get-store-with-products.action";
@@ -63,4 +63,4 @@ async function ProductList({ subdomain, category, sort, search, min, max, limit,
         </>
     )
 }
-export { ProductList }
+export { ProductList } */

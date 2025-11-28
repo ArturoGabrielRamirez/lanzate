@@ -29,7 +29,7 @@ function DashboardError({ message }: DashboardErrorProps) {
                     <EmptyContent>
                         <div className="flex gap-2">
                             <Button asChild>
-                                <Link href="/stores">Reload page</Link>
+                                <Link href="/stores">Recargar página</Link>
                             </Button>
                         </div>
                     </EmptyContent>

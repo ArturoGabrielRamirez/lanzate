@@ -10,7 +10,7 @@ import { editEmployeeAction } from "@/features/employees/actions/edit-employee.a
 import { EditEmployeeButtonProps, EditEmployeePayload } from "@/features/employees/types"
 import { ButtonWithPopup } from "@/features/global/components/button-with-popup"
 import { InputField } from "@/features/global/components/form/input-field"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+/* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
@@ -18,7 +18,7 @@ import { Textarea } from "@/features/shadcn/components/ui/textarea"
 
 function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployeeButtonProps) {
 
-    const [permissions, setPermissions] = useState({
+    const [permissions, /* setPermissions */] = useState({
         can_create_orders: employee.can_create_orders,
         can_update_orders: employee.can_update_orders,
         can_create_products: employee.can_create_products,
@@ -30,7 +30,7 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
         can_manage_store: employee.can_manage_store,
     })
 
-    const [isActive, setIsActive] = useState(employee.is_active)
+    const [isActive, /* setIsActive */] = useState(employee.is_active)
     const [selectedRole, setSelectedRole] = useState<string>(employee.role) // ✅ Cambiar a string
     const [salary, setSalary] = useState(employee.salary?.toString() || "")
     const t = useTranslations("store.edit-employee")
@@ -47,12 +47,12 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
         return editEmployeeAction(employee.id, data, slug, userId)
     }
 
-    const handlePermissionChange = (permission: keyof typeof permissions, checked: boolean) => {
+  /*   const handlePermissionChange = (permission: keyof typeof permissions, checked: boolean) => {
         setPermissions(prev => ({
             ...prev,
             [permission]: checked
         }))
-    }
+    } */
 
     const roleOptions = [
         { value: 'EMPLOYEE', label: t("roles.employee") },
@@ -154,11 +154,11 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
 
                 {/* Active status */}
                 <div className="flex items-center space-x-2">
-                    <Checkbox
+                 {/*    <Checkbox
                         id="is_active"
                         checked={isActive}
                         onCheckedChange={(checked) => setIsActive(checked === true)}
-                    />
+                    /> */}
                     <Label
                         htmlFor="is_active"
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -173,83 +173,83 @@ function EditEmployeeButton({ employee, slug, onComplete, userId }: EditEmployee
 
                     <div className="grid grid-cols-1 gap-3">
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                           {/*  <Checkbox
                                 id="can_create_orders"
                                 checked={permissions.can_create_orders}
                                 onCheckedChange={(checked) => handlePermissionChange('can_create_orders', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_create_orders" className="text-sm">{t("permissions.can-create-orders")}</Label>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                           {/*  <Checkbox
                                 id="can_update_orders"
                                 checked={permissions.can_update_orders}
                                 onCheckedChange={(checked) => handlePermissionChange('can_update_orders', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_update_orders" className="text-sm">{t("permissions.can-update-orders")}</Label>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                          {/*   <Checkbox
                                 id="can_create_products"
                                 checked={permissions.can_create_products}
                                 onCheckedChange={(checked) => handlePermissionChange('can_create_products', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_create_products" className="text-sm">{t("permissions.can-create-products")}</Label>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                           {/*  <Checkbox
                                 id="can_update_products"
                                 checked={permissions.can_update_products}
                                 onCheckedChange={(checked) => handlePermissionChange('can_update_products', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_update_products" className="text-sm">{t("permissions.can-update-products")}</Label>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                           {/*  <Checkbox
                                 id="can_manage_stock"
                                 checked={permissions.can_manage_stock}
                                 onCheckedChange={(checked) => handlePermissionChange('can_manage_stock', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_manage_stock" className="text-sm">{t("permissions.can-manage-stock")}</Label>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                           {/*  <Checkbox
                                 id="can_process_refunds"
                                 checked={permissions.can_process_refunds}
                                 onCheckedChange={(checked) => handlePermissionChange('can_process_refunds', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_process_refunds" className="text-sm">{t("permissions.can-process-refunds")}</Label>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                          {/*   <Checkbox
                                 id="can_view_reports"
                                 checked={permissions.can_view_reports}
                                 onCheckedChange={(checked) => handlePermissionChange('can_view_reports', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_view_reports" className="text-sm">{t("permissions.can-view-reports")}</Label>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                          {/*   <Checkbox
                                 id="can_manage_employees"
                                 checked={permissions.can_manage_employees}
                                 onCheckedChange={(checked) => handlePermissionChange('can_manage_employees', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_manage_employees" className="text-sm">{t("permissions.can-manage-employees")}</Label>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                            {/* <Checkbox
                                 id="can_manage_store"
                                 checked={permissions.can_manage_store}
                                 onCheckedChange={(checked) => handlePermissionChange('can_manage_store', checked as boolean)}
-                            />
+                            /> */}
                             <Label htmlFor="can_manage_store" className="text-sm">{t("permissions.can-manage-store")}</Label>
                         </div>
                     </div>

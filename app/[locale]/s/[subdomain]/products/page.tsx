@@ -1,22 +1,22 @@
-import { SearchParams } from "nuqs"
-import { Suspense } from "react"
+/* import { SearchParams } from "nuqs"
+import { Suspense } from "react" */
 
 import { PageContainer } from "@/features/layout/components"
 import { SidebarOrderBySelect } from "@/features/layout/components/public-store/sidebar-price-select"
-import { ProductCardLoader, ProductList } from "@/features/products/components"
-import { loadFilterParams } from "@/features/products/utils"
+/* import { ProductCardLoader, ProductList } from "@/features/products/components" */
+/* import { loadFilterParams } from "@/features/products/utils" */
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { StoreBanner, TopCategoriesNavbar } from "@/features/stores/components/public"
 
-type Props = {
+/* type Props = {
     params: Promise<{ subdomain: string }>
     searchParams: Promise<SearchParams>
-}
+} */
 
-async function ProductsPage({ params, searchParams }: Props) {
+async function ProductsPage(/* { params, searchParams }: Props */) {
 
-    const { subdomain } = await params
-    const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
+/*     const { subdomain } = await params
+    const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams) */
 
     return (
         <PageContainer className="max-w-full !pt-0">
@@ -50,8 +50,8 @@ async function ProductsPage({ params, searchParams }: Props) {
                         {/* <ProductListDisplay /> */}
                         <SidebarOrderBySelect />
                     </div>
-                    <Suspense fallback={<ProductCardLoader />} key={category}>
-                        <ProductList
+                    {/* <Suspense fallback={<ProductCardLoader />} key={category}> */}
+                      {/*   <ProductList
                             subdomain={subdomain}
                             category={category}
                             sort={sort}
@@ -60,8 +60,8 @@ async function ProductsPage({ params, searchParams }: Props) {
                             max={max}
                             limit={limit}
                             page={page}
-                        />
-                    </Suspense>
+                        /> */}
+                  {/*   </Suspense> */}
                 </div>
             </div>
         </PageContainer>

@@ -5,7 +5,7 @@ async function StoreBalanceBig({ slug }: { slug: string }) {
     const { payload: balance, hasError, message } = await getStoreBalanceBySlugAction(slug)
 
     if (hasError) {
-        return <div>Error loading store balance: {message || "Unknown error"}</div>
+        return <div>Error al cargar el saldo: {message || "Error desconocido"}</div>
     }
 
     return (

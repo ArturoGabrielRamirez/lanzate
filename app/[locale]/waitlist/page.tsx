@@ -69,7 +69,7 @@ export default async function WaitlistPage() {
                         src={waitlistImage}
                         alt={t('image.alt')}
                         width={5}
-                        className="w-full antialiased object-bottom drop-shadow-xl drop-shadow/20"
+                        className="antialiased object-bottom drop-shadow-xl drop-shadow/20"
                     />
 
                 </div>

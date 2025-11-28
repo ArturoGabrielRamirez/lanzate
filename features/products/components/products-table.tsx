@@ -9,17 +9,24 @@ import { useTranslations } from "next-intl"
 import { useMemo } from "react"
 
 import { DataTable } from "@/features/global/components/data-table"
-import { DeleteProductButton, EditProductButton/* , DistributeStockButton  */} from "@/features/products/components"
+import { DeleteProductButton, EditProductButton/* , DistributeStockButton  */ } from "@/features/products/components"
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
 import type { ProductsTableProps, ProductsTableVariantRow } from "@/features/products/types"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
-import { Checkbox } from "@/features/shadcn/components/ui/checkbox"
+/* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
 import { DropdownMenu } from "@/features/shadcn/components/ui/dropdown-menu"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
-function ProductsTable({ data, userId, slug, employeePermissions/* , branches */ }: ProductsTableProps) {
+function ProductsTable({
+    data,
+    userId,
+    slug,
+    employeePermissions,
+    headerActions // ✅ Nuevo prop
+    /* , branches */
+}: ProductsTableProps) {
 
     const t = useTranslations("store.products-table")
 
@@ -58,8 +65,8 @@ function ProductsTable({ data, userId, slug, employeePermissions/* , branches */
                     stock: vStock,
                     variant_id: v.id,
                     variant_label: label,
-                /*     variants: p.variants,
-                    price: v.price || p.price */
+                    /*     variants: p.variants,
+                        price: v.price || p.price */
                 })
             }
         }
@@ -69,23 +76,23 @@ function ProductsTable({ data, userId, slug, employeePermissions/* , branches */
     const columns: ColumnDef<ProductsTableVariantRow>[] = [
         {
             id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    checked={
-                        table.getIsAllPageRowsSelected() ||
-                        (table.getIsSomePageRowsSelected() && "indeterminate")
-                    }
-                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
+            /*          header: ({ table }) => (
+                         <Checkbox
+                             checked={
+                                 table.getIsAllPageRowsSelected() ||
+                                 (table.getIsSomePageRowsSelected() && "indeterminate")
+                             }
+                             onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                             aria-label="Select all"
+                         />
+                     ), */
+            /*  cell: ({ row }) => (
+                 <Checkbox
+                     checked={row.getIsSelected()}
+                     onCheckedChange={(value) => row.toggleSelected(!!value)}
+                     aria-label="Select row"
+                 />
+             ), */
         },
         {
             accessorKey: "name",
@@ -285,7 +292,7 @@ function ProductsTable({ data, userId, slug, employeePermissions/* , branches */
                             {(employeePermissions.isAdmin || employeePermissions.permissions?.can_manage_stock) && (
                                 <>
                                     <DropdownMenuSeparator />
-                                   {/*  <DropdownMenuItem asChild>
+                                    {/*  <DropdownMenuItem asChild>
                                         {(() => {
                                             const currentVariantStocks = row.original.variant_id
                                                 ? (row.original as any).variants?.find((v: { id: number | undefined }) => v.id === row.original.variant_id)?.stocks as
@@ -341,11 +348,22 @@ function ProductsTable({ data, userId, slug, employeePermissions/* , branches */
     ]
 
     return (
-        <DataTable
-            columns={columns}
-            data={rows}
-            filterKey="name"
-        />
+        <>
+            {/* ✅ Header con acciones (botón de crear) */}
+           {/*  {headerActions && (
+                <div className="flex items-center justify-end mb-4">
+                    {headerActions}
+                </div>
+            )} */}
+
+            {/* ✅ Tabla de productos */}
+            <DataTable
+                columns={columns}
+                data={rows}
+                filterKey="name"
+                headerActions={headerActions}
+            />
+        </>
     )
 }
 

@@ -30,7 +30,7 @@ export async function getStoresFromUserData(userId: number) {
     })
 
     return {
-        message: "Stores fetched successfully from db",
+        message: "Tiendas recuperadas con éxito",
         payload: stores,
         hasError: false
     }

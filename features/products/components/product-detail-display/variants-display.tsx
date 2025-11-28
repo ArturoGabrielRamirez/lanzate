@@ -10,7 +10,6 @@ import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
-
 function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
@@ -121,7 +120,7 @@ function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
                             <div className="border-2 border-dashed border-muted-foreground/25 rounded-md p-4 text-center">
                                 <Boxes className="size-8 mx-auto text-muted-foreground mb-2" />
                                 <p className="text-sm text-muted-foreground">
-                                    Configura nuevas variantes para este producto
+                                    Configurá nuevas variantes para este producto
                                 </p>
                             </div>
                         </div>

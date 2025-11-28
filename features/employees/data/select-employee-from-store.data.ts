@@ -13,7 +13,7 @@ export async function selectEmployeesFromStoreData(storeId: number) {
     })
 
     return {
-        message: "Employees fetched successfully",
+        message: "Empleados recuperados exitosamente",
         payload: employees,
         hasError: false
     }

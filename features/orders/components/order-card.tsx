@@ -72,7 +72,7 @@ function OrderCard({ order }: OrderCardProps) {
                 <Button asChild variant="outline" size="sm">
                     <Link href={`/my-orders/${order.id}`}>
                         <Eye className="w-4 h-4 mr-2" />
-                        View Details
+                        Ver Detalles
                     </Link>
                 </Button>
             </CardFooter>

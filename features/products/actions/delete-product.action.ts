@@ -25,15 +25,15 @@ export async function deleteProductAction(productId: number, slug: string, userI
             entity_type: "PRODUCT",
             entity_id: productId,
             user_id: userId,
-            action_initiator: "Delete product button",
-            details: "Product soft deleted using delete product button"
+            action_initiator: "Botón eliminar producto",
+            details: "Producto eliminado usando el botón eliminar producto. Las órdenes relacionadas mantienen sus datos pero las referencias al producto se establecen en NULL."
         })
 
-        if (logError) throw new Error("The action went through but there was an error creating a log entry for this.")
+        if (logError) throw new Error("La acción se realizó pero hubo un error al crear una entrada de registro para esto.")
 
         return {
             hasError: false,
-            message: "Product soft deleted successfully",
+            message: "Producto eliminado exitosamente. Las órdenes relacionadas mantienen sus datos pero las referencias al producto se establecen en NULL.",
             payload: payload
         }
     })

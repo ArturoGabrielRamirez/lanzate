@@ -17,7 +17,7 @@ function PickedUpOrderButton({ order }: PickedUpOrderButtonProps) {
 
         if (isPending) return
 
-        toast.loading("Marking order as picked up, please wait...")
+        toast.loading("Marcando el pedido como retirado, por favor esperá...")
 
         startTransition(async () => {
             try {
@@ -28,11 +28,11 @@ function PickedUpOrderButton({ order }: PickedUpOrderButtonProps) {
                 await changeOrderTrackingStatusAction({ orderId: order.id, newStatus })
 
                 toast.dismiss()
-                toast.success("Order marked as picked up", { richColors: true })
+                toast.success("Pedido marcado como retirado", { richColors: true })
 
             } catch (error) {
                 toast.dismiss()
-                toast.error(error instanceof Error ? error.message : "Failed to mark order as picked up", { richColors: true })
+                toast.error(error instanceof Error ? error.message : "Error al marcar el pedido como retirado", { richColors: true })
             }
         })
 
@@ -43,7 +43,7 @@ function PickedUpOrderButton({ order }: PickedUpOrderButtonProps) {
         <div>
             <Button onClick={handleMarkAsPickedUp} disabled={isPending}>
                 {isPending ? <Loader2 className="size-4 animate-spin" /> : <Truck className="size-4" />}
-                Order picked up by delivery driver
+                Pedido retirado por el repartidor
             </Button>
         </div>
     )

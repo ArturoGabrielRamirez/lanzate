@@ -8,7 +8,7 @@ export function validateCreateStore(user: UserType) {
     const currentStoreCount = user.Store?.length || 0;
 
     if (hasReachedLimit({ plan: accountType, resource: "stores", currentCount: currentStoreCount })) {
-        throw new Error(`Has alcanzado el límite de tiendas para tu plan ${accountType}`);
+        throw new Error(`Ya ulizaste el límite de tiendas para tu plan ${accountType}`);
     }
 }
 
