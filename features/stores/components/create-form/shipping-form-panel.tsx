@@ -20,7 +20,7 @@ import type { Selection } from "react-aria-components"
 
 export function ShippingFormPanel() {
     const t = useTranslations("store.create-form.shipping")
-    const { control, formState: { isValid, errors }, setValue, getValues, trigger, watch } = useFormContext<CreateStoreFormType>()
+    const { control, formState: { isValid, errors, disabled }, setValue, getValues, trigger, watch } = useFormContext<CreateStoreFormType>()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { shipping_info } = values
 
@@ -31,19 +31,23 @@ export function ShippingFormPanel() {
 
     const [isAddingMethod, setIsAddingMethod] = useState(false)
     const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
-    const [offersDelivery, setOffersDelivery] = useState(false)
+    const [offersDelivery, setOffersDelivery] = useState(shipping_info?.offers_delivery || false)
 
     const shippingMethods = watch("shipping_info.methods")
     const watchedOffersDelivery = watch("shipping_info.offers_delivery")
 
     useEffect(() => {
+        if (disabled) {
+            setOffersDelivery(shipping_info?.offers_delivery || false)
+        }
+    }, [disabled, shipping_info?.offers_delivery])
+
+    useEffect(() => {
         if (shipping_info) {
+            setValue("shipping_info", shipping_info)
             setOffersDelivery(shipping_info.offers_delivery || false)
-            if (shipping_info.methods) {
-                setValue("shipping_info.methods", shipping_info.methods)
-            }
         } else {
-             setValue("shipping_info", { offers_delivery: false, methods: [] })
+            setValue("shipping_info", { offers_delivery: false, methods: [] })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -79,27 +83,28 @@ export function ShippingFormPanel() {
 
     const handleSelectionChange = (selection: Selection) => {
         if (selection === "all") return
+        if (disabled) return
         const selected = Array.from(selection)[0]
-        
+
         const newOffersDelivery = selected === "delivery"
         setOffersDelivery(newOffersDelivery)
         setValue("shipping_info.offers_delivery", newOffersDelivery, { shouldValidate: true, shouldDirty: true })
-        setCtxValues({ 
+        setCtxValues({
             ...values,
-            shipping_info: { 
+            shipping_info: {
                 ...getValues("shipping_info"),
-                offers_delivery: newOffersDelivery 
-            } 
+                offers_delivery: newOffersDelivery
+            }
         })
 
         if (!newOffersDelivery) {
             setValue("shipping_info.methods", [])
             setCtxValues({
-                    ...values,
-                 shipping_info: {
-                     offers_delivery: false,
-                     methods: []
-                 }
+                ...values,
+                shipping_info: {
+                    offers_delivery: false,
+                    methods: []
+                }
             })
             setConfirmedIds(new Set())
             setIsAddingMethod(false)
@@ -170,12 +175,12 @@ export function ShippingFormPanel() {
             }
             return item
         })
-        
+
         // We update local context but setValue is already handled by the input onChange calling setValue/register logic if using RHF properly.
         // However, since we are using custom inputs/onChange, we need to ensure RHF value is updated.
         // The helper function passed to onChange usually updates RHF.
         // Here we just sync context.
-        
+
         setCtxValues({
             ...values,
             shipping_info: {
@@ -190,13 +195,13 @@ export function ShippingFormPanel() {
         const currentMethod = currentMethods[index]
         const currentProviders = currentMethod?.providers || []
         let newProviders = []
-        
+
         if (currentProviders.includes(provider)) {
             newProviders = currentProviders.filter(p => p !== provider)
         } else {
             newProviders = [...currentProviders, provider]
         }
-        
+
         setValue(`shipping_info.methods.${index}.providers`, newProviders, { shouldValidate: true, shouldDirty: true })
         handleMethodChange(index, 'providers', newProviders)
     }
@@ -210,12 +215,13 @@ export function ShippingFormPanel() {
 
     return (
         <div className="flex flex-col gap-4">
-             <ChoiceBox
+            <ChoiceBox
                 columns={2}
                 gap={6}
                 selectionMode="single"
                 selectedKeys={[offersDelivery ? "delivery" : "pickup"]}
                 onSelectionChange={handleSelectionChange}
+                className={cn(disabled && "pointer-events-none")}
             >
                 <ChoiceBoxItem id="pickup" textValue={t("pickup-only")}>
                     <Store />
@@ -239,7 +245,7 @@ export function ShippingFormPanel() {
                         className="space-y-4"
                     >
                         <div className="flex flex-col gap-2">
-                             <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-between">
                                 <p className="text-sm font-medium">{t("shipping-methods")}</p>
                             </div>
 
@@ -263,7 +269,7 @@ export function ShippingFormPanel() {
                                             <ItemMedia>
                                                 <Package className="size-5 text-muted-foreground" />
                                             </ItemMedia>
-                                            <ItemContent>
+                                            <ItemContent className="grow">
                                                 <ItemHeader>
                                                     <ItemTitle>{method?.providers?.join(", ") || t("no-provider-selected")}</ItemTitle>
                                                 </ItemHeader>
@@ -274,13 +280,16 @@ export function ShippingFormPanel() {
                                                 </ItemDescription>
                                             </ItemContent>
                                             <ItemActions>
-                                                <IconButton
-                                                    icon={Trash2}
-                                                    onClick={() => handleRemoveMethod(index)}
-                                                    color={[255, 0, 0]}
-                                                    className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
-                                                    tooltip={t("delete")}
-                                                />
+                                                {!disabled && (
+                                                    <IconButton
+                                                        icon={Trash2}
+                                                        onClick={() => handleRemoveMethod(index)}
+                                                        color={[255, 0, 0]}
+                                                        className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
+                                                        tooltip={t("delete")}
+                                                        disabled={disabled}
+                                                    />
+                                                )}
                                             </ItemActions>
                                         </Item>
                                     )
@@ -314,7 +323,7 @@ export function ShippingFormPanel() {
                                                         )
                                                     })}
                                                 </div>
-                                                 {errors.shipping_info?.methods?.[index]?.providers && (
+                                                {errors.shipping_info?.methods?.[index]?.providers && (
                                                     <p className="text-sm text-red-500 mt-1">{t("providers-error") || "Required"}</p>
                                                 )}
                                             </div>
@@ -398,7 +407,7 @@ export function ShippingFormPanel() {
                                 )
                             })}
 
-                            {!isAddingMethod && (
+                            {!isAddingMethod && !disabled && (
                                 <Button variant="outline" onClick={handleAddMethod}>
                                     <Plus className="mr-2 size-4" />
                                     {t("add-shipping-method")}
