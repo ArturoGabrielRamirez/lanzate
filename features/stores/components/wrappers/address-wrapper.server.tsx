@@ -12,14 +12,7 @@ export async function AddressServerWrapper({ slug }: { slug: string }) {
     const data = {
         ...addressData,
         is_physical_store: isPhysicalStore
-    } || {
-        is_physical_store: isPhysicalStore,
-        address: "",
-        city: "",
-        province: "",
-        country: ""
     }
-    console.log("🚀 ~ AddressServerWrapper ~ data:", data)
 
     return <AddressFormWrapper data={data} slug={slug} />
 }
