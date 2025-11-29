@@ -50,11 +50,11 @@ async function StoreDetailsLayout({ children, params }: StoreDetailsLayoutProps)
     }
 
     return (
-        <PageContainer className="gap-4 flex flex-col lg:gap-8">
+        <PageContainer className="gap-4">
             <Suspense fallback={<StoreHeaderSkeleton />}>
                 <StoreHeaderServer slug={slug} />
             </Suspense>
-            <div className="grow flex flex-col gap-8">
+            <div className="grow">
                 <div className="lg:hidden flex flex-col gap-4">
                     {children}
                 </div>

@@ -20,7 +20,7 @@ async function StoresPage() {
     if (!user) return redirect({ href: "/login", locale: "es" })
 
     return (
-        <PageContainer className="gap-4 flex flex-col lg:gap-8">
+        <PageContainer className="gap-4">
             <PageHeader
                 title={t("title")}
                 breadcrumbs={[

@@ -10,7 +10,7 @@ import { Link } from "@/i18n/naviation"
 function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderProps) {
 
     return (
-        <header className="flex flex-col gap-1 border-b border-muted-foreground/15 pb-2">
+        <header className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
                 {media && (
                     <div className="relative bottom-1">

@@ -30,7 +30,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     }
 
     return (
-        <PageContainer className="gap-4 flex flex-col lg:gap-8">
+        <PageContainer className="gap-4">
             <WelcomeWidget user={user} />
             <div className="lg:hidden flex flex-col gap-4">
                 <Suspense fallback={<StoreListSkeleton />}>

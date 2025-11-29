@@ -48,7 +48,7 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
     }
 
     return (
-        <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="relative group shrink-0 grow">
+        <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="relative group shrink-0 grow h-full">
             <Card onClick={handleClick} className="transition-all gap-0 md:gap-3 lg:gap-4 group h-full group relative @container cursor-pointer">
                 <CardHeader className="gap-0 items-center hidden md:grid">
                     <CardTitle className="flex items-start md:items-center gap-2 truncate">
