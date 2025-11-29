@@ -51,9 +51,9 @@ function isPublicProfileRoute(pathWithoutLocale: string): boolean {
 }
 
 export async function updateSession(request: NextRequest) {
+
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
   const subdomain = extractSubdomain(request)
-
   const { pathname } = request.nextUrl
 
   let response: NextResponse
@@ -196,8 +196,3 @@ export async function updateSession(request: NextRequest) {
 
   return response
 }
-/* export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
-} */
