@@ -4,9 +4,7 @@ import { Suspense } from "react"
 import { WelcomeTutorial, WelcomeWidget, DashboardError, ActivityFeed, ActivityFeedSkeleton, HelpCard, StoreListContainer, StoreListSkeleton } from "@/features/dashboard/components"
 import { loadFeedParams } from "@/features/dashboard/utils"
 import { getUserInfo } from "@/features/global/actions"
-import { GlobalSearch } from "@/features/global-search/components"
 import { PageContainer } from "@/features/layout/components"
-import { SectionContainer } from "@/features/stores/components"
 import { redirect } from "@/i18n/naviation"
 
 export const metadata: Metadata = {
@@ -35,11 +33,6 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         <PageContainer className="gap-4 flex flex-col lg:gap-8">
             <WelcomeWidget user={user} />
             <div className="lg:hidden flex flex-col gap-4">
-                <Suspense>
-                    <SectionContainer title="Looking for something?">
-                        <GlobalSearch userId={user.id} />
-                    </SectionContainer>
-                </Suspense>
                 <Suspense fallback={<StoreListSkeleton />}>
                     <StoreListContainer />
                 </Suspense>
@@ -50,11 +43,6 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
             </div>
             <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
                 <div className="flex flex-col gap-8">
-                    {/* <Suspense>
-                        <SectionContainer title="Looking for something?">
-                            <GlobalSearch userId={user.id} />
-                        </SectionContainer>
-                    </Suspense> */}
                     <Suspense fallback={<StoreListSkeleton />}>
                         <StoreListContainer />
                     </Suspense>

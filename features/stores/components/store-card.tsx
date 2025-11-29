@@ -51,7 +51,7 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
 
     return (
         <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="relative group shrink-0 grow">
-            <Card onClick={handleClick} className="transition-all gap-2 md:gap-3 lg:gap-4 group h-full group relative @container cursor-pointer">
+            <Card onClick={handleClick} className="transition-all gap-0 md:gap-3 lg:gap-4 group h-full group relative @container cursor-pointer">
                 <CardHeader className="gap-0 items-center hidden md:grid">
                     <CardTitle className="flex items-start md:items-center gap-2 truncate">
                         <StoreCardLogo logo={store?.logo || ""} name={store?.name || ""} />
@@ -106,21 +106,14 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
                 </CardHeader>
                 <CardContent className="grow">
                     <Empty className="md:hidden">
-                        <EmptyHeader>
-                            <EmptyMedia variant="icon">
-                                <Avatar className="aspect-square size-8 lg:size-10 shrink-0 border-2 border-primary hidden md:block">
-                                    <AvatarImage src={store?.logo || ""} alt={store?.name || ""} asChild className="aspect-square">
-                                        <Image src={store?.logo || ""} alt={store?.name || ""} width={32} height={32} unoptimized className="aspect-square" />
-                                    </AvatarImage>
-                                    <AvatarFallback>
-                                        <StoreIcon className="size-4 md:size-5 lg:size-6 text-primary/50 group-hover:text-primary transition-all" />
-                                    </AvatarFallback>
-                                </Avatar>
+                        <EmptyHeader className="gap-0">
+                            <EmptyMedia variant="icon" className="rounded-full">
+                                <StoreCardLogo logo={store?.logo || ""} name={store?.name || ""} />
                             </EmptyMedia>
-                            <EmptyTitle>
+                            <EmptyTitle className="leading-tight">
                                 {store?.name || ""}
                             </EmptyTitle>
-                            <EmptyDescription>
+                            <EmptyDescription className="leading-tight text-xs">
                                 {store?.description || t("no-description")}
                             </EmptyDescription>
                         </EmptyHeader>
@@ -132,7 +125,7 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
                         {store?.created_at.toLocaleDateString() || ""}
                     </p>
                     <div>
-                        <p className="text-md text-muted-foreground">
+                        <p className="text-xs md:text-sm text-muted-foreground">
                             {store?._count?.products || 0} {t("products")}
                         </p>
                     </div>
