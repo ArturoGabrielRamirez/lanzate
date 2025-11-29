@@ -24,8 +24,8 @@ export function ShippingFormActions({ isEditing, onEdit, onCancel, onSave, isSav
     const { values, setValues } = useCreateStoreContext()
 
     const handleCancel = () => {
-
         const mappedMethods = reverseMapShippingMethods(initialValues)
+        if (!mappedMethods) return
         const offersDelivery = mappedMethods.length > 0
 
         setValues({
