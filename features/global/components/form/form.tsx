@@ -23,10 +23,10 @@ function Form<T extends FieldValues>({
     onError,
     disabled = false,
     submitButton = true,
-    resetOnSuccess = false
-
-}: FormPropsType<T> & { resetOnSuccess?: boolean }) {
-    const config: UseFormProps<T> = { mode: "onChange" }
+    resetOnSuccess = false,
+    submitButtonClassName,
+}: FormPropsType<T> & { resetOnSuccess?: boolean, submitButtonClassName?: string }) {
+    const config: UseFormProps<T> = { mode: "onChange" , disabled }
 
     if (resolver) config.resolver = resolver as Resolver<T, unknown, T>
 
@@ -79,6 +79,7 @@ function Form<T extends FieldValues>({
                     <LoadingSubmitButtonContext
                         text={contentButton}
                         disabled={disabled}
+                        className={submitButtonClassName}
                     />
                 )}
             </form>
