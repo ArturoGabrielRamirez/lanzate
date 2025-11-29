@@ -1,4 +1,5 @@
 "use client"
+
 import { Boxes, Calendar, EllipsisVertical, Globe, Loader2, ShoppingCart, StoreIcon, Trash2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -89,7 +90,7 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
                                 </DropDrawerItem>
                             </DropDrawerGroup>
                             <DropDrawerItem icon={isDeleting ? <Loader2 className="size-6 lg:size-4 text-destructive animate-spin" /> : <Trash2 className="size-6 lg:size-4 text-destructive" />} className="text-destructive" onClick={handleDeleteStore} disabled={isDeleting}>
-                                {isDeleting ? "Deleting..." : "Delete Store"}
+                                {isDeleting ? "Eliminando..." : "Eliminar Tienda"}
                             </DropDrawerItem>
                         </DropDrawerContent>
                     </DropDrawer>
@@ -101,7 +102,7 @@ function StoreCard({ store, userId }: StoreCardComponentProps) {
                         <EmptyMedia variant="icon">
                             <Avatar className="aspect-square size-8 lg:size-10 shrink-0 border-2 border-primary hidden md:block">
                                 <AvatarImage src={store?.logo || ""} alt={store?.name || ""} asChild className="aspect-square">
-                                    <Image src={store?.logo || ""} alt={store?.name || ""} width={32} height={32} unoptimized className="aspect-square" fill />
+                                    <Image src={store?.logo || ""} alt={store?.name || ""} width={32} height={32} unoptimized className="aspect-square" />
                                 </AvatarImage>
                                 <AvatarFallback>
                                     <StoreIcon className="size-4 md:size-5 lg:size-6 text-primary/50 group-hover:text-primary transition-all" />

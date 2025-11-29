@@ -11,8 +11,8 @@ export * from "@/features/stores/data/select-store-by-subdomain.data"
 export * from "@/features/stores/data/select-store-header-by-slug.data"
 export * from "@/features/stores/data/select-store-with-products.data"
 export * from "@/features/stores/data/update-store-banner.data"
-export * from "@/features/stores/data/update-operational-settings.data"
-export * from "@/features/stores/data/update-store-by-slug.data"
+/* export * from "@/features/stores/data/update-operational-settings.data" */
+/* export * from "@/features/stores/data/update-store-by-slug.data" */
 export * from "@/features/stores/data/update-store-logo.data"
 export * from "@/features/stores/data/verify-store-ownership.data"
 export * from "@/features/stores/data/select-store-contacts-by-slug.data"

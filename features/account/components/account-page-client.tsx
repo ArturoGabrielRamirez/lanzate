@@ -9,26 +9,20 @@ import useDeletionStatus from "@/features/account/hooks/use-deletion-status"
 import useUserData from "@/features/account/hooks/use-user-data"
 import { AccountPageClientProps } from "@/features/account/types"
 import { EmailStatusBanner } from "@/features/auth/components/index"
+import { useGlobalKeyboardShortcuts } from "@/features/global/hooks"
 import { PageContainer } from "@/features/layout/components"
-/* import { Title } from "@/features/layout/components" */
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/features/shadcn/components/ui/tabs"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
+import { SectionContainer } from "@/features/stores/components"
+
 
 export function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {
     const { user, immediateData, handleAvatarUpdate, handleProfileUpdate } = useUserData(initialUser)
     const { deletionStatus, isDeletionLoading, fetchDeletionStatus, hasInitialized } = useDeletionStatus()
-    const [activeTab, setActiveTab] = useState("account")
+    const [activeTab, setActiveTab] = useState<"account" | "membership" | "danger-zone">("account")
     const [dangerZoneLoaded, setDangerZoneLoaded] = useState(false)
 
-    // Handler para actualizar el banner (opcional)
-    /*    const handleBannerUpdate = useCallback(async (url: string | null) => {
-           // Aquí podrías implementar la lógica para guardar el banner
-           // Similar a como manejas el avatar
-           if (url) {
-   
-               toast.success('Banner actualizado')
-           }
-   
-       }, []) */
+    // Keyboard shortcuts globales
+    useGlobalKeyboardShortcuts()
 
     const loadDangerZone = useCallback(() => {
         if (!dangerZoneLoaded && activeTab === "danger-zone") {
@@ -56,78 +50,90 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
         )
     }
 
+    const tabs = [
+        { id: "account", label: t["description.account-details"], icon: Settings },
+        { id: "membership", label: "Membresía", icon: CreditCard },
+        { id: "danger-zone", label: "Zona de Peligro", icon: AlertTriangle }
+    ] as const
+
     return (
-        <PageContainer>
-            <div className="flex-shrink-0 mb-2 md:mb-4">
+        <PageContainer className="gap-4">
+            <EmailStatusBanner />
 
-                <EmailStatusBanner />
+            <AccountBannerHeader
+                user={user}
+                translations={t}
+                onAvatarUpdate={handleAvatarUpdate}
+                onProfileUpdate={handleProfileUpdate}
+            />
 
-                <AccountBannerHeader
-                    user={user}
-                    translations={t}
-                    onAvatarUpdate={handleAvatarUpdate}
-                    onProfileUpdate={handleProfileUpdate}
-                />
-            </div>
+            {/* Layout similar a Dashboard */}
+            <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 lg:gap-8">
+                {/* Sidebar con tabs */}
+                <div className="lg:sticky lg:top-20 lg:h-fit">
+                    <SectionContainer title="Configuración">
+                        <Card>
+                            <CardContent className="p-0">
+                                <nav className="flex lg:flex-col">
+                                    {tabs.map((tab) => {
+                                        const Icon = tab.icon
+                                        return (
+                                            <button
+                                                key={tab.id}
+                                                onClick={() => {
+                                                    setActiveTab(tab.id)
+                                                    if (tab.id === "danger-zone") loadDangerZone()
+                                                }}
+                                                className={`
+                                  flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors
+                                  hover:bg-muted/50 first:rounded-t-lg last:rounded-b-lg
+                                  lg:first:rounded-l-lg lg:first:rounded-tr-none
+                                  lg:last:rounded-r-lg lg:last:rounded-bl-none
+                                  ${activeTab === tab.id
+                                                        ? 'bg-muted text-foreground border-l-2 border-primary'
+                                                        : 'text-muted-foreground'
+                                                    }
+                                `}
+                                            >
+                                                <Icon className="size-4 flex-shrink-0" />
+                                                <span className="hidden lg:block">{tab.label}</span>
+                                            </button>
+                                        )
+                                    })}
+                                </nav>
+                            </CardContent>
+                        </Card>
+                    </SectionContainer>
+                </div>
 
-            <div className="flex-1 overflow-hidden">
-                <Tabs
-                    value={activeTab}
-                    onValueChange={setActiveTab}
-                    defaultValue="account"
-                    className="h-full grid grid-cols-1 md:grid-cols-[300px_1fr] grid-rows-[auto_1fr] md:grid-rows-[1fr] w-full md:gap-4"
-                >
-                    <TabsList className="w-full h-fit items-start flex-shrink-0">
-                        <div className="flex md:block w-full">
-                            <TabsTrigger value="account" className="w-full h-fit cursor-pointer py-3">
-                                <Settings className="size-4" />
-                                {t["description.account-details"]}
-                            </TabsTrigger>
-                            <TabsTrigger value="membership" className="w-full h-fit cursor-pointer py-3">
-                                <CreditCard className="size-4" />
-                                Membresía
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="danger-zone"
-                                className="w-full h-fit cursor-pointer py-3"
-                                onClick={() => loadDangerZone()}
-                            >
-                                <div className="flex items-center gap-2">
-                                    <AlertTriangle className="size-4" />
-                                    Zona de Peligro
-                                </div>
-                            </TabsTrigger>
-                        </div>
-                    </TabsList>
-
-                    <TabsContent value="account" className="h-full overflow-hidden">
-                        <div className="h-full overflow-y-auto">
+                {/* Contenido principal */}
+                <div className="min-h-[400px]">
+                    {activeTab === "account" && (
+                        <SectionContainer title={t["description.account-details"]}>
                             <AccountDetailsTab
                                 user={user}
                                 immediateData={immediateData}
                                 translations={t}
                             />
-                        </div>
-                    </TabsContent>
+                        </SectionContainer>
+                    )}
 
-                    <TabsContent value="membership" className="h-full overflow-hidden">
-                        <div className="h-full overflow-y-auto">
-                            <MembershipTab
-                                user={user}
-                            />
-                        </div>
-                    </TabsContent>
+                    {activeTab === "membership" && (
+                        <SectionContainer title="Membresía">
+                            <MembershipTab user={user} />
+                        </SectionContainer>
+                    )}
 
-                    <TabsContent value="danger-zone" className="h-full overflow-hidden">
-                        <div className="h-full overflow-y-auto">
+                    {activeTab === "danger-zone" && (
+                        <SectionContainer title="Zona de Peligro">
                             <DangerZoneTab
                                 userId={user.id}
                                 onStatusChange={fetchDeletionStatus}
                                 preload
                             />
-                        </div>
-                    </TabsContent>
-                </Tabs>
+                        </SectionContainer>
+                    )}
+                </div>
             </div>
         </PageContainer>
     )

@@ -1,7 +1,7 @@
 import { ArrowRight, BookA, Candy, Eye, Milk, Utensils } from "lucide-react"
 import Link from "next/link"
-import { SearchParams } from "nuqs"
-import { Suspense } from "react"
+/* import { SearchParams } from "nuqs" */
+/* import { Suspense } from "react" */
 
 /* import { Title } from "@/features/layout/components"; */
 /* import PaginationNav from "@/features/store-landing/components/pagination-nav";
@@ -12,21 +12,21 @@ import SidebarFilters from "@/features/store-landing/components/sidebar-filters"
 /* import { getStoreProductAmount } from "@/features/subdomain/actions/getStoreProductAmount"; */
 /* import Image from "next/image"; */
 import { PageContainer } from "@/features/layout/components";
-import { ProductCardLoader } from "@/features/products/components/product-card-loader";
-import { ProductList } from "@/features/products/components/product-list";
-import { loadFilterParams } from "@/features/products/utils/load-filter-params";
+/* import { ProductCardLoader } from "@/features/products/components/product-card-loader"; */
+/* import { ProductList } from "@/features/products/components/product-list"; */
+/* import { loadFilterParams } from "@/features/products/utils/load-filter-params"; */
 import { Card, CardContent } from "@/features/shadcn/components/ui/card";
 import { StoreBanner } from "@/features/stores/components/public/store-banner";
 import { TopCategoriesNavbar } from "@/features/stores/components/public/top-categories-navbar";
 
-type Props = {
+/* type Props = {
     params: Promise<{ subdomain: string }>
     searchParams: Promise<SearchParams>
-}
+} */
 
-export default async function StorePage({ params, searchParams }: Props) {
-    const { subdomain } = await params
-    const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams)
+export default async function StorePage(/* { params, searchParams }: Props */) {
+  /*   const { subdomain } = await params
+    const { category, sort, search, min, max, page, limit } = await loadFilterParams(searchParams) */
     /* const { payload: productAmount } = await getStoreProductAmount(subdomain); */
     /* const t = await getTranslations("subdomain"); */
 
@@ -117,7 +117,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                             <ProductListDisplay />
                             <ProductAmountDisplay amount={productAmount || 0} />
                         </div> */}
-                            <Suspense fallback={<ProductCardLoader />} key={category}>
+                         {/*    <Suspense fallback={<ProductCardLoader />} key={category}>
                                 <ProductList
                                     subdomain={subdomain}
                                     category={category}
@@ -128,7 +128,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                                     limit={limit}
                                     page={page}
                                 />
-                            </Suspense>
+                            </Suspense> */}
                             {/* <PaginationNav productAmount={productAmount || 0} limit={limit} /> */}
                         </div>
                     </div>

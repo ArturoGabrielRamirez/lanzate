@@ -4,7 +4,7 @@ import { InsertBranchProps } from "@/features/branches/types"
 import { prisma } from "@/utils/prisma"
 
 
-export async function insertBranchData({ name, address, email, phone, storeId }: InsertBranchProps) {
+export async function insertBranchData({ name, address,/* email, phone, */ storeId }: InsertBranchProps) {
 
     const existingBranches = await prisma.branch.count({
         where: {
@@ -19,8 +19,8 @@ export async function insertBranchData({ name, address, email, phone, storeId }:
             store_id: storeId,
             name: name,
             address: address,
-            email: email,
-            phone: phone,
+            /* email: email, */
+           /*  phone: phone, */
             is_main: isFirstBranch
         }
     })

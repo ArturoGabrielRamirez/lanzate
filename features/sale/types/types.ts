@@ -98,6 +98,7 @@ export type ActionsSectionProps = {
     customerInfo: CustomerInfo
     setCustomerInfo: (info: CustomerInfo) => void
     branchName?: string
+    isFinalizingSale?: boolean
 }
 
 export type BarcodeScannerCammeraButtonProps = {
@@ -136,6 +137,7 @@ export type FinalizeSaleButtonProps = {
     customerInfo: CustomerInfo
     setCustomerInfo: (info: CustomerInfo) => void
     branchName?: string
+    isFinalizingSale?: boolean
 }
 
 export type FinalizeSaleFormData = {
@@ -171,4 +173,5 @@ export type SearchSectionProps = {
 
 export type SearchSectionRef = {
     clearSearch: () => void
+    focusSearch: () => void
 }

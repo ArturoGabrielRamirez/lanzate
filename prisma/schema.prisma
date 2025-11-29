@@ -264,6 +264,7 @@ model Branch {
   emails               BranchEmail[]
   social_media         BranchSocialMedia[]
   payment_configs      BranchPaymentConfig[]
+  is_physical_store    Boolean                    @default(false)
 
   @@map("branches")
 }

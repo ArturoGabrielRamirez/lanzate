@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Branch, PaymentMethod, StoreOperationalSettings } from "@prisma/client"
@@ -187,4 +187,4 @@ function CheckoutForm({
     )
 }
 
-export { CheckoutForm }
+export { CheckoutForm } */

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import * as Yup from 'yup'
 
+import { InlineShortcut } from '@/features/global/components'
 import { ButtonWithPopup } from '@/features/global/components/button-with-popup'
 import InputField from '@/features/global/components/form/input'
 import type { CalculateChangeButtonProps, ChangeFormData } from '@/features/sale/types'
@@ -51,8 +52,6 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
   }
 
   const handleCalculateChange = async (data: ChangeFormData) => {
-    // Esta función no hace nada real, solo simula el cálculo
-    // En una implementación real, podría guardar el cambio en algún estado global
     return { hasError: false, payload: data, message: 'Cambio calculado correctamente' }
   }
 
@@ -61,7 +60,10 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
       text={
         <>
           <Calculator className="h-4 w-4" />
-          <span className='hidden lg:block'>{t('title')}</span>
+          <span className='hidden lg:flex items-center gap-1'>
+            {t('title')}
+            <InlineShortcut keys={['V']} />
+          </span>
         </>
       }
       title={t('popup-title')}
@@ -91,7 +93,6 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
           startContent="$"
         />
 
-        {/* Preset amounts */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">
             {t('preset-amounts-label')}
@@ -110,7 +111,6 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
           </div>
         </div>
 
-        {/* Change amount display */}
         {changeAmount !== null && changeAmount >= 0 && (
           <div className="p-3 bg-green-50 dark:bg-green-950/20 rounded-md border border-green-200 dark:border-green-800">
             <div className="flex justify-between items-center">

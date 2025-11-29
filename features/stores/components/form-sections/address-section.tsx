@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -71,3 +71,4 @@ function AddressSection({ store, mode }: AddressSectionProps) {
 }
 
 export { AddressSection }
+ */

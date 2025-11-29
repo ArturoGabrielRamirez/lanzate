@@ -86,14 +86,14 @@ function EditBranchButton({ branch, slug, onComplete, userId }: EditBranchButton
                 name="phone"
                 label={t("phone")}
                 type="text"
-                defaultValue={branch.phone || ""}
+           /*      defaultValue={branch.phone || ""} */
             />
 
             <InputField
                 name="email"
                 label={t("email")}
                 type="email"
-                defaultValue={branch.email || ""}
+                /* defaultValue={branch.email || ""} */
             />
 
             <div className="flex items-center space-x-2">

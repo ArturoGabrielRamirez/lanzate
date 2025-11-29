@@ -96,10 +96,10 @@ function BranchTable({ branches, storeId, userId, slug, employeePermissions }: B
                     </div>
                 )
             },
-            cell: ({ row }) => {
+           /*  cell: ({ row }) => {
                 const phone = row.original.phone
                 return <span className={cn(!phone && "text-muted-foreground/50")}>{phone ? phone : t("no-phone")}</span>
-            }
+            } */
         },
         {
             //header: t("headers.email"),   
@@ -118,10 +118,10 @@ function BranchTable({ branches, storeId, userId, slug, employeePermissions }: B
                     </div>
                 )
             },
-            cell: ({ row }) => {
+          /*   cell: ({ row }) => {
                 const email = row.original.email
                 return <span className={cn(email ? "text-blue-500" : "text-muted-foreground/50")}>{email ? email : t("no-email")}</span>
-            }
+            } */
         },
         {
             header: t("headers.actions"),

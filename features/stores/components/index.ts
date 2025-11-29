@@ -1,8 +1,8 @@
 export * from '@/features/stores/components/delete-store-button'
 export * from '@/features/stores/components/delivery-switch'
-export * from '@/features/stores/components/edit-operational-settings-button'
+/* export * from '@/features/stores/components/edit-operational-settings-button' */
 export * from '@/features/stores/components/new-store-card'
-export * from '@/features/stores/components/payment-methods-switches'
+/* export * from '@/features/stores/components/payment-methods-switches' */
 export * from '@/features/stores/components/section-container'
 export * from '@/features/stores/components/store-balance-big-skeleton'
 export * from '@/features/stores/components/store-balance-big'
@@ -15,7 +15,7 @@ export * from '@/features/stores/components/store-header-server'
 export * from '@/features/stores/components/store-header-skeleton'
 export * from '@/features/stores/components/store-header-tiny-widgets'
 export * from '@/features/stores/components/store-header'
-export * from '@/features/stores/components/store-information-form'
+/* export * from '@/features/stores/components/store-information-form' */
 export * from '@/features/stores/components/store-logo-editor-wrapper'
 export * from '@/features/stores/components/store-logo-editor'
 export * from '@/features/stores/components/store-logo-inline-editor'

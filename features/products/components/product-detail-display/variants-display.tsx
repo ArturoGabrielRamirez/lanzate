@@ -87,7 +87,6 @@ function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
                                                     src={variant.primary_media.url} 
                                                     alt={label} 
                                                     className="h-12 w-12 rounded object-cover" 
-                                                    fill
                                                 />
                                             ) : (
                                                 <div className="h-12 w-12 rounded bg-secondary flex items-center justify-center">

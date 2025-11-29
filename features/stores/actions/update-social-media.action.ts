@@ -26,9 +26,10 @@ export async function updateStoreSocialMediaAction(storeId: number, data: EditSo
                             id: mainBranch?.id
                         },
                         data: {
-                            facebook_url: data.facebook_url || null,
+                            /* facebook_url: data.facebook_url || null,
                             instagram_url: data.instagram_url || null,
-                            x_url: data.x_url || null
+                            x_url: data.x_url || null */
+                            //TODO: Arreglar aca, para Hori
                         }
                     }
                 }

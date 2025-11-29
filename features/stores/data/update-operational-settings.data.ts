@@ -1,4 +1,4 @@
-import { UpdateOperationalSettingsPayload } from '@/features/stores/types'
+/* import { UpdateOperationalSettingsPayload } from '@/features/stores/types'
 import { prisma } from "@/utils/prisma"
 
 export async function updateOperationalSettingsData(storeId: number, payload: UpdateOperationalSettingsPayload) {
@@ -47,4 +47,4 @@ export async function updateOperationalSettingsData(storeId: number, payload: Up
             payload: newSettings
         }
     }
-} 
+}  */

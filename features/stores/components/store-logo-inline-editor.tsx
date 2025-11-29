@@ -168,7 +168,7 @@ function StoreLogoInlineEditor({ currentLogo, storeName, onLogoUpdate }: StoreLo
     <div className="space-y-6">
       <div className="flex justify-center">
         <div className="relative">
-          <Image src={getCurrentPreview()} alt="Store logo preview" className="size-24 rounded-full object-cover border-2 border-muted" fill />
+          <Image src={getCurrentPreview()} alt="Store logo preview" className="size-24 rounded-full object-cover border-2 border-muted" />
           <Button
             type="button"
             variant="ghost"

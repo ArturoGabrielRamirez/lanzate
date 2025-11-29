@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Phone, Edit as EditIcon, X } from "lucide-react"
@@ -108,3 +108,4 @@ function ContactDisplay({ store }: ContactDisplayProps) {
 }
 
 export { ContactDisplay }
+ */

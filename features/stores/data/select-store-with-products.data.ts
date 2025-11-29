@@ -123,7 +123,8 @@ export async function selectStoreWithProductsData(subdomain: string, category: s
                 skip: limit * (page - 1)
             },
             customization: true,
-            operational_settings: true
+           /*  operational_settings: true */
+           //TODO: Arreglar aca, para Hori
         },
     })
 
