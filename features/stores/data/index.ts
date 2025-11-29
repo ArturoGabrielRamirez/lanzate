@@ -15,3 +15,6 @@ export * from "@/features/stores/data/update-store-banner.data"
 /* export * from "@/features/stores/data/update-store-by-slug.data" */
 export * from "@/features/stores/data/update-store-logo.data"
 export * from "@/features/stores/data/verify-store-ownership.data"
+export * from "@/features/stores/data/select-store-contacts-by-slug.data"
+export * from "@/features/stores/data/select-store-payment-methods-by-slug.data"
+export * from "@/features/stores/data/get-store-opening-hours.data"

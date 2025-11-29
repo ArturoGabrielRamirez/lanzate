@@ -7,17 +7,24 @@ import { useFormContext } from "react-hook-form"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { AttentionDateFormPanel } from "@/features/stores/components/create-form/attention-date-form-panel"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
+import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
 
 export function SettingsFormPanel() {
     const t = useTranslations("store.create-form.settings")
 
-    const { setValue, getValues, formState: { isValid } } = useFormContext()
+    const { setValue, getValues, formState: { isValid, disabled } } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { settings } = values
 
     const [isOpen24Hours, setIsOpen24Hours] = useState(settings?.is_open_24_hours ?? true)
+
+    useEffect(() => {
+        if (disabled) {
+            setIsOpen24Hours(settings?.is_open_24_hours ?? true)
+        }
+    }, [disabled, settings?.is_open_24_hours])
 
     useEffect(() => {
         if (settings) {
@@ -61,6 +68,7 @@ export function SettingsFormPanel() {
 
     const handleSelectionChange = (selection: Selection) => {
         if (selection === "all") return
+        if (disabled) return
         const selected = Array.from(selection)[0]
         if (selected === "24hours") {
             handleIsOpen24Hours()
@@ -79,14 +87,15 @@ export function SettingsFormPanel() {
                     selectionMode="single"
                     selectedKeys={[isOpen24Hours ? "24hours" : "schedule"]}
                     onSelectionChange={handleSelectionChange}
+                    className={cn(disabled && "pointer-events-none")}
                 >
                     <ChoiceBoxItem id="24hours" textValue={t("24-hours")}>
-                        <Clock className="size-9" />
+                        <Clock />
                         <ChoiceBoxLabel>{t("24-hours")}</ChoiceBoxLabel>
                         <ChoiceBoxDescription>{t("24-hours-description")}</ChoiceBoxDescription>
                     </ChoiceBoxItem>
                     <ChoiceBoxItem id="schedule" textValue={t("schedule")}>
-                        <Calendar className="size-9" />
+                        <Calendar />
                         <ChoiceBoxLabel>{t("schedule")}</ChoiceBoxLabel>
                         <ChoiceBoxDescription>{t("schedule-description")}</ChoiceBoxDescription>
                     </ChoiceBoxItem>

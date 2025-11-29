@@ -14,8 +14,8 @@ function NewStoreCard({ userId, variant = "empty" }: NewStoreCardProps) {
     const description = isAddMore ? "¡Lleva tu negocio a otro nivel!" : "¡Creala ahora!"
 
     return (
-        <Card className="p-0 md:p-0 lg:p-0 xl:p-0 opacity-50 hover:opacity-100 transition-all">
-            <CardContent>
+        <Card className="p-0 md:p-0 lg:p-0 xl:p-0 opacity-50 hover:opacity-100 transition-all h-full">
+            <CardContent className="grow flex">
                 <Empty className="lg:p-3 xl:p-3">
                     <EmptyHeader>
                         <EmptyMedia variant="icon">

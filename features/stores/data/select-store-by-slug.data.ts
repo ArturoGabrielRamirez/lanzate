@@ -15,6 +15,11 @@ export async function selectStoreBySlugData(slug: string) {
                     shipping_methods: true,
                     operational_settings: true,
                     opening_hours: true,
+                    emails: true,
+                    phones: true,
+                    social_media: true,
+                    payment_configs: true,
+                    
                 }
             },
             products: {
@@ -34,7 +39,7 @@ export async function selectStoreBySlugData(slug: string) {
                 }
             },
             balance: true,
-            customization: true
+            customization: true,
         }
     })
 

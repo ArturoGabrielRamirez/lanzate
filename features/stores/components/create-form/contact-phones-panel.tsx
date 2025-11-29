@@ -11,7 +11,7 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 
 export function ContactPhonesPanel() {
     const t = useTranslations("store.create-form.contact")
-    const { control, formState: { errors }, setValue, getValues, trigger, watch } = useFormContext()
+    const { control, formState: { errors, disabled }, setValue, getValues, trigger, watch } = useFormContext()
     const { values, setValues: setCtxValues } = useCreateStoreContext()
     const { fields, append, remove } = useFieldArray({ control, name: "contact_info.phones" })
     const { contact_info } = values
@@ -118,7 +118,7 @@ export function ContactPhonesPanel() {
     }
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
                 <label className="text-sm font-medium">{t("phone")}</label>
             </div>
@@ -144,29 +144,33 @@ export function ContactPhonesPanel() {
                         tooltip={"Un telefono de contacto de la tienda"}
                         endIcon={
                             <div className="flex">
-                                <IconButton
-                                    icon={Star}
-                                    onClick={() => handleSetPrimary(index)}
-                                    color={phones?.[index]?.is_primary ? [255, 215, 0] : [80, 40, 0]}
-                                    iconClassName={phones?.[index]?.is_primary ? "text-yellow-500 fill-yellow-500" : "text-yellow-500"}
-                                    tooltip={"Marcar como principal"}
-                                />
-                                <IconButton
-                                    icon={Trash2}
-                                    onClick={() => handleRemovePhone(index)}
-                                    color={[255, 0, 0]}
-                                    iconClassName="text-red-500"
-                                    tooltip={"Eliminar"}
-                                />
-                                {(!confirmedIds.has(field.id) && (!phones?.[index]?.phone || (isAddingPhone && index === fields.length - 1))) && (
-                                    <IconButton
-                                        icon={Check}
-                                        onClick={() => handleConfirmPhone(index)}
-                                        color={[0, 200, 0]}
-                                        iconClassName="text-green-500"
-                                        tooltip={"Confirmar"}
-                                        disabled={!!(errors?.contact_info as unknown as { phones: { phone: string }[] })?.phones?.[index]?.phone}
-                                    />
+                                {!disabled && (
+                                    <>
+                                        <IconButton
+                                            icon={Star}
+                                            onClick={() => handleSetPrimary(index)}
+                                            color={phones?.[index]?.is_primary ? [255, 215, 0] : [80, 40, 0]}
+                                            iconClassName={phones?.[index]?.is_primary ? "text-yellow-500 fill-yellow-500" : "text-yellow-500"}
+                                            tooltip={"Marcar como principal"}
+                                        />
+                                        <IconButton
+                                            icon={Trash2}
+                                            onClick={() => handleRemovePhone(index)}
+                                            color={[255, 0, 0]}
+                                            iconClassName="text-red-500"
+                                            tooltip={"Eliminar"}
+                                        />
+                                        {(!confirmedIds.has(field.id) && (!phones?.[index]?.phone || (isAddingPhone && index === fields.length - 1))) && (
+                                            <IconButton
+                                                icon={Check}
+                                                onClick={() => handleConfirmPhone(index)}
+                                                color={[0, 200, 0]}
+                                                iconClassName="text-green-500"
+                                                tooltip={"Confirmar"}
+                                                disabled={!!(errors?.contact_info as unknown as { phones: { phone: string }[] })?.phones?.[index]?.phone}
+                                            />
+                                        )}
+                                    </>
                                 )}
                             </div>
                         }
@@ -174,7 +178,7 @@ export function ContactPhonesPanel() {
                 </div>
             ))}
 
-            {!isAddingPhone && (
+            {!isAddingPhone && !disabled && (
                 <Button type="button" variant="outline" onClick={handleAddPhone} >
                     <Plus />
                     Agregar nuevo

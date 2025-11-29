@@ -11,7 +11,7 @@ import { useCreateStoreContext } from "@/features/stores/components/create-form/
 
 export function ContactUrlsPanel() {
     const t = useTranslations("store.create-form.contact")
-    const { control, formState: { errors }, setValue, getValues, trigger, watch } = useFormContext()
+    const { control, formState: { errors, disabled }, setValue, getValues, trigger, watch } = useFormContext()
     const { values, setValues: setCtxValues } = useCreateStoreContext()
     const { fields, append, remove } = useFieldArray({ control, name: "contact_info.social_media" })
     const { contact_info } = values
@@ -99,7 +99,7 @@ export function ContactUrlsPanel() {
     }
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
                 <label className="text-sm font-medium">{t("social-media")}</label>
             </div>
@@ -127,22 +127,26 @@ export function ContactUrlsPanel() {
                         tooltip={"Una URL de contacto de la tienda"}
                         endIcon={
                             <div className="flex">
-                                <IconButton
-                                    icon={Trash2}
-                                    onClick={() => handleRemoveUrl(index)}
-                                    color={[255, 0, 0]}
-                                    iconClassName="text-red-500"
-                                    tooltip={"Eliminar URL de contacto"}
-                                />
-                                {(!confirmedIds.has(field.id) && (!urls?.[index]?.url || (isAddingUrl && index === fields.length - 1))) && (
-                                    <IconButton
-                                        icon={Check}
-                                        onClick={() => handleConfirmUrl(index)}
-                                        color={[0, 200, 0]}
-                                        iconClassName="text-green-500"
-                                        tooltip={"Confirmar URL de contacto"}
-                                        disabled={!!(errors?.contact_info as unknown as { social_media: { url: string }[] })?.social_media?.[index]?.url}
-                                    />
+                                {!disabled && (
+                                    <>
+                                        <IconButton
+                                            icon={Trash2}
+                                            onClick={() => handleRemoveUrl(index)}
+                                            color={[255, 0, 0]}
+                                            iconClassName="text-red-500"
+                                            tooltip={"Eliminar URL de contacto"}
+                                        />
+                                        {(!confirmedIds.has(field.id) && (!urls?.[index]?.url || (isAddingUrl && index === fields.length - 1))) && (
+                                            <IconButton
+                                                icon={Check}
+                                                onClick={() => handleConfirmUrl(index)}
+                                                color={[0, 200, 0]}
+                                                iconClassName="text-green-500"
+                                                tooltip={"Confirmar URL de contacto"}
+                                                disabled={!!(errors?.contact_info as unknown as { social_media: { url: string }[] })?.social_media?.[index]?.url}
+                                            />
+                                        )}
+                                    </>
                                 )}
                             </div>
                         }
@@ -152,7 +156,7 @@ export function ContactUrlsPanel() {
                 </div>
             ))}
 
-            {!isAddingUrl && (
+            {!isAddingUrl && !disabled && (
                 <Button type="button" variant="outline" onClick={handleAddUrl} >
                     <Plus />
                     Agregar nuevo

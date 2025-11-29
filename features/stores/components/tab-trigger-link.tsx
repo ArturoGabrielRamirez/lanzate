@@ -22,7 +22,7 @@ function TabTriggerLink({ value, text, slug, icon }: TabTriggerLinkProps) {
         <TabsTrigger value={value} className={cn(
             "w-full h-fit cursor-pointer py-3 !text-muted-foreground/30 hover:!bg-muted hover:!text-muted-foreground",
             isActive && "!bg-primary !text-primary-foreground"
-        )} asChild>
+        )}>
             <Link href={`/stores/${slug}/${value}`} className="min-w-16">
                 <span className="">
                     {icon}

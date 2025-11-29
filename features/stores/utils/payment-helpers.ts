@@ -12,3 +12,14 @@ export const mapPaymentMethodType = (type: string): PaymentMethod => {
     }
 }
 
+export const reverseMapPaymentMethodType = (type: PaymentMethod): string => {
+    switch (type) {
+        case PaymentMethod.CASH: return 'efectivo'
+        case PaymentMethod.CREDIT_CARD: return 'credito'
+        case PaymentMethod.DEBIT_CARD: return 'debito'
+        case PaymentMethod.TRANSFER: return 'transferencia'
+        case PaymentMethod.VIRTUAL_WALLET: return 'billetera_virtual'
+        case PaymentMethod.MERCADO_PAGO: return 'mercado_pago'
+        default: return 'otro'
+    }
+}

@@ -10,7 +10,7 @@ import { updateStoreAddressAction } from "@/features/stores/actions/update-store
 import { EditAddressButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 
-function EditAddressButton({ store, userId, onSuccess }: EditAddressButtonProps) {
+function EditAddressButton({ store, onSuccess }: EditAddressButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -27,7 +27,7 @@ function EditAddressButton({ store, userId, onSuccess }: EditAddressButtonProps)
         try {
             setIsLoading(true)
             toast.loading("Actualizando información de dirección...")
-            const { hasError, message } = await updateStoreAddressAction(store.slug, payload, userId)
+            const { hasError, message } = await updateStoreAddressAction(store.slug, payload)
 
             if (hasError) {
                 throw new Error(message)

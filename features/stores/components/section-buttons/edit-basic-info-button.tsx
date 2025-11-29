@@ -10,7 +10,7 @@ import { updateStoreBasicInfoAction } from "@/features/stores/actions/update-sto
 import { EditBasicInfoButtonProps } from "@/features/stores/types"
 import { cn } from "@/lib/utils"
 
-function EditBasicInfoButton({ store, userId, onSuccess }: EditBasicInfoButtonProps) {
+function EditBasicInfoButton({ store, onSuccess }: EditBasicInfoButtonProps) {
     const { getValues, formState: { isValid } } = useFormContext()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -18,15 +18,17 @@ function EditBasicInfoButton({ store, userId, onSuccess }: EditBasicInfoButtonPr
 
         const values = getValues()
         const payload = {
-            name: values.name,
-            description: values.description,
-            subdomain: values.subdomain
+            basic_info: {
+                name: values.name,
+                description: values.description,
+                subdomain: values.subdomain,
+            }
         }
 
         try {
             setIsLoading(true)
             toast.loading("Actualizando información básica...")
-            const { hasError, message } = await updateStoreBasicInfoAction(store.slug, payload, userId)
+            const { hasError, message } = await updateStoreBasicInfoAction(store.slug, payload)
 
             if (hasError) {
                 throw new Error(message)

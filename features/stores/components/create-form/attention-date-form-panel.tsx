@@ -5,9 +5,10 @@ import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { Button } from "@/features/shadcn/components/button"
 import { Empty, EmptyContent, EmptyDescription, EmptyMedia } from "@/features/shadcn/components/empty"
-import { Item, ItemContent, ItemHeader, ItemTitle } from "@/features/shadcn/components/item"
+import { Item, ItemActions, ItemContent, ItemDescription, ItemHeader, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { TimePicker } from "@/features/stores/components/create-form/time-picker"
@@ -24,7 +25,7 @@ function AttentionDateEditor({
     onSave: () => void
 }) {
     const t = useTranslations("store.create-form.settings")
-    const { setValue, getValues, watch, trigger } = useFormContext()
+    const { setValue, getValues, watch, trigger, formState: { disabled } } = useFormContext()
     const { values, setValues: setCtxValues } = useCreateStoreContext()
     const { settings } = values
     const baseName = `settings.attention_dates.${index}`
@@ -36,14 +37,14 @@ function AttentionDateEditor({
 
     const selectedDays = watch(`${baseName}.days`) || []
 
-    const dayLabels = [
-        t("days.monday"),
-        t("days.tuesday"),
-        t("days.wednesday"),
-        t("days.thursday"),
-        t("days.friday"),
-        t("days.saturday"),
-        t("days.sunday"),
+    const daysMap = [
+        { key: "monday", label: t("days.monday") },
+        { key: "tuesday", label: t("days.tuesday") },
+        { key: "wednesday", label: t("days.wednesday") },
+        { key: "thursday", label: t("days.thursday") },
+        { key: "friday", label: t("days.friday") },
+        { key: "saturday", label: t("days.saturday") },
+        { key: "sunday", label: t("days.sunday") },
     ]
 
     const syncToContext = () => {
@@ -61,14 +62,19 @@ function AttentionDateEditor({
         })
     }
 
-    const handleToggleDay = (day: string) => {
+    const handleToggleDay = (dayKey: string) => {
+        if (disabled) return
         const current = selectedDays || []
         let newSelection = []
-        if (current.includes(day)) {
-            newSelection = current.filter((d: string) => d !== day)
+        if (current.includes(dayKey)) {
+            newSelection = current.filter((d: string) => d !== dayKey)
         } else {
-            newSelection = [...current, day]
-            newSelection.sort((a, b) => dayLabels.indexOf(a) - dayLabels.indexOf(b))
+            newSelection = [...current, dayKey]
+            newSelection.sort((a: string, b: string) => {
+                const indexA = daysMap.findIndex(d => d.key === a)
+                const indexB = daysMap.findIndex(d => d.key === b)
+                return indexA - indexB
+            })
         }
         setValue(`${baseName}.days`, newSelection, { shouldDirty: true, shouldTouch: true, shouldValidate: true })
         syncToContext()
@@ -95,17 +101,18 @@ function AttentionDateEditor({
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                    {dayLabels.map((day) => (
+                    {daysMap.map((day) => (
                         <Badge
-                            key={day}
-                            variant={selectedDays.includes(day) ? "default" : "outline"}
+                            key={day.key}
+                            variant={selectedDays.includes(day.key) ? "default" : "outline"}
                             className={cn(
                                 "cursor-pointer select-none px-4 py-1.5",
-                                !selectedDays.includes(day) && "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                                !selectedDays.includes(day.key) && "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                                disabled && "pointer-events-none opacity-50"
                             )}
-                            onClick={() => handleToggleDay(day)}
+                            onClick={() => handleToggleDay(day.key)}
                         >
-                            {day.slice(0, 3)}
+                            {day.label.slice(0, 3)}
                         </Badge>
                     ))}
                 </div>
@@ -126,7 +133,7 @@ function AttentionDateEditor({
                         <ItemContent className="gap-2">
                             <ItemHeader>
                                 <ItemTitle className="text-sm font-medium">
-                                    {selectedDays.length > 0 ? selectedDays[0] : ""}
+                                    {selectedDays.length > 0 ? daysMap.find(d => d.key === selectedDays[0])?.label : ""}
                                     {selectedDays.length > 1 && ` + ${selectedDays.length - 1} more`}
                                 </ItemTitle>
                             </ItemHeader>
@@ -161,14 +168,14 @@ function AttentionDateEditor({
             </div>
 
             <div className="flex gap-2 justify-end">
-                <Button variant="destructive" onClick={onCancel} type="button">
+                <Button variant="destructive" onClick={onCancel} type="button" disabled={disabled}>
                     <X />
                     {t("cancel")}
                 </Button>
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <span>
-                            <Button onClick={onSave} type="button" disabled={selectedDays.length === 0}>
+                            <Button onClick={onSave} type="button" disabled={selectedDays.length === 0 || disabled}>
                                 <Check className="mr-2 size-4" />
                                 {t("save-schedule")}
                             </Button>
@@ -187,12 +194,22 @@ function AttentionDateEditor({
 
 export function AttentionDateFormPanel() {
     const t = useTranslations("store.create-form.settings")
-    const { control, setValue, getValues, trigger, formState: { errors } } = useFormContext()
+    const { control, setValue, getValues, trigger, formState: { errors, disabled } } = useFormContext()
     const { values, setValues: setCtxValues } = useCreateStoreContext()
     const { settings } = values
 
     // This line is needed to fix the unused variable warning, or we remove it if not needed
     const triggerValidation = trigger
+
+    const DAYS_MAP: Record<string, string> = {
+        "monday": t("days.monday"),
+        "tuesday": t("days.tuesday"),
+        "wednesday": t("days.wednesday"),
+        "thursday": t("days.thursday"),
+        "friday": t("days.friday"),
+        "saturday": t("days.saturday"),
+        "sunday": t("days.sunday"),
+    }
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -267,7 +284,8 @@ export function AttentionDateFormPanel() {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+            <p className="text-sm font-medium">Horarios de atención</p>
             {!isAddingDate && (fields.length === 0 || (errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>))) && (
                 <div className={cn(
                     "text-sm border p-2 rounded-md text-center border-dashed",
@@ -276,7 +294,7 @@ export function AttentionDateFormPanel() {
                         : "text-muted-foreground border-muted-foreground/50"
                 )}>
                     <p>
-                        {errors?.settings && "attention_dates" in (errors.settings as Record<string, unknown>)
+                        {errors?.settings && "attention_dates" in (errors.ssettings as Record<string, unknown>)
                             ? (errors.settings as Record<string, { message?: string }>)["attention_dates"]?.message
                             : t("no-days-configured")
                         }
@@ -289,21 +307,45 @@ export function AttentionDateFormPanel() {
                     {fields.map((field, i) => {
                         const dateData = getValues(`settings.attention_dates.${i}`)
                         return (
-                            <div key={field.id} className="flex justify-between items-center border rounded-md p-3 text-sm">
-                                <div className="space-y-1">
-                                    <p className="font-medium">{dateData?.days?.length ? dateData.days.join(', ') : t("no-days-selected")}</p>
-                                    <p className="text-muted-foreground">
-                                        {dateData?.startTime} - {dateData?.endTime}
-                                    </p>
-                                </div>
-                                <IconButton
-                                    icon={Trash2}
-                                    onClick={() => handleDeleteDate(i)}
-                                    color={[255, 0, 0]}
-                                    className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
-                                    tooltip={t("delete")}
-                                />
-                            </div>
+                            <Card key={field.id}>
+                                <CardContent>
+                                    <Item className="p-0">
+                                        <ItemMedia>
+                                            <Calendar className="size-5 text-muted-foreground" />
+                                        </ItemMedia>
+                                        <ItemContent className="grow">
+                                            <ItemHeader>
+                                                <p className="font-medium">
+                                                    {dateData?.days?.length
+                                                        ? dateData.days.map((d: string) => DAYS_MAP[d] || d).join(', ')
+                                                        : t("no-days-selected")}
+                                                </p>
+                                            </ItemHeader>
+                                            <ItemDescription>
+                                                <span>{dateData?.startTime}</span>
+                                                <span>-</span>
+                                                <span>{dateData?.endTime}</span>
+                                            </ItemDescription>
+                                        </ItemContent>
+                                        <ItemActions className="flex items-center gap-2">
+                                            {!disabled && (
+                                                <IconButton
+                                                    icon={Trash2}
+                                                    onClick={() => handleDeleteDate(i)}
+                                                    color={[255, 0, 0]}
+                                                    className={cn(
+                                                        "text-destructive hover:bg-destructive/10 active:bg-destructive/20",
+                                                        disabled && "pointer-events-none opacity-50"
+                                                    )}
+                                                    tooltip={t("delete")}
+                                                    disabled={disabled}
+                                                />
+                                            )}
+                                        </ItemActions>
+                                    </Item>
+                                </CardContent>
+
+                            </Card>
                         )
                     })}
                 </div>
@@ -317,8 +359,8 @@ export function AttentionDateFormPanel() {
                 />
             )}
 
-            {!isAddingDate && (
-                <Button className="w-full" onClick={handleAddDate} type="button" variant="outline">
+            {!isAddingDate && !disabled && (
+                <Button className="w-full" onClick={handleAddDate} type="button" variant="outline" disabled={disabled}>
                     <Plus />
                     {t("add-date")}
                 </Button>

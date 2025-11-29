@@ -1,4 +1,4 @@
-import { Boxes, Building2, Clock, Home, ShoppingCart, Store } from "lucide-react"
+import { Boxes, Building2, Clock, Home, Settings, ShoppingCart } from "lucide-react"
 
 export const STORES_NAVIGATION_LINKS = [
     {
@@ -6,12 +6,6 @@ export const STORES_NAVIGATION_LINKS = [
         description: "Ve a tu tienda.",
         href: "/",
         icon: <Home className="size-[inherit]" />
-    },
-    {
-        label: "Cuenta",
-        description: "Gestiona la cuenta de tu tienda.",
-        href: "/account",
-        icon: <Store className="size-[inherit]" />
     },
     {
         label: "Productos",
@@ -30,6 +24,12 @@ export const STORES_NAVIGATION_LINKS = [
         description: "Gestiona las sucursales de tu tienda.",
         href: "/branches",
         icon: <Building2 className="size-[inherit]" />
+    },
+    {
+        label: "Configuracion",
+        description: "Gestiona la cuenta de tu tienda.",
+        href: "/account",
+        icon: <Settings className="size-[inherit]" />
     },
     /* {
         label: "Empleados",

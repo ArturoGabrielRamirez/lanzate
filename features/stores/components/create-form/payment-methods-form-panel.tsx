@@ -11,6 +11,8 @@ import { Empty, EmptyDescription } from "@/features/shadcn/components/empty"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemHeader, ItemMedia, ItemTitle } from "@/features/shadcn/components/item"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { Badge } from "@/features/shadcn/components/ui/badge"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
 import { CreateStoreFormValues } from "@/features/stores/types"
 
@@ -67,7 +69,7 @@ const paymentTypes = [
 
 export function PaymentMethodsFormPanel() {
     const t = useTranslations("store.create-form.payment")
-    const { control, formState: { isValid, errors }, setValue, getValues, trigger, watch } = useFormContext<CreateStoreFormValues>()
+    const { control, formState: { isValid, errors, disabled }, setValue, getValues, trigger, watch } = useFormContext<CreateStoreFormValues>()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { payment_info } = values
 
@@ -80,6 +82,13 @@ export function PaymentMethodsFormPanel() {
     const [confirmedIds, setConfirmedIds] = useState<Set<string>>(new Set())
 
     const paymentMethods = watch("payment_info.payment_methods")
+
+    useEffect(() => {
+        if (disabled) {
+            setIsAddingMethod(false)
+            setConfirmedIds(new Set())
+        }
+    }, [disabled])
 
     useEffect(() => {
         if (payment_info?.payment_methods) {
@@ -187,7 +196,7 @@ export function PaymentMethodsFormPanel() {
     }
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
                 <p className="text-sm font-medium">Métodos de pago</p>
             </div>
@@ -208,35 +217,43 @@ export function PaymentMethodsFormPanel() {
 
                 if (isConfirmed && !isCurrentAdding) {
                     return (
-                        <Item key={field.id} className="border rounded-md p-4 border-muted-foreground/50">
-                            <ItemMedia>
-                                <CreditCard className="size-5 text-muted-foreground" />
-                            </ItemMedia>
-                            <ItemContent>
-                                <ItemHeader>
-                                    <ItemTitle>{paymentMethods?.[index]?.name}</ItemTitle>
-                                </ItemHeader>
-                                <ItemDescription>
-                                    {paymentTypes.find(t => t.value === methodType)?.label || methodType}
-                                    {(paymentMethods?.[index]?.commission_percent || paymentMethods?.[index]?.commission_amount) && (
-                                        <span className="ml-2 text-xs text-muted-foreground">
-                                            ({paymentMethods?.[index]?.commission_percent ? `${paymentMethods?.[index]?.commission_percent}%` : ''}
-                                            {paymentMethods?.[index]?.commission_percent && paymentMethods?.[index]?.commission_amount ? ' + ' : ''}
-                                            {paymentMethods?.[index]?.commission_amount ? `$${paymentMethods?.[index]?.commission_amount}` : ''})
-                                        </span>
-                                    )}
-                                </ItemDescription>
-                            </ItemContent>
-                            <ItemActions>
-                                <IconButton
-                                    icon={Trash2}
-                                    onClick={() => handleRemoveMethod(index)}
-                                    color={[255, 0, 0]}
-                                    className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
-                                    tooltip="Eliminar"
-                                />
-                            </ItemActions>
-                        </Item>
+                        <Card key={field.id}>
+                            <CardContent>
+                                <Item className="p-0">
+                                    <ItemMedia>
+                                        <CreditCard className="size-5 text-muted-foreground" />
+                                    </ItemMedia>
+                                    <ItemContent className="grow">
+                                        <ItemHeader>
+                                            <ItemTitle>
+                                                <h3 className="text-sm font-medium">
+                                                    {paymentMethods?.[index]?.name}
+                                                </h3>
+                                            </ItemTitle>
+                                        </ItemHeader>
+                                        <ItemDescription className="flex items-center gap-1">
+                                            <span>{`${paymentMethods?.[index]?.commission_percent}%`}</span>
+                                            <span>-</span>
+                                            <span>{`$${paymentMethods?.[index]?.commission_amount}`}</span>
+                                        </ItemDescription>
+                                    </ItemContent>
+                                    <ItemActions className="flex items-center gap-2">
+                                        <Badge variant="outline">
+                                            {methodType}
+                                        </Badge>
+                                        {!disabled && (
+                                            <IconButton
+                                                icon={Trash2}
+                                                onClick={() => handleRemoveMethod(index)}
+                                                color={[255, 0, 0]}
+                                                className="text-destructive hover:bg-destructive/10 active:bg-destructive/20"
+                                                tooltip="Eliminar"
+                                            />
+                                        )}
+                                    </ItemActions>
+                                </Item>
+                            </CardContent>
+                        </Card>
                     )
                 }
 
@@ -341,7 +358,7 @@ export function PaymentMethodsFormPanel() {
                 )
             })}
 
-            {!isAddingMethod && (
+            {!isAddingMethod && !disabled && (
                 <Button variant="outline" onClick={handleAddMethod}>
                     <Plus />
                     Agregar nuevo

@@ -5,24 +5,30 @@ import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-
 import { InputField } from "@/features/global/components/form/input-field"
 import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
 import { useCreateStoreContext } from "@/features/stores/components/create-form/create-store-provider"
+import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
 
-export function AddressFormPanel() {
+export function AddressFormPanel({ isEditing = false }: { isEditing?: boolean }) {
     const t = useTranslations("store.create-form.address")
 
-    const { setValue, formState: { isValid }, trigger } = useFormContext()
+    const { setValue, formState: { isValid, disabled }, trigger } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateStoreContext()
     const { address_info } = values
 
     const [isPhysicalStore, setIsPhysicalStore] = useState(address_info?.is_physical_store || false)
 
     useEffect(() => {
-        if (address_info) {
+        if (address_info?.is_physical_store !== undefined) {
+            setIsPhysicalStore(address_info.is_physical_store)
+        }
+    }, [address_info?.is_physical_store])
+
+    useEffect(() => {
+        if (address_info && !isEditing) {
             setValue("address_info", address_info)
             setIsPhysicalStore(address_info.is_physical_store)
             if (address_info.is_physical_store) {
@@ -37,13 +43,14 @@ export function AddressFormPanel() {
 
     const handleSelectionChange = (selection: Selection) => {
         if (selection === "all") return
+        if (disabled) return
         const selected = Array.from(selection)[0]
         const isPhysical = selected === "physical"
 
         setIsPhysicalStore(isPhysical)
         setValue("address_info.is_physical_store", isPhysical, { shouldValidate: true, shouldDirty: true })
 
-        if (!isPhysical) {
+        if (!isPhysical && !isEditing) {
             setValue("address_info.address", "", { shouldValidate: true, shouldDirty: true })
             setValue("address_info.city", "", { shouldValidate: true, shouldDirty: true })
             setValue("address_info.province", "", { shouldValidate: true, shouldDirty: true })
@@ -121,6 +128,8 @@ export function AddressFormPanel() {
                     selectionMode="single"
                     selectedKeys={[isPhysicalStore ? "physical" : "online"]}
                     onSelectionChange={handleSelectionChange}
+                    className={cn(disabled && "pointer-events-none")}
+                    defaultSelectedKeys={isPhysicalStore ? ["physical"] : ["online"]}
                 >
                     <ChoiceBoxItem id="online" textValue={t("online-store")}>
                         <Globe />
@@ -150,6 +159,7 @@ export function AddressFormPanel() {
                             isRequired
                             tooltip={t("address-tooltip")}
                             onChange={handleAddressChange}
+                            disabled={disabled}
                         />
                         <InputField
                             name="address_info.city"
@@ -159,6 +169,7 @@ export function AddressFormPanel() {
                             isRequired
                             tooltip={t("city-tooltip")}
                             onChange={handleCityChange}
+                            disabled={disabled}
                         />
                         <InputField
                             name="address_info.province"
@@ -168,6 +179,7 @@ export function AddressFormPanel() {
                             isRequired
                             tooltip={t("province-tooltip")}
                             onChange={handleProvinceChange}
+                            disabled={disabled}
                         />
                         <InputField
                             name="address_info.country"
@@ -177,6 +189,7 @@ export function AddressFormPanel() {
                             isRequired
                             tooltip={t("country-tooltip")}
                             onChange={handleCountryChange}
+                            disabled={disabled}
                         />
                     </motion.div>
                 )}

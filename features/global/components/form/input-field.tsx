@@ -76,7 +76,7 @@ function InputField({
                                 {label}{isRequired && <span className="text-red-500">*</span>}
                             </FieldLabel>
                         )}
-                        <InputGroup className={cn("bg-background", className)}>
+                        <InputGroup className={cn("bg-background", disabled && "bg-background/50 cursor-not-allowed", className)}>
                             {startIcon && (
                                 <InputGroupAddon>
                                     {startIcon}
