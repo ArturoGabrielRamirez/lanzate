@@ -14,7 +14,10 @@ export async function updateStoreShippingAction(slug: string, data: ShippingForm
         const validatedData = await shippingSchema.validate(data, { abortEarly: false })
         
         // 2. Process data
-        const processedMethods = processShippingMethods(validatedData.shipping_info.methods)
+       const processedMethods = processShippingMethods(validatedData.shipping_info.methods?.map(m => ({
+            ...m,
+            providers: m.providers?.filter((p): p is string => !!p)
+        })))
 
         // 3. Update DB
         await updateStoreShippingData(slug, processedMethods)
