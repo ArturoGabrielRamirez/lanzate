@@ -17,14 +17,16 @@ function EditContactButton({ store, onSuccess }: EditContactButtonProps) {
     const handleSubmit = async () => {
         const values = getValues()
         const payload = {
-            contact_phone: values.contact_phone ?? "",
-            contact_email: values.contact_email ?? ""
+            contact_info: {
+                phones: values.contact_phone ? [{ phone: values.contact_phone, is_primary: true }] : [],
+                emails: values.contact_email ? [{ email: values.contact_email, is_primary: true }] : []
+            }
         }
 
         try {
             setIsLoading(true)
             toast.loading("Actualizando información de contacto...")
-            const { hasError, message } = await updateStoreContactAction(store.id, payload)
+            const { hasError, message } = await updateStoreContactAction(store.slug, payload)
 
             if (hasError) {
                 throw new Error(message)
