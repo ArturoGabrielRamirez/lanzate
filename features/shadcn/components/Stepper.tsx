@@ -97,7 +97,7 @@ export default function Stepper({
         direction={direction}
         className={`step-content-default w-full ${contentClassName}`}
       >
-        <ScrollArea className="h-[calc(100vh_-_15rem)] md:h-[calc(100vh_-_12rem)] md:max-h-96 !overflow-x-visible w-full">
+        <ScrollArea className="h-[calc(100dvh_-_15rem)] md:h-[calc(100dvh_-_12rem)] md:max-h-96 !overflow-x-visible w-full">
           {stepsArray[currentStep - 1]}
         </ScrollArea>
       </StepContentWrapper>

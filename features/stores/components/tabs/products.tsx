@@ -2,7 +2,8 @@ import { getTranslations } from "next-intl/server"
 
 import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
-import { CreateProductButton } from "@/features/products/components"
+/* import { CreateProductButton } from "@/features/products/components" */
+import { CreateProductButton } from "@/features/products/components/create-form/create-product-button"
 import { ProductsTable } from "@/features/products/components/products-table"
 import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
 import { ProductsTabProps } from "@/features/stores/types"
@@ -44,6 +45,12 @@ async function ProductsTab({ slug }: ProductsTabProps) {
             storeId={store.id}
             employeePermissions={employeePermissions}
             branches={store.branches}
+            /* headerActions={
+                <CreateProductButton
+                    storeId={store.id}
+                    userId={user.id}
+                />
+            } */
             headerActions={
                 <CreateProductButton
                     storeId={store.id}
