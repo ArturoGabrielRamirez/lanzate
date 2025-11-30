@@ -126,7 +126,10 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
             ) : (
                 <>
                     {selectedSource === "MANUAL" && (
-                        <CreateProductForm onSubmitAll={handleCreateProduct} />
+                        <CreateProductForm 
+                            onSubmitAll={handleCreateProduct} 
+                            onExitFlow={() => setSelectedSource(null)}
+                        />
                     )}
                     {(selectedSource === "AI" || selectedSource === "FILE") && (
                         <SourcePlaceholderPanel

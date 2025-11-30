@@ -27,9 +27,10 @@ import Stepper, { Step } from "@/features/shadcn/components/Stepper"
 
 interface CreateProductFormProps {
     onSubmitAll: (data: CreateProductFormType) => Promise<ServerResponse<unknown>>
+    onExitFlow?: () => void
 }
 
-export function CreateProductForm({ onSubmitAll }: CreateProductFormProps) {
+export function CreateProductForm({ onSubmitAll, onExitFlow }: CreateProductFormProps) {
 
     const { isStepValid, values, step, setStep } = useCreateProductContext()
     const t = useTranslations("store.create-product")
@@ -57,6 +58,7 @@ export function CreateProductForm({ onSubmitAll }: CreateProductFormProps) {
             disableStepConnectors={true}
             onStepChange={setStep}
             onFinalStepCompleted={handleFinalStepCompleted}
+            onExitFlow={onExitFlow}
             nextButtonProps={{ disabled: !isValid }}
             renderStepIndicator={(props: { step: number; currentStep: number; onStepClick: (step: number) => void }) => {
                 return (

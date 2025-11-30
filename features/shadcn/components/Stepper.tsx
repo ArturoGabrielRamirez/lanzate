@@ -14,6 +14,8 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   initialStep?: number;
   onStepChange?: (step: number) => void;
   onFinalStepCompleted?: () => void;
+  onExitFlow?: () => void;
+  exitFlowTooltip?: string;
   stepCircleContainerClassName?: string;
   stepContainerClassName?: string;
   contentClassName?: string;
@@ -38,6 +40,8 @@ export default function Stepper({
   initialStep = 1,
   onStepChange = () => { },
   onFinalStepCompleted = () => { },
+  onExitFlow,
+  exitFlowTooltip = 'Volver a elegir método',
   stepCircleContainerClassName = '',
   stepContainerClassName = '',
   contentClassName = '',
@@ -71,6 +75,8 @@ export default function Stepper({
     if (currentStep > 1) {
       setDirection(1);
       updateStep(currentStep - 1);
+    } else if (onExitFlow) {
+      onExitFlow();
     }
   };
 
@@ -143,13 +149,13 @@ export default function Stepper({
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button disabled={currentStep === 1} variant="outline" onClick={handleBack} {...backButtonProps}>
+                <Button disabled={currentStep === 1 && !onExitFlow} variant="outline" onClick={handleBack} {...backButtonProps}>
                   <ArrowLeft />
                   {backButtonText}
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                Go back to the previous step
+                {currentStep === 1 && onExitFlow ? exitFlowTooltip : 'Go back to the previous step'}
               </TooltipContent>
             </Tooltip>
 
