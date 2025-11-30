@@ -8,6 +8,7 @@ import { InputField } from "@/features/global/components/form/input-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
+import { slugify } from "@/features/stores/utils"
 
 export function BasicInfoProductPanel() {
     
@@ -29,10 +30,34 @@ export function BasicInfoProductPanel() {
         setStepValid(1, isValid)
     }, [isValid, setStepValid])
 
-    const handleInputChange = useCallback((field: keyof CreateProductFormType['basic_info']) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const val = e.target.value
-        setValues({ basic_info: { ...values.basic_info, [field]: val } })
-        setValue(`basic_info.${field}`, val, { shouldValidate: true, shouldDirty: true })
+    const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, name, slug: slugify(name) } })
+        setValue("basic_info.slug", slugify(name), { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    const handleSlugChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const slug = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, slug } })
+        setValue("basic_info.slug", slug, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    const handleSkuChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const sku = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, sku } })
+        setValue("basic_info.sku", sku, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    const handleBarcodeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const barcode = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, barcode } })
+        setValue("basic_info.barcode", barcode, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const description = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, description } })
+        setValue("basic_info.description", description, { shouldValidate: true, shouldDirty: true })
     }, [setValues, setValue, values])
 
     return (
@@ -44,7 +69,7 @@ export function BasicInfoProductPanel() {
                     placeholder="Ej: Camiseta Negra"
                     startIcon={<Box />}
                     isRequired
-                    onChange={handleInputChange("name")}
+                    onChange={handleNameChange}
                     disabled={disabled}
                     tooltip="El nombre del producto es el nombre que se mostrará en el catálogo de productos."
                 />
@@ -53,7 +78,7 @@ export function BasicInfoProductPanel() {
                     label="Slug (URL)"
                     placeholder="ej-camiseta-negra"
                     startIcon={<Link />}
-                    onChange={handleInputChange("slug")}
+                    onChange={handleSlugChange}
                     disabled={disabled}
                     tooltip="El slug es la URL del producto. Debe ser único y no debe contener espacios."
                 />
@@ -64,7 +89,7 @@ export function BasicInfoProductPanel() {
                     label="SKU"
                     placeholder="CAM-NEG-001"
                     startIcon={<Tag />}
-                    onChange={handleInputChange("sku")}
+                    onChange={handleSkuChange}
                     disabled={disabled}
                     tooltip="El SKU es el código único del producto. Debe ser único y no debe contener espacios."
                 />
@@ -72,7 +97,7 @@ export function BasicInfoProductPanel() {
                     name="basic_info.barcode"
                     label="Código de barras"
                     placeholder="123456789"
-                    onChange={handleInputChange("barcode")}
+                    onChange={handleBarcodeChange}
                     startIcon={<Barcode />}
                     disabled={disabled}
                     tooltip="El código de barras es el código único del producto. Debe ser único y no debe contener espacios."
@@ -82,7 +107,7 @@ export function BasicInfoProductPanel() {
                 name="basic_info.description"
                 label="Descripción"
                 placeholder="Descripción detallada del producto..."
-                onChange={handleInputChange("description")}
+                onChange={handleDescriptionChange}
                 disabled={disabled}
             />
         </div>
