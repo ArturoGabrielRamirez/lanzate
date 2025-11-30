@@ -1625,6 +1625,23 @@
             "name": "Name",
             "price": "Price",
             "stock": "Stock",
+            "descriptions": {
+                "step1": "Choose how you want to upload your product.",
+                "step2": "Complete basic product information.",
+                "step3": "Add images and videos.",
+                "step4": "Define price and available stock.",
+                "step5": "Configure product visibility and status."
+            },
+            "titles": {
+                "creating": "Creating product...",
+                "created": "Product created!"
+            },
+            "steps": {
+                "basic": "Basic Info",
+                "media": "Media",
+                "price_stock": "Price & Stock",
+                "settings": "Settings"
+            },
             "file-rejected": "\"{filename}\" has been rejected",
             "messages": {
                 "success": "Product created successfully!",

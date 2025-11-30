@@ -1499,6 +1499,23 @@
             "name": "Nombre",
             "price": "Precio",
             "stock": "Stock",
+            "descriptions": {
+                "step1": "Elegí cómo querés cargar tu producto.",
+                "step2": "Completá la información básica del producto.",
+                "step3": "Agregá imágenes y videos.",
+                "step4": "Definí el precio y el stock disponible.",
+                "step5": "Configurá la visibilidad y el estado del producto."
+            },
+            "titles": {
+                "creating": "Creando producto...",
+                "created": "¡Producto creado!"
+            },
+            "steps": {
+                "basic": "Información Básica",
+                "media": "Multimedia",
+                "price_stock": "Precio y Stock",
+                "settings": "Configuración"
+            },
             "file-rejected": "\"{filename}\" fue rechazado",
             "messages": {
                 "success": "¡Producto creado exitosamente!",
