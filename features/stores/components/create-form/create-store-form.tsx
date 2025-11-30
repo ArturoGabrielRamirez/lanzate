@@ -1,3 +1,5 @@
+"use client"
+
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Check, Loader } from "lucide-react"
 import { useTranslations } from "next-intl"
