@@ -22,7 +22,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
             return { hasError: true, message: "Store ID is missing", payload: null }
         }
 
-        setStep(4) // Loading step (adjust index based on steps)
+        setStep(6) // Loading step
 
         // Map form data to action args
         // This is a simplified mapping. You will need to refine this based on your exact form structure and action requirements.
@@ -55,7 +55,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
 
         if (hasError) {
             toast.error(message)
-            setStep(3) // Go back to previous step or stay
+            setStep(5) // Go back to previous interactive step (Settings)
             return {
                 message,
                 payload: null,
@@ -63,7 +63,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
             }
         }
 
-        setStep(5) // Success step
+        setStep(7) // Success step
         toast.success(t("messages.success"))
 
         setTimeout(() => {
@@ -82,16 +82,20 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
         1: t("descriptions.step1"),
         2: t("descriptions.step2"),
         3: t("descriptions.step3"),
-        4: t("titles.creating"),
-        5: t("titles.created"),
+        4: t("descriptions.step4"),
+        5: t("descriptions.step5"),
+        6: t("titles.creating"),
+        7: t("titles.created"),
     }
 
     const titleSlugs = {
-        1: t("steps.basic"),
-        2: t("steps.media"),
-        3: t("steps.price_stock"),
-        4: t("titles.creating"),
-        5: t("titles.created"),
+        1: t("steps.source"),
+        2: t("steps.basic"),
+        3: t("steps.media"),
+        4: t("steps.price_stock"),
+        5: t("steps.settings"),
+        6: t("titles.creating"),
+        7: t("titles.created"),
     }
 
     return (

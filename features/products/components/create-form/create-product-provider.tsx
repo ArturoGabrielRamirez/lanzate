@@ -27,6 +27,9 @@ function useCreateProductContext() {
 }
 
 const initialValues: CreateProductFormType = {
+    source_info: {
+        type: "MANUAL",
+    },
     basic_info: {
         name: "",
         description: "",
@@ -54,6 +57,7 @@ function CreateProductProvider({ children, initialValues: propInitialValues }: {
     const [values, setValuesState] = useState<CreateProductFormType>(() => ({
         ...initialValues,
         ...propInitialValues,
+        source_info: { ...initialValues.source_info, ...propInitialValues?.source_info },
         basic_info: { ...initialValues.basic_info, ...propInitialValues?.basic_info },
         media_info: { ...initialValues.media_info, ...propInitialValues?.media_info },
         price_stock_info: { ...initialValues.price_stock_info, ...propInitialValues?.price_stock_info },
@@ -61,7 +65,7 @@ function CreateProductProvider({ children, initialValues: propInitialValues }: {
     }))
     
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
-    const [step, { setStep }] = useStep(5) // Assuming 5 steps: Basic, Media, Price/Stock, Settings, Confirm
+    const [step, { setStep }] = useStep(6) // Steps: Source, Basic, Media, Price/Stock, Settings, Creating, Created (Total 7 actually, but let's check usage)
     const [isOpen, setIsOpen] = useState(false)
 
     const setValues = useCallback((partial: Partial<CreateProductFormType>) => {

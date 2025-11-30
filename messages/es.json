@@ -535,6 +535,20 @@
             }
         },
         "create-product": {
+            "steps": {
+                "source": "Origen",
+                "basic": "Información Básica",
+                "media": "Multimedia",
+                "price_stock": "Precio y Stock",
+                "settings": "Configuración"
+            },
+            "descriptions": {
+                "step1": "Elegí cómo querés cargar tu producto.",
+                "step2": "Completá la información básica del producto.",
+                "step3": "Agregá imágenes y videos.",
+                "step4": "Definí el precio y el stock disponible.",
+                "step5": "Configurá las opciones de publicación."
+            },
             "button": "Crear Producto",
             "title": "Crear nuevo producto",
             "description": "Descripción",

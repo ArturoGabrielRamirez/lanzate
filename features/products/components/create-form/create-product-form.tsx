@@ -11,6 +11,7 @@ import { useCreateProductContext } from "@/features/products/components/create-f
 import { MediaProductPanel } from "@/features/products/components/create-form/media-product-panel"
 import { PriceStockProductPanel } from "@/features/products/components/create-form/price-stock-product-panel"
 import { SettingsProductPanel } from "@/features/products/components/create-form/settings-product-panel"
+import { SourceProductPanel } from "@/features/products/components/create-form/source-product-panel"
 import { StepIndicator } from "@/features/products/components/create-form/step-indicator"
 import {
     CreateProductFormType,
@@ -21,7 +22,9 @@ import {
     productPriceStockSchema,
     ProductPriceStockFormType,
     productSettingsSchema,
-    ProductSettingsFormType
+    ProductSettingsFormType,
+    productSourceSchema,
+    ProductSourceFormType
 } from "@/features/products/schemas/create-product-form-schema"
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
 
@@ -37,10 +40,10 @@ export function CreateProductForm({ onSubmitAll }: CreateProductFormProps) {
 
     const allowedMaxStep = (() => {
         let max = 1
-        for (let s = 1; s <= 3; s++) { // Check steps 1, 2, 3 (Settings is 4)
+        for (let s = 1; s <= 4; s++) { // Check steps 1, 2, 3, 4 (Settings is 5)
             if (isStepValid[s]) max = s + 1; else break
         }
-        return Math.min(max, 5)
+        return Math.min(max, 6)
     })()
 
     const handleFinalStepCompleted = async () => {
@@ -70,6 +73,11 @@ export function CreateProductForm({ onSubmitAll }: CreateProductFormProps) {
             }}
         >
             <Step>
+                <Form<ProductSourceFormType> contentButton="" submitButton={false} resolver={yupResolver(productSourceSchema as never)}>
+                    <SourceProductPanel />
+                </Form>
+            </Step>
+            <Step>
                 <Form<ProductBasicInfoFormType> contentButton="" submitButton={false} resolver={yupResolver(productBasicInfoSchema as never)}>
                     <BasicInfoProductPanel />
                 </Form>
@@ -91,7 +99,7 @@ export function CreateProductForm({ onSubmitAll }: CreateProductFormProps) {
                 </Form>
             </Step>
             
-            {step === 5 && (
+            {step === 6 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Loader className="size-12 animate-spin text-primary" />
@@ -99,7 +107,7 @@ export function CreateProductForm({ onSubmitAll }: CreateProductFormProps) {
                     </div>
                 </Step>
             )}
-            {step === 6 && ( // Assuming success is next step or handled by dialog close
+            {step === 7 && ( // Assuming success is next step or handled by dialog close
                  <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Check className="size-12 text-green-600" />
