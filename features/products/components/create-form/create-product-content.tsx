@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { createUnifiedProductAction } from "@/features/products/actions/create-unified-product.action"
 import { CreateProductForm } from "@/features/products/components/create-form/create-product-form"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
+import { SourcePlaceholderPanel } from "@/features/products/components/create-form/source-placeholder-panel"
 import { SourceProductPanel } from "@/features/products/components/create-form/source-product-panel"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
 import { CreateUnifiedProductArgs } from "@/features/products/types"
@@ -127,7 +128,12 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
                     {selectedSource === "MANUAL" && (
                         <CreateProductForm onSubmitAll={handleCreateProduct} />
                     )}
-                    {/* TODO: Handle AI and FILE sources here */}
+                    {(selectedSource === "AI" || selectedSource === "FILE") && (
+                        <SourcePlaceholderPanel
+                            source={selectedSource}
+                            onBack={() => setSelectedSource(null)}
+                        />
+                    )}
                 </>
             )}
         </DialogContent>
