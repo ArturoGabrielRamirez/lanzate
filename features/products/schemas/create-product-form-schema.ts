@@ -1,12 +1,5 @@
 import * as yup from "yup"
 
-// Source Schema
-export const productSourceSchema = yup.object({
-    source_info: yup.object({
-        type: yup.string().oneOf(["AI", "FILE", "MANUAL"], "Selecciona un método válido").required("El método es obligatorio"),
-    })
-})
-
 // Basic Info Schema
 export const productBasicInfoSchema = yup.object({
     basic_info: yup.object({
@@ -51,7 +44,6 @@ export const createProductSchema = productBasicInfoSchema
     .concat(productSettingsSchema)
 
 // Types
-export type ProductSourceFormType = yup.InferType<typeof productSourceSchema>
 export type ProductBasicInfoFormType = yup.InferType<typeof productBasicInfoSchema>
 export type ProductMediaFormType = yup.InferType<typeof productMediaSchema>
 export type ProductPriceStockFormType = yup.InferType<typeof productPriceStockSchema>
