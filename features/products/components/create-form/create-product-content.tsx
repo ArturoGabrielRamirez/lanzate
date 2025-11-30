@@ -4,22 +4,22 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { createUnifiedProductAction } from "@/features/products/actions/create-unified-product.action"
-import { CreateProductForm } from "@/features/products/components/create-form/create-product-form"
+/* import { createUnifiedProductAction } from "@/features/products/actions/create-unified-product.action"
+ */import { CreateProductForm } from "@/features/products/components/create-form/create-product-form"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { SourcePlaceholderPanel } from "@/features/products/components/create-form/source-placeholder-panel"
 import { SourceProductPanel } from "@/features/products/components/create-form/source-product-panel"
-import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
-import { CreateUnifiedProductArgs } from "@/features/products/types"
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
+/* import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
+ *//* import { CreateUnifiedProductArgs } from "@/features/products/types"
+ */import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
 
-export function CreateProductContent({ userId, storeId }: { userId: number; storeId?: number }) {
+export function CreateProductContent({ /* userId, */ storeId }: { userId: number; storeId?: number }) {
 
     const { step, setStep, closeDialog } = useCreateProductContext()
     const t = useTranslations("store.create-product")
     const [selectedSource, setSelectedSource] = useState<"AI" | "FILE" | "MANUAL" | null>(null)
 
-    const handleCreateProduct = async (data: CreateProductFormType) => {
+    const handleCreateProduct = async (/* data: CreateProductFormType */) => {
 
         if (!storeId) {
             toast.error("Store ID is missing")
@@ -30,7 +30,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
 
         // Map form data to action args
         // This is a simplified mapping. You will need to refine this based on your exact form structure and action requirements.
-        const args: CreateUnifiedProductArgs = {
+        /* const args: CreateUnifiedProductArgs = {
             form: {
                 name: data.basic_info.name,
                 description: data.basic_info.description,
@@ -55,9 +55,9 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
             userId: userId
         }
 
-        const { hasError, message, payload } = await createUnifiedProductAction(args)
+        const { hasError, message, payload } = await createUnifiedProductAction(args) */
 
-        if (hasError) {
+        /* if (hasError) {
             toast.error(message)
             setStep(4) // Go back to previous interactive step (Settings)
             return {
@@ -65,7 +65,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
                 payload: null,
                 hasError: true
             }
-        }
+        } */
 
         setStep(6) // Success step
         toast.success(t("messages.success"))
@@ -79,7 +79,8 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
         return {
             hasError: false,
             message: t("messages.success"),
-            payload: payload,
+            /* payload: payload, */
+            payload: null,
         }
     }
 
