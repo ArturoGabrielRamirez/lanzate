@@ -1647,7 +1647,8 @@
                 "success": "Product created successfully!",
                 "error": "Failed to create product",
                 "loading": "Creating product..."
-            }
+            },
+            "step-locked": "Complete the previous steps first"
         },
         "edit-product": {
             "button": "Edit Product",

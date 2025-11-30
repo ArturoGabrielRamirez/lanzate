@@ -1521,7 +1521,8 @@
                 "success": "¡Producto creado exitosamente!",
                 "error": "Error al crear producto",
                 "loading": "Creando producto..."
-            }
+            },
+            "step-locked": "Completá los pasos anteriores primero"
         },
         "edit-product": {
             "button": "Editar Producto",
