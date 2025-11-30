@@ -95,7 +95,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
     }
 
     return (
-        <DialogContent className="w-full !max-w-full md:!max-w-2xl h-dvh rounded-none md:h-auto md:!rounded-lg max-h-dvh !grid-rows-[auto_1fr] gap-4 z-[100]">
+        <DialogContent className="w-full !max-w-full md:!max-w-2xl h-dvh rounded-none md:h-auto md:!rounded-lg max-h-dvh !grid-rows-[auto_1fr] gap-4">
             <div className="flex flex-col gap-4">
                 <DialogHeader>
                     <DialogTitle>{t("title")} - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>

@@ -5,9 +5,9 @@ export const productBasicInfoSchema = yup.object({
     basic_info: yup.object({
         name: yup.string().required("El nombre es obligatorio").min(3, "Mínimo 3 caracteres"),
         description: yup.string().optional(),
-        slug: yup.string().optional(),
-        sku: yup.string().optional(),
-        barcode: yup.string().optional(),
+        slug: yup.string().transform(v => v === "" ? undefined : v).matches(/^[a-z0-9\-]+$/, "El slug solo puede contener letras minúsculas, números y guiones (sin espacios)").optional(),
+        sku: yup.string().transform(v => v === "" ? undefined : v).matches(/^[a-zA-Z0-9\-\_\.]+$/, "El SKU solo puede contener caracteres alfanuméricos, guiones, guiones bajos y puntos (sin espacios)").optional(),
+        barcode: yup.string().transform(v => v === "" ? undefined : v).matches(/^[a-zA-Z0-9\-\.\$\/\+\%]*$/, "El código de barras no es válido (sin espacios, solo alfanuméricos y - . $ / + %)").optional(),
     })
 })
 
