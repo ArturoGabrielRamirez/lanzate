@@ -62,6 +62,7 @@ function TabsTab({ className, ...props }: TabsPrimitive.Tab.Props) {
         "hover:text-muted-foreground data-active:text-foreground",
         "gap-1.5 px-[calc(--spacing(2.5)-1px)] py-[calc(--spacing(1.5)-1px)]",
         "data-[orientation=vertical]:w-full data-[orientation=vertical]:justify-start",
+        "data-active:bg-primary data-active:rounded-none data-active:text-primary-foreground",
         className,
       )}
       data-slot="tabs-trigger"

@@ -31,14 +31,14 @@ function FloatingDock() {
 
     return (
         <motion.footer className="fixed bottom-0 w-full p-2 pb-2 z-50 xl:hidden container left-1/2 -translate-x-1/2">
-            <motion.div className={cn("bg-primary/25 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-1 px-2 flex items-center gap-1 border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70 justify-between overflow-hidden transition-[padding,border,gap] mx-auto [box-shadow:0_1px_8px_4px_hsl(0_0%_0%_/_0.1)] drop-shadow-2xl drop-shadow-black/50", showSearch && "px-2 py-2 !border-primary/80 border-3 gap-1")} animate={{ paddingInline: showSearch ? "8px" : "12px ", width: showSearch ? "100%" : "fit-content", y: showDock ? 0 : 100 }}>
+            <motion.div className={cn("bg-background/60 dark:bg-background/70 backdrop-blur-[4px] rounded-full py-1 px-2 flex items-center gap-1 border-t dark:border-t-foreground/20 border-b dark:border-b-background/90 border-b-primary/40 border-t-white/70 justify-between overflow-hidden transition-[padding,border,gap] mx-auto [box-shadow:0_1px_8px_4px_hsl(0_0%_0%_/_0.1)] drop-shadow-2xl drop-shadow-black/50", showSearch && "px-2 py-2 !border-primary/80 border-3 gap-1")} animate={{ paddingInline: showSearch ? "8px" : "12px ", width: showSearch ? "100%" : "fit-content", y: showDock ? 0 : 100 }}>
                 <AnimatePresence mode="popLayout">
                     {showSearch && (
                         <motion.div key="close-search" exit={{ opacity: 0, y: 40, transition: { delay: 0.1 } }} initial={{ opacity: 0, y: 40, rotate: 360 }} animate={{ opacity: 1, y: 0, rotate: 0, transition: { delay: 0, duration: 0.5 } }} className="flex items-center">
                             <IconButton
                                 size="lg"
                                 icon={X}
-                                className={cn(pathname.includes(`/search`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                className={cn(pathname.includes(`/search`) ? "text-primary" : "text-muted-foreground")}
                                 active={pathname.includes(`/search`)}
                                 onClick={handleSearchClose}
                                 key="close-search"
@@ -56,7 +56,7 @@ function FloatingDock() {
                                 <IconButton
                                     size="lg"
                                     icon={Home}
-                                    className={cn(pathname.includes(`/dashboard`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    className={cn(pathname.includes(`/dashboard`) ? "text-primary" : "text-muted-foreground")}
                                     active={pathname.includes(`/dashboard`)}
                                 />
                             </Link>
@@ -68,7 +68,7 @@ function FloatingDock() {
                                 <IconButton
                                     size="lg"
                                     icon={Store}
-                                    className={cn(pathname.includes(`/stores`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    className={cn(pathname.includes(`/stores`) ? "text-primary" : "text-muted-foreground")}
                                     active={pathname.includes(`/stores`)}
                                 />
                             </Link>
@@ -82,7 +82,7 @@ function FloatingDock() {
                                     icon={() => (
                                         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-2" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}><path d="M21 15h-2.5a1.503 1.503 0 0 0-1.5 1.5a1.503 1.503 0 0 0 1.5 1.5h1a1.503 1.503 0 0 1 1.5 1.5a1.503 1.503 0 0 1-1.5 1.5H17m2 0v1m0-8v1m-6 6H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2m12 3.12V9a2 2 0 0 0-2-2h-2"></path><path d="M16 10V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v6m8 0H8m8 0h1m-9 0H7m1 4v.01M8 17v.01m4-3.02V14m0 3v.01"></path></g></svg>
                                     )}
-                                    className={cn(pathname.includes(`/sale`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    className={cn(pathname.includes(`/sale`) ? "text-primary" : "text-muted-foreground")}
                                     active={pathname.includes(`/sale`)}
                                 />
                             </Link>
@@ -93,7 +93,7 @@ function FloatingDock() {
                             <IconButton
                                 size="lg"
                                 icon={Camera}
-                                className={cn(pathname.includes(`/camera`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                className={cn(pathname.includes(`/camera`) ? "text-primary" : "text-muted-foreground")}
                                 active={pathname.includes(`/camera`)}
                                 key="camera"
                             />
@@ -106,7 +106,7 @@ function FloatingDock() {
                                 <IconButton
                                     size="lg"
                                     icon={ArrowLeft}
-                                    className={cn(pathname.includes(`/stores/${slug}`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    className={cn(pathname.includes(`/stores/${slug}`) ? "text-primary" : "text-muted-foreground")}
                                     active={pathname.includes(`/stores/${slug}`)}
                                     key="back"
                                 />
@@ -119,7 +119,7 @@ function FloatingDock() {
                                 <IconButton
                                     size="lg"
                                     icon={Store}
-                                    className={cn(pathname.includes(`/stores/${slug}`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    className={cn(pathname.includes(`/stores/${slug}`) ? "text-primary" : "text-muted-foreground")}
                                     active={pathname.includes(`/stores/${slug}`)}
                                     key="account"
                                 />
@@ -133,7 +133,7 @@ function FloatingDock() {
                                 <IconButton
                                     size="lg"
                                     icon={Box}
-                                    className={cn(pathname.includes(`/products`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    className={cn(pathname.includes(`/products`) ? "text-primary" : "text-muted-foreground")}
                                     active={pathname.includes(`/products`)}
                                     key="products"
                                 />
@@ -148,7 +148,7 @@ function FloatingDock() {
                                     icon={() => (
                                         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-2" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}><path d="M21 15h-2.5a1.503 1.503 0 0 0-1.5 1.5a1.503 1.503 0 0 0 1.5 1.5h1a1.503 1.503 0 0 1 1.5 1.5a1.503 1.503 0 0 1-1.5 1.5H17m2 0v1m0-8v1m-6 6H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2m12 3.12V9a2 2 0 0 0-2-2h-2"></path><path d="M16 10V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v6m8 0H8m8 0h1m-9 0H7m1 4v.01M8 17v.01m4-3.02V14m0 3v.01"></path></g></svg>
                                     )}
-                                    className={cn(pathname.includes(`/sale`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    className={cn(pathname.includes(`/sale`) ? "text-primary" : "text-muted-foreground")}
                                     active={pathname.includes(`/sale`)}
                                 />
                             </Link>
@@ -160,7 +160,7 @@ function FloatingDock() {
                                 <IconButton
                                     size="lg"
                                     icon={ShoppingCart}
-                                    className={cn(pathname.includes(`/orders`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                    className={cn(pathname.includes(`/orders`) ? "text-primary" : "text-muted-foreground")}
                                     active={pathname.includes(`/orders`)}
                                     key="orders"
                                 />
@@ -172,7 +172,7 @@ function FloatingDock() {
                             <IconButton
                                 size="lg"
                                 icon={Camera}
-                                className={cn(pathname.includes(`/camera`) ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                                className={cn(pathname.includes(`/camera`) ? "text-primary" : "text-muted-foreground")}
                                 active={pathname.includes(`/camera`)}
                                 key="camera"
                             />
@@ -183,7 +183,7 @@ function FloatingDock() {
                     <IconButton
                         size="lg"
                         icon={Search}
-                        className={cn(showSearch ? "text-primary" : "dark:text-foreground/40 text-white/80")}
+                        className={cn(showSearch ? "text-primary" : "text-muted-foreground")}
                         active={showSearch}
                         onClick={handleSearchClick}
                         key="search"

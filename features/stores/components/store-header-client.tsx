@@ -23,7 +23,7 @@ function StoreHeaderClient({ store }: StoreHeaderClientProps) {
         <PageHeader
             title={store.name}
             breadcrumbs={breadcrumbs}
-            media={<StoreCardLogo logo={store.logo || ""} name={store.name} />}
+            media={<StoreCardLogo logo={store.logo || ""} name={store.name} className="!size-9"/>}
         />
     )
 }

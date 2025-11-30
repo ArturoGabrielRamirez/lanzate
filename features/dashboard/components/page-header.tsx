@@ -10,15 +10,19 @@ import { Link } from "@/i18n/naviation"
 function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderProps) {
 
     return (
-        <header className="flex flex-col gap-2">
-            <div className="flex items-center gap-4">
-                {media && media}
-                <div className="flex flex-col gap-2">
-                    <h2 className="text-2xl lg:text-4xl font-bold flex items-center gap-2">
+        <header className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+                {media && (
+                    <div className="relative bottom-1">
+                        {media}
+                    </div>
+                )}
+                <div>
+                    <h2 className="text-2xl lg:text-4xl font-bold flex items-center gap-2 leading-none">
                         {title}
                     </h2>
                     {subtitle && (
-                        <p className="text-base lg:text-lg text-muted-foreground">
+                        <p className="text-base lg:text-lg text-muted-foreground leading-tight">
                             {subtitle}
                         </p>
                     )}
