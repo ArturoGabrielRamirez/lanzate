@@ -18,7 +18,7 @@ function StoreInformationForm({ slug, userId }: StoreInformationFormProps) {
     return (
         <CreateStoreProvider>
             <Tabs defaultValue="basic-info">
-                <TabsList variant="underline" className="overflow-x-auto max-w-full overflow-y-hidden justify-start border-b border-muted-foreground/20 w-full">
+                <TabsList variant="underline" className="overflow-x-auto max-w-full overflow-y-hidden justify-start border-b border-muted-foreground/20 w-full !pt-0">
                     <TabsTab value="basic-info">Información Básica</TabsTab>
                     <TabsTab value="contact">Contacto</TabsTab>
                     <TabsTab value="payment" className="flex-1 shrink-0">Métodos de Pago</TabsTab>
