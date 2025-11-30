@@ -1,11 +1,13 @@
 "use client"
 
 import { useTranslations } from "next-intl"
+import { useState } from "react"
 import { toast } from "sonner"
 
 import { createUnifiedProductAction } from "@/features/products/actions/create-unified-product.action"
 import { CreateProductForm } from "@/features/products/components/create-form/create-product-form"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
+import { SourceProductPanel } from "@/features/products/components/create-form/source-product-panel"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
 import { CreateUnifiedProductArgs } from "@/features/products/types"
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
@@ -14,6 +16,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
 
     const { step, setStep, closeDialog } = useCreateProductContext()
     const t = useTranslations("store.create-product")
+    const [selectedSource, setSelectedSource] = useState<"AI" | "FILE" | "MANUAL" | null>(null)
 
     const handleCreateProduct = async (data: CreateProductFormType) => {
 
@@ -22,7 +25,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
             return { hasError: true, message: "Store ID is missing", payload: null }
         }
 
-        setStep(6) // Loading step
+        setStep(5) // Loading step (was 6)
 
         // Map form data to action args
         // This is a simplified mapping. You will need to refine this based on your exact form structure and action requirements.
@@ -55,7 +58,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
 
         if (hasError) {
             toast.error(message)
-            setStep(5) // Go back to previous interactive step (Settings)
+            setStep(4) // Go back to previous interactive step (Settings)
             return {
                 message,
                 payload: null,
@@ -63,12 +66,13 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
             }
         }
 
-        setStep(7) // Success step
+        setStep(6) // Success step
         toast.success(t("messages.success"))
 
         setTimeout(() => {
             setStep(1)
             closeDialog()
+            setSelectedSource(null)
         }, 2000)
 
         return {
@@ -79,36 +83,53 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
     }
 
     const descriptions = {
-        1: t("descriptions.step1"),
-        2: t("descriptions.step2"),
-        3: t("descriptions.step3"),
-        4: t("descriptions.step4"),
-        5: t("descriptions.step5"),
-        6: t("titles.creating"),
-        7: t("titles.created"),
+        1: t("descriptions.step2"),
+        2: t("descriptions.step3"),
+        3: t("descriptions.step4"),
+        4: t("descriptions.step5"),
+        5: t("titles.creating"),
+        6: t("titles.created"),
     }
 
     const titleSlugs = {
-        1: t("steps.source"),
-        2: t("steps.basic"),
-        3: t("steps.media"),
-        4: t("steps.price_stock"),
-        5: t("steps.settings"),
-        6: t("titles.creating"),
-        7: t("titles.created"),
+        1: t("steps.basic"),
+        2: t("steps.media"),
+        3: t("steps.price_stock"),
+        4: t("steps.settings"),
+        5: t("titles.creating"),
+        6: t("titles.created"),
     }
 
     return (
         <DialogContent className="w-full !max-w-full md:!max-w-2xl h-dvh rounded-none md:h-auto md:!rounded-lg max-h-dvh !grid-rows-[auto_1fr] gap-4">
             <div className="flex flex-col gap-4">
                 <DialogHeader>
-                    <DialogTitle>{t("title")} - {titleSlugs[step as keyof typeof titleSlugs]}</DialogTitle>
+                    <DialogTitle>
+                        {selectedSource ? `${t("title")} - ${titleSlugs[step as keyof typeof titleSlugs]}` : t("title")}
+                    </DialogTitle>
                 </DialogHeader>
                 <DialogDescription asChild>
-                    <p>{descriptions[step as keyof typeof descriptions]}</p>
+                    <p>
+                        {selectedSource
+                            ? descriptions[step as keyof typeof descriptions]
+                            : t("descriptions.step1")}
+                    </p>
                 </DialogDescription>
             </div>
-            <CreateProductForm onSubmitAll={handleCreateProduct} />
+
+            {!selectedSource ? (
+                <SourceProductPanel
+                    selectedSource={selectedSource}
+                    onSelect={setSelectedSource}
+                />
+            ) : (
+                <>
+                    {selectedSource === "MANUAL" && (
+                        <CreateProductForm onSubmitAll={handleCreateProduct} />
+                    )}
+                    {/* TODO: Handle AI and FILE sources here */}
+                </>
+            )}
         </DialogContent>
     )
 }

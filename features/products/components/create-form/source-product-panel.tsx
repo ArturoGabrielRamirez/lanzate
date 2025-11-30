@@ -2,21 +2,21 @@
 
 import { BrainCircuit, FileSpreadsheet, PenTool } from "lucide-react"
 import { Selection } from "react-aria-components"
-import { useFormContext } from "react-hook-form"
 
-import { ProductSourceFormType } from "@/features/products/schemas/create-product-form-schema"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 
-export function SourceProductPanel() {
-    const { setValue, watch } = useFormContext<ProductSourceFormType>()
+interface SourceProductPanelProps {
+    onSelect: (source: "AI" | "FILE" | "MANUAL") => void
+    selectedSource: "AI" | "FILE" | "MANUAL" | null
+}
 
-    const selectedType = watch("source_info.type")
+export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPanelProps) {
 
     const handleSelectionChange = (keys: Selection) => {
         // ChoiceBox returns a Set or array of keys. Since selectionMode is single, we take the first one.
         const selected = Array.from(keys)[0] as "AI" | "FILE" | "MANUAL"
         if (selected) {
-            setValue("source_info.type", selected, { shouldValidate: true })
+            onSelect(selected)
         }
     }
 
@@ -26,7 +26,7 @@ export function SourceProductPanel() {
                 columns={1}
                 gap={4}
                 selectionMode="single"
-                selectedKeys={selectedType ? [selectedType] : []}
+                selectedKeys={selectedSource ? [selectedSource] : []}
                 onSelectionChange={handleSelectionChange}
                 className="grid-cols-1 md:grid-cols-3"
             >

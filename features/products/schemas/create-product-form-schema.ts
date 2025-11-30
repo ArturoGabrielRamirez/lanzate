@@ -45,8 +45,7 @@ export const productSettingsSchema = yup.object({
 })
 
 // Combined Schema
-export const createProductSchema = productSourceSchema
-    .concat(productBasicInfoSchema)
+export const createProductSchema = productBasicInfoSchema
     .concat(productMediaSchema)
     .concat(productPriceStockSchema)
     .concat(productSettingsSchema)
