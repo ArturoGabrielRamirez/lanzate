@@ -38,7 +38,7 @@ export const productBasicInfoSchema = yup.object({
             .optional(),
         description: yup.string().optional(),
         brand: yup.string().optional(),
-        tags: yup.array().of(yup.string()).optional(),
+        tags: yup.array().of(yup.string().min(3, "Mínimo 3 caracteres")).required("Las etiquetas son obligatorias"),
         category_ids: yup.array().of(yup.number()).min(1, "Debes seleccionar al menos una categoría").optional(), // Optional in schema to avoid blocking drafts, but UI might require it
     })
 })

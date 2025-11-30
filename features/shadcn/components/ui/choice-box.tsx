@@ -224,6 +224,7 @@ function ChoiceBoxDescription({ className, ref, ...props }: ChoiceBoxDescription
         "group-has-data-[slot=avatar]:col-start-2",
         "text-base/6 text-muted-foreground sm:text-sm/6",
         "group-disabled:opacity-50",
+        "!leading-tight col-end-3",
         className,
       )}
       {...props}
