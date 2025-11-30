@@ -1,17 +1,18 @@
 "use client"
 
 import { BrainCircuit, FileSpreadsheet, PenTool } from "lucide-react"
+import { Selection } from "react-aria-components"
 import { useFormContext } from "react-hook-form"
 
-import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { ProductSourceFormType } from "@/features/products/schemas/create-product-form-schema"
+import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 
 export function SourceProductPanel() {
     const { setValue, watch } = useFormContext<ProductSourceFormType>()
 
     const selectedType = watch("source_info.type")
 
-    const handleSelectionChange = (keys: any) => {
+    const handleSelectionChange = (keys: Selection) => {
         // ChoiceBox returns a Set or array of keys. Since selectionMode is single, we take the first one.
         const selected = Array.from(keys)[0] as "AI" | "FILE" | "MANUAL"
         if (selected) {
