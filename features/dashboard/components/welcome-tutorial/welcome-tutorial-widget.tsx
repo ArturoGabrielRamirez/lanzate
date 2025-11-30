@@ -12,7 +12,7 @@ function WelcomeTutorialWidget({ onRetakeTutorial }: { onRetakeTutorial: () => v
     }
 
     return (
-        <Item variant="outline" size="sm" className="bg-card/50 hover:bg-card/75 transition-all group rounded-xl">
+        <Item variant="outline" size="sm" className="bg-card/50 hover:bg-card/75 transition-all group rounded-md">
             <ItemMedia className="opacity-50 group-hover:opacity-100 transition-all">
                 <BadgeCheckIcon className="size-5" />
             </ItemMedia>

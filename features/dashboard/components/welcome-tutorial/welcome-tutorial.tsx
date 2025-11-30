@@ -62,7 +62,7 @@ function WelcomeTutorial({ userId }: { userId: number }) {
         <SectionContainer title={t("section-title")}>
             <WelcomeTutorialWidget onRetakeTutorial={handleRetakeTutorial} />
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="w-full !max-w-full h-full md:!max-w-lg md:h-auto rounded-none md:!rounded-lg">
+                <DialogContent className="w-full !max-w-full h-full md:!max-w-lg md:h-auto rounded-none md:!rounded-md">
                     <DialogHeader>
                         <DialogTitle>{t("dialog-title")}</DialogTitle>
                     </DialogHeader>
