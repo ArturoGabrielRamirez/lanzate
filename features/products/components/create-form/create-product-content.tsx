@@ -19,7 +19,7 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
 
         if (!storeId) {
             toast.error("Store ID is missing")
-            return { success: false, error: true, message: "Store ID is missing", data: null }
+            return { hasError: true, message: "Store ID is missing", payload: null }
         }
 
         setStep(4) // Loading step (adjust index based on steps)
@@ -57,10 +57,9 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
             toast.error(message)
             setStep(3) // Go back to previous step or stay
             return {
-                success: false,
-                error: true,
-                message: message,
-                data: null
+                message,
+                payload: null,
+                hasError: true
             }
         }
 
@@ -73,10 +72,9 @@ export function CreateProductContent({ userId, storeId }: { userId: number; stor
         }, 2000)
 
         return {
-            success: true,
-            error: false,
+            hasError: false,
             message: t("messages.success"),
-            data: payload
+            payload: payload,
         }
     }
 

@@ -13,7 +13,7 @@ export function CreateProductDialog({ userId, storeId }: { userId: number; store
 
     const { isOpen, openDialog, closeDialog } = useCreateProductContext()
 
-    const t = useTranslations("store.create-product") // Using existing namespace or generic
+    const t = useTranslations("store.create-product")
 
     const handleToggleDialog = useCallback((open: boolean) => {
         if (open) return openDialog()

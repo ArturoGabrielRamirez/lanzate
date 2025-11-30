@@ -1,6 +1,6 @@
 "use client"
 
-import { Box } from "lucide-react"
+import { Barcode, Box, Link, Tag } from "lucide-react"
 import { useCallback, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
@@ -46,13 +46,16 @@ export function BasicInfoProductPanel() {
                     isRequired
                     onChange={handleInputChange("name")}
                     disabled={disabled}
+                    tooltip="El nombre del producto es el nombre que se mostrará en el catálogo de productos."
                 />
                 <InputField
                     name="basic_info.slug"
                     label="Slug (URL)"
                     placeholder="ej-camiseta-negra"
+                    startIcon={<Link />}
                     onChange={handleInputChange("slug")}
                     disabled={disabled}
+                    tooltip="El slug es la URL del producto. Debe ser único y no debe contener espacios."
                 />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -60,15 +63,19 @@ export function BasicInfoProductPanel() {
                     name="basic_info.sku"
                     label="SKU"
                     placeholder="CAM-NEG-001"
+                    startIcon={<Tag />}
                     onChange={handleInputChange("sku")}
                     disabled={disabled}
+                    tooltip="El SKU es el código único del producto. Debe ser único y no debe contener espacios."
                 />
                 <InputField
                     name="basic_info.barcode"
                     label="Código de barras"
                     placeholder="123456789"
                     onChange={handleInputChange("barcode")}
+                    startIcon={<Barcode />}
                     disabled={disabled}
+                    tooltip="El código de barras es el código único del producto. Debe ser único y no debe contener espacios."
                 />
             </div>
             <TextareaField

@@ -5,6 +5,7 @@ import { Check, Loader } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Form } from "@/features/global/components/form/form"
+import { ServerResponse } from "@/features/global/types"
 import { BasicInfoProductPanel } from "@/features/products/components/create-form/basic-info-product-panel"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { MediaProductPanel } from "@/features/products/components/create-form/media-product-panel"
@@ -25,7 +26,7 @@ import {
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
 
 interface CreateProductFormProps {
-    onSubmitAll: (data: CreateProductFormType) => Promise<void>
+    onSubmitAll: (data: CreateProductFormType) => Promise<ServerResponse<unknown>>
 }
 
 export function CreateProductForm({ onSubmitAll }: CreateProductFormProps) {
