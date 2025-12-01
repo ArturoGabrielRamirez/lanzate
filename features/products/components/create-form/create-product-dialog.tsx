@@ -22,6 +22,9 @@ export function CreateProductDialog({ userId, storeId }: { userId: number; store
 
     return (
         <Dialog open={isOpen} onOpenChange={handleToggleDialog} modal={false}>
+            {isOpen && (
+                <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"/>
+            )}
             <DialogTrigger asChild>
                 <Button onClick={openDialog}>
                     <Plus />
