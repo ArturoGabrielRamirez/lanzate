@@ -66,9 +66,9 @@ function TagsField({
             name={name}
             control={control}
             render={({ field, fieldState }) => {
-                console.log("🚀 ~ TagsField ~ fieldState:", fieldState)
+
                 const value: string[] = Array.isArray(field.value) ? field.value : []
-                
+
                 const handleSelect = (selectedValue: string) => {
                     let newValue = [...value]
                     if (newValue.includes(selectedValue)) {
@@ -101,21 +101,21 @@ function TagsField({
                     }
                 }
 
-                
+
 
                 return (
                     <Field data-invalid={fieldState.invalid}>
                         <FieldLabel htmlFor={field.name}>
                             {label}{isRequired && <span className="text-red-500">*</span>}
                         </FieldLabel>
-                        
-                        <Tags 
+
+                        <Tags
                             value={inputValue}
-                            open={isOpen} 
+                            open={isOpen}
                             onOpenChange={setIsOpen}
                         >
                             <PopoverTrigger asChild>
-                                <div 
+                                <div
                                     className="w-full"
                                     onClick={() => !disabled && setIsOpen(true)}
                                 >
@@ -130,8 +130,8 @@ function TagsField({
                                                 <span className="text-sm text-muted-foreground">{startText}</span>
                                             </InputGroupAddon>
                                         )}
-                                        
-                                        <div 
+
+                                        <div
                                             data-slot="input-group-control"
                                             className={cn(
                                                 "flex-1 flex flex-wrap items-center gap-1.5 p-2 min-w-0 bg-transparent border-0 outline-none",
@@ -178,10 +178,10 @@ function TagsField({
                                     </InputGroup>
                                 </div>
                             </PopoverTrigger>
-                            
+
                             <TagsContent className="w-full min-w-[200px]">
-                                <TagsInput 
-                                    placeholder="Buscar o crear etiqueta..." 
+                                <TagsInput
+                                    placeholder="Buscar o crear etiqueta..."
                                     value={inputValue}
                                     onValueChange={setInputValue}
                                     onKeyDown={handleKeyDown}
@@ -190,7 +190,7 @@ function TagsField({
                                     <TagsEmpty>
                                         {inputValue ? "Presiona Enter para crear." : "No hay etiquetas encontradas."}
                                     </TagsEmpty>
-                                    
+
                                     {options.length > 0 && (
                                         <TagsGroup heading="Sugerencias">
                                             {options.map((option) => (
@@ -211,7 +211,7 @@ function TagsField({
                                             ))}
                                         </TagsGroup>
                                     )}
-                                    
+
                                     {/* If we want to show the "Create" option explicitly when typing */}
                                     {inputValue && !options.find(o => o.value === inputValue) && !value.includes(inputValue) && (
                                         <TagsGroup heading="Crear">
@@ -221,7 +221,7 @@ function TagsField({
                                                     handleSelect(inputValue)
                                                 }}
                                             >
-                                               Crear &quot;{inputValue}&quot;
+                                                Crear &quot;{inputValue}&quot;
                                             </TagsItem>
                                         </TagsGroup>
                                     )}
