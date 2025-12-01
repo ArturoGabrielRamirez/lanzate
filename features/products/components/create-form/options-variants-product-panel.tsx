@@ -8,16 +8,18 @@ import { TagsValue } from "@/components/ui/shadcn-io/tags"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
 import { Button } from "@/features/shadcn/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/features/shadcn/components/ui/table"
 import { cn } from "@/lib/utils"
+
+import type { Selection } from "react-aria-components"
 
 // Simple ID generator
 const generateId = () => Math.random().toString(36).substring(2, 9)
 
 export function OptionsVariantsProductPanel() {
-    const { watch, setValue } = useFormContext<CreateProductFormType>()
+    const { watch, setValue, formState: { disabled } } = useFormContext<CreateProductFormType>()
     const { setStepValid } = useCreateProductContext()
 
     const hasVariants = watch("options_variants_info.has_variants")
@@ -74,7 +76,10 @@ export function OptionsVariantsProductPanel() {
         })
     }
 
-    const handleTypeSelect = (isVariant: boolean) => {
+    const handleTypeSelect = (selection: Selection) => {
+        if (selection === "all") return
+        const selected = Array.from(selection)[0]
+        const isVariant = selected === "variants"
         setValue("options_variants_info.has_variants", isVariant)
     }
 
@@ -135,33 +140,26 @@ export function OptionsVariantsProductPanel() {
 
             <div className="space-y-2">
                 <h3 className="text-sm font-medium">¿Este producto tiene variantes?</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Card 
-                        className={cn("cursor-pointer transition-all hover:border-primary/50", !hasVariants && "border-primary bg-primary/5 ring-1 ring-primary")}
-                        onClick={() => handleTypeSelect(false)}
-                    >
-                        <CardHeader>
-                            <div className="flex justify-between items-start">
-                                <CardTitle className="text-base">Producto Simple</CardTitle>
-                                <Box className="h-5 w-5 text-muted-foreground" />
-                            </div>
-                            <CardDescription>Un solo SKU, sin variaciones.</CardDescription>
-                        </CardHeader>
-                    </Card>
-
-                    <Card 
-                        className={cn("cursor-pointer transition-all hover:border-primary/50", hasVariants && "border-primary bg-primary/5 ring-1 ring-primary")}
-                        onClick={() => handleTypeSelect(true)}
-                    >
-                        <CardHeader>
-                            <div className="flex justify-between items-start">
-                                <CardTitle className="text-base">Con Variantes</CardTitle>
-                                <Layers className="h-5 w-5 text-muted-foreground" />
-                            </div>
-                            <CardDescription>Múltiples opciones (color, talle, etc.)</CardDescription>
-                        </CardHeader>
-                    </Card>
-                </div>
+                <ChoiceBox
+                    columns={2}
+                    gap={4}
+                    selectionMode="single"
+                    selectedKeys={[hasVariants ? "variants" : "simple"]}
+                    onSelectionChange={handleTypeSelect}
+                    className={cn(disabled && "pointer-events-none")}
+                    defaultSelectedKeys={hasVariants ? ["variants"] : ["simple"]}
+                >
+                    <ChoiceBoxItem id="simple" textValue="Producto Simple">
+                        <Box />
+                        <ChoiceBoxLabel>Producto Simple</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>Un solo SKU, sin variaciones.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                    <ChoiceBoxItem id="variants" textValue="Con Variantes">
+                        <Layers />
+                        <ChoiceBoxLabel>Con Variantes</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>Múltiples opciones (color, talle, etc.)</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                </ChoiceBox>
             </div>
 
             {hasVariants && (
