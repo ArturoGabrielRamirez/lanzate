@@ -1,6 +1,6 @@
 "use client"
 
-import { Box, CloudDownload, Wrench, ShoppingBag, Link, Tag, Layers } from "lucide-react"
+import { Box, CloudDownload, Wrench, ShoppingBag, Link, Tag } from "lucide-react"
 import { useCallback, useEffect } from "react"
 import { Selection } from "react-aria-components"
 import { useFormContext } from "react-hook-form"
@@ -8,12 +8,14 @@ import { useFormContext } from "react-hook-form"
 import { InputField } from "@/features/global/components/form/input-field"
 import { TagsField } from "@/features/global/components/form/tags-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
+import { CategorySelector } from "@/features/products/components/create-form/category-selector"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType, ProductType } from "@/features/products/schemas/create-product-form-schema"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { slugify } from "@/features/stores/utils"
+
 
 export function BasicInfoProductPanel() {
 
@@ -69,11 +71,6 @@ export function BasicInfoProductPanel() {
         setValue("basic_info.tags", tags, { shouldValidate: true, shouldDirty: true })
     }, [setValues, setValue, values])
 
-    const handleCategoriesChange = useCallback((categories: string[]) => {
-        setValues({ ...values, basic_info: { ...values.basic_info, categories } })
-        setValue("basic_info.categories", categories, { shouldValidate: true, shouldDirty: true })
-    }, [setValues, setValue, values])
-
     const handleSlugChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const slug = e.target.value
         setValues({ ...values, basic_info: { ...values.basic_info, slug } })
@@ -95,15 +92,7 @@ export function BasicInfoProductPanel() {
                     tooltip="El nombre del producto es el nombre que se mostrará en la tienda."
                     startIcon={<Box />}
                 />
-                <TagsField
-                    name="basic_info.categories"
-                    label="Categorías"
-                    placeholder="Seleccionar categorías..."
-                    onChange={handleCategoriesChange}
-                    disabled={disabled}
-                    tooltip="Las categorías ayudan a organizar tus productos."
-                    startIcon={<Layers />}
-                />
+                <CategorySelector />
             </div>
 
             <TextareaField
