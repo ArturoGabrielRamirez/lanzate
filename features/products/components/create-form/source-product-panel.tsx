@@ -23,7 +23,7 @@ export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPa
     return (
         <div className="flex flex-col gap-4">
             <ChoiceBox
-                columns={1}
+                columns={3}
                 gap={4}
                 selectionMode="single"
                 selectedKeys={selectedSource ? [selectedSource] : []}
@@ -31,7 +31,7 @@ export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPa
                 className="grid-cols-1 md:grid-cols-3"
             >
                 <ChoiceBoxItem id="AI" textValue="IA">
-                    <BrainCircuit className="size-8 mb-2 text-primary" />
+                    <BrainCircuit />
                     <ChoiceBoxLabel>IA</ChoiceBoxLabel>
                     <ChoiceBoxDescription>
                         Genera tu producto automáticamente con inteligencia artificial.
@@ -39,7 +39,7 @@ export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPa
                 </ChoiceBoxItem>
 
                 <ChoiceBoxItem id="FILE" textValue="Archivo">
-                    <FileSpreadsheet className="size-8 mb-2 text-primary" />
+                    <FileSpreadsheet />
                     <ChoiceBoxLabel>Archivo</ChoiceBoxLabel>
                     <ChoiceBoxDescription>
                         Importa desde un archivo CSV, Excel o PDF.
@@ -47,7 +47,7 @@ export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPa
                 </ChoiceBoxItem>
 
                 <ChoiceBoxItem id="MANUAL" textValue="Manual">
-                    <PenTool className="size-8 mb-2 text-primary" />
+                    <PenTool />
                     <ChoiceBoxLabel>Manual</ChoiceBoxLabel>
                     <ChoiceBoxDescription>
                         Ingresa toda la información paso a paso.
