@@ -161,10 +161,19 @@ export function OptionsVariantsProductPanel() {
 
         newOptions[index].values = newValuesObj
         setValue("options_variants_info.options", newOptions)
-        // Don't regenerate variants immediately while editing, do it on save
-        // Or do we? If we regenerate immediately, variants table updates live. 
-        // Let's update live for better UX, but "Save" button just collapses the card.
-        setValue("options_variants_info.variants", generateVariants(newOptions))
+        
+        // Only regenerate variants if we are NOT in editing mode (e.g. removing tags from view mode)
+        // If we are editing, we wait for the "Save" button
+        const optionId = newOptions[index].id
+        if (optionId && !editingOptions[optionId]) {
+            setValue("options_variants_info.variants", generateVariants(newOptions))
+        }
+    }
+
+    const removeVariant = (index: number) => {
+        const newVariants = [...variants]
+        newVariants.splice(index, 1)
+        setValue("options_variants_info.variants", newVariants)
     }
 
     const updateVariant = (index: number, field: string, value: string | number) => {
@@ -212,7 +221,7 @@ export function OptionsVariantsProductPanel() {
                     <div className="flex items-end justify-between">
                         <p className="text-sm font-medium">Opciones del Producto</p>
                         {options.length > 0 && (
-                            <Button variant="link" onClick={addOption} className="pb-0 relative top-1.5 !pr-0">
+                            <Button variant="outline" onClick={addOption} size="sm">
                                 <Plus /> Agregar opción
                             </Button>
                         )}
@@ -221,7 +230,7 @@ export function OptionsVariantsProductPanel() {
                     {options.length === 0 && (
                         <div className="border-2 border-dashed rounded-lg p-8 text-center">
                             <p className="text-muted-foreground">No hay opciones configuradas</p>
-                            <Button variant="link" onClick={addOption} className="text-primary">+ Agregar tu primera opción</Button>
+                            <Button variant="outline" onClick={addOption} className="text-primary">+ Agregar tu primera opción</Button>
                         </div>
                     )}
 
@@ -327,6 +336,7 @@ export function OptionsVariantsProductPanel() {
                                                     <TableHead>SKU</TableHead>
                                                     <TableHead>Precio</TableHead>
                                                     <TableHead>Stock</TableHead>
+                                                    <TableHead className="w-[50px]"></TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody className="overflow-x-auto">
@@ -360,6 +370,16 @@ export function OptionsVariantsProductPanel() {
                                                                 className="h-8 w-24"
                                                                 min={0}
                                                             />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                onClick={() => removeVariant(index)}
+                                                                className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                                                            >
+                                                                <Trash2 className="h-4 w-4" />
+                                                            </Button>
                                                         </TableCell>
                                                     </TableRow>
                                                 ))}
