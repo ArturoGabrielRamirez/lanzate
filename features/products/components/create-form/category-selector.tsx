@@ -75,9 +75,9 @@ export function CategorySelector({ storeId, options }: { storeId?: number, optio
             toast.success(result.message)
             
             // Add the new category to the selection
-            const currentCategories = values.basic_info?.categories || []
+            const currentCategories = (values.basic_info?.categories || []) as string[]
             // Check if payload returned and has name, otherwise use input
-            const createdName = result.payload?.name || newCategoryName
+            const createdName = (result.payload?.name || newCategoryName) as string
             
             handleCategoriesChange([...currentCategories, createdName])
             
@@ -97,7 +97,9 @@ export function CategorySelector({ storeId, options }: { storeId?: number, optio
             placeholder="Seleccionar categorías..."
             onChange={handleCategoriesChange}
             onCreate={handleCreateCategory}
-            disabled={disabled || isPending}
+            disabled={disabled}
+            isLoading={isPending}
+            loadingMessage="Creando nueva categoría..."
             tooltip="Las categorías ayudan a organizar tus productos."
             startIcon={<Layers />}
             endIcon={isPending ? <Loader2 className="animate-spin" /> : undefined}

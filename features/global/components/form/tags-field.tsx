@@ -38,6 +38,8 @@ interface TagsFieldProps {
     tooltip?: string | React.ReactNode
     isRequired?: boolean
     disabled?: boolean
+    isLoading?: boolean
+    loadingMessage?: string
     options?: TagOption[]
     maxTags?: number
     onCreate?: (tag: string) => void
@@ -55,6 +57,8 @@ function TagsField({
     tooltip,
     isRequired = false,
     disabled = false,
+    isLoading = false,
+    loadingMessage,
     options = [], // Predefined options
     maxTags,
     onChange,
@@ -70,7 +74,8 @@ function TagsField({
     const renderTagsInput = (
         value: string[],
         onChangeInternal: (val: string[]) => void,
-        fieldState: { invalid: boolean; error?: FieldErrorType }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        fieldState: { invalid: boolean; error?: FieldErrorType | any }
     ) => {
         const handleSelect = (selectedValue: string) => {
             let newValue = [...value]
@@ -195,53 +200,62 @@ function TagsField({
                             value={inputValue}
                             onValueChange={setInputValue}
                             onKeyDown={handleKeyDown}
+                            disabled={isLoading}
                         />
                         <TagsList>
-                            <TagsEmpty className="text-xs p-2 text-muted-foreground">
-                                {inputValue ? "Presiona Enter para crear." : "No hay etiquetas encontradas."}
-                            </TagsEmpty>
+                            {isLoading ? (
+                                <div className="p-2 text-sm text-muted-foreground text-center">
+                                    {loadingMessage || "Cargando..."}
+                                </div>
+                            ) : (
+                                <>
+                                    <TagsEmpty className="text-xs p-2 text-muted-foreground">
+                                        {inputValue ? "Presiona Enter para crear." : "No hay etiquetas encontradas."}
+                                    </TagsEmpty>
 
-                            {options.length > 0 && (
-                                <TagsGroup heading="Sugerencias">
-                                    {options
-                                        .sort((a, b) => {
-                                            const aSelected = value.includes(a.value)
-                                            const bSelected = value.includes(b.value)
-                                            if (aSelected && !bSelected) return -1
-                                            if (!aSelected && bSelected) return 1
-                                            return 0
-                                        })
-                                        .map((option) => (
+                                    {options.length > 0 && (
+                                        <TagsGroup heading="Sugerencias">
+                                            {options
+                                                .sort((a, b) => {
+                                                    const aSelected = value.includes(a.value)
+                                                    const bSelected = value.includes(b.value)
+                                                    if (aSelected && !bSelected) return -1
+                                                    if (!aSelected && bSelected) return 1
+                                                    return 0
+                                                })
+                                                .map((option) => (
+                                                    <TagsItem
+                                                        key={option.value}
+                                                        value={option.value}
+                                                        onSelect={() => {
+                                                            handleSelect(option.value)
+                                                        }}
+                                                    >
+                                                        <div className="flex items-center justify-between w-full">
+                                                            <span>{option.label}</span>
+                                                            {value.includes(option.value) && (
+                                                                <CheckIcon className="h-4 w-4" />
+                                                            )}
+                                                        </div>
+                                                    </TagsItem>
+                                                ))}
+                                        </TagsGroup>
+                                    )}
+
+                                    {/* If we want to show the "Create" option explicitly when typing */}
+                                    {inputValue && !options.find(o => o.value === inputValue) && !value.includes(inputValue) && (
+                                        <TagsGroup>
                                             <TagsItem
-                                                key={option.value}
-                                                value={option.value}
+                                                value={inputValue}
                                                 onSelect={() => {
-                                                    handleSelect(option.value)
+                                                    handleSelect(inputValue)
                                                 }}
                                             >
-                                                <div className="flex items-center justify-between w-full">
-                                                    <span>{option.label}</span>
-                                                    {value.includes(option.value) && (
-                                                        <CheckIcon className="h-4 w-4" />
-                                                    )}
-                                                </div>
+                                                Crear &quot;{inputValue}&quot;
                                             </TagsItem>
-                                        ))}
-                                </TagsGroup>
-                            )}
-
-                            {/* If we want to show the "Create" option explicitly when typing */}
-                            {inputValue && !options.find(o => o.value === inputValue) && !value.includes(inputValue) && (
-                                <TagsGroup>
-                                    <TagsItem
-                                        value={inputValue}
-                                        onSelect={() => {
-                                            handleSelect(inputValue)
-                                        }}
-                                    >
-                                        Crear &quot;{inputValue}&quot;
-                                    </TagsItem>
-                                </TagsGroup>
+                                        </TagsGroup>
+                                    )}
+                                </>
                             )}
                         </TagsList>
                     </TagsContent>
