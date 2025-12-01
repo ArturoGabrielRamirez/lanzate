@@ -1,13 +1,15 @@
 "use client"
 
-import { Box, Boxes, Copy, Plus, Trash2 } from "lucide-react"
+import { Box, Boxes, Check, Copy, Plus, Trash2, X } from "lucide-react"
 import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
+import { InputField } from "@/features/global/components/form/input-field"
 import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
 import { Button } from "@/features/shadcn/components/button"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/features/shadcn/components/ui/table"
@@ -95,15 +97,6 @@ export function OptionsVariantsProductPanel() {
         setValue("options_variants_info.variants", generateVariants(newOptions))
     }
 
-    const updateOptionName = (index: number, name: string) => {
-        const newOptions = [...options]
-        newOptions[index].name = name
-        setValue("options_variants_info.options", newOptions)
-        // We don't regenerate variants here because variant names depend on values, 
-        // but if we wanted to include option name in variant name (e.g. Color: Red), we would need to.
-        // Currently using "Red / Small" format.
-    }
-
     const updateOptionValues = (index: number, values: string[]) => {
         const newOptions = [...options]
         const currentValues = newOptions[index].values || []
@@ -175,36 +168,38 @@ export function OptionsVariantsProductPanel() {
 
                     <div className="space-y-4">
                         {options.map((option, index) => (
-                            <div key={option.id} className="border rounded-lg p-4 space-y-4 bg-card">
-                                <div className="flex gap-4 items-start">
-                                    <div className="mt-3 cursor-grab text-muted-foreground">
-                                        <svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M4 14C4 15.1 3.1 16 2 16C0.9 16 0 15.1 0 14C0 12.9 0.9 12 2 12C3.1 12 4 12.9 4 14ZM2 6C0.9 6 0 6.9 0 8C0 9.1 0.9 10 2 10C3.1 10 4 9.1 4 8C4 6.9 3.1 6 2 6ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0ZM8 6C6.9 6 6 6.9 6 8C6 9.1 6.9 10 8 10C9.1 10 10 9.1 10 8C10 6.9 9.1 6 8 6ZM8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12Z" fillOpacity="0.4" />
-                                        </svg>
+                            <Card key={option.id}>
+                                <CardContent className="flex flex-col gap-4">
+                                    <InputField
+                                        name={`options_variants_info.options.${index}.name`}
+                                        label="Nombre"
+                                        placeholder="Nombre de opción (ej: Color, Talle)"
+                                        className="flex-1"
+                                        disabled={disabled}
+                                        isRequired
+                                        tooltip="Es el nombre de la opción que se mostrará como filtro en la tienda."
+                                        startIcon={<Box />}
+                                    />
+                                    <TagsField
+                                        label="Valores"
+                                        value={option.values?.map(v => v.value) || []}
+                                        onChange={(newValues) => updateOptionValues(index, newValues)}
+                                        placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
+                                        disabled={disabled}
+                                        tooltip="Es el valor de la opción que se mostrará como filtro en la tienda."
+                                        isRequired
+                                        startIcon={<Box />}
+                                    />
+                                    <div className="flex justify-end">
+                                        <Button variant="destructive" onClick={() => removeOption(index)}>
+                                            <X /> Cancelar
+                                        </Button>
+                                        <Button variant="default" onClick={() => saveOption(index)}>
+                                            <Check /> Guardar
+                                        </Button>
                                     </div>
-                                    <div className="flex-1 space-y-4">
-                                        <div className="flex gap-2">
-                                            <Input
-                                                placeholder="Nombre de opción (ej: Color, Talle)"
-                                                value={option.name}
-                                                onChange={(e) => updateOptionName(index, e.target.value)}
-                                                className="flex-1"
-                                            />
-                                            <Button variant="ghost" size="icon" onClick={() => removeOption(index)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
-                                                <Trash2 className="h-4 w-4" />
-                                            </Button>
-                                        </div>
-                                        <div>
-                                            <TagsField
-                                                label=""
-                                                value={option.values?.map(v => v.value) || []}
-                                                onChange={(newValues) => updateOptionValues(index, newValues)}
-                                                placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                </CardContent>
+                            </Card>
                         ))}
                     </div>
                 </div>
