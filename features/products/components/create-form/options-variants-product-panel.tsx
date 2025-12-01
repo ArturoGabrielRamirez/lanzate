@@ -1,7 +1,7 @@
 "use client"
 
-import { Box, Boxes, Check, Copy, Plus, Trash2, X } from "lucide-react"
-import { useEffect } from "react"
+import { Box, Boxes, Check, Copy, Edit2, Plus, Trash2, X } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
@@ -9,6 +9,7 @@ import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
 import { Button } from "@/features/shadcn/components/button"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { Input } from "@/features/shadcn/components/ui/input"
@@ -27,6 +28,28 @@ export function OptionsVariantsProductPanel() {
     const hasVariants = watch("options_variants_info.has_variants")
     const options = watch("options_variants_info.options") || []
     const variants = watch("options_variants_info.variants") || []
+
+    // Track which options are currently being edited
+    const [editingOptions, setEditingOptions] = useState<Record<string, boolean>>({})
+
+    // Initialize editing state for new options
+    useEffect(() => {
+        const newEditingState: Record<string, boolean> = { ...editingOptions }
+        let changed = false
+        options.forEach(opt => {
+            // If option is new (empty name/values) and not tracked, mark as editing
+            if (opt.id && editingOptions[opt.id] === undefined) {
+                // If it has no name/values, assume it's new and should be editable
+                const isNew = !opt.name && (!opt.values || opt.values.length === 0)
+                newEditingState[opt.id!] = isNew
+                changed = true
+            }
+        })
+        
+        if (changed) {
+            setEditingOptions(newEditingState)
+        }
+    }, [options.length]) // Only check when options array length changes or IDs change
 
     // Update step validity
     useEffect(() => {
@@ -86,15 +109,45 @@ export function OptionsVariantsProductPanel() {
     }
 
     const addOption = () => {
-        const newOptions = [...options, { id: generateId(), name: "", values: [] }]
+        const id = generateId()
+        const newOptions = [...options, { id, name: "", values: [] }]
         setValue("options_variants_info.options", newOptions)
+        setEditingOptions(prev => ({ ...prev, [id]: true }))
     }
 
     const removeOption = (index: number) => {
         const newOptions = [...options]
+        const removedId = newOptions[index].id
         newOptions.splice(index, 1)
         setValue("options_variants_info.options", newOptions)
         setValue("options_variants_info.variants", generateVariants(newOptions))
+        
+        if (removedId) {
+            setEditingOptions(prev => {
+                const newState = { ...prev }
+                delete newState[removedId]
+                return newState
+            })
+        }
+    }
+
+    const saveOption = (index: number) => {
+        const option = options[index]
+        // Only save if valid (has name and at least one value)
+        if (option.name && option.values && option.values.length > 0) {
+            if (option.id) {
+                setEditingOptions(prev => ({ ...prev, [option.id!]: false }))
+            }
+            // Trigger variant generation
+            setValue("options_variants_info.variants", generateVariants(options))
+        }
+    }
+
+    const editOption = (index: number) => {
+        const option = options[index]
+        if (option.id) {
+            setEditingOptions(prev => ({ ...prev, [option.id!]: true }))
+        }
     }
 
     const updateOptionValues = (index: number, values: string[]) => {
@@ -107,6 +160,9 @@ export function OptionsVariantsProductPanel() {
 
         newOptions[index].values = newValuesObj
         setValue("options_variants_info.options", newOptions)
+        // Don't regenerate variants immediately while editing, do it on save
+        // Or do we? If we regenerate immediately, variants table updates live. 
+        // Let's update live for better UX, but "Save" button just collapses the card.
         setValue("options_variants_info.variants", generateVariants(newOptions))
     }
 
@@ -167,40 +223,79 @@ export function OptionsVariantsProductPanel() {
                     )}
 
                     <div className="space-y-4">
-                        {options.map((option, index) => (
-                            <Card key={option.id}>
-                                <CardContent className="flex flex-col gap-4">
-                                    <InputField
-                                        name={`options_variants_info.options.${index}.name`}
-                                        label="Nombre"
-                                        placeholder="Nombre de opción (ej: Color, Talle)"
-                                        className="flex-1"
-                                        disabled={disabled}
-                                        isRequired
-                                        tooltip="Es el nombre de la opción que se mostrará como filtro en la tienda."
-                                        startIcon={<Box />}
-                                    />
-                                    <TagsField
-                                        label="Valores"
-                                        value={option.values?.map(v => v.value) || []}
-                                        onChange={(newValues) => updateOptionValues(index, newValues)}
-                                        placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
-                                        disabled={disabled}
-                                        tooltip="Es el valor de la opción que se mostrará como filtro en la tienda."
-                                        isRequired
-                                        startIcon={<Box />}
-                                    />
-                                    <div className="flex justify-end">
-                                        <Button variant="destructive" onClick={() => removeOption(index)}>
-                                            <X /> Cancelar
-                                        </Button>
-                                        <Button variant="default" onClick={() => saveOption(index)}>
-                                            <Check /> Guardar
-                                        </Button>
+                        {options.map((option, index) => {
+                            const isEditing = option.id ? editingOptions[option.id] : true
+                            
+                            if (isEditing) {
+                                return (
+                                    <Card key={option.id || index}>
+                                        <CardContent className="flex flex-col gap-4">
+                                            <InputField
+                                                name={`options_variants_info.options.${index}.name`}
+                                                label="Nombre"
+                                                placeholder="Nombre de opción (ej: Color, Talle)"
+                                                className="flex-1"
+                                                disabled={disabled}
+                                                isRequired
+                                                tooltip="Es el nombre de la opción que se mostrará como filtro en la tienda."
+                                                startIcon={<Box />}
+                                            />
+                                            <TagsField
+                                                label="Valores"
+                                                value={option.values?.map(v => v.value) || []}
+                                                onChange={(newValues) => updateOptionValues(index, newValues)}
+                                                placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
+                                                disabled={disabled}
+                                                tooltip="Es el valor de la opción que se mostrará como filtro en la tienda."
+                                                isRequired
+                                                startIcon={<Box />}
+                                            />
+                                            <div className="flex justify-end gap-2">
+                                                <Button variant="destructive" onClick={() => removeOption(index)}>
+                                                    <Trash2 className="w-4 h-4 mr-2" /> Eliminar
+                                                </Button>
+                                                <Button variant="default" onClick={() => saveOption(index)} disabled={disabled || !option.name || !option.values || option.values.length === 0}>
+                                                    <Check className="w-4 h-4 mr-2" /> Guardar
+                                                </Button>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                )
+                            } else {
+                                return (
+                                    <div key={option.id || index} className="flex items-center justify-between p-4 border rounded-lg bg-card">
+                                        <div className="space-y-1">
+                                            <p className="font-medium">{option.name}</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {option.values?.map((val, vIndex) => (
+                                                    <Badge key={val.id || vIndex} variant="secondary" className="pr-1">
+                                                        {val.value}
+                                                        <button 
+                                                            onClick={() => {
+                                                                const newValues = option.values!.filter((_, i) => i !== vIndex).map(v => v.value)
+                                                                updateOptionValues(index, newValues)
+                                                            }}
+                                                            className="ml-1 hover:text-destructive focus:outline-none"
+                                                            disabled={disabled}
+                                                        >
+                                                            <X className="h-3 w-3" />
+                                                        </button>
+                                                    </Badge>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Button variant="ghost" size="icon" onClick={() => editOption(index)} disabled={disabled}>
+                                                <Edit2 className="h-4 w-4 text-muted-foreground" />
+                                            </Button>
+                                            <Button variant="ghost" size="icon" onClick={() => removeOption(index)} disabled={disabled} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </div>
                                     </div>
-                                </CardContent>
-                            </Card>
-                        ))}
+                                )
+                            }
+                        })}
                     </div>
                 </div>
             )}
