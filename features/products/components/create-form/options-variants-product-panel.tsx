@@ -9,6 +9,7 @@ import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
 import { Button } from "@/features/shadcn/components/button"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
@@ -17,7 +18,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
-
 // Simple ID generator
 const generateId = () => Math.random().toString(36).substring(2, 9)
 
@@ -45,7 +45,7 @@ export function OptionsVariantsProductPanel() {
                 changed = true
             }
         })
-        
+
         if (changed) {
             setEditingOptions(newEditingState)
         }
@@ -121,7 +121,7 @@ export function OptionsVariantsProductPanel() {
         newOptions.splice(index, 1)
         setValue("options_variants_info.options", newOptions)
         setValue("options_variants_info.variants", generateVariants(newOptions))
-        
+
         if (removedId) {
             setEditingOptions(prev => {
                 const newState = { ...prev }
@@ -225,7 +225,7 @@ export function OptionsVariantsProductPanel() {
                     <div className="space-y-4">
                         {options.map((option, index) => {
                             const isEditing = option.id ? editingOptions[option.id] : true
-                            
+
                             if (isEditing) {
                                 return (
                                     <Card key={option.id || index}>
@@ -270,10 +270,14 @@ export function OptionsVariantsProductPanel() {
                                                 {option.values?.map((val, vIndex) => (
                                                     <Badge key={val.id || vIndex} variant="secondary" className="pr-1">
                                                         {val.value}
-                                                        <button 
+                                                        <button
                                                             onClick={() => {
                                                                 const newValues = option.values!.filter((_, i) => i !== vIndex).map(v => v.value)
-                                                                updateOptionValues(index, newValues)
+                                                                if (newValues.length === 0) {
+                                                                    removeOption(index)
+                                                                } else {
+                                                                    updateOptionValues(index, newValues)
+                                                                }
                                                             }}
                                                             className="ml-1 hover:text-destructive focus:outline-none"
                                                             disabled={disabled}
@@ -302,60 +306,72 @@ export function OptionsVariantsProductPanel() {
 
             {hasVariants && variants.length > 0 && (
                 <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300 delay-150">
-                    <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium">Variantes Generadas ({variants.length})</h3>
-                        <Button variant="ghost" size="sm" onClick={copyPriceToAll} className="gap-2">
-                            <Copy className="h-4 w-4" /> Copiar precio a todas
-                        </Button>
-                    </div>
+                    <Accordion type="single" collapsible className="w-full" defaultValue="variants">
+                        <AccordionItem value="variants" className="border-none">
+                            <AccordionTrigger className="hover:no-underline py-2">
+                                <div className="flex items-center justify-between w-full mr-4">
+                                    <h3 className="text-sm font-medium">Variantes Generadas ({variants.length})</h3>
 
-                    <div className="border rounded-lg overflow-hidden">
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Variante</TableHead>
-                                    <TableHead>SKU</TableHead>
-                                    <TableHead>Precio</TableHead>
-                                    <TableHead>Stock</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {variants.map((variant, index) => (
-                                    <TableRow key={variant.id}>
-                                        <TableCell className="font-medium">
-                                            <span className="bg-muted px-2 py-1 rounded text-xs">{variant.name}</span>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Input
-                                                value={variant.sku || ""}
-                                                onChange={(e) => updateVariant(index, "sku", e.target.value)}
-                                                className="h-8 w-32"
-                                                placeholder="SKU"
-                                            />
-                                        </TableCell>
-                                        <TableCell>
-                                            <Input
-                                                type="number"
-                                                value={variant.price}
-                                                onChange={(e) => updateVariant(index, "price", parseFloat(e.target.value) || 0)}
-                                                className="h-8 w-24"
-                                                min={0}
-                                            />
-                                        </TableCell>
-                                        <TableCell>
-                                            <Input
-                                                type="number"
-                                                value={variant.stock}
-                                                onChange={(e) => updateVariant(index, "stock", parseFloat(e.target.value) || 0)}
-                                                className="h-8 w-24"
-                                                min={0}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="pt-4">
+                                <div className="flex flex-col gap-4">
+                                    <div className="border rounded-lg overflow-hidden">
+                                        <Table>
+                                            <TableHeader>
+                                                <TableRow>
+                                                    <TableHead>Variante</TableHead>
+                                                    <TableHead>SKU</TableHead>
+                                                    <TableHead>Precio</TableHead>
+                                                    <TableHead>Stock</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {variants.map((variant, index) => (
+                                                    <TableRow key={variant.id}>
+                                                        <TableCell className="font-medium">
+                                                            <span className="bg-muted px-2 py-1 rounded text-xs">{variant.name}</span>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Input
+                                                                value={variant.sku || ""}
+                                                                onChange={(e) => updateVariant(index, "sku", e.target.value)}
+                                                                className="h-8 w-32"
+                                                                placeholder="SKU"
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Input
+                                                                type="number"
+                                                                value={variant.price}
+                                                                onChange={(e) => updateVariant(index, "price", parseFloat(e.target.value) || 0)}
+                                                                className="h-8 w-24"
+                                                                min={0}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Input
+                                                                type="number"
+                                                                value={variant.stock}
+                                                                onChange={(e) => updateVariant(index, "stock", parseFloat(e.target.value) || 0)}
+                                                                className="h-8 w-24"
+                                                                min={0}
+                                                            />
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                    <div className="flex justify-end">
+                                        <Button variant="outline" onClick={copyPriceToAll} className="gap-2">
+                                            <Copy className="h-4 w-4" /> Copiar precio a todas
+                                        </Button>
+                                    </div>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
                 </div>
             )}
         </div>
