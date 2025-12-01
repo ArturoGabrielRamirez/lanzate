@@ -25,16 +25,28 @@ const generateId = () => Math.random().toString(36).substring(2, 9)
 
 export function OptionsVariantsProductPanel() {
     const { watch, setValue, formState: { disabled } } = useFormContext<CreateProductFormType>()
-    const { setStepValid } = useCreateProductContext()
+    const { values, setValues: setCtxValues, setStepValid } = useCreateProductContext()
+    const { options_variants_info } = values
 
     const hasVariants = watch("options_variants_info.has_variants")
     const options = watch("options_variants_info.options") || []
     const variants = watch("options_variants_info.variants") || []
-
+    
     // Track which options are currently being edited
     const [editingOptions, setEditingOptions] = useState<Record<string, boolean>>({})
 
     const isEditingAnyOption = Object.values(editingOptions).some(v => v)
+
+    // Initialize from context
+    useEffect(() => {
+        if (options_variants_info) {
+            // Only set if they differ to avoid unnecessary re-renders, though setValue usually handles this.
+            // Force update to ensure RHF matches Context on mount (e.g. coming back from another step)
+            setValue("options_variants_info.has_variants", options_variants_info.has_variants)
+            setValue("options_variants_info.options", options_variants_info.options || [])
+            setValue("options_variants_info.variants", options_variants_info.variants || [])
+        }
+    }, []) // Run once on mount
 
     // Initialize editing state for new options
     useEffect(() => {
@@ -110,6 +122,14 @@ export function OptionsVariantsProductPanel() {
         const selected = Array.from(selection)[0]
         const isVariant = selected === "variants"
         setValue("options_variants_info.has_variants", isVariant)
+        
+        setCtxValues({
+            ...values,
+            options_variants_info: {
+                ...values.options_variants_info,
+                has_variants: isVariant
+            }
+        })
     }
 
     const addOption = () => {
@@ -117,14 +137,33 @@ export function OptionsVariantsProductPanel() {
         const newOptions = [...options, { id, name: "", values: [], type: OptionType.TEXT }]
         setValue("options_variants_info.options", newOptions)
         setEditingOptions(prev => ({ ...prev, [id]: true }))
+        
+        setCtxValues({
+            ...values,
+            options_variants_info: {
+                ...values.options_variants_info,
+                options: newOptions
+            }
+        })
     }
 
     const removeOption = (index: number) => {
         const newOptions = [...options]
         const removedId = newOptions[index].id
         newOptions.splice(index, 1)
+        const newVariants = generateVariants(newOptions)
+        
         setValue("options_variants_info.options", newOptions)
-        setValue("options_variants_info.variants", generateVariants(newOptions))
+        setValue("options_variants_info.variants", newVariants)
+
+        setCtxValues({
+            ...values,
+            options_variants_info: {
+                ...values.options_variants_info,
+                options: newOptions,
+                variants: newVariants
+            }
+        })
 
         if (removedId) {
             setEditingOptions(prev => {
@@ -143,7 +182,18 @@ export function OptionsVariantsProductPanel() {
                 setEditingOptions(prev => ({ ...prev, [option.id!]: false }))
             }
             // Trigger variant generation
-            setValue("options_variants_info.variants", generateVariants(options))
+            const newVariants = generateVariants(options)
+            setValue("options_variants_info.variants", newVariants)
+            
+            setCtxValues({
+                ...values,
+                options_variants_info: {
+                    ...values.options_variants_info,
+                    variants: newVariants,
+                    // options are already updated in their respective handlers, but let's ensure sync just in case
+                    options: options 
+                }
+            })
         }
     }
 
@@ -160,31 +210,59 @@ export function OptionsVariantsProductPanel() {
         // For now, let's keep them, assuming string values are compatible
         newOptions[index].type = type
         setValue("options_variants_info.options", newOptions)
+        
+        setCtxValues({
+            ...values,
+            options_variants_info: {
+                ...values.options_variants_info,
+                options: newOptions
+            }
+        })
     }
 
-    const updateOptionValues = (index: number, values: string[]) => {
+    const updateOptionValues = (index: number, newValuesList: string[]) => {
         const newOptions = [...options]
         const currentValues = newOptions[index].values || []
-        const newValuesObj = values.map(v => {
+        const newValuesObj = newValuesList.map(v => {
             const existing = currentValues.find(cv => cv.value === v)
             return existing || { id: generateId(), value: v }
         })
 
         newOptions[index].values = newValuesObj
         setValue("options_variants_info.options", newOptions)
+        
+        let newVariants = variants;
 
         // Only regenerate variants if we are NOT in editing mode (e.g. removing tags from view mode)
         // If we are editing, we wait for the "Save" button
         const optionId = newOptions[index].id
         if (optionId && !editingOptions[optionId]) {
-            setValue("options_variants_info.variants", generateVariants(newOptions))
+            newVariants = generateVariants(newOptions)
+            setValue("options_variants_info.variants", newVariants)
         }
+        
+        setCtxValues({
+            ...values,
+            options_variants_info: {
+                ...values.options_variants_info,
+                options: newOptions,
+                variants: newVariants
+            }
+        })
     }
 
     const removeVariant = (index: number) => {
         const newVariants = [...variants]
         newVariants.splice(index, 1)
         setValue("options_variants_info.variants", newVariants)
+        
+        setCtxValues({
+            ...values,
+            options_variants_info: {
+                ...values.options_variants_info,
+                variants: newVariants
+            }
+        })
     }
 
     const updateVariant = (index: number, field: string, value: string | number) => {
@@ -192,6 +270,14 @@ export function OptionsVariantsProductPanel() {
         // @ts-expect-error - dynamic field access
         newVariants[index][field] = value
         setValue("options_variants_info.variants", newVariants)
+        
+        setCtxValues({
+            ...values,
+            options_variants_info: {
+                ...values.options_variants_info,
+                variants: newVariants
+            }
+        })
     }
 
     const copyPriceToAll = () => {
@@ -199,6 +285,14 @@ export function OptionsVariantsProductPanel() {
         const price = variants[0].price
         const newVariants = variants.map(v => ({ ...v, price }))
         setValue("options_variants_info.variants", newVariants)
+        
+        setCtxValues({
+            ...values,
+            options_variants_info: {
+                ...values.options_variants_info,
+                variants: newVariants
+            }
+        })
     }
 
     return (
