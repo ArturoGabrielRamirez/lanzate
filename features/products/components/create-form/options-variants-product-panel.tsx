@@ -207,12 +207,14 @@ export function OptionsVariantsProductPanel() {
             </div>
 
             {hasVariants && (
-                <div className="space-y-6 animate-in fade-in slide-in-from-top-4 duration-300">
-                    <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium">Opciones del Producto</h3>
-                        <Button variant="outline" onClick={addOption}>
-                            <Plus /> Agregar opción
-                        </Button>
+                <div className="animate-in fade-in slide-in-from-top-4 duration-300 flex flex-col gap-2">
+                    <div className="flex items-end justify-between">
+                        <p className="text-sm font-medium">Opciones del Producto</p>
+                        {options.length > 0 && (
+                            <Button variant="link" onClick={addOption} className="pb-0 relative top-1.5 !pr-0">
+                                <Plus /> Agregar opción
+                            </Button>
+                        )}
                     </div>
 
                     {options.length === 0 && (
