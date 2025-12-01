@@ -77,9 +77,13 @@ export function SelectField({
                                         <SelectItem
                                             key={option.value}
                                             value={option.value}
-                                            className="cursor-pointer hover:bg-[#e56c43]/10 focus:bg-[#e56c43]/20 text-white"
+                                            className="cursor-pointer hover:bg-[#e56c43]/10 focus:bg-[#e56c43]/20 text-white flex gap-1"
                                         >
                                             {option.label}
+                                            <span className="text-xs text-muted-foreground">
+                                                {option.description}
+                                            </span>
+
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
