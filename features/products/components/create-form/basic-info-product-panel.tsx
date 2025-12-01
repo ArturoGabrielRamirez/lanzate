@@ -1,6 +1,6 @@
 "use client"
 
-import { Box, CloudDownload, Wrench, ShoppingBag, Link, Tag } from "lucide-react"
+import { Box, CloudDownload, Wrench, ShoppingBag, Link, Tag, Layers } from "lucide-react"
 import { useCallback, useEffect } from "react"
 import { Selection } from "react-aria-components"
 import { useFormContext } from "react-hook-form"
@@ -29,6 +29,7 @@ export function BasicInfoProductPanel() {
         setValue("basic_info.type", values.basic_info?.type || ProductType.PHYSICAL)
         setValue("basic_info.brand", values.basic_info?.brand || "")
         setValue("basic_info.tags", values.basic_info?.tags || [])
+        setValue("basic_info.categories", values.basic_info?.categories || [])
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -68,6 +69,11 @@ export function BasicInfoProductPanel() {
         setValue("basic_info.tags", tags, { shouldValidate: true, shouldDirty: true })
     }, [setValues, setValue, values])
 
+    const handleCategoriesChange = useCallback((categories: string[]) => {
+        setValues({ ...values, basic_info: { ...values.basic_info, categories } })
+        setValue("basic_info.categories", categories, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
     const handleSlugChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const slug = e.target.value
         setValues({ ...values, basic_info: { ...values.basic_info, slug } })
@@ -89,15 +95,14 @@ export function BasicInfoProductPanel() {
                     tooltip="El nombre del producto es el nombre que se mostrará en la tienda."
                     startIcon={<Box />}
                 />
-                <InputField
-                    name="basic_info.slug"
-                    label="URL (Slug)"
-                    placeholder="ej-camiseta-negra"
-                    startIcon={<Link />}
-                    onChange={handleSlugChange}
-                    startText="lanzate.app/"
+                <TagsField
+                    name="basic_info.categories"
+                    label="Categorías"
+                    placeholder="Seleccionar categorías..."
+                    onChange={handleCategoriesChange}
                     disabled={disabled}
-                    tooltip="El slug es la parte final de la URL de tu producto."
+                    tooltip="Las categorías ayudan a organizar tus productos."
+                    startIcon={<Layers />}
                 />
             </div>
 
@@ -160,6 +165,18 @@ export function BasicInfoProductPanel() {
                             tooltip="Palabras clave para ayudar a encontrar tu producto."
                             startIcon={<Tag />}
                         />
+                        <div className="md:col-span-2">
+                            <InputField
+                                name="basic_info.slug"
+                                label="URL (Slug)"
+                                placeholder="ej-camiseta-negra"
+                                startIcon={<Link />}
+                                onChange={handleSlugChange}
+                                startText="mitienda.lanzate.app/producto/"
+                                disabled={true}
+                                tooltip="El slug es la parte final de la URL de tu producto."
+                            />
+                        </div>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
