@@ -1,13 +1,13 @@
 "use client"
 
-import { Box, Copy, Layers, Plus, Trash2 } from "lucide-react"
-import { useEffect, useState } from "react"
+import { Box, Boxes, Copy, Plus, Trash2 } from "lucide-react"
+import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { TagsValue } from "@/components/ui/shadcn-io/tags"
+import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
-import { Button } from "@/features/shadcn/components/ui/button"
+import { Button } from "@/features/shadcn/components/button"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
 import { Input } from "@/features/shadcn/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/features/shadcn/components/ui/table"
@@ -134,7 +134,7 @@ export function OptionsVariantsProductPanel() {
     return (
         <div className="flex flex-col gap-4">
             <div className="space-y-2">
-                <h3 className="text-sm font-medium">¿Este producto tiene variantes?</h3>
+                <p className="text-sm font-medium">Tipo de producto</p>
                 <ChoiceBox
                     columns={2}
                     gap={4}
@@ -150,7 +150,7 @@ export function OptionsVariantsProductPanel() {
                         <ChoiceBoxDescription>Un solo SKU, sin variaciones.</ChoiceBoxDescription>
                     </ChoiceBoxItem>
                     <ChoiceBoxItem id="variants" textValue="Con Variantes">
-                        <Layers />
+                        <Boxes />
                         <ChoiceBoxLabel>Con Variantes</ChoiceBoxLabel>
                         <ChoiceBoxDescription>Múltiples opciones (color, talle, etc.)</ChoiceBoxDescription>
                     </ChoiceBoxItem>
@@ -161,8 +161,8 @@ export function OptionsVariantsProductPanel() {
                 <div className="space-y-6 animate-in fade-in slide-in-from-top-4 duration-300">
                     <div className="flex items-center justify-between">
                         <h3 className="text-sm font-medium">Opciones del Producto</h3>
-                        <Button variant="outline" size="sm" onClick={addOption} className="gap-2 text-primary hover:text-primary hover:bg-primary/5">
-                            <Plus className="h-4 w-4" /> Agregar opción
+                        <Button variant="outline" onClick={addOption}>
+                            <Plus /> Agregar opción
                         </Button>
                     </div>
 
@@ -195,8 +195,9 @@ export function OptionsVariantsProductPanel() {
                                             </Button>
                                         </div>
                                         <div>
-                                            <SimpleTagInput
-                                                values={option.values?.map(v => v.value) || []}
+                                            <TagsField
+                                                label=""
+                                                value={option.values?.map(v => v.value) || []}
                                                 onChange={(newValues) => updateOptionValues(index, newValues)}
                                                 placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
                                             />
@@ -267,41 +268,6 @@ export function OptionsVariantsProductPanel() {
                     </div>
                 </div>
             )}
-        </div>
-    )
-}
-
-function SimpleTagInput({ values, onChange, placeholder }: { values: string[], onChange: (v: string[]) => void, placeholder: string }) {
-    const [inputValue, setInputValue] = useState("")
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && inputValue.trim()) {
-            e.preventDefault()
-            if (!values.includes(inputValue.trim())) {
-                onChange([...values, inputValue.trim()])
-            }
-            setInputValue("")
-        }
-    }
-
-    const removeTag = (tag: string) => {
-        onChange(values.filter(v => v !== tag))
-    }
-
-    return (
-        <div className="flex flex-wrap gap-2 p-2 border rounded-md bg-background focus-within:ring-1 focus-within:ring-ring">
-            {values.map(tag => (
-                <TagsValue key={tag} onRemove={() => removeTag(tag)}>
-                    {tag}
-                </TagsValue>
-            ))}
-            <input
-                placeholder={values.length === 0 ? placeholder : ""}
-                value={inputValue}
-                onChange={e => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="flex-1 min-w-[120px] border-none focus:outline-none p-0 h-9 bg-transparent text-sm"
-            />
         </div>
     )
 }
