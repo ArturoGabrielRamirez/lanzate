@@ -130,6 +130,7 @@ export function CreateProductContent({ /* userId, */ storeId }: { userId: number
                         <CreateProductForm 
                             onSubmitAll={handleCreateProduct} 
                             onExitFlow={() => setSelectedSource(null)}
+                            storeId={storeId}
                         />
                     )}
                     {(selectedSource === "AI" || selectedSource === "FILE") && (

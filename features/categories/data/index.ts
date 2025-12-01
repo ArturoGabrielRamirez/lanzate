@@ -2,6 +2,6 @@ export { getStoreCategoriesData as getStoreCategories } from "@/features/categor
 export { searchCategories } from "@/features/categories/data/search-categories.data"
 export { getStoreIdBySlugData as getStoreIdBySlug } from "@/features/categories/data/get-store-id-by-slug.data"
 export { getStoreIdBySubdomainData as getStoreIdBySubdomain } from "@/features/categories/data/get-store-id-by-subdomain.data"
-export { insertCategoryData as insertCategory } from "@/features/categories/data/insert-category.data"
+export { insertCategoryData as insertCategory, insertCategoryData } from "@/features/categories/data/insert-category.data"
 export { updateCategory } from "@/features/categories/data/update-category.data"
 export { deleteCategoryData as deleteCategory } from "@/features/categories/data/delete-category.data"

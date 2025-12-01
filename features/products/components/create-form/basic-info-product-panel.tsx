@@ -17,7 +17,7 @@ import { Label } from "@/features/shadcn/components/ui/label"
 import { slugify } from "@/features/stores/utils"
 
 
-export function BasicInfoProductPanel() {
+export function BasicInfoProductPanel({ storeId }: { storeId?: number }) {
 
     const { setValue, formState: { isValid, disabled }, trigger } = useFormContext<CreateProductFormType>()
     const { values, setValues, setStepValid } = useCreateProductContext()
@@ -92,7 +92,7 @@ export function BasicInfoProductPanel() {
                     tooltip="El nombre del producto es el nombre que se mostrará en la tienda."
                     startIcon={<Box />}
                 />
-                <CategorySelector />
+                <CategorySelector storeId={storeId} />
             </div>
 
             <TextareaField
