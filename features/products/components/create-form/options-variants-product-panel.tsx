@@ -9,6 +9,7 @@ import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
 import { Button } from "@/features/shadcn/components/button"
+import { Item, ItemActions, ItemContent, ItemTitle } from "@/features/shadcn/components/item"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Card, CardContent } from "@/features/shadcn/components/ui/card"
@@ -265,9 +266,9 @@ export function OptionsVariantsProductPanel() {
                                 )
                             } else {
                                 return (
-                                    <div key={option.id || index} className="flex items-center justify-between p-4 border rounded-lg bg-card">
-                                        <div className="space-y-1">
-                                            <p className="font-medium">{option.name}</p>
+                                    <Item variant="outline" key={option.id || index}>
+                                        <ItemContent className="flex-1">
+                                            <ItemTitle>{option.name}</ItemTitle>
                                             <div className="flex flex-wrap gap-2">
                                                 {option.values?.map((val, vIndex) => (
                                                     <Badge key={val.id || vIndex} variant="secondary" className="pr-1">
@@ -289,16 +290,16 @@ export function OptionsVariantsProductPanel() {
                                                     </Badge>
                                                 ))}
                                             </div>
-                                        </div>
-                                        <div className="flex items-center gap-2">
+                                        </ItemContent>
+                                        <ItemActions>
                                             <Button variant="ghost" size="icon" onClick={() => editOption(index)} disabled={disabled}>
                                                 <Edit2 className="h-4 w-4 text-muted-foreground" />
                                             </Button>
                                             <Button variant="ghost" size="icon" onClick={() => removeOption(index)} disabled={disabled} className="text-destructive hover:text-destructive hover:bg-destructive/10">
                                                 <Trash2 className="h-4 w-4" />
                                             </Button>
-                                        </div>
-                                    </div>
+                                        </ItemActions>
+                                    </Item>
                                 )
                             }
                         })}
@@ -328,7 +329,7 @@ export function OptionsVariantsProductPanel() {
                                                     <TableHead>Stock</TableHead>
                                                 </TableRow>
                                             </TableHeader>
-                                            <TableBody>
+                                            <TableBody className="overflow-x-auto">
                                                 {variants.map((variant, index) => (
                                                     <TableRow key={variant.id}>
                                                         <TableCell className="font-medium">
