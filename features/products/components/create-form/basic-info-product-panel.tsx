@@ -1,6 +1,6 @@
 "use client"
 
-import { Box, CloudDownload, Wrench, Link, Tag, ShoppingBag } from "lucide-react"
+import { Box, CloudDownload, Wrench, ShoppingBag, Link, Tag } from "lucide-react"
 import { useCallback, useEffect } from "react"
 import { Selection } from "react-aria-components"
 import { useFormContext } from "react-hook-form"
@@ -41,12 +41,6 @@ export function BasicInfoProductPanel() {
         setValue("basic_info.slug", slugify(name), { shouldValidate: true, shouldDirty: true })
     }, [setValues, setValue, values])
 
-    const handleSlugChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const slug = e.target.value
-        setValues({ ...values, basic_info: { ...values.basic_info, slug } })
-        setValue("basic_info.slug", slug, { shouldValidate: true, shouldDirty: true })
-    }, [setValues, setValue, values])
-
     const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const description = e.target.value
         setValues({ ...values, basic_info: { ...values.basic_info, description } })
@@ -75,34 +69,15 @@ export function BasicInfoProductPanel() {
         setValue("basic_info.tags", tags, { shouldValidate: true, shouldDirty: true })
     }, [setValues, setValue, values])
 
+    const handleSlugChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const slug = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, slug } })
+        setValue("basic_info.slug", slug, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
     return (
         <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1">
-                <Label className="text-sm font-medium">Tipo de Producto</Label>
-                <ChoiceBox
-                    columns={3}
-                    gap={4}
-                    selectedKeys={values.basic_info.type ? [values.basic_info.type] : []}
-                    onSelectionChange={handleTypeChange}
-                    selectionMode="single"
-                >
-                    <ChoiceBoxItem id={ProductType.PHYSICAL} textValue="Físico">
-                        <Box />
-                        <ChoiceBoxLabel>Físico</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>Producto tangible que requiere envío.</ChoiceBoxDescription>
-                    </ChoiceBoxItem>
-                    <ChoiceBoxItem id={ProductType.DIGITAL} textValue="Digital">
-                        <CloudDownload />
-                        <ChoiceBoxLabel>Digital</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>Archivo o contenido descargable.</ChoiceBoxDescription>
-                    </ChoiceBoxItem>
-                    <ChoiceBoxItem id={ProductType.SERVICE} textValue="Servicio">
-                        <Wrench />
-                        <ChoiceBoxLabel>Servicio</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>Servicio profesional o consultoría.</ChoiceBoxDescription>
-                    </ChoiceBoxItem>
-                </ChoiceBox>
-            </div>
+            
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <InputField
@@ -121,6 +96,7 @@ export function BasicInfoProductPanel() {
                     placeholder="ej-camiseta-negra"
                     startIcon={<Link />}
                     onChange={handleSlugChange}
+                    startText="lanzate.app/"
                     disabled={disabled}
                     tooltip="El slug es la parte final de la URL de tu producto."
                 />
@@ -161,6 +137,33 @@ export function BasicInfoProductPanel() {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
+
+            <div className="flex flex-col gap-1">
+                <Label className="text-sm font-medium">Tipo de Producto</Label>
+                <ChoiceBox
+                    columns={3}
+                    gap={4}
+                    selectedKeys={values.basic_info.type ? [values.basic_info.type] : []}
+                    onSelectionChange={handleTypeChange}
+                    selectionMode="single"
+                >
+                    <ChoiceBoxItem id={ProductType.PHYSICAL} textValue="Físico">
+                        <Box />
+                        <ChoiceBoxLabel>Físico</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>Producto tangible que requiere envío.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                    <ChoiceBoxItem id={ProductType.DIGITAL} textValue="Digital">
+                        <CloudDownload />
+                        <ChoiceBoxLabel>Digital</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>Archivo o contenido descargable.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                    <ChoiceBoxItem id={ProductType.SERVICE} textValue="Servicio">
+                        <Wrench />
+                        <ChoiceBoxLabel>Servicio</ChoiceBoxLabel>
+                        <ChoiceBoxDescription>Servicio profesional o consultoría.</ChoiceBoxDescription>
+                    </ChoiceBoxItem>
+                </ChoiceBox>
+            </div>
         </div>
     )
 }

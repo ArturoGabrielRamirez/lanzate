@@ -83,7 +83,7 @@ function InputField({
                                 </InputGroupAddon>
                             )}
                             {startText && (
-                                <InputGroupText>
+                                <InputGroupText className="pl-2">
                                     {startText}
                                 </InputGroupText>
                             )}
