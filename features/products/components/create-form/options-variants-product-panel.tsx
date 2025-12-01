@@ -48,9 +48,9 @@ export function OptionsVariantsProductPanel() {
         const validOptions = currentOptions.filter(opt => opt.name && opt.values && opt.values.length > 0)
         if (validOptions.length === 0) return []
 
-        const optionValuesArrays = validOptions.map(opt => opt.values!.map(v => ({ 
-            optionName: opt.name, 
-            value: v.value 
+        const optionValuesArrays = validOptions.map(opt => opt.values!.map(v => ({
+            optionName: opt.name,
+            value: v.value
         })))
 
         // Cartesian product helper
@@ -111,7 +111,7 @@ export function OptionsVariantsProductPanel() {
             const existing = currentValues.find(cv => cv.value === v)
             return existing || { id: generateId(), value: v }
         })
-        
+
         newOptions[index].values = newValuesObj
         setValue("options_variants_info.options", newOptions)
         setValue("options_variants_info.variants", generateVariants(newOptions))
@@ -132,12 +132,7 @@ export function OptionsVariantsProductPanel() {
     }
 
     return (
-        <div className="space-y-8">
-            <div>
-                <h2 className="text-lg font-semibold">Crear Producto - Opciones y Variantes</h2>
-                <p className="text-muted-foreground">Configura colores, talles y más</p>
-            </div>
-
+        <div className="flex flex-col gap-4">
             <div className="space-y-2">
                 <h3 className="text-sm font-medium">¿Este producto tiene variantes?</h3>
                 <ChoiceBox
@@ -184,13 +179,13 @@ export function OptionsVariantsProductPanel() {
                                 <div className="flex gap-4 items-start">
                                     <div className="mt-3 cursor-grab text-muted-foreground">
                                         <svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                           <path d="M4 14C4 15.1 3.1 16 2 16C0.9 16 0 15.1 0 14C0 12.9 0.9 12 2 12C3.1 12 4 12.9 4 14ZM2 6C0.9 6 0 6.9 0 8C0 9.1 0.9 10 2 10C3.1 10 4 9.1 4 8C4 6.9 3.1 6 2 6ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0ZM8 6C6.9 6 6 6.9 6 8C6 9.1 6.9 10 8 10C9.1 10 10 9.1 10 8C10 6.9 9.1 6 8 6ZM8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12Z" fillOpacity="0.4"/>
+                                            <path d="M4 14C4 15.1 3.1 16 2 16C0.9 16 0 15.1 0 14C0 12.9 0.9 12 2 12C3.1 12 4 12.9 4 14ZM2 6C0.9 6 0 6.9 0 8C0 9.1 0.9 10 2 10C3.1 10 4 9.1 4 8C4 6.9 3.1 6 2 6ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0ZM8 6C6.9 6 6 6.9 6 8C6 9.1 6.9 10 8 10C9.1 10 10 9.1 10 8C10 6.9 9.1 6 8 6ZM8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12Z" fillOpacity="0.4" />
                                         </svg>
                                     </div>
                                     <div className="flex-1 space-y-4">
                                         <div className="flex gap-2">
-                                            <Input 
-                                                placeholder="Nombre de opción (ej: Color, Talle)" 
+                                            <Input
+                                                placeholder="Nombre de opción (ej: Color, Talle)"
                                                 value={option.name}
                                                 onChange={(e) => updateOptionName(index, e.target.value)}
                                                 className="flex-1"
@@ -200,11 +195,11 @@ export function OptionsVariantsProductPanel() {
                                             </Button>
                                         </div>
                                         <div>
-                                             <SimpleTagInput 
+                                            <SimpleTagInput
                                                 values={option.values?.map(v => v.value) || []}
                                                 onChange={(newValues) => updateOptionValues(index, newValues)}
                                                 placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
-                                             />
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -240,26 +235,26 @@ export function OptionsVariantsProductPanel() {
                                             <span className="bg-muted px-2 py-1 rounded text-xs">{variant.name}</span>
                                         </TableCell>
                                         <TableCell>
-                                            <Input 
-                                                value={variant.sku || ""} 
+                                            <Input
+                                                value={variant.sku || ""}
                                                 onChange={(e) => updateVariant(index, "sku", e.target.value)}
-                                                className="h-8 w-32" 
+                                                className="h-8 w-32"
                                                 placeholder="SKU"
                                             />
                                         </TableCell>
                                         <TableCell>
-                                            <Input 
-                                                type="number" 
-                                                value={variant.price} 
+                                            <Input
+                                                type="number"
+                                                value={variant.price}
                                                 onChange={(e) => updateVariant(index, "price", parseFloat(e.target.value) || 0)}
                                                 className="h-8 w-24"
                                                 min={0}
                                             />
                                         </TableCell>
                                         <TableCell>
-                                            <Input 
-                                                type="number" 
-                                                value={variant.stock} 
+                                            <Input
+                                                type="number"
+                                                value={variant.stock}
                                                 onChange={(e) => updateVariant(index, "stock", parseFloat(e.target.value) || 0)}
                                                 className="h-8 w-24"
                                                 min={0}
@@ -278,7 +273,7 @@ export function OptionsVariantsProductPanel() {
 
 function SimpleTagInput({ values, onChange, placeholder }: { values: string[], onChange: (v: string[]) => void, placeholder: string }) {
     const [inputValue, setInputValue] = useState("")
-    
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && inputValue.trim()) {
             e.preventDefault()
@@ -294,19 +289,19 @@ function SimpleTagInput({ values, onChange, placeholder }: { values: string[], o
     }
 
     return (
-         <div className="flex flex-wrap gap-2 p-2 border rounded-md bg-background focus-within:ring-1 focus-within:ring-ring">
+        <div className="flex flex-wrap gap-2 p-2 border rounded-md bg-background focus-within:ring-1 focus-within:ring-ring">
             {values.map(tag => (
                 <TagsValue key={tag} onRemove={() => removeTag(tag)}>
                     {tag}
                 </TagsValue>
             ))}
-            <input 
-                placeholder={values.length === 0 ? placeholder : ""} 
+            <input
+                placeholder={values.length === 0 ? placeholder : ""}
                 value={inputValue}
                 onChange={e => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 className="flex-1 min-w-[120px] border-none focus:outline-none p-0 h-9 bg-transparent text-sm"
             />
-         </div>
+        </div>
     )
 }
