@@ -6,6 +6,7 @@ import { Selection } from "react-aria-components"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
+import { TagsField } from "@/features/global/components/form/tags-field"
 import { TextareaField } from "@/features/global/components/form/textarea-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType, ProductType } from "@/features/products/schemas/create-product-form-schema"
@@ -28,6 +29,7 @@ export function BasicInfoProductPanel() {
         setValue("basic_info.type", values.basic_info?.type || ProductType.PHYSICAL)
         setValue("basic_info.brand", values.basic_info?.brand || "")
         setValue("basic_info.tags", values.basic_info?.tags || [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // Validate step
@@ -61,10 +63,7 @@ export function BasicInfoProductPanel() {
         setValue("basic_info.brand", brand, { shouldValidate: true, shouldDirty: true })
     }, [setValues, setValue, values])
 
-    const handleTagsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        // Simple comma separated tags for now
-        const tagsString = e.target.value
-        const tags = tagsString.split(',').map(t => t.trim()).filter(Boolean)
+    const handleTagsChange = useCallback((tags: string[]) => {
         setValues({ ...values, basic_info: { ...values.basic_info, tags } })
         setValue("basic_info.tags", tags, { shouldValidate: true, shouldDirty: true })
     }, [setValues, setValue, values])
@@ -77,7 +76,7 @@ export function BasicInfoProductPanel() {
 
     return (
         <div className="flex flex-col gap-4">
-            
+
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <InputField
@@ -110,34 +109,6 @@ export function BasicInfoProductPanel() {
                 disabled={disabled}
             />
 
-            <Accordion type="single" collapsible>
-                <AccordionItem value="advanced" className="border-none">
-                    <AccordionTrigger className="hover:no-underline py-4">
-                        <span className="text-sm font-medium">Opciones Adicionales</span>
-                    </AccordionTrigger>
-                    <AccordionContent className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
-                        <InputField
-                            name="basic_info.brand"
-                            label="Marca"
-                            placeholder="Ej: Nike, Adidas..."
-                            onChange={handleBrandChange}
-                            tooltip="La marca del producto. Ej: Nike, Adidas..."
-                            startIcon={<ShoppingBag />}
-                            disabled={disabled}
-                        />
-                        <InputField
-                            name="basic_info.tags"
-                            label="Etiquetas"
-                            placeholder="running, verano, oferta (separadas por coma)"
-                            onChange={handleTagsChange}
-                            disabled={disabled}
-                            tooltip="Palabras clave para ayudar a encontrar tu producto."
-                            startIcon={<Tag />}
-                        />
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
-
             <div className="flex flex-col gap-1">
                 <Label className="text-sm font-medium">Tipo de Producto</Label>
                 <ChoiceBox
@@ -164,6 +135,36 @@ export function BasicInfoProductPanel() {
                     </ChoiceBoxItem>
                 </ChoiceBox>
             </div>
+
+            <Accordion type="single" collapsible>
+                <AccordionItem value="advanced" className="border-none">
+                    <AccordionTrigger className="hover:no-underline py-4">
+                        <span className="text-sm font-medium">Opciones Adicionales</span>
+                    </AccordionTrigger>
+                    <AccordionContent className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
+                        <InputField
+                            name="basic_info.brand"
+                            label="Marca"
+                            placeholder="Ej: Nike, Adidas..."
+                            onChange={handleBrandChange}
+                            tooltip="La marca del producto. Ej: Nike, Adidas..."
+                            startIcon={<ShoppingBag />}
+                            disabled={disabled}
+                        />
+                        <TagsField
+                            name="basic_info.tags"
+                            label="Etiquetas"
+                            placeholder="Seleccionar etiquetas..."
+                            onChange={handleTagsChange}
+                            disabled={disabled}
+                            tooltip="Palabras clave para ayudar a encontrar tu producto."
+                            startIcon={<Tag />}
+                        />
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+
+
         </div>
     )
 }
