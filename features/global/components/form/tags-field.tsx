@@ -40,6 +40,7 @@ interface TagsFieldProps {
     disabled?: boolean
     options?: TagOption[]
     maxTags?: number
+    onCreate?: (tag: string) => void
     className?: string
 }
 
@@ -57,6 +58,7 @@ function TagsField({
     options = [], // Predefined options
     maxTags,
     onChange,
+    onCreate,
     value: controlledValue,
     className,
 }: TagsFieldProps) {
@@ -77,6 +79,12 @@ function TagsField({
             } else {
                 if (maxTags && newValue.length >= maxTags) return
                 newValue.push(selectedValue)
+
+                // Check if it is a new creation (not in predefined options)
+                const isPredefined = options.some(o => o.value === selectedValue)
+                if (!isPredefined && onCreate) {
+                    onCreate(selectedValue)
+                }
             }
             onChangeInternal(newValue)
             if (onChange && name) onChange(newValue) // If controlled via name, call extra onChange
@@ -188,7 +196,7 @@ function TagsField({
                             onKeyDown={handleKeyDown}
                         />
                         <TagsList>
-                            <TagsEmpty>
+                            <TagsEmpty className="text-xs p-2 text-muted-foreground">
                                 {inputValue ? "Presiona Enter para crear." : "No hay etiquetas encontradas."}
                             </TagsEmpty>
 
@@ -215,7 +223,7 @@ function TagsField({
 
                             {/* If we want to show the "Create" option explicitly when typing */}
                             {inputValue && !options.find(o => o.value === inputValue) && !value.includes(inputValue) && (
-                                <TagsGroup heading="Crear">
+                                <TagsGroup>
                                     <TagsItem
                                         value={inputValue}
                                         onSelect={() => {

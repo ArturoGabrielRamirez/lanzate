@@ -31,6 +31,7 @@ export function CategorySelector() {
             label="Categorías"
             placeholder="Seleccionar categorías..."
             onChange={handleCategoriesChange}
+            onCreate={(tag) => console.log("Created new category:", tag)}
             disabled={disabled}
             tooltip="Las categorías ayudan a organizar tus productos."
             startIcon={<Layers />}

@@ -11,6 +11,7 @@ import {
   useRef,
   useState,
 } from 'react';
+
 import { Badge } from '@/features/shadcn/components/ui/badge';
 import { Button } from '@/features/shadcn/components/ui/button';
 import {
@@ -65,14 +66,14 @@ export type TagsProps = {
   className?: string;
 };
 
-export const Tags = ({
+export function Tags({
   value,
   setValue,
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
   children,
   className,
-}: TagsProps) => {
+}: TagsProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const [width, setWidth] = useState<number>();
   const ref = useRef<HTMLDivElement>(null);
@@ -111,22 +112,22 @@ export const Tags = ({
 
 export type TagsTriggerProps = ComponentProps<typeof Button>;
 
-export const TagsTrigger = ({
+export function TagsTrigger({
   className,
   children,
   ...props
-}: TagsTriggerProps) => (
+}: TagsTriggerProps) {
   <PopoverTrigger asChild>
     <Button
       className={cn('h-auto w-full justify-between p-2', className)}
       // biome-ignore lint/a11y/useSemanticElements: "Required"
       role="combobox"
       variant="outline"
-      {...(props as any)}
+      {...(props)}
     >
       <div className="flex flex-wrap items-center gap-1">
         {children}
-        {Array.from(children).length === 0 && (
+        {Array.from(children as ReactNode[]).length === 0 && (
           <span className="px-2 py-px text-muted-foreground">
             Select a tag...
           </span>
@@ -134,16 +135,16 @@ export const TagsTrigger = ({
       </div>
     </Button>
   </PopoverTrigger>
-);
+}
 
 export type TagsValueProps = ComponentProps<typeof Badge>;
 
-export const TagsValue = ({
+export function TagsValue({
   className,
   children,
   onRemove,
   ...props
-}: TagsValueProps & { onRemove?: () => void }) => {
+}: TagsValueProps & { onRemove?: () => void }) {
   const handleRemove: MouseEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -151,7 +152,7 @@ export const TagsValue = ({
   };
 
   return (
-    <Badge className={cn('flex items-center gap-2', className)} {...(props as any)}>
+    <Badge className={cn('flex items-center gap-2', className)} {...(props)}>
       {children}
       {onRemove && (
         // biome-ignore lint/a11y/noStaticElementInteractions: "This is a clickable badge"
@@ -165,22 +166,22 @@ export const TagsValue = ({
       )}
     </Badge>
   );
-};
+}
 
 export type TagsContentProps = ComponentProps<typeof PopoverContent>;
 
-export const TagsContent = ({
+export function TagsContent({
   className,
   children,
   ...props
-}: TagsContentProps) => {
+}: TagsContentProps) {
   const { width } = useTagsContext();
 
   return (
     <PopoverContent
       className={cn('p-0', className)}
       style={{ width }}
-      {...(props as any)}
+      {...(props)}
     >
       <Command>{children}</Command>
     </PopoverContent>
@@ -189,25 +190,25 @@ export const TagsContent = ({
 
 export type TagsInputProps = ComponentProps<typeof CommandInput>;
 
-export const TagsInput = ({ className, ...props }: TagsInputProps) => (
-  <CommandInput className={cn('h-9', className)} {...(props as any)} />
-);
+export function TagsInput({ className, ...props }: TagsInputProps) {
+  return <CommandInput className={cn('h-9', className)} {...(props)} />
+}
 
 export type TagsListProps = ComponentProps<typeof CommandList>;
 
-export const TagsList = ({ className, ...props }: TagsListProps) => (
-  <CommandList className={cn('max-h-[200px]', className)} {...(props as any)} />
-);
+export function TagsList({ className, ...props }: TagsListProps) {
+  return <CommandList className={cn('max-h-[200px]', className)} {...(props)} />
+}
 
 export type TagsEmptyProps = ComponentProps<typeof CommandEmpty>;
 
-export const TagsEmpty = ({
+export function TagsEmpty({
   children,
   className,
   ...props
-}: TagsEmptyProps) => (
-  <CommandEmpty {...(props as any)}>{children ?? 'No tags found.'}</CommandEmpty>
-);
+}: TagsEmptyProps) {
+  return <CommandEmpty {...(props)} className={className}>{children ?? 'No tags found.'}</CommandEmpty>
+}
 
 export type TagsGroupProps = ComponentProps<typeof CommandGroup>;
 
@@ -215,9 +216,9 @@ export const TagsGroup = CommandGroup;
 
 export type TagsItemProps = ComponentProps<typeof CommandItem>;
 
-export const TagsItem = ({ className, ...props }: TagsItemProps) => (
-  <CommandItem
+export function TagsItem({ className, ...props }: TagsItemProps) {
+  return <CommandItem
     className={cn('cursor-pointer items-center justify-between', className)}
-    {...(props as any)}
+    {...(props)}
   />
-);
+}
