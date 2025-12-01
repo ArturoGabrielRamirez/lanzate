@@ -115,6 +115,6 @@ export interface SearchCategoriesAction {
     searchTerm: string
 }
 
-export interface GetStoreIdBySubdomainAction {
-    subdomain: string
+export interface GetStoreCategoriesAction {
+    storeId: number
 }

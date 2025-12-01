@@ -21,7 +21,7 @@ export function CreateProductDialog({ userId, storeId }: { userId: number; store
     }, [openDialog, closeDialog])
 
     return (
-        <Dialog open={isOpen} onOpenChange={handleToggleDialog}>
+        <Dialog open={isOpen} onOpenChange={handleToggleDialog} modal={false}>
             <DialogTrigger asChild>
                 <Button onClick={openDialog}>
                     <Plus />

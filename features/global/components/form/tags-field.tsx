@@ -122,6 +122,7 @@ function TagsField({
                     value={inputValue}
                     open={isOpen}
                     onOpenChange={setIsOpen}
+                    className="z-[1000]"
                 >
                     <PopoverTrigger asChild>
                         <div
@@ -202,22 +203,30 @@ function TagsField({
 
                             {options.length > 0 && (
                                 <TagsGroup heading="Sugerencias">
-                                    {options.map((option) => (
-                                        <TagsItem
-                                            key={option.value}
-                                            value={option.value}
-                                            onSelect={() => {
-                                                handleSelect(option.value)
-                                            }}
-                                        >
-                                            <div className="flex items-center justify-between w-full">
-                                                <span>{option.label}</span>
-                                                {value.includes(option.value) && (
-                                                    <CheckIcon className="h-4 w-4" />
-                                                )}
-                                            </div>
-                                        </TagsItem>
-                                    ))}
+                                    {options
+                                        .sort((a, b) => {
+                                            const aSelected = value.includes(a.value)
+                                            const bSelected = value.includes(b.value)
+                                            if (aSelected && !bSelected) return -1
+                                            if (!aSelected && bSelected) return 1
+                                            return 0
+                                        })
+                                        .map((option) => (
+                                            <TagsItem
+                                                key={option.value}
+                                                value={option.value}
+                                                onSelect={() => {
+                                                    handleSelect(option.value)
+                                                }}
+                                            >
+                                                <div className="flex items-center justify-between w-full">
+                                                    <span>{option.label}</span>
+                                                    {value.includes(option.value) && (
+                                                        <CheckIcon className="h-4 w-4" />
+                                                    )}
+                                                </div>
+                                            </TagsItem>
+                                        ))}
                                 </TagsGroup>
                             )}
 

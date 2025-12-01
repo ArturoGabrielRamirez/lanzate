@@ -1,19 +1,44 @@
 "use client"
 
-import { Layers } from "lucide-react"
-import { useCallback, useTransition } from "react"
+import { Layers, Loader2 } from "lucide-react"
+import { useCallback, useEffect, useState, useTransition } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 
 import { createCategoryDynamicAction } from "@/features/categories/actions/create-category-dynamic.action"
-import { TagsField } from "@/features/global/components/form/tags-field"
+import { getStoreCategoriesAction } from "@/features/categories/actions/get-store-categories.action"
+import { TagsField, TagOption } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
 
-export function CategorySelector({ storeId }: { storeId?: number }) {
+export function CategorySelector({ storeId, options }: { storeId?: number, options?: TagOption[] }) {
     const { setValue, formState: { disabled } } = useFormContext<CreateProductFormType>()
     const { values, setValues } = useCreateProductContext()
     const [isPending, startTransition] = useTransition()
+    const [categoryOptions, setCategoryOptions] = useState<TagOption[]>(options || [])
+
+    useEffect(() => {
+        if (options) {
+            setCategoryOptions(options)
+            return
+        }
+
+        if (!storeId || isNaN(storeId)) return
+
+        startTransition(async () => {
+            const result = await getStoreCategoriesAction({ storeId })
+            if (result.error) {
+                toast.error("No se pudieron cargar las categorías")
+                return
+            }
+            
+            const mappedOptions = result.payload.map((cat: { name: string }) => ({
+                value: cat.name,
+                label: cat.name
+            }))
+            setCategoryOptions(mappedOptions)
+        })
+    }, [storeId, options])
 
     const handleCategoriesChange = useCallback((categories: string[]) => {
         // Ensure basic_info exists to avoid undefined errors if called early
@@ -55,6 +80,13 @@ export function CategorySelector({ storeId }: { storeId?: number }) {
             const createdName = result.payload?.name || newCategoryName
             
             handleCategoriesChange([...currentCategories, createdName])
+            
+            // Add to options if not present
+            setCategoryOptions(prev => {
+                const nameToAdd = createdName || newCategoryName
+                if (prev.some(o => o.value === nameToAdd)) return prev
+                return [...prev, { value: nameToAdd, label: nameToAdd }]
+            })
         })
     }
 
@@ -68,6 +100,8 @@ export function CategorySelector({ storeId }: { storeId?: number }) {
             disabled={disabled || isPending}
             tooltip="Las categorías ayudan a organizar tus productos."
             startIcon={<Layers />}
+            endIcon={isPending ? <Loader2 className="animate-spin" /> : undefined}
+            options={categoryOptions}
         />
     )
 }

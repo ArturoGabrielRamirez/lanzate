@@ -1,4 +1,5 @@
-export { getStoreCategoriesData as getStoreCategories } from "@/features/categories/data/get-store-categories.data"
+/* export { getStoreCategoriesData as getStoreCategories } from "@/features/categories/data/get-store-categories.data" */
+export * as categoriesData from "@/features/categories/data/get-store-categories.data"
 export { searchCategories } from "@/features/categories/data/search-categories.data"
 export { getStoreIdBySlugData as getStoreIdBySlug } from "@/features/categories/data/get-store-id-by-slug.data"
 export { getStoreIdBySubdomainData as getStoreIdBySubdomain } from "@/features/categories/data/get-store-id-by-subdomain.data"
