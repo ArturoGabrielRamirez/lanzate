@@ -5,10 +5,12 @@ import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
+import { SelectField } from "@/features/global/components/form/select-field"
 import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
-import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
+import { CreateProductFormType, OptionType } from "@/features/products/schemas/create-product-form-schema"
 import { Button } from "@/features/shadcn/components/button"
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
 import { Item, ItemActions, ItemContent, ItemTitle } from "@/features/shadcn/components/item"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { Badge } from "@/features/shadcn/components/ui/badge"
@@ -111,7 +113,7 @@ export function OptionsVariantsProductPanel() {
 
     const addOption = () => {
         const id = generateId()
-        const newOptions = [...options, { id, name: "", values: [] }]
+        const newOptions = [...options, { id, name: "", values: [], type: OptionType.TEXT }]
         setValue("options_variants_info.options", newOptions)
         setEditingOptions(prev => ({ ...prev, [id]: true }))
     }
@@ -149,6 +151,14 @@ export function OptionsVariantsProductPanel() {
         if (option.id) {
             setEditingOptions(prev => ({ ...prev, [option.id!]: true }))
         }
+    }
+
+    const updateOptionType = (index: number, type: OptionType) => {
+        const newOptions = [...options]
+        // If type changes, we might want to clear values or keep them if compatible
+        // For now, let's keep them, assuming string values are compatible
+        newOptions[index].type = type
+        setValue("options_variants_info.options", newOptions)
     }
 
     const updateOptionValues = (index: number, values: string[]) => {
@@ -242,27 +252,70 @@ export function OptionsVariantsProductPanel() {
                                 return (
                                     <Card key={option.id || index}>
                                         <CardContent className="flex flex-col gap-4">
-                                            <InputField
-                                                name={`options_variants_info.options.${index}.name`}
-                                                label="Nombre"
-                                                placeholder="Nombre de opción (ej: Color, Talle)"
-                                                className="flex-1"
-                                                disabled={disabled}
-                                                isRequired
-                                                tooltip="Es el nombre de la opción que se mostrará como filtro en la tienda."
-                                                startIcon={<Box />}
-                                            />
-                                            <TagsField
-                                                label="Valores"
-                                                value={option.values?.map(v => v.value) || []}
-                                                onChange={(newValues) => updateOptionValues(index, newValues)}
-                                                placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
-                                                disabled={disabled}
-                                                tooltip="Es el valor de la opción que se mostrará como filtro en la tienda."
-                                                isRequired
-                                                startIcon={<Box />}
-                                            />
-                                            <div className="flex justify-end gap-2">
+                                            <div className="flex gap-4 items-start">
+                                                <InputField
+                                                    name={`options_variants_info.options.${index}.name`}
+                                                    label="Nombre"
+                                                    placeholder="Nombre de opción (ej: Color, Talle)"
+                                                    className="flex-1"
+                                                    disabled={disabled}
+                                                    isRequired
+                                                    tooltip="Es el nombre de la opción que se mostrará como filtro en la tienda."
+                                                    startIcon={<Box />}
+                                                />
+                                                <div className="w-[180px]">
+                                                    <SelectField
+                                                        name={`options_variants_info.options.${index}.type`}
+                                                        label="Tipo"
+                                                        isRequired
+                                                        placeholder="Tipo"
+                                                        options={[
+                                                            { value: OptionType.TEXT, label: "Texto" },
+                                                            { value: OptionType.NUMBER, label: "Número" },
+                                                            { value: OptionType.COLOR, label: "Color" },
+                                                            { value: OptionType.IMAGE, label: "Imagen" }
+                                                        ]}
+                                                        disabled={disabled}
+                                                        onChange={(val) => updateOptionType(index, val as OptionType)}
+                                                        value={option.type || OptionType.TEXT}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            {option.type === OptionType.TEXT ? (
+                                                <TagsField
+                                                    label="Valores"
+                                                    value={option.values?.map(v => v.value) || []}
+                                                    onChange={(newValues) => updateOptionValues(index, newValues)}
+                                                    placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
+                                                    disabled={disabled}
+                                                    tooltip="Es el valor de la opción que se mostrará como filtro en la tienda."
+                                                    isRequired
+                                                    startIcon={<Box />}
+                                                />
+                                            ) : (
+                                                <div className="border rounded-md p-6 bg-muted/20">
+                                                    <Empty>
+                                                        <EmptyHeader>
+                                                            <EmptyMedia>
+                                                                <Boxes className="w-10 h-10 text-muted-foreground/50" />
+                                                            </EmptyMedia>
+                                                            <EmptyTitle>Próximamente</EmptyTitle>
+                                                            <EmptyDescription>La edición de este tipo de opción estará disponible pronto.</EmptyDescription>
+                                                        </EmptyHeader>
+                                                        <EmptyContent>
+                                                            <Button 
+                                                                variant="outline" 
+                                                                onClick={() => updateOptionType(index, OptionType.TEXT)}
+                                                            >
+                                                                Volver a Texto
+                                                            </Button>
+                                                        </EmptyContent>
+                                                    </Empty>
+                                                </div>
+                                            )}
+                                            
+                                            <div className="flex justify-end gap-2 mt-2">
                                                 <Button variant="destructive" onClick={() => removeOption(index)}>
                                                     <Trash2 className="w-4 h-4 mr-2" /> Eliminar
                                                 </Button>

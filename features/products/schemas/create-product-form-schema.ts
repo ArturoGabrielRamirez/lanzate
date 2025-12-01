@@ -52,6 +52,13 @@ export const productMediaSchema = yup.object({
     })
 })
 
+export enum OptionType {
+    TEXT = "TEXT",
+    NUMBER = "NUMBER",
+    COLOR = "COLOR",
+    IMAGE = "IMAGE"
+}
+
 // Options & Variants Schema
 export const productOptionsVariantsSchema = yup.object({
     options_variants_info: yup.object({
@@ -60,6 +67,7 @@ export const productOptionsVariantsSchema = yup.object({
             yup.object({
                 id: yup.string().optional(), // temp id for UI
                 name: yup.string().required("El nombre de la opción es requerido"),
+                type: yup.mixed<OptionType>().oneOf(Object.values(OptionType)).default(OptionType.TEXT),
                 values: yup.array().of(
                     yup.object({
                         id: yup.string().optional(),
