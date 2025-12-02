@@ -5,13 +5,12 @@ import { Check, Loader } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Form } from "@/features/global/components/form/form"
-import { ServerResponse } from "@/features/global/types"
+import type { ServerResponse } from "@/features/global/types"
 import { BasicInfoProductPanel } from "@/features/products/components/create-form/basic-info-product-panel"
 import { ConfigurationsProductPanel } from "@/features/products/components/create-form/configurations-product-panel"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { MediaProductPanel } from "@/features/products/components/create-form/media-product-panel"
 import { OptionsVariantsProductPanel } from "@/features/products/components/create-form/options-variants-product-panel"
-// import { SettingsProductPanel } from "@/features/products/components/create-form/settings-product-panel"
 import { StepIndicator } from "@/features/products/components/create-form/step-indicator"
 import { TypeSpecificProductPanel } from "@/features/products/components/create-form/type-specific-product-panel"
 import {
@@ -26,9 +25,6 @@ import {
     ProductOptionsVariantsFormType,
     productTypeSpecificSchema,
     ProductTypeSpecificFormType,
-    /* 
-    productSettingsSchema,
-    ProductSettingsFormType */
 } from "@/features/products/schemas/create-product-form-schema"
 import Stepper, { Step } from "@/features/shadcn/components/Stepper"
 
@@ -107,14 +103,6 @@ export function CreateProductForm({ onSubmitAll, onExitFlow, storeId }: CreatePr
                     <ConfigurationsProductPanel />
                 </Form>
             </Step>
-            
-            {/* 
-            <Step>
-                <Form<ProductSettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(productSettingsSchema as never)}>
-                    <SettingsProductPanel />
-                </Form>
-            </Step>
-            */}
             
             {step === 6 && (
                 <Step className="!p-0 !pt-10 !pb-2">
