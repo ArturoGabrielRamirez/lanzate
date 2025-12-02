@@ -33,12 +33,12 @@ export function OptionsVariantsProductPanel() {
     const hasVariants = watch("options_variants_info.has_variants")
     const options = watch("options_variants_info.options") || []
     const variants = watch("options_variants_info.variants") || []
-    
+
     // Price & Stock fields for simple products
     const price = watch("price_stock_info.price")
     const stock = watch("price_stock_info.stock")
     const stockUnlimited = watch("price_stock_info.stock_unlimited")
-    
+
     // Track which options are currently being edited
     const [editingOptions, setEditingOptions] = useState<Record<string, boolean>>({})
 
@@ -133,7 +133,7 @@ export function OptionsVariantsProductPanel() {
         const selected = Array.from(selection)[0]
         const isVariant = selected === "variants"
         setValue("options_variants_info.has_variants", isVariant)
-        
+
         setCtxValues({
             ...values,
             options_variants_info: {
@@ -148,7 +148,7 @@ export function OptionsVariantsProductPanel() {
         const newOptions = [...options, { id, name: "", values: [], type: OptionType.TEXT }]
         setValue("options_variants_info.options", newOptions)
         setEditingOptions(prev => ({ ...prev, [id]: true }))
-        
+
         setCtxValues({
             ...values,
             options_variants_info: {
@@ -163,7 +163,7 @@ export function OptionsVariantsProductPanel() {
         const removedId = newOptions[index].id
         newOptions.splice(index, 1)
         const newVariants = generateVariants(newOptions)
-        
+
         setValue("options_variants_info.options", newOptions)
         setValue("options_variants_info.variants", newVariants)
 
@@ -195,14 +195,14 @@ export function OptionsVariantsProductPanel() {
             // Trigger variant generation
             const newVariants = generateVariants(options)
             setValue("options_variants_info.variants", newVariants)
-            
+
             setCtxValues({
                 ...values,
                 options_variants_info: {
                     ...values.options_variants_info,
                     variants: newVariants,
                     // options are already updated in their respective handlers, but let's ensure sync just in case
-                    options: options 
+                    options: options
                 }
             })
         }
@@ -221,7 +221,7 @@ export function OptionsVariantsProductPanel() {
         // For now, let's keep them, assuming string values are compatible
         newOptions[index].type = type
         setValue("options_variants_info.options", newOptions)
-        
+
         setCtxValues({
             ...values,
             options_variants_info: {
@@ -241,7 +241,7 @@ export function OptionsVariantsProductPanel() {
 
         newOptions[index].values = newValuesObj
         setValue("options_variants_info.options", newOptions)
-        
+
         let newVariants = variants;
 
         // Only regenerate variants if we are NOT in editing mode (e.g. removing tags from view mode)
@@ -251,7 +251,7 @@ export function OptionsVariantsProductPanel() {
             newVariants = generateVariants(newOptions)
             setValue("options_variants_info.variants", newVariants)
         }
-        
+
         setCtxValues({
             ...values,
             options_variants_info: {
@@ -293,26 +293,11 @@ export function OptionsVariantsProductPanel() {
             {hasVariants && (
                 <div className="animate-in fade-in slide-in-from-top-4 duration-300 flex flex-col gap-4">
                     <Accordion type="single" collapsible className="w-full" defaultValue="options">
-                        <AccordionItem value="options" className="border-none">
-                            <AccordionTrigger className="hover:no-underline py-2">
-                                <div className="flex items-center justify-between w-full mr-4">
-                                    <h3 className="text-sm font-medium">Opciones del Producto</h3>
-                                    {!isEditingAnyOption && options.length > 0 && (
-                                        <Button 
-                                            variant="outline" 
-                                            onClick={(e) => {
-                                                e.stopPropagation()
-                                                addOption()
-                                            }} 
-                                            size="sm"
-                                            className="ml-auto"
-                                        >
-                                            <Plus /> Agregar opción
-                                        </Button>
-                                    )}
-                                </div>
+                        <AccordionItem value="options" className="border-none flex flex-col gap-1">
+                            <AccordionTrigger className="hover:no-underline py-0">
+                                <p className="text-sm font-medium">Opciones del Producto</p>
                             </AccordionTrigger>
-                            <AccordionContent className="pt-4">
+                            <AccordionContent className="flex flex-col gap-2 pb-1">
                                 {options.length === 0 && !isEditingAnyOption && (
                                     <div className="border-2 border-dashed rounded-lg p-8 text-center">
                                         <p className="text-muted-foreground">No hay opciones configuradas</p>
@@ -360,7 +345,7 @@ export function OptionsVariantsProductPanel() {
                                                             placeholder="Tipo"
                                                             options={[
                                                                 { value: OptionType.TEXT, label: "Texto", description: "Ej: S, M, L" },
-                                                                { value: OptionType.NUMBER, label: "Número", description: "Ej: 28, 30, 32" },   
+                                                                { value: OptionType.NUMBER, label: "Número", description: "Ej: 28, 30, 32" },
                                                                 { value: OptionType.COLOR, label: "Colores", description: "Paleta de colores" },
                                                                 { value: OptionType.IMAGE, label: "Imágenes", description: "Texturas/materiales" }
                                                             ]}
@@ -432,7 +417,7 @@ export function OptionsVariantsProductPanel() {
                                             // Hide non-editing items when editing any option
                                             if (isEditingAnyOption) return null
                                             return (
-                                                <Item variant="outline" key={option.id || index}>
+                                                <Item variant="outline" key={option.id || index} size="sm">
                                                     <ItemContent className="flex-1">
                                                         <ItemTitle>{option.name}</ItemTitle>
                                                         <div className="flex flex-wrap gap-2">
@@ -458,10 +443,10 @@ export function OptionsVariantsProductPanel() {
                                                         </div>
                                                     </ItemContent>
                                                     <ItemActions>
-                                                        <Button variant="ghost" size="icon" onClick={() => editOption(index)} disabled={disabled}>
+                                                        <Button variant="ghost" size="icon-sm" onClick={() => editOption(index)} disabled={disabled}>
                                                             <Edit2 className="h-4 w-4 text-muted-foreground" />
                                                         </Button>
-                                                        <Button variant="ghost" size="icon" onClick={() => removeOption(index)} disabled={disabled} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                                                        <Button variant="ghost" size="icon-sm" onClick={() => removeOption(index)} disabled={disabled} className="text-destructive hover:text-destructive hover:bg-destructive/10">
                                                             <Trash2 className="h-4 w-4" />
                                                         </Button>
                                                     </ItemActions>
@@ -469,6 +454,21 @@ export function OptionsVariantsProductPanel() {
                                             )
                                         }
                                     })}
+                                </div>
+                                <div className="flex justify-end">
+                                    {!isEditingAnyOption && options.length > 0 && (
+                                        <Button
+                                            variant="outline"
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                addOption()
+                                            }}
+                                            size="sm"
+                                            className="ml-auto"
+                                        >
+                                            <Plus /> Agregar opción
+                                        </Button>
+                                    )}
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
@@ -553,13 +553,10 @@ export function OptionsVariantsProductPanel() {
                 <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300 delay-150">
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="variants" className="border-none">
-                            <AccordionTrigger className="hover:no-underline py-2">
-                                <div className="flex items-center justify-between w-full mr-4">
-                                    <h3 className="text-sm font-medium">Variantes Generadas ({variants.length})</h3>
-
-                                </div>
+                            <AccordionTrigger className="hover:no-underline py-0">
+                                <p className="text-sm font-medium">Variantes Generadas ({variants.length})</p>
                             </AccordionTrigger>
-                            <AccordionContent className="pt-4">
+                            <AccordionContent className="pb-1">
                                 <VariantsTable />
                             </AccordionContent>
                         </AccordionItem>
