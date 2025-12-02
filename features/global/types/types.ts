@@ -27,7 +27,7 @@ export interface ReplyEmailTemplateProps {
 }
 
 export interface ReplyFormProps {
-    messageId?: string; // ID del mensaje en DB
+    messageId?: string;
     recipientEmail: string;
     recipientName?: string;
     category?: string;
@@ -85,12 +85,10 @@ export type InputFieldProps = {
     endContent?: React.ReactNode
     placeholder?: string,
     disabled?: boolean
-
     isTextArea?: boolean
     isRequired?: boolean
     inputMode?: "search" | "text" | "numeric" | "none" | "tel" | "url" | "email" | "decimal" | undefined
     maxLength?: number
-
 }
 
 export type LandingSectionIconTitleProps = {
@@ -103,22 +101,6 @@ export type LandingSectionIconTitleProps = {
 export type LandingSectionTitleProps = {
     children: React.ReactNode
     className?: string
-}
-
-export interface EmailTemplateProps {
-    name?: string;
-    email: string;
-    category?: string;
-    message: string;
-}
-
-export interface ReplyEmailTemplateProps {
-    recipientName?: string;
-    recipientEmail: string;
-    category?: string;
-    originalMessage: string;
-    replyMessage: string;
-    agentName?: string;
 }
 
 export interface WaitlistWelcomeProps {
@@ -135,12 +117,12 @@ export interface ShortcutHintProps {
 export interface KeyboardShortcut {
     keys: string[]
     description: string
-    category: 'global' | 'sale'
+    category: 'global' | 'sale' | 'account' | 'security' | 'membership' | 'danger-zone'
     condition?: string
 }
 
 export interface KeyboardShortcutsConfig {
-    // Callbacks para acciones específicas
+    // ============ SALE CALLBACKS ============
     onNewSale?: () => void
     onFinalizeSale?: () => void
     onCalculateChange?: () => void
@@ -152,10 +134,53 @@ export interface KeyboardShortcutsConfig {
     onIncreaseQuantity?: () => void
     onDecreaseQuantity?: () => void
 
-    // Control de contexto
+    // ============ ACCOUNT CALLBACKS ============
+    onEditProfile?: () => void
+    onChangeAvatar?: () => void
+    onChangeEmail?: () => void
+    onChangePassword?: () => void
+    onUpgradePlan?: () => void
+    onCancelSubscription?: () => void
+    onDeleteAccount?: () => void
+
+    // ============ CONTEXT CONTROL ============
+    // Sale context
     isInSale?: boolean
     hasCartItems?: boolean
 
-    // Deshabilitar shortcuts globalmente
+    // Account context
+    isInAccount?: boolean
+    activeAccountTab?: 'account' | 'security' | 'membership' | 'danger-zone'
+
+    // Global control
     disabled?: boolean
+
+    onNavigateToAccount?: () => void
+    onNavigateToSecurity?: () => void
+    onNavigateToMembership?: () => void
+    onNavigateToDangerZone?: () => void
+}
+
+export type HintMode = 'always' | 'hover' | 'never'
+
+export interface KeyboardShortcutsStore {
+    hintMode: HintMode
+    setHintMode: (mode: HintMode) => void
+    toggleHintMode: () => void
+}
+
+export interface KeyboardShortcutsHelpProps {
+    isInSale?: boolean
+    isInAccount?: boolean
+    activeAccountTab?: 'account' | 'security' | 'membership' | 'danger-zone'
+}
+
+export interface DangerZoneRef {
+    openDeleteDialog: () => void
+}
+
+declare global {
+    interface Window {
+        dangerZoneRef?: React.RefObject<DangerZoneRef | null>  // ✅ Agregar | null
+    }
 }

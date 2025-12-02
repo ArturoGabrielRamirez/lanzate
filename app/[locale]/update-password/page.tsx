@@ -39,8 +39,9 @@ export default async function UpdatePasswordPage() {
                     <Image
                         src={updatePasswordImage}
                         alt={t('image.alt')}
-                        width={5}
+                        /* width={5} */
                         className="antialiased object-bottom drop-shadow-xl drop-shadow/20"
+                        fill
                     />
                 </div>
             </div>

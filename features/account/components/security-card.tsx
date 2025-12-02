@@ -10,20 +10,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/comp
 export function SecurityCard({ user }: { user: UserType }) {
     const truncateEmail = (email: string, maxLength: number = 20) => {
         if (email.length <= maxLength) return email
-
         const [localPart, domain] = email.split('@')
         const truncatedLocal = localPart.length > 8
             ? localPart.substring(0, 6) + '...'
             : localPart
-
-        return `${truncatedLocal}@${domain}`
+        return `${truncatedLocal}@${domain}` //TODO:Unificar esto o hasta depurar el truncate d elos email
     }
 
     return (
         <Card>
             <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
-                    <Shield className="size-4" />
+                    <Shield className="size-5" />
                     Seguridad
                 </CardTitle>
             </CardHeader>
@@ -42,11 +40,13 @@ export function SecurityCard({ user }: { user: UserType }) {
                             </div>
                         </div>
                         <div className="flex-shrink-0 w-full lg:w-auto">
-                            <ChangeEmailButton
-                                buttonText={<Edit className="size-4" />}
-                                title="Cambiar email"
-                                currentEmail={user.email}
-                            />
+                            <div data-action="change-email">
+                                <ChangeEmailButton
+                                    buttonText={<Edit className="size-4" />}
+                                    title="Cambiar email"
+                                    currentEmail={user.email}
+                                />
+                            </div>
                         </div>
                     </div>
 
@@ -60,10 +60,12 @@ export function SecurityCard({ user }: { user: UserType }) {
                             </div>
                         </div>
                         <div className="flex-shrink-0 w-full lg:w-auto">
-                            <ChangePasswordButton
-                                buttonText={<Edit className="size-4" />}
-                                title="Cambiar contraseña"
-                            />
+                            <div data-action="change-password">
+                                <ChangePasswordButton
+                                    buttonText={<Edit className="size-4" />}
+                                    title="Cambiar contraseña"
+                                />
+                            </div>
                         </div>
                     </div>
 

@@ -3,12 +3,9 @@
 import { useTranslations } from "next-intl";
 import { useState } from 'react';
 
-
 import { ContactForm } from "@/features/global/components/contact-us/contact-form";
 import { Button } from "@/features/shadcn/components/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/features/shadcn/components/ui/dialog";
-
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/features/shadcn/components/ui/dialog";
 
 function HelpDialogButton({ asChild = false }: { asChild?: boolean }) {
     const t = useTranslations("dashboard.help");
@@ -22,19 +19,20 @@ function HelpDialogButton({ asChild = false }: { asChild?: boolean }) {
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                    <DialogTitle>
+                        {t("dialog.title")}
+                    </DialogTitle>
+                </DialogHeader>
                 <div className="space-y-6">
-                    <div className="space-y-2">
-                        <h2 className="text-2xl font-bold text-foreground">
-                            {t("dialog.title")}
-                        </h2>
-                        <p className="text-muted-foreground">
-                            {t("dialog.description")}
-                        </p>
-                    </div>
+                    <p className="text-muted-foreground">
+                        {t("dialog.description")}
+                    </p>
                     <ContactForm onSuccess={() => setOpen(false)} />
                 </div>
             </DialogContent>
-        </Dialog>)
+        </Dialog>
+    )
 }
 
 export { HelpDialogButton };

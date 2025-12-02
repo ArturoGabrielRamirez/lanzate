@@ -1,9 +1,15 @@
-import { Calendar, Phone, User } from "lucide-react";
+"use client"
+import { Calendar, Phone, User } from "lucide-react"
 
-import { AccountDetailsTabProps, UserType } from "@/features/account/types";
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
+import { BasicInfoCardProps } from "@/features/account/types"
+import { ProfileEditor } from "@/features/auth/components/profile/profile-editor"
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
-export function BasicInfoCard({ user, immediateData }: { user: UserType; immediateData?: AccountDetailsTabProps['immediateData'] }) {
+export function BasicInfoCard({
+    user,
+    immediateData,
+    onProfileUpdate
+}: BasicInfoCardProps) {
     const formatDate = (date: string | Date) => {
         return new Date(date).toLocaleDateString('es-ES', {
             day: '2-digit',
@@ -12,13 +18,31 @@ export function BasicInfoCard({ user, immediateData }: { user: UserType; immedia
         })
     }
 
+    // Preparar los valores que se pasarán a ProfileEditor
+    const currentUsername = immediateData?.username || user.username || ""
+    const currentFirstName = immediateData?.firstName || user.first_name || ""
+    const currentLastName = immediateData?.lastName || user.last_name || ""
+    const currentPhone = immediateData?.phone || user.phone || ""
+
     return (
         <Card>
             <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                    <User className="size-4" />
-                    Información básica
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2 text-lg whitespace-nowrap w-full">
+                        <User className="size-5" />
+                        Información básica
+                    </CardTitle>
+                    <div className="size-4 pr-7">
+                        <ProfileEditor
+                            currentEmail={user.email}
+                            currentUsername={currentUsername}
+                            currentFirstName={currentFirstName}
+                            currentLastName={currentLastName}
+                            currentPhone={currentPhone}
+                            onProfileUpdate={onProfileUpdate}
+                        />
+                    </div>
+                </div>
             </CardHeader>
             <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

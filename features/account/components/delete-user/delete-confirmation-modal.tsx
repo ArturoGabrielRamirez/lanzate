@@ -1,5 +1,5 @@
 import { AlertTriangle, X } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { validators, DELETION_CONSTANTS } from "@/features/account/utils/utils"
 import { Alert, AlertDescription } from "@/features/shadcn/components/ui/alert"
@@ -28,6 +28,27 @@ export function DeleteConfirmationModal({
     isLoading: boolean;
 }) {
     const [errors, setErrors] = useState<{ reason?: string; password?: string }>({});
+
+    // Manejar ESC para cerrar el modal
+    useEffect(() => {
+        const handleEscape = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && isOpen && !isLoading) {
+                e.preventDefault();
+                onClose();
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('keydown', handleEscape);
+            // Prevenir scroll del body cuando el modal está abierto
+            document.body.style.overflow = 'hidden';
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleEscape);
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen, isLoading, onClose]);
 
     if (!isOpen) return null;
 
@@ -69,10 +90,22 @@ export function DeleteConfirmationModal({
         }
     };
 
-    return (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-800 border border-gray-700 rounded-lg max-w-md w-full">
+    // Cerrar al hacer click fuera del modal (backdrop)
+    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (e.target === e.currentTarget && !isLoading) {
+            onClose();
+        }
+    };
 
+    return (
+        <div 
+            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+            onClick={handleBackdropClick}
+        >
+            <div 
+                className="bg-gray-800 border border-gray-700 rounded-lg max-w-md w-full"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <div className="flex items-center justify-between p-6 border-b border-gray-700">
                     <h3 className="text-lg font-semibold text-red-400">
                         Confirmar eliminación de cuenta
@@ -81,15 +114,14 @@ export function DeleteConfirmationModal({
                         variant="ghost"
                         size="sm"
                         onClick={onClose}
+                        disabled={isLoading}
                         className="h-8 w-8 p-0 text-gray-400 hover:text-white hover:bg-gray-700"
                     >
                         <X className="h-4 w-4" />
                     </Button>
                 </div>
 
-
                 <div className="p-6 space-y-4">
-
                     <Alert className="bg-red-500/10 border-red-500/30">
                         <AlertTriangle className="h-4 w-4 text-red-400" />
                         <AlertDescription className="text-red-400">
@@ -98,7 +130,6 @@ export function DeleteConfirmationModal({
                             serán eliminados permanentemente después de {DELETION_CONSTANTS.GRACE_PERIOD_DAYS} días.
                         </AlertDescription>
                     </Alert>
-
 
                     <div className="space-y-2">
                         <Label htmlFor="reason" className="text-gray-300">
@@ -113,6 +144,7 @@ export function DeleteConfirmationModal({
                                 }`}
                             rows={3}
                             minLength={DELETION_CONSTANTS.MIN_REASON_LENGTH}
+                            disabled={isLoading}
                         />
                         {errors.reason && (
                             <p className="text-red-400 text-sm">{errors.reason}</p>
@@ -134,6 +166,7 @@ export function DeleteConfirmationModal({
                             placeholder="Ingresa tu contraseña actual"
                             className={`bg-gray-900 border-gray-600 text-white placeholder-gray-400 focus:border-red-400 ${errors.password ? 'border-red-500' : ''
                                 }`}
+                            disabled={isLoading}
                         />
                         {errors.password && (
                             <p className="text-red-400 text-sm">{errors.password}</p>
@@ -154,7 +187,7 @@ export function DeleteConfirmationModal({
                             className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
                             disabled={isLoading}
                         >
-                            Cancelar
+                            Cancelar <span className="ml-2 text-xs opacity-70">(Esc)</span>
                         </Button>
                         <Button
                             onClick={handleConfirm}

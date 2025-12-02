@@ -29,7 +29,7 @@ export interface UserType {
     first_name: string | null
     last_name: string | null
     username: string | null
-    phone?: string | null  // Esto acepta string, null, o undefined
+    phone?: string | null
     password?: string
     updated_at?: string | Date
     supabase_user_id: string | null
@@ -283,10 +283,19 @@ export interface AccountDetailsTabProps {
         storesCount: number
         accountType: string
     }
+    /*  onBannerUpdate?: (url: string | null) => void */
+    onProfileUpdate: (profile: {
+        username: string | null
+        firstName: string | null
+        lastName: string | null
+        phone: string | null
+    }) => void
 }
 
 export interface AccountBannerHeaderProps extends AccountHeaderProps {
     onBannerUpdate?: (url: string | null) => void
+    editProfileButtonRef?: React.RefObject<HTMLButtonElement>
+    changeAvatarButtonRef?: React.RefObject<HTMLButtonElement>
 }
 
 export interface DeletionRequestedViewProps {
@@ -299,4 +308,27 @@ export interface ActionTimeLeft {
     minutes: number;
     seconds: number;
     totalMinutes: number;
+}
+
+export interface BasicInfoCardProps {
+    user: UserType;
+    immediateData?: AccountDetailsTabProps['immediateData'];
+    onProfileUpdate: (profile: {
+        username: string | null
+        firstName: string | null
+        lastName: string | null
+        phone: string | null
+    }) => void;
+}
+
+export interface AccountStatsProps {
+    user: UserType
+    immediateData?: AccountDetailsTabProps['immediateData']
+}
+
+export interface DeletionCheckResult {
+    isDeletionRequested: boolean
+    canCancel: boolean
+    isAnonymized: boolean
+    displayScheduledAt: string | null
 }

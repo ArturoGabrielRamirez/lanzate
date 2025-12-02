@@ -14,7 +14,7 @@ function LoadingSubmitButtonContext({ text = "Submit", disabled = false, classNa
     return (
         <Button type="submit" disabled={isSubmitting || disabled} className={cn("bg-gradient-to-t from-chart-5 to-primary", className)} size={"lg"}>
             {isSubmitting && <Loader className="w-4 h-4 animate-spin" />}
-            {isSubmitting ? "Loading..." : text}
+            {isSubmitting ? "Cargando..." : text}
         </Button>
     )
 }

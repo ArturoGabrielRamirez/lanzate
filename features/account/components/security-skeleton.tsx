@@ -1,7 +1,7 @@
-import { Shield } from "lucide-react";
+import { Shield } from "lucide-react"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card";
-import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 
 export function SecuritySkeleton() {
     return (

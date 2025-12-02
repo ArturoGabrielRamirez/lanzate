@@ -147,6 +147,7 @@ export interface MediaSelectorProps {
   userEmail?: string
   storeId?: number
   productId?: number
+  ref?: React.RefObject<HTMLButtonElement>
 }
 
 export interface UploadProgressProps {

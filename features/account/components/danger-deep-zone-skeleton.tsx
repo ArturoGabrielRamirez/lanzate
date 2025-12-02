@@ -1,4 +1,4 @@
-import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton"
 
 export function DangerDeepZoneSkeleton() {
     return (

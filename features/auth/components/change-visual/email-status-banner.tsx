@@ -17,7 +17,6 @@ function EmailStatusBanner() {
     const handleSmartResend = async () => {
         setIsResending(true);
 
-        console.log('Resending email for status en EmailStatusBanner:', status);
         try {
             const payload: { type: 'email_change'; step?: 'old_email' | 'new_email' } = {
                 type: 'email_change'
@@ -109,7 +108,7 @@ function EmailStatusBanner() {
                         <div className="flex-1">
                             <strong>Último paso (2/2):</strong>
                             <div className="text-sm opacity-75 mt-1">
-                                Tu antiguo email fue confirmado. Ahora confirma tu nuevo email: <strong>{status.newEmail}</strong>
+                                Tu antiguo email fue confirmado. Ahora confirmá tu nuevo email: <strong>{status.newEmail}</strong>
                             </div>
                         </div>
                         <Button
@@ -140,7 +139,7 @@ function EmailStatusBanner() {
                     <div className="flex-1">
                         <strong>Cambio de email en progreso (1/2):</strong>
                         <div className="text-sm opacity-75 mt-1">
-                            Confirma tu email actual para continuar con el cambio a: <strong>{status.currentEmail}</strong>
+                            Confirmá tu email actual para continuar con el cambio a: <strong>{status.currentEmail}</strong>
                         </div>
                     </div>
                     <Button
