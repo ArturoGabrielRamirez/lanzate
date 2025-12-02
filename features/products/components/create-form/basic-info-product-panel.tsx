@@ -1,8 +1,7 @@
 "use client"
 
-import { Box, CloudDownload, Wrench, ShoppingBag, Link, Tag } from "lucide-react"
+import { Box, ShoppingBag, Link, Tag } from "lucide-react"
 import { useCallback, useEffect } from "react"
-import { Selection } from "react-aria-components"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
@@ -12,9 +11,6 @@ import { CategorySelector } from "@/features/products/components/create-form/cat
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { CreateProductFormType, ProductType } from "@/features/products/schemas/create-product-form-schema"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
-import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
-import { Label } from "@/features/shadcn/components/ui/label"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { slugify } from "@/features/stores/utils"
 
 
@@ -51,14 +47,6 @@ export function BasicInfoProductPanel({ storeId }: { storeId?: number }) {
         const description = e.target.value
         setValues({ ...values, basic_info: { ...values.basic_info, description } })
         setValue("basic_info.description", description, { shouldValidate: true, shouldDirty: true })
-    }, [setValues, setValue, values])
-
-    const handleTypeChange = useCallback((keys: Selection) => {
-        const selected = Array.from(keys)[0] as ProductType
-        if (selected) {
-            setValues({ ...values, basic_info: { ...values.basic_info, type: selected } })
-            setValue("basic_info.type", selected, { shouldValidate: true, shouldDirty: true })
-        }
     }, [setValues, setValue, values])
 
     const handleBrandChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,40 +91,6 @@ export function BasicInfoProductPanel({ storeId }: { storeId?: number }) {
                 onChange={handleDescriptionChange}
                 disabled={disabled}
             />
-
-            <div className="flex flex-col gap-1">
-                <Label className="text-sm font-medium">Tipo de Producto</Label>
-                <ChoiceBox
-                    columns={3}
-                    gap={4}
-                    selectedKeys={values.basic_info.type ? [values.basic_info.type] : []}
-                    onSelectionChange={handleTypeChange}
-                    selectionMode="single"
-                >
-                    <ChoiceBoxItem id={ProductType.PHYSICAL} textValue="Físico">
-                        <Box />
-                        <ChoiceBoxLabel>Físico</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>Producto tangible que requiere envío.</ChoiceBoxDescription>
-                    </ChoiceBoxItem>
-                    <ChoiceBoxItem id={ProductType.DIGITAL} textValue="Digital">
-                        <CloudDownload />
-                        <ChoiceBoxLabel>Digital</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>Archivo o contenido descargable.</ChoiceBoxDescription>
-                    </ChoiceBoxItem>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <ChoiceBoxItem id={ProductType.SERVICE} textValue="Servicio" isDisabled>
-                                <Wrench />
-                                <ChoiceBoxLabel>Servicio</ChoiceBoxLabel>
-                                <ChoiceBoxDescription>Servicio profesional o consultoría.</ChoiceBoxDescription>
-                            </ChoiceBoxItem>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Servicio no disponible. Próximamente.</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </ChoiceBox>
-            </div>
 
             <Accordion type="single" collapsible>
                 <AccordionItem value="advanced" className="border-none">
