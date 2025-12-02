@@ -522,7 +522,6 @@ export function OptionsVariantsProductPanel() {
                         />
                     </div>
 
-                    <Separator />
                     <div className="flex gap-4 flex-col">
                         <InputField
                             name="price_stock_info.stock"
@@ -543,7 +542,6 @@ export function OptionsVariantsProductPanel() {
                                 label="Rastrear stock"
                                 description="Actualizar automáticamente"
                             />
-                            <Separator />
                         </div>
                     </div>
                 </div>
