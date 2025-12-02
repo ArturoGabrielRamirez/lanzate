@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeft, Box, Boxes, Check, Copy, Edit2, Plus, Trash2, X } from "lucide-react"
+import { ArrowLeft, Box, Boxes, Check, Edit2, Plus, Trash2, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
@@ -8,6 +8,7 @@ import { InputField } from "@/features/global/components/form/input-field"
 import { SelectField } from "@/features/global/components/form/select-field"
 import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
+import { VariantsTable } from "@/features/products/components/create-form/variants-table"
 import { CreateProductFormType, OptionType } from "@/features/products/schemas/create-product-form-schema"
 import { Button } from "@/features/shadcn/components/button"
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
@@ -15,11 +16,10 @@ import { Item, ItemActions, ItemContent, ItemTitle } from "@/features/shadcn/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
-import { Input } from "@/features/shadcn/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/features/shadcn/components/ui/table"
 import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
+
 // Simple ID generator
 const generateId = () => Math.random().toString(36).substring(2, 9)
 
@@ -79,7 +79,7 @@ export function OptionsVariantsProductPanel() {
             if (variants.length === 0) isValid = false
         }
         setStepValid(3, isValid)
-    }, [/* hasVariants, options, variants, setStepValid */])
+    }, [hasVariants, options, variants, setStepValid])
 
 
     // Generate Variants based on Options
@@ -246,50 +246,6 @@ export function OptionsVariantsProductPanel() {
             options_variants_info: {
                 ...values.options_variants_info,
                 options: newOptions,
-                variants: newVariants
-            }
-        })
-    }
-
-    const removeVariant = (index: number) => {
-        const newVariants = [...variants]
-        newVariants.splice(index, 1)
-        setValue("options_variants_info.variants", newVariants)
-        
-        setCtxValues({
-            ...values,
-            options_variants_info: {
-                ...values.options_variants_info,
-                variants: newVariants
-            }
-        })
-    }
-
-    const updateVariant = (index: number, field: string, value: string | number) => {
-        const newVariants = [...variants]
-        // @ts-expect-error - dynamic field access
-        newVariants[index][field] = value
-        setValue("options_variants_info.variants", newVariants)
-        
-        setCtxValues({
-            ...values,
-            options_variants_info: {
-                ...values.options_variants_info,
-                variants: newVariants
-            }
-        })
-    }
-
-    const copyPriceToAll = () => {
-        if (variants.length === 0) return
-        const price = variants[0].price
-        const newVariants = variants.map(v => ({ ...v, price }))
-        setValue("options_variants_info.variants", newVariants)
-        
-        setCtxValues({
-            ...values,
-            options_variants_info: {
-                ...values.options_variants_info,
                 variants: newVariants
             }
         })
@@ -498,7 +454,7 @@ export function OptionsVariantsProductPanel() {
 
             {hasVariants && variants.length > 0 && !isEditingAnyOption && (
                 <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300 delay-150">
-                    <Accordion type="single" collapsible className="w-full" defaultValue="variants">
+                    <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="variants" className="border-none">
                             <AccordionTrigger className="hover:no-underline py-2">
                                 <div className="flex items-center justify-between w-full mr-4">
@@ -507,71 +463,7 @@ export function OptionsVariantsProductPanel() {
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="pt-4">
-                                <div className="flex flex-col gap-4">
-                                    <div className="border rounded-lg overflow-hidden">
-                                        <Table>
-                                            <TableHeader>
-                                                <TableRow>
-                                                    <TableHead>Variante</TableHead>
-                                                    <TableHead>SKU</TableHead>
-                                                    <TableHead>Precio</TableHead>
-                                                    <TableHead>Stock</TableHead>
-                                                    <TableHead className="w-[50px]"></TableHead>
-                                                </TableRow>
-                                            </TableHeader>
-                                            <TableBody className="overflow-x-auto">
-                                                {variants.map((variant, index) => (
-                                                    <TableRow key={variant.id}>
-                                                        <TableCell className="font-medium">
-                                                            <span className="bg-muted px-2 py-1 rounded text-xs">{variant.name}</span>
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <Input
-                                                                value={variant.sku || ""}
-                                                                onChange={(e) => updateVariant(index, "sku", e.target.value)}
-                                                                className="h-8 w-32"
-                                                                placeholder="SKU"
-                                                            />
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <Input
-                                                                type="number"
-                                                                value={variant.price}
-                                                                onChange={(e) => updateVariant(index, "price", parseFloat(e.target.value) || 0)}
-                                                                className="h-8 w-24"
-                                                                min={0}
-                                                            />
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <Input
-                                                                type="number"
-                                                                value={variant.stock}
-                                                                onChange={(e) => updateVariant(index, "stock", parseFloat(e.target.value) || 0)}
-                                                                className="h-8 w-24"
-                                                                min={0}
-                                                            />
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            <Button
-                                                                variant="ghost"
-                                                                size="icon"
-                                                                onClick={() => removeVariant(index)}
-                                                                className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                                                            >
-                                                                <Trash2 className="h-4 w-4" />
-                                                            </Button>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                ))}
-                                            </TableBody>
-                                        </Table>
-                                    </div>
-                                    <div className="flex justify-end">
-                                        <Button variant="outline" onClick={copyPriceToAll} className="gap-2">
-                                            <Copy className="h-4 w-4" /> Copiar precio a todas
-                                        </Button>
-                                    </div>
-                                </div>
+                                <VariantsTable />
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>

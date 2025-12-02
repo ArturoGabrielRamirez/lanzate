@@ -10,7 +10,7 @@ import { BasicInfoProductPanel } from "@/features/products/components/create-for
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { MediaProductPanel } from "@/features/products/components/create-form/media-product-panel"
 import { OptionsVariantsProductPanel } from "@/features/products/components/create-form/options-variants-product-panel"
-// import { PriceStockProductPanel } from "@/features/products/components/create-form/price-stock-product-panel"
+import { PriceStockProductPanel } from "@/features/products/components/create-form/price-stock-product-panel"
 // import { SettingsProductPanel } from "@/features/products/components/create-form/settings-product-panel"
 import { StepIndicator } from "@/features/products/components/create-form/step-indicator"
 import {
@@ -21,8 +21,9 @@ import {
     ProductMediaFormType,
     productOptionsVariantsSchema,
     ProductOptionsVariantsFormType,
-    /* productPriceStockSchema,
+    productPriceStockSchema,
     ProductPriceStockFormType,
+    /* 
     productSettingsSchema,
     ProductSettingsFormType */
 } from "@/features/products/schemas/create-product-form-schema"
@@ -42,10 +43,10 @@ export function CreateProductForm({ onSubmitAll, onExitFlow, storeId }: CreatePr
 
     const allowedMaxStep = (() => {
         let max = 1
-        for (let s = 1; s <= 2; s++) { // Check steps 1, 2 (Step 3 is final now)
+        for (let s = 1; s <= 3; s++) { // Check steps 1, 2, 3
             if (isStepValid[s]) max = s + 1; else break
         }
-        return Math.min(max, 3)
+        return Math.min(max, 4)
     })()
 
     const handleFinalStepCompleted = async () => {
@@ -92,13 +93,13 @@ export function CreateProductForm({ onSubmitAll, onExitFlow, storeId }: CreatePr
                 </Form>
             </Step>
 
-            {/* 
             <Step>
                 <Form<ProductPriceStockFormType> contentButton="" submitButton={false} resolver={yupResolver(productPriceStockSchema as never)}>
                     <PriceStockProductPanel />
                 </Form>
             </Step>
             
+            {/* 
             <Step>
                 <Form<ProductSettingsFormType> contentButton="" submitButton={false} resolver={yupResolver(productSettingsSchema as never)}>
                     <SettingsProductPanel />
@@ -106,7 +107,7 @@ export function CreateProductForm({ onSubmitAll, onExitFlow, storeId }: CreatePr
             </Step>
             */}
             
-            {step === 4 && (
+            {step === 5 && (
                 <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Loader className="size-12 animate-spin text-primary" />
@@ -114,7 +115,7 @@ export function CreateProductForm({ onSubmitAll, onExitFlow, storeId }: CreatePr
                     </div>
                 </Step>
             )}
-            {step === 5 && ( // Assuming success is next step or handled by dialog close
+            {step === 6 && ( // Assuming success is next step or handled by dialog close
                  <Step className="!p-0 !pt-10 !pb-2">
                     <div className="flex flex-col items-center justify-center text-center gap-4 py-16">
                         <Check className="size-12 text-green-600" />
