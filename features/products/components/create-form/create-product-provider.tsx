@@ -94,16 +94,13 @@ function CreateProductProvider({ children, initialValues: propInitialValues }: {
     }))
     
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
-    // Steps: Basic, Media, Options/Variants, Price/Stock, Type Specific, Configurations, Shipping, Settings
+    // Steps: Basic, Media, Options/Variants, Type Specific, Configurations
     // 1. Basic
     // 2. Media
     // 3. Options & Variants
-    // 4. Price & Stock
-    // 5. Type Specific (dynamic based on product type)
-    // 6. Configurations
-    // 7. Shipping
-    // 8. Settings
-    const [step, { setStep }] = useStep(7) 
+    // 4. Type Specific (dynamic based on product type)
+    // 5. Configurations
+    const [step, { setStep }] = useStep(6) 
     const [isOpen, setIsOpen] = useState(false)
 
     const setValues = useCallback((partial: Partial<CreateProductFormType>) => {

@@ -22,20 +22,18 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Prod
         1: Box,
         2: ImageIcon,
         3: DollarSign,
-        4: DollarSign,
-        5: Package,
-        6: Settings,
-        7: Check,
+        4: Package,
+        5: Settings,
+        6: Check,
     }
 
     const tooltips = {
         1: "Información básica",
         2: "Imágenes y multimedia",
         3: "Opciones y variantes",
-        4: "Precio y stock",
-        5: "Configuración por tipo",
-        6: "Configuraciones",
-        7: "Finalizar",
+        4: "Configuración por tipo",
+        5: "Configuraciones",
+        6: "Finalizar",
     }
 
     const isComplete = !!isStepValid[step]
@@ -56,7 +54,7 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Prod
                 )}
                 onClick={handleStepClick}
             >
-                {isComplete && step !== 7 ? (
+                {isComplete && step !== 6 ? (
                     <Check className="size-5 text-primary" />
                 ) : (
                     <IconButton

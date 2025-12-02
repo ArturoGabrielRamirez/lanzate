@@ -14,7 +14,7 @@ export function TypeSpecificProductPanel() {
 
     // Validate step - for now always valid since we only show Empty components
     useEffect(() => {
-        setStepValid(5, true)
+        setStepValid(4, true)
     }, [setStepValid])
 
     // Render the appropriate panel based on product type

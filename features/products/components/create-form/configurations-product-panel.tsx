@@ -11,7 +11,7 @@ export function ConfigurationsProductPanel() {
 
     // Validate step - for now always valid since we only show Empty component
     useEffect(() => {
-        setStepValid(6, true)
+        setStepValid(5, true)
     }, [setStepValid])
 
     return (
