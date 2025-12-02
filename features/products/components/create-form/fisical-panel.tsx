@@ -24,7 +24,7 @@ const lengthUnitOptions: SelectOption[] = [
 ]
 
 export function FisicalPanel() {
-    const { setValue, formState: { isValid, disabled } } = useFormContext<CreateProductFormType>()
+    const { setValue, formState: { isValid, disabled }, clearErrors } = useFormContext<CreateProductFormType>()
     const { values, setValues, setStepValid } = useCreateProductContext()
 
     const physicalInfo = useMemo(() => values.type_specific_info?.physical || {
@@ -46,16 +46,31 @@ export function FisicalPanel() {
         const defaultWeightUnit = physicalInfo.weight_unit || WeightUnit.KG
         const defaultLengthUnit = LengthUnit.CM
         
-        setValue("type_specific_info.physical.weight", physicalInfo.weight || undefined)
-        setValue("type_specific_info.physical.weight_unit", defaultWeightUnit, { shouldValidate: false })
-        setValue("type_specific_info.physical.width", physicalInfo.width || undefined)
-        setValue("type_specific_info.physical.width_unit", physicalInfo.width_unit || defaultLengthUnit, { shouldValidate: false })
-        setValue("type_specific_info.physical.height", physicalInfo.height || undefined)
-        setValue("type_specific_info.physical.height_unit", physicalInfo.height_unit || defaultLengthUnit, { shouldValidate: false })
-        setValue("type_specific_info.physical.depth", physicalInfo.depth || undefined)
-        setValue("type_specific_info.physical.depth_unit", physicalInfo.depth_unit || defaultLengthUnit, { shouldValidate: false })
-        setValue("type_specific_info.physical.diameter", physicalInfo.diameter || undefined)
-        setValue("type_specific_info.physical.diameter_unit", physicalInfo.diameter_unit || defaultLengthUnit, { shouldValidate: false })
+        // First, clear any existing errors
+        clearErrors([
+            "type_specific_info.physical.weight",
+            "type_specific_info.physical.weight_unit",
+            "type_specific_info.physical.width",
+            "type_specific_info.physical.width_unit",
+            "type_specific_info.physical.height",
+            "type_specific_info.physical.height_unit",
+            "type_specific_info.physical.depth",
+            "type_specific_info.physical.depth_unit",
+            "type_specific_info.physical.diameter",
+            "type_specific_info.physical.diameter_unit",
+        ])
+        
+        // Then set values without validation or touch
+        setValue("type_specific_info.physical.weight", physicalInfo.weight || undefined, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.weight_unit", defaultWeightUnit, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.width", physicalInfo.width || undefined, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.width_unit", physicalInfo.width_unit || defaultLengthUnit, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.height", physicalInfo.height || undefined, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.height_unit", physicalInfo.height_unit || defaultLengthUnit, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.depth", physicalInfo.depth || undefined, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.depth_unit", physicalInfo.depth_unit || defaultLengthUnit, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.diameter", physicalInfo.diameter || undefined, { shouldValidate: false, shouldTouch: false })
+        setValue("type_specific_info.physical.diameter_unit", physicalInfo.diameter_unit || defaultLengthUnit, { shouldValidate: false, shouldTouch: false })
         
         // Update context with default values if they weren't set
         if (!physicalInfo.weight_unit || !physicalInfo.width_unit || !physicalInfo.height_unit || !physicalInfo.depth_unit || !physicalInfo.diameter_unit) {

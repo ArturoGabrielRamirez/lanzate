@@ -102,10 +102,10 @@ function SelectInputField({
                             }}
                             disabled={disabled}
                         >
-                            <SelectTrigger className="font-mono min-w-fit !h-full !grow">
+                            <SelectTrigger className="font-mono min-w-fit !h-full !grow" onClick={e=>e.stopPropagation()}>
                                 <SelectValue placeholder={selectPlaceholder || "Seleccionar"} />
                             </SelectTrigger>
-                            <SelectContent className="min-w-24">
+                            <SelectContent className="min-w-24" onClick={e=>e.stopPropagation()}>
                                 {selectOptions.map((option) => (
                                     <SelectItem key={option.value} value={option.value}>
                                         {option.label}
@@ -178,15 +178,19 @@ function SelectInputField({
 
     // If both selectName and inputName are provided, use Controller for both
     if (selectName && inputName && control) {
+        const defaultSelectValue = selectOptions[0]?.value || ""
+        
         return (
             <>
                 <Controller
                     name={selectName}
                     control={control}
+                    defaultValue={controlledSelectValue || defaultSelectValue}
                     render={({ field: selectField, fieldState: selectFieldState }) => (
                         <Controller
                             name={inputName}
                             control={control}
+                            defaultValue={controlledInputValue || ""}
                             render={({ field: inputField, fieldState: inputFieldState }) => {
                                 const handleSelectChange = (value: string) => {
                                     selectField.onChange(value)
