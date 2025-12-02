@@ -26,10 +26,19 @@ export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPa
             gap={4}
             selectionMode="single"
             selectedKeys={selectedSource ? [selectedSource] : []}
+            defaultSelectedKeys={["MANUAL"]}
             onSelectionChange={handleSelectionChange}
             className="grid-cols-1 md:grid-cols-3"
         >
-            <ChoiceBoxItem id="AI" textValue="IA">
+            <ChoiceBoxItem id="MANUAL" textValue="Manual" className="bg-accent/20">
+                <PenTool />
+                <ChoiceBoxLabel>Manual</ChoiceBoxLabel>
+                <ChoiceBoxDescription>
+                    Ingresa toda la información paso a paso.
+                </ChoiceBoxDescription>
+            </ChoiceBoxItem>
+
+            <ChoiceBoxItem id="AI" textValue="IA" isDisabled className="bg-accent/20">
                 <BrainCircuit />
                 <ChoiceBoxLabel>IA</ChoiceBoxLabel>
                 <ChoiceBoxDescription>
@@ -37,7 +46,7 @@ export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPa
                 </ChoiceBoxDescription>
             </ChoiceBoxItem>
 
-            <ChoiceBoxItem id="FILE" textValue="Archivo">
+            <ChoiceBoxItem id="FILE" textValue="Archivo" isDisabled className="bg-accent/20">
                 <FileSpreadsheet />
                 <ChoiceBoxLabel>Archivo</ChoiceBoxLabel>
                 <ChoiceBoxDescription>
@@ -45,13 +54,6 @@ export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPa
                 </ChoiceBoxDescription>
             </ChoiceBoxItem>
 
-            <ChoiceBoxItem id="MANUAL" textValue="Manual">
-                <PenTool />
-                <ChoiceBoxLabel>Manual</ChoiceBoxLabel>
-                <ChoiceBoxDescription>
-                    Ingresa toda la información paso a paso.
-                </ChoiceBoxDescription>
-            </ChoiceBoxItem>
         </ChoiceBox>
     )
 }

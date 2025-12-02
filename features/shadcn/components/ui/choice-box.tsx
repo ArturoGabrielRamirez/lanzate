@@ -102,7 +102,7 @@ const choiceBoxItemStyles = tv({
       false: "cursor-default",
     },
     isHovered: {
-      true: "not-data-readonly:not-data-focus-visible:not-selected:inset-ring-muted-fg/30 cursor-pointer",
+      true: "not-data-readonly:not-data-focus-visible:not-selected:inset-ring-muted-fg/30 cursor-pointer hover:bg-accent/50",
     },
     isFocused: {
       true: "inset-ring-(--choice-box-active-ring) ring-(--primary) ring-3 invalid:ring-danger-subtle-fg/20",

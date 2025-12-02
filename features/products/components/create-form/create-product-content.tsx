@@ -1,5 +1,6 @@
 "use client"
 
+import { X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { Separator } from "react-aria-components"
@@ -10,6 +11,7 @@ import { toast } from "sonner"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { SourcePlaceholderPanel } from "@/features/products/components/create-form/source-placeholder-panel"
 import { SourceProductPanel } from "@/features/products/components/create-form/source-product-panel"
+import { Button } from "@/features/shadcn/components/button"
 /* import { CreateProductFormType } from "@/features/products/schemas/create-product-form-schema"
  *//* import { CreateUnifiedProductArgs } from "@/features/products/types"
  */import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/features/shadcn/components/ui/dialog"
@@ -123,10 +125,22 @@ export function CreateProductContent({ /* userId, */ storeId }: { userId: number
             </div>
             <Separator />
             {!selectedSource ? (
-                <SourceProductPanel
-                    selectedSource={selectedSource}
-                    onSelect={setSelectedSource}
-                />
+                <>
+                    <SourceProductPanel
+                        selectedSource={selectedSource}
+                        onSelect={setSelectedSource}
+                    />
+                    <Separator />
+                    <div className="flex justify-end">
+                        <Button
+                            variant="destructive"
+                            onClick={() => closeDialog()}
+                        >
+                            <X />
+                            Cancelar
+                        </Button>
+                    </div>
+                </>
             ) : (
                 <>
                     {selectedSource === "MANUAL" && (
