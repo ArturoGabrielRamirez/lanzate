@@ -53,19 +53,6 @@ export function OptionsVariantsProductPanel() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []) // Run once on mount
 
-    // Handlers for price/stock fields to sync with context
-    const handlePriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseFloat(e.target.value) || 0
-        setCtxValues({
-            ...values,
-            price_stock_info: {
-                ...values.price_stock_info,
-                price: value
-            }
-        })
-        setValue("price_stock_info.price", value, { shouldValidate: true, shouldDirty: true })
-    }, [setCtxValues, setValue, values])
-
     const handlePromotionalPriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value === "" ? null : (parseFloat(e.target.value) || 0)
         setCtxValues({
@@ -368,7 +355,6 @@ export function OptionsVariantsProductPanel() {
                 <SimpleProductFields
                     disabled={disabled}
                     stockUnlimited={stockUnlimited}
-                    onPriceChange={handlePriceChange}
                     onPromotionalPriceChange={handlePromotionalPriceChange}
                     onCostChange={handleCostChange}
                     onStockChange={handleStockChange}

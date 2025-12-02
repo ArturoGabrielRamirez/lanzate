@@ -2,12 +2,11 @@
 
 import { Plus } from "lucide-react"
 
+import { OptionEditor } from "@/features/products/components/create-form/option-editor"
+import { OptionView } from "@/features/products/components/create-form/option-view"
+import { OptionType } from "@/features/products/schemas/create-product-form-schema"
 import { Button } from "@/features/shadcn/components/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
-import { OptionType } from "@/features/products/schemas/create-product-form-schema"
-
-import { OptionEditor } from "./option-editor"
-import { OptionView } from "./option-view"
 
 interface Option {
     id?: string
@@ -105,10 +104,10 @@ export function OptionsList({
                                         e.stopPropagation()
                                         onAddOption()
                                     }}
-                                    size="sm"
-                                    className="ml-auto"
+                                    disabled={disabled}
                                 >
-                                    <Plus /> Agregar opción
+                                    <Plus className="size-4" />
+                                    Agregar opción
                                 </Button>
                             )}
                         </div>
