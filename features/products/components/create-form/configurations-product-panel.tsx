@@ -214,7 +214,7 @@ export function ConfigurationsProductPanel() {
                     icon={<Ticket className="w-5 h-5 text-purple-600" />}
                     iconBgColor="bg-purple-100 dark:bg-purple-900/30"
                     title="Permitir cupones"
-                    description="Aplicar descuentos promocionales"
+                    description="Admite ofertas futuras"
                     name="settings_info.allow_promotions"
                     defaultValue={allowPromotions}
                     onChange={handleAllowPromotionsChange}
@@ -224,7 +224,7 @@ export function ConfigurationsProductPanel() {
                     icon={<Truck className="w-5 h-5 text-teal-600" />}
                     iconBgColor="bg-teal-100 dark:bg-teal-900/30"
                     title="Envío gratuito"
-                    description="Ofrecer envío sin costo adicional"
+                    description="Ofrecer envío sin costo"
                     name="shipping_info.free_shipping"
                     defaultValue={freeShipping}
                     onChange={handleFreeShippingChange}
