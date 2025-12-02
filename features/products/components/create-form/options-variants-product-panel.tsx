@@ -670,7 +670,7 @@ export function OptionsVariantsProductPanel() {
 
             {hasVariants && variants.length > 0 && !isEditingAnyOption && (
                 <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300 delay-150">
-                    <Accordion type="single" collapsible className="w-full">
+                    <Accordion type="single" collapsible className="w-full" defaultValue="variants">
                         <AccordionItem value="variants" className="border-none">
                             <AccordionTrigger className="hover:no-underline py-0">
                                 <p className="text-sm font-medium">Variantes Generadas ({variants.length})</p>

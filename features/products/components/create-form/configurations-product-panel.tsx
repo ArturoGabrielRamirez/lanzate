@@ -1,8 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
-
 import { Settings } from "lucide-react"
+import { useEffect } from "react"
 
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
