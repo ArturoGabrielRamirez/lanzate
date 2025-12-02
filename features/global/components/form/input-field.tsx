@@ -28,6 +28,7 @@ function InputField({
     hideLabel = false,
     onChange,
     className,
+    maxLength,
 }: {
     name: string,
     label: string,
@@ -47,6 +48,7 @@ function InputField({
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     hideLabel?: boolean
     className?: string
+    maxLength?: number
 }) {
 
     const { control } = useFormContext();
@@ -102,6 +104,7 @@ function InputField({
                                 disabled={disabled}
                                 readOnly={readOnly}
                                 inputMode={inputMode}
+                                maxLength={maxLength}
                                 onChange={handleChange}
                                 tabIndex={readOnly ? -1 : 0}
                             />

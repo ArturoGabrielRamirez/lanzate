@@ -1,13 +1,17 @@
 "use client"
 
-import { CheckCircle2, Star, Sparkles, Percent, Ticket, Truck } from "lucide-react"
-import { useCallback, useEffect } from "react"
+import { CheckCircle2, Star, Sparkles, Percent, Ticket, Truck, Search } from "lucide-react"
+import { useCallback, useEffect, useMemo } from "react"
 import { useFormContext } from "react-hook-form"
 
+import { InputField } from "@/features/global/components/form/input-field"
 import { SwitchField } from "@/features/global/components/form/switch-field"
+import { TextareaField } from "@/features/global/components/form/textarea-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { ProductStatus } from "@/features/products/schemas/create-product-form-schema"
 import { Item } from "@/features/shadcn/components/item"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { Card, CardContent } from "@/features/shadcn/components/ui/card"
 import { Switch } from "@/features/shadcn/components/ui/switch"
 import { cn } from "@/lib/utils"
 
@@ -70,7 +74,7 @@ function ConfigurationOption({
 export function ConfigurationsProductPanel() {
     const { setValue, formState: { isValid }, trigger, watch } = useFormContext()
     const { values, setValues: setCtxValues, setStepValid } = useCreateProductContext()
-    const { settings_info, shipping_info } = values
+    const { settings_info, shipping_info, basic_info } = values
 
     // Watch form values
     const status = watch("settings_info.status")
@@ -79,18 +83,22 @@ export function ConfigurationsProductPanel() {
     const isOnSale = watch("settings_info.is_on_sale")
     const allowPromotions = watch("settings_info.allow_promotions")
     const freeShipping = watch("shipping_info.free_shipping")
+    const seoTitle = watch("settings_info.seo_title") || ""
+    const seoDescription = watch("settings_info.seo_description") || ""
 
     useEffect(() => {
         // Initialize form values
         if (settings_info) {
-            setValue("settings_info.status", settings_info.status || ProductStatus.ACTIVE)
-            setValue("settings_info.is_featured", settings_info.is_featured || false)
-            setValue("settings_info.is_new", settings_info.is_new || false)
-            setValue("settings_info.is_on_sale", settings_info.is_on_sale || false)
+            setValue("settings_info.status", settings_info.status ?? ProductStatus.ACTIVE)
+            setValue("settings_info.is_featured", settings_info.is_featured ?? true)
+            setValue("settings_info.is_new", settings_info.is_new ?? true)
+            setValue("settings_info.is_on_sale", settings_info.is_on_sale ?? false)
             setValue("settings_info.allow_promotions", settings_info.allow_promotions ?? true)
+            setValue("settings_info.seo_title", settings_info.seo_title || "")
+            setValue("settings_info.seo_description", settings_info.seo_description || "")
         }
         if (shipping_info) {
-            setValue("shipping_info.free_shipping", shipping_info.free_shipping || false)
+            setValue("shipping_info.free_shipping", shipping_info.free_shipping ?? false)
         }
         trigger(["settings_info", "shipping_info"])
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -167,8 +175,38 @@ export function ConfigurationsProductPanel() {
         })
     }, [setValue, setCtxValues, values, shipping_info])
 
+    const handleSeoTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        setValue("settings_info.seo_title", value, { shouldValidate: true, shouldDirty: true })
+        setCtxValues({
+            ...values,
+            settings_info: {
+                ...(settings_info || {}),
+                seo_title: value,
+            }
+        })
+    }, [setValue, setCtxValues, values, settings_info])
+
+    const handleSeoDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const value = e.target.value
+        setValue("settings_info.seo_description", value, { shouldValidate: true, shouldDirty: true })
+        setCtxValues({
+            ...values,
+            settings_info: {
+                ...(settings_info || {}),
+                seo_description: value,
+            }
+        })
+    }, [setValue, setCtxValues, values, settings_info])
+
+    // Generate preview URL
+    const previewUrl = useMemo(() => {
+        const slug = basic_info?.slug || basic_info?.name?.toLowerCase().replace(/\s+/g, "-") || "producto"
+        return `tu-tienda.lanzate.com > productos > ${slug.substring(0, 1)}`
+    }, [basic_info?.slug, basic_info?.name])
+
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 overflow-hidden rounded-md border border-border">
                 <ConfigurationOption
                     icon={<CheckCircle2 className="w-5 h-5 text-green-600" />}
@@ -231,6 +269,61 @@ export function ConfigurationsProductPanel() {
                     className="rounded-br-md border-0"
                 />
             </div>
+
+            {/* SEO Section */}
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="seo" className="border-none">
+                    <AccordionTrigger className="hover:no-underline">
+                        <span className="flex items-center gap-2">
+                            <Search className="w-5 h-5 text-muted-foreground" />
+                            <span className="text-sm font-semibold">Optimización para buscadores (SEO)</span>
+                        </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4">
+                        <InputField
+                            name="settings_info.seo_title"
+                            label="Título SEO"
+                            placeholder="Título SEO"
+                            tooltip="El título SEO aparecerá en los resultados de búsqueda."
+                            maxLength={60}
+                            onChange={handleSeoTitleChange}
+                        />
+
+                        <TextareaField
+                            name="settings_info.seo_description"
+                            label="Meta descripción"
+                            placeholder="Meta descripción"
+                            tooltip="La descripción aparecerá debajo del título en los resultados de búsqueda."
+                            maxLength={160}
+                            onChange={handleSeoDescriptionChange}
+                        />
+
+                        {/* Google Preview */}
+                        <div className="flex flex-col gap-2">
+                            <h4 className="text-sm font-medium">Vista previa en Google</h4>
+                            <Card className="border border-border">
+                                <CardContent>
+                                    <div className="flex flex-col gap-1">
+                                        <a
+                                            href="#"
+                                            className="text-lg text-blue-600 hover:underline line-clamp-1"
+                                            onClick={(e) => e.preventDefault()}
+                                        >
+                                            {seoTitle || basic_info?.name || "Sin título"}
+                                        </a>
+                                        <p className="text-sm text-green-700 line-clamp-1">
+                                            {previewUrl}
+                                        </p>
+                                        <p className="text-sm text-muted-foreground line-clamp-2">
+                                            {seoDescription || "Sin descripción"}
+                                        </p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
         </div>
     )
 }

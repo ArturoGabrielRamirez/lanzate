@@ -92,8 +92,8 @@ const initialValues: CreateProductFormType = {
     configurations_info: {},
     settings_info: {
         status: ProductStatus.ACTIVE,
-        is_featured: false,
-        is_new: false,
+        is_featured: true,
+        is_new: true,
         is_on_sale: false,
         allow_promotions: true,
         seo_title: "",
