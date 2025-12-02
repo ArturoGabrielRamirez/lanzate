@@ -120,7 +120,7 @@ const choiceBoxItemStyles = tv({
       ],
     },
     isDisabled: {
-      true: "z-10 opacity-50 **:data-[slot=label]:text-muted-fg forced-colors:text-[GrayText] **:[[slot=description]]:text-muted-fg/70",
+      true: "z-10 opacity-50 **:data-[slot=label]:text-muted-fg forced-colors:text-[GrayText] **:[[slot=description]]:text-muted-fg/70 cursor-not-allowed",
     },
   },
 })

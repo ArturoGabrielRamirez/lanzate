@@ -14,6 +14,7 @@ import { CreateProductFormType, ProductType } from "@/features/products/schemas/
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { ChoiceBox, ChoiceBoxItem, ChoiceBoxLabel, ChoiceBoxDescription } from "@/features/shadcn/components/ui/choice-box"
 import { Label } from "@/features/shadcn/components/ui/label"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { slugify } from "@/features/stores/utils"
 
 
@@ -122,11 +123,18 @@ export function BasicInfoProductPanel({ storeId }: { storeId?: number }) {
                         <ChoiceBoxLabel>Digital</ChoiceBoxLabel>
                         <ChoiceBoxDescription>Archivo o contenido descargable.</ChoiceBoxDescription>
                     </ChoiceBoxItem>
-                    <ChoiceBoxItem id={ProductType.SERVICE} textValue="Servicio">
-                        <Wrench />
-                        <ChoiceBoxLabel>Servicio</ChoiceBoxLabel>
-                        <ChoiceBoxDescription>Servicio profesional o consultoría.</ChoiceBoxDescription>
-                    </ChoiceBoxItem>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <ChoiceBoxItem id={ProductType.SERVICE} textValue="Servicio" isDisabled>
+                                <Wrench />
+                                <ChoiceBoxLabel>Servicio</ChoiceBoxLabel>
+                                <ChoiceBoxDescription>Servicio profesional o consultoría.</ChoiceBoxDescription>
+                            </ChoiceBoxItem>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Servicio no disponible. Próximamente.</p>
+                        </TooltipContent>
+                    </Tooltip>
                 </ChoiceBox>
             </div>
 
