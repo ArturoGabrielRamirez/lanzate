@@ -1630,7 +1630,10 @@
                 "step2": "Complete basic product information.",
                 "step3": "Add images and videos.",
                 "step4": "Define price and available stock.",
-                "step5": "Configure product visibility and status."
+                "step5": "Configure product visibility and status.",
+                "step6": "Configure product type and settings.",
+                "creating": "Processing and saving your product...",
+                "created": "Your product has been created successfully."
             },
             "titles": {
                 "creating": "Creating product...",
@@ -1640,7 +1643,8 @@
                 "basic": "Basic Info",
                 "media": "Media",
                 "price_stock": "Price & Stock",
-                "settings": "Settings"
+                "settings": "Product Type",
+                "step6": "Settings"
             },
             "file-rejected": "\"{filename}\" has been rejected",
             "messages": {

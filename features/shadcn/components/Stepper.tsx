@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { motion, AnimatePresence, Variants } from 'motion/react';
 import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode } from 'react';
+import { Separator } from 'react-aria-components';
 
 import { Button } from '@/features/shadcn/components/button';
 import { ScrollArea } from '@/features/shadcn/components/scroll-area';
@@ -143,6 +144,7 @@ export default function Stepper({
         </div>
       </div>
 
+      <Separator />
       {!isCompleted && (
         <div className={`footer-container ${footerClassName}`}>
           <div className={`footer-nav justify-between gap-4 md:gap-8`}>

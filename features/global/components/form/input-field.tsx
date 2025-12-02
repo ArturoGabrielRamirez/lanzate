@@ -29,6 +29,7 @@ function InputField({
     onChange,
     className,
     maxLength,
+    autoFocus = false,
 }: {
     name: string,
     label: string,
@@ -49,6 +50,7 @@ function InputField({
     hideLabel?: boolean
     className?: string
     maxLength?: number
+    autoFocus?: boolean
 }) {
 
     const { control } = useFormContext();
@@ -107,6 +109,7 @@ function InputField({
                                 maxLength={maxLength}
                                 onChange={handleChange}
                                 tabIndex={readOnly ? -1 : 0}
+                                autoFocus={autoFocus}
                             />
                             {endText && (
                                 <InputGroupText className="pr-2">

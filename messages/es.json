@@ -1504,7 +1504,10 @@
                 "step2": "Completá la información básica del producto.",
                 "step3": "Agregá imágenes y videos.",
                 "step4": "Definí el precio y el stock disponible.",
-                "step5": "Configurá la visibilidad y el estado del producto."
+                "step5": "Configurá la visibilidad y el estado del producto.",
+                "step6": "Configurá el tipo de producto y las opciones.",
+                "creating": "Procesando y guardando tu producto...",
+                "created": "Tu producto ha sido creado exitosamente."
             },
             "titles": {
                 "creating": "Creando producto...",
@@ -1514,7 +1517,8 @@
                 "basic": "Información Básica",
                 "media": "Multimedia",
                 "price_stock": "Precio y Stock",
-                "settings": "Configuración"
+                "settings": "Tipo de Producto",
+                "step6": "Configuración"
             },
             "file-rejected": "\"{filename}\" fue rechazado",
             "messages": {

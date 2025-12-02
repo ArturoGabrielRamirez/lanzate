@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl"
 import { useState } from "react"
+import { Separator } from "react-aria-components"
 import { toast } from "sonner"
 
 /* import { createUnifiedProductAction } from "@/features/products/actions/create-unified-product.action"
@@ -85,26 +86,28 @@ export function CreateProductContent({ /* userId, */ storeId }: { userId: number
     }
 
     const descriptions = {
-        1: t("descriptions.step2"),
-        2: t("descriptions.step3"),
-        3: t("descriptions.step4"),
-        4: t("descriptions.step5"),
-        5: t("titles.creating"),
-        6: t("titles.created"),
+        1: t("descriptions.step2"), // Basic Info
+        2: t("descriptions.step3"), // Media
+        3: t("descriptions.step4"), // Price & Stock
+        4: t("descriptions.step5"), // Settings
+        5: t("descriptions.step6"), // Creating
+        6: t("descriptions.creating"), // Creating
+        7: t("descriptions.created"), // Created
     }
 
     const titleSlugs = {
-        1: t("steps.basic"),
-        2: t("steps.media"),
-        3: t("steps.price_stock"),
-        4: t("steps.settings"),
-        5: t("titles.creating"),
-        6: t("titles.created"),
+        1: t("steps.basic"), // Basic Info
+        2: t("steps.media"), // Media
+        3: t("steps.price_stock"), // Price & Stock
+        4: t("steps.settings"), // Settings
+        5: t("steps.step6"), // Creating
+        6: t("titles.creating"), // Creating
+        7: t("titles.created"), // Created
     }
 
     return (
         <DialogContent className="w-full !max-w-full md:!max-w-2xl h-dvh rounded-none md:h-auto md:!rounded-lg max-h-dvh !grid-rows-[auto_1fr] gap-4">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
                 <DialogHeader>
                     <DialogTitle>
                         {selectedSource ? `${t("title")} - ${titleSlugs[step as keyof typeof titleSlugs]}` : t("title")}
@@ -118,7 +121,7 @@ export function CreateProductContent({ /* userId, */ storeId }: { userId: number
                     </p>
                 </DialogDescription>
             </div>
-
+            <Separator />
             {!selectedSource ? (
                 <SourceProductPanel
                     selectedSource={selectedSource}
@@ -127,8 +130,8 @@ export function CreateProductContent({ /* userId, */ storeId }: { userId: number
             ) : (
                 <>
                     {selectedSource === "MANUAL" && (
-                        <CreateProductForm 
-                            onSubmitAll={handleCreateProduct} 
+                        <CreateProductForm
+                            onSubmitAll={handleCreateProduct}
                             onExitFlow={() => setSelectedSource(null)}
                             storeId={storeId}
                         />

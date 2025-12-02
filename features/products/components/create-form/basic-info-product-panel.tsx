@@ -80,6 +80,7 @@ export function BasicInfoProductPanel({ storeId }: { storeId?: number }) {
                     disabled={disabled}
                     tooltip="El nombre del producto es el nombre que se mostrará en la tienda."
                     startIcon={<Box />}
+                    autoFocus={true}
                 />
                 <CategorySelector storeId={storeId} />
             </div>

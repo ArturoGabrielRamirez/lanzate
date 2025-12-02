@@ -21,40 +21,38 @@ export function SourceProductPanel({ onSelect, selectedSource }: SourceProductPa
     }
 
     return (
-        <div className="flex flex-col gap-4">
-            <ChoiceBox
-                columns={3}
-                gap={4}
-                selectionMode="single"
-                selectedKeys={selectedSource ? [selectedSource] : []}
-                onSelectionChange={handleSelectionChange}
-                className="grid-cols-1 md:grid-cols-3"
-            >
-                <ChoiceBoxItem id="AI" textValue="IA">
-                    <BrainCircuit />
-                    <ChoiceBoxLabel>IA</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>
-                        Genera tu producto automáticamente con inteligencia artificial.
-                    </ChoiceBoxDescription>
-                </ChoiceBoxItem>
+        <ChoiceBox
+            columns={3}
+            gap={4}
+            selectionMode="single"
+            selectedKeys={selectedSource ? [selectedSource] : []}
+            onSelectionChange={handleSelectionChange}
+            className="grid-cols-1 md:grid-cols-3"
+        >
+            <ChoiceBoxItem id="AI" textValue="IA">
+                <BrainCircuit />
+                <ChoiceBoxLabel>IA</ChoiceBoxLabel>
+                <ChoiceBoxDescription>
+                    Genera tu producto automáticamente con inteligencia artificial.
+                </ChoiceBoxDescription>
+            </ChoiceBoxItem>
 
-                <ChoiceBoxItem id="FILE" textValue="Archivo">
-                    <FileSpreadsheet />
-                    <ChoiceBoxLabel>Archivo</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>
-                        Importa desde un archivo CSV, Excel o PDF.
-                    </ChoiceBoxDescription>
-                </ChoiceBoxItem>
+            <ChoiceBoxItem id="FILE" textValue="Archivo">
+                <FileSpreadsheet />
+                <ChoiceBoxLabel>Archivo</ChoiceBoxLabel>
+                <ChoiceBoxDescription>
+                    Importa desde un archivo CSV, Excel o PDF.
+                </ChoiceBoxDescription>
+            </ChoiceBoxItem>
 
-                <ChoiceBoxItem id="MANUAL" textValue="Manual">
-                    <PenTool />
-                    <ChoiceBoxLabel>Manual</ChoiceBoxLabel>
-                    <ChoiceBoxDescription>
-                        Ingresa toda la información paso a paso.
-                    </ChoiceBoxDescription>
-                </ChoiceBoxItem>
-            </ChoiceBox>
-        </div>
+            <ChoiceBoxItem id="MANUAL" textValue="Manual">
+                <PenTool />
+                <ChoiceBoxLabel>Manual</ChoiceBoxLabel>
+                <ChoiceBoxDescription>
+                    Ingresa toda la información paso a paso.
+                </ChoiceBoxDescription>
+            </ChoiceBoxItem>
+        </ChoiceBox>
     )
 }
 
