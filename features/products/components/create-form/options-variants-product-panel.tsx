@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
@@ -14,9 +14,9 @@ import { CreateProductFormType, OptionType } from "@/features/products/schemas/c
 import type { Selection } from "react-aria-components"
 
 export function OptionsVariantsProductPanel() {
-    const { watch, setValue, formState: { disabled }, trigger } = useFormContext<CreateProductFormType>()
+    const { watch, setValue, formState: { disabled } } = useFormContext<CreateProductFormType>()
     const { values, setValues: setCtxValues, setStepValid } = useCreateProductContext()
-    const { options_variants_info, price_stock_info } = values
+    const { options_variants_info } = values
 
     const hasVariants = watch("options_variants_info.has_variants")
     const options = watch("options_variants_info.options") || []
@@ -39,90 +39,8 @@ export function OptionsVariantsProductPanel() {
             setValue("options_variants_info.options", options_variants_info.options || [])
             setValue("options_variants_info.variants", options_variants_info.variants || [])
         }
-        if (price_stock_info) {
-            setValue("price_stock_info.sku", price_stock_info.sku || "")
-            setValue("price_stock_info.barcode", price_stock_info.barcode || "")
-            setValue("price_stock_info.price", price_stock_info.price || 0)
-            setValue("price_stock_info.promotional_price", price_stock_info.promotional_price || null)
-            setValue("price_stock_info.cost", price_stock_info.cost || 0)
-            setValue("price_stock_info.stock", price_stock_info.stock || 0)
-            setValue("price_stock_info.stock_unlimited", price_stock_info.stock_unlimited || false)
-            setValue("price_stock_info.track_stock", price_stock_info.track_stock ?? true)
-            trigger(["price_stock_info.price", "price_stock_info.stock", "price_stock_info.stock_unlimited"])
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []) // Run once on mount
-
-    const handlePromotionalPriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value === "" ? null : (parseFloat(e.target.value) || 0)
-        setCtxValues({
-            ...values,
-            price_stock_info: {
-                ...values.price_stock_info,
-                promotional_price: value
-            }
-        })
-        setValue("price_stock_info.promotional_price", value, { shouldValidate: true, shouldDirty: true })
-    }, [setCtxValues, setValue, values])
-
-    const handleCostChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseFloat(e.target.value) || 0
-        setCtxValues({
-            ...values,
-            price_stock_info: {
-                ...values.price_stock_info,
-                cost: value
-            }
-        })
-        setValue("price_stock_info.cost", value, { shouldValidate: true, shouldDirty: true })
-    }, [setCtxValues, setValue, values])
-
-    const handleStockChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseFloat(e.target.value) || 0
-        setCtxValues({
-            ...values,
-            price_stock_info: {
-                ...values.price_stock_info,
-                stock: value
-            }
-        })
-        setValue("price_stock_info.stock", value, { shouldValidate: true, shouldDirty: true })
-    }, [setCtxValues, setValue, values])
-
-    const handleSkuChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value
-        setCtxValues({
-            ...values,
-            price_stock_info: {
-                ...values.price_stock_info,
-                sku: value
-            }
-        })
-        setValue("price_stock_info.sku", value, { shouldValidate: true, shouldDirty: true })
-    }, [setCtxValues, setValue, values])
-
-    const handleBarcodeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value
-        setCtxValues({
-            ...values,
-            price_stock_info: {
-                ...values.price_stock_info,
-                barcode: value
-            }
-        })
-        setValue("price_stock_info.barcode", value, { shouldValidate: true, shouldDirty: true })
-    }, [setCtxValues, setValue, values])
-
-    const handleStockUnlimitedChange = useCallback((checked: boolean) => {
-        setCtxValues({
-            ...values,
-            price_stock_info: {
-                ...values.price_stock_info,
-                stock_unlimited: checked
-            }
-        })
-        setValue("price_stock_info.stock_unlimited", checked, { shouldValidate: true, shouldDirty: true })
-    }, [setCtxValues, setValue, values])
 
     // Initialize editing state for new options
     useEffect(() => {
@@ -352,16 +270,7 @@ export function OptionsVariantsProductPanel() {
             )}
 
             {!hasVariants && (
-                <SimpleProductFields
-                    disabled={disabled}
-                    stockUnlimited={stockUnlimited}
-                    onPromotionalPriceChange={handlePromotionalPriceChange}
-                    onCostChange={handleCostChange}
-                    onStockChange={handleStockChange}
-                    onSkuChange={handleSkuChange}
-                    onBarcodeChange={handleBarcodeChange}
-                    onStockUnlimitedChange={handleStockUnlimitedChange}
-                />
+                <SimpleProductFields disabled={disabled} />
             )}
 
             {hasVariants && variants.length > 0 && !isEditingAnyOption && (

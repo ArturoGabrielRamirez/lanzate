@@ -1,7 +1,7 @@
 "use client"
 
 import { Barcode, Infinity, Package, RefreshCcw, Tag } from "lucide-react"
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
@@ -11,28 +11,31 @@ import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
 interface SimpleProductFieldsProps {
     disabled?: boolean
-    stockUnlimited: boolean
-    onPromotionalPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onCostChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onStockChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onSkuChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onBarcodeChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onStockUnlimitedChange: (checked: boolean) => void
 }
 
-export function SimpleProductFields({
-    disabled,
-    stockUnlimited,
-    onPromotionalPriceChange,
-    onCostChange,
-    onStockChange,
-    onSkuChange,
-    onBarcodeChange,
-    onStockUnlimitedChange,
-}: SimpleProductFieldsProps) {
-
-    const { setValue } = useFormContext<CreateProductFormType>()
+export function SimpleProductFields({ disabled }: SimpleProductFieldsProps) {
+    const { watch, setValue, trigger, formState: { disabled: formDisabled } } = useFormContext<CreateProductFormType>()
     const { values, setValues: setCtxValues } = useCreateProductContext()
+    const { price_stock_info } = values
+
+    const stockUnlimited = watch("price_stock_info.stock_unlimited")
+    const isDisabled = disabled || formDisabled
+
+    // Initialize from context
+    useEffect(() => {
+        if (price_stock_info) {
+            setValue("price_stock_info.sku", price_stock_info.sku || "")
+            setValue("price_stock_info.barcode", price_stock_info.barcode || "")
+            setValue("price_stock_info.price", price_stock_info.price || 0)
+            setValue("price_stock_info.promotional_price", price_stock_info.promotional_price || null)
+            setValue("price_stock_info.cost", price_stock_info.cost || 0)
+            setValue("price_stock_info.stock", price_stock_info.stock || 0)
+            setValue("price_stock_info.stock_unlimited", price_stock_info.stock_unlimited || false)
+            setValue("price_stock_info.track_stock", price_stock_info.track_stock ?? true)
+            trigger(["price_stock_info.price", "price_stock_info.stock", "price_stock_info.stock_unlimited"])
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []) // Run once on mount
 
     const handlePriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseFloat(e.target.value) || 0
@@ -44,6 +47,77 @@ export function SimpleProductFields({
             }
         })
         setValue("price_stock_info.price", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handlePromotionalPriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value === "" ? null : (parseFloat(e.target.value) || 0)
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                promotional_price: value
+            }
+        })
+        setValue("price_stock_info.promotional_price", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleCostChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseFloat(e.target.value) || 0
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                cost: value
+            }
+        })
+        setValue("price_stock_info.cost", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleStockChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseFloat(e.target.value) || 0
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                stock: value
+            }
+        })
+        setValue("price_stock_info.stock", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleSkuChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                sku: value
+            }
+        })
+        setValue("price_stock_info.sku", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleBarcodeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                barcode: value
+            }
+        })
+        setValue("price_stock_info.barcode", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleStockUnlimitedChange = useCallback((checked: boolean) => {
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                stock_unlimited: checked
+            }
+        })
+        setValue("price_stock_info.stock_unlimited", checked, { shouldValidate: true, shouldDirty: true })
     }, [setCtxValues, setValue, values])
 
     return (
@@ -58,7 +132,7 @@ export function SimpleProductFields({
                     isRequired
                     tooltip="Precio de venta del producto"
                     onChange={handlePriceChange}
-                    disabled={disabled}
+                    disabled={isDisabled}
                 />
                 <InputField
                     name="price_stock_info.promotional_price"
@@ -67,8 +141,8 @@ export function SimpleProductFields({
                     type="number"
                     startIcon="$"
                     tooltip="Si se establece, este será el precio actual"
-                    onChange={onPromotionalPriceChange}
-                    disabled={disabled}
+                    onChange={handlePromotionalPriceChange}
+                    disabled={isDisabled}
                 />
                 <InputField
                     name="price_stock_info.cost"
@@ -77,8 +151,8 @@ export function SimpleProductFields({
                     type="number"
                     startIcon="$"
                     tooltip="Para cálculo de ganancias (no visible al cliente)"
-                    onChange={onCostChange}
-                    disabled={disabled}
+                    onChange={handleCostChange}
+                    disabled={isDisabled}
                 />
             </div>
 
@@ -87,11 +161,11 @@ export function SimpleProductFields({
                 label="Stock disponible"
                 placeholder="0"
                 type="number"
-                disabled={stockUnlimited || disabled}
+                disabled={stockUnlimited || isDisabled}
                 startIcon={<Package />}
                 tooltip="Stock disponible total para la venta"
                 isRequired
-                onChange={onStockChange}
+                onChange={handleStockChange}
                 endIcon={(
                     <>
                         <IconButton
@@ -99,7 +173,7 @@ export function SimpleProductFields({
                             tooltip="Stock ilimitado"
                             active={stockUnlimited}
                             onClick={() => {
-                                onStockUnlimitedChange(!stockUnlimited)
+                                handleStockUnlimitedChange(!stockUnlimited)
                             }}
                             iconClassName={stockUnlimited ? "" : "text-muted-foreground"}
                         />
@@ -122,8 +196,8 @@ export function SimpleProductFields({
                     placeholder="SKU-001"
                     startIcon={<Tag />}
                     tooltip="Código único de identificación del producto"
-                    onChange={onSkuChange}
-                    disabled={disabled}
+                    onChange={handleSkuChange}
+                    disabled={isDisabled}
                 />
                 <InputField
                     name="price_stock_info.barcode"
@@ -131,8 +205,8 @@ export function SimpleProductFields({
                     placeholder="7791234567890"
                     startIcon={<Barcode />}
                     tooltip="Código de barras (EAN, UPC, etc.)"
-                    onChange={onBarcodeChange}
-                    disabled={disabled}
+                    onChange={handleBarcodeChange}
+                    disabled={isDisabled}
                 />
             </div>
         </div>
