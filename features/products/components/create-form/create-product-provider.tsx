@@ -66,7 +66,20 @@ const initialValues: CreateProductFormType = {
             unit: LengthUnit.CM,
         }
     },
-    type_specific_info: {},
+    type_specific_info: {
+        physical: {
+            weight: undefined,
+            weight_unit: WeightUnit.KG,
+            width: undefined,
+            width_unit: LengthUnit.CM,
+            height: undefined,
+            height_unit: LengthUnit.CM,
+            depth: undefined,
+            depth_unit: LengthUnit.CM,
+            diameter: undefined,
+            diameter_unit: LengthUnit.CM,
+        }
+    },
     configurations_info: {},
     settings_info: {
         status: ProductStatus.ACTIVE,

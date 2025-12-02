@@ -21,6 +21,7 @@ export enum WeightUnit {
 }
 
 export enum LengthUnit {
+    MM = "MM",
     CM = "CM",
     M = "M",
     IN = "IN",
@@ -164,8 +165,19 @@ export const productSettingsSchema = yup.object({
 // Type Specific Schema (for step 5 - dynamic based on product type)
 export const productTypeSpecificSchema = yup.object({
     type_specific_info: yup.object({
-        // Fields will vary based on product type (PHYSICAL, DIGITAL, SERVICE)
-        // For now, empty object as placeholder
+        // Physical product properties
+        physical: yup.object({
+            weight: yup.number().min(0).optional().nullable(),
+            weight_unit: yup.mixed<WeightUnit>().oneOf(Object.values(WeightUnit)).default(WeightUnit.KG).optional(),
+            width: yup.number().min(0).optional().nullable(),
+            width_unit: yup.mixed<LengthUnit>().oneOf(Object.values(LengthUnit)).default(LengthUnit.CM).optional(),
+            height: yup.number().min(0).optional().nullable(),
+            height_unit: yup.mixed<LengthUnit>().oneOf(Object.values(LengthUnit)).default(LengthUnit.CM).optional(),
+            depth: yup.number().min(0).optional().nullable(),
+            depth_unit: yup.mixed<LengthUnit>().oneOf(Object.values(LengthUnit)).default(LengthUnit.CM).optional(),
+            diameter: yup.number().min(0).optional().nullable(),
+            diameter_unit: yup.mixed<LengthUnit>().oneOf(Object.values(LengthUnit)).default(LengthUnit.CM).optional(),
+        }).optional()
     }).optional()
 })
 
