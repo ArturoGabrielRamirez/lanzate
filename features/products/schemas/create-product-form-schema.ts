@@ -228,11 +228,19 @@ export const productTypeSpecificSchema = yup.object({
     }).optional()
 })
 
-// Configurations Schema (for step 6)
+// Configurations Schema (for step 5)
 export const productConfigurationsSchema = yup.object({
-    configurations_info: yup.object({
-        // Additional product configurations
-        // For now, empty object as placeholder
+    settings_info: yup.object({
+        status: yup.mixed<ProductStatus>().oneOf(Object.values(ProductStatus)).default(ProductStatus.ACTIVE),
+        is_featured: yup.boolean().default(false),
+        is_new: yup.boolean().default(false),
+        is_on_sale: yup.boolean().default(false),
+        allow_promotions: yup.boolean().default(true),
+        seo_title: yup.string().max(60, "Máximo 60 caracteres").optional(),
+        seo_description: yup.string().max(160, "Máximo 160 caracteres").optional(),
+    }).optional(),
+    shipping_info: yup.object({
+        free_shipping: yup.boolean().default(false),
     }).optional()
 })
 
