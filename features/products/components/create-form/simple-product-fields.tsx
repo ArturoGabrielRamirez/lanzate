@@ -39,15 +39,43 @@ export function SimpleProductFields({ disabled }: SimpleProductFieldsProps) {
 
     const handlePriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseFloat(e.target.value) || 0
+        const currentPrice = price_stock_info?.price ?? 0
+        const currentPromotionalPrice = price_stock_info?.promotional_price ?? null
+        const currentCost = price_stock_info?.cost ?? 0
+        
+        // Auto-complete promotional_price and cost if they match the previous price
+        // This allows them to stay synchronized while the user is typing
+        // Also auto-fill if they are empty/initial (null/0)
+        const shouldAutoFillPromotional = 
+            (currentPromotionalPrice === null || currentPromotionalPrice === 0) ||
+            (currentPromotionalPrice === currentPrice)
+        const shouldAutoFillCost = 
+            (currentCost === 0) ||
+            (currentCost === currentPrice)
+        
         setCtxValues({
             ...values,
             price_stock_info: {
                 ...values.price_stock_info,
-                price: value
+                price: value,
+                // Auto-fill promotional_price if it matches the previous price or is empty
+                promotional_price: shouldAutoFillPromotional ? value : currentPromotionalPrice,
+                // Auto-fill cost if it matches the previous price or is 0
+                cost: shouldAutoFillCost ? value : currentCost
             }
         })
         setValue("price_stock_info.price", value, { shouldValidate: true, shouldDirty: true })
-    }, [setCtxValues, setValue, values])
+        
+        // Auto-fill promotional_price if needed
+        if (shouldAutoFillPromotional) {
+            setValue("price_stock_info.promotional_price", value, { shouldValidate: true, shouldDirty: true })
+        }
+        
+        // Auto-fill cost if needed
+        if (shouldAutoFillCost) {
+            setValue("price_stock_info.cost", value, { shouldValidate: true, shouldDirty: true })
+        }
+    }, [setCtxValues, setValue, values, price_stock_info])
 
     const handlePromotionalPriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value === "" ? null : (parseFloat(e.target.value) || 0)
