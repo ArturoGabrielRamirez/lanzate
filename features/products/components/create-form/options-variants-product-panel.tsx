@@ -1,13 +1,11 @@
 "use client"
 
-import { ArrowLeft, Barcode, Box, Boxes, Check, Edit2, Plus, Tag, Trash2, X } from "lucide-react"
-import { useEffect, useState } from "react"
-import { Separator } from "react-aria-components"
+import { ArrowLeft, Barcode, Box, Boxes, Check, Edit2, Infinity, Package, Plus, RefreshCcw, Tag, Trash2, X } from "lucide-react"
+import { useCallback, useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { InputField } from "@/features/global/components/form/input-field"
 import { SelectField } from "@/features/global/components/form/select-field"
-import { SwitchField } from "@/features/global/components/form/switch-field"
 import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
 import { VariantsTable } from "@/features/products/components/create-form/variants-table"
@@ -15,6 +13,7 @@ import { CreateProductFormType, OptionType } from "@/features/products/schemas/c
 import { Button } from "@/features/shadcn/components/button"
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
 import { Item, ItemActions, ItemContent, ItemTitle } from "@/features/shadcn/components/item"
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
@@ -26,9 +25,9 @@ import type { Selection } from "react-aria-components"
 const generateId = () => Math.random().toString(36).substring(2, 9)
 
 export function OptionsVariantsProductPanel() {
-    const { watch, setValue, formState: { disabled } } = useFormContext<CreateProductFormType>()
+    const { watch, setValue, formState: { disabled }, trigger } = useFormContext<CreateProductFormType>()
     const { values, setValues: setCtxValues, setStepValid } = useCreateProductContext()
-    const { options_variants_info } = values
+    const { options_variants_info, price_stock_info } = values
 
     const hasVariants = watch("options_variants_info.has_variants")
     const options = watch("options_variants_info.options") || []
@@ -47,13 +46,107 @@ export function OptionsVariantsProductPanel() {
     // Initialize from context
     useEffect(() => {
         if (options_variants_info) {
-            // Only set if they differ to avoid unnecessary re-renders, though setValue usually handles this.
-            // Force update to ensure RHF matches Context on mount (e.g. coming back from another step)
             setValue("options_variants_info.has_variants", options_variants_info.has_variants)
             setValue("options_variants_info.options", options_variants_info.options || [])
             setValue("options_variants_info.variants", options_variants_info.variants || [])
         }
+        if (price_stock_info) {
+            setValue("price_stock_info.sku", price_stock_info.sku || "")
+            setValue("price_stock_info.barcode", price_stock_info.barcode || "")
+            setValue("price_stock_info.price", price_stock_info.price || 0)
+            setValue("price_stock_info.promotional_price", price_stock_info.promotional_price || null)
+            setValue("price_stock_info.cost", price_stock_info.cost || 0)
+            setValue("price_stock_info.stock", price_stock_info.stock || 0)
+            setValue("price_stock_info.stock_unlimited", price_stock_info.stock_unlimited || false)
+            setValue("price_stock_info.track_stock", price_stock_info.track_stock ?? true)
+            trigger(["price_stock_info.price", "price_stock_info.stock", "price_stock_info.stock_unlimited"])
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []) // Run once on mount
+
+    // Handlers for price/stock fields to sync with context
+    const handlePriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseFloat(e.target.value) || 0
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                price: value
+            }
+        })
+        setValue("price_stock_info.price", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handlePromotionalPriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value === "" ? null : (parseFloat(e.target.value) || 0)
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                promotional_price: value
+            }
+        })
+        setValue("price_stock_info.promotional_price", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleCostChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseFloat(e.target.value) || 0
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                cost: value
+            }
+        })
+        setValue("price_stock_info.cost", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleStockChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseFloat(e.target.value) || 0
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                stock: value
+            }
+        })
+        setValue("price_stock_info.stock", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleSkuChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                sku: value
+            }
+        })
+        setValue("price_stock_info.sku", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleBarcodeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                barcode: value
+            }
+        })
+        setValue("price_stock_info.barcode", value, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
+
+    const handleStockUnlimitedChange = useCallback((checked: boolean) => {
+        setCtxValues({
+            ...values,
+            price_stock_info: {
+                ...values.price_stock_info,
+                stock_unlimited: checked
+            }
+        })
+        setValue("price_stock_info.stock_unlimited", checked, { shouldValidate: true, shouldDirty: true })
+    }, [setCtxValues, setValue, values])
 
     // Initialize editing state for new options
     useEffect(() => {
@@ -478,24 +571,8 @@ export function OptionsVariantsProductPanel() {
 
             {!hasVariants && (
                 <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-top-4 duration-300">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <InputField
-                            name="price_stock_info.sku"
-                            label="SKU"
-                            placeholder="SKU-001"
-                            startIcon={<Tag />}
-                            tooltip="Código único de identificación del producto"
-                        />
-                        <InputField
-                            name="price_stock_info.barcode"
-                            label="Código de barras"
-                            placeholder="7791234567890"
-                            startIcon={<Barcode />}
-                            tooltip="Código de barras (EAN, UPC, etc.)"
-                        />
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <InputField
                             name="price_stock_info.price"
                             label="Precio de venta"
@@ -503,6 +580,9 @@ export function OptionsVariantsProductPanel() {
                             type="number"
                             startIcon="$"
                             isRequired
+                            tooltip="Precio de venta del producto"
+                            onChange={handlePriceChange}
+                            disabled={disabled}
                         />
                         <InputField
                             name="price_stock_info.promotional_price"
@@ -511,6 +591,8 @@ export function OptionsVariantsProductPanel() {
                             type="number"
                             startIcon="$"
                             tooltip="Si se establece, este será el precio actual"
+                            onChange={handlePromotionalPriceChange}
+                            disabled={disabled}
                         />
                         <InputField
                             name="price_stock_info.cost"
@@ -519,30 +601,69 @@ export function OptionsVariantsProductPanel() {
                             type="number"
                             startIcon="$"
                             tooltip="Para cálculo de ganancias (no visible al cliente)"
+                            onChange={handleCostChange}
+                            disabled={disabled}
                         />
                     </div>
 
-                    <div className="flex gap-4 flex-col">
+                    <InputField
+                        name="price_stock_info.stock"
+                        label="Stock disponible"
+                        placeholder="0"
+                        type="number"
+                        disabled={stockUnlimited || disabled}
+                        startIcon={<Package />}
+                        tooltip="Stock disponible total para la venta"
+                        isRequired
+                        onChange={handleStockChange}
+                        endIcon={(
+                            <>
+                                <IconButton
+                                    icon={Infinity}
+                                    tooltip="Stock ilimitado"
+                                    active={stockUnlimited}
+                                    onClick={() => {
+                                        handleStockUnlimitedChange(!stockUnlimited)
+                                    }}
+                                    iconClassName={stockUnlimited ? "" : "text-muted-foreground"}
+                                />
+                                {/* track stock button */}
+                                <IconButton
+                                    icon={RefreshCcw}
+                                    tooltip="Rastrear stock"
+                                    onClick={() => {
+                                        // TODO: Implement track stock
+                                    }}
+                                    iconClassName=""
+                                />
+                            </>
+                        )}
+                    />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <InputField
-                            name="price_stock_info.stock"
-                            label="Stock disponible"
-                            placeholder="0"
-                            type="number"
-                            disabled={stockUnlimited}
+                            name="price_stock_info.sku"
+                            label="SKU"
+                            placeholder="SKU-001"
+                            startIcon={<Tag />}
+                            tooltip="Código único de identificación del producto"
+                            onChange={handleSkuChange}
+                            disabled={disabled}
                         />
-                        <div className="flex flex-col gap-2">
-                            <SwitchField
-                                name="price_stock_info.stock_unlimited"
-                                label="Stock ilimitado"
-                                description="Para productos digitales o servicios"
-                            />
-                            <Separator />
-                            <SwitchField
-                                name="price_stock_info.track_stock"
-                                label="Rastrear stock"
-                                description="Actualizar automáticamente"
-                            />
-                        </div>
+                        <InputField
+                            name="price_stock_info.barcode"
+                            label="Código de barras"
+                            placeholder="7791234567890"
+                            startIcon={<Barcode />}
+                            tooltip="Código de barras (EAN, UPC, etc.)"
+                            onChange={handleBarcodeChange}
+                            disabled={disabled}
+                        />
+                    </div>
+
+
+
+                    <div className="flex gap-4 flex-col">
+
                     </div>
                 </div>
             )}
