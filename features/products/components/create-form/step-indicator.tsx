@@ -1,4 +1,4 @@
-import { Check, Box, ImageIcon, DollarSign, Settings } from "lucide-react"
+import { Check, Box, ImageIcon, DollarSign, Settings, Package } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
@@ -22,16 +22,20 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Prod
         1: Box,
         2: ImageIcon,
         3: DollarSign,
-        4: Settings,
-        5: Check,
+        4: DollarSign,
+        5: Package,
+        6: Settings,
+        7: Check,
     }
 
     const tooltips = {
         1: "Información básica",
         2: "Imágenes y multimedia",
-        3: "Precio y stock",
-        4: "Configuración",
-        5: "Finalizar",
+        3: "Opciones y variantes",
+        4: "Precio y stock",
+        5: "Configuración por tipo",
+        6: "Configuraciones",
+        7: "Finalizar",
     }
 
     const isComplete = !!isStepValid[step]
@@ -52,7 +56,7 @@ export function StepIndicator({ step, currentStep, onStepClick, disabled }: Prod
                 )}
                 onClick={handleStepClick}
             >
-                {isComplete && step !== 5 ? (
+                {isComplete && step !== 7 ? (
                     <Check className="size-5 text-primary" />
                 ) : (
                     <IconButton

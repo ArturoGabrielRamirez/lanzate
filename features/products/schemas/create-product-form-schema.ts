@@ -161,11 +161,29 @@ export const productSettingsSchema = yup.object({
     })
 })
 
+// Type Specific Schema (for step 5 - dynamic based on product type)
+export const productTypeSpecificSchema = yup.object({
+    type_specific_info: yup.object({
+        // Fields will vary based on product type (PHYSICAL, DIGITAL, SERVICE)
+        // For now, empty object as placeholder
+    }).optional()
+})
+
+// Configurations Schema (for step 6)
+export const productConfigurationsSchema = yup.object({
+    configurations_info: yup.object({
+        // Additional product configurations
+        // For now, empty object as placeholder
+    }).optional()
+})
+
 // Combined Schema
 export const createProductSchema = productBasicInfoSchema
     .concat(productMediaSchema)
     .concat(productOptionsVariantsSchema)
     .concat(productPriceStockSchema)
+    .concat(productTypeSpecificSchema)
+    .concat(productConfigurationsSchema)
     .concat(productShippingSchema)
     .concat(productSettingsSchema)
 
@@ -174,6 +192,8 @@ export type ProductBasicInfoFormType = yup.InferType<typeof productBasicInfoSche
 export type ProductMediaFormType = yup.InferType<typeof productMediaSchema>
 export type ProductOptionsVariantsFormType = yup.InferType<typeof productOptionsVariantsSchema>
 export type ProductPriceStockFormType = yup.InferType<typeof productPriceStockSchema>
+export type ProductTypeSpecificFormType = yup.InferType<typeof productTypeSpecificSchema>
+export type ProductConfigurationsFormType = yup.InferType<typeof productConfigurationsSchema>
 export type ProductShippingFormType = yup.InferType<typeof productShippingSchema>
 export type ProductSettingsFormType = yup.InferType<typeof productSettingsSchema>
 

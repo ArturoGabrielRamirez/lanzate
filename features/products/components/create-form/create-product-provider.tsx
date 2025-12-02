@@ -66,6 +66,8 @@ const initialValues: CreateProductFormType = {
             unit: LengthUnit.CM,
         }
     },
+    type_specific_info: {},
+    configurations_info: {},
     settings_info: {
         status: ProductStatus.ACTIVE,
         is_featured: false,
@@ -85,20 +87,23 @@ function CreateProductProvider({ children, initialValues: propInitialValues }: {
         media_info: { ...initialValues.media_info, ...propInitialValues?.media_info },
         options_variants_info: { ...initialValues.options_variants_info, ...propInitialValues?.options_variants_info },
         price_stock_info: { ...initialValues.price_stock_info, ...propInitialValues?.price_stock_info },
+        type_specific_info: { ...initialValues.type_specific_info, ...propInitialValues?.type_specific_info },
+        configurations_info: { ...initialValues.configurations_info, ...propInitialValues?.configurations_info },
         shipping_info: { ...initialValues.shipping_info, ...propInitialValues?.shipping_info },
         settings_info: { ...initialValues.settings_info, ...propInitialValues?.settings_info },
     }))
     
     const [isStepValid, setIsStepValid] = useState<Record<number, boolean>>({})
-    // Steps: Basic, Media, Options/Variants, Price/Stock, Shipping, Settings, Review/Confirm (7 steps now?)
-    // Let's assume 6 steps for now based on logical grouping in the wizard design
+    // Steps: Basic, Media, Options/Variants, Price/Stock, Type Specific, Configurations, Shipping, Settings
     // 1. Basic
     // 2. Media
     // 3. Options & Variants
     // 4. Price & Stock
-    // 5. Shipping
-    // 6. Settings
-    const [step, { setStep }] = useStep(6) 
+    // 5. Type Specific (dynamic based on product type)
+    // 6. Configurations
+    // 7. Shipping
+    // 8. Settings
+    const [step, { setStep }] = useStep(7) 
     const [isOpen, setIsOpen] = useState(false)
 
     const setValues = useCallback((partial: Partial<CreateProductFormType>) => {
