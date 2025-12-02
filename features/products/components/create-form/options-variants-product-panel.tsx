@@ -1,28 +1,17 @@
 "use client"
 
-import { ArrowLeft, Barcode, Box, Boxes, Check, Edit2, Infinity, Package, Plus, RefreshCcw, Tag, Trash2, X } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { InputField } from "@/features/global/components/form/input-field"
-import { SelectField } from "@/features/global/components/form/select-field"
-import { TagsField } from "@/features/global/components/form/tags-field"
 import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
-import { VariantsTable } from "@/features/products/components/create-form/variants-table"
+import { OptionsList } from "@/features/products/components/create-form/options-list"
+import { ProductTypeSelector } from "@/features/products/components/create-form/product-type-selector"
+import { SimpleProductFields } from "@/features/products/components/create-form/simple-product-fields"
+import { generateId, generateVariants } from "@/features/products/components/create-form/utils/option-utils"
+import { VariantsAccordion } from "@/features/products/components/create-form/variants-accordion"
 import { CreateProductFormType, OptionType } from "@/features/products/schemas/create-product-form-schema"
-import { Button } from "@/features/shadcn/components/button"
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/features/shadcn/components/empty"
-import { Item, ItemActions, ItemContent, ItemTitle } from "@/features/shadcn/components/item"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
-import { Badge } from "@/features/shadcn/components/ui/badge"
-import { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel } from "@/features/shadcn/components/ui/choice-box"
-import { cn } from "@/lib/utils"
 
 import type { Selection } from "react-aria-components"
-
-// Simple ID generator
-const generateId = () => Math.random().toString(36).substring(2, 9)
 
 export function OptionsVariantsProductPanel() {
     const { watch, setValue, formState: { disabled }, trigger } = useFormContext<CreateProductFormType>()
@@ -185,42 +174,6 @@ export function OptionsVariantsProductPanel() {
         setStepValid(3, isValid)
     }, [hasVariants, options, variants, price, stock, stockUnlimited, setStepValid])
 
-
-    // Generate Variants based on Options
-    const generateVariants = (currentOptions: typeof options) => {
-        if (currentOptions.length === 0) return []
-
-        const validOptions = currentOptions.filter(opt => opt.name && opt.values && opt.values.length > 0)
-        if (validOptions.length === 0) return []
-
-        const optionValuesArrays = validOptions.map(opt => opt.values!.map(v => ({
-            optionName: opt.name,
-            value: v.value
-        })))
-
-        // Cartesian product helper
-        const cartesianProduct = <T,>(arrays: T[][]): T[][] => {
-            return arrays.reduce<T[][]>((acc, curr) => {
-                return acc.flatMap(x => curr.map(y => [...x, y]));
-            }, [[]] as T[][]);
-        }
-
-        const combinations = cartesianProduct(optionValuesArrays)
-
-        return combinations.map((combo) => {
-            const name = combo.map(c => c.value).join(" / ")
-            // Preserve existing variant data if name matches
-            const existing = variants.find(v => v.name === name)
-            return {
-                id: existing?.id || generateId(),
-                name,
-                sku: existing?.sku || "",
-                price: existing?.price || 0,
-                stock: existing?.stock || 0
-            }
-        })
-    }
-
     const handleTypeSelect = (selection: Selection) => {
         if (selection === "all") return
         const selected = Array.from(selection)[0]
@@ -255,7 +208,7 @@ export function OptionsVariantsProductPanel() {
         const newOptions = [...options]
         const removedId = newOptions[index].id
         newOptions.splice(index, 1)
-        const newVariants = generateVariants(newOptions)
+        const newVariants = generateVariants(newOptions, variants as Array<{ id?: string; name?: string; sku?: string; price: number; stock: number }>)
 
         setValue("options_variants_info.options", newOptions)
         setValue("options_variants_info.variants", newVariants)
@@ -286,7 +239,7 @@ export function OptionsVariantsProductPanel() {
                 setEditingOptions(prev => ({ ...prev, [option.id!]: false }))
             }
             // Trigger variant generation
-            const newVariants = generateVariants(options)
+            const newVariants = generateVariants(options, variants as Array<{ id?: string; name?: string; sku?: string; price: number; stock: number }>)
             setValue("options_variants_info.variants", newVariants)
 
             setCtxValues({
@@ -341,7 +294,7 @@ export function OptionsVariantsProductPanel() {
         // If we are editing, we wait for the "Save" button
         const optionId = newOptions[index].id
         if (optionId && !editingOptions[optionId]) {
-            newVariants = generateVariants(newOptions)
+            newVariants = generateVariants(newOptions, variants as Array<{ id?: string; name?: string; sku?: string; price: number; stock: number }>)
             setValue("options_variants_info.variants", newVariants)
         }
 
@@ -355,332 +308,78 @@ export function OptionsVariantsProductPanel() {
         })
     }
 
+    const cancelEdit = (index: number, option: typeof options[0]) => {
+        // If cancelling a new option (no name/values), remove it
+        if (!option.name && (!option.values || option.values.length === 0)) {
+            removeOption(index)
+        } else if (option.id) {
+            // Just stop editing
+            setEditingOptions(prev => ({ ...prev, [option.id!]: false }))
+        }
+    }
+
+    const backFromEdit = (index: number, option: typeof options[0]) => {
+        if (!option.name && (!option.values || option.values.length === 0)) {
+            removeOption(index)
+        } else if (option.id) {
+            // Just stop editing
+            setEditingOptions(prev => ({ ...prev, [option.id!]: false }))
+        }
+    }
+
+    const removeValue = (optionIndex: number, valueIndex: number) => {
+        const option = options[optionIndex]
+        const newValues = option.values!.filter((_, i) => i !== valueIndex).map(v => v.value)
+        if (newValues.length === 0) {
+            removeOption(optionIndex)
+        } else {
+            updateOptionValues(optionIndex, newValues)
+        }
+    }
+
     return (
         <div className="flex flex-col gap-4">
             {!isEditingAnyOption && (
-                <div className="space-y-2">
-                    <p className="text-sm font-medium">Tipo de producto</p>
-                    <ChoiceBox
-                        columns={2}
-                        gap={4}
-                        selectionMode="single"
-                        selectedKeys={[hasVariants ? "variants" : "simple"]}
-                        onSelectionChange={handleTypeSelect}
-                        className={cn(disabled && "pointer-events-none")}
-                        defaultSelectedKeys={hasVariants ? ["variants"] : ["simple"]}
-                    >
-                        <ChoiceBoxItem id="simple" textValue="Producto Simple">
-                            <Box />
-                            <ChoiceBoxLabel>Producto Simple</ChoiceBoxLabel>
-                            <ChoiceBoxDescription>Un solo SKU, sin variaciones.</ChoiceBoxDescription>
-                        </ChoiceBoxItem>
-                        <ChoiceBoxItem id="variants" textValue="Con Variantes">
-                            <Boxes />
-                            <ChoiceBoxLabel>Con Variantes</ChoiceBoxLabel>
-                            <ChoiceBoxDescription>Múltiples opciones (color, talle, etc.)</ChoiceBoxDescription>
-                        </ChoiceBoxItem>
-                    </ChoiceBox>
-                </div>
+                <ProductTypeSelector
+                    hasVariants={hasVariants}
+                    onSelectionChange={handleTypeSelect}
+                    disabled={disabled}
+                />
             )}
 
             {hasVariants && (
-                <div className="animate-in fade-in slide-in-from-top-4 duration-300 flex flex-col gap-4">
-                    <Accordion type="single" collapsible className="w-full" defaultValue="options">
-                        <AccordionItem value="options" className="border-none flex flex-col gap-1">
-                            <AccordionTrigger className="hover:no-underline py-0">
-                                <p className="text-sm font-medium">Opciones del Producto ({options.length})</p>
-                            </AccordionTrigger>
-                            <AccordionContent className="flex flex-col gap-2 pb-1">
-                                {options.length === 0 && !isEditingAnyOption && (
-                                    <div className="border-2 border-dashed rounded-lg p-8 text-center">
-                                        <p className="text-muted-foreground">No hay opciones configuradas</p>
-                                        <Button variant="outline" onClick={addOption} className="text-primary">+ Agregar tu primera opción</Button>
-                                    </div>
-                                )}
-
-                                <div className="space-y-4">
-                                    {options.map((option, index) => {
-                                        const isEditing = option.id ? editingOptions[option.id] : true
-
-                                        if (isEditing) {
-                                            return (
-                                                <div className="flex flex-col gap-2" key={option.id || index}>
-                                                    <div className="flex items-center justify-between mb-2">
-
-                                                        <p className="text-sm font-medium flex items-center gap-2">
-                                                            <ArrowLeft className="size-4 text-primary cursor-pointer" onClick={() => {
-                                                                if (!option.name && (!option.values || option.values.length === 0)) {
-                                                                    removeOption(index)
-                                                                } else if (option.id) {
-                                                                    // Just stop editing
-                                                                    setEditingOptions(prev => ({ ...prev, [option.id!]: false }))
-                                                                }
-                                                            }} />
-                                                            Editando opción
-                                                        </p>
-                                                        {/* Option to cancel/back could be here too if desired, but user asked for a link generally */}
-                                                    </div>
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                        <InputField
-                                                            name={`options_variants_info.options.${index}.name`}
-                                                            label="Nombre"
-                                                            placeholder="Nombre de opción (ej: Color, Talle)"
-                                                            className="flex-1"
-                                                            disabled={disabled}
-                                                            isRequired
-                                                            tooltip="Es el nombre de la opción que se mostrará como filtro en la tienda."
-                                                            startIcon={<Box />}
-                                                        />
-                                                        <SelectField
-                                                            name={`options_variants_info.options.${index}.type`}
-                                                            label="Tipo"
-                                                            isRequired
-                                                            placeholder="Tipo"
-                                                            options={[
-                                                                { value: OptionType.TEXT, label: "Texto", description: "Ej: S, M, L" },
-                                                                { value: OptionType.NUMBER, label: "Número", description: "Ej: 28, 30, 32" },
-                                                                { value: OptionType.COLOR, label: "Colores", description: "Paleta de colores" },
-                                                                { value: OptionType.IMAGE, label: "Imágenes", description: "Texturas/materiales" }
-                                                            ]}
-                                                            disabled={disabled}
-                                                            onChange={(val) => updateOptionType(index, val as OptionType)}
-                                                            value={option.type || OptionType.TEXT}
-                                                            tooltip="El tipo de opción que se mostrará como filtro en la tienda."
-                                                        />
-                                                    </div>
-
-                                                    {option.type === OptionType.TEXT ? (
-                                                        <TagsField
-                                                            label="Valores"
-                                                            value={option.values?.map(v => v.value) || []}
-                                                            onChange={(newValues) => updateOptionValues(index, newValues)}
-                                                            placeholder="Valor (ej: Rojo, XL) - Presiona Enter"
-                                                            disabled={disabled}
-                                                            tooltip="Es el valor de la opción que se mostrará como filtro en la tienda."
-                                                            isRequired
-                                                            startIcon={<Box />}
-                                                        />
-                                                    ) : (
-                                                        <div className="border rounded-md p-6 bg-muted/20">
-                                                            <Empty>
-                                                                <EmptyHeader>
-                                                                    <EmptyMedia>
-                                                                        <Boxes className="w-10 h-10 text-muted-foreground/50" />
-                                                                    </EmptyMedia>
-                                                                    <EmptyTitle>Próximamente</EmptyTitle>
-                                                                    <EmptyDescription>La edición de este tipo de opción estará disponible pronto.</EmptyDescription>
-                                                                </EmptyHeader>
-                                                                <EmptyContent>
-                                                                    <Button
-                                                                        variant="outline"
-                                                                        onClick={() => updateOptionType(index, OptionType.TEXT)}
-                                                                    >
-                                                                        Volver a Texto
-                                                                    </Button>
-                                                                </EmptyContent>
-                                                            </Empty>
-                                                        </div>
-                                                    )}
-
-                                                    <div className="flex justify-end gap-2 mt-2">
-                                                        <Button
-                                                            variant="ghost"
-                                                            onClick={() => {
-                                                                // If cancelling a new option (no name/values), remove it
-                                                                if (!option.name && (!option.values || option.values.length === 0)) {
-                                                                    removeOption(index)
-                                                                } else if (option.id) {
-                                                                    // Just stop editing
-                                                                    setEditingOptions(prev => ({ ...prev, [option.id!]: false }))
-                                                                }
-                                                            }}
-                                                        >
-                                                            Cancelar
-                                                        </Button>
-                                                        {/* <Button variant="destructive" onClick={() => removeOption(index)}>
-                                                                <Trash2 className="w-4 h-4 mr-2" /> Eliminar
-                                                            </Button> */}
-                                                        <Button variant="default" onClick={() => saveOption(index)} disabled={disabled || !option.name || !option.values || option.values.length === 0}>
-                                                            <Check className="w-4 h-4 mr-2" /> Guardar
-                                                        </Button>
-                                                    </div>
-                                                </div>
-                                            )
-                                        } else {
-                                            // Hide non-editing items when editing any option
-                                            if (isEditingAnyOption) return null
-                                            return (
-                                                <Item variant="outline" key={option.id || index} size="sm">
-                                                    <ItemContent className="flex-1">
-                                                        <ItemTitle>{option.name}</ItemTitle>
-                                                        <div className="flex flex-wrap gap-2">
-                                                            {option.values?.map((val, vIndex) => (
-                                                                <Badge key={val.id || vIndex} variant="secondary" className="pr-1">
-                                                                    {val.value}
-                                                                    <button
-                                                                        onClick={() => {
-                                                                            const newValues = option.values!.filter((_, i) => i !== vIndex).map(v => v.value)
-                                                                            if (newValues.length === 0) {
-                                                                                removeOption(index)
-                                                                            } else {
-                                                                                updateOptionValues(index, newValues)
-                                                                            }
-                                                                        }}
-                                                                        className="ml-1 hover:text-destructive focus:outline-none"
-                                                                        disabled={disabled}
-                                                                    >
-                                                                        <X className="h-3 w-3" />
-                                                                    </button>
-                                                                </Badge>
-                                                            ))}
-                                                        </div>
-                                                    </ItemContent>
-                                                    <ItemActions>
-                                                        <Button variant="ghost" size="icon-sm" onClick={() => editOption(index)} disabled={disabled}>
-                                                            <Edit2 className="h-4 w-4 text-muted-foreground" />
-                                                        </Button>
-                                                        <Button variant="ghost" size="icon-sm" onClick={() => removeOption(index)} disabled={disabled} className="text-destructive hover:text-destructive hover:bg-destructive/10">
-                                                            <Trash2 className="h-4 w-4" />
-                                                        </Button>
-                                                    </ItemActions>
-                                                </Item>
-                                            )
-                                        }
-                                    })}
-                                </div>
-                                <div className="flex justify-end">
-                                    {!isEditingAnyOption && options.length > 0 && (
-                                        <Button
-                                            variant="outline"
-                                            onClick={(e) => {
-                                                e.stopPropagation()
-                                                addOption()
-                                            }}
-                                            size="sm"
-                                            className="ml-auto"
-                                        >
-                                            <Plus /> Agregar opción
-                                        </Button>
-                                    )}
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                </div>
+                <OptionsList
+                    options={options}
+                    editingOptions={editingOptions}
+                    disabled={disabled}
+                    onAddOption={addOption}
+                    onEditOption={editOption}
+                    onRemoveOption={removeOption}
+                    onSaveOption={saveOption}
+                    onCancelEdit={cancelEdit}
+                    onBackFromEdit={backFromEdit}
+                    onTypeChange={updateOptionType}
+                    onValuesChange={updateOptionValues}
+                    onRemoveValue={removeValue}
+                />
             )}
 
             {!hasVariants && (
-                <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-top-4 duration-300">
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <InputField
-                            name="price_stock_info.price"
-                            label="Precio de venta"
-                            placeholder="0.00"
-                            type="number"
-                            startIcon="$"
-                            isRequired
-                            tooltip="Precio de venta del producto"
-                            onChange={handlePriceChange}
-                            disabled={disabled}
-                        />
-                        <InputField
-                            name="price_stock_info.promotional_price"
-                            label="Precio promocional"
-                            placeholder="0.00"
-                            type="number"
-                            startIcon="$"
-                            tooltip="Si se establece, este será el precio actual"
-                            onChange={handlePromotionalPriceChange}
-                            disabled={disabled}
-                        />
-                        <InputField
-                            name="price_stock_info.cost"
-                            label="Costo"
-                            placeholder="0.00"
-                            type="number"
-                            startIcon="$"
-                            tooltip="Para cálculo de ganancias (no visible al cliente)"
-                            onChange={handleCostChange}
-                            disabled={disabled}
-                        />
-                    </div>
-
-                    <InputField
-                        name="price_stock_info.stock"
-                        label="Stock disponible"
-                        placeholder="0"
-                        type="number"
-                        disabled={stockUnlimited || disabled}
-                        startIcon={<Package />}
-                        tooltip="Stock disponible total para la venta"
-                        isRequired
-                        onChange={handleStockChange}
-                        endIcon={(
-                            <>
-                                <IconButton
-                                    icon={Infinity}
-                                    tooltip="Stock ilimitado"
-                                    active={stockUnlimited}
-                                    onClick={() => {
-                                        handleStockUnlimitedChange(!stockUnlimited)
-                                    }}
-                                    iconClassName={stockUnlimited ? "" : "text-muted-foreground"}
-                                />
-                                {/* track stock button */}
-                                <IconButton
-                                    icon={RefreshCcw}
-                                    tooltip="Rastrear stock"
-                                    onClick={() => {
-                                        // TODO: Implement track stock
-                                    }}
-                                    iconClassName=""
-                                />
-                            </>
-                        )}
-                    />
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <InputField
-                            name="price_stock_info.sku"
-                            label="SKU"
-                            placeholder="SKU-001"
-                            startIcon={<Tag />}
-                            tooltip="Código único de identificación del producto"
-                            onChange={handleSkuChange}
-                            disabled={disabled}
-                        />
-                        <InputField
-                            name="price_stock_info.barcode"
-                            label="Código de barras"
-                            placeholder="7791234567890"
-                            startIcon={<Barcode />}
-                            tooltip="Código de barras (EAN, UPC, etc.)"
-                            onChange={handleBarcodeChange}
-                            disabled={disabled}
-                        />
-                    </div>
-
-
-
-                    <div className="flex gap-4 flex-col">
-
-                    </div>
-                </div>
+                <SimpleProductFields
+                    disabled={disabled}
+                    stockUnlimited={stockUnlimited}
+                    onPriceChange={handlePriceChange}
+                    onPromotionalPriceChange={handlePromotionalPriceChange}
+                    onCostChange={handleCostChange}
+                    onStockChange={handleStockChange}
+                    onSkuChange={handleSkuChange}
+                    onBarcodeChange={handleBarcodeChange}
+                    onStockUnlimitedChange={handleStockUnlimitedChange}
+                />
             )}
 
             {hasVariants && variants.length > 0 && !isEditingAnyOption && (
-                <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300 delay-150">
-                    <Accordion type="single" collapsible className="w-full" defaultValue="variants">
-                        <AccordionItem value="variants" className="border-none">
-                            <AccordionTrigger className="hover:no-underline py-0">
-                                <p className="text-sm font-medium">Variantes Generadas ({variants.length})</p>
-                            </AccordionTrigger>
-                            <AccordionContent className="pb-1">
-                                <VariantsTable />
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                </div>
+                <VariantsAccordion variantsCount={variants.length} />
             )}
         </div>
     )
