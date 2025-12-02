@@ -230,7 +230,7 @@ function StepContentWrapper({ isCompleted, currentStep, direction, children, cla
       className={className}
       style={{ position: 'relative', overflow: 'hidden' }}
       animate={{ height: isCompleted ? 0 : parentHeight }}
-      transition={{ type: 'spring', duration: 0.4 }}
+      transition={{ type: 'spring', duration: 0.3 }}
     >
       <AnimatePresence initial={false} mode="sync" custom={direction}>
         {!isCompleted && (
@@ -276,7 +276,7 @@ function SlideTransition({ children, direction, onHeightReady }: SlideTransition
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.3 }}
       style={{ position: 'absolute', left: 0, right: 0, top: 0 }}
     >
       {children}
@@ -364,7 +364,7 @@ function StepConnector({ isComplete }: StepConnectorProps) {
         variants={lineVariants}
         initial={false}
         animate={isComplete ? 'complete' : 'incomplete'}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.3 }}
       />
     </div>
   );
@@ -382,7 +382,7 @@ function CheckIcon(props: CheckIconProps) {
       <motion.path
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={{ delay: 0.1, type: 'tween', ease: 'easeOut', duration: 0.3 }}
+        transition={{ delay: 0.1, type: 'tween', ease: 'easeOut', duration: 0.2 }}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M5 13l4 4L19 7"
