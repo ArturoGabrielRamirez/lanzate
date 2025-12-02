@@ -295,7 +295,7 @@ export function OptionsVariantsProductPanel() {
                     <Accordion type="single" collapsible className="w-full" defaultValue="options">
                         <AccordionItem value="options" className="border-none flex flex-col gap-1">
                             <AccordionTrigger className="hover:no-underline py-0">
-                                <p className="text-sm font-medium">Opciones del Producto</p>
+                                <p className="text-sm font-medium">Opciones del Producto ({options.length})</p>
                             </AccordionTrigger>
                             <AccordionContent className="flex flex-col gap-2 pb-1">
                                 {options.length === 0 && !isEditingAnyOption && (
