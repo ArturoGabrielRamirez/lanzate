@@ -78,7 +78,7 @@ function SelectInputField({
         onSelectChangeInternal: (val: string) => void,
         onInputChangeInternal: (e: React.ChangeEvent<HTMLInputElement>) => void,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        fieldState: { invalid: boolean; error?: FieldErrorType | any }
+        fieldState: { invalid: boolean; error?: FieldErrorType | Array<{ message?: string } | undefined> | any }
     ) => {
         return (
             <Field data-invalid={fieldState.invalid} className={className}>
@@ -165,7 +165,7 @@ function SelectInputField({
                         {description}
                     </FieldDescription>
                 )}
-                {fieldState.invalid && <FieldError errors={fieldState.error} />}
+                {fieldState.invalid && <FieldError errors={Array.isArray(fieldState.error) ? fieldState.error : fieldState.error ? [fieldState.error] : undefined} />}
             </Field>
         )
     }
@@ -197,9 +197,12 @@ function SelectInputField({
                                 }
 
                                 // Combine field states - invalid if either is invalid
+                                const errors: Array<{ message?: string } | undefined> = []
+                                if (selectFieldState.error) errors.push(selectFieldState.error)
+                                if (inputFieldState.error) errors.push(inputFieldState.error)
                                 const combinedFieldState = {
                                     invalid: selectFieldState.invalid || inputFieldState.invalid,
-                                    error: selectFieldState.error || inputFieldState.error,
+                                    error: errors.length > 0 ? errors : undefined,
                                 }
 
                                 return renderSelectInput(
