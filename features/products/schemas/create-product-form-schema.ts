@@ -28,6 +28,43 @@ export enum LengthUnit {
     FT = "FT"
 }
 
+export enum FileType {
+    PDF = "PDF",
+    DOC = "DOC",
+    DOCX = "DOCX",
+    XLS = "XLS",
+    XLSX = "XLSX",
+    PPT = "PPT",
+    PPTX = "PPTX",
+    JPG = "JPG",
+    JPEG = "JPEG",
+    PNG = "PNG",
+    GIF = "GIF",
+    SVG = "SVG",
+    WEBP = "WEBP",
+    AVIF = "AVIF",
+    MP4 = "MP4",
+    WEBM = "WEBM",
+    MP3 = "MP3",
+    WAV = "WAV",
+    OGG = "OGG",
+    AAC = "AAC",
+    M4A = "M4A",
+    M4V = "M4V",
+    MOV = "MOV",
+    WMV = "WMV",
+    AVI = "AVI",
+    FLV = "FLV",
+    SWF = "SWF",
+}
+
+export enum FileSizeUnit {
+    BYTE = "BYTE",
+    KILOBYTE = "KILOBYTE",
+    MEGABYTE = "MEGABYTE",
+    GIGABYTE = "GIGABYTE",
+}
+
 // Basic Info Schema
 export const productBasicInfoSchema = yup.object({
     basic_info: yup.object({
@@ -177,6 +214,16 @@ export const productTypeSpecificSchema = yup.object({
             depth_unit: yup.mixed<LengthUnit>().oneOf(Object.values(LengthUnit)).default(LengthUnit.CM).optional(),
             diameter: yup.number().min(0).optional().nullable(),
             diameter_unit: yup.mixed<LengthUnit>().oneOf(Object.values(LengthUnit)).default(LengthUnit.CM).optional(),
+        }).optional(),
+        // Digital product properties
+        digital: yup.object({
+            file_url: yup.string().url("URL inválida").optional().nullable(),
+            file_type: yup.mixed<FileType>().oneOf(Object.values(FileType)).optional().nullable(),
+            file_name: yup.string().optional().nullable(),
+            file_size: yup.number().min(0).optional().nullable(),
+            file_size_unit: yup.mixed<FileSizeUnit>().oneOf(Object.values(FileSizeUnit)).default(FileSizeUnit.MEGABYTE).optional(),
+            max_downloads: yup.number().min(0).optional().nullable(),
+            expiration_date: yup.string().optional().nullable(), // Stored as string (datetime-local format), converted to Date when needed
         }).optional()
     }).optional()
 })

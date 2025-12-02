@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useCallback } from "react"
 
-import { CreateProductFormType, ProductStatus, ProductType, WeightUnit, LengthUnit } from "@/features/products/schemas/create-product-form-schema"
+import { CreateProductFormType, ProductStatus, ProductType, WeightUnit, LengthUnit, FileType, FileSizeUnit } from "@/features/products/schemas/create-product-form-schema"
 import { useStep } from "@/features/shadcn/hooks/use-step"
 
 interface CreateProductContextType {
@@ -78,6 +78,15 @@ const initialValues: CreateProductFormType = {
             depth_unit: LengthUnit.CM,
             diameter: undefined,
             diameter_unit: LengthUnit.CM,
+        },
+        digital: {
+            file_url: undefined,
+            file_type: undefined,
+            file_name: undefined,
+            file_size: undefined,
+            file_size_unit: FileSizeUnit.MEGABYTE,
+            max_downloads: undefined,
+            expiration_date: undefined,
         }
     },
     configurations_info: {},
