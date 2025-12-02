@@ -40,18 +40,40 @@ export function FisicalPanel() {
         diameter_unit: LengthUnit.CM,
     }, [values.type_specific_info?.physical])
 
-    // Sync context with form state on mount
+    // Sync context with form state on mount and set default values
     useEffect(() => {
+        // Set default values if they don't exist
+        const defaultWeightUnit = physicalInfo.weight_unit || WeightUnit.KG
+        const defaultLengthUnit = LengthUnit.CM
+        
         setValue("type_specific_info.physical.weight", physicalInfo.weight || undefined)
-        setValue("type_specific_info.physical.weight_unit", physicalInfo.weight_unit || WeightUnit.KG)
+        setValue("type_specific_info.physical.weight_unit", defaultWeightUnit, { shouldValidate: false })
         setValue("type_specific_info.physical.width", physicalInfo.width || undefined)
-        setValue("type_specific_info.physical.width_unit", physicalInfo.width_unit || LengthUnit.CM)
+        setValue("type_specific_info.physical.width_unit", physicalInfo.width_unit || defaultLengthUnit, { shouldValidate: false })
         setValue("type_specific_info.physical.height", physicalInfo.height || undefined)
-        setValue("type_specific_info.physical.height_unit", physicalInfo.height_unit || LengthUnit.CM)
+        setValue("type_specific_info.physical.height_unit", physicalInfo.height_unit || defaultLengthUnit, { shouldValidate: false })
         setValue("type_specific_info.physical.depth", physicalInfo.depth || undefined)
-        setValue("type_specific_info.physical.depth_unit", physicalInfo.depth_unit || LengthUnit.CM)
+        setValue("type_specific_info.physical.depth_unit", physicalInfo.depth_unit || defaultLengthUnit, { shouldValidate: false })
         setValue("type_specific_info.physical.diameter", physicalInfo.diameter || undefined)
-        setValue("type_specific_info.physical.diameter_unit", physicalInfo.diameter_unit || LengthUnit.CM)
+        setValue("type_specific_info.physical.diameter_unit", physicalInfo.diameter_unit || defaultLengthUnit, { shouldValidate: false })
+        
+        // Update context with default values if they weren't set
+        if (!physicalInfo.weight_unit || !physicalInfo.width_unit || !physicalInfo.height_unit || !physicalInfo.depth_unit || !physicalInfo.diameter_unit) {
+            setValues({
+                ...values,
+                type_specific_info: {
+                    ...values.type_specific_info,
+                    physical: {
+                        ...physicalInfo,
+                        weight_unit: defaultWeightUnit,
+                        width_unit: physicalInfo.width_unit || defaultLengthUnit,
+                        height_unit: physicalInfo.height_unit || defaultLengthUnit,
+                        depth_unit: physicalInfo.depth_unit || defaultLengthUnit,
+                        diameter_unit: physicalInfo.diameter_unit || defaultLengthUnit,
+                    },
+                },
+            })
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

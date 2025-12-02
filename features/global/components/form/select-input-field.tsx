@@ -4,9 +4,8 @@ import { InfoIcon } from "lucide-react"
 import { useFormContext, Controller, FieldError as FieldErrorType } from "react-hook-form"
 
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/features/shadcn/components/field"
-import { Button } from "@/features/shadcn/components/ui/button"
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/features/shadcn/components/input-group"
 import { ButtonGroup } from "@/features/shadcn/components/ui/button-group"
-import { Input } from "@/features/shadcn/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/lib/utils"
@@ -32,6 +31,7 @@ interface SelectInputFieldProps {
     description?: string | React.ReactNode
     tooltip?: string | React.ReactNode
     isRequired?: boolean
+    startIcon?: React.ReactNode
     disabled?: boolean
     hideLabel?: boolean
     className?: string
@@ -61,6 +61,7 @@ function SelectInputField({
     tooltip,
     isRequired = false,
     disabled = false,
+    startIcon,
     hideLabel = false,
     className,
     endButton,
@@ -80,6 +81,8 @@ function SelectInputField({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         fieldState: { invalid: boolean; error?: FieldErrorType | Array<{ message?: string } | undefined> | any }
     ) => {
+        // Use first option as default if selectValue is empty
+        const finalSelectValue = selectValue || selectOptions[0]?.value || ""
         return (
             <Field data-invalid={fieldState.invalid} className={className}>
                 {!hideLabel && (
@@ -90,7 +93,7 @@ function SelectInputField({
                 <ButtonGroup className={cn("bg-background w-full", disabled && "bg-background/50 cursor-not-allowed")}>
                     <ButtonGroup>
                         <Select
-                            value={selectValue || ""}
+                            value={finalSelectValue}
                             onValueChange={(value) => {
                                 onSelectChangeInternal(value)
                                 if (onSelectChange) {
@@ -99,7 +102,7 @@ function SelectInputField({
                             }}
                             disabled={disabled}
                         >
-                            <SelectTrigger className="font-mono min-w-fit">
+                            <SelectTrigger className="font-mono min-w-fit !h-full !grow">
                                 <SelectValue placeholder={selectPlaceholder || "Seleccionar"} />
                             </SelectTrigger>
                             <SelectContent className="min-w-24">
@@ -115,50 +118,53 @@ function SelectInputField({
                                 ))}
                             </SelectContent>
                         </Select>
-                        <Input
-                            placeholder={inputPlaceholder || ""}
-                            value={inputValue || ""}
-                            type={inputType}
-                            inputMode={inputMode}
-                            pattern={inputPattern}
-                            disabled={disabled}
-                            onChange={onInputChangeInternal}
-                            className="flex-1"
-                            aria-invalid={fieldState.invalid}
-                        />
-                    </ButtonGroup>
-                    {endButton && (
-                        <ButtonGroup>
-                            <Button
-                                variant="outline"
-                                size="icon"
-                                aria-label={endButton.ariaLabel}
-                                onClick={endButton.onClick}
+                        <InputGroup>
+                        {startIcon && (
+                                <InputGroupAddon>
+                                    {startIcon}
+                                </InputGroupAddon>
+                            )}
+                            <InputGroupInput
+                                placeholder={inputPlaceholder || ""}
+                                value={inputValue || ""}
+                                type={inputType}
+                                inputMode={inputMode}
+                                pattern={inputPattern}
                                 disabled={disabled}
-                            >
-                                {endButton.icon}
-                            </Button>
-                        </ButtonGroup>
-                    )}
-                    {tooltip && (
-                        <ButtonGroup>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        aria-label="Info"
-                                        disabled={disabled}
-                                    >
-                                        <InfoIcon />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>{tooltip}</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </ButtonGroup>
-                    )}
+                                onChange={onInputChangeInternal}
+                                className="flex-1"
+                                aria-invalid={fieldState.invalid}
+                            />
+                            {endButton && (
+                                <InputGroupAddon
+                                    align="inline-end"
+                                    aria-label={endButton.ariaLabel}
+                                    onClick={endButton.onClick}
+                                >
+                                    {endButton.icon}
+                                </InputGroupAddon>
+                            )}
+                            {tooltip && (
+                                <InputGroupAddon align="inline-end">
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <InputGroupButton
+                                                variant="ghost"
+                                                aria-label="Info"
+                                                size="icon-xs"
+                                                disabled={disabled}
+                                            >
+                                                <InfoIcon />
+                                            </InputGroupButton>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>{tooltip}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </InputGroupAddon>
+                            )}
+                        </InputGroup>
+                    </ButtonGroup>
                 </ButtonGroup>
                 {description && (
                     <FieldDescription>
@@ -205,8 +211,13 @@ function SelectInputField({
                                     error: errors.length > 0 ? errors : undefined,
                                 }
 
+                                // Use default value from selectOptions if field value is empty
+                                // The useEffect in the parent component should set the default value in the form
+                                const defaultSelectValue = selectOptions[0]?.value || ""
+                                const selectValue = selectField.value || defaultSelectValue
+                                
                                 return renderSelectInput(
-                                    selectField.value || "",
+                                    selectValue,
                                     inputField.value || "",
                                     handleSelectChange,
                                     handleInputChange,
