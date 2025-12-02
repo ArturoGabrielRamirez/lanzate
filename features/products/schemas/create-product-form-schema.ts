@@ -86,7 +86,24 @@ export const productOptionsVariantsSchema = yup.object({
                 // Add more variant specific fields if needed (weight, dimensions per variant)
             })
         ).optional()
-    })
+    }),
+    // Include price_stock_info for simple products (validation handled manually in component)
+    price_stock_info: yup.object({
+        sku: yup.string()
+            .transform(v => v === "" ? undefined : v)
+            .matches(/^[a-zA-Z0-9\-\_\.]+$/, "El SKU solo puede contener caracteres alfanuméricos, guiones, guiones bajos y puntos")
+            .optional(),
+        barcode: yup.string()
+            .transform(v => v === "" ? undefined : v)
+            .matches(/^[a-zA-Z0-9\-\.\$\/\+\%]*$/, "El código de barras no es válido")
+            .optional(),
+        price: yup.number().min(0, "El precio no puede ser negativo").optional(),
+        promotional_price: yup.number().min(0, "El precio promocional no puede ser negativo").optional().nullable(),
+        cost: yup.number().min(0, "El costo no puede ser negativo").optional(),
+        stock: yup.number().min(0, "El stock no puede ser negativo").optional(),
+        stock_unlimited: yup.boolean().default(false),
+        track_stock: yup.boolean().default(true),
+    }).optional()
 })
 
 // Price & Stock Schema (Mostly for Simple Products)
