@@ -4,7 +4,7 @@ import Link from "next/link"
 
 import { PageContainer } from "@/features/layout/components/page-container"
 import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
-import { AddToCartButton, LikeButton/* , VariantDetailClient */ } from "@/features/products/components"
+import { /* AddToCartButton, */ LikeButton/* , VariantDetailClient */ } from "@/features/products/components"
 import { Button } from "@/features/shadcn/components/ui/button"
 
 /* import type { Product, ProductVariant *//* , Color */ /* } from "@prisma/client" */
@@ -92,7 +92,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                 <p className="text-sm text-gray-500 mt-1">SKU: {product.sku}</p>
                             )} */}
                             <div className="flex gap-2 justify-end">
-                                <AddToCartButton
+                         {/*        <AddToCartButton
                                     product={product}
                                     withText
                                     className="text-lg p-6 !px-8 !bg-accent text-accent-foreground"
@@ -101,7 +101,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                     overrideName={product.variants?.find(v => v.id === parseInt(variant))?.name ?? product.name}
                                     overridePrice={product.variants?.find(v => v.id === parseInt(variant))?.price ?? product.price}
                                     overrideImage={product.image ?? undefined}
-                                />
+                                /> */}
                                 <Button variant="outline" size="lg" className="text-lg p-6 !px-8" asChild>
                                     <Link href="/checkout">
                                         <ShoppingBag />
