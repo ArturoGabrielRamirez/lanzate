@@ -6,6 +6,8 @@ import { prisma } from "@/utils/prisma"
 
 export async function insertCategoryData({ storeId, payload }: InsertCategoryAction) {
     return actionWrapper(async () => {
+        if (!storeId) throw new Error("Store ID is required")
+
         // Generar slug único para la tienda
         const baseSlug = payload.name.toLowerCase()
             .replace(/[^a-z0-9\s-]/g, '')
@@ -49,4 +51,4 @@ export async function insertCategoryData({ storeId, payload }: InsertCategoryAct
             message: "Categoría creada exitosamente"
         }
     })
-} 
+}

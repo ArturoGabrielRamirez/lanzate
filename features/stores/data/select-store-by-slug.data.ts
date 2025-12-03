@@ -11,7 +11,7 @@ export async function selectStoreBySlugData(slug: string) {
         include: {
             branches: {
                 include: {
-                    stock: true,
+                    stock_items: true,
                     shipping_methods: true,
                     operational_settings: true,
                     opening_hours: true,
@@ -24,16 +24,16 @@ export async function selectStoreBySlugData(slug: string) {
             },
             products: {
                 where: {
-                    is_deleted: false
+                    status : "ACTIVE"
                 },
                 include: {
                     categories: true,
                     variants: {
                         include: {
-                            stocks: true,
+                            stock_items: true,
                         },
                         where: {
-                            is_deleted: false
+                            is_active: true
                         }
                     }
                 }

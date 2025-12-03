@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { motion, AnimatePresence, Variants } from 'motion/react';
 import React, { useState, Children, useRef, useLayoutEffect, HTMLAttributes, ReactNode } from 'react';
+import { Separator } from 'react-aria-components';
 
 import { Button } from '@/features/shadcn/components/button';
 import { ScrollArea } from '@/features/shadcn/components/scroll-area';
@@ -14,6 +15,8 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   initialStep?: number;
   onStepChange?: (step: number) => void;
   onFinalStepCompleted?: () => void;
+  onExitFlow?: () => void;
+  exitFlowTooltip?: string;
   stepCircleContainerClassName?: string;
   stepContainerClassName?: string;
   contentClassName?: string;
@@ -38,6 +41,8 @@ export default function Stepper({
   initialStep = 1,
   onStepChange = () => { },
   onFinalStepCompleted = () => { },
+  onExitFlow,
+  exitFlowTooltip = 'Volver a elegir método',
   stepCircleContainerClassName = '',
   stepContainerClassName = '',
   contentClassName = '',
@@ -71,6 +76,8 @@ export default function Stepper({
     if (currentStep > 1) {
       setDirection(1);
       updateStep(currentStep - 1);
+    } else if (onExitFlow) {
+      onExitFlow();
     }
   };
 
@@ -97,7 +104,7 @@ export default function Stepper({
         direction={direction}
         className={`step-content-default w-full ${contentClassName}`}
       >
-        <ScrollArea className="h-[calc(100vh_-_15rem)] md:h-[calc(100vh_-_12rem)] md:max-h-96 !overflow-x-visible w-full">
+        <ScrollArea className="h-[calc(100dvh_-_15rem)] md:h-[calc(100dvh_-_12rem)] md:max-h-[500px] !overflow-x-visible w-full">
           {stepsArray[currentStep - 1]}
         </ScrollArea>
       </StepContentWrapper>
@@ -137,19 +144,20 @@ export default function Stepper({
         </div>
       </div>
 
+      <Separator />
       {!isCompleted && (
         <div className={`footer-container ${footerClassName}`}>
           <div className={`footer-nav justify-between gap-4 md:gap-8`}>
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button disabled={currentStep === 1} variant="outline" onClick={handleBack} {...backButtonProps}>
+                <Button disabled={currentStep === 1 && !onExitFlow} variant="outline" onClick={handleBack} {...backButtonProps}>
                   <ArrowLeft />
                   {backButtonText}
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                Go back to the previous step
+                {currentStep === 1 && onExitFlow ? exitFlowTooltip : 'Go back to the previous step'}
               </TooltipContent>
             </Tooltip>
 
@@ -224,7 +232,7 @@ function StepContentWrapper({ isCompleted, currentStep, direction, children, cla
       className={className}
       style={{ position: 'relative', overflow: 'hidden' }}
       animate={{ height: isCompleted ? 0 : parentHeight }}
-      transition={{ type: 'spring', duration: 0.4 }}
+      transition={{ type: 'spring', duration: 0.3 }}
     >
       <AnimatePresence initial={false} mode="sync" custom={direction}>
         {!isCompleted && (
@@ -270,7 +278,7 @@ function SlideTransition({ children, direction, onHeightReady }: SlideTransition
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.3 }}
       style={{ position: 'absolute', left: 0, right: 0, top: 0 }}
     >
       {children}
@@ -358,7 +366,7 @@ function StepConnector({ isComplete }: StepConnectorProps) {
         variants={lineVariants}
         initial={false}
         animate={isComplete ? 'complete' : 'incomplete'}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.3 }}
       />
     </div>
   );
@@ -376,7 +384,7 @@ function CheckIcon(props: CheckIconProps) {
       <motion.path
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={{ delay: 0.1, type: 'tween', ease: 'easeOut', duration: 0.3 }}
+        transition={{ delay: 0.1, type: 'tween', ease: 'easeOut', duration: 0.2 }}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M5 13l4 4L19 7"

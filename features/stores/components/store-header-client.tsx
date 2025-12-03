@@ -12,6 +12,7 @@ function StoreHeaderClient({ store }: StoreHeaderClientProps) {
     const hasLinkAfterSlug = lastPart.length > 3
 
     const breadcrumbs = [
+        { label: "Tiendas", href: "/stores" },
         { label: store.name, href: `/stores/${store.slug}` },
     ]
 

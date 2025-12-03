@@ -102,7 +102,7 @@ const choiceBoxItemStyles = tv({
       false: "cursor-default",
     },
     isHovered: {
-      true: "not-data-readonly:not-data-focus-visible:not-selected:inset-ring-muted-fg/30 cursor-pointer",
+      true: "not-data-readonly:not-data-focus-visible:not-selected:inset-ring-muted-fg/30 cursor-pointer hover:bg-accent/50",
     },
     isFocused: {
       true: "inset-ring-(--choice-box-active-ring) ring-(--primary) ring-3 invalid:ring-danger-subtle-fg/20",
@@ -120,7 +120,7 @@ const choiceBoxItemStyles = tv({
       ],
     },
     isDisabled: {
-      true: "z-10 opacity-50 **:data-[slot=label]:text-muted-fg forced-colors:text-[GrayText] **:[[slot=description]]:text-muted-fg/70",
+      true: "z-10 opacity-50 **:data-[slot=label]:text-muted-fg forced-colors:text-[GrayText] **:[[slot=description]]:text-muted-fg/70 cursor-not-allowed",
     },
   },
 })
@@ -224,6 +224,7 @@ function ChoiceBoxDescription({ className, ref, ...props }: ChoiceBoxDescription
         "group-has-data-[slot=avatar]:col-start-2",
         "text-base/6 text-muted-foreground sm:text-sm/6",
         "group-disabled:opacity-50",
+        "!leading-tight col-end-3",
         className,
       )}
       {...props}

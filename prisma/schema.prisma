@@ -148,7 +148,7 @@ model Store {
   // ============================================================
   products   Product[]
   categories Category[]
-  colors     Color[]
+  // colors     Color[] // Removed in favor of ProductOptionValue
 
   // ============================================================
   // 5. OPERATIONS & BRANCHES
@@ -195,49 +195,184 @@ model Account {
 
 model Product {
   id                Int                @id @default(autoincrement())
+  store_id          Int
+  
+  // === 1. IDENTITY & DESCRIPTION ===
   name              String
-  description       String?
-  price             Float
-  stock             Int
+  description       String?            @db.Text // HTML content
+  
+  // === 2. TYPE ===
+  type              ProductType        @default(PHYSICAL)
+  
+  // === 3. ORGANIZATION ===
+  brand             String?
+  categories        Category[]         @relation("ProductCategories")
+  // tags              Tag[]              @relation("ProductTags") // Future implementation
+  tags              String[]           // Keep simple array for now or migrate to relation later
+  
+  // === 4. VISIBILITY & PROMOTION ===
+  status            ProductStatus      @default(ACTIVE)
+  is_featured       Boolean            @default(false)
+  is_new            Boolean            @default(false)
+  is_on_sale        Boolean            @default(false)
+  allow_promotions  Boolean            @default(true)
+  
+  // === 5. GLOBAL SHIPPING CONFIG ===
+  free_shipping     Boolean            @default(false)
+
+  // === 6. SEO ===
+  slug              String             @unique
+  seo_title         String?
+  seo_description   String?
+  
+  // === TIMESTAMPS ===
   created_at        DateTime           @default(now())
   updated_at        DateTime           @updatedAt
-  store_id          Int
-  tags              String[]
-  barcode           String?
-  image             String?
-  owner_id          Int
-  sku               String             @unique
-  slug              String             @unique
-  video             String?
-  is_active         Boolean            @default(true)
-  is_featured       Boolean            @default(false)
-  is_published      Boolean            @default(false)
-  expiration_date   DateTime?
+
+  // === RELATIONS ===
+  store             Store              @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  media             ProductMedia[]
+  
+  options           ProductOption[]
+  variants          ProductVariant[]
+
+  // Legacy relations to keep or refactor
+  product_comments  product_comments[]
+  product_likes     product_likes[]
+  social_activities SocialActivity[]
+  order_items       OrderItem[]
+  primary_media     ProductMedia?      @relation("ProductPrimaryMedia", fields: [primary_media_id], references: [id])
   primary_media_id  Int?               @unique
-  depth             Float?
-  depth_unit        LengthUnit?
-  diameter          Float?
-  diameter_unit     LengthUnit?
-  height            Float?
-  height_unit       LengthUnit?
+  owner_id          Int
+  owner             User               @relation(fields: [owner_id], references: [id])
+
+  @@map("products")
+}
+
+enum ProductType {
+  PHYSICAL
+  DIGITAL
+  SERVICE
+}
+
+enum ProductStatus {
+  ACTIVE
+  DRAFT
+  ARCHIVED
+}
+
+model ProductOption {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  name       String   // e.g. "Color", "Size", "Material"
+  position   Int      // Display order
+  
+  product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  values     ProductOptionValue[]
+
+  @@map("product_options")
+}
+
+model ProductOptionValue {
+  id           Int                 @id @default(autoincrement())
+  option_id    Int
+  value        String              // e.g. "Red", "XL"
+  swatch_color String?             // HEX color e.g. "#FF0000"
+  swatch_image String?             // URL for texture image
+  
+  option       ProductOption       @relation(fields: [option_id], references: [id], onDelete: Cascade)
+  variants     ProductVariantValue[]
+
+  @@map("product_option_values")
+}
+
+model ProductVariant {
+  id                Int                   @id @default(autoincrement())
+  product_id        Int
+  
+  // === IDENTITY ===
+  sku               String?
+  barcode           String?
+  
+  // === PRICING ===
+  price             Float
+  promotional_price Float?
+  cost_price        Float?
+  show_price        Boolean               @default(true)
+  
+  // === INVENTORY SETTINGS ===
+  stock_unlimited   Boolean               @default(false)
+  track_stock       Boolean               @default(true)
+  
+  // === PHYSICAL PROPERTIES (Per variant) ===
   weight            Float?
   weight_unit       WeightUnit?
   width             Float?
   width_unit        LengthUnit?
-  is_deleted        Boolean            @default(false)
-  order_items       OrderItem[]
-  product_comments  product_comments[]
-  product_likes     product_likes[]
-  media             ProductMedia[]
-  stock_entries     ProductStock[]
-  variants          ProductVariant[]
-  owner             User               @relation(fields: [owner_id], references: [id])
-  primary_media     ProductMedia?      @relation("ProductPrimaryMedia", fields: [primary_media_id], references: [id])
-  store             Store              @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  social_activities SocialActivity[]
-  categories        Category[]         @relation("CategoryToProduct")
+  height            Float?
+  height_unit       LengthUnit?
+  depth             Float?
+  depth_unit        LengthUnit?
+  diameter          Float?
+  diameter_unit     LengthUnit?
 
-  @@map("products")
+  // === DIGITAL PROPERTIES (Only for digital products per variant) ===
+  file_url          String?
+  file_type         FileType?
+  file_name         String?
+  file_size         Int?
+  file_size_unit    FileSizeUnit?
+  max_downloads     Int?
+  expiration_date   DateTime?
+  
+
+  // === STATE ===
+  is_active         Boolean               @default(true)
+  is_default        Boolean               @default(false) // TRUE if it's a simple product (hidden variant)
+  
+  // === MEDIA ===
+  media_id          Int?
+  media             ProductMedia?         @relation("VariantSpecificMedia", fields: [media_id], references: [id])
+
+  // === RELATIONS ===
+  product           Product               @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  option_values     ProductVariantValue[]
+  stock_items       VariantStock[]
+  order_items       OrderItem[]
+  
+  // Legacy relations cleanup might be needed later
+  media_items       ProductMedia[]        @relation("VariantMedia")
+  // primary_media     ProductMedia?         @relation("VariantPrimaryMedia") // Replaced by 'media'
+
+  created_at        DateTime              @default(now())
+  updated_at        DateTime              @updatedAt
+
+  @@map("product_variants")
+}
+
+model ProductVariantValue {
+  variant_id      Int
+  option_value_id Int
+  
+  variant         ProductVariant     @relation(fields: [variant_id], references: [id], onDelete: Cascade)
+  value           ProductOptionValue @relation(fields: [option_value_id], references: [id], onDelete: Cascade)
+
+  @@id([variant_id, option_value_id])
+  @@map("product_variant_values")
+}
+
+model VariantStock {
+  id          Int            @id @default(autoincrement())
+  variant_id  Int
+  branch_id   Int
+  
+  quantity    Int            @default(0)
+  
+  variant     ProductVariant @relation(fields: [variant_id], references: [id], onDelete: Cascade)
+  branch      Branch         @relation(fields: [branch_id], references: [id], onDelete: Cascade)
+
+  @@unique([variant_id, branch_id])
+  @@map("variant_stocks")
 }
 
 model Branch {
@@ -255,8 +390,10 @@ model Branch {
   
   store                Store                      @relation(fields: [store_id], references: [id], onDelete: Cascade)
   orders               Order[]
-  stock                ProductStock[]
-  variant_stock        ProductVariantStock[]
+  
+  // Refactored Inventory
+  stock_items          VariantStock[]
+  
   operational_settings BranchOperationalSettings?
   opening_hours        BranchOpeningHour[]
   shipping_methods     BranchShippingMethod[]
@@ -368,142 +505,37 @@ model BranchShippingMethod {
   @@map("branch_shipping_methods")
 }
 
-model ProductStock {
-  quantity   Int
-  product_id Int
-  branch_id  Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  branch     Branch   @relation(fields: [branch_id], references: [id], onDelete: Cascade)
-  product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
-
-  @@id([product_id, branch_id])
-  @@map("product_stocks")
-}
-
 model Category {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String?
-  image       String?
-  slug        String
-  created_at  DateTime  @default(now())
-  is_active   Boolean   @default(true)
-  is_default  Boolean   @default(false)
-  sort_order  Int       @default(0)
-  store_id    Int
-  updated_at  DateTime  @updatedAt
-  store       Store     @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  products    Product[] @relation("CategoryToProduct")
+  id              Int       @id @default(autoincrement())
+  store_id        Int
+  parent_id       Int?
+  
+  name            String
+  slug            String
+  description     String?
+  image           String?
+  
+  // === GOOGLE SHOPPING ===
+  google_category String?
+  
+  // === SEO ===
+  seo_title       String?
+  seo_description String?
+  
+  is_active       Boolean   @default(true)
+  is_default      Boolean   @default(false)
+  sort_order      Int       @default(0)
+  
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  
+  store           Store     @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  parent          Category? @relation("CategoryHierarchy", fields: [parent_id], references: [id])
+  children        Category[] @relation("CategoryHierarchy")
+  products        Product[] @relation("ProductCategories")
 
   @@unique([store_id, slug])
   @@map("categories")
-}
-
-model Color {
-  id         Int              @id @default(autoincrement())
-  store_id   Int?
-  name       String
-  rgba       Json?
-  created_at DateTime         @default(now())
-  updated_at DateTime         @updatedAt
-  store      Store?           @relation(fields: [store_id], references: [id], onDelete: Cascade)
-  variants   ProductVariant[]
-
-  @@map("colors")
-}
-
-model ProductVariant {
-  id                 Int                   @id @default(autoincrement())
-  product_id         Int
-  sku                String?               @unique
-  color_id           Int?
-  price              Float?
-  is_active          Boolean               @default(true)
-  is_featured        Boolean               @default(false)
-  is_published       Boolean               @default(false)
-  barcode            String?
-  created_at         DateTime              @default(now())
-  updated_at         DateTime              @updatedAt
-  primary_media_id   Int?                  @unique
-  is_deleted         Boolean               @default(false)
-  available_for_sale Boolean               @default(true)
-  available_from     DateTime?
-  available_until    DateTime?
-  compare_price      Float?
-  cost_price         Float?
-  country_of_origin  String?
-  custom_attributes  Json?
-  depth              Float?
-  depth_unit         LengthUnit?
-  description        String?
-  diameter           Float?
-  diameter_unit      LengthUnit?
-  digital_file_url   String?
-  discount_amount    Float?
-  discount_end       DateTime?
-  discount_start     DateTime?
-  discount_type      DiscountType?
-  height             Float?
-  height_unit        LengthUnit?
-  is_digital         Boolean               @default(false)
-  is_visible         Boolean               @default(true)
-  low_stock_alert    Int?
-  material           String?
-  max_per_order      Int?
-  min_wholesale_qty  Int?
-  name               String?
-  pattern            String?
-  requires_shipping  Boolean               @default(true)
-  shipping_depth     Float?
-  shipping_height    Float?
-  shipping_weight    Float?
-  shipping_width     Float?
-  size               String?
-  measure            String?
-  style              String?
-  weight             Float?
-  weight_unit        WeightUnit?
-  wholesale_price    Float?
-  width              Float?
-  width_unit         LengthUnit?
-  order_items        OrderItem[]
-  media              ProductMedia[]        @relation("VariantMedia")
-  stocks             ProductVariantStock[]
-  color              Color?                @relation(fields: [color_id], references: [id])
-  primary_media      ProductMedia?         @relation("VariantPrimaryMedia", fields: [primary_media_id], references: [id])
-  product            Product               @relation(fields: [product_id], references: [id], onDelete: Cascade)
-
-  @@unique([product_id, size, color_id])
-  @@index([product_id])
-  @@map("product_variants")
-}
-
-model ProductVariantStock {
-  variant_id Int
-  branch_id  Int
-  quantity   Int
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
-  branch     Branch         @relation(fields: [branch_id], references: [id], onDelete: Cascade)
-  variant    ProductVariant @relation(fields: [variant_id], references: [id], onDelete: Cascade)
-
-  @@id([variant_id, branch_id])
-  @@map("product_variant_stocks")
-}
-
-model DefaultCategory {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  image       String?
-  slug        String   @unique
-  sort_order  Int      @default(0)
-  is_active   Boolean  @default(true)
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("default_categories")
 }
 
 model Order {
@@ -1011,11 +1043,19 @@ model ProductMedia {
   sort_order          Int             @default(0)
   created_at          DateTime        @default(now())
   updated_at          DateTime        @updatedAt
-  product_variant_id  Int?
+  
+  // Relation to Product (One-to-Many for gallery)
   product             Product         @relation(fields: [product_id], references: [id], onDelete: Cascade)
-  variant             ProductVariant? @relation("VariantMedia", fields: [product_variant_id], references: [id])
-  primary_for_variant ProductVariant? @relation("VariantPrimaryMedia")
+  
+  // Relation to Product (One-to-One for primary image)
   primary_for_product Product?        @relation("ProductPrimaryMedia")
+
+  // Legacy/Optional: Link to specific variant (e.g. "Red Shirt" photos)
+  product_variant_id  Int?
+  variant             ProductVariant? @relation("VariantMedia", fields: [product_variant_id], references: [id])
+  
+  // New: Primary image for a variant (e.g. the main thumbnail for "Red")
+  primary_for_variants ProductVariant[] @relation("VariantSpecificMedia")
 
   @@index([product_id, sort_order])
   @@index([product_variant_id, sort_order])
@@ -1029,6 +1069,43 @@ model Waitlist {
   contact_amount Int            @default(0)
   created_at     DateTime       @default(now())
   updated_at     DateTime       @updatedAt
+}
+
+enum FileType {
+  PDF
+  DOC
+  DOCX
+  XLS
+  XLSX
+  PPT
+  PPTX
+  JPG
+  JPEG
+  PNG
+  GIF
+  SVG
+  WEBP
+  AVIF
+  MP4
+  WEBM
+  MP3
+  WAV
+  OGG
+  AAC
+  M4A
+  M4V
+  MOV
+  WMV
+  AVI
+  FLV
+  SWF
+}
+
+enum FileSizeUnit {
+  BYTE
+  KILOBYTE
+  MEGABYTE
+  GIGABYTE
 }
 
 enum WaitlistStatus {

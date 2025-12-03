@@ -28,6 +28,8 @@ function InputField({
     hideLabel = false,
     onChange,
     className,
+    maxLength,
+    autoFocus = false,
 }: {
     name: string,
     label: string,
@@ -47,6 +49,8 @@ function InputField({
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     hideLabel?: boolean
     className?: string
+    maxLength?: number
+    autoFocus?: boolean
 }) {
 
     const { control } = useFormContext();
@@ -83,7 +87,7 @@ function InputField({
                                 </InputGroupAddon>
                             )}
                             {startText && (
-                                <InputGroupText>
+                                <InputGroupText className="pl-2">
                                     {startText}
                                 </InputGroupText>
                             )}
@@ -102,8 +106,10 @@ function InputField({
                                 disabled={disabled}
                                 readOnly={readOnly}
                                 inputMode={inputMode}
+                                maxLength={maxLength}
                                 onChange={handleChange}
                                 tabIndex={readOnly ? -1 : 0}
+                                autoFocus={autoFocus}
                             />
                             {endText && (
                                 <InputGroupText className="pr-2">

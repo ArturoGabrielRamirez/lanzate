@@ -27,7 +27,7 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
     if (existingSubdomain) throw new Error(`El subdominio "${payload.basic_info.subdomain}" ya está en uso.`)
 
     // 3. Get Default Categories
-    const defaultCategories = await prisma.defaultCategory.findMany({
+    const defaultCategories = await prisma.category.findMany({
         where: { is_active: true },
         orderBy: { sort_order: 'asc' }
     })
@@ -46,7 +46,7 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
                     logo: typeof payload.basic_info.logo === 'string' ? payload.basic_info.logo : null,
                     user_id: userId,
                     is_active: true,
-                    
+
                     // Init Balance
                     balance: {
                         create: { current_balance: 0 }
@@ -86,7 +86,7 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
                 province: payload.address_info.province || null,
                 country: payload.address_info.country || null,
                 is_main: true,
-                
+
                 // Operational Settings
                 operational_settings: {
                     create: {
@@ -115,14 +115,14 @@ export async function insertStoreData(payload: ProcessedCreateStoreData, userId:
                 },
 
                 // Contact Info
-                phones: payload.contact_info.phones && payload.contact_info.phones.length > 0 
+                phones: payload.contact_info.phones && payload.contact_info.phones.length > 0
                     ? { create: payload.contact_info.phones.map(p => ({ number: p.phone, is_primary: p.is_primary, type: "mobile" })) }
                     : undefined,
 
                 emails: payload.contact_info.emails && payload.contact_info.emails.length > 0
                     ? { create: payload.contact_info.emails.map(e => ({ email: e.email, is_primary: e.is_primary })) }
                     : undefined,
-                    
+
                 social_media: payload.contact_info.social_media && payload.contact_info.social_media.length > 0
                     ? { create: payload.contact_info.social_media.map(s => ({ platform: "generic", url: s.url, is_primary: s.is_primary })) }
                     : undefined,

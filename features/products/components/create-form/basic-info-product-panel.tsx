@@ -1,0 +1,139 @@
+"use client"
+
+import { Box, ShoppingBag, Link, Tag } from "lucide-react"
+import { useCallback, useEffect } from "react"
+import { useFormContext } from "react-hook-form"
+
+import { InputField } from "@/features/global/components/form/input-field"
+import { TagsField } from "@/features/global/components/form/tags-field"
+import { TextareaField } from "@/features/global/components/form/textarea-field"
+import { CategorySelector } from "@/features/products/components/create-form/category-selector"
+import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider"
+import { CreateProductFormType, ProductType } from "@/features/products/schemas/create-product-form-schema"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
+import { slugify } from "@/features/stores/utils"
+
+
+export function BasicInfoProductPanel({ storeId }: { storeId?: number }) {
+
+    const { setValue, formState: { isValid, disabled }, trigger } = useFormContext<CreateProductFormType>()
+    const { values, setValues, setStepValid } = useCreateProductContext()
+
+    // Sync context with form state on mount
+    useEffect(() => {
+        trigger(["basic_info.name", "basic_info.slug"])
+        setValue("basic_info.name", values.basic_info?.name || "")
+        setValue("basic_info.slug", values.basic_info?.slug || "")
+        setValue("basic_info.description", values.basic_info?.description || "")
+        setValue("basic_info.type", values.basic_info?.type || ProductType.PHYSICAL)
+        setValue("basic_info.brand", values.basic_info?.brand || "")
+        setValue("basic_info.tags", values.basic_info?.tags || [])
+        setValue("basic_info.categories", values.basic_info?.categories || [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    // Validate step
+    useEffect(() => {
+        setStepValid(1, isValid)
+    }, [isValid, setStepValid])
+
+    const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, name, slug: slugify(name) } })
+        setValue("basic_info.slug", slugify(name), { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const description = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, description } })
+        setValue("basic_info.description", description, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    const handleBrandChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const brand = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, brand } })
+        setValue("basic_info.brand", brand, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    const handleTagsChange = useCallback((tags: string[]) => {
+        setValues({ ...values, basic_info: { ...values.basic_info, tags } })
+        setValue("basic_info.tags", tags, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    const handleSlugChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const slug = e.target.value
+        setValues({ ...values, basic_info: { ...values.basic_info, slug } })
+        setValue("basic_info.slug", slug, { shouldValidate: true, shouldDirty: true })
+    }, [setValues, setValue, values])
+
+    return (
+        <div className="flex flex-col gap-4">
+
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <InputField
+                    name="basic_info.name"
+                    label="Nombre"
+                    placeholder="Ej: Camiseta Negra"
+                    isRequired
+                    onChange={handleNameChange}
+                    disabled={disabled}
+                    tooltip="El nombre del producto es el nombre que se mostrará en la tienda."
+                    startIcon={<Box />}
+                    autoFocus={true}
+                />
+                <CategorySelector storeId={storeId} />
+            </div>
+
+            <TextareaField
+                name="basic_info.description"
+                label="Descripción"
+                placeholder="Describe tu producto..."
+                onChange={handleDescriptionChange}
+                disabled={disabled}
+            />
+
+            <Accordion type="single" collapsible>
+                <AccordionItem value="advanced" className="border-none">
+                    <AccordionTrigger className="hover:no-underline py-4">
+                        <span className="text-sm font-medium">Opciones Adicionales</span>
+                    </AccordionTrigger>
+                    <AccordionContent className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
+                        <InputField
+                            name="basic_info.brand"
+                            label="Marca"
+                            placeholder="Ej: Nike, Adidas..."
+                            onChange={handleBrandChange}
+                            tooltip="La marca del producto. Ej: Nike, Adidas..."
+                            startIcon={<ShoppingBag />}
+                            disabled={disabled}
+                        />
+                        <TagsField
+                            name="basic_info.tags"
+                            label="Etiquetas"
+                            placeholder="Seleccionar etiquetas..."
+                            onChange={handleTagsChange}
+                            disabled={disabled}
+                            tooltip="Palabras clave para ayudar a encontrar tu producto."
+                            startIcon={<Tag />}
+                        />
+                        <div className="md:col-span-2">
+                            <InputField
+                                name="basic_info.slug"
+                                label="URL (Slug)"
+                                placeholder="ej-camiseta-negra"
+                                startIcon={<Link />}
+                                onChange={handleSlugChange}
+                                startText="mitienda.lanzate.app/producto/"
+                                disabled={true}
+                                tooltip="El slug es la parte final de la URL de tu producto."
+                            />
+                        </div>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+
+
+        </div>
+    )
+}

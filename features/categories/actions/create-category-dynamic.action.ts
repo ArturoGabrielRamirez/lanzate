@@ -2,13 +2,21 @@
 
 import { revalidatePath } from "next/cache"
 
-import { insertCategory } from "@/features/categories/data"
+import { insertCategoryData } from "@/features/categories/data"
 import { CreateCategoryDynamicAction } from "@/features/categories/types"
 
-
 export async function createCategoryDynamicAction({ storeId, categoryName }: CreateCategoryDynamicAction) {
-    const { hasError, message, payload: category } = await insertCategory({
-        storeId, payload: {
+    if (!storeId || isNaN(storeId)) {
+        return {
+            payload: null,
+            error: true,
+            message: "ID de tienda inválido"
+        }
+    }
+
+    const { hasError, message, payload: category } = await insertCategoryData({
+        storeId,
+        payload: {
             name: categoryName,
             sort_order: 999, // Colocar al final
             description: "",
@@ -33,4 +41,4 @@ export async function createCategoryDynamicAction({ storeId, categoryName }: Cre
         error: false,
         message: "Categoría creada exitosamente"
     }
-} 
+}
