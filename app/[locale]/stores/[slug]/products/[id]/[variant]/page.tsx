@@ -4,13 +4,13 @@ import Link from "next/link"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 import { CreateProductButton } from "@/features/products/components"
-import { VariantDetailForm } from "@/features/products/components/variant-detail-display"
-import { Card, CardHeader, CardTitle, CardContent } from "@/features/shadcn/components/ui/card"
+/* import { VariantDetailForm } from "@/features/products/components/variant-detail-display" */
+import { Card, CardHeader, CardTitle/* , CardContent  */} from "@/features/shadcn/components/ui/card"
 
 type Props = { params: Promise<{ slug: string; id: string; variant: string }> }
 
 export default async function ProductVariantDetailPage({ params }: Props) {
-    const { slug, id, variant } = await params
+    const { slug, id/* , variant */ } = await params
 
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
     if (userError || !user) {
@@ -24,10 +24,10 @@ export default async function ProductVariantDetailPage({ params }: Props) {
         return null
     }
 
-    const variantId = Number(variant)
-    const variantData = product.variants?.find((v: { id: number }) => v.id === variantId)
+  /*   const variantId = Number(variant) */
+ /*    const variantData = product.variants?.find((v: { id: number }) => v.id === variantId) */
 
-    if (!variantData) {
+  /*   if (!variantData) {
         return (
             <Card>
                 <CardContent className="p-6">
@@ -35,7 +35,7 @@ export default async function ProductVariantDetailPage({ params }: Props) {
                 </CardContent>
             </Card>
         )
-    }
+    } */
 
     return (
         <div className="space-y-6">
@@ -61,13 +61,13 @@ export default async function ProductVariantDetailPage({ params }: Props) {
                 </CardHeader>
             </Card>
 
-            <VariantDetailForm
+           {/*  <VariantDetailForm
                 variant={variantData}
                 productPrice={product.price}
                 slug={slug}
                 productId={Number(id)}
                 product={product}
-            />
+            /> */}
         </div>
     )
 }
