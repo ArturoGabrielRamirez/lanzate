@@ -1,15 +1,13 @@
-/* import { Category } from "@prisma/client" */
 import { Image as ImageIcon, Share, ShoppingBag } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
-/* import { Title } from "@/features/layout/components" */
 import { PageContainer } from "@/features/layout/components/page-container"
 import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
-import { AddToCartButton, LikeButton, VariantDetailClient } from "@/features/products/components"
+import { AddToCartButton, LikeButton/* , VariantDetailClient */ } from "@/features/products/components"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-import type { Product, ProductVariant, Color } from "@prisma/client"//test
+/* import type { Product, ProductVariant *//* , Color */ /* } from "@prisma/client" */
 
 type Props = {
     params: Promise<{ id: string; subdomain: string; variant: string }>
@@ -23,11 +21,6 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
     if (hasError || !product) {
         return (
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
-                {/* <Title
-                    title="Product Not Found"
-                    breadcrumbs={[{ label: "Product Not Found", href: `/item/${id}/${variant}` }]}
-                    homePath={`/`}
-                /> */}
                 <p className="text-red-500 mt-4">{message}</p>
             </PageContainer>
         )
@@ -35,7 +28,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
 
     return (
         <PageContainer>
-      {/*       <Title
+            {/*       <Title
                 title={product.name}
                 breadcrumbs={[
                     ...product.categories.map((category: Category) => ({
@@ -82,10 +75,10 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                     </div>
 
                     <div className="space-y-4 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-4 relative">
-                        <VariantDetailClient
+                        {/*                 <VariantDetailClient
                             product={product as unknown as Product & { variants?: (ProductVariant & { color: Color | null })[] }}
                             initialVariantId={parseInt(variant)}
-                        />
+                        /> */}
 
                         <div className="flex flex-col gap-2 border-b border-muted-foreground pb-4">
                             {product.description && (
