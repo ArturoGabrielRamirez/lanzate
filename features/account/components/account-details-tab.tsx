@@ -1,30 +1,19 @@
 "use client"
-
-import { useEffect, useState } from "react"
-
-import { BasicInfoCard, SecurityCard, SecuritySkeleton, StatsCard } from "@/features/account/components"
+import { BasicInfoCard } from "@/features/account/components"
 import { AccountDetailsTabProps } from "@/features/account/types"
 
-export function AccountDetailsTab({ user, immediateData }: AccountDetailsTabProps) {
-    const [securityVisible, setSecurityVisible] = useState(false)
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setSecurityVisible(true)
-        }, 200)
-
-        return () => clearTimeout(timer)
-    }, [])
-
+export function AccountDetailsTab({
+    user,
+    immediateData,
+    onProfileUpdate
+}: AccountDetailsTabProps) {
     return (
         <div className="space-y-4">
-            <BasicInfoCard user={user} immediateData={immediateData} />
-            {securityVisible ? (
-                <SecurityCard user={user} />
-            ) : (
-                <SecuritySkeleton />
-            )}
-            <StatsCard user={user} immediateData={immediateData} />
+            <BasicInfoCard
+                user={user}
+                immediateData={immediateData}
+                onProfileUpdate={onProfileUpdate}
+            />
         </div>
     )
 }

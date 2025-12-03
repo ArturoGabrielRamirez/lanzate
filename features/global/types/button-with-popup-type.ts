@@ -1,27 +1,29 @@
-import { FieldValues } from "react-hook-form";
-import { ObjectSchema } from "yup";
+import { ReactNode } from "react"
+import { FieldValues, DefaultValues } from "react-hook-form"
+import { ObjectSchema } from "yup"
 
-import { ServerResponse } from '@/features/global/types';
-
+import { ServerResponse } from "@/features/global/types"
 
 export type ButtonWithPopupPropsType<P extends FieldValues> = {
-    text: string | React.ReactNode
-    children?: React.ReactNode
-    title: string
-    description: string
-    action: (payload: P) => Promise<ServerResponse<unknown>>
-    disabled?: boolean
+    text?: ReactNode
+    children?: ReactNode
+    title?: string
+    description?: string
+    action: (formData: P) => Promise<ServerResponse<unknown>>
     messages: {
         success: string
-        error: string
+        error?: string
         loading: string
     }
-    schema?: ObjectSchema<Partial<P>>;
+    disabled?: boolean
+    schema?: ObjectSchema<P>
     onComplete?: () => void
-    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
     className?: string
-    formDisabled?: boolean
     size?: "default" | "sm" | "lg" | "icon"
-    contentButton?: string | React.ReactNode
+    formDisabled?: boolean
+    contentButton?: ReactNode
     onlyIcon?: boolean
+    // ✅ CORRECCIÓN: Usar DefaultValues<P> en lugar de UseFormProps
+    defaultValues?: DefaultValues<P>
 }

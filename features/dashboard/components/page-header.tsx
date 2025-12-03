@@ -2,12 +2,12 @@
 
 import { Fragment } from "react"
 
-import { PageHeaderProps } from "@/features/dashboard/types"
+import { PageHeaderPropsFixed } from "@/features/dashboard/types"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/features/shadcn/components/breadcrumb"
 import { Link } from "@/i18n/naviation"
 
-
-function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderProps) {
+function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderPropsFixed) {
+    const isSubtitleString = typeof subtitle === 'string'
 
     return (
         <header className="flex flex-col gap-1">
@@ -22,9 +22,15 @@ function PageHeader({ title, subtitle, breadcrumbs, media }: PageHeaderProps) {
                         {title}
                     </h2>
                     {subtitle && (
-                        <p className="text-base lg:text-lg text-muted-foreground leading-tight">
-                            {subtitle}
-                        </p>
+                        isSubtitleString ? (
+                            <p className="text-base lg:text-lg text-muted-foreground leading-tight">
+                                {subtitle}
+                            </p>
+                        ) : (
+                            <div className="text-base lg:text-lg text-muted-foreground leading-tight">
+                                {subtitle}
+                            </div>
+                        )
                     )}
                 </div>
             </div>

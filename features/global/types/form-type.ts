@@ -1,20 +1,26 @@
-import { Resolver, FieldValues } from "react-hook-form"
+import { ReactNode } from "react"
+import { FieldValues, Resolver, DefaultValues } from "react-hook-form"
 
-import { ActionFunction, ServerResponse } from "@/features/global/types"
+import { ServerResponse } from "@/features/global/types"
 
 export type FormPropsType<T extends FieldValues> = {
-
-    children: React.ReactNode
-    resolver?: Resolver<T, unknown, T>
-    contentButton: string | React.ReactNode
-    formAction?: (formData: T) => Promise<ServerResponse<unknown>> | ActionFunction<T>
+    children?: ReactNode
+    resolver?: Resolver<T, unknown>
+    contentButton?: ReactNode
+    formAction?: (formData: T) => Promise<ServerResponse<unknown>>
     successRedirect?: string
     successMessage?: string
     loadingMessage?: string
     className?: string
-    onComplete?: () => void | Promise<void>
-    onSuccess?: () => void | Promise<void>
-    onError?: () => void | Promise<void>
+    onComplete?: () => void
+    onSuccess?: () => void
+    onError?: () => void
     disabled?: boolean
     submitButton?: boolean
+    resetOnSuccess?: boolean
+    submitButtonClassName?: string
+    onSubmitStart?: () => void | Promise<void>
+    onSubmitEnd?: () => void | Promise<void>
+    // ✅ CORRECCIÓN: Usar DefaultValues<T> en lugar de UseFormProps
+    defaultValues?: DefaultValues<T>
 }

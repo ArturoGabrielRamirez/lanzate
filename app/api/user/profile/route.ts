@@ -18,27 +18,6 @@ export async function PATCH(request: NextRequest) {
     if (username !== null && username !== undefined) {
       const trimmedUsername = username.trim()
 
-      if (trimmedUsername && trimmedUsername.length < 3) {
-        return NextResponse.json({
-          field: 'username',
-          message: 'El nombre de usuario debe tener al menos 3 caracteres'
-        }, { status: 400 })
-      }
-
-      if (trimmedUsername && trimmedUsername.length > 30) {
-        return NextResponse.json({
-          field: 'username',
-          message: 'El nombre de usuario debe tener máximo 30 caracteres'
-        }, { status: 400 })
-      }
-
-      if (trimmedUsername && !/^[a-zA-Z0-9_.-]+$/.test(trimmedUsername)) {
-        return NextResponse.json({
-          field: 'username',
-          message: 'Solo se permiten letras, números, puntos, guiones y guiones bajos'
-        }, { status: 400 })
-      }
-
       if (trimmedUsername) {
         const existingUser = await prisma.user.findFirst({
           where: {
@@ -53,33 +32,6 @@ export async function PATCH(request: NextRequest) {
           return NextResponse.json({
             field: 'username',
             message: 'Este nombre de usuario ya está en uso'
-          }, { status: 400 })
-        }
-      }
-    }
-
-    if (firstName && firstName.trim().length > 50) {
-      return NextResponse.json({
-        field: 'firstName',
-        message: 'El nombre debe tener máximo 50 caracteres'
-      }, { status: 400 })
-    }
-
-    if (lastName && lastName.trim().length > 50) {
-      return NextResponse.json({
-        field: 'lastName',
-        message: 'El apellido debe tener máximo 50 caracteres'
-      }, { status: 400 })
-    }
-
-    if (phone !== null && phone !== undefined) {
-      const trimmedPhone = phone.trim()
-      if (trimmedPhone) {
-        const cleanPhone = trimmedPhone.replace(/[\s\-\(\)\+]/g, '')
-        if (!/^\d{8,15}$/.test(cleanPhone)) {
-          return NextResponse.json({
-            field: 'phone',
-            message: 'El teléfono debe tener entre 8 y 15 dígitos'
           }, { status: 400 })
         }
       }
@@ -112,7 +64,7 @@ export async function PATCH(request: NextRequest) {
       where: {
         supabase_user_id: user.supabase_user_id
       },
-      data: updateData
+      data: updateData //TODO: Migrar esto a DATA
     })
 
     return NextResponse.json({ success: true })

@@ -1,40 +1,196 @@
 'use client'
 
-import { AlertTriangle, CreditCard, Settings } from "lucide-react"
-import { useState, useEffect, useCallback } from "react"
+import { AlertTriangle, CreditCard, Shield, User } from "lucide-react"
+import { Suspense, useState } from "react"
 
-import { AccountBannerHeader, AccountDetailsTab, DangerZoneTab, DeletionRequestedView, MembershipTab } from "@/features/account/components"
+import { DeletionRequestedView } from "@/features/account/components"
+import { AccountBannerHeader } from "@/features/account/components"
+import { AccountDetailsTab } from "@/features/account/components/account-details-tab"
+import { AccountNavigation } from "@/features/account/components/account-navigation"
+import { AccountStats } from "@/features/account/components/account-stats"
+import { DangerZoneTab } from "@/features/account/components/danger-zone-tab"
 import { LoadingSkeleton } from "@/features/account/components/loading-skeleton"
+import { MembershipTab } from "@/features/account/components/membership-tab"
+import { SecurityTab } from "@/features/account/components/security-tab"
+import { AccountDetailsSkeleton } from "@/features/account/components/skeletons/account-details-skeleton"
+import { DangerZoneSkeleton } from "@/features/account/components/skeletons/danger-zone-skeleton"
+import { MembershipSkeleton } from "@/features/account/components/skeletons/membership-skeleton"
+import { SecuritySkeleton } from "@/features/account/components/skeletons/security-skeleton"
 import useDeletionStatus from "@/features/account/hooks/use-deletion-status"
 import useUserData from "@/features/account/hooks/use-user-data"
 import { AccountPageClientProps } from "@/features/account/types"
 import { EmailStatusBanner } from "@/features/auth/components/index"
-import { useGlobalKeyboardShortcuts } from "@/features/global/hooks"
+import { HelpCard } from "@/features/dashboard/components"
+import { ShortcutHint, KeyboardShortcutsHelp, ShortcutsToggle } from "@/features/global/components"
+import { useKeyboardShortcuts } from "@/features/global/hooks"
+import { useKeyboardShortcutsStore } from "@/features/global/stores/keyboard-shortcuts-store"
 import { PageContainer } from "@/features/layout/components"
-import { Card, CardContent } from "@/features/shadcn/components/ui/card"
+import { Tabs, TabsList, TabsPanel, TabsTab } from "@/features/shadcn/components/ui/tabs"
 import { SectionContainer } from "@/features/stores/components"
-
 
 export function AccountPageClient({ user: initialUser, translations: t }: AccountPageClientProps) {
     const { user, immediateData, handleAvatarUpdate, handleProfileUpdate } = useUserData(initialUser)
     const { deletionStatus, isDeletionLoading, fetchDeletionStatus, hasInitialized } = useDeletionStatus()
-    const [activeTab, setActiveTab] = useState<"account" | "membership" | "danger-zone">("account")
-    const [dangerZoneLoaded, setDangerZoneLoaded] = useState(false)
+    const [activeTab, setActiveTab] = useState<'account' | 'security' | 'membership' | 'danger-zone'>("account")
+    const { hintMode } = useKeyboardShortcutsStore()
 
-    // Keyboard shortcuts globales
-    useGlobalKeyboardShortcuts()
+    // Función para cambiar tab programáticamente
+    const navigateToTab = (tab: typeof activeTab) => {
+        setActiveTab(tab)
+    }
 
-    const loadDangerZone = useCallback(() => {
-        if (!dangerZoneLoaded && activeTab === "danger-zone") {
-            setDangerZoneLoaded(true)
+    // Función helper para clickear con retry
+    const clickWithRetry = (selector: string, maxAttempts = 10, delay = 100) => {
+        let attempts = 0
+
+        const tryClick = () => {
+            const element = document.querySelector(selector) as HTMLButtonElement
+
+            if (element) {
+                element.click()
+                return true
+            }
+
+            attempts++
+
+            if (attempts < maxAttempts) {
+                setTimeout(tryClick, delay)
+            } else {
+                console.error(`❌ No se encontró el elemento después de ${maxAttempts} intentos: ${selector}`)
+            }
+            return false
         }
-    }, [dangerZoneLoaded, activeTab])
 
-    useEffect(() => {
-        if (activeTab === "danger-zone") {
-            loadDangerZone()
+        tryClick()
+    }
+
+    // Función mejorada para danger zone usando ref
+    const openDangerZoneDialog = () => {
+        // Método 1: Usar el ref global si está disponible
+        if (typeof window !== 'undefined' && window.dangerZoneRef?.current) {
+            window.dangerZoneRef.current.openDeleteDialog()
+            return
         }
-    }, [activeTab, dangerZoneLoaded, loadDangerZone])
+
+        // Método 2: Fallback al click tradicional con más intentos
+        clickWithRetry('[data-action="delete-account"]', 20, 100)
+    }
+
+    // Configurar atajos de teclado para account
+    useKeyboardShortcuts({
+        isInAccount: true,
+        activeAccountTab: activeTab,
+
+        // Navegación entre tabs
+        onNavigateToAccount: () => navigateToTab('account'),
+        onNavigateToSecurity: () => navigateToTab('security'),
+        onNavigateToMembership: () => navigateToTab('membership'),
+        onNavigateToDangerZone: () => navigateToTab('danger-zone'),
+
+        // Editar perfil
+        onEditProfile: () => {
+            if (activeTab === 'account') {
+                clickWithRetry('[data-action="edit-profile"]', 10, 100)
+            }
+        },
+
+        onChangeAvatar: () => {
+            clickWithRetry('[data-action="change-avatar"]')
+        },
+
+        onChangeEmail: () => {
+            if (activeTab === 'security') {
+                clickWithRetry('[data-action="change-email"]')
+            }
+        },
+
+        onChangePassword: () => {
+            if (activeTab === 'security') {
+                clickWithRetry('[data-action="change-password"]')
+            }
+        },
+
+        onUpgradePlan: () => {
+            if (activeTab === 'membership') {
+                const upgradeButton = document.querySelector('[data-action="upgrade-plan"]') as HTMLButtonElement
+                upgradeButton?.scrollIntoView({ behavior: 'smooth' })
+                clickWithRetry('[data-action="upgrade-plan"]')
+            }
+        },
+
+        onCancelSubscription: () => {
+            if (activeTab === 'membership') {
+                clickWithRetry('[data-action="cancel-subscription"]')
+            }
+        },
+
+        // Eliminar cuenta - MEJORADO
+        onDeleteAccount: () => {
+            if (activeTab === 'danger-zone') {
+                openDangerZoneDialog()
+            }
+        }
+    })
+
+    // Determinar clases de visibilidad según hintMode
+    const getHintClasses = () => {
+        switch (hintMode) {
+            case 'always':
+                return 'opacity-100'
+            case 'hover':
+                return 'opacity-0 group-hover:opacity-100'
+            case 'never':
+                return '!hidden'
+        }
+    }
+
+    // Obtener shortcuts según el tab activo
+    const getAccountShortcuts = () => {
+        switch (activeTab) {
+            case 'account':
+                return [
+                    { keys: ['E'], label: 'Editar' },
+                    { keys: ['A'], label: 'Avatar' },
+                    { keys: ['H'], label: 'Ayuda' },
+                ]
+            case 'security':
+                return [
+                    { keys: ['E'], label: 'Volver' },
+                    { keys: ['1'], label: 'Email' },
+                    { keys: ['2'], label: 'Contraseña' },
+                    { keys: ['H'], label: 'Ayuda' },
+                ]
+            case 'membership':
+                return [
+                    { keys: ['E'], label: 'Volver' },
+                    { keys: ['U'], label: 'Upgrade' },
+                    { keys: ['C'], label: 'Cancelar' },
+                    { keys: ['H'], label: 'Ayuda' },
+                ]
+            case 'danger-zone':
+                return [
+                    { keys: ['E'], label: 'Volver' },
+                    { keys: ['D'], label: 'Eliminar' },
+                    { keys: ['H'], label: 'Ayuda' },
+                ]
+        }
+    }
+
+    // Función para obtener el título según el tab activo
+    const getTabTitle = () => {
+        switch (activeTab) {
+            case 'account':
+                return 'Información básica'
+            case 'security':
+                return 'Seguridad y acceso'
+            case 'membership':
+                return 'Plan y membresía'
+            case 'danger-zone':
+                return 'Zona de peligro'
+            default:
+                return 'Cuenta'
+        }
+    }
 
     if (isDeletionLoading && deletionStatus.isDeletionRequested && hasInitialized) {
         return <LoadingSkeleton />
@@ -50,12 +206,6 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
         )
     }
 
-    const tabs = [
-        { id: "account", label: t["description.account-details"], icon: Settings },
-        { id: "membership", label: "Membresía", icon: CreditCard },
-        { id: "danger-zone", label: "Zona de Peligro", icon: AlertTriangle }
-    ] as const
-
     return (
         <PageContainer className="gap-4">
             <EmailStatusBanner />
@@ -67,73 +217,201 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
                 onProfileUpdate={handleProfileUpdate}
             />
 
-            {/* Layout similar a Dashboard */}
-            <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 lg:gap-8">
-                {/* Sidebar con tabs */}
-                <div className="lg:sticky lg:top-20 lg:h-fit">
-                    <SectionContainer title="Configuración">
-                        <Card>
-                            <CardContent className="p-0">
-                                <nav className="flex lg:flex-col">
-                                    {tabs.map((tab) => {
-                                        const Icon = tab.icon
-                                        return (
-                                            <button
-                                                key={tab.id}
-                                                onClick={() => {
-                                                    setActiveTab(tab.id)
-                                                    if (tab.id === "danger-zone") loadDangerZone()
-                                                }}
-                                                className={`
-                                  flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors
-                                  hover:bg-muted/50 first:rounded-t-lg last:rounded-b-lg
-                                  lg:first:rounded-l-lg lg:first:rounded-tr-none
-                                  lg:last:rounded-r-lg lg:last:rounded-bl-none
-                                  ${activeTab === tab.id
-                                                        ? 'bg-muted text-foreground border-l-2 border-primary'
-                                                        : 'text-muted-foreground'
-                                                    }
-                                `}
-                                            >
-                                                <Icon className="size-4 flex-shrink-0" />
-                                                <span className="hidden lg:block">{tab.label}</span>
-                                            </button>
-                                        )
-                                    })}
-                                </nav>
-                            </CardContent>
-                        </Card>
+            <div className="grow">
+                {/* Mobile: Todo en una columna */}
+                <div className="lg:hidden flex flex-col gap-4">
+                    <SectionContainer title={getTabTitle()}>
+                        <Tabs
+                            value={activeTab}
+                            className="w-full"
+                            onValueChange={(value) => setActiveTab(value as typeof activeTab)}
+                        >
+                            <TabsList variant="underline" className="w-full justify-start border-b border-muted-foreground/20 !pt-0 overflow-x-auto">
+                                <TabsTab value="account" className="group flex-shrink-0">
+                                    <div className="flex items-center gap-2">
+                                        <User className="size-4" />
+                                        <span className="text-xs sm:text-sm">Info</span>
+                                    </div>
+                                </TabsTab>
+                                <TabsTab value="security" className="group flex-shrink-0">
+                                    <div className="flex items-center gap-2">
+                                        <Shield className="size-4" />
+                                        <span className="text-xs sm:text-sm">Seguridad</span>
+                                    </div>
+                                </TabsTab>
+                                <TabsTab value="membership" className="group flex-shrink-0">
+                                    <div className="flex items-center gap-2">
+                                        <CreditCard className="size-4" />
+                                        <span className="text-xs sm:text-sm">Membresía</span>
+                                    </div>
+                                </TabsTab>
+                                <TabsTab value="danger-zone" className="group flex-shrink-0">
+                                    <div className="flex items-center gap-2">
+                                        <AlertTriangle className="size-4" />
+                                        <span className="text-xs sm:text-sm">Peligro</span>
+                                    </div>
+                                </TabsTab>
+                            </TabsList>
+
+                            <TabsPanel value="account">
+                                <Suspense fallback={<AccountDetailsSkeleton />}>
+                                    <AccountDetailsTab
+                                        user={user}
+                                        immediateData={immediateData}
+                                        translations={t}
+                                        onProfileUpdate={handleProfileUpdate}
+                                    />
+                                </Suspense>
+                            </TabsPanel>
+
+                            <TabsPanel value="security">
+                                <Suspense fallback={<SecuritySkeleton />}>
+                                    <SecurityTab user={user} />
+                                </Suspense>
+                            </TabsPanel>
+
+                            <TabsPanel value="membership">
+                                <Suspense fallback={<MembershipSkeleton />}>
+                                    <MembershipTab user={user} />
+                                </Suspense>
+                            </TabsPanel>
+
+                            <TabsPanel value="danger-zone">
+                                <Suspense fallback={<DangerZoneSkeleton />}>
+                                    <DangerZoneTab
+                                        userId={user.id}
+                                        onStatusChange={fetchDeletionStatus}
+                                    />
+                                </Suspense>
+                            </TabsPanel>
+                        </Tabs>
                     </SectionContainer>
                 </div>
 
-                {/* Contenido principal */}
-                <div className="min-h-[400px]">
-                    {activeTab === "account" && (
-                        <SectionContainer title={t["description.account-details"]}>
-                            <AccountDetailsTab
-                                user={user}
-                                immediateData={immediateData}
-                                translations={t}
-                            />
+                {/* Desktop: Sidebar + Contenido */}
+                <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] lg:gap-8">
+                    {/* Sidebar sticky */}
+                    <div className="flex flex-col gap-8 sticky top-24 h-fit">
+                        <SectionContainer title="Configuración" className="@container">
+                            <AccountNavigation />
                         </SectionContainer>
-                    )}
 
-                    {activeTab === "membership" && (
-                        <SectionContainer title="Membresía">
-                            <MembershipTab user={user} />
-                        </SectionContainer>
-                    )}
+                        <AccountStats user={user} immediateData={immediateData} />
 
-                    {activeTab === "danger-zone" && (
-                        <SectionContainer title="Zona de Peligro">
-                            <DangerZoneTab
-                                userId={user.id}
-                                onStatusChange={fetchDeletionStatus}
-                                preload
-                            />
-                        </SectionContainer>
-                    )}
+                        <HelpCard />
+                    </div>
+
+                    {/* Contenido principal con Tabs */}
+                    <SectionContainer title={getTabTitle()}>
+                        <Tabs
+                            value={activeTab}
+                            className="w-full"
+                            onValueChange={(value) => setActiveTab(value as typeof activeTab)}
+                        >
+                            <TabsList variant="underline" className="w-full justify-start border-b border-muted-foreground/20 !pt-0">
+                                <TabsTab value="account" className="group">
+                                    <div className="flex items-center gap-2">
+                                        <User className="size-4" />
+                                        <span>Información Básica</span>
+                                        <kbd className={`hidden xl:inline-flex ml-2 px-1.5 py-0.5 text-xs font-semibold bg-muted/50 text-muted-foreground border border-border/50 rounded transition-opacity duration-200 ${getHintClasses()}`}>
+                                            E
+                                        </kbd>
+                                    </div>
+                                </TabsTab>
+                                <TabsTab value="security" className="group">
+                                    <div className="flex items-center gap-2">
+                                        <Shield className="size-4" />
+                                        <span>Seguridad</span>
+                                        <kbd className={`hidden xl:inline-flex ml-2 px-1.5 py-0.5 text-xs font-semibold bg-muted/50 text-muted-foreground border border-border/50 rounded transition-opacity duration-200 ${getHintClasses()}`}>
+                                            1
+                                        </kbd>
+                                    </div>
+                                </TabsTab>
+                                <TabsTab value="membership" className="group">
+                                    <div className="flex items-center gap-2">
+                                        <CreditCard className="size-4" />
+                                        <span>Membresía</span>
+                                        <kbd className={`hidden xl:inline-flex ml-2 px-1.5 py-0.5 text-xs font-semibold bg-muted/50 text-muted-foreground border border-border/50 rounded transition-opacity duration-200 ${getHintClasses()}`}>
+                                            U
+                                        </kbd>
+                                    </div>
+                                </TabsTab>
+                                <TabsTab value="danger-zone" className="group">
+                                    <div className="flex items-center gap-2">
+                                        <AlertTriangle className="size-4" />
+                                        <span>Zona de Peligro</span>
+                                        <kbd className={`hidden xl:inline-flex ml-2 px-1.5 py-0.5 text-xs font-semibold bg-muted/50 text-muted-foreground border border-border/50 rounded transition-opacity duration-200 ${getHintClasses()}`}>
+                                            D
+                                        </kbd>
+                                    </div>
+                                </TabsTab>
+                            </TabsList>
+
+                            <TabsPanel value="account">
+                                <Suspense fallback={<AccountDetailsSkeleton />}>
+                                    <AccountDetailsTab
+                                        user={user}
+                                        immediateData={immediateData}
+                                        translations={t}
+                                        onProfileUpdate={handleProfileUpdate}
+                                    />
+                                </Suspense>
+                            </TabsPanel>
+
+                            <TabsPanel value="security">
+                                <Suspense fallback={<SecuritySkeleton />}>
+                                    <SecurityTab user={user} />
+                                </Suspense>
+                            </TabsPanel>
+
+                            <TabsPanel value="membership">
+                                <Suspense fallback={<MembershipSkeleton />}>
+                                    <MembershipTab user={user} />
+                                </Suspense>
+                            </TabsPanel>
+
+                            <TabsPanel value="danger-zone">
+                                <Suspense fallback={<DangerZoneSkeleton />}>
+                                    <DangerZoneTab
+                                        userId={user.id}
+                                        onStatusChange={fetchDeletionStatus}
+                                    />
+                                </Suspense>
+                            </TabsPanel>
+                        </Tabs>
+                    </SectionContainer>
                 </div>
+            </div>
+
+            {/* Barra de atajos flotante - Solo desktop */}
+            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40 hidden lg:block">
+                <div className="bg-background/95 backdrop-blur-sm border border-border rounded-full px-4 py-2 shadow-lg">
+                    <div className="flex items-center gap-3">
+                        {/* Toggle de hints */}
+                        <ShortcutsToggle />
+
+                        <div className="w-px h-6 bg-border" />
+
+                        <span className="text-xs text-muted-foreground mr-2">Atajos:</span>
+                        {getAccountShortcuts().map((shortcut, index) => (
+                            <ShortcutHint
+                                key={index}
+                                keys={shortcut.keys}
+                                label={shortcut.label}
+                                variant="outline"
+                                size="sm"
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Botón de ayuda flotante - Solo desktop */}
+            <div className="fixed bottom-4 right-4 z-50 hidden lg:block">
+                <KeyboardShortcutsHelp
+                    isInAccount={true}
+                    activeAccountTab={activeTab}
+                />
             </div>
         </PageContainer>
     )

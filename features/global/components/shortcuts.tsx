@@ -12,7 +12,7 @@ function ShortcutHint({ keys, label, variant = "secondary", size = "sm" }: Short
         {keys.map((key, index) => (
           <span key={index} className="inline-flex items-center">
             {index > 0 && <span className="mx-0.5">+</span>}
-            <kbd className="px-1 py-0.5 bg-background/50 rounded text-xs font-semibold border border-border/50">
+            <kbd className="px-1.5 py-0.5 bg-background/50 rounded text-xs font-semibold border border-border/50">
               {key}
             </kbd>
           </span>

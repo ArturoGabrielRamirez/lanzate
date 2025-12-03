@@ -3,7 +3,6 @@ import { Suspense } from "react"
 
 import { DangerDeepZoneSkeleton, DangerZoneTab } from "@/features/account/components"
 import { DeletionRequestedViewProps } from "@/features/account/types"
-/* import { Title } from "@/features/layout/components" */
 
 export function DeletionRequestedView({
     user,
@@ -13,21 +12,10 @@ export function DeletionRequestedView({
     return (
         <div className="h-screen flex flex-col overflow-hidden relative z-10">
             <div className="flex-shrink-0 p-4 pt-17">
-                {/* <Title
-                    title={( */}
                         <div className="flex items-center gap-2 text-red-600">
                             <AlertTriangle />
                             Cuenta en proceso de eliminación
                         </div>
-                 {/*    )}
-                    breadcrumbs={[
-                        {
-                            label: "Cuenta",
-                            href: "/account"
-                        }
-                    ]}
-                    showDate
-                /> */}
                 <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
                     <div className="flex items-start space-x-3">
                         <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />

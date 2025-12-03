@@ -1,5 +1,6 @@
 import { PaymentMethod, Store, SocialActivity, User, Product, Order, OrderTracking, ContractAssignment, Contract } from "@prisma/client"
 import { LucideIcon } from "lucide-react"
+import { ReactNode } from "react"
 
 import { LocalUserType } from "@/features/auth/types"
 
@@ -136,13 +137,10 @@ export type ActivityFeedProps = {
   page: number
 }
 
-// ✅ Tipo parcial para el usuario en actividades
 type ActivityUser = Pick<User, 'id' | 'email' | 'avatar' | 'first_name' | 'last_name' | 'username'>
 
-// ✅ Tipo parcial para la tienda en actividades
 type ActivityStore = Pick<Store, 'id' | 'name' | 'slug'>
 
-// ✅ Tipo base para actividad con relaciones
 export type ActivityWithRelations = SocialActivity & {
   user: ActivityUser
   store: ActivityStore | null
@@ -151,14 +149,12 @@ export type ActivityWithRelations = SocialActivity & {
   contract?: (ContractAssignment & { contract: Contract }) | null
 }
 
-// ✅ Actualizado usando el tipo base
 export type NewActivityFeedProps = {
   initialActivities: ActivityWithRelations[]
   userId: number
   type: string
 }
 
-// ✅ Actualizado usando el tipo base
 export type FeedItemProps = {
   item: ActivityWithRelations
 }
@@ -219,7 +215,6 @@ export type CopyLinkProps = {
   stores: Store[]
 }
 
-// Component inline types moved from components
 export type ChangeIndicatorProps = {
   change: number
 }
@@ -249,15 +244,18 @@ export type ActivityFeedItemSkeletonProps = {
 }
 
 export type ExtractLinkItem = SocialActivity & {
-  store: ActivityStore | null  // ✅ Cambiado de Store completo a ActivityStore
-  product: Product | null       // ✅ Ahora nullable
-  order: Order | null           // ✅ Ahora nullable
+  store: ActivityStore | null
+  product: Product | null 
+  order: Order | null  
 }
-
 
 export interface PageHeaderProps {
   title: string | React.ReactNode
   subtitle?: string | React.ReactNode
   breadcrumbs?: { label: string, href: string }[]
   media?: React.ReactNode | string
+}
+
+export interface PageHeaderPropsFixed extends Omit<PageHeaderProps, 'subtitle'> {
+  subtitle?: string | ReactNode
 }

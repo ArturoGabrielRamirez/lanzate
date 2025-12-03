@@ -1,6 +1,5 @@
 "use client"
-/* import { useTranslations } from "next-intl" */
-/* import { redirect } from "next/navigation" */
+import { CreditCard } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
@@ -10,10 +9,7 @@ import { Button } from "@/features/shadcn/components/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
 function MembershipTab({ user }: { user: UserType }) {
-
-    /* const t = useTranslations("landing.pricing") */
     const router = useRouter()
-
     const accountType = user.Account?.[0]?.type
 
     const handleBusinessPlan = () => {
@@ -45,15 +41,6 @@ function MembershipTab({ user }: { user: UserType }) {
     }
 
     const handleCancelSubscription = () => {
-        /* cancelSuscriptionAction(user.Account?.[0]?.suscriptionId!)
-            .then((res) => {
-                toast.dismiss()
-                toast.success("Suscripción cancelada exitosamente")
-            })
-            .catch((_err) => {
-                toast.dismiss()
-                toast.error("Error al cancelar la suscripción")
-            }) */
         toast.loading("Cargando...")
         cancelSuscriptionAction(user.Account?.[0]?.suscription_id as string)
             .then((_res) => {
@@ -69,24 +56,60 @@ function MembershipTab({ user }: { user: UserType }) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                    <CreditCard className="size-5" />
                     Membresía
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <p className="mb-4">Tipo de plan: {accountType}</p>
-                <p className="mb-4">ID de suscripción: {user.Account?.[0]?.suscription_id}</p>
-                <p className="mb-4">Fecha de suscripción: {Intl.DateTimeFormat("es-AR", { dateStyle: "long", timeStyle: "short" }).format(new Date(user.Account?.[0]?.created_at as string))}</p>
-                <div className="container grid items-center gap-4 lg:grid-cols-3 mx-auto relative h-fit w-full font-geist mb-4">
-                    <Button disabled={accountType === 'FREE' || accountType === 'PRO' || accountType === 'ENTERPRISE'}>Starter</Button>
-                    <Button disabled={accountType === 'PRO' || accountType === 'ENTERPRISE'} onClick={handleBusinessPlan}>Business</Button>
-                    <Button disabled={accountType === 'ENTERPRISE'} onClick={handleEnterprisePlan}>Enterprise</Button>
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <p className="text-sm text-muted-foreground">Tipo de plan: <span className="font-semibold text-foreground">{accountType}</span></p>
+                        <p className="text-sm text-muted-foreground">ID de suscripción: <span className="font-mono text-xs">{user.Account?.[0]?.suscription_id}</span></p>
+                        <p className="text-sm text-muted-foreground">Fecha de suscripción: <span className="font-semibold text-foreground">{Intl.DateTimeFormat("es-AR", { dateStyle: "long", timeStyle: "short" }).format(new Date(user.Account?.[0]?.created_at as string))}</span></p>
+                    </div>
+
+                    <div className="pt-4 border-t">
+                        <h3 className="text-sm font-semibold mb-3">Cambiar plan</h3>
+                        <div className="grid gap-3 lg:grid-cols-3" data-action="upgrade-plan">
+                            <Button
+                                disabled={accountType === 'FREE' || accountType === 'PRO' || accountType === 'ENTERPRISE'}
+                                variant="outline"
+                                className="w-full"
+                            >
+                                Starter
+                            </Button>
+                            <Button
+                                disabled={accountType === 'PRO' || accountType === 'ENTERPRISE'}
+                                onClick={handleBusinessPlan}
+                                variant={accountType === 'FREE' ? 'default' : 'outline'}
+                                className="w-full"
+                            >
+                                Business
+                            </Button>
+                            <Button
+                                disabled={accountType === 'ENTERPRISE'}
+                                onClick={handleEnterprisePlan}
+                                variant={accountType !== 'ENTERPRISE' ? 'default' : 'outline'}
+                                className="w-full"
+                            >
+                                Enterprise
+                            </Button>
+                        </div>
+                    </div>
+
+                    {accountType !== "FREE" && (
+                        <div className="pt-4 border-t" data-action="cancel-subscription">
+                            <Button
+                                variant="destructive"
+                                onClick={handleCancelSubscription}
+                                className="w-full"
+                            >
+                                Cancelar suscripción
+                            </Button>
+                        </div>
+                    )}
                 </div>
-                {accountType !== "FREE" && (
-                    <Button variant="destructive" onClick={handleCancelSubscription}>
-                        Cancelar suscripción
-                    </Button>
-                )}
             </CardContent>
         </Card>
     )

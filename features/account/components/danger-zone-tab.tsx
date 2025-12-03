@@ -1,21 +1,26 @@
 "use client"
 
-import { Suspense, lazy, useEffect } from "react"
+import { useRef } from 'react'
 
-import { DangerZoneSkeleton } from "@/features/account/components"
-import { DangerZoneTabProps } from "@/features/account/types"
-const DangerZoneOriginal = lazy(() => import("./delete-user/danger-zone"))
+import DangerZone from '@/features/account/components/delete-user/danger-zone'
+import { DangerZoneTabProps } from '@/features/account/types'
+import { DangerZoneRef } from '@/features/global/types'
 
-export function DangerZoneTab({ userId, onStatusChange, preload }: DangerZoneTabProps) {
-  useEffect(() => {
-    if (preload) {
-      import("./delete-user/danger-zone")
-    }
-  }, [preload])
+export function DangerZoneTab({ userId, onStatusChange }: DangerZoneTabProps) {
+  const dangerZoneRef = useRef<DangerZoneRef | null>(null)
+
+  // Exponer globalmente para que los atajos puedan acceder
+  if (typeof window !== 'undefined') {
+    window.dangerZoneRef = dangerZoneRef
+  }
 
   return (
-    <Suspense fallback={<DangerZoneSkeleton />}>
-      <DangerZoneOriginal userId={userId} onStatusChange={onStatusChange} />
-    </Suspense>
+    <div className="space-y-4">
+      <DangerZone
+        ref={dangerZoneRef}
+        userId={userId}
+        onStatusChange={onStatusChange}
+      />
+    </div>
   )
 }

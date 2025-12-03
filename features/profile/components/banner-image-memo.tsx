@@ -19,11 +19,13 @@ const BannerImage = memo(({
     }
 
     return (
-        <Image
+       <Image
             src={bannerUrl}
             alt="Banner del perfil"
             sizes="100vw"
-            className="object-cover transition-all duration-300 size-8"
+            className="object-cover transition-all duration-300 w-full h-full"
+            width={1920}  // ⬅️ FIX: Dimensiones del banner
+            height={400} // ⬅️ FIX: Dimensiones del banner
             onLoad={onLoad}
             onError={onError}
             priority

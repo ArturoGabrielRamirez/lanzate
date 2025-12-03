@@ -2,6 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { NextRequest, NextResponse } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 
+// 🚨 IMPORTACIÓN NECESARIA PARA LA FUNCIONALIDAD DE BLOQUEO
+import { checkUserDeletionStatus } from '@/features/account/utils/check-deletion-status' 
 import { validateSubdomainAction } from '@/features/subdomain/actions/validate-subdomain.action'
 import { extractSubdomain } from '@/features/subdomain/middleware'
 import { Locale, routing } from '@/i18n/routing'
@@ -45,7 +47,6 @@ function createCookieConfig() {
   }
 }
 
-// Función para verificar si es una ruta de perfil público
 function isPublicProfileRoute(pathWithoutLocale: string): boolean {
   return pathWithoutLocale.match(/^\/u\/[a-zA-Z0-9_-]+$/) !== null
 }
@@ -90,7 +91,6 @@ export async function updateSession(request: NextRequest) {
             request.cookies.set(name, value)
           })
 
-          //response = NextResponse.next({ request })
           cookiesToSet.forEach(({ name, value, options }) => {
             response.cookies.set(name, value, { ...options, ...cookieConfig })
           })
@@ -109,6 +109,39 @@ export async function updateSession(request: NextRequest) {
 
   const { locale, pathWithoutLocale } = extractLocaleFromPath(pathname)
   const currentLocale = locale || routing.defaultLocale
+
+  // 🚨 BLOQUEO POR ELIMINACIÓN - RE-AGREGAR ESTA SECCIÓN
+  if (user) {
+    try {
+      // Usamos el cliente 'supabase' y el 'user.id'
+      const deletionStatus = await checkUserDeletionStatus(supabase, user.id)
+      
+      // Si el usuario está en proceso de eliminación y NO está anonimizado
+      if (deletionStatus?.isDeletionRequested && !deletionStatus.isAnonymized) {
+        
+        // Definir rutas que SÍ están permitidas
+        const isAccountRoute = pathWithoutLocale === '/account'
+        const isApiRoute = pathname.startsWith('/api/')
+        const isAuthRoute = pathname.startsWith('/auth/')
+        const isNextRoute = pathname.startsWith('/_next/')
+        const isFavicon = pathname.startsWith('/favicon')
+        const isStaticAsset = pathname.includes('.')
+        
+        const isAllowedRoute = isAccountRoute || isApiRoute || isAuthRoute || isNextRoute || isFavicon || isStaticAsset
+        
+        // Si NO está en una ruta permitida, redirigir a /account
+        if (!isAllowedRoute) {
+          console.log(`🚫 Bloqueando acceso a ${pathname} - Usuario en eliminación diferida`)
+          const url = new URL(`/${currentLocale}/account`, request.url)
+          return NextResponse.redirect(url)
+        }
+      }
+    } catch (error) {
+      console.error('Error verificando estado de eliminación:', error)
+      // En caso de error, permitir continuar (fail-open para no bloquear usuarios)
+    }
+  }
+  // FIN BLOQUEO POR ELIMINACIÓN
 
   // Manejar subdominios
   if (subdomain) {
@@ -138,7 +171,6 @@ export async function updateSession(request: NextRequest) {
     if (subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes]) {
       const url = new URL(subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes], request.url)
       url.search = request.nextUrl.search
-      //return NextResponse.rewrite(url)
       return NextResponse.rewrite(url, response)
     }
 
@@ -158,7 +190,6 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.rewrite(url, response)
     }
 
-    // Permitir rutas de perfil público en subdominios también
     if (isPublicProfileRoute(pathWithoutLocale)) {
       return response
     }
@@ -180,7 +211,6 @@ export async function updateSession(request: NextRequest) {
     '/about',
   ]
 
-  // Verificar si es una ruta de perfil público (no requiere autenticación)
   const isPublicProfile = isPublicProfileRoute(pathWithoutLocale)
 
   // Redirecciones de autenticación simples
