@@ -5,11 +5,11 @@ import Link from "next/link"
 /* import { Title } from "@/features/layout/components" */
 import { PageContainer } from "@/features/layout/components"
 import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
-import { Comments, RelatedProducts, VariantDetailClient } from "@/features/products/components"
+import { Comments, RelatedProducts/* , VariantDetailClient */ } from "@/features/products/components"
 import { AddToCartButton } from "@/features/products/components/add-to-cart-button"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-import type { Product, ProductVariant, Color } from "@prisma/client"
+/* import type { Product, ProductVariant, Color } from "@prisma/client" */
 
 type Props = {
     params: Promise<{ id: string; subdomain: string; variant?: string }>
@@ -52,7 +52,7 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
 
             <div className="grow flex flex-col">
                 <div className="space-y-6 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-0 lg:pr-4 relative">
-                    <VariantDetailClient product={product as unknown as Product & { variants?: (ProductVariant & { color: Color | null })[] }} />
+                {/*     <VariantDetailClient product={product as unknown as Product & { variants?: (ProductVariant & { color: Color | null })[] }} /> */}
 
                     <div className="flex flex-col gap-4 border-b border-muted-foreground/30 pb-6">
                         {product.description && (
