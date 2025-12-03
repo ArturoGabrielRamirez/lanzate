@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useCallback } from "react"
 
-import { CreateProductFormType, ProductStatus, ProductType, WeightUnit, LengthUnit, FileType, FileSizeUnit } from "@/features/products/schemas/create-product-form-schema"
+import { CreateProductFormType, ProductStatus, ProductType, WeightUnit, LengthUnit, FileSizeUnit } from "@/features/products/schemas/create-product-form-schema"
 import { useStep } from "@/features/shadcn/hooks/use-step"
 
 interface CreateProductContextType {
@@ -89,7 +89,6 @@ const initialValues: CreateProductFormType = {
             expiration_date: undefined,
         }
     },
-    configurations_info: {},
     settings_info: {
         status: ProductStatus.ACTIVE,
         is_featured: true,
@@ -110,7 +109,6 @@ function CreateProductProvider({ children, initialValues: propInitialValues }: {
         options_variants_info: { ...initialValues.options_variants_info, ...propInitialValues?.options_variants_info },
         price_stock_info: { ...initialValues.price_stock_info, ...propInitialValues?.price_stock_info },
         type_specific_info: { ...initialValues.type_specific_info, ...propInitialValues?.type_specific_info },
-        configurations_info: { ...initialValues.configurations_info, ...propInitialValues?.configurations_info },
         shipping_info: { ...initialValues.shipping_info, ...propInitialValues?.shipping_info },
         settings_info: { ...initialValues.settings_info, ...propInitialValues?.settings_info },
     }))
