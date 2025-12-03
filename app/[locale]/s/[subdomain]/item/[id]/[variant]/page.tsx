@@ -88,9 +88,9 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                 </div>
                             )}
 
-                            {product.sku && (
+                         {/*    {product.sku && (
                                 <p className="text-sm text-gray-500 mt-1">SKU: {product.sku}</p>
-                            )}
+                            )} */}
                             <div className="flex gap-2 justify-end">
                                 <AddToCartButton
                                     product={product}
