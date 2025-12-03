@@ -9,7 +9,7 @@ import { getPublicStoreProductDetailsAction } from "@/features/products/actions/
 import { AddToCartButton, LikeButton, VariantDetailClient } from "@/features/products/components"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-import type { Product, ProductVariant, Color } from "@prisma/client"
+import type { Product, ProductVariant, Color } from "@prisma/client"//test
 
 type Props = {
     params: Promise<{ id: string; subdomain: string; variant: string }>
