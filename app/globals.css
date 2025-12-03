@@ -400,3 +400,7 @@ input:-webkit-autofill:active {
   /* Or, to remove the background entirely (with a long transition for effect) */
   transition: background-color 5000s ease-in-out 0s;
 }
+
+[data-radix-scroll-area-viewport]>div {
+  display: block !important;
+}
