@@ -1439,7 +1439,8 @@
             }
         },
         "products-tab": {
-            "error-loading-store": "Error al cargar información de la tienda"
+            "error-loading-store": "Error al cargar información de la tienda",
+            "loading-products": "Cargando productos..."
         },
         "products-table": {
             "headers": {
@@ -1451,6 +1452,7 @@
                 "featured": "Destacado",
                 "active": "Activo",
                 "published": "Publicado",
+                "status": "Estado",
                 "actions": "Acciones"
             },
             "categories": {

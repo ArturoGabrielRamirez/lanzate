@@ -1565,7 +1565,8 @@
             }
         },
         "products-tab": {
-            "error-loading-store": "Error loading store information"
+            "error-loading-store": "Error loading store information",
+            "loading-products": "Loading products..."
         },
         "products-table": {
             "headers": {
@@ -1577,6 +1578,7 @@
                 "featured": "Featured",
                 "active": "Active",
                 "published": "Published",
+                "status": "Status",
                 "actions": "Actions"
             },
             "categories": {
