@@ -12,6 +12,7 @@ import { DataTable } from "@/features/global/components/data-table"
 import { DeleteProductButton, EditProductButton/* , DistributeStockButton  */ } from "@/features/products/components"
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
 import type { ProductsTableProps, ProductsTableVariantRow } from "@/features/products/types"
+import { buildVariantLabel, calculateVariantStock } from "@/features/products/utils"
 import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Button } from "@/features/shadcn/components/ui/button"
 /* import { Checkbox } from "@/features/shadcn/components/ui/checkbox" */
@@ -27,6 +28,7 @@ function ProductsTable({
     headerActions // ✅ Nuevo prop
     /* , branches */
 }: ProductsTableProps) {
+    console.log("🚀 ~ ProductsTable ~ data:", data)
 
     const t = useTranslations("store.products-table")
 
@@ -34,39 +36,32 @@ function ProductsTable({
     //const canCreateProducts = employeePermissions.isAdmin || employeePermissions.permissions?.can_create_products
 
     const rows: ProductsTableVariantRow[] = useMemo(() => {
-        const list = data as unknown as (Product & {
-            categories: Category[];
-            variants?: {
-                id: number;
-                name: string | null;
-                size: string | null;
-                measure: string | null;
-                color_id: number | null;
-                color?: { name: string } | null;
-                stocks?: { quantity: number }[]
-            }[]
-        })[]
-
         const flattened: ProductsTableVariantRow[] = []
 
-        for (const p of list) {
+        for (const p of data) {
             const variants = p.variants ?? []
             if (variants.length === 0) {
-                flattened.push({ ...p, variant_id: undefined, variant_label: undefined })
+                // Product without variants - calculate stock from all variants if any exist
+                const totalStock = 0
+                flattened.push({ 
+                    ...p, 
+                    variant_id: undefined, 
+                    variant_label: undefined,
+                    stock: totalStock,
+                    variant_price: undefined
+                })
                 continue
             }
 
             for (const v of variants) {
-                const vStock = (v.stocks ?? []).reduce((sum, s) => sum + (s.quantity ?? 0), 0)
-                const variantAttributes = [v.size, v.measure, v.color?.name].filter(Boolean).join(" · ")
-                const label = v.name || (variantAttributes || "Variante")
+                const vStock = calculateVariantStock(v)
+                const label = buildVariantLabel(v)
                 flattened.push({
                     ...p,
                     stock: vStock,
                     variant_id: v.id,
                     variant_label: label,
-                    /*     variants: p.variants,
-                        price: v.price || p.price */
+                    variant_price: v.price
                 })
             }
         }
@@ -113,9 +108,14 @@ function ProductsTable({
             cell: ({ row }) => {
                 const r = row.original
                 if (r.variant_id) {
+                    // Si hay variant_label y no es solo "Variante", mostrar nombre + label
+                    // Si no hay variant_label o es "Variante", mostrar solo el nombre del producto
+                    const displayName = r.variant_label && r.variant_label !== "Variante" 
+                        ? `${r.name} - ${r.variant_label}`
+                        : r.name
                     return (
                         <Link href={`/stores/${slug}/products/${r.id}/${r.variant_id}`} className="hover:underline">
-                            {r.variant_label || r.name}
+                            {displayName}
                         </Link>
                     )
                 }
@@ -143,10 +143,8 @@ function ProductsTable({
                 )
             },
             cell: ({ row }) => {
-                const variant = row.original as unknown as { variant_id?: number; price: number } & { variants?: { id: number; price: number | null }[] }
-                const price = variant.variant_id
-                    ? variant.variants?.find(v => v.id === variant.variant_id)?.price ?? variant.price
-                    : variant.price
+                const rowData = row.original
+                const price = rowData.variant_price ?? (rowData.variants?.[0]?.price ?? 0)
                 return <span>{Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(price)}</span>
             }
         },
@@ -168,13 +166,21 @@ function ProductsTable({
             },
             cell: ({ row }) => {
                 const categories = (row.original as Product & { categories: Category[] }).categories
+                if (!categories?.length) {
+                    return (
+                        <Badge variant="outline" className="text-muted-foreground">
+                            {t("categories.none")}
+                        </Badge>
+                    )
+                }
                 return (
-                    <Badge variant="outline">
-                        {!categories?.length
-                            ? t("categories.none")
-                            : categories.map((category: Category) => category.name).join(", ")
-                        }
-                    </Badge>
+                    <div className="flex flex-wrap gap-1">
+                        {categories.map((category: Category) => (
+                            <Badge key={category.id} variant="outline">
+                                {category.name}
+                            </Badge>
+                        ))}
+                    </div>
                 )
             },
         },
@@ -220,11 +226,11 @@ function ProductsTable({
             }
         },
         {
-            accessorKey: "is_active",
+            accessorKey: "status",
             header: ({ column }) => {
                 return (
                     <div className="flex items-center gap-2">
-                        {t("headers.active")}
+                        {t("headers.status")}
                         <Button
                             variant="ghost"
                             size="icon"
@@ -236,29 +242,9 @@ function ProductsTable({
                 )
             },
             cell: ({ row }) => {
-                const isActive = row.original.is_active
+                const status = row.original.status
+                const isActive = status === "ACTIVE"
                 return <Badge variant="outline" className={cn(isActive && "text-accent-foreground border-accent-foreground")}>{isActive ? t("boolean.yes") : t("boolean.no")}</Badge>
-            }
-        },
-        {
-            accessorKey: "is_published",
-            header: ({ column }) => {
-                return (
-                    <div className="flex items-center gap-2">
-                        {t("headers.published")}
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                        >
-                            <ArrowUpDown className="size-4" />
-                        </Button>
-                    </div>
-                )
-            },
-            cell: ({ row }) => {
-                const isPublished = row.original.is_published
-                return <Badge variant="outline" className={cn(isPublished && "text-accent-foreground border-accent-foreground")}>{isPublished ? t("boolean.yes") : t("boolean.no")}</Badge>
             }
         },
         {

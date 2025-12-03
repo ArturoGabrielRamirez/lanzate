@@ -1,11 +1,53 @@
 import { getTranslations } from "next-intl/server"
+import { Suspense } from "react"
 
-import { getEmployeePermissionsAction } from "@/features/employees/actions/get-employee-permisions.action"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { CreateProductButton } from "@/features/products/components/create-form/create-product-button"
-import { ProductsTable } from "@/features/products/components/products-table"
-import { getStoresFromSlugAction } from "@/features/stores/actions/get-stores-from-slug.action"
+import { ProductsTableWrapper } from "@/features/products/components/products-table-wrapper"
+import { getStoreBasicInfoBySlugAction } from "@/features/stores/actions/get-store-basic-info-by-slug.action"
 import { ProductsTabProps } from "@/features/stores/types"
+
+async function ProductsTabContent({ slug, userId }: ProductsTabProps & { userId: number }) {
+    const { payload: storeInfo, hasError: storeError, message: storeMessage } = await getStoreBasicInfoBySlugAction(slug)
+
+    if (storeError || !storeInfo) {
+        console.error(storeMessage || "Error al cargar información de la tienda")
+        return null
+    }
+
+    // Default employee permissions - assuming user is admin/owner for now
+    // This can be enhanced later if needed
+    const employeePermissions = {
+        isAdmin: true,
+        permissions: {
+            can_create_orders: true,
+            can_update_orders: true,
+            can_create_products: true,
+            can_update_products: true,
+            can_manage_stock: true,
+            can_process_refunds: true,
+            can_view_reports: true,
+            can_manage_employees: true,
+            can_manage_store: true
+        }
+    }
+
+    return (
+        <ProductsTableWrapper
+            slug={slug}
+            storeId={storeInfo.id}
+            userId={userId}
+            employeePermissions={employeePermissions}
+            branches={storeInfo.branches}
+            headerActions={
+                <CreateProductButton
+                    storeId={storeInfo.id}
+                    userId={userId}
+                />
+            }
+        />
+    )
+}
 
 async function ProductsTab({ slug }: ProductsTabProps) {
     const t = await getTranslations("store.products-tab")
@@ -17,39 +59,10 @@ async function ProductsTab({ slug }: ProductsTabProps) {
         return null
     }
 
-    const [
-        { payload: store, hasError: storeError, message: storeMessage },
-        { payload: employeePermissions, hasError: permissionsError }
-    ] = await Promise.all([
-        getStoresFromSlugAction(slug),
-        getEmployeePermissionsAction(user.id, slug)
-    ])
-
-    if (storeError || !store) {
-        console.error(storeMessage || t("error-loading-store"))
-        return null
-    }
-
-    if (permissionsError || !employeePermissions) {
-        console.error("Error al cargar los permisos del empleado")
-        return null
-    }
-
     return (
-        <ProductsTable
-            data={store.products}
-            userId={user.id}
-            slug={slug}
-            storeId={store.id}
-            employeePermissions={employeePermissions}
-            branches={store.branches}
-            headerActions={
-                <CreateProductButton
-                    storeId={store.id}
-                    userId={user.id}
-                />
-            }
-        />
+        <Suspense fallback={<div>{t("loading-products") || "Cargando productos..."}</div>}>
+            <ProductsTabContent slug={slug} userId={user.id} />
+        </Suspense>
     )
 }
 

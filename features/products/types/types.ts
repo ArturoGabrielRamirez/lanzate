@@ -1,6 +1,7 @@
-import { Category, Color, Product, ProductVariant, StoreCustomization, Store, ProductMedia, /* ProductVariantStock, */ Branch, ProductStock } from "@prisma/client";
+import { Category, Product, ProductVariant, StoreCustomization, Store, ProductMedia, /* ProductVariantStock, */ Branch, VariantStock } from "@prisma/client";
 
 import { DeferredFile } from "@/features/global/types/media";
+import { ProductWithRelations } from "@/features/products/types/products-by-store.types"
 
 // Main product types
 export type GetProductDetailsReturn = {
@@ -13,16 +14,16 @@ export type GetProductDetailsReturn = {
             subdomain: string;
             customization: StoreCustomization | null;
         };
-        variants?: (ProductVariant & { color: Color | null })[];
-    }) | null;
-    error: boolean;
-};
+        variants?: (ProductVariant & { color: ProductColor | null })[];
+    }) | null
+    error: boolean
+}
 
 // Product color type
 export type ProductColor = {
     id: string
     name: string
-    rgba: [number, number, number, number]
+    hex: string
 }
 
 // Form and section data types
@@ -277,7 +278,7 @@ export type BasicInfoDisplayProps = {
     userId: number
 }
 
-export type BasicInfoFormValues = Pick<Product, 'name' | 'description' | 'sku' | 'barcode'>
+export type BasicInfoFormValues = Pick<Product, 'name' | 'description' | 'slug'>
 
 export type CategoriesDisplayProps = {
     product: Product & { categories: Category[] }
@@ -300,7 +301,7 @@ export type PriceStockDisplayProps = {
     userId: number
 }
 
-export type PriceStockFormValues = Pick<Product, 'price' | 'stock'>
+export type PriceStockFormValues = Pick<ProductWithAllRelations, "variants">
 
 export type ProductDetailFormProps = {
     product: Product & {
@@ -463,7 +464,7 @@ export type ProductWithMedia = Product & {
     primary_media?: ProductMedia | null
 }
 
-export type VariantWithColor = ProductVariant & { color?: Color | null }
+export type VariantWithColor = ProductVariant & { color?: ProductColor | null }
 
 export type VariantWithStock = ProductVariant & {
     stocks?: StockInfo[]
@@ -504,7 +505,7 @@ export type DistributeStockButtonProps = {
     productId: number
     productName: string
     availableStock: number
-    branches: (Branch & { stock: ProductStock[] })[]
+    branches: (Branch & { stock_items: VariantStock[] })[]
     variantStocks?: { branch_id: number; quantity: number }[]
 }
 
@@ -527,17 +528,33 @@ export type EmployeePermissions = {
     }
 }
 
+
 export type ProductsTableProps = {
-    data: (Product & { categories: Category[] })[]
+    data: ProductWithRelations[]
     userId: number
     slug: string
     storeId: number
     employeePermissions: EmployeePermissions
-    branches: (Branch & { stock: ProductStock[] })[]
+    branches: (Branch & { stock_items: VariantStock[] })[]
     headerActions?: React.ReactNode
 }
 
-export type ProductsTableVariantRow = (Product & { categories: Category[] }) & { variant_id?: number; variant_label?: string }
+export type ProductsTableWrapperProps = {
+    storeId?: number
+    slug?: string
+    subdomain?: string
+    userId: number
+    employeePermissions: EmployeePermissions
+    branches: (Branch & { stock_items: VariantStock[] })[]
+    headerActions?: React.ReactNode
+}
+
+export type ProductsTableVariantRow = ProductWithRelations & { 
+    variant_id?: number
+    variant_label?: string
+    stock: number
+    variant_price?: number
+}
 
 export type MinimalUser = {
     id: number
@@ -620,12 +637,8 @@ export type RelatedProductsProps = { productId: number }
 // =====================
 
 export type ProductDimensions = Pick<
-    Product,
-    | 'height' | 'height_unit'
-    | 'width' | 'width_unit'
-    | 'depth' | 'depth_unit'
-    | 'diameter' | 'diameter_unit'
-    | 'weight' | 'weight_unit'
+    ProductWithVariants,
+    | 'variants'
 >
 
 export type VariantDimensions = Pick<
