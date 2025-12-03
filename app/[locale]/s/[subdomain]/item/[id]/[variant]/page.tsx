@@ -1,5 +1,5 @@
 import { Image as ImageIcon, Share, ShoppingBag } from "lucide-react"
-import Image from "next/image"
+/* import Image from "next/image" */
 import Link from "next/link"
 
 import { PageContainer } from "@/features/layout/components/page-container"
@@ -52,7 +52,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                             </div>
                         </div>
                         <div className="bg-gray-100 relative rounded-lg flex items-center justify-center grow">
-                            {product.image ? (
+                            {/* {product.image ? (
                                 <Image
                                     src={product.image}
                                     alt={product.name}
@@ -64,7 +64,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                     <ImageIcon className="size-16" />
                                     <p className="text-sm text-muted-foreground">No hay imagen disponible</p>
                                 </div>
-                            )}
+                            )} */}
                         </div>
                         <div className="flex flex-col gap-4">
                             <Button variant="outline" size="icon">
