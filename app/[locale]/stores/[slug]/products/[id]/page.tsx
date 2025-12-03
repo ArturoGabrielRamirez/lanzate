@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server"
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
 import { CreateProductButton, DeleteProductButton } from "@/features/products/components"
-import { ProductDetailForm } from "@/features/products/components/product-detail-display"
+/* import { ProductDetailForm } from "@/features/products/components/product-detail-display" */
 import { ProductDetailPageProps } from "@/features/products/types"
 import { Card, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
@@ -62,11 +62,11 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
             </Card>
 
             {/* Contenido principal con las cards */}
-            <ProductDetailForm
+           {/*  <ProductDetailForm
                 product={product}
                 slug={slug}
                 userId={user.id}
-            />
+            /> */}
         </div>
     )
 }
