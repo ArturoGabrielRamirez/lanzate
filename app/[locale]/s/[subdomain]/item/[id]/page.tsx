@@ -62,9 +62,9 @@ async function ProductDetailsPage({ params, searchParams }: Props) {
                             </div>
                         )}
 
-                        {product.sku && (
+                       {/*  {product.sku && (
                             <p className="text-sm text-muted-foreground">SKU: {product.sku}</p>
-                        )}
+                        )} */}
                         <div className="flex gap-2 justify-end">
                             <AddToCartButton product={product} withText className="text-lg p-6 !px-8 !bg-accent text-accent-foreground" canBeAddedToCart={true} />
                             <Button variant="outline" size="lg" className="text-lg p-6 !px-8" asChild>
