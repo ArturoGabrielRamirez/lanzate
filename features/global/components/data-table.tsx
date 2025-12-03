@@ -18,10 +18,10 @@ import { ChevronLeft } from "lucide-react"
 import { ChevronRight, Filter, Search } from "lucide-react"
 import { useState } from "react"
 
+import { InputField } from "@/features/global/components/form/input-field"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Button } from "@/features/shadcn/components/ui/button"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/features/shadcn/components/ui/dropdown-menu"
-import { Input } from "@/features/shadcn/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/features/shadcn/components/ui/select"
 import {
     Table,
@@ -99,6 +99,21 @@ export function DataTable<TData, TValue>({
             {/* ✅ Header con filtro y acciones */}
             <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 flex-1">
+
+                    <InputField
+                        label="Filter"
+                        type="search"
+                        inputMode="search"
+                        tooltip="Filter the table by the column name"
+                        hideLabel
+                        placeholder="Filter..."
+                        name={filterKey}
+                        onChange={(event) =>
+                            table.getColumn(filterKey)?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                        startIcon={<Search />}
+                    />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <IconButton
@@ -128,15 +143,6 @@ export function DataTable<TData, TValue>({
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Input
-                        placeholder="Filter..."
-                        value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn(filterKey)?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm grow"
-                        startContent={<Search />}
-                    />
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
                         <div className={cn("text-muted-foreground flex-1 text-sm", table.getFilteredSelectedRowModel().rows.length === 0 && "text-muted-foreground/50")}>
                             {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} selected.
