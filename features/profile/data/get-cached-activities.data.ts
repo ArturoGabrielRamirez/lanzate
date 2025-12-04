@@ -32,7 +32,7 @@ export const getCachedActivitiesData = unstable_cache(
                     select: {
                         id: true,
                         name: true,
-                        image: true,
+                       /*  image: true, */
                         slug: true
                     }
                 },
