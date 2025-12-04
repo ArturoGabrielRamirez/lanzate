@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
-import { CreateProductButton } from "@/features/products/components"
+/* import { CreateProductButton } from "@/features/products/components" */
 /* import { VariantDetailForm } from "@/features/products/components/variant-detail-display" */
 import { Card, CardHeader, CardTitle/* , CardContent  */} from "@/features/shadcn/components/ui/card"
 
@@ -52,11 +52,11 @@ export default async function ProductVariantDetailPage({ params }: Props) {
                             Detalle de Variante
                         </CardTitle>
 
-                        <CreateProductButton
+                        {/* <CreateProductButton
                             storeId={product.store_id}
                             userId={user.id}
                             onlyIcon={true}
-                        />
+                        /> */}
                     </div>
                 </CardHeader>
             </Card>
