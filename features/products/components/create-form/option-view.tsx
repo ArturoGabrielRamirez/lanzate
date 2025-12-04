@@ -3,8 +3,8 @@
 import { Edit2, Trash2, X } from "lucide-react"
 
 import { Button } from "@/features/shadcn/components/button"
-import { Badge } from "@/features/shadcn/components/ui/badge"
 import { Item, ItemActions, ItemContent, ItemTitle } from "@/features/shadcn/components/item"
+import { Badge } from "@/features/shadcn/components/ui/badge"
 
 interface OptionViewProps {
     option: {
