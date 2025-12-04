@@ -1,11 +1,11 @@
 "use client"
 
-import { Settings2, EditIcon, X, Check, Loader2 } from "lucide-react"
+import { Settings2, EditIcon, X/* , Check, Loader2  */ } from "lucide-react"
 import { useState } from "react"
-import { toast } from "sonner"
+/* import { toast } from "sonner" */
 
 import { Form } from "@/features/global/components/form/form"
-import { updateVariantFlagsData } from "@/features/products/data/update-variant-flags.data"
+/* import { updateVariantFlagsData } from "@/features/products/data/update-variant-flags.data" */
 import type { VariantConfigDisplayProps } from "@/features/products/types"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
@@ -15,11 +15,11 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/compo
 
 function VariantConfigDisplay({ variant }: VariantConfigDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
-    const [isSaving, setIsSaving] = useState(false)
+    /*     const [isSaving, setIsSaving] = useState(false) */
     const [active, setActive] = useState<boolean>(!!variant.is_active)
-    const [published, setPublished] = useState<boolean>(!!variant.is_published)
-    const [featured, setFeatured] = useState<boolean>(!!variant.is_featured)
-
+    /*     const [published, setPublished] = useState<boolean>(!!variant.is_published)
+        const [featured, setFeatured] = useState<boolean>(!!variant.is_featured)
+     */
     const handleOpenEdit = () => {
         setIsEditing(true)
     }
@@ -43,7 +43,7 @@ function VariantConfigDisplay({ variant }: VariantConfigDisplayProps) {
                             <div className="flex items-center gap-2">
                                 <Tooltip>
                                     <TooltipTrigger asChild>
-                                        <IconButton
+                                        {/*  <IconButton
                                             onClick={async () => {
                                                 try {
                                                     setIsSaving(true)
@@ -66,7 +66,7 @@ function VariantConfigDisplay({ variant }: VariantConfigDisplayProps) {
                                             icon={isSaving ? Loader2 : Check}
                                             iconClassName={isSaving ? "animate-spin" : undefined}
                                             disabled={isSaving}
-                                        />
+                                        /> */}
                                     </TooltipTrigger>
                                     <TooltipContent>
                                         Guardar cambios
@@ -119,14 +119,14 @@ function VariantConfigDisplay({ variant }: VariantConfigDisplayProps) {
                                 <span>Publicada</span>
                                 <span className="font-normal text-sm text-muted-foreground">Visible públicamente</span>
                             </Label>
-                            <Switch id="is_published" checked={published} onCheckedChange={setPublished} disabled={!isEditing} />
+                            {/*   <Switch id="is_published" checked={published} onCheckedChange={setPublished} disabled={!isEditing} /> */}
                         </div>
                         <div className="flex items-center justify-between">
                             <Label htmlFor="is_featured" className="flex flex-col gap-1 items-start">
                                 <span>Destacada</span>
                                 <span className="font-normal text-sm text-muted-foreground">Mostrar como destacada</span>
                             </Label>
-                            <Switch id="is_featured" checked={featured} onCheckedChange={setFeatured} disabled={!isEditing} />
+                            {/*  <Switch id="is_featured" checked={featured} onCheckedChange={setFeatured} disabled={!isEditing} /> */}
                         </div>
                     </div>
                 </CardContent>

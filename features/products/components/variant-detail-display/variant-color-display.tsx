@@ -7,16 +7,17 @@ import { toast } from "sonner"
 import { Form } from "@/features/global/components/form/form"
 import { CreateColorInline } from "@/features/products/components/create-color-inline"
 import { updateVariantColorData } from "@/features/products/data/update-variant-color.data"
-import type { ProductColor, VariantColorDisplayProps } from "@/features/products/types"
+import type { /* ProductColor, */ VariantColorDisplayProps } from "@/features/products/types"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip" 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
 function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
-    const [pendingColorId, setPendingColorId] = useState<number | null>(variant.color ? (variant).color_id ?? null : null)
+    const [pendingColorId, setPendingColorId] = useState<number | null>(variant.color /* ? (variant).color_id ?? null : null */)
 
+    console.log(product)
     const handleOpenEdit = () => {
         setIsEditing(true)
     }
@@ -105,7 +106,7 @@ function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
                             <div className="flex items-center gap-3">
                                 <div
                                     className="size-10 rounded-full border"
-                             /*        style={{ backgroundColor: variant.color.hex }} */
+                                /*        style={{ backgroundColor: variant.color.hex }} */
                                 />
                                 <div>
                                     <p className="font-medium">{variant.color.name}</p>
@@ -121,7 +122,7 @@ function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
                         {isEditing && (
                             <div className="space-y-3">
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                                    {product.available_colors?.map((color: ProductColor) => {
+                                    {/* {product.available_colors?.map((color: ProductColor) => {
                                         const isSelected = (pendingColorId ?? variant.color_id) === Number(color.id)
                                         return (
                                             <button
@@ -137,7 +138,7 @@ function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
                                                 </div>
                                             </button>
                                         )
-                                    })}
+                                    })} */}
                                     <button
                                         type="button"
                                         className={`p-2 rounded-lg border text-left transition-colors ${pendingColorId === null ? 'border-primary bg-primary/5' : 'hover:border-primary/50'

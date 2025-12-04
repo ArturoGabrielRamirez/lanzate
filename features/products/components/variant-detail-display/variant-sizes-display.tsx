@@ -2,18 +2,18 @@
 
 import { Ruler, EditIcon, X, Check, Loader2 } from "lucide-react"
 import { useState } from "react"
-import { toast } from "sonner"
+/* import { toast } from "sonner"
 
-import { updateVariantSizesData } from "@/features/products/data/update-variant-sizes.data"
+import { updateVariantSizesData } from "@/features/products/data/update-variant-sizes.data" */
 import type { VariantSizesDisplayProps } from "@/features/products/types"
-import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
-import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector"
+/* import MultipleSelector from "@/features/shadcn/components/expansion/multiple-selector"
+import type { Option as MultiOption } from "@/features/shadcn/components/expansion/multiple-selector" */
+import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Label } from "@/features/shadcn/components/ui/label"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 
-
+/* 
 const sizeOptions: MultiOption[] = [
     { label: "XS", value: "XS", group: "Letras" },
     { label: "S", value: "S", group: "Letras" },
@@ -37,17 +37,19 @@ const measureOptions: MultiOption[] = [
     { label: "Pequeño", value: "small", group: "Genérico" },
     { label: "Mediano", value: "medium", group: "Genérico" },
     { label: "Grande", value: "large", group: "Genérico" },
-]
+] */
 
 function VariantSizesDisplay({ variant }: VariantSizesDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
-    const [selectedSize, setSelectedSize] = useState<MultiOption | null>(
-        variant.size ? { label: variant.size, value: variant.size, group: "Custom" } : null
-    )
-    const [selectedMeasure, setSelectedMeasure] = useState<MultiOption | null>(
-        variant.measure ? { label: variant.measure, value: variant.measure, group: "Custom" } : null
-    )
+
+    console.log(variant)
+    /*  const [selectedSize, setSelectedSize] = useState<MultiOption | null>(
+         variant.size ? { label: variant.size, value: variant.size, group: "Custom" } : null
+     )
+     const [selectedMeasure, setSelectedMeasure] = useState<MultiOption | null>(
+         variant.measure ? { label: variant.measure, value: variant.measure, group: "Custom" } : null
+     ) */
 
     const handleOpenEdit = () => {
         setIsEditing(true)
@@ -57,32 +59,32 @@ function VariantSizesDisplay({ variant }: VariantSizesDisplayProps) {
         setIsEditing(false)
     }
 
-    const handleChangeSize = (options: MultiOption[]) => {
-        const selected = options[0] || null
-        setSelectedSize(selected)
-    }
+    /*   const handleChangeSize = (options: MultiOption[]) => {
+          const selected = options[0] || null
+          setSelectedSize(selected)
+      } */
 
-    const handleChangeMeasure = (options: MultiOption[]) => {
-        const selected = options[0] || null
-        setSelectedMeasure(selected)
-    }
-
+    /*     const handleChangeMeasure = (options: MultiOption[]) => {
+            const selected = options[0] || null
+            setSelectedMeasure(selected)
+        }
+     */
     return (
         <Card className="group/variant-sizes-display">
             <form
                 onSubmit={async (e) => {
                     e.preventDefault()
                     setIsSaving(true)
-                    const response = await updateVariantSizesData(variant.id, {
-                        size: selectedSize?.value ?? null,
-                        measure: selectedMeasure?.value ?? null
-                    })
-                    if (response.hasError) {
-                        toast.error(response.message || "Error al actualizar los tamaños")
-                        setIsSaving(false)
-                        return
-                    }
-                    toast.success(response.message || "Tamaños actualizados correctamente")
+                    /*  const response = await updateVariantSizesData(variant.id, {
+                         size: selectedSize?.value ?? null,
+                         measure: selectedMeasure?.value ?? null
+                     }) */
+                    /*    if (response.hasError) {
+                           toast.error(response.message || "Error al actualizar los tamaños")
+                           setIsSaving(false)
+                           return
+                       } */
+                    /*   toast.success(response.message || "Tamaños actualizados correctamente") */
                     handleCloseEdit()
                     setIsSaving(false)
                 }}
@@ -147,7 +149,7 @@ function VariantSizesDisplay({ variant }: VariantSizesDisplayProps) {
                     <div className="space-y-4">
                         <div className="space-y-3">
                             <Label>Talles (letras y números)</Label>
-                            <MultipleSelector
+                            {/* <MultipleSelector
                                 className="w-full"
                                 defaultOptions={sizeOptions}
                                 value={selectedSize ? [selectedSize] : []}
@@ -157,12 +159,12 @@ function VariantSizesDisplay({ variant }: VariantSizesDisplayProps) {
                                 groupBy="group"
                                 disabled={!isEditing}
                                 hidePlaceholderWhenSelected
-                            />
+                            /> */}
                         </div>
 
                         <div className="space-y-3">
                             <Label>Tamaños (volúmenes o genéricos)</Label>
-                            <MultipleSelector
+                            {/*  <MultipleSelector
                                 className="w-full"
                                 defaultOptions={measureOptions}
                                 value={selectedMeasure ? [selectedMeasure] : []}
@@ -172,7 +174,7 @@ function VariantSizesDisplay({ variant }: VariantSizesDisplayProps) {
                                 groupBy="group"
                                 disabled={!isEditing}
                                 hidePlaceholderWhenSelected
-                            />
+                            /> */}
                         </div>
                     </div>
                 </CardContent>
