@@ -530,26 +530,15 @@ export type EmployeePermissions = {
 
 
 export type ProductsTableProps = {
-    data: ProductWithRelations[]
+    storeId: number
     userId: number
     slug: string
-    storeId: number
     employeePermissions: EmployeePermissions
-    branches: (Branch & { stock_items: VariantStock[] })[]
-    headerActions?: React.ReactNode
-}
-
-export type ProductsTableWrapperProps = {
-    storeId?: number
-    slug?: string
-    subdomain?: string
-    userId: number
-    employeePermissions: EmployeePermissions
-    branches: (Branch & { stock_items: VariantStock[] })[]
     headerActions?: React.ReactNode
 }
 
 export type ProductsTableVariantRow = ProductWithRelations & { 
+    row_id: string
     variant_id?: number
     variant_label?: string
     stock: number

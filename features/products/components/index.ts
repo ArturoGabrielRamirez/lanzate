@@ -26,7 +26,6 @@ export * from "@/features/products/components/product-list-display"
 /* export * from "@/features/products/components/product-list" */
 export * from "@/features/products/components/products-card"
 export * from "@/features/products/components/products-table"
-export * from "@/features/products/components/products-table-wrapper"
 export * from "@/features/products/components/related-products"
 export * from "@/features/products/components/unified-create-product-button"
 export * from "@/features/products/components/variant-detail-client"

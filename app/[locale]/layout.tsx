@@ -4,7 +4,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { GlobalEmailConfirmationDetector } from '@/features/auth/components'
 import { FloatingDockContainer } from '@/features/floating-dock/components'
 import { Footer } from "@/features/footer/components"
-import { GlobalShortcutsWrapper } from '@/features/global/components'
+import { GlobalShortcutsWrapper, QueryProvider } from '@/features/global/components'
 import { Header } from "@/features/header/components"
 import { NextThemeProvider, SubdomainProvider } from "@/features/layout/components"
 import { ChatDoc } from "@/features/layout/components/chat-doc"
@@ -30,8 +30,9 @@ export default async function RootLayout({ children, params }: LayoutType) {
     >
       <GlobalShortcutsWrapper>
         <NuqsAdapter>
-          <NextIntlClientProvider locale={locale}>
-            <BProgressProvider options={{ showSpinner: true }} startOnLoad spinnerPosition="bottom-right" shallowRouting={false}>
+          <QueryProvider>
+            <NextIntlClientProvider locale={locale}>
+              <BProgressProvider options={{ showSpinner: true }} startOnLoad spinnerPosition="bottom-right" shallowRouting={false}>
               <ChatProvider>
                 <PlanProvider user={user}>
                   <SubdomainProvider
@@ -64,7 +65,8 @@ export default async function RootLayout({ children, params }: LayoutType) {
                 </PlanProvider>
               </ChatProvider>
             </BProgressProvider>
-          </NextIntlClientProvider>
+            </NextIntlClientProvider>
+          </QueryProvider>
         </NuqsAdapter>
       </GlobalShortcutsWrapper>
     </NextThemeProvider>

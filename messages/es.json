@@ -1458,6 +1458,7 @@
             "categories": {
                 "none": "Ninguna"
             },
+            "search-placeholder": "Buscar productos...",
             "boolean": {
                 "yes": "Sí",
                 "no": "No"
@@ -1488,6 +1489,12 @@
                 "description": "Descripción",
                 "created_at": "Fecha de creación",
                 "updated_at": "Fecha de actualización"
+            },
+            "expanded": {
+                "description": "Descripción",
+                "barcode": "Código de barras",
+                "stock-by-branch": "Stock por sucursal",
+                "no-additional-info": "No hay información adicional disponible"
             }
         },
         "create-product": {

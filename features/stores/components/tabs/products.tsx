@@ -3,7 +3,7 @@ import { Suspense } from "react"
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { CreateProductButton } from "@/features/products/components/create-form/create-product-button"
-import { ProductsTableWrapper } from "@/features/products/components/products-table-wrapper"
+import { ProductsTable } from "@/features/products/components/products-table"
 import { getStoreBasicInfoBySlugAction } from "@/features/stores/actions/get-store-basic-info-by-slug.action"
 import { ProductsTabProps } from "@/features/stores/types"
 
@@ -33,12 +33,11 @@ async function ProductsTabContent({ slug, userId }: ProductsTabProps & { userId:
     }
 
     return (
-        <ProductsTableWrapper
+        <ProductsTable
             slug={slug}
             storeId={storeInfo.id}
             userId={userId}
             employeePermissions={employeePermissions}
-            branches={storeInfo.branches}
             headerActions={
                 <CreateProductButton
                     storeId={storeInfo.id}
