@@ -17,32 +17,43 @@ const finalizeSaleSchema = Yup.object({
   paymentMethod: Yup.string()
     .oneOf(['CASH', 'CREDIT_CARD', 'DEBIT_CARD', 'TRANSFER', 'MERCADO_PAGO', 'PAYPAL', 'CRYPTO'])
     .required('Debes seleccionar un método de pago'),
-  includeCustomerInfo: Yup.boolean(),
+
+  includeCustomerInfo: Yup.boolean().required(),
+
   name: Yup.string()
+    .default('')
     .when('includeCustomerInfo', {
       is: true,
-      then: (schema) => schema
-        .min(2, 'El nombre debe tener al menos 2 caracteres')
-        .required('El nombre del cliente es requerido'),
-      otherwise: (schema) => schema.optional()
+      then: (schema) =>
+        schema
+          .min(2, 'El nombre debe tener al menos 2 caracteres')
+          .required('El nombre del cliente es requerido'),
+      otherwise: (schema) => schema
     }),
+
   phone: Yup.string()
+    .default('')
     .when('includeCustomerInfo', {
       is: true,
-      then: (schema) => schema
-        .min(8, 'El teléfono debe tener al menos 8 dígitos')
-        .required('El teléfono del cliente es requerido'),
-      otherwise: (schema) => schema.optional()
+      then: (schema) =>
+        schema
+          .min(8, 'El teléfono debe tener al menos 8 dígitos')
+          .required('El teléfono del cliente es requerido'),
+      otherwise: (schema) => schema
     }),
+
   email: Yup.string()
+    .default('')
     .when('includeCustomerInfo', {
       is: true,
-      then: (schema) => schema
-        .email('El email debe tener un formato válido')
-        .required('El email del cliente es requerido'),
-      otherwise: (schema) => schema.optional()
+      then: (schema) =>
+        schema
+          .email('El email debe tener un formato válido')
+          .required('El email del cliente es requerido'),
+      otherwise: (schema) => schema
     })
 })
+
 
 const paymentMethodOptions = [
   { value: 'CASH', label: 'Efectivo' },
