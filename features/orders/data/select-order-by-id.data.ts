@@ -25,7 +25,7 @@ export async function selectOrderByIdData(orderId: number) {
                             id: true,
                             name: true,
                             description: true,
-                            image: true,
+                          /*   image: true, */
                             categories: {
                                 select: {
                                     id: true,
