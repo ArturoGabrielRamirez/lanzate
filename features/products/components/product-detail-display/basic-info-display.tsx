@@ -30,8 +30,8 @@ function BasicInfoDisplay({ product }: BasicInfoDisplayProps) {
         const initialValues = {
             name: product.name,
             description: product.description || "",
-            sku: product.sku,
-            barcode: product.barcode || "",
+     /*        sku: product.sku, */
+     /*        barcode: product.barcode || "", */
         }
 
         const onClick = () => {
@@ -98,19 +98,19 @@ function BasicInfoDisplay({ product }: BasicInfoDisplayProps) {
                         </div>
                         <div className="space-y-1">
                             <label className="text-sm font-medium">SKU</label>
-                            {isEditing ? (
+                           {/*  {isEditing ? (
                                 <InputField name="sku" type="text" label="SKU" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{product.sku}</p>
-                            )}
+                            )} */}
                         </div>
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Código de barras</label>
-                            {isEditing ? (
+                          {/*   {isEditing ? (
                                 <InputField name="barcode" type="text" label="Código de barras" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{product.barcode || "No especificado"}</p>
-                            )}
+                            )} */}
                         </div>
                         <div className="space-y-1 md:col-span-2">
                             <label className="text-sm font-medium">Descripción</label>
