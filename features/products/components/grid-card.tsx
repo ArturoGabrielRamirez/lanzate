@@ -2,12 +2,12 @@
 
 import { Crown, Heart, Share, ShoppingCart } from "lucide-react"
 import * as motion from "motion/react-client"
-import Image from "next/image"
+/* import Image from "next/image" */
 import Link from "next/link"
 import { useState } from "react"
 
 
-import { AddToCartButton } from "@/features/products/components/add-to-cart-button"
+/* import { AddToCartButton } from "@/features/products/components/add-to-cart-button" */
 import type { GridCardProps } from "@/features/products/types"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Badge } from "@/features/shadcn/components/ui/badge"
@@ -18,7 +18,7 @@ function GridCard({ product, href }: GridCardProps) {
 
     const [isFlipped, setIsFlipped] = useState(false)
 
-    const canBeAddedToCart = product.stock > 0 && product.stock !== null && product.is_active && product.is_published
+  /*   const canBeAddedToCart = product.stock > 0 && product.stock !== null && product.is_active && product.is_published */
 
     const handleFlip = () => {
         setIsFlipped(!isFlipped)
@@ -61,7 +61,7 @@ function GridCard({ product, href }: GridCardProps) {
                     <Card className={cn("rounded-none hover:rounded-2xl hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 w-full h-full gap-2 !pt-0 group/card cursor-pointer")} onClick={handleFlip}>
                         <CardHeader className="gap-0 !px-0 ">
                             <div className="relative w-full aspect-[1/0.7] overflow-hidden rounded-none group-hover/card:rounded-md rounded-b-none transition-all duration-300 group-hover/card:rounded-b-none">
-                                <Image
+                                {/* <Image
                                     src={product.image || "/public-store/avatar.svg"}
                                     alt={product.name}
                                     fill
@@ -69,14 +69,14 @@ function GridCard({ product, href }: GridCardProps) {
                                         "object-cover group-hover/card:scale-110 transition-all duration-300 contrast-50 group-hover/card:contrast-100",
                                         !product.is_active && "grayscale"
                                     )}
-                                />
+                                /> */}
                                 <div className="absolute top-2 left-2 flex gap-2">
                                     {product.is_featured && <Crown className="text-yellow-500" />}
-                                    {!product.is_active && (
+                                  {/*   {!product.is_active && (
                                         <Badge className="text-blue-500 border-blue-500 bg-black/30 backdrop-blur-sm text-sm">
                                             Próximamente
                                         </Badge>
-                                    )}
+                                    )} */}
                                     {product.created_at > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) && (
                                         <Badge className="text-green-500 border-green-500 bg-black/30 backdrop-blur-sm text-sm">
                                             Nuevo
@@ -96,10 +96,10 @@ function GridCard({ product, href }: GridCardProps) {
                             </p>
                         </CardContent>
                         <CardFooter className="flex justify-between items-center">
-                            <p className="font-bold text-xl">${product.price}</p>
-                            <div className="flex gap-2">
+                           {/*  <p className="font-bold text-xl">${product.price}</p> */}
+                           {/*  <div className="flex gap-2">
                                 <AddToCartButton product={product} canBeAddedToCart={canBeAddedToCart} />
-                            </div>
+                            </div> */}
                         </CardFooter>
                     </Card>
                 </div>

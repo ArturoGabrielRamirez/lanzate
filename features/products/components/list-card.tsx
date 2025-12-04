@@ -1,4 +1,4 @@
-import Image from "next/image"
+/* import Image from "next/image" */
 import Link from "next/link"
 
 import { AddToCartButton } from "@/features/products/components/add-to-cart-button"
@@ -10,7 +10,7 @@ function ListCard({ product, href }: ListCardProps) {
         <Link href={href} className="block w-full">
             <Card className="flex flex-row gap-3 p-3 h-24 hover:shadow-md transition-shadow">
                 <div className="relative h-16 w-16 flex-shrink-0">
-                    {product.image ? (
+                    {/* {product.image ? (
                         <Image
                             src={product.image}
                             alt={product.name}
@@ -24,7 +24,7 @@ function ListCard({ product, href }: ListCardProps) {
                             className="rounded-md w-full h-full object-cover"
                             fill
                         />
-                    )}
+                    )} */}
                 </div>
                 <div className="flex-1 flex flex-col justify-between min-w-0">
                     <div>
@@ -37,7 +37,7 @@ function ListCard({ product, href }: ListCardProps) {
                     </div>
                 </div>
                 <div className="flex flex-col justify-between items-end flex-shrink-0">
-                    <p className="text-lg font-bold">${product.price}</p>
+                   {/*  <p className="text-lg font-bold">${product.price}</p> */}
                     <div className="flex gap-1">
                         <AddToCartButton product={product} canBeAddedToCart={true} />
                         {/* <LikeButton productId={product.id} /> */}

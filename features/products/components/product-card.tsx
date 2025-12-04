@@ -28,10 +28,10 @@ function ProductCard({ product, slug }: ProductCardProps) {
                 <p className="text-muted-foreground text-sm line-clamp-2">{product.description || t("no-description")}</p>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <p className="text-muted-foreground text-sm">
+            {/*     <p className="text-muted-foreground text-sm">
                     {product.stock} {product.stock > 1 ? t("items-left") : t("item-left")}
                 </p>
-                <p className="font-bold">${product.price}</p>
+                <p className="font-bold">${product.price}</p> */}
             </CardFooter>
         </Card>
     )
