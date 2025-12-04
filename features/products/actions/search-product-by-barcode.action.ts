@@ -14,9 +14,9 @@ export async function searchProductByBarcodeAction(barcode: string, storeId: num
             throw new Error("Se requiere el ID de la tienda")
         }
 
-        const { error, payload, message } = await getProductByBarcodeData(barcode.trim(), storeId)
+        const { hasError, payload, message } = await getProductByBarcodeData(barcode.trim(), storeId)
 
-        if (error) {
+        if (hasError) {
             throw new Error(message)
         }
 
