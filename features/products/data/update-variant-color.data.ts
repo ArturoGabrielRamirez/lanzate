@@ -5,10 +5,12 @@ import { revalidatePath } from "next/cache"
 import { prisma } from "@/utils/prisma"
 
 export async function updateVariantColorData(variantId: number, colorId: number | null) {
-    const updated = await prisma.productVariant.update({
-        where: { id: variantId },
-        data: { color_id: colorId }
-    })
+    /*     const updated = await prisma.productVariant.update({
+            where: { id: variantId },
+            data: { color_id: colorId }
+        }) */
+
+    console.log("arreglar o depurar updateVariantColorData", variantId, colorId)
 
     const ref = await prisma.productVariant.findUnique({
         where: { id: variantId },
@@ -18,7 +20,7 @@ export async function updateVariantColorData(variantId: number, colorId: number 
         revalidatePath(`/stores/${ref.product.store.slug}/products/${ref.product.id}/${variantId}`, "page")
     }
 
-    return { hasError: false, message: "Color de variante actualizado", payload: updated }
+    return { hasError: false, message: "Color de variante actualizado", payload: null/* updated  */ }
 }
 
 

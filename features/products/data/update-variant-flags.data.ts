@@ -10,8 +10,8 @@ export async function updateVariantFlagsData(variantId: number, data: UpdateVari
         where: { id: variantId },
         data: {
             is_active: data.is_active,
-            is_published: data.is_published,
-            is_featured: data.is_featured,
+          /*   is_published: data.is_published, */
+          /*   is_featured: data.is_featured, */
         }
     })
 

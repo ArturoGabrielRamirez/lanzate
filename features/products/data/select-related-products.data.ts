@@ -7,7 +7,7 @@ export async function selectRelatedProductsData(productId: number) {
     where: { id: productId },
     include: {
       categories: true,
-      variants: { where: { is_deleted: false } },
+    /*   variants: { where: { is_deleted: false } }, */
       store: true,
     },
   })
@@ -28,13 +28,13 @@ export async function selectRelatedProductsData(productId: number) {
   const categoryProducts = await prisma.product.findMany({
     where: {
       id: { not: product.id },
-      is_deleted: false,
+      /* is_deleted: false, */
       categories: { some: { id: { in: categoryIds } } },
       store_id: product.store_id,
-      is_active: true,
-      is_published: true,
+     /*  is_active: true, */
+ /*      is_published: true, */
     },
-    include: { variants: { where: { is_deleted: false } } },
+   /*  include: { variants: { where: { is_deleted: false } } }, */
     take: 12,
   })
 
