@@ -56,9 +56,9 @@ export async function insertOrderData({
         }
 
 
-        for (const item of cart) {
+       /*  for (const item of cart) {
 
-            const productStock = await prisma.productStock.findUnique({
+            const productStock = await prisma.variantStock.findUnique({
                 where: {
                     product_id_branch_id: {
                         branch_id: branch.id,
@@ -86,7 +86,7 @@ export async function insertOrderData({
 
             if (productStock.quantity < item.quantity) throw new Error("El producto está agotado")
 
-        }
+        } */
 
         const order = await prisma.$transaction(async (tx) => {
 
@@ -135,7 +135,7 @@ export async function insertOrderData({
 
             if (!order) throw new Error("No se pudo crear la orden")
 
-            for (const item of cart) {
+         /*    for (const item of cart) {
 
                 await tx.product.update({
                     where: {
@@ -161,7 +161,7 @@ export async function insertOrderData({
                         }
                     }
                 })
-            }
+            } */
 
             const updatedStore = await tx.store.update({
                 where: {
