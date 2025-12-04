@@ -6,7 +6,7 @@ import { toast } from "sonner"
 
 import { Form } from "@/features/global/components/form/form"
 import { CreateColorInline } from "@/features/products/components/create-color-inline"
-import { updateVariantColorData } from "@/features/products/data/update-variant-color.data"
+/* import { updateVariantColorData } from "@/features/products/data/update-variant-color.data" */
 import type { /* ProductColor, */ VariantColorDisplayProps } from "@/features/products/types"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
@@ -15,7 +15,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/compo
 function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
-    const [pendingColorId, setPendingColorId] = useState<number | null>(variant.color /* ? (variant).color_id ?? null : null */)
+    const [pendingColorId, setPendingColorId] = useState<number | null>(/* variant.color  *//* ? (variant).color_id ?? null : null */)
 
     console.log(product)
     const handleOpenEdit = () => {
@@ -47,12 +47,12 @@ function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
                                             onClick={async () => {
                                                 try {
                                                     setIsSaving(true)
-                                                    const { hasError, message } = await updateVariantColorData(variant.id, pendingColorId)
-                                                    if (hasError) {
+                                                 /*    const { hasError, message } = await updateVariantColorData(variant.id, pendingColorId) */
+                                                    /* if (hasError) {
                                                         toast.error(message || "Error al actualizar color")
                                                         setIsSaving(false)
                                                         return
-                                                    }
+                                                    } */
                                                     toast.success("Color actualizado")
                                                     handleCloseEdit()
                                                     setIsSaving(false)
@@ -109,7 +109,7 @@ function VariantColorDisplay({ variant, product }: VariantColorDisplayProps) {
                                 /*        style={{ backgroundColor: variant.color.hex }} */
                                 />
                                 <div>
-                                    <p className="font-medium">{variant.color.name}</p>
+                                   {/*  <p className="font-medium">{variant.color.name}</p> */}
                                     {/* <p className="text-sm text-muted-foreground">{variant.color.hex}</p> */}
                                 </div>
                             </div>
