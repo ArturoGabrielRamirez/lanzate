@@ -48,7 +48,7 @@ export async function updateOrderStatusData(orderId: number, data: ChangeOrderSt
                 }
 
                 // Restaurar stock para cada producto
-                for (const item of order.items) {
+                /* for (const item of order.items) {
                     // Restaurar stock del producto principal
                     await tx.product.update({
                         where: { id: item.product_id },
@@ -80,7 +80,7 @@ export async function updateOrderStatusData(orderId: number, data: ChangeOrderSt
                             }
                         })
                     }
-                }
+                } */
 
                 // Revertir balance de la tienda
                 if (order.store.balance) {
