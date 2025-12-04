@@ -14,9 +14,9 @@ export async function searchProductsByNameData(searchTerm: string, storeId: numb
     const products = await prisma.product.findMany({
         where: {
             store_id: storeId,
-            is_active: true,
-            is_published: true,
-            is_deleted: false,
+           /*  is_active: true, */
+         /*    is_published: true, */
+          /*   is_deleted: false, */
             OR: [
                 {
                     name: {
@@ -30,21 +30,21 @@ export async function searchProductsByNameData(searchTerm: string, storeId: numb
                         mode: 'insensitive'
                     }
                 },
-                {
+          /*       {
                     sku: {
                         contains: searchTerm.trim(),
                         mode: 'insensitive'
                     }
-                }
+                } */
             ]
         },
         include: {
             categories: true,
-            stock_entries: {
+           /*  stock_entries: {
                 include: {
                     branch: true
                 }
-            }
+            } */
         },
         take: 20 // Limitar a 20 resultados
     })
@@ -52,7 +52,7 @@ export async function searchProductsByNameData(searchTerm: string, storeId: numb
     // Calcular stock total para cada producto
     const productsWithTotalStock = products.map(product => ({
         ...product,
-        totalStock: product.stock_entries.reduce((total, entry) => total + entry.quantity, 0)
+      /*   totalStock: product.stock_entries.reduce((total, entry) => total + entry.quantity, 0) */
     }))
 
     return {

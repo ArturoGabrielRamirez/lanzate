@@ -6,12 +6,12 @@ import { UpdateVariantPricePayload } from "@/features/products/types"
 import { prisma } from "@/utils/prisma"
 
 export async function updateVariantPriceData(variantId: number, data: UpdateVariantPricePayload) {
-    const variant = await prisma.productVariant.update({
-        where: { id: variantId },
-        data: {
-            price: data.price
-        }
-    })
+    /*  const variant = await prisma.productVariant.update({
+         where: { id: variantId },
+         data: {
+             price: data.price
+         }
+     }) */
 
     const ref = await prisma.productVariant.findUnique({
         where: { id: variantId },
@@ -24,6 +24,6 @@ export async function updateVariantPriceData(variantId: number, data: UpdateVari
     return {
         hasError: false,
         message: data.price ? "Precio actualizado correctamente" : "Se restableció el precio base del producto",
-        payload: variant
+        payload: null/* variant */
     }
 }

@@ -8,9 +8,9 @@ export async function selectProductByIdAndSubdomainData(id: number, subdomain: s
     const product = await prisma.product.findFirst({
         where: {
             id: id,
-            is_active: true,
-            is_published: true,
-            is_deleted: false,
+          /*   is_active: true, */
+       /*      is_published: true, */
+           /*  is_deleted: false, */
             store: {
                 subdomain: sanitizedSubdomain
             }
@@ -27,7 +27,7 @@ export async function selectProductByIdAndSubdomainData(id: number, subdomain: s
             },
             primary_media: true,
             media: { orderBy: { sort_order: 'asc' }, take: 12 },
-            variants: {
+          /*   variants: {
                 where: { is_deleted: false },
                 include: {
                     color: true,
@@ -35,7 +35,7 @@ export async function selectProductByIdAndSubdomainData(id: number, subdomain: s
                     media: { orderBy: { sort_order: 'asc' }, take: 12 }
                 },
                 orderBy: { id: 'asc' }
-            }
+            } */
         }
     })
 

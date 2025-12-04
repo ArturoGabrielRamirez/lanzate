@@ -11,7 +11,7 @@ export async function setMediaAsPrimaryData(
   if (variantId) {
     // ✅ Si hay variante, actualizar la variante
     // Primero quitar primary de todas las variantes del producto
-    await prisma.productVariant.updateMany({
+   /*  await prisma.productVariant.updateMany({
       where: {
         product_id: productId,
       },
@@ -19,9 +19,9 @@ export async function setMediaAsPrimaryData(
         primary_media_id: null
       }
     })
-
+ */
     // Luego marcar esta variante como primary
-    await prisma.productVariant.update({
+  /*   await prisma.productVariant.update({
       where: {
         id: variantId
       },
@@ -29,7 +29,7 @@ export async function setMediaAsPrimaryData(
         primary_media_id: mediaId
       }
     })
-
+ */
     console.log(`✅ Media ${mediaId} set as primary for variant ${variantId}`)
   } else {
     // ✅ Si NO hay variante, actualizar el producto directamente

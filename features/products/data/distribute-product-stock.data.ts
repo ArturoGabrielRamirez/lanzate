@@ -1,14 +1,16 @@
 "use server"
 
 import { DistributeStockData } from "@/features/products/types"
-import { prisma } from "@/utils/prisma"
+/* import { prisma } from "@/utils/prisma" */
 
 export async function distributeProductStockData(data: DistributeStockData) {
     try {
         const { productId, distributions } = data
 
+        console.log("arreglar o depurar distributeProductStockData", productId, distributions)
+
         // Get current product and its stock distribution
-        const product = await prisma.product.findUnique({
+       /*  const product = await prisma.product.findUnique({
             where: { id: productId },
             include: {
                 stock_entries: {
@@ -17,33 +19,33 @@ export async function distributeProductStockData(data: DistributeStockData) {
                     }
                 }
             }
-        })
+        }) */
 
-        if (!product) {
+       /*  if (!product) {
             return {
                 hasError: true,
                 message: "Producto no encontrado",
                 payload: null
             }
-        }
+        } */
 
         // Calculate total current stock across all branches
-        const totalCurrentStock = product.stock_entries.reduce((sum, entry) => sum + entry.quantity, 0)
-        
+      /*   const totalCurrentStock = product.stock_entries.reduce((sum, entry) => sum + entry.quantity, 0)
+         */
         // Calculate total requested distribution
-        const totalRequestedDistribution = distributions.reduce((sum, dist) => sum + dist.quantity, 0)
+/*         const totalRequestedDistribution = distributions.reduce((sum, dist) => sum + dist.quantity, 0) */
 
         // Validate that we're not creating stock out of thin air
-        if (totalRequestedDistribution > totalCurrentStock) {
+       /*  if (totalRequestedDistribution > totalCurrentStock) {
             return {
                 hasError: true,
                 message: "No se puede distribuir más stock del que está disponible actualmente en todas las sucursales",
                 payload: null
             }
-        }
+        } */
 
         // Update stock in transaction
-        await prisma.$transaction(async (tx) => {
+     /*    await prisma.$transaction(async (tx) => {
             // Update branch stocks - this will redistribute existing stock
             for (const distribution of distributions) {
                 if (distribution.quantity > 0) {
@@ -76,7 +78,7 @@ export async function distributeProductStockData(data: DistributeStockData) {
                     }
                 }
             })
-        })
+        }) */
 
         return {
             hasError: false,

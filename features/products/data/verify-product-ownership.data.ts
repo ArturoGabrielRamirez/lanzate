@@ -9,7 +9,7 @@ export async function verifyProductOwnershipData(productId: number, userId: numb
         select: {
             id: true,
             name: true,
-            image: true,
+           /*  image: true, */
             primary_media_id: true,
             owner_id: true,
             store_id: true

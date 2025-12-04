@@ -9,10 +9,10 @@ export async function updateVariantBasicInfoData(variantId: number, data: Update
     const variant = await prisma.productVariant.update({
         where: { id: variantId },
         data: {
-            name: data.name,
+  /*           name: data.name, */
             sku: data.sku,
             barcode: data.barcode,
-            description: data.description
+         /*    description: data.description */
         }
     })
 
