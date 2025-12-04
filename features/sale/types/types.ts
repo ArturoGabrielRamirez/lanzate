@@ -64,7 +64,7 @@ export type ProductData = {
 export type ScannedProduct = {
     id: number
     name: string
-    price: number
+    price?: number //TODO: Esto no era opcional, verificar su uso o si está en otra tabla
     description?: string | null
     barcode?: string | null
     sku?: string | null

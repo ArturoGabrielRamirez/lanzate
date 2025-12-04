@@ -41,7 +41,7 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   const searchSectionRef = useRef<SearchSectionRef>(null)
   const t = useTranslations('sale.messages')
 
-  const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
+  const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price ? item.product.price * item.quantity : 0), 0) //TODO: ACA PARCHEE CON CERO
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   // ============ HANDLERS ============

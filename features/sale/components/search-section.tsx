@@ -62,12 +62,32 @@ const SearchSection = forwardRef<SearchSectionRef, SearchSectionProps>(
         } else {
           // Convertir los productos al tipo correcto
           const products: ScannedProduct[] = payload.map(product => ({
-            ...product,
+            id: product.id,
+            name: product.name,
             description: product.description ?? undefined,
+    /*         price: product.price,
+            stock: product.stock,                   // debe existir en payload
             barcode: product.barcode ?? undefined,
-            sku: product.sku ?? undefined,
-            image: product.image ?? undefined,
+            sku: product.sku ?? "", */
+            slug: product.slug,
+           /*  image: product.image ?? undefined, */
+
+            /* totalStock: product.totalStock ?? product.stock ?? 0, */
+
+            categories: product.categories?.map(cat => ({
+              id: cat.id,
+              name: cat.name
+            })) ?? [],
+
+            /* stock_entries: product.stock_entries?.map(entry => ({
+              quantity: entry.quantity,
+              branch: {
+                id: entry.branch.id,
+                name: entry.branch.name
+              }
+            })) ?? [], */
           }))
+
 
           onSearchResults({
             products,
