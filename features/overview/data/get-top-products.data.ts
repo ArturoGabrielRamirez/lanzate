@@ -17,7 +17,7 @@ export async function getTopProductsData(storeId: number, limit: number = 5) {
                 select: {
                     id: true,
                     name: true,
-                    image: true
+                  /*   image: true */
                 }
             }
         }
@@ -32,7 +32,7 @@ export async function getTopProductsData(storeId: number, limit: number = 5) {
             name: item.product.name,
             totalSold: 0,
             revenue: 0,
-            image: item.product.image || undefined
+           /*  image: item.product.image || undefined */
         }
 
         productSales.set(productId, {
