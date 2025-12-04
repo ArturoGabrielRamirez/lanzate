@@ -8,7 +8,7 @@ import { useFormContext } from "react-hook-form"
 import { Form } from "@/features/global/components/form/form"
 import InputField from "@/features/global/components/form/input"
 import { editProductSchema } from "@/features/products/schemas/product-schema"
-import type { BasicInfoDisplayProps, BasicInfoFormValues } from "@/features/products/types"
+import type { BasicInfoDisplayProps, BasicInfoDefaults } from "@/features/products/types"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
@@ -25,7 +25,7 @@ function BasicInfoDisplay({ product }: BasicInfoDisplayProps) {
     }
 
     function ToggleEditButton() {
-        const { reset } = useFormContext<BasicInfoFormValues>()
+        const { reset } = useFormContext<BasicInfoDefaults>()
 
         const initialValues = {
             name: product.name,
