@@ -3,7 +3,7 @@
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 /* import { Title } from "@/features/layout/components" */
-import SaleInterface from "@/features/sale/components/sale-interface"
+/* import SaleInterface from "@/features/sale/components/sale-interface" */
 import { getStoreBySubdomainAction } from "@/features/stores/actions/get-store-by-subdomain.action"
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 async function SaleStorePage({ params }: Props) {
-    const { slug, branch } = await params
+    const { slug/* , branch */ } = await params
     /* const t = await getTranslations("sale") */
 
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
@@ -44,15 +44,15 @@ async function SaleStorePage({ params }: Props) {
                 }
             ]} className="hidden md:block" /> */}
 
-            <SaleInterface
+     {/*        <SaleInterface
                 storeName={store.name}
                 storeDescription={store.description ?? undefined}
                 storeId={store.id}
                 branchId={parseInt(branch)}
                 subdomain={store.subdomain}
                 processed_by_user_id={user.id}
-              /*   branchName={store.branches.find(b => b.id === parseInt(branch))?.name} */
-            />
+                branchName={store.branches.find(b => b.id === parseInt(branch))?.name}
+            /> */}
         </section>
     )
 }
