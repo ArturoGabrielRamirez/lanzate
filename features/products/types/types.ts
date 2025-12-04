@@ -300,7 +300,7 @@ export type PriceStockDisplayProps = {
     userId: number
 }
 
-/* export type PriceStockFormValues = Pick<Product, 'price' | 'stock'> */
+export type PriceStockFormValues = Pick<Product, 'id' | 'name'> // Pick<Product, 'price' | 'stock'> hay que arreglar esto
 
 export type ProductDetailFormProps = {
     product: Product & {
