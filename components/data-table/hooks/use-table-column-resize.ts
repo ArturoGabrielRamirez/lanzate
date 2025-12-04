@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
 import { ColumnSizingState } from "@tanstack/react-table";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 // Debounce function to limit expensive operations
 function useDebounce<T>(value: T, delay: number): T {

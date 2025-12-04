@@ -37,7 +37,7 @@ export function ProductsTable({
             getColumns={getColumns}
             fetchDataFn={useProductsData}
             idField="row_id"
-            pageSizeOptions={[10, 20, 50, 100]}
+            pageSizeOptions={[5,10, 20, 50, 100]}
             renderToolbarContent={() => headerActions ?? null}
             config={{
                 enableRowSelection: true,
