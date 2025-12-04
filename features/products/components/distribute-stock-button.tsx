@@ -30,12 +30,12 @@ function DistributeStockButton({
             variantStocks.forEach(s => {
                 initialDistributions[s.branch_id] = s.quantity
             })
-        } else {
+        } /* else {
             branches.forEach(branch => {
                 const currentStock = branch.stock.find(stock => stock.product_id === productId)?.quantity || 0
                 initialDistributions[branch.id] = currentStock
             })
-        }
+        } */
 
         setDistributions(initialDistributions)
     }, [branches, productId, variantStocks])
