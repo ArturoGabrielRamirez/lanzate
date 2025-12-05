@@ -1,6 +1,7 @@
-import { Order, Store, Branch, Product, Category, StoreBalance, ProductStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod, ProductVariant, StoreCustomization } from "@prisma/client"
+import { Order, Store, Branch, Product, Category, StoreBalance, VariantStock, PaymentMethod, BranchOperationalSettings, BranchOpeningHour, BranchShippingMethod, ProductVariant, StoreCustomization } from "@prisma/client"
 import { RowModel } from "@tanstack/react-table"
 import dayjs from "dayjs"
+import { SearchParams } from "nuqs/server"
 import { ReactNode } from "react"
 import * as yup from "yup"
 
@@ -105,6 +106,7 @@ export type TabLayoutProps = {
 
 export type TabPageProps = {
     params: Promise<{ slug: string, tab: string }>
+    searchParams: Promise<SearchParams>
 }
 
 export type TabTriggerLinkProps = {
@@ -200,7 +202,7 @@ export type StoreHeaderData = {
 export type GetStoreHeaderBySlugReturn = ActionResult<StoreHeaderData | null>
 
 export type GetStoresFromSlugReturn = ActionResult<Store & {
-    branches: (Branch & { stock: ProductStock[] })[]
+    branches: (Branch & { stock: VariantStock[] })[]
     products: (Product & { categories: Category[] })[]
     balance: StoreBalance | null
     operational_settings: BranchOperationalSettings | null

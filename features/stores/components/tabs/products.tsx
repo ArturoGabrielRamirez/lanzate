@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server"
+import { SearchParams } from "nuqs"
 import { Suspense } from "react"
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
@@ -7,7 +8,7 @@ import { ProductsTableWrapper } from "@/features/products/components/products-ta
 import { getStoreBasicInfoBySlugAction } from "@/features/stores/actions/get-store-basic-info-by-slug.action"
 import { ProductsTabProps } from "@/features/stores/types"
 
-async function ProductsTabContent({ slug, userId }: ProductsTabProps & { userId: number }) {
+async function ProductsTabContent({ slug, userId, ...queryParams }: ProductsTabProps & { userId: number } & { queryParams: Promise<SearchParams> }) {
     const { payload: storeInfo, hasError: storeError, message: storeMessage } = await getStoreBasicInfoBySlugAction(slug)
 
     if (storeError || !storeInfo) {
@@ -39,6 +40,7 @@ async function ProductsTabContent({ slug, userId }: ProductsTabProps & { userId:
             userId={userId}
             employeePermissions={employeePermissions}
             branches={storeInfo.branches}
+            {...queryParams}
             headerActions={
                 <CreateProductButton
                     storeId={storeInfo.id}
@@ -49,7 +51,7 @@ async function ProductsTabContent({ slug, userId }: ProductsTabProps & { userId:
     )
 }
 
-async function ProductsTab({ slug }: ProductsTabProps) {
+async function ProductsTab({ slug, ...queryParams }: ProductsTabProps & { queryParams: Promise<SearchParams> }) {
     const t = await getTranslations("store.products-tab")
 
     const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
@@ -61,7 +63,7 @@ async function ProductsTab({ slug }: ProductsTabProps) {
 
     return (
         <Suspense fallback={<div>{t("loading-products") || "Cargando productos..."}</div>}>
-            <ProductsTabContent slug={slug} userId={user.id} />
+            <ProductsTabContent slug={slug} userId={user.id} {...queryParams} />
         </Suspense>
     )
 }

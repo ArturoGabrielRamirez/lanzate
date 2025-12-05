@@ -12,7 +12,11 @@ async function ProductsTableContent({
     userId,
     employeePermissions,
     branches,
-    headerActions
+    headerActions,
+    limit,
+    orderBy,
+    page,
+    search
 }: ProductsTableWrapperProps) {
     // Determine which identifier to use
     let identifier: StoreIdentifier
@@ -29,7 +33,7 @@ async function ProductsTableContent({
         throw new Error("Debe proporcionar storeId, slug o subdomain")
     }
 
-    const { payload: products, hasError, message } = await getProductsByStoreAction(identifier)
+    const { payload: products, hasError, message } = await getProductsByStoreAction(identifier, limit, orderBy, page, search)
 
     if (hasError || !products) {
         console.error(message || "Error al cargar productos")

@@ -24,6 +24,7 @@
     "@rigidui": "https://rigidui.com/r/{name}.json",
     "@intentui": "https://intentui.com/r/{name}",
     "@ncdai": "https://chanhdai.com/r/{name}.json",
-    "@coss": "https://coss.com/ui/r/{name}.json"
+    "@coss": "https://coss.com/ui/r/{name}.json",
+    "@supabase": "https://supabase.com/ui/r/{name}.json"
   }
 }

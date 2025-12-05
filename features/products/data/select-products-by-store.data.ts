@@ -3,10 +3,10 @@
 import { StoreIdentifier } from "@/features/products/types/products-by-store.types"
 import { prisma } from "@/utils/prisma"
 
-export async function selectProductsByStoreData(identifier: StoreIdentifier) {
-    // Build where clause based on identifier type
+export async function selectProductsByStoreData(identifier: StoreIdentifier, limit: number, orderBy: string, page: number, search: string) {
+
     const storeWhere: { id?: number; slug?: string; subdomain?: string } = {}
-    
+
     if ('storeId' in identifier) {
         storeWhere.id = identifier.storeId
     } else if ('slug' in identifier) {
@@ -19,7 +19,17 @@ export async function selectProductsByStoreData(identifier: StoreIdentifier) {
     const products = await prisma.product.findMany({
         where: {
             store: storeWhere,
-            status: "ACTIVE"
+            status: "ACTIVE",
+            ...(search ? {
+                AND: [
+                    {
+                        name: {
+                            contains: search,
+                            mode: "insensitive"
+                        }
+                    }
+                ]
+            } : {}),
         },
         include: {
             categories: true,
@@ -46,8 +56,10 @@ export async function selectProductsByStoreData(identifier: StoreIdentifier) {
             }
         },
         orderBy: {
-            created_at: 'desc'
-        }
+            [orderBy]: 'desc'
+        },
+        take: limit,
+        skip: limit * (page - 1)
     })
 
     return {

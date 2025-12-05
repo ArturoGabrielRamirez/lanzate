@@ -540,6 +540,10 @@ export type ProductsTableProps = {
 }
 
 export type ProductsTableWrapperProps = {
+    limit: number
+    orderBy: string
+    page: number
+    search: string
     storeId?: number
     slug?: string
     subdomain?: string
