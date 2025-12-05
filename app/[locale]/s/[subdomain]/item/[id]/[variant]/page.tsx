@@ -1,15 +1,13 @@
-/* import { Category } from "@prisma/client" */
 import { Image as ImageIcon, Share, ShoppingBag } from "lucide-react"
-import Image from "next/image"
+/* import Image from "next/image" */
 import Link from "next/link"
 
-/* import { Title } from "@/features/layout/components" */
 import { PageContainer } from "@/features/layout/components/page-container"
 import { getPublicStoreProductDetailsAction } from "@/features/products/actions/get-public-store-product-details.action"
-import { AddToCartButton, LikeButton, VariantDetailClient } from "@/features/products/components"
+import { /* AddToCartButton, */ LikeButton/* , VariantDetailClient */ } from "@/features/products/components"
 import { Button } from "@/features/shadcn/components/ui/button"
 
-import type { Product, ProductVariant, Color } from "@prisma/client"
+/* import type { Product, ProductVariant *//* , Color */ /* } from "@prisma/client" */
 
 type Props = {
     params: Promise<{ id: string; subdomain: string; variant: string }>
@@ -23,11 +21,6 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
     if (hasError || !product) {
         return (
             <PageContainer className="![padding-top:calc(var(--section-padding-top)_+_2rem)]">
-                {/* <Title
-                    title="Product Not Found"
-                    breadcrumbs={[{ label: "Product Not Found", href: `/item/${id}/${variant}` }]}
-                    homePath={`/`}
-                /> */}
                 <p className="text-red-500 mt-4">{message}</p>
             </PageContainer>
         )
@@ -35,7 +28,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
 
     return (
         <PageContainer>
-      {/*       <Title
+            {/*       <Title
                 title={product.name}
                 breadcrumbs={[
                     ...product.categories.map((category: Category) => ({
@@ -59,7 +52,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                             </div>
                         </div>
                         <div className="bg-gray-100 relative rounded-lg flex items-center justify-center grow">
-                            {product.image ? (
+                            {/* {product.image ? (
                                 <Image
                                     src={product.image}
                                     alt={product.name}
@@ -71,7 +64,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                     <ImageIcon className="size-16" />
                                     <p className="text-sm text-muted-foreground">No hay imagen disponible</p>
                                 </div>
-                            )}
+                            )} */}
                         </div>
                         <div className="flex flex-col gap-4">
                             <Button variant="outline" size="icon">
@@ -82,10 +75,10 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                     </div>
 
                     <div className="space-y-4 text-primary overflow-y-auto max-h-[calc(100vh-205px)] pr-4 relative">
-                        <VariantDetailClient
+                        {/*                 <VariantDetailClient
                             product={product as unknown as Product & { variants?: (ProductVariant & { color: Color | null })[] }}
                             initialVariantId={parseInt(variant)}
-                        />
+                        /> */}
 
                         <div className="flex flex-col gap-2 border-b border-muted-foreground pb-4">
                             {product.description && (
@@ -95,11 +88,11 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                 </div>
                             )}
 
-                            {product.sku && (
+                         {/*    {product.sku && (
                                 <p className="text-sm text-gray-500 mt-1">SKU: {product.sku}</p>
-                            )}
+                            )} */}
                             <div className="flex gap-2 justify-end">
-                                <AddToCartButton
+                         {/*        <AddToCartButton
                                     product={product}
                                     withText
                                     className="text-lg p-6 !px-8 !bg-accent text-accent-foreground"
@@ -108,7 +101,7 @@ export default async function ProductVariantDetailsPage({ params }: Props) {
                                     overrideName={product.variants?.find(v => v.id === parseInt(variant))?.name ?? product.name}
                                     overridePrice={product.variants?.find(v => v.id === parseInt(variant))?.price ?? product.price}
                                     overrideImage={product.image ?? undefined}
-                                />
+                                /> */}
                                 <Button variant="outline" size="lg" className="text-lg p-6 !px-8" asChild>
                                     <Link href="/checkout">
                                         <ShoppingBag />

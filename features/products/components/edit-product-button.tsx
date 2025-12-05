@@ -11,11 +11,11 @@ import { getStoreIdBySlugData } from "@/features/categories/data/get-store-id-by
 import { Form } from "@/features/global/components/form/form"
 import { formatErrorResponse } from "@/features/global/utils"
 import { editProductAction } from "@/features/products/actions/edit-producto.action"
-import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
-import { BasicInfoSection } from "@/features/products/components/sections/basic-info-section"
+/* import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action" */
+/* import { BasicInfoSection } from "@/features/products/components/sections/basic-info-section" */
 import { CategoriesSection } from "@/features/products/components/sections/categories-section"
 import { MediaSection } from "@/features/products/components/sections/media-section"
-import { PriceStockSection } from "@/features/products/components/sections/price-stock-section"
+/* import { PriceStockSection } from "@/features/products/components/sections/price-stock-section" */
 import { SettingsSection } from "@/features/products/components/sections/settings-section"
 import { ProductFormProvider, useProductForm } from "@/features/products/contexts/product-form-context"
 import { EditProductButtonProps, EditProductPayload } from "@/features/products/types"
@@ -27,13 +27,13 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
 function EditProductButtonInner({ product, slug, onComplete, userId }: EditProductButtonProps) {
     const [storeId, setStoreId] = useState<number | null>(null)
     const [open, setOpen] = useState(false)
-    const [productDetails, setProductDetails] = useState<{ media?: { id: number; url: string }[]; primary_media?: { id: number; url: string } | null } | null>(null)
+    const [productDetails/* , setProductDetails */] = useState<{ media?: { id: number; url: string }[]; primary_media?: { id: number; url: string } | null } | null>(null)
     const [isUploadingImages, setIsUploadingImages] = useState(false)
 
     const t = useTranslations("store.edit-product")
 
     // Usar contexto en lugar de useState localess
-    const { state, updateCategories, updateSettings, updateMedia, resetForm } = useProductForm()
+    const { state, updateCategories, updateSettings, /* updateMedia, */ resetForm } = useProductForm()
 
     // Obtener el storeId a partir del slug
     useEffect(() => {
@@ -47,23 +47,23 @@ function EditProductButtonInner({ product, slug, onComplete, userId }: EditProdu
     }, [slug])
 
     // Inicializar contexto con categorías y settings del producto
-    useEffect(() => {
-        if (open && product.categories && product.categories.length > 0) {
-            const initialCategories = product.categories.map((category: { name: string; id: number }) => ({
-                label: category.name,
-                value: category.id.toString()
-            }))
-            updateCategories({ categories: initialCategories })
-        }
-
-        if (open) {
-            updateSettings({
-                isActive: product.is_active,
-                isFeatured: product.is_featured,
-                isPublished: product.is_published
-            })
-        }
-    }, [open, product.categories, product.is_active, product.is_featured, product.is_published, updateCategories, updateSettings])
+    /*  useEffect(() => {
+         if (open && product.categories && product.categories.length > 0) {
+             const initialCategories = product.categories.map((category: { name: string; id: number }) => ({
+                 label: category.name,
+                 value: category.id.toString()
+             }))
+             updateCategories({ categories: initialCategories })
+         }
+ 
+         if (open) {
+             updateSettings({
+                 isActive: product.is_active,
+                 isFeatured: product.is_featured,
+                 isPublished: product.is_published
+             })
+         }
+     }, [open, product.categories, product.is_active, product.is_featured, product.is_published, updateCategories, updateSettings]) */
 
     useEffect(() => {
         if (!open) {
@@ -73,7 +73,7 @@ function EditProductButtonInner({ product, slug, onComplete, userId }: EditProdu
     }, [open, resetForm])
 
     // Load product media when dialog opens
-    useEffect(() => {
+    /* useEffect(() => {
         const load = async () => {
             if (!open) return
             const { payload } = await getProductDetailsAction(String(product.id))
@@ -100,7 +100,7 @@ function EditProductButtonInner({ product, slug, onComplete, userId }: EditProdu
             }
         }
         load()
-    }, [open, product.id, updateMedia])
+    }, [open, product.id, updateMedia]) */
 
     const onFileReject = useCallback((file: File, message: string) => {
         const filename = file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
@@ -225,8 +225,8 @@ function EditProductButtonInner({ product, slug, onComplete, userId }: EditProdu
                                         onChange={() => { }}
                                         onFileReject={onFileReject}
                                     />
-                                    <BasicInfoSection defaults={{ name: product.name, slug: product.slug, description: product.description ?? undefined, sku: product.sku ?? undefined, barcode: product.barcode ?? undefined }} />
-                                    <PriceStockSection defaults={{ price: product.price, stock: product.stock }} />
+                                    {/*   <BasicInfoSection defaults={{ name: product.name, slug: product.slug, description: product.description ?? undefined, sku: product.sku ?? undefined, barcode: product.barcode ?? undefined }} />
+                                    <PriceStockSection defaults={{ price: product.price, stock: product.stock }} /> */}
                                     <CategoriesSection
                                         storeId={storeId || undefined}
                                         value={{ categories: state.categories.categories }}

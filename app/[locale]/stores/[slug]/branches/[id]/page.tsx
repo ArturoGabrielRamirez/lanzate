@@ -1,4 +1,4 @@
-import { Order } from "@prisma/client"
+/* import { Order } from "@prisma/client" */
 import { ArrowLeft, MapPin, Phone, Mail, Crown, Package, ShoppingCart, DollarSign, Calendar } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -39,9 +39,9 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
 
     const t = await getTranslations("store.branches")
 
-    const totalProducts = branch.stock?.length || 0
-    const totalOrders = branch.orders?.length || 0
-    const totalRevenue = (branch.orders as Order[] | undefined)?.reduce((sum: number, order: Order) => sum + order.total_price, 0) || 0
+  /*   const totalProducts = branch.stock?.length || 0 */
+    /* const totalOrders = branch.orders?.length || 0
+    const totalRevenue = (branch.orders as Order[] | undefined)?.reduce((sum: number, order: Order) => sum + order.total_price, 0) || 0 */
 
     return (
         <Card>
@@ -78,7 +78,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                     </Badge>
                                 )}
                             </div>
-                            <p className="text-xl text-muted-foreground">{branch.store.name}</p>
+                        {/*     <p className="text-xl text-muted-foreground">{branch.store.name}</p> */}
                         </div>
 
                         {/* Description */}
@@ -125,7 +125,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                 <Package className="w-4 h-4 text-blue-500" />
                                 <div>
                                     <p className="text-sm font-medium">{t("products-in-stock")}</p>
-                                    <p className="text-2xl font-bold">{totalProducts}</p>
+                               {/*      <p className="text-2xl font-bold">{totalProducts}</p> */}
                                 </div>
                             </div>
 
@@ -133,7 +133,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                 <ShoppingCart className="w-4 h-4 text-green-500" />
                                 <div>
                                     <p className="text-sm font-medium">{t("total-orders")}</p>
-                                    <p className="text-2xl font-bold">{totalOrders}</p>
+                                   {/*  <p className="text-2xl font-bold">{totalOrders}</p> */}
                                 </div>
                             </div>
 
@@ -141,7 +141,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                 <DollarSign className="w-4 h-4 text-purple-500" />
                                 <div>
                                     <p className="text-sm font-medium">{t("revenue")}</p>
-                                    <p className="text-2xl font-bold">${totalRevenue.toFixed(2)}</p>
+                                 {/*    <p className="text-2xl font-bold">${totalRevenue.toFixed(2)}</p> */}
                                 </div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                         </div>
 
                         {/* Recent Orders */}
-                        {branch.orders && branch.orders.length > 0 && (
+                       {/*  {branch.orders && branch.orders.length > 0 && (
                             <div>
                                 <h4 className="mb-2 text-lg font-semibold">{t("recent-orders")}</h4>
                                 <div className="space-y-2">
@@ -175,7 +175,7 @@ async function BranchDetailPage({ params }: BranchDetailPageProps) {
                                     ))}
                                 </div>
                             </div>
-                        )}
+                        )} */}
 
                         {/* Action Buttons */}
                         <div className="flex justify-center md:justify-end mt-auto">

@@ -1,15 +1,17 @@
 "use server"
 
-import { prisma } from "@/utils/prisma"
+/* import { prisma } from "@/utils/prisma" */
 
 export async function selectStoreWithProductsData(subdomain: string, category: string | undefined, sort: string | undefined, search: string | undefined, min: string | undefined, max: string | undefined, limit: number = 10, page: number = 1) {
 
-    const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
+    console.log("arreglar o depurar selectStoreWithProductsData", subdomain, category, sort, search, min, max, limit, page)
+
+    /*     const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, ''); */
     /* const prisma = new PrismaClient() */
 
-    const categoryIds = category
-        ? category.split(',').map(id => id.trim())
-        : undefined;
+    /*  const categoryIds = category
+         ? category.split(',').map(id => id.trim())
+         : undefined; */
 
     const orderBy: {
         name?: 'asc' | 'desc',
@@ -42,7 +44,7 @@ export async function selectStoreWithProductsData(subdomain: string, category: s
         priceRange.lte = parseFloat(max)
     }
 
-    const result = await prisma.store.findUnique({
+    /* const result = await prisma.store.findUnique({
         where: {
             subdomain: sanitizedSubdomain,
         },
@@ -121,16 +123,16 @@ export async function selectStoreWithProductsData(subdomain: string, category: s
                 orderBy: orderBy,
                 take: limit,
                 skip: limit * (page - 1)
-            },
-            customization: true,
-           /*  operational_settings: true */
-           //TODO: Arreglar aca, para Hori
-        },
-    })
+            }, */
+    /*        customization: true, */
+    /*  operational_settings: true */
+    //TODO: Arreglar aca, para Hori
+    /*  }, */
+    /*  }) */
 
     return {
         message: "Tienda con productos recuperada con éxito desde la base de datos",
-        payload: result,
+        payload: null/* result */,
         hasError: false
     };
 

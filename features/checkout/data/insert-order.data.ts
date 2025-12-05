@@ -33,60 +33,60 @@ export async function insertOrderData({
 
         const branch = await prisma.branch.findFirst({
             where: {
-                store_id: store.id,
+                store_id: 100/*  store.id */,
                 id: branch_id
             }
         })
 
         if (!branch) throw new Error("Branch not found")
 
-        if (isWalkIn && store.user_id !== processed_by_user_id) {
+        /*  if (isWalkIn && store.user_id !== processed_by_user_id) {
+ 
+             const employee = await prisma.employee.findFirst({
+                 where: {
+                     store_id: store.id,
+                     user_id: processed_by_user_id,
+                 }
+             })
+ 
+             if (!employee) throw new Error("Empleado no encontrado")
+ 
+             if (!employee.can_create_orders) throw new Error("No estás autorizado para crear órdenes")
+ 
+         } */
 
-            const employee = await prisma.employee.findFirst({
-                where: {
-                    store_id: store.id,
-                    user_id: processed_by_user_id,
-                }
-            })
 
-            if (!employee) throw new Error("Empleado no encontrado")
-
-            if (!employee.can_create_orders) throw new Error("No estás autorizado para crear órdenes")
-
-        }
-
-
-        for (const item of cart) {
-
-            const productStock = await prisma.productStock.findUnique({
-                where: {
-                    product_id_branch_id: {
-                        branch_id: branch.id,
-                        product_id: Number(item.id)
-                    }
-                }
-            })
-
-            const product = await prisma.product.findUnique({
-                where: {
-                    id: Number(item.id)
-                }
-            })
-
-            if (!product) throw new Error("Producto no encontrado")
-
-            if (product.is_active === false) throw new Error("El producto no está activo")
-
-            if (!product.is_published) throw new Error(`El producto ${product.name} no está publicado`)
-            if (product.stock <= 0) throw new Error(`El producto ${product.name} está agotado`)
-
-            if (product.stock < item.quantity) throw new Error(`El producto ${product.name} está agotado`)
-
-            if (!productStock) throw new Error("Producto no encontrado")
-
-            if (productStock.quantity < item.quantity) throw new Error("El producto está agotado")
-
-        }
+        /*  for (const item of cart) {
+ 
+             const productStock = await prisma.variantStock.findUnique({
+                 where: {
+                     product_id_branch_id: {
+                         branch_id: branch.id,
+                         product_id: Number(item.id)
+                     }
+                 }
+             })
+ 
+             const product = await prisma.product.findUnique({
+                 where: {
+                     id: Number(item.id)
+                 }
+             })
+ 
+             if (!product) throw new Error("Producto no encontrado")
+ 
+             if (product.is_active === false) throw new Error("El producto no está activo")
+ 
+             if (!product.is_published) throw new Error(`El producto ${product.name} no está publicado`)
+             if (product.stock <= 0) throw new Error(`El producto ${product.name} está agotado`)
+ 
+             if (product.stock < item.quantity) throw new Error(`El producto ${product.name} está agotado`)
+ 
+             if (!productStock) throw new Error("Producto no encontrado")
+ 
+             if (productStock.quantity < item.quantity) throw new Error("El producto está agotado")
+ 
+         } */
 
         const order = await prisma.$transaction(async (tx) => {
 
@@ -95,7 +95,7 @@ export async function insertOrderData({
                     total_price: total_price,
                     total_quantity: total_quantity,
                     branch_id: branch.id,
-                    store_id: store.id,
+                    store_id: /* store.id */100,
                     customer_id: !isWalkIn ? user?.id : null,
                     customer_name: customer_info?.name || user.first_name || null,
                     customer_phone: customer_info?.phone || null,
@@ -131,75 +131,75 @@ export async function insertOrderData({
                     status: status || "PROCESSING",
                     order_type: isWalkIn ? "CASH_REGISTER" : "PUBLIC_STORE"
                 }
-            })
+            }) //TODO: Arreglar aca, para Hori
 
             if (!order) throw new Error("No se pudo crear la orden")
 
-            for (const item of cart) {
+            /*    for (const item of cart) {
+   
+                   await tx.product.update({
+                       where: {
+                           id: Number(item.id)
+                       },
+                       data: {
+                           stock: {
+                               decrement: item.quantity
+                           }
+                       }
+                   })
+   
+                   await tx.productStock.update({
+                       where: {
+                           product_id_branch_id: {
+                               product_id: Number(item.id),
+                               branch_id: branch.id
+                           }
+                       },
+                       data: {
+                           quantity: {
+                               decrement: item.quantity
+                           }
+                       }
+                   })
+               } */
 
-                await tx.product.update({
-                    where: {
-                        id: Number(item.id)
-                    },
+            /*    const updatedStore = await tx.store.update({
+                   where: {
+                       id: Number(store.id)
+                   },
+                   data: {
+                       balance: {
+                           update: {
+                               current_balance: {
+                                   increment: total_price
+                               },
+                           }
+                       },
+                   },
+                   include: {
+                       balance: true
+                   }
+               }) */
+
+            /*  if (!updatedStore) throw new Error("No se pudo actualizar la tienda")
+  */
+            /*     const transaction = await tx.transaction.create({
                     data: {
-                        stock: {
-                            decrement: item.quantity
-                        }
+                        amount: total_price,
+                        type: "SALE",
+                        balance_before: store.balance?.current_balance || 0,
+                        balance_after: updatedStore.balance?.current_balance || 0,
+                        description: `Order ${order.id} created`,
+                        store_id: Number(store.id),
+                        created_by: user.id,
+                        notes: `Order ${order.id} created`,
+                        reference_id: order.id,
+                        reference_type: "order",
+                        branch_id: branch.id
                     }
-                })
+                }) */
 
-                await tx.productStock.update({
-                    where: {
-                        product_id_branch_id: {
-                            product_id: Number(item.id),
-                            branch_id: branch.id
-                        }
-                    },
-                    data: {
-                        quantity: {
-                            decrement: item.quantity
-                        }
-                    }
-                })
-            }
-
-            const updatedStore = await tx.store.update({
-                where: {
-                    id: Number(store.id)
-                },
-                data: {
-                    balance: {
-                        update: {
-                            current_balance: {
-                                increment: total_price
-                            },
-                        }
-                    },
-                },
-                include: {
-                    balance: true
-                }
-            })
-
-            if (!updatedStore) throw new Error("No se pudo actualizar la tienda")
-
-        /*     const transaction = await tx.transaction.create({
-                data: {
-                    amount: total_price,
-                    type: "SALE",
-                    balance_before: store.balance?.current_balance || 0,
-                    balance_after: updatedStore.balance?.current_balance || 0,
-                    description: `Order ${order.id} created`,
-                    store_id: Number(store.id),
-                    created_by: user.id,
-                    notes: `Order ${order.id} created`,
-                    reference_id: order.id,
-                    reference_type: "order",
-                    branch_id: branch.id
-                }
-            }) */
-
-           /*  if (!transaction) throw new Error("No se pudo crear la transacción") */
+            /*  if (!transaction) throw new Error("No se pudo crear la transacción") */
 
             /* await tx.socialActivity.create({
                 data: {

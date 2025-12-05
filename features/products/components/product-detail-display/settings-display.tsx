@@ -73,9 +73,9 @@ function SettingsDisplay({ product }: SettingsDisplayProps) {
                     <div className="space-y-1">
                         <label className="text-sm font-medium">Estado</label>
                         <div className="flex items-center gap-2">
-                            <Badge variant={product.is_active ? "default" : "secondary"}>
+                           {/*  <Badge variant={product.is_active ? "default" : "secondary"}>
                                 {product.is_active ? "Activo" : "Inactivo"}
-                            </Badge>
+                            </Badge> */}
                         </div>
                     </div>
                     <div className="space-y-1">
@@ -89,16 +89,16 @@ function SettingsDisplay({ product }: SettingsDisplayProps) {
                     <div className="space-y-1">
                         <label className="text-sm font-medium">Publicado</label>
                         <div className="flex items-center gap-2">
-                            <Badge variant={product.is_published ? "default" : "secondary"}>
+                            {/* <Badge variant={product.is_published ? "default" : "secondary"}>
                                 {product.is_published ? "Publicado" : "Borrador"}
-                            </Badge>
+                            </Badge> */}
                         </div>
                     </div>
                     <div className="space-y-1">
                         <label className="text-sm font-medium">Fecha de expiración</label>
-                        <p className="text-sm text-muted-foreground">
+                        {/* <p className="text-sm text-muted-foreground">
                             {product.expiration_date ? new Date(product.expiration_date).toLocaleDateString() : "No especificada"}
-                        </p>
+                        </p> */}
                     </div>
                 </div>
             </CardContent>

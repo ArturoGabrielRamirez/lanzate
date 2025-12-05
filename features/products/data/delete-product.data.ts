@@ -16,22 +16,22 @@ export async function deleteProductData(productId: number) {
 
         if (!product) throw new Error("Producto no encontrado")
 
-        const variantIds = product.variants.map(v => v.id)
+      /*   const variantIds = product.variants.map(v => v.id) */
 
-        if (variantIds.length > 0) {
+      /*   if (variantIds.length > 0) {
             // Soft delete variants by setting is_deleted to true
             await tx.productVariant.updateMany({
                 where: { id: { in: variantIds } },
                 data: { is_deleted: true }
             })
         }
-
+ */
         // Soft delete product by setting is_deleted to true
-        await tx.product.update({
+      /*   await tx.product.update({
             where: { id: productId },
             data: { is_deleted: true }
         })
-
+ */
         return product
     })
 

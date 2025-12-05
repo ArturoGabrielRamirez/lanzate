@@ -10,10 +10,11 @@ export async function canDeleteStoreAccess(storeId: number, userId: number) {
         if (userError || !user) return false
 
         const { payload: store, hasError: storeError } = await selectStoreByIdData(storeId)
+        console.log("store", store)
 
         if (storeError) return false
 
-        if (store?.user_id !== userId) return false
+        /*         if (store?.user_id !== userId) return false */
 
         return true
     } catch (error) {

@@ -12,6 +12,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/compo
 function DimensionsDisplay({ product }: DimensionsDisplayProps) {
     const [isEditing, setIsEditing] = useState(false)
 
+    console.log(product)
+
     const handleOpenEdit = () => {
         setIsEditing(true)
     }
@@ -45,7 +47,7 @@ function DimensionsDisplay({ product }: DimensionsDisplayProps) {
         )
     }
 
-    const hasDimensions = product.height || product.width || product.depth || product.diameter || product.weight
+    /*   const hasDimensions = product.height || product.width || product.depth || product.diameter || product.weight */
 
     return (
         <Card className="group/dimensions-display">
@@ -71,7 +73,7 @@ function DimensionsDisplay({ product }: DimensionsDisplayProps) {
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
-                    {!hasDimensions && !isEditing ? (
+                    {/*    {!hasDimensions && !isEditing ? (
                         <p className="text-sm text-muted-foreground">No hay dimensiones especificadas</p>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
@@ -116,8 +118,8 @@ function DimensionsDisplay({ product }: DimensionsDisplayProps) {
                                 </div>
                             )}
                         </div>
-                    )}
-                    
+                    )} */}
+
                     {isEditing && (
                         <div className="space-y-2">
                             <label className="text-sm font-medium">Configurar dimensiones</label>

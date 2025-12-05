@@ -3,7 +3,7 @@ import { prisma } from "@/utils/prisma"
 
 export async function updateProductsPricesData(payload: UpdatePricesPayload) {
     try {
-        const { storeId, amount, updateType, productIds, categoryId } = payload
+        const { storeId, /* amount, updateType, */ productIds, categoryId } = payload
 
         // Build the where clause based on what we're updating
         const baseWhereClause = {
@@ -40,7 +40,7 @@ export async function updateProductsPricesData(payload: UpdatePricesPayload) {
             where: whereClause,
             select: {
                 id: true,
-                price: true,
+                /*  price: true, */
                 name: true
             }
         })
@@ -59,40 +59,40 @@ export async function updateProductsPricesData(payload: UpdatePricesPayload) {
         }
 
         // Calculate new prices and update each product
-        const updatePromises = productsToUpdate.map(async (product) => {
-            let newPrice: number
+        /* const updatePromises = productsToUpdate.map(async (product) => { */
+        /*  let newPrice: number */
 
-            if (updateType === "fijo") {
-                // Fixed amount increase
-                newPrice = product.price + amount
-            } else {
-                // Percentage increase
-                newPrice = product.price * (1 + amount / 100)
+        /*  if (updateType === "fijo") {
+             // Fixed amount increase
+             newPrice = product.price + amount
+         } else {
+             // Percentage increase
+             newPrice = product.price * (1 + amount / 100)
+         } */
+
+        // Ensure price doesn't go below 0
+        /*   newPrice = Math.max(0, Math.round(newPrice * 100) / 100) */
+
+        /* return prisma.product.update({
+            where: { id: product.id },
+            data: { price: newPrice },
+            select: {
+                id: true,
+                name: true,
+                price: true
             }
+        }) */
+        /*     }) */
 
-            // Ensure price doesn't go below 0
-            newPrice = Math.max(0, Math.round(newPrice * 100) / 100)
-
-            return prisma.product.update({
-                where: { id: product.id },
-                data: { price: newPrice },
-                select: {
-                    id: true,
-                    name: true,
-                    price: true
-                }
-            })
-        })
-
-        const updatedProducts = await Promise.all(updatePromises)
+        /*  const updatedProducts = await Promise.all(updatePromises) */
 
         return {
             error: false,
-            message: `Se actualizaron correctamente ${updatedProducts.length} productos`,
-            payload: {
+            message: `Se actualizaron correctamente ${/* updatedProducts.length */''} productos`,
+            payload: null /* {
                 updatedCount: updatedProducts.length,
                 products: updatedProducts
-            }
+            } */
         }
     } catch (error) {
         console.error("Error actualizando los precios de los productos:", error)

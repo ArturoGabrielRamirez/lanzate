@@ -54,23 +54,25 @@ export async function insertProductData(payload: InsertProductPayload, storeId: 
                     .getPublicUrl(data.path)
 
                 imageUrl = publicUrl
+
+                console.log("arreglar o depurar insertProductData", imageUrl)
             }
         }
         console.log("6")
         const product = await tx.product.create({
             data: {
                 name: payload.name,
-                price: payload.price,
-                stock: payload.stock,
+                /*  price: payload.price, */
+                /*  stock: payload.stock, */
                 store_id: store.id,
                 description: payload.description,
-                image: imageUrl,
-                stock_entries: {
-                    create: {
-                        branch_id: mainBranch.id,
-                        quantity: payload.stock,
-                    }
-                },
+                /*   image: imageUrl, */
+                /*  stock_entries: {
+                     create: {
+                         branch_id: mainBranch.id,
+                         quantity: payload.stock,
+                     }
+                 }, */
                 categories: {
                     connect: [
                         ...payload.categories.map((category: CategoryValue) => ({ id: Number(category.value) }))
@@ -78,9 +80,9 @@ export async function insertProductData(payload: InsertProductPayload, storeId: 
                 },
                 owner_id: userId,
                 slug: randomstring.generate(8),
-                sku: randomstring.generate(8),
-                is_active: payload.is_active ?? true,
-                is_published: payload.is_published ?? true,
+                /*  sku: randomstring.generate(8), */
+                /*   is_active: payload.is_active ?? true, */
+                /*  is_published: payload.is_published ?? true, */
                 is_featured: payload.is_featured ?? false,
             }
         })

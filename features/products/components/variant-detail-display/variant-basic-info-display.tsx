@@ -28,10 +28,10 @@ function ToggleEditButton({ isEditing, onToggle, onCancel, variant }: {
     const { reset } = useFormContext()
 
     const initialValues = {
-        name: variant.name,
+        /*   name: variant.name, */
         sku: variant.sku,
         barcode: variant.barcode,
-        description: variant.description
+        /*   description: variant.description */
     }
 
     const handleClick = () => {
@@ -87,32 +87,32 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                             barcode: data.barcode || null,
                             description: data.description || null
                         })
-                        
+
                         // ✅ Normaliza la respuesta al formato ServerResponse
                         if (result.hasError) {
                             toast.error("Error al actualizar la variante", {
                                 description: result.message
                             })
-                            return { 
-                                hasError: true, 
-                                message: result.message, 
-                                payload: null 
+                            return {
+                                hasError: true,
+                                message: result.message,
+                                payload: null
                             }
                         }
-                        
+
                         toast.success("Variante actualizada correctamente")
-                        return { 
-                            hasError: false, 
-                            message: result.message, 
-                            payload: result.payload 
+                        return {
+                            hasError: false,
+                            message: result.message,
+                            payload: result.payload
                         }
                     } catch (error) {
                         console.error("Error updating variant:", error)
                         toast.error("Error al actualizar la variante")
-                        return { 
-                            hasError: true, 
-                            message: "Error al actualizar la variante", 
-                            payload: null 
+                        return {
+                            hasError: true,
+                            message: "Error al actualizar la variante",
+                            payload: null
                         }
                     }
                 }}
@@ -170,7 +170,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                             <InputField
                                 name="name"
                                 label="Nombre"
-                                defaultValue={variant.name || product.name || undefined}
+                                /*  defaultValue={variant.name || product.name || undefined} */
                                 placeholder="Ej. Camiseta"
                                 disabled={!isEditing}
                             />
@@ -179,7 +179,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                             <InputField
                                 name="sku"
                                 label="SKU"
-                                defaultValue={variant.sku || product.sku || undefined}
+                                /*   defaultValue={variant.sku || product.sku || undefined} */
                                 placeholder="Ej. SKU123"
                                 disabled={!isEditing}
                             />
@@ -188,7 +188,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                             <InputField
                                 name="barcode"
                                 label="Código de barras"
-                                defaultValue={variant.barcode || product.barcode || undefined}
+                                /*   defaultValue={variant.barcode || product.barcode || undefined} */
                                 placeholder="Ej. 1234567890123"
                                 disabled={!isEditing}
                             />
@@ -197,7 +197,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                             <InputField
                                 name="description"
                                 label="Descripción"
-                                defaultValue={variant.description || product.description || undefined}
+                                /* defaultValue={variant.description || product.description || undefined} */
                                 placeholder="Ej. Camiseta de algodón"
                                 disabled={!isEditing}
                             />
@@ -216,7 +216,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                                             variant={otherVariant}
                                             slug={slug}
                                             productId={productId}
-                                            productPrice={product.price}
+                                        /*   productPrice={product.price} */
                                         />
                                     ))
                                 }
@@ -230,7 +230,7 @@ function VariantBasicInfoDisplay({ variant, slug, productId, product }: VariantB
                                     <div className="flex flex-col flex-1">
                                         <span className="text-sm font-medium">Producto Principal</span>
                                         <span className="text-xs text-muted-foreground">{product.name}</span>
-                                        <span className="text-xs text-muted-foreground">Precio base: ${product.price}</span>
+                                        {/* <span className="text-xs text-muted-foreground">Precio base: ${product.price}</span> */}
                                     </div>
                                 </Link>
                             </div>

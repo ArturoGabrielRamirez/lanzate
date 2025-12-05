@@ -1,6 +1,7 @@
 "use client"
 
 import { CheckIcon, MinusIcon } from "@heroicons/react/20/solid"
+import * as LabelPrimitive from "@radix-ui/react-label"
 import {
   CheckboxGroup as CheckboxGroupPrimitive,
   Checkbox as CheckboxPrimitive,
@@ -10,6 +11,7 @@ import { twMerge } from "tailwind-merge"
 
 import { Label } from "@/features/shadcn/components/ui/label"
 import { cx } from "@/features/shadcn/lib/primitive"
+
 
 import type { CheckboxGroupProps, CheckboxProps } from "react-aria-components"
 
@@ -74,7 +76,7 @@ export function Checkbox({ className, children, ...props }: CheckboxProps) {
                     "group-invalid:inset-ring-danger-subtle-fg/70 group-invalid:text-danger-fg group-invalid:ring-danger-subtle-fg/20",
                   ],
                   isInvalid &&
-                    "inset-ring-danger-subtle-fg/70 bg-danger-subtle/5 text-danger-fg ring-danger-subtle-fg/20 group-hover:inset-ring-danger-subtle-fg/70",
+                  "inset-ring-danger-subtle-fg/70 bg-danger-subtle/5 text-danger-fg ring-danger-subtle-fg/20 group-hover:inset-ring-danger-subtle-fg/70",
                 ])}
               >
                 {indicator}
@@ -88,6 +90,13 @@ export function Checkbox({ className, children, ...props }: CheckboxProps) {
   )
 }
 
-export function CheckboxLabel(props: React.ComponentProps<typeof Label>) {
-  return <Label elementType="span" {...props} />
+export function CheckboxLabel(
+  props: React.ComponentProps<typeof LabelPrimitive.Root>
+) {
+  return (
+    <span className="inline-flex items-center gap-2">
+      <Label {...props} />
+    </span>
+  );
 }
+

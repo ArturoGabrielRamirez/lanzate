@@ -1,6 +1,6 @@
 "use client"
 
-import {VariantBasicInfoDisplay,VariantMediaDisplay,VariantStockDisplay,VariantPriceDisplay,VariantDimensionsDisplay,VariantSizesDisplay,VariantConfigDisplay,VariantColorDisplay} from "@/features/products/components/variant-detail-display/index"   
+import {VariantBasicInfoDisplay,VariantMediaDisplay,VariantStockDisplay,VariantPriceDisplay/* ,VariantDimensionsDisplay,VariantSizesDisplay */,VariantConfigDisplay,VariantColorDisplay} from "@/features/products/components/variant-detail-display/index"   
  import type { VariantDetailFormProps } from "@/features/products/types"
 
 function VariantDetailForm({ variant, productPrice, slug, productId, product }: VariantDetailFormProps) {
@@ -33,14 +33,14 @@ function VariantDetailForm({ variant, productPrice, slug, productId, product }: 
 
             {/* Tercera fila: Dimensiones y Tamaños */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <VariantDimensionsDisplay
+              {/*   <VariantDimensionsDisplay
                     variant={variant}
                     product={product}
                 />
                 <VariantSizesDisplay
                     variant={variant}
                     product={product}
-                />
+                /> */}
             </div>
 
             {/* Cuarta fila: Configuración y Color */}

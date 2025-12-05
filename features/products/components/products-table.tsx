@@ -60,9 +60,10 @@ function ProductsTable({
                 const vStock = (v.stocks ?? []).reduce((sum, s) => sum + (s.quantity ?? 0), 0)
                 const variantAttributes = [v.size, v.measure, v.color?.name].filter(Boolean).join(" · ")
                 const label = v.name || (variantAttributes || "Variante")
+                console.log(vStock)
                 flattened.push({
                     ...p,
-                    stock: vStock,
+                 /*    stock: vStock, */
                     variant_id: v.id,
                     variant_label: label,
                     /*     variants: p.variants,
@@ -193,10 +194,10 @@ function ProductsTable({
                     </div>
                 )
             },
-            cell: ({ row }) => {
+        /*     cell: ({ row }) => {
                 const stock = row.original.stock
                 return <span className={cn(stock < 10 && "text-red-500", stock < 25 && "text-yellow-500", stock >= 25 && "text-green-500")}>{stock}</span>
-            }
+            } */
         },
         {
             accessorKey: "is_featured",
@@ -235,10 +236,10 @@ function ProductsTable({
                     </div>
                 )
             },
-            cell: ({ row }) => {
+            /* cell: ({ row }) => {
                 const isActive = row.original.is_active
                 return <Badge variant="outline" className={cn(isActive && "text-accent-foreground border-accent-foreground")}>{isActive ? t("boolean.yes") : t("boolean.no")}</Badge>
-            }
+            } */
         },
         {
             accessorKey: "is_published",
@@ -256,10 +257,10 @@ function ProductsTable({
                     </div>
                 )
             },
-            cell: ({ row }) => {
+           /*  cell: ({ row }) => {
                 const isPublished = row.original.is_published
                 return <Badge variant="outline" className={cn(isPublished && "text-accent-foreground border-accent-foreground")}>{isPublished ? t("boolean.yes") : t("boolean.no")}</Badge>
-            }
+            } */
         },
         {
             header: t("headers.actions"),

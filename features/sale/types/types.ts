@@ -27,15 +27,15 @@ export type BarcodeScannerHookReturn = {
     scanHistory: string[]
 }
 
-export type ScannedProduct = {
+/* export type ScannedProduct = {
     id: number
     name: string
     description?: string
     price: number
     stock: number
     barcode?: string
-    sku: string
-    slug: string
+    sku?: string
+    slug?: string
     image?: string
     totalStock: number
     categories: Array<{
@@ -49,6 +49,26 @@ export type ScannedProduct = {
             name: string
         }
     }>
+} */
+
+export type ProductData = {
+    id: number
+    name: string
+    price: number
+    description?: string | null
+    barcode?: string | null
+    sku?: string | null
+    image?: string | null
+}
+
+export type ScannedProduct = {
+    id: number
+    name: string
+    price?: number //TODO: Esto no era opcional, verificar su uso o si está en otra tabla
+    description?: string | null
+    barcode?: string | null
+    sku?: string | null
+    image?: string | null
 }
 
 export type ProductSearchResult = {

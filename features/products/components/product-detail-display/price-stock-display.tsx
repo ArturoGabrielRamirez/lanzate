@@ -1,12 +1,12 @@
 "use client"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { DollarSign, Package, EditIcon, X } from "lucide-react"
+import { DollarSign, /* Package, */ EditIcon, X } from "lucide-react"
 import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { Form } from "@/features/global/components/form/form"
-import InputField from "@/features/global/components/form/input"
+/* import InputField from "@/features/global/components/form/input" */
 import { editProductSchema } from "@/features/products/schemas/product-schema"
 import type { PriceStockDisplayProps, PriceStockFormValues } from "@/features/products/types"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
@@ -27,14 +27,16 @@ function PriceStockDisplay({ product }: PriceStockDisplayProps) {
     function ToggleEditButton() {
         const { reset } = useFormContext<PriceStockFormValues>()
 
-        const initialValues = {
-            price: product.price,
-            stock: product.stock,
-        }
+        console.log(reset, product)
+
+        /*  const initialValues = {
+             price: product.price,
+             stock: product.stock,
+         } */
 
         const onClick = () => {
             if (isEditing) {
-                reset(initialValues)
+                /*   reset(initialValues) */
                 handleCloseEdit()
                 return
             }
@@ -88,22 +90,22 @@ function PriceStockDisplay({ product }: PriceStockDisplayProps) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Precio</label>
-                            {isEditing ? (
+                            {/*    {isEditing ? (
                                 <InputField name="price" type="number" label="Precio" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">${product.price}</p>
-                            )}
+                            )} */}
                         </div>
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Stock total</label>
-                            {isEditing ? (
+                            {/*     {isEditing ? (
                                 <InputField name="stock" type="number" label="Stock total" />
                             ) : (
                                 <div className="flex items-center gap-2">
                                     <Package className="size-4 text-muted-foreground" />
                                     <p className="text-sm text-muted-foreground">{product.stock} unidades</p>
                                 </div>
-                            )}
+                            )} */}
                         </div>
                     </div>
                 </CardContent>

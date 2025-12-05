@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Loader2, Plus, AlertCircle, Package, X } from 'lucide-react'
+import { Search, Loader2, /* Plus, */ AlertCircle, Package, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import type { ProductResultsProps } from '@/features/sale/types'
@@ -9,7 +9,7 @@ import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card'
 import { cn } from '@/lib/utils'
 
-function ProductResults({ searchResults, barcodeResult, onAddToCart, onClearResults }: ProductResultsProps) {
+function ProductResults({ searchResults, barcodeResult, /* onAddToCart, */ onClearResults }: ProductResultsProps) {
   const t = useTranslations('sale.product-results')
 
   const formatPrice = (price: number) => {
@@ -75,24 +75,24 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart, onClearResu
                   )}
                   <div className="flex gap-2 mt-1">
                     <p className='text-xs'>
-                      {t('units-remaining', {
+                      {/*  {t('units-remaining', {
                         count: barcodeResult.product!.totalStock,
                         units: barcodeResult.product!.totalStock > 1 ? t('units') : t('unit')
-                      })}
+                      })} */}
                     </p>
-                    {barcodeResult.product!.categories.length > 0 && (
+                    {/*  {barcodeResult.product!.categories.length > 0 && (
                       <Badge variant="outline" className="text-xs">
                         {barcodeResult.product!.categories[0].name}
                       </Badge>
-                    )}
+                    )} */}
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2 flex-col">
                   <p className='font-bold text-lg'>
-                    {formatPrice(barcodeResult.product!.price)}
+                    {formatPrice(barcodeResult.product!.price ? barcodeResult.product!.price : 0)}
                   </p>
-                  <Button
+                  {/*      <Button
                     size="sm"
                     onClick={() => onAddToCart(barcodeResult.product!)}
                     disabled={barcodeResult.product!.totalStock === 0}
@@ -100,7 +100,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart, onClearResu
                   >
                     <Plus className="h-3 w-3 mr-1" />
                     {t('add')}
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>
@@ -132,24 +132,24 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart, onClearResu
                       )}
                       <div className="flex gap-2 mt-1">
                         <p className='text-xs'>
-                          {t('units-remaining', {
+                          {/* {t('units-remaining', {
                             count: product.totalStock,
                             units: product.totalStock > 1 ? t('units') : t('unit')
-                          })}
+                          })} */}
                         </p>
-                        {product.categories.length > 0 && (
+                        {/* {product.categories.length > 0 && (
                           <Badge variant="outline" className="text-xs">
                             {product.categories[0].name}
                           </Badge>
-                        )}
+                        )} */}
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 flex-col">
                       <p className='font-bold text-lg'>
-                        {formatPrice(product.price)}
+                        {formatPrice(product.price ? product.price : 0)}
                       </p>
-                      <Button
+                      {/*    <Button
                         size="sm"
                         onClick={() => onAddToCart(product)}
                         disabled={product.totalStock === 0}
@@ -157,7 +157,7 @@ function ProductResults({ searchResults, barcodeResult, onAddToCart, onClearResu
                       >
                         <Plus className="h-3 w-3 mr-1" />
                         {t('add')}
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 ))}

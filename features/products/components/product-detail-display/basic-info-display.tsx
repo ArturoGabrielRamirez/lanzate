@@ -8,7 +8,7 @@ import { useFormContext } from "react-hook-form"
 import { Form } from "@/features/global/components/form/form"
 import InputField from "@/features/global/components/form/input"
 import { editProductSchema } from "@/features/products/schemas/product-schema"
-import type { BasicInfoDisplayProps, BasicInfoFormValues } from "@/features/products/types"
+import type { BasicInfoDisplayProps, BasicInfoDefaults } from "@/features/products/types"
 import { IconButton } from "@/features/shadcn/components/shadcn-io/icon-button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
@@ -25,13 +25,13 @@ function BasicInfoDisplay({ product }: BasicInfoDisplayProps) {
     }
 
     function ToggleEditButton() {
-        const { reset } = useFormContext<BasicInfoFormValues>()
+        const { reset } = useFormContext<BasicInfoDefaults>()
 
         const initialValues = {
             name: product.name,
             description: product.description || "",
-            sku: product.sku,
-            barcode: product.barcode || "",
+     /*        sku: product.sku, */
+     /*        barcode: product.barcode || "", */
         }
 
         const onClick = () => {
@@ -98,19 +98,19 @@ function BasicInfoDisplay({ product }: BasicInfoDisplayProps) {
                         </div>
                         <div className="space-y-1">
                             <label className="text-sm font-medium">SKU</label>
-                            {isEditing ? (
+                           {/*  {isEditing ? (
                                 <InputField name="sku" type="text" label="SKU" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{product.sku}</p>
-                            )}
+                            )} */}
                         </div>
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Código de barras</label>
-                            {isEditing ? (
+                          {/*   {isEditing ? (
                                 <InputField name="barcode" type="text" label="Código de barras" />
                             ) : (
                                 <p className="text-sm text-muted-foreground">{product.barcode || "No especificado"}</p>
-                            )}
+                            )} */}
                         </div>
                         <div className="space-y-1 md:col-span-2">
                             <label className="text-sm font-medium">Descripción</label>

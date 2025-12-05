@@ -18,7 +18,7 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
   }
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-  const totalPrice = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
+  const totalPrice = cartItems.reduce((sum, item) => sum + (item.product.price ? item.product.price * item.quantity : 0), 0)
 
   return (
     <Card className='lg:area-[cart] h-full row-span-2'>
@@ -40,7 +40,7 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-sm truncate">{item.product.name}</h4>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span>{item.quantity} x {formatPrice(item.product.price)}</span>
+                      <span>{item.quantity} x {formatPrice(item.product.price ? item.product.price : 0)}</span>
                     </div>
                   </div>
 
@@ -54,7 +54,7 @@ function CartSection({ cartItems, onRemoveItem }: CartSectionProps) {
                       <Trash2 className="h-3 w-3" />
                     </Button>
                     <div className="text-sm font-medium">
-                      {formatPrice(item.product.price * item.quantity)}
+                      {formatPrice(item.product.price ? item.product.price * item.quantity : 0)}
                     </div>
                   </div>
                 </div>

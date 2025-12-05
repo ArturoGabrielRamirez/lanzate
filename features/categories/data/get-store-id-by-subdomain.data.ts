@@ -1,10 +1,9 @@
 "use server"
 
-import { GetStoreIdBySubdomainAction } from "@/features/categories/types"
 import { actionWrapper } from "@/features/global/utils"
 import { prisma } from "@/utils/prisma"
 
-export async function getStoreIdBySubdomainData({ subdomain }: GetStoreIdBySubdomainAction) {
+export async function getStoreIdBySubdomainData({ subdomain }: { subdomain: string }) {
     return actionWrapper(async () => {
         const store = await prisma.store.findUnique({
             where: {

@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/features/shadcn/comp
 
 
 function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
-    const currency = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" })
+    /*     const currency = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }) */
 
     return (
         <Card>
@@ -47,11 +47,11 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <label className="text-sm font-medium">SKU</label>
-                        <p className="text-sm text-muted-foreground">{product.sku}</p>
+                        {/*  <p className="text-sm text-muted-foreground">{product.sku}</p> */}
                     </div>
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Código de barras</label>
-                        <p className="text-sm text-muted-foreground">{product.barcode || "No especificado"}</p>
+                        {/*  <p className="text-sm text-muted-foreground">{product.barcode || "No especificado"}</p> */}
                     </div>
                     <div className="space-y-2 md:col-span-2">
                         <label className="text-sm font-medium">Descripción</label>
@@ -63,11 +63,11 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Precio</label>
-                        <p className="text-sm text-muted-foreground">{currency.format(product.price)}</p>
+                        {/*        <p className="text-sm text-muted-foreground">{currency.format(product.price)}</p> */}
                     </div>
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Stock total</label>
-                        <p className="text-sm text-muted-foreground">{product.stock} unidades</p>
+                        {/*                <p className="text-sm text-muted-foreground">{product.stock} unidades</p> */}
                     </div>
                 </div>
 
@@ -105,9 +105,9 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                                         <div className="flex flex-col flex-1">
                                             <span className="text-sm font-medium">{label}</span>
                                             <span className="text-xs text-muted-foreground">Stock: {total}</span>
-                                            {v.price && v.price !== product.price && (
+                                            {/*  {v.price && v.price !== product.price && (
                                                 <span className="text-xs text-muted-foreground">Precio: ${v.price}</span>
-                                            )}
+                                            )} */}
                                         </div>
                                     </Link>
                                 )
@@ -121,19 +121,20 @@ function ProductDetailForm({ product, slug }: ProductDetailFormProps) {
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Configuración</label>
                         <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-                            <Badge variant="outline">Activo: {product.is_active ? "Sí" : "No"}</Badge>
+                            {/*  <Badge variant="outline">Activo: {product.is_active ? "Sí" : "No"}</Badge> */}
                             <Badge variant="outline">Destacado: {product.is_featured ? "Sí" : "No"}</Badge>
-                            <Badge variant="outline">Publicado: {product.is_published ? "Sí" : "No"}</Badge>
+                            {/*        <Badge variant="outline">Publicado: {product.is_published ? "Sí" : "No"}</Badge> */}
                         </div>
                     </div>
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Dimensiones</label>
                         <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
-                            {product.height ? <p>Alto: {product.height}{product.height_unit ? ` ${product.height_unit}` : ""}</p> : null}
+                            {/*   {product.height ? <p>Alto: {product.height}{product.height_unit ? ` ${product.height_unit}` : ""}</p> : null}
                             {product.width ? <p>Ancho: {product.width}{product.width_unit ? ` ${product.width_unit}` : ""}</p> : null}
                             {product.depth ? <p>Profundidad: {product.depth}{product.depth_unit ? ` ${product.depth_unit}` : ""}</p> : null}
                             {product.diameter ? <p>Diámetro: {product.diameter}{product.diameter_unit ? ` ${product.diameter_unit}` : ""}</p> : null}
                             {product.weight ? <p>Peso: {product.weight}{product.weight_unit ? ` ${product.weight_unit}` : ""}</p> : null}
+                         */}
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { Category, Color, Product, ProductVariant, StoreCustomization, Store, ProductMedia, /* ProductVariantStock, */ Branch, ProductStock } from "@prisma/client";
+import { Category, /* Color, */ Product, ProductVariant, StoreCustomization, Store, ProductMedia, /* ProductVariantStock, */ Branch/* , ProductStock */ } from "@prisma/client";
 
 import { DeferredFile } from "@/features/global/types/media";
 
@@ -13,7 +13,7 @@ export type GetProductDetailsReturn = {
             subdomain: string;
             customization: StoreCustomization | null;
         };
-        variants?: (ProductVariant & { color: Color | null })[];
+        variants?: (ProductVariant & { color: /* Color | */ null })[];
     }) | null;
     error: boolean;
 };
@@ -30,7 +30,7 @@ export type CategoryValue = { value: string; label: string }
 
 export type MediaSectionData = {
     files: File[]
-     urls?: string[]
+    urls?: string[]
     primaryIndex: number | null
 }
 
@@ -277,7 +277,7 @@ export type BasicInfoDisplayProps = {
     userId: number
 }
 
-export type BasicInfoFormValues = Pick<Product, 'name' | 'description' | 'sku' | 'barcode'>
+/* export type BasicInfoFormValues = Pick<Product, 'name' | 'slug' | 'description' | 'price' | 'stock'> */
 
 export type CategoriesDisplayProps = {
     product: Product & { categories: Category[] }
@@ -300,7 +300,7 @@ export type PriceStockDisplayProps = {
     userId: number
 }
 
-export type PriceStockFormValues = Pick<Product, 'price' | 'stock'>
+export type PriceStockFormValues = Pick<Product, 'id' | 'name'> // Pick<Product, 'price' | 'stock'> hay que arreglar esto
 
 export type ProductDetailFormProps = {
     product: Product & {
@@ -370,7 +370,7 @@ export type VariantDetailFormProps = {
 }
 
 export type VariantDimensionsDisplayProps = VariantDisplayBaseProps & {
-    product: ProductDimensions
+    product: VariantDimensions
 }
 
 export type VariantLinkCardProps = {
@@ -391,7 +391,7 @@ export type VariantPriceFormValues = {
     "variant-price"?: string
 }
 
-export type VariantSizesDisplayProps = VariantDisplayBaseProps & { product: ProductDimensions }
+export type VariantSizesDisplayProps = VariantDisplayBaseProps & { product: VariantDimensions }
 
 export type VariantStockDisplayProps = VariantDisplayBaseProps & {
     variant: VariantWithStock & { stocks?: (StockInfo & { branch?: { id: number; name: string } })[] }
@@ -463,7 +463,7 @@ export type ProductWithMedia = Product & {
     primary_media?: ProductMedia | null
 }
 
-export type VariantWithColor = ProductVariant & { color?: Color | null }
+export type VariantWithColor = ProductVariant & { color?:/*  Color | */ null }
 
 export type VariantWithStock = ProductVariant & {
     stocks?: StockInfo[]
@@ -504,7 +504,7 @@ export type DistributeStockButtonProps = {
     productId: number
     productName: string
     availableStock: number
-    branches: (Branch & { stock: ProductStock[] })[]
+    branches: (Branch & { /* stock: ProductStock[] */ })[]
     variantStocks?: { branch_id: number; quantity: number }[]
 }
 
@@ -533,7 +533,7 @@ export type ProductsTableProps = {
     slug: string
     storeId: number
     employeePermissions: EmployeePermissions
-    branches: (Branch & { stock: ProductStock[] })[]
+    branches: (Branch & { /* stock: ProductStock[] */ })[]
     headerActions?: React.ReactNode
 }
 
@@ -619,14 +619,14 @@ export type RelatedProductsProps = { productId: number }
 // Dimension aliases via Pick<PrismaModel>
 // =====================
 
-export type ProductDimensions = Pick<
+/* export type ProductDimensions = Pick<
     Product,
     | 'height' | 'height_unit'
     | 'width' | 'width_unit'
     | 'depth' | 'depth_unit'
     | 'diameter' | 'diameter_unit'
     | 'weight' | 'weight_unit'
->
+> */
 
 export type VariantDimensions = Pick<
     ProductVariant,
@@ -650,7 +650,7 @@ export type EditProductPayload = {
 }
 
 export interface ProductMediaSelectorProps {
-  value?: DeferredFile[]
-  onChange?: (files: DeferredFile[]) => void
-  maxFiles?: number
+    value?: DeferredFile[]
+    onChange?: (files: DeferredFile[]) => void
+    maxFiles?: number
 }

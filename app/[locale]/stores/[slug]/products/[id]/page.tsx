@@ -4,8 +4,8 @@ import { getTranslations } from "next-intl/server"
 
 import { getUserInfo } from "@/features/global/actions/get-user-info.action"
 import { getProductDetailsAction } from "@/features/products/actions/get-product-details.action"
-import { CreateProductButton, DeleteProductButton } from "@/features/products/components"
-import { ProductDetailForm } from "@/features/products/components/product-detail-display"
+/* import { CreateProductButton, DeleteProductButton } from "@/features/products/components" */
+/* import { ProductDetailForm } from "@/features/products/components/product-detail-display" */
 import { ProductDetailPageProps } from "@/features/products/types"
 import { Card, CardHeader, CardTitle } from "@/features/shadcn/components/ui/card"
 
@@ -46,7 +46,7 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                         
                         {/* ✅ Botones de acción */}
                         <div className="flex items-center gap-2">
-                            <CreateProductButton 
+                        {/*     <CreateProductButton 
                                 storeId={product.store_id}
                                 userId={user.id}
                                 onlyIcon={true}
@@ -55,18 +55,18 @@ async function ProductDetailPage({ params }: ProductDetailPageProps) {
                                 productId={product.id}
                                 slug={slug}
                                 userId={user.id}
-                            />
+                            /> */}
                         </div>
                     </div>
                 </CardHeader>
             </Card>
 
             {/* Contenido principal con las cards */}
-            <ProductDetailForm
+           {/*  <ProductDetailForm
                 product={product}
                 slug={slug}
                 userId={user.id}
-            />
+            /> */}
         </div>
     )
 }

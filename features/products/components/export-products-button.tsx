@@ -121,7 +121,7 @@ function ExportProductsButton({ data, onlyIcon }: ExportProductsButtonProps) {
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
             {
-                v: product.price,
+               /*  v: product.price, */
                 t: 'n',
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
@@ -131,7 +131,7 @@ function ExportProductsButton({ data, onlyIcon }: ExportProductsButtonProps) {
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
             {
-                v: product.stock,
+                /* v: product.stock, */
                 t: 'n',
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
@@ -141,7 +141,7 @@ function ExportProductsButton({ data, onlyIcon }: ExportProductsButtonProps) {
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },
             {
-                v: product.is_published ? t("boolean.yes") : t("boolean.no"),
+               /*  v: product.is_published ? t("boolean.yes") : t("boolean.no"), */
                 t: 's',
                 s: { alignment: { horizontal: 'left', vertical: 'center' } }
             },

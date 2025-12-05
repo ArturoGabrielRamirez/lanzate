@@ -129,7 +129,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 />
                                 <Select
                                     name="heightUnit"
-                                    defaultValue={variant.height_unit || product.height_unit || "CM"}
+                                    /*          defaultValue={variant.height_unit || product.height_unit || "CM"} */
                                     disabled={!isEditing}
                                 >
                                     <SelectTrigger className="w-28">
@@ -157,7 +157,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 />
                                 <Select
                                     name="widthUnit"
-                                    defaultValue={variant.width_unit || product.width_unit || "CM"}
+                                    /*  defaultValue={variant.width_unit || product.width_unit || "CM"} */
                                     disabled={!isEditing}
                                 >
                                     <SelectTrigger className="w-28">
@@ -185,7 +185,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 />
                                 <Select
                                     name="depthUnit"
-                                    defaultValue={variant.depth_unit || product.depth_unit || "CM"}
+                                    /* defaultValue={variant.depth_unit || product.depth_unit || "CM"} */
                                     disabled={!isEditing}
                                 >
                                     <SelectTrigger className="w-28">
@@ -213,7 +213,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 />
                                 <Select
                                     name="diameterUnit"
-                                    defaultValue={variant.diameter_unit || product.diameter_unit || "CM"}
+                                    /*  defaultValue={variant.diameter_unit || product.diameter_unit || "CM"} */
                                     disabled={!isEditing}
                                 >
                                     <SelectTrigger className="w-28">
@@ -241,7 +241,7 @@ function VariantDimensionsDisplay({ variant, product }: VariantDimensionsDisplay
                                 />
                                 <Select
                                     name="weightUnit"
-                                    defaultValue={variant.weight_unit || product.weight_unit || "KG"}
+                                    /*  defaultValue={variant.weight_unit || product.weight_unit || "KG"} */
                                     disabled={!isEditing}
                                 >
                                     <SelectTrigger className="w-28">

@@ -1,7 +1,7 @@
 "use client"
 
 import { Boxes, EditIcon, X } from "lucide-react"
-import Image from "next/image"
+/* import Image from "next/image" */
 import { useState } from "react"
 
 import { DeleteVariantButton } from "@/features/products/components/delete-variant-button"
@@ -78,11 +78,11 @@ function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
                             <div className="grid gap-2 sm:grid-cols-2">
                                 {product.variants.map((variant) => {
                                     const total = (variant.stocks ?? []).reduce((s: number, x: { quantity: number }) => s + (x.quantity ?? 0), 0)
-                                    const label = [variant.size, variant.color?.name].filter(Boolean).join(" · ") || `Variante ${variant.id}`
-                                    
+                                   /*  const label = [variant.size, variant.color?.name].filter(Boolean).join(" · ") || `Variante ${variant.id}`
+                                     */
                                     return (
                                         <div key={variant.id} className="rounded-md border p-3 flex items-center gap-3">
-                                            {variant.primary_media?.url ? (
+                                         {/*    {variant.primary_media?.url ? (
                                                 <Image 
                                                     src={variant.primary_media.url} 
                                                     alt={label} 
@@ -92,13 +92,13 @@ function VariantsDisplay({ product, slug }: VariantsDisplayProps) {
                                                 <div className="h-12 w-12 rounded bg-secondary flex items-center justify-center">
                                                     <Boxes className="size-6 text-muted-foreground" />
                                                 </div>
-                                            )}
+                                            )} */}
                                             <div className="flex flex-col flex-1">
-                                                <span className="text-sm font-medium">{label}</span>
+                                                {/* <span className="text-sm font-medium">{label}</span> */}
                                                 <span className="text-xs text-muted-foreground">Stock: {total}</span>
-                                                {variant.price && variant.price !== product.price && (
+                                               {/*  {variant.price && variant.price !== product.price && (
                                                     <span className="text-xs text-muted-foreground">Precio: ${variant.price}</span>
-                                                )}
+                                                )} */}
                                             </div>
                                             {isEditing && (
                                                 <DeleteVariantButton

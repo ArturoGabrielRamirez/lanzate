@@ -58,7 +58,7 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
             }
 
             // Restore stock for all items if order was in PROCESSING or READY
-            if (['PROCESSING', 'READY', 'SHIPPED'].includes(oldStatus)) {
+         /*    if (['PROCESSING', 'READY', 'SHIPPED'].includes(oldStatus)) {
                 for (const item of order.items) {
                     // Restore main product stock
                     await tx.product.update({
@@ -92,7 +92,7 @@ export async function updateCancelledOrderData({ orderId }: UpdateCancelledOrder
                         })
                     }
                 }
-            }
+            } */
 
             // Reverse store balance if order was paid
             if (order.is_paid && order.store.balance) {

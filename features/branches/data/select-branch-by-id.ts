@@ -17,7 +17,7 @@ export async function selectBranchByIdData({ id }: SelectBranchByIdProps) {
                     slug: true
                 }
             },
-            stock: {
+         /*    stock: {
                 include: {
                     product: {
                         select: {
@@ -28,7 +28,7 @@ export async function selectBranchByIdData({ id }: SelectBranchByIdProps) {
                         }
                     }
                 }
-            },
+            }, */
             orders: {
                 select: {
                     id: true,
