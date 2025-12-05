@@ -1,12 +1,11 @@
-import { createServerClient } from '@supabase/ssr'
 import { NextRequest, NextResponse } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 
-// 🚨 IMPORTACIÓN NECESARIA PARA LA FUNCIONALIDAD DE BLOQUEO
-import { checkUserDeletionStatus } from '@/features/account/utils/check-deletion-status' 
+import { checkUserDeletionStatus } from '@/features/account/utils/check-deletion-status'
 import { validateSubdomainAction } from '@/features/subdomain/actions/validate-subdomain.action'
 import { extractSubdomain } from '@/features/subdomain/middleware'
 import { Locale, routing } from '@/i18n/routing'
+import { createServerSideClient } from '@/utils/supabase/server'
 
 import type { User } from '@supabase/supabase-js'
 
@@ -39,30 +38,29 @@ function extractLocaleFromPath(pathname: string): { locale: string | null; pathW
   }
 }
 
-function createCookieConfig() {
-  return {
-    domain: '.lanzate.app',
-    secure: true,
-    sameSite: 'none' as const
-  }
-}
-
 function isPublicProfileRoute(pathWithoutLocale: string): boolean {
   return pathWithoutLocale.match(/^\/u\/[a-zA-Z0-9_-]+$/) !== null
 }
 
-export async function updateSession(request: NextRequest) {
+function isStaticAsset(pathname: string): boolean {
+  return (
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/favicon') ||
+    pathname.includes('.')
+  )
+}
 
+export async function updateSession(request: NextRequest) {
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
   const subdomain = extractSubdomain(request)
   const { pathname } = request.nextUrl
 
-  let response: NextResponse
+  let response: NextResponse = NextResponse.next()
 
   if (shouldApplyI18n(pathname)) {
     const intlResponse = intlMiddleware(request)
 
-    if (intlResponse?.status >= 300 && intlResponse?.status < 400) {
+    if (intlResponse.ok === false) {
       if (subdomain) {
         const location = intlResponse.headers.get('location')
         if (location) {
@@ -73,38 +71,25 @@ export async function updateSession(request: NextRequest) {
       }
       return intlResponse
     }
-    response = intlResponse || NextResponse.next()
-  } else {
-    response = NextResponse.next()
+
+    response = intlResponse
   }
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll: () => request.cookies.getAll(),
-        setAll: (cookiesToSet) => {
-          const cookieConfig = createCookieConfig()
+  const isApiRoute = pathname.startsWith('/api/')
+  const isStaticAssetRequest = isStaticAsset(pathname)
 
-          cookiesToSet.forEach(({ name, value }) => {
-            request.cookies.set(name, value)
-          })
+  if (isApiRoute || isStaticAssetRequest) {
+    return response
+  }
 
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, { ...options, ...cookieConfig })
-          })
-        },
-      },
-    }
-  )
+  const supabase = createServerSideClient()
 
   let user: User | null = null
   try {
     const { data } = await supabase.auth.getUser()
     user = data.user
   } catch (error) {
-    console.error('Error getting user:', error)
+    user = null
   }
 
   const { locale, pathWithoutLocale } = extractLocaleFromPath(pathname)
@@ -115,20 +100,24 @@ export async function updateSession(request: NextRequest) {
     try {
       // Usamos el cliente 'supabase' y el 'user.id'
       const deletionStatus = await checkUserDeletionStatus(supabase, user.id)
-      
+
       // Si el usuario está en proceso de eliminación y NO está anonimizado
       if (deletionStatus?.isDeletionRequested && !deletionStatus.isAnonymized) {
-        
+
         // Definir rutas que SÍ están permitidas
         const isAccountRoute = pathWithoutLocale === '/account'
-        const isApiRoute = pathname.startsWith('/api/')
         const isAuthRoute = pathname.startsWith('/auth/')
         const isNextRoute = pathname.startsWith('/_next/')
         const isFavicon = pathname.startsWith('/favicon')
-        const isStaticAsset = pathname.includes('.')
-        
-        const isAllowedRoute = isAccountRoute || isApiRoute || isAuthRoute || isNextRoute || isFavicon || isStaticAsset
-        
+
+        const isAllowedRoute =
+          isAccountRoute ||
+          isApiRoute ||
+          isAuthRoute ||
+          isNextRoute ||
+          isFavicon ||
+          isStaticAssetRequest
+
         // Si NO está en una ruta permitida, redirigir a /account
         if (!isAllowedRoute) {
           console.log(`🚫 Bloqueando acceso a ${pathname} - Usuario en eliminación diferida`)
@@ -151,12 +140,9 @@ export async function updateSession(request: NextRequest) {
 
     try {
       const { payload: exists } = await validateSubdomainAction(subdomain)
-      if (!exists) {
-        const url = new URL('/not-found', `https://${rootDomain}`)
-        return NextResponse.redirect(url)
-      }
+      if (!exists) throw new Error("Subdomain not found")
     } catch (error) {
-      console.error('Error validating subdomain:', error)
+      return NextResponse.redirect(new URL('/not-found', `https://${rootDomain}`))
     }
 
     const subdomainRoutes = {

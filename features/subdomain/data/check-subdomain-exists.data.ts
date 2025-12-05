@@ -12,6 +12,7 @@ export async function checkSubdomainExistsData(subdomain: string) {
         .select('id')
         .eq('subdomain', sanitizedSubdomain)
         .single();
+    console.log("🚀 ~ checkSubdomainExistsData ~ error:", error)
 
     const exists = !error && data !== null;
 
