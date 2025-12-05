@@ -534,6 +534,21 @@ export type ProductsTableProps = {
     userId: number
     slug: string
     employeePermissions: EmployeePermissions
+    branches: (Branch & { stock_items: VariantStock[] })[]
+    headerActions?: React.ReactNode
+}
+
+export type ProductsTableWrapperProps = {
+    limit: number
+    orderBy: string
+    page: number
+    search: string
+    storeId?: number
+    slug?: string
+    subdomain?: string
+    userId: number
+    employeePermissions: EmployeePermissions
+    branches: (Branch & { stock_items: VariantStock[] })[]
     headerActions?: React.ReactNode
 }
 
