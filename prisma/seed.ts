@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function main() {
     // Categorías por defecto que se crearán para cada nueva tienda
-    const defaultCategories = [
+    /* const defaultCategories = [
         {
             name: 'General',
             description: 'Productos generales de la tienda',
@@ -35,16 +35,20 @@ async function main() {
             slug: 'mas-vendidos',
             sort_order: 5
         }
-    ];
+    ]; */
 
     // Crear categorías por defecto del sistema
-    for (const category of defaultCategories) {
-        await prisma.defaultCategory.upsert({
-            where: { slug: category.slug },
+   /*  for (const category of defaultCategories) {
+        await prisma.category.upsert({
+            where: { 
+                slug: category.slug,
+                store_id: 39,
+                
+             },
             update: category,
             create: category
         });
-    }
+    } */
 
     console.log('✅ Categorías por defecto creadas exitosamente');
 }
