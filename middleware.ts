@@ -14,13 +14,13 @@ const middlewares: MiddlewareConfig = {
       const intlResponse = intlMiddleware(request)
 
       //if the intl middleware is not ok, redirect to the default locale
-      if(intlResponse.ok === false){
+      if (intlResponse.ok === false) {
         return NextResponse.redirect(new URL(`/${routing.defaultLocale}`, request.url))
       }
 
       //Supabase middleware : takes care of the authentication
       const supabaseResponse = await updateSession(request, intlResponse)
-      
+
       // Ensure we return the response that preserves the locale rewrite
       return supabaseResponse
     }
