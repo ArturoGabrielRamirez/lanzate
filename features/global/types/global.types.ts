@@ -12,7 +12,7 @@ export interface WithParams {
     }>
 }
 
-export interface RootLayout {
+export interface RootLayoutType {
     children: React.ReactNode
     params: Promise<{
         locale: string;

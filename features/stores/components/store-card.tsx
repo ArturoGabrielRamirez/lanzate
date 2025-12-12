@@ -1,9 +1,7 @@
 "use client"
 
-import { useRouter } from "@bprogress/next"
 import { Boxes, Calendar, EllipsisVertical, Globe, Loader2, ShoppingCart, StoreIcon, Trash2 } from "lucide-react"
 import * as motion from "motion/react-client"
-import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -15,6 +13,7 @@ import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader,
 import { deleteStoreAction } from "@/features/stores/actions"
 import { StoreCardLogo } from "@/features/stores/components"
 import { StoreCardComponentProps } from "@/features/stores/types"
+import { Link, useRouter } from "@/i18n/naviation"
 
 
 function StoreCard({ store, userId }: StoreCardComponentProps) {

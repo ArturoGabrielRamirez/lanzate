@@ -1,12 +1,12 @@
 "use server";
 
 import { actionWrapper } from "@/features/global/utils";
-import { getCurrentUserPermissionsData } from "@/features/plans/data/get-current-user-permissions.data";
+import { getCurrentUserPermissionsData } from "@/features/plans/data";
 
 export async function getCurrentUserPermissionsAction() {
     return actionWrapper(async () => {
         const user = await getCurrentUserPermissionsData();
-        
+
         if (!user) {
             // Retornamos null explícitamente si no hay usuario logueado, 
             // esto no necesariamente es un error (usuario visitante)

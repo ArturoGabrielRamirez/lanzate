@@ -32,7 +32,7 @@ export async function getCurrentUserPermissionsData() {
     // but for our adapter we mainly need Account and Store.
     // However, our adapter expects UserType which usually matches the full prisma return + helpers.
     // Let's return it as is, assuming it matches well enough or we cast it.
-    
+
     return user as unknown as UserType;
 }
 
