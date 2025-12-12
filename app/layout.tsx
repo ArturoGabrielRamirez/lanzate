@@ -1,7 +1,7 @@
 import { Geist, Quattrocento, Oswald } from 'next/font/google';
 
 import "@/app/globals.css";
-import { RootLayout } from "@/features/global/types";
+import { RootLayoutType } from '@/features/global/types';
 import { NextThemeProvider } from '@/features/layout/components';
 import { BProgressProvider } from "@/features/shadcn/components/bprogress-provider"
 import { cn } from '@/lib/utils';
@@ -39,7 +39,7 @@ const oswald = Oswald({
     variable: '--font-oswald',
 });
 
-export default async function RootLayout({ children }: RootLayout) {
+export default async function RootLayout({ children }: RootLayoutType) {
 
     const bodyClassName = cn(
         "min-h-dvh flex flex-col overflow-x-hidden relative bg-gradient-to-br from-background to-primary/20",
