@@ -11,10 +11,7 @@ export default function AuthRedirect() {
     useEffect(() => {
         if (subdomain && path) {
             const targetURL = `https://${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'}${path}`
-
-            setTimeout(() => {
-                window.location.href = targetURL
-            }, 100)
+            window.location.href = targetURL
         }
     }, [subdomain, path])
 

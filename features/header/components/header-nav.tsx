@@ -8,8 +8,6 @@ async function HeaderNav() {
 
     const { payload: user } = await getUserInfo()
 
-    if (!user) return null
-    
     const { payload: dashboardData } = await getDashboardStoresAction(user.id, 2)
 
     return (

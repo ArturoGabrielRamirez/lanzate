@@ -51,6 +51,7 @@ function isStaticAsset(pathname: string): boolean {
 }
 
 export async function updateSession(request: NextRequest) {
+  
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
   const subdomain = extractSubdomain(request)
   const { pathname } = request.nextUrl
