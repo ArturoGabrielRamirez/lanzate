@@ -5,9 +5,10 @@ export const routing = defineRouting({
     locales: ['es', 'en'/* , 'pt' */],
 
     // Used when no locale matches
-    defaultLocale: 'es'
+    defaultLocale: 'en'
 
     // The locale to redirect to when the requested locale could not be found
+    
 });
 
 export type Locale = (typeof routing.locales)[number];

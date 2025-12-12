@@ -47,6 +47,7 @@
     "@react-email/components": "^0.5.7",
     "@react-three/drei": "^10.6.1",
     "@react-three/fiber": "^9.3.0",
+    "@rescale/nemo": "^2.0.2",
     "@supabase/postgrest-js": "*",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.86.2",
