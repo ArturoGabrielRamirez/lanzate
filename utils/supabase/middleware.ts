@@ -138,9 +138,10 @@ export async function updateSession(request: NextRequest) {
   ]
 
   const isPublicProfile = isPublicProfileRoute(pathWithoutLocale)
+  const isStoreRoute = pathWithoutLocale.startsWith('/s/')
 
   // Redirecciones de autenticación simples
-  if (!user && !publicRoutes.includes(pathWithoutLocale) && !isPublicProfile) {
+  if (!user && !publicRoutes.includes(pathWithoutLocale) && !isPublicProfile && !isStoreRoute) {
     const url = new URL(`/${currentLocale}/login`, `https://${rootDomain}`)
     return NextResponse.redirect(url)
   }

@@ -20,7 +20,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
                         const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost';
                         const cookieOptions = {
                             ...options,
-                            domain: 'lanzate.app',
+                            domain: '.lanzate.app',
                             path: '/',
                             secure: !rootDomain.includes('localhost'),
                             sameSite: 'lax' as const,
@@ -42,7 +42,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
         return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url))
     }
 
-    if (!user && !isPublicRoute && !isPublicProfileUrl(pathWithoutLocale)) {
+    if (!user && !isPublicRoute && !isPublicProfileUrl(pathWithoutLocale) && !pathWithoutLocale.startsWith('/s/')) {
         return NextResponse.redirect(new URL(`/${locale}/login`, request.url))
     }
 

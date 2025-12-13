@@ -10,13 +10,12 @@ export async function handleSubdomain(request: NextRequest, response: NextRespon
 
     const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'lanzate.app'
     const subdomain = extractSubdomain(request)
-    console.log("🚀 ~ handleSubdomain ~ subdomain:", subdomain)
+    const { locale, pathWithoutLocale } = getLocaleAndPathname(request.nextUrl.pathname)
 
     if (!subdomain) {
         return response
     }
 
-    const { locale, pathWithoutLocale } = getLocaleAndPathname(request.nextUrl.pathname)
     const currentLocale = locale || routing.defaultLocale
 
     // If already on a /s/ route, don't rewrite
@@ -44,19 +43,19 @@ export async function handleSubdomain(request: NextRequest, response: NextRespon
 
     // Handle static routes
     if (subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes]) {
-        const url = new URL(subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes], request.url)
-        //console.log("🚀 ~ handleSubdomain ~ url:", url.href)
-        //https://localhost:3000/en/s/lodemauri
-        url.search = request.nextUrl.search
+        const url = request.nextUrl.clone()
+        url.pathname = subdomainRoutes[pathWithoutLocale as keyof typeof subdomainRoutes]
         return NextResponse.rewrite(url, response)
     }
+
 
     // Handle dynamic routes - my-orders with order ID
     if (pathWithoutLocale.startsWith('/my-orders/')) {
         const orderId = pathWithoutLocale.split('/my-orders/')[1]
         if (orderId && !isNaN(Number(orderId))) {
-            const url = new URL(`/${currentLocale}/s/${subdomain}/my-orders/${orderId}`, request.url)
-            url.search = request.nextUrl.search
+            const url = request.nextUrl.clone()
+            url.pathname = `/${currentLocale}/s/${subdomain}/my-orders/${orderId}`
+
             return NextResponse.rewrite(url, response)
         }
     }
@@ -64,7 +63,9 @@ export async function handleSubdomain(request: NextRequest, response: NextRespon
     // Handle dynamic routes - item pages
     if (pathWithoutLocale.startsWith('/item/')) {
         const itemPath = pathWithoutLocale.split('/item/')[1]
-        const url = new URL(`/${currentLocale}/s/${subdomain}/item/${itemPath}`, request.url)
+        const url = request.nextUrl.clone()
+        url.pathname = `/${currentLocale}/s/${subdomain}/item/${itemPath}`
+
         return NextResponse.rewrite(url, response)
     }
 

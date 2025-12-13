@@ -7,7 +7,7 @@ export default function GlobalNotFound() {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: '100vh', 
+      minHeight: '100vh',
       fontFamily: 'system-ui, sans-serif',
       backgroundColor: '#f9fafb',
       color: '#374151',
