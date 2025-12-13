@@ -2,7 +2,7 @@ import { createNEMO, MiddlewareConfig } from '@rescale/nemo';
 import { NextRequest, NextResponse } from 'next/server';
 import createIntlMiddleware from 'next-intl/middleware'
 
-import { updateSession } from '@/features/middleware/utils/supabase';
+import { handleSubdomain, updateSession } from '@/features/middleware/utils';
 import { routing } from '@/i18n/routing';
 
 const intlMiddleware = createIntlMiddleware(routing)
@@ -21,8 +21,11 @@ const middlewares: MiddlewareConfig = {
       //Supabase middleware : takes care of the authentication
       const supabaseResponse = await updateSession(request, intlResponse)
 
+      //Subdomain middleware : takes care of the subdomain routing
+      const subdomainResponse = await handleSubdomain(request, supabaseResponse)
+
       // Ensure we return the response that preserves the locale rewrite
-      return supabaseResponse
+      return subdomainResponse
     }
   ],
 };

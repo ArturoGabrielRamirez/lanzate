@@ -1,20 +1,22 @@
 "use server"
 
 import { formatSuccessResponse } from "@/features/global/utils";
-import { createServerSideClient } from "@/utils/supabase/server";
+import { prisma } from "@/utils/prisma";
 
 export async function checkSubdomainExistsData(subdomain: string) {
 
     const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
 
-    const { data, error } = await createServerSideClient()
-        .from('stores')
-        .select('id')
-        .eq('subdomain', sanitizedSubdomain)
-        .single();
-    console.log("🚀 ~ checkSubdomainExistsData ~ error:", error)
+    const store = await prisma.store.findUnique({
+        where: {
+            subdomain: sanitizedSubdomain
+        },
+        select: {
+            id: true
+        }
+    });
 
-    const exists = !error && data !== null;
+    const exists = store !== null;
 
     return formatSuccessResponse(exists ? "El subdominio existe" : "El subdominio no existe", exists);
 
