@@ -7,9 +7,9 @@ export async function selectStoreWithProductsData(subdomain: string, category: s
     const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
     /* const prisma = new PrismaClient() */
 
-    const categoryIds = category
+    /* const categoryIds = category
         ? category.split(',').map(id => id.trim())
-        : undefined;
+        : undefined; */
 
     const orderBy: {
         name?: 'asc' | 'desc',
@@ -48,74 +48,12 @@ export async function selectStoreWithProductsData(subdomain: string, category: s
         },
         include: {
             products: {
-                where: {
-                    is_deleted: false,
-                    ...(categoryIds
-                        ? {
-                            categories: {
-                                some: {
-                                    id: {
-                                        in: categoryIds.map(id => parseInt(id))
-                                    }
-                                }
-                            },
-                            OR: [
-                                {
-                                    name: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    name: {
-                                        contains: search,
-                                        mode: "insensitive"
-                                    }
-                                },
-                                {
-                                    description: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    description: {
-                                        contains: search, mode: "insensitive"
-                                    }
-                                },
-                            ],
-                            price: priceRange
-                        }
-                        : {
-                            OR: [
-                                {
-                                    name: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    name: {
-                                        contains: search,
-                                        mode: "insensitive"
-                                    }
-                                },
-                                {
-                                    description: {
-                                        search: search
-                                    }
-                                },
-                                {
-                                    description: {
-                                        contains: search, mode: "insensitive"
-                                    }
-                                },
-                            ],
-                            price: priceRange
-                        })
-                },
+
                 include: {
                     variants: {
-                        where: {
+                        /* where: {
                             is_deleted: false
-                        }
+                        } */
                     }
                 },
                 orderBy: orderBy,
@@ -123,10 +61,11 @@ export async function selectStoreWithProductsData(subdomain: string, category: s
                 skip: limit * (page - 1)
             },
             customization: true,
-           /*  operational_settings: true */
-           //TODO: Arreglar aca, para Hori
+            /*  operational_settings: true */
+            //TODO: Arreglar aca, para Hori
         },
     })
+    console.log("🚀 ~ selectStoreWithProductsData ~ result:", result)
 
     return {
         message: "Tienda con productos recuperada con éxito desde la base de datos",
