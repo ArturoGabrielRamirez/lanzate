@@ -5,6 +5,7 @@ import { checkSubdomainExistsData } from "@/features/subdomain/data/check-subdom
 
 export async function validateSubdomainAction(subdomain: string) {
     return actionWrapper(async () => {
+
         const { payload: exists, hasError, message } = await checkSubdomainExistsData(subdomain);
 
         if (hasError) throw new Error(message);
