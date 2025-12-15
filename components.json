@@ -25,6 +25,7 @@
     "@intentui": "https://intentui.com/r/{name}",
     "@ncdai": "https://chanhdai.com/r/{name}.json",
     "@coss": "https://coss.com/ui/r/{name}.json",
-    "@supabase": "https://supabase.com/ui/r/{name}.json"
+    "@supabase": "https://supabase.com/ui/r/{name}.json",
+    "@systaliko-ui": "https://systaliko-ui.vercel.app/r/{name}.json"
   }
 }
