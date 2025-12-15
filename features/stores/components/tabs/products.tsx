@@ -63,7 +63,7 @@ async function ProductsTab({ slug, ...queryParams }: ProductsTabProps & { queryP
 
     return (
         <Suspense fallback={<div>{t("loading-products") || "Cargando productos..."}</div>}>
-            <ProductsTabContent slug={slug} userId={user.id} {...queryParams} />
+            <ProductsTabContent slug={slug} {...queryParams} userId={user.id} />
         </Suspense>
     )
 }

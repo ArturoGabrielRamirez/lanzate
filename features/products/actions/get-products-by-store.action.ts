@@ -8,6 +8,8 @@ import { StoreIdentifier } from "@/features/products/types/products-by-store.typ
 
 export async function getProductsByStoreAction(identifier: StoreIdentifier, limit: number, orderBy: string, page: number, search: string) {
 
+    "use cache"
+
     return actionWrapper(async () => {
         const { payload, hasError, message } = await unstable_cache(selectProductsByStoreData, ['products-by-store'], {
             revalidate: 60,

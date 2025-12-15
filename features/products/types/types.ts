@@ -31,7 +31,7 @@ export type CategoryValue = { value: string; label: string }
 
 export type MediaSectionData = {
     files: File[]
-     urls?: string[]
+    urls?: string[]
     primaryIndex: number | null
 }
 
@@ -553,7 +553,7 @@ export type ProductsTableWrapperProps = {
     headerActions?: React.ReactNode
 }
 
-export type ProductsTableVariantRow = ProductWithRelations & { 
+export type ProductsTableVariantRow = ProductWithRelations & {
     variant_id?: number
     variant_label?: string
     stock: number
@@ -667,7 +667,7 @@ export type EditProductPayload = {
 }
 
 export interface ProductMediaSelectorProps {
-  value?: DeferredFile[]
-  onChange?: (files: DeferredFile[]) => void
-  maxFiles?: number
+    value?: DeferredFile[]
+    onChange?: (files: DeferredFile[]) => void
+    maxFiles?: number
 }

@@ -21,7 +21,7 @@ async function ProductsTableContent({
     // Determine which identifier to use
     let identifier: StoreIdentifier
     let resolvedStoreId = storeId
-    
+
     if (storeId) {
         identifier = { storeId }
         resolvedStoreId = storeId

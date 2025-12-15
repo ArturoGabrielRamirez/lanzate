@@ -4,6 +4,7 @@ import { StoreIdentifier } from "@/features/products/types/products-by-store.typ
 import { prisma } from "@/utils/prisma"
 
 export async function selectProductsByStoreData(identifier: StoreIdentifier, limit: number, orderBy: string, page: number, search: string) {
+    "use cache"
 
     const storeWhere: { id?: number; slug?: string; subdomain?: string } = {}
 
