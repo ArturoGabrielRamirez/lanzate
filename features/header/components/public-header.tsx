@@ -1,8 +1,8 @@
 import { BaseHeader } from '@/features/header/components/base-header';
 import { BrandLogo } from '@/features/header/components/brand-logo';
+import { HeaderActions } from '@/features/header/components/header-actions';
 import { HeaderNavContainer } from '@/features/header/components/header-nav-container';
 import { HeaderNavGuest } from '@/features/header/components/header-nav-guest';
-import { HeaderActions } from '@/features/header/components/header-actions';
 import { MobileDrawer } from '@/features/header/components/mobile-drawer';
 import { DRAWER_MENU_ITEMS_GUEST } from '@/features/header/constants';
 import type { PublicHeaderProps } from '@/features/header/types';

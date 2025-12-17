@@ -1,11 +1,10 @@
-import { getUserInfo } from '@/features/global/actions/get-user-info.action';
 import { getDashboardStoresAction } from '@/features/dashboard/actions';
+import { getUserInfo } from '@/features/global/actions/get-user-info.action';
 import { BaseHeader } from '@/features/header/components/base-header';
 import { BrandLogo } from '@/features/header/components/brand-logo';
-import { HeaderNavContainer } from '@/features/header/components/header-nav-container';
-import { HeaderNavAuth } from '@/features/header/components/header-nav-auth';
-import { HeaderNavGuest } from '@/features/header/components/header-nav-guest';
 import { HeaderActions } from '@/features/header/components/header-actions';
+import { HeaderNavAuth } from '@/features/header/components/header-nav-auth';
+import { HeaderNavContainer } from '@/features/header/components/header-nav-container';
 import { MobileDrawer } from '@/features/header/components/mobile-drawer';
 import { NAV_MENU_ITEMS_AUTH, DRAWER_MENU_ITEMS_GUEST } from '@/features/header/constants';
 import type { PrivateHeaderProps } from '@/features/header/types';
@@ -20,11 +19,7 @@ async function PrivateHeader({ className }: PrivateHeaderProps) {
         <BaseHeader className={className}>
             <BrandLogo />
             <HeaderNavContainer>
-                {user ? (
-                    <HeaderNavAuth storesCount={storesCount} />
-                ) : (
-                    <HeaderNavGuest />
-                )}
+                <HeaderNavAuth storesCount={storesCount} />
             </HeaderNavContainer>
             <div className='flex items-center'>
                 <HeaderActions showLogin={!user} />

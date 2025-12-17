@@ -1,3 +1,5 @@
+import { User } from '@prisma/client';
+
 import { LocalUserType } from '@/features/auth/types';
 import { WithClassName } from '@/features/global/types';
 
@@ -54,10 +56,13 @@ export interface BaseHeaderProps extends WithClassName {
 
 // PrivateHeaderProps - Props para el header de rutas privadas
 export interface PrivateHeaderProps extends WithClassName {
+    user? : User
 }
 
 // PublicHeaderProps - Props para el header de rutas públicas
-export interface PublicHeaderProps extends WithClassName {}
+export interface PublicHeaderProps extends WithClassName {
+    user? : User
+}
 
 // HeaderActionsProps - Props para las acciones del header
 export interface HeaderActionsProps {
