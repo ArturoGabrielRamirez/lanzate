@@ -1,25 +1,25 @@
-import { WithClassName } from "@/features/global/types"
-import { BrandLogo, HeaderNavContainer, HeaderNavGuest } from "@/features/header/components"
-import { HeaderActions } from "@/features/header/components/public-header-actions"
-import { MobileDrawer } from "@/features/header/components/public-mobile-drawer"
-import { cn } from "@/lib/utils"
+import { BaseHeader } from '@/features/header/components/base-header';
+import { BrandLogo } from '@/features/header/components/brand-logo';
+import { HeaderNavContainer } from '@/features/header/components/header-nav-container';
+import { HeaderNavGuest } from '@/features/header/components/header-nav-guest';
+import { HeaderActions } from '@/features/header/components/header-actions';
+import { MobileDrawer } from '@/features/header/components/mobile-drawer';
+import { DRAWER_MENU_ITEMS_GUEST } from '@/features/header/constants';
+import type { PublicHeaderProps } from '@/features/header/types';
 
-async function Header({ className }: WithClassName) {
-
+async function PublicHeader({ className }: PublicHeaderProps) {
     return (
-        <header className={cn("fixed md:absolute top-0 z-[2] w-full max-xl:bg-background max-xl:shadow-2xl", className)}>
-            <div className="container mx-auto px-4 flex h-14 xl:h-20 items-center justify-between">
-                <BrandLogo />
-                <HeaderNavContainer>
-                    <HeaderNavGuest />
-                </HeaderNavContainer>
-                <div className='flex items-center'>
-                    <HeaderActions />
-                    <MobileDrawer />
-                </div>
+        <BaseHeader className={className}>
+            <BrandLogo />
+            <HeaderNavContainer>
+                <HeaderNavGuest />
+            </HeaderNavContainer>
+            <div className='flex items-center'>
+                <HeaderActions showLogin={true} />
+                <MobileDrawer user={null} menuItems={DRAWER_MENU_ITEMS_GUEST} />
             </div>
-        </header>
-    )
+        </BaseHeader>
+    );
 }
 
-export { Header }
+export { PublicHeader };

@@ -1,19 +1,14 @@
-import { getUserInfo } from '@/features/global/actions/get-user-info.action';
 import { HeaderLoginLink } from '@/features/header/components/header-login-link';
 import { SettingsToolbar } from '@/features/header/components/settings-toolbar';
+import type { HeaderActionsProps } from '@/features/header/types';
 
-async function HeaderActions() {
-
-    const { payload: user } = await getUserInfo()
-
+function HeaderActions({ showLogin = false }: HeaderActionsProps) {
     return (
         <div className="hidden md:flex items-center md:gap-3">
             <SettingsToolbar />
-            {!user && (
-                <HeaderLoginLink />
-            )}
+            {showLogin && <HeaderLoginLink />}
         </div>
     );
-};
+}
 
 export { HeaderActions };

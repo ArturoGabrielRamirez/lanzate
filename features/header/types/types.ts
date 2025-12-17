@@ -45,3 +45,27 @@ export interface NavLinkWithUnderlineProps extends BaseNavElement {
     prefetch?: boolean;
     disabled?: boolean;
 }
+
+// BaseHeaderProps - Props para el componente base del header
+export interface BaseHeaderProps extends WithClassName {
+    children: ReactNode;
+    variant?: 'fixed' | 'absolute' | 'sticky';
+}
+
+// PrivateHeaderProps - Props para el header de rutas privadas
+export interface PrivateHeaderProps extends WithClassName {
+}
+
+// PublicHeaderProps - Props para el header de rutas públicas
+export interface PublicHeaderProps extends WithClassName {}
+
+// HeaderActionsProps - Props para las acciones del header
+export interface HeaderActionsProps {
+    showLogin?: boolean;
+}
+
+// MobileDrawerProps - Props para el drawer móvil
+export interface MobileDrawerProps {
+    user: LocalUserType | null;
+    menuItems: NavSubItem[];
+}

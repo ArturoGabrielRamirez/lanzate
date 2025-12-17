@@ -2,7 +2,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import { FloatingDockContainer } from '@/features/floating-dock/components';
 import { GlobalShortcutsWrapper } from "@/features/global/components";
-import { Header } from '@/features/header/components';
+import { PrivateHeader } from '@/features/header/components';
 import { getCurrentUserPermissionsAction } from '@/features/plans/actions';
 import { PlanProvider } from '@/features/plans/components/plan-provider'
 import { CookiePanel } from '@/features/shadcn/components/ui/cookie-banner-1';
@@ -16,7 +16,7 @@ export default async function PrivateLayout({ children }: { children: React.Reac
         <GlobalShortcutsWrapper>
             <NuqsAdapter>
                 <PlanProvider user={user}>
-                    <Header />
+                    <PrivateHeader />
                     <main className='flex flex-col grow'>
                         {children}
                     </main>
