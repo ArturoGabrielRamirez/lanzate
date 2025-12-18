@@ -47,3 +47,5 @@ access-*.log.gz
 
 agent_docs
 CLAUDE.md
+
+.claude

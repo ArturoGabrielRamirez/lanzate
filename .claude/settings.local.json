@@ -5,7 +5,11 @@
       "Bash(bunx next build:*)",
       "Bash(npx tsc:*)",
       "Bash(git stash:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(bunx tsc:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
