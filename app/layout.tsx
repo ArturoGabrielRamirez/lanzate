@@ -1,7 +1,9 @@
 import { Geist, Quattrocento, Oswald } from 'next/font/google';
 
 import "@/app/globals.css";
-import { WithChildren } from "@/features/global/types";
+import { RootLayoutType } from '@/features/global/types';
+import { NextThemeProvider } from '@/features/layout/components';
+import { BProgressProvider } from "@/features/shadcn/components/bprogress-provider"
 import { cn } from '@/lib/utils';
 
 import type { Metadata } from "next";
@@ -37,11 +39,31 @@ const oswald = Oswald({
     variable: '--font-oswald',
 });
 
-export default function RootLayout({ children }: WithChildren) {
+export default async function RootLayout({ children }: RootLayoutType) {
+
+    const bodyClassName = cn(
+        "min-h-dvh flex flex-col overflow-x-hidden relative bg-gradient-to-br from-background to-primary/20",
+        geist.variable, quattrocento.variable, oswald.variable
+    )
+
     return (
         <html suppressHydrationWarning>
-            <body className={cn("min-h-dvh flex flex-col overflow-x-hidden relative bg-gradient-to-br from-background to-primary/20", geist.variable, quattrocento.variable, oswald.variable)}>
-                {children}
+            <body className={bodyClassName}>
+                <NextThemeProvider
+                    enableSystem
+                    attribute="class"
+                    defaultTheme="system"
+                    disableTransitionOnChange
+                >
+                    <BProgressProvider
+                        startOnLoad
+                        shallowRouting={false}
+                        spinnerPosition="bottom-right"
+                        options={{ showSpinner: true }}
+                    >
+                        {children}
+                    </BProgressProvider>
+                </NextThemeProvider>
             </body>
         </html>
     )

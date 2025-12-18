@@ -1,6 +1,6 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { ROUTES } from "@/features/global/constants";
 import heroImage from "@/features/landing/assets/Startup life-pana 1.svg";
@@ -13,6 +13,8 @@ import packageJson from "@/package.json";
 async function HeroSection() {
 
     const t = await getTranslations("landing.hero")
+    const locale = await getLocale()
+    console.log("🚀 ~ HeroSection ~ locale:", locale)
 
     const words = [t("slogan.rotatingWords.word1"), t("slogan.rotatingWords.word2"), t("slogan.rotatingWords.word3")]
 
