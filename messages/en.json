@@ -1584,6 +1584,7 @@
             "categories": {
                 "none": "None"
             },
+            "search-placeholder": "Search products...",
             "boolean": {
                 "yes": "Yes",
                 "no": "No"
@@ -1614,6 +1615,12 @@
                 "description": "Description",
                 "created_at": "Created at",
                 "updated_at": "Updated at"
+            },
+            "expanded": {
+                "description": "Description",
+                "barcode": "Barcode",
+                "stock-by-branch": "Stock by branch",
+                "no-additional-info": "No additional information available"
             }
         },
         "create-product": {

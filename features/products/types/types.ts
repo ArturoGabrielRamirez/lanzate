@@ -41,10 +41,10 @@ export type ProductColor = {
 export type CategoryValue = { value: string; label: string };
 
 export type MediaSectionData = {
-  files: File[];
-  urls?: string[];
-  primaryIndex: number | null;
-};
+    files: File[]
+    urls?: string[]
+    primaryIndex: number | null
+}
 
 export type CategoriesSectionData = {
   categories: CategoryValue[];
@@ -586,35 +586,34 @@ export type EmployeePermissions = {
 };
 
 export type ProductsTableProps = {
-  data: ProductWithRelations[];
-  userId: number;
-  slug: string;
-  storeId: number;
-  employeePermissions: EmployeePermissions;
-  branches: (Branch & { stock_items: VariantStock[] })[];
-  headerActions?: React.ReactNode;
-};
+    storeId: number
+    userId: number
+    slug: string
+    employeePermissions: EmployeePermissions
+    branches: (Branch & { stock_items: VariantStock[] })[]
+    headerActions?: React.ReactNode
+}
 
 export type ProductsTableWrapperProps = {
-  limit: number;
-  orderBy: string;
-  page: number;
-  search: string;
-  storeId?: number;
-  slug?: string;
-  subdomain?: string;
-  userId: number;
-  employeePermissions: EmployeePermissions;
-  branches: (Branch & { stock_items: VariantStock[] })[];
-  headerActions?: React.ReactNode;
-};
+    limit: number
+    orderBy: string
+    page: number
+    search: string
+    storeId?: number
+    slug?: string
+    subdomain?: string
+    userId: number
+    employeePermissions: EmployeePermissions
+    branches: (Branch & { stock_items: VariantStock[] })[]
+    headerActions?: React.ReactNode
+}
 
 export type ProductsTableVariantRow = ProductWithRelations & {
-  variant_id?: number;
-  variant_label?: string;
-  stock: number;
-  variant_price?: number;
-};
+    variant_id?: number
+    variant_label?: string
+    stock: number
+    variant_price?: number
+}
 
 export type MinimalUser = {
   id: number;
@@ -725,7 +724,7 @@ export type EditProductPayload = {
 };
 
 export interface ProductMediaSelectorProps {
-  value?: DeferredFile[];
-  onChange?: (files: DeferredFile[]) => void;
-  maxFiles?: number;
+    value?: DeferredFile[]
+    onChange?: (files: DeferredFile[]) => void
+    maxFiles?: number
 }

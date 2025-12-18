@@ -27,10 +27,7 @@ export async function selectStoreWithProductsData(
   /*     const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, ''); */
   /* const prisma = new PrismaClient() */
 
-  /*  const categoryIds = category
-         ? category.split(',').map(id => id.trim())
-         : undefined; */
-  /* const categoryIds = category
+    /* const categoryIds = category
         ? category.split(',').map(id => id.trim())
         : undefined; */
 
@@ -74,7 +71,7 @@ export async function selectStoreWithProductsData(
 
                 include: {
                     variants: {
-                         where: {
+                        where: {
                             is_deleted: false
                         }
                     }
@@ -88,7 +85,6 @@ export async function selectStoreWithProductsData(
     //TODO: Arreglar aca, para Hori
             },
             customization: true,
-             operational_settings: true
             //TODO: Arreglar aca, para Hori
         },
     })
