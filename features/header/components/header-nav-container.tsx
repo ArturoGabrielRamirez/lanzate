@@ -1,15 +1,15 @@
 'use client';
 
 import * as motion from 'motion/react-client';
-import { type ReactNode } from 'react';
 
 import { BrandLogo } from '@/features/header/components/brand-logo';
 import { SettingsToolbar } from '@/features/header/components/settings-toolbar';
 import { SCROLL_THRESHOLD_FOR_FLOATING_NAV } from '@/features/header/constants';
 import { useScrollThreshold } from '@/features/header/hooks';
+import type { HeaderNavContainerProps } from '@/features/header/types';
 import { cn } from '@/lib/utils';
 
-function HeaderNavContainer({ children }: { children: ReactNode }) {
+function HeaderNavContainer({ children }: HeaderNavContainerProps) {
     const shouldBlurBackground = useScrollThreshold(SCROLL_THRESHOLD_FOR_FLOATING_NAV);
 
     const headerLogoConfig = {

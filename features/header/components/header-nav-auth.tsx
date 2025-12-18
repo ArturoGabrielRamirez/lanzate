@@ -2,10 +2,11 @@
 
 import { NavLinkWithUnderline } from '@/features/header/components/nav-link-with-underline';
 import { NAV_MENU_ITEMS_AUTH } from '@/features/header/constants';
+import type { HeaderNavAuthProps } from '@/features/header/types';
 import { isActiveRoute } from '@/features/header/utils';
 import { usePathname } from '@/i18n/naviation';
 
-function HeaderNavAuth({ storesCount }: { storesCount: number }) {
+function HeaderNavAuth({ storesCount }: HeaderNavAuthProps) {
 
     const pathname = usePathname();
 

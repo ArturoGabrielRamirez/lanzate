@@ -1,14 +1,13 @@
-import { User } from '@prisma/client';
+import type { ReactNode } from 'react';
 
+import { UserType } from '@/features/account/types';
 import { LocalUserType } from '@/features/auth/types';
 import { WithClassName } from '@/features/global/types';
-
-import type { ReactNode } from 'react';
 
 
 
 // Interface base para elementos de navegación
-interface BaseNavElement {
+export interface BaseNavElement {
     label: string;
     href: string;
     description?: string;
@@ -16,7 +15,7 @@ interface BaseNavElement {
 }
 
 // Interface base para elementos con tamaño
-interface BaseSizedElement {
+export interface BaseSizedElement {
     size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
@@ -38,7 +37,7 @@ export interface NavMenuItem extends Omit<BaseNavElement, 'href'> {
 
 // UserAvatarProps - extiende BaseElement y BaseSizedElement
 export interface UserAvatarProps extends WithClassName, BaseSizedElement {
-    user: LocalUserType;
+    user: UserType | LocalUserType;
 }
 
 // NavLinkWithUnderlineProps - extiende BaseNavElement
@@ -56,21 +55,30 @@ export interface BaseHeaderProps extends WithClassName {
 
 // PrivateHeaderProps - Props para el header de rutas privadas
 export interface PrivateHeaderProps extends WithClassName {
-    user? : User
+    user: UserType | null;
+    storesCount: number;
 }
 
 // PublicHeaderProps - Props para el header de rutas públicas
-export interface PublicHeaderProps extends WithClassName {
-    user? : User
-}
+export type PublicHeaderProps = WithClassName;
 
 // HeaderActionsProps - Props para las acciones del header
-export interface HeaderActionsProps {
+export interface HeaderActionsProps extends WithClassName {
     showLogin?: boolean;
 }
 
 // MobileDrawerProps - Props para el drawer móvil
 export interface MobileDrawerProps {
-    user: LocalUserType | null;
+    user: UserType | LocalUserType | null;
     menuItems: NavSubItem[];
+}
+
+// HeaderNavAuthProps - Props para navegación autenticada
+export interface HeaderNavAuthProps {
+    storesCount: number;
+}
+
+// HeaderNavContainerProps - Props para contenedor de navegación
+export interface HeaderNavContainerProps {
+    children: ReactNode;
 }

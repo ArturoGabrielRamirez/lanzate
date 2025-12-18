@@ -1,5 +1,3 @@
-import { getDashboardStoresAction } from '@/features/dashboard/actions';
-import { getUserInfo } from '@/features/global/actions/get-user-info.action';
 import { BaseHeader } from '@/features/header/components/base-header';
 import { BrandLogo } from '@/features/header/components/brand-logo';
 import { HeaderActions } from '@/features/header/components/header-actions';
@@ -9,12 +7,7 @@ import { MobileDrawer } from '@/features/header/components/mobile-drawer';
 import { NAV_MENU_ITEMS_AUTH, DRAWER_MENU_ITEMS_GUEST } from '@/features/header/constants';
 import type { PrivateHeaderProps } from '@/features/header/types';
 
-async function PrivateHeader({ className }: PrivateHeaderProps) {
-
-    const { payload: user } = await getUserInfo();
-    const { payload: dashboardData } = await getDashboardStoresAction(user?.id || 0, 2);
-    const storesCount = dashboardData?.storeCount || 0;
-
+function PrivateHeader({ className, user, storesCount }: PrivateHeaderProps) {
     return (
         <BaseHeader className={className}>
             <BrandLogo />

@@ -16,7 +16,6 @@ export * from "@/features/header/components/header-login-link"
 export * from "@/features/header/components/logout-link"
 
 // Navigation components
-export * from "@/features/header/components/header-nav"
 export * from "@/features/header/components/header-nav-container"
 export * from "@/features/header/components/header-nav-auth"
 export * from "@/features/header/components/header-nav-guest"
