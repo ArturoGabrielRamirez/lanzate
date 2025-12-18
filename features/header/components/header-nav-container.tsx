@@ -1,25 +1,16 @@
 'use client';
 
-import { useMotionValueEvent, useScroll } from "motion/react";
-import * as motion from "motion/react-client";
-import { useState, type ReactNode } from "react";
+import * as motion from 'motion/react-client';
+import { type ReactNode } from 'react';
 
-import { BrandLogo } from "@/features/header/components/brand-logo";
-import { SettingsToolbar } from "@/features/header/components/settings-toolbar";
-import { cn } from "@/lib/utils";
+import { BrandLogo } from '@/features/header/components/brand-logo';
+import { SettingsToolbar } from '@/features/header/components/settings-toolbar';
+import { SCROLL_THRESHOLD_FOR_FLOATING_NAV } from '@/features/header/constants';
+import { useScrollThreshold } from '@/features/header/hooks';
+import { cn } from '@/lib/utils';
 
 function HeaderNavContainer({ children }: { children: ReactNode }) {
-
-    const { scrollY } = useScroll()
-    const [shouldBlurBackground, setShouldBlurBackground] = useState(false)
-
-    useMotionValueEvent(scrollY, "change", (latest) => {
-        if (latest > 100) {
-            setShouldBlurBackground(true)
-        } else {
-            setShouldBlurBackground(false)
-        }
-    })
+    const shouldBlurBackground = useScrollThreshold(SCROLL_THRESHOLD_FOR_FLOATING_NAV);
 
     const headerLogoConfig = {
         initial: { opacity: 0, y: -100 },

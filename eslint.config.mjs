@@ -33,7 +33,6 @@ const eslintConfig = [
           jsx: true,
         },
         sourceType: "module",
-        project: true,
       },
     },
     rules: {
@@ -44,8 +43,8 @@ const eslintConfig = [
         "error",
         {
           argsIgnorePattern: "^_",
-          caughtErrors: "none"
-        }
+          caughtErrors: "none",
+        },
       ],
       "react/prop-types": "off",
       "import/order": [
@@ -78,7 +77,7 @@ const eslintConfig = [
             caseInsensitive: true,
           },
           warnOnUnassignedImports: true,
-        }
+        },
       ],
       "no-restricted-imports": [
         "error",
@@ -93,11 +92,9 @@ const eslintConfig = [
         },
       ],
       "react/react-in-jsx-scope": "off",
-      "react/function-component-definition": [
-        "error"
-      ],
-    }
-  }
+      "react/function-component-definition": ["error"],
+    },
+  },
 ];
 
 export default eslintConfig;

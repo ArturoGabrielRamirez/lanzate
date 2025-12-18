@@ -44,3 +44,6 @@ next-env.d.ts
 
 access-*
 access-*.log.gz
+
+agent_docs
+CLAUDE.md

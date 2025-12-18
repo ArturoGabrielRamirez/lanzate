@@ -1,26 +1,16 @@
 'use client';
 
-import { useMotionValueEvent, useScroll } from 'motion/react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 
+import { SCROLL_THRESHOLD_FOR_FLOATING_NAV } from '@/features/header/constants';
+import { useScrollThreshold } from '@/features/header/hooks';
 import type { NavLinkWithUnderlineProps } from '@/features/header/types';
 import { Link } from '@/i18n/naviation';
 import { cn } from '@/lib/utils';
 
 function NavLinkWithUnderline({ href, label, icon, isActive = false, prefetch = true, disabled = false }: NavLinkWithUnderlineProps) {
-
     const t = useTranslations();
-    const { scrollY } = useScroll()
-    const [shouldShowIcon, setShouldShowIcon] = useState(false)
-
-    useMotionValueEvent(scrollY, "change", (latest) => {
-        if (latest > 100) {
-            setShouldShowIcon(true)
-        } else {
-            setShouldShowIcon(false)
-        }
-    })
+    const shouldShowIcon = useScrollThreshold(SCROLL_THRESHOLD_FOR_FLOATING_NAV);
 
     return (
         <Link

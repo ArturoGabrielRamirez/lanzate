@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl';
 
-import { Button } from "@/features/shadcn/components/button";
-import { Link } from "@/i18n/naviation";
+import { Button } from '@/features/shadcn/components/button';
+import { Link } from '@/i18n/naviation';
 
 function HeaderLoginLink() {
 

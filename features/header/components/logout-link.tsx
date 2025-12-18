@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useTranslations } from "next-intl";
-import { toast } from "sonner";
+import { useTranslations } from 'next-intl';
+import { toast } from 'sonner';
 
-import { handleSignOut } from "@/features/auth/actions";
-import { Link, redirect } from "@/i18n/naviation";
+import { handleSignOut } from '@/features/auth/actions';
+import { Link, redirect } from '@/i18n/naviation';
 
 function LogoutLink() {
 
