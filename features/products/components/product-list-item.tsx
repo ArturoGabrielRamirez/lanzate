@@ -10,78 +10,79 @@ import {
   getVariantLabel,
 } from "@/features/products/utils";
 import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+} from "@/features/shadcn/components/item";
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/features/shadcn/components/ui/accordion";
 import { Badge } from "@/features/shadcn/components/ui/badge";
+import {
+  Card,
+  CardAction,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/features/shadcn/components/ui/card";
 
-/**
- * Componente para mostrar un producto en vista lista (tipo tabla)
- */
 export function ProductListItem({ product }: ProductListItemProps) {
   const priceRange = getPriceRange(product.variants || []);
   const variantCount = product.variants?.length || 0;
 
   return (
-    <div className="border-b border-border">
-      <div className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-4 items-center p-4 hover:bg-muted/50 transition-colors">
-        {/* Nombre + Featured */}
-        <div className="flex items-center gap-2">
+    <Card className="gap-0! py-3!">
+      <CardHeader>
+        <CardTitle className="gap-2 flex items-center">
           <span className="font-medium">{product.name}</span>
           {product.is_featured && (
             <Badge variant="secondary" className="text-xs">
               Featured
             </Badge>
           )}
-        </div>
+        </CardTitle>
+        <CardAction>
+          <div className="text-sm text-muted-foreground whitespace-nowrap">
+            {priceRange.display}
+          </div>
+        </CardAction>
+      </CardHeader>
+      <CardFooter>
+        {variantCount > 0 && (
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="variants" className="border-0">
+              <AccordionTrigger className="text-sm hover:no-underline w-full py-0">
+                {variantCount} {variantCount === 1 ? "variant" : "variants"}
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-2">
+                  {product.variants.map((variant: ProductTableVariant) => {
+                    const totalStock = getTotalStock(variant);
+                    const label = getVariantLabel(variant);
 
-        {/* Precio */}
-        <div className="text-sm text-muted-foreground whitespace-nowrap">
-          {priceRange.display}
-        </div>
-
-        {/* Cantidad de variantes */}
-        <div className="text-sm text-muted-foreground whitespace-nowrap">
-          {variantCount} {variantCount === 1 ? 'variant' : 'variants'}
-        </div>
-
-        {/* Espacio para accordion trigger */}
-        <div className="w-8" />
-      </div>
-
-      {/* Accordion de variantes */}
-      {variantCount > 0 && (
-        <Accordion type="single" collapsible className="border-t border-border/50">
-          <AccordionItem value="variants" className="border-0">
-            <AccordionTrigger className="px-4 py-2 text-sm hover:no-underline">
-              Ver variantes
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4">
-              <div className="space-y-2">
-                {product.variants.map((variant: ProductTableVariant) => {
-                  const totalStock = getTotalStock(variant);
-                  const label = getVariantLabel(variant);
-
-                  return (
-                    <div
-                      key={variant.id}
-                      className="flex items-center justify-between p-3 bg-muted/30 rounded-md text-sm"
-                    >
-                      <span className="font-medium">{label}</span>
-                      <div className="flex items-center gap-4 text-muted-foreground">
-                        <span>${variant.price.toFixed(2)}</span>
-                        <span>Stock: {totalStock}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      )}
-    </div>
+                    return (
+                      <Item key={variant.id} size="sm" variant="outline">
+                        <ItemContent>
+                          <ItemTitle>{label}</ItemTitle>
+                          <ItemDescription>Stock: {totalStock}</ItemDescription>
+                        </ItemContent>
+                        <ItemActions>
+                          <span>${variant.price.toFixed(2)}</span>
+                        </ItemActions>
+                      </Item>
+                    );
+                  })}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        )}
+      </CardFooter>
+    </Card>
   );
 }
