@@ -57,6 +57,7 @@ function CalculateChangeButton({ cartTotal, disabled = false, className }: Calcu
 
   return (
     <ButtonWithPopup<ChangeFormData>
+      data-action="calculate-change"
       text={
         <>
           <Calculator className="h-4 w-4" />

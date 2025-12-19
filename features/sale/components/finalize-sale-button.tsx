@@ -111,6 +111,7 @@ function FinalizeSaleButton({
 
   return (
     <ButtonWithPopup<FinalizeSaleFormData>
+      data-action="finalize-sale"
       text={
         <>
           <CreditCard className="h-5 w-5" />

@@ -41,6 +41,29 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   const searchSectionRef = useRef<SearchSectionRef>(null)
   const t = useTranslations('sale.messages')
 
+  // Helper para clickear con retry (unificado con account)
+  const clickWithRetry = (selector: string, maxAttempts = 10, delay = 100) => {
+    let attempts = 0
+
+    const tryClick = () => {
+      const element = document.querySelector(selector) as HTMLButtonElement
+
+      if (element) {
+        element.click()
+        return true
+      }
+
+      attempts++
+
+      if (attempts < maxAttempts) {
+        setTimeout(tryClick, delay)
+      }
+      return false
+    }
+
+    tryClick()
+  }
+
   const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price ? item.product.price * item.quantity : 0), 0) //TODO: ACA PARCHEE CON CERO
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
@@ -253,19 +276,28 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
   useKeyboardShortcuts({
     isInSale: true,
     hasCartItems: cartItems.length > 0,
+
+    // Búsqueda
     onFocusSearch: () => {
       searchSectionRef.current?.focusSearch()
     },
     onClearSearch: handleClearResults,
-    onFinalizeSale: async () => {
-      if (cartItems.length > 0) {
-        // Simular click en el botón de finalizar venta
-        await handleFinalizeSale({ paymentMethod: selectedPaymentMethod, customerInfo })
-      }
+
+    // Acciones con data-action (unificado con account)
+    onFinalizeSale: () => {
+      clickWithRetry('[data-action="finalize-sale"]')
     },
-    onCalculateChange: handleCalculateChange,
-    onPrintReceipt: handlePrintReceipt,
-    onClearCart: handleClearCart,
+    onCalculateChange: () => {
+      clickWithRetry('[data-action="calculate-change"]')
+    },
+    onPrintReceipt: () => {
+      clickWithRetry('[data-action="print-receipt"]')
+    },
+    onClearCart: () => {
+      clickWithRetry('[data-action="clear-cart"]')
+    },
+
+    // Acciones directas (sin botón visible)
     onRefund: handleRefund,
     onIncreaseQuantity: () => {
       if (cartItems.length > 0) {
