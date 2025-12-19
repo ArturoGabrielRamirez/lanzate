@@ -64,21 +64,20 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
     }
 
     const handleClose = () => {
-        setIsOpen(false);
-        // Forzar detención de todos los tracks de video activos
-        navigator.mediaDevices.enumerateDevices()
-            .then(() => {
-                // Obtener y detener cualquier stream de video activo
-                const videoElements = document.querySelectorAll('video');
-                videoElements.forEach((video) => {
-                    const stream = video.srcObject as MediaStream;
-                    if (stream) {
-                        stream.getTracks().forEach(track => track.stop());
-                        video.srcObject = null;
-                    }
+        // PRIMERO: Detener todos los tracks de video ANTES de desmontar
+        const videoElements = document.querySelectorAll('video');
+        videoElements.forEach((video) => {
+            const stream = video.srcObject as MediaStream;
+            if (stream) {
+                stream.getTracks().forEach(track => {
+                    track.stop();
                 });
-            })
-            .catch(() => {});
+                video.srcObject = null;
+            }
+        });
+
+        // DESPUÉS: Cerrar el modal (desmonta el componente)
+        setIsOpen(false);
     }
 
     const handleScan = (text: string) => {
