@@ -30,6 +30,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/features/shadcn/components/ui/card";
+import { Crown } from "lucide-react";
 
 export function ProductListItem({ product }: ProductListItemProps) {
   const priceRange = getPriceRange(product.variants || []);
@@ -42,7 +43,7 @@ export function ProductListItem({ product }: ProductListItemProps) {
           <span className="font-medium">{product.name}</span>
           {product.is_featured && (
             <Badge variant="secondary" className="text-xs">
-              Featured
+              <Crown />
             </Badge>
           )}
         </CardTitle>
@@ -55,11 +56,11 @@ export function ProductListItem({ product }: ProductListItemProps) {
       <CardFooter>
         {variantCount > 0 && (
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="variants" className="border-0">
-              <AccordionTrigger className="text-sm hover:no-underline w-full py-0">
+            <AccordionItem value={`${product.id}`} className="border-0">
+              <AccordionTrigger className="text-xs font-normal hover:no-underline w-full py-0 text-muted-foreground/50">
                 {variantCount} {variantCount === 1 ? "variant" : "variants"}
               </AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="pb-0">
                 <div className="space-y-2">
                   {product.variants.map((variant: ProductTableVariant) => {
                     const totalStock = getTotalStock(variant);

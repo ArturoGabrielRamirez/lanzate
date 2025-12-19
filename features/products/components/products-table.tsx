@@ -15,9 +15,7 @@ function ProductsTable({ data }: ProductsTableProps) {
   const [loading, startTransition] = useTransition();
 
   return (
-    <div
-      className={cn("flex flex-col gap-4 relative", loading && "opacity-50")}
-    >
+    <div className={cn("flex flex-col relative", loading && "opacity-50")}>
       {loading && (
         <Loader2 className="size-4 animate-spin absolute top-0 left-0" />
       )}

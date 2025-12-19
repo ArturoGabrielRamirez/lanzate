@@ -9,16 +9,18 @@ import {
   ToggleGroupItem,
 } from "@/features/shadcn/components/ui/toggle-group";
 import { cn } from "@/features/shadcn/lib/utils";
+import { Button } from "@/features/shadcn/components/ui/button";
 
 const layout_config = {
   list: {
     mode: "list",
-    className: "flex flex-col divide-y divide-border border border-border rounded-lg overflow-hidden",
+    className: "flex flex-col rounded-lg overflow-hidden",
     label: "List view",
   },
   auto: {
     mode: "auto",
-    className: "grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4",
+    className:
+      "grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4",
     label: "Grid view",
   },
 };
@@ -81,11 +83,7 @@ export function ToggleLayoutContainer({
   );
 }
 
-export function SelectLayoutGroup({
-  className,
-}: {
-  className?: string;
-}) {
+export function SelectLayoutGroup({ className }: { className?: string }) {
   const { modeIndex, setModeIndex } = useToggleLayoutContext();
   const layout_config_values = Object.values(layout_config);
 
@@ -111,13 +109,15 @@ export function SelectLayoutGroup({
       onValueChange={handleValueChange}
       className={cn("w-fit", className)}
     >
-      <ToggleGroupItem value="list" aria-label="List view">
-        <List className="h-4 w-4" />
-        <span className="ml-2">List</span>
+      <ToggleGroupItem value="list" aria-label="List view" asChild>
+        <Button size="icon" variant="outline">
+          <List className="h-4 w-4" />
+        </Button>
       </ToggleGroupItem>
-      <ToggleGroupItem value="auto" aria-label="Grid view">
-        <LayoutGrid className="h-4 w-4" />
-        <span className="ml-2">Grid</span>
+      <ToggleGroupItem value="auto" aria-label="Grid view" asChild>
+        <Button size="icon" variant="outline">
+          <LayoutGrid className="h-4 w-4" />
+        </Button>
       </ToggleGroupItem>
     </ToggleGroup>
   );

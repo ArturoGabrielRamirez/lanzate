@@ -8,7 +8,10 @@ import {
 } from "@/components/systaliko-ui/ecommerce/toggle-layout";
 import { ProductCardItem } from "@/features/products/components/product-card-item";
 import { ProductListItem } from "@/features/products/components/product-list-item";
-import type { ProductWithRelations, ProductsContentProps } from "@/features/products/types";
+import type {
+  ProductWithRelations,
+  ProductsContentProps,
+} from "@/features/products/types";
 import {
   Select,
   SelectContent,

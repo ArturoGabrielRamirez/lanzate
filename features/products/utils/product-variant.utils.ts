@@ -10,10 +10,12 @@ import type {
  * @returns Total de unidades en stock
  */
 export function getTotalStock(variant: ProductTableVariant): number {
-  return variant.stock_items?.reduce(
-    (sum: number, item: ProductTableStockItem) => sum + item.quantity,
-    0
-  ) || 0;
+  return (
+    variant.stock_items?.reduce(
+      (sum: number, item: ProductTableStockItem) => sum + item.quantity,
+      0,
+    ) || 0
+  );
 }
 
 /**
@@ -22,6 +24,7 @@ export function getTotalStock(variant: ProductTableVariant): number {
  * @returns String formateado con los valores de opciones (ej: "Rojo / Grande")
  */
 export function getVariantLabel(variant: ProductTableVariant): string {
+  console.log(variant);
   if (!variant.option_values || variant.option_values.length === 0) {
     return "Default";
   }
