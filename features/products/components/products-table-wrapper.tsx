@@ -13,7 +13,7 @@ async function ProductsTableContent({
     employeePermissions,
     branches,
     headerActions,
-    limit = 20,
+    limit = 5,
     orderBy = "created_at",
     page = 1,
     search = ""

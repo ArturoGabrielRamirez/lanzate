@@ -1,24 +1,24 @@
 "use client";
 
-import { HTMLMotionProps, LayoutGroup, motion } from "motion/react";
 import { List, LayoutGrid } from "lucide-react";
+import { HTMLMotionProps, LayoutGroup, motion } from "motion/react";
 import React from "react";
 
-import { cn } from "@/features/shadcn/lib/utils";
 import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/features/shadcn/components/ui/toggle-group";
+import { cn } from "@/features/shadcn/lib/utils";
 
 const layout_config = {
   list: {
     mode: "list",
-    className: "flex flex-col space-y-4",
+    className: "flex flex-col",
     label: "List view",
   },
   auto: {
     mode: "auto",
-    className: "grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4",
+    className: "grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4",
     label: "Grid view",
   },
 };
@@ -95,7 +95,7 @@ export function SelectLayoutGroup({
   const handleValueChange = (value: string) => {
     if (value) {
       const newIndex = layout_config_values.findIndex(
-        (config) => config.mode === value
+        (config) => config.mode === value,
       );
       if (newIndex !== -1) {
         setModeIndex(newIndex);

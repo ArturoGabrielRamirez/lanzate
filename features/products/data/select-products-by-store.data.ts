@@ -17,6 +17,15 @@ export async function selectProductsByStoreData(identifier: StoreIdentifier, lim
         storeWhere.subdomain = sanitizedSubdomain
     }
 
+    // Parse orderBy format: "field-direction" (e.g., "name-asc", "price-desc")
+    const [field, direction] = orderBy.includes('-')
+        ? orderBy.split('-')
+        : [orderBy, 'desc']; // fallback for backward compatibility
+
+    const validDirection = direction === 'asc' || direction === 'desc'
+        ? direction
+        : 'desc';
+
     const products = await prisma.product.findMany({
         where: {
             store: storeWhere,
@@ -57,7 +66,7 @@ export async function selectProductsByStoreData(identifier: StoreIdentifier, lim
             }
         },
         orderBy: {
-            [orderBy]: 'desc'
+            [field]: validDirection
         },
         take: limit,
         skip: limit * (page - 1)

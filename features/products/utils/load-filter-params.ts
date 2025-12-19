@@ -8,7 +8,7 @@ export const filterSearchParams = {
     min: parseAsString.withDefault(""),
     max: parseAsString.withDefault(""),
     page: parseAsInteger.withDefault(1),
-    limit: parseAsInteger.withDefault(10),
+    limit: parseAsInteger.withDefault(5),
     offset: parseAsInteger.withDefault(0),
 }
 

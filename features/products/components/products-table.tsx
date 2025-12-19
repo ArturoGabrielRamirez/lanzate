@@ -89,62 +89,97 @@ import {
 } from "@/components/systaliko-ui/ecommerce/toggle-layout";
 import type { ProductsTableProps } from "@/features/products/types";
 import { cn } from "@/lib/utils";
+import { Card, CardHeader } from "@/features/shadcn/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/features/shadcn/components/ui/select";
 
 function ProductsTable({ data }: ProductsTableProps) {
   const [limit, setLimit] = useQueryState("limit", { shallow: false });
   const [orderBy, setOrderBy] = useQueryState("orderBy", { shallow: false });
   const [loading, startTransition] = useTransition();
 
-  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    startTransition(() => {
-      setLimit(e.target.value);
-    });
-  };
-
-  const handleOrderByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    startTransition(() => {
-      setOrderBy(e.target.value);
-    });
-  };
-
   return (
-    <>
-      <div
-        className={cn("flex flex-col gap-4 relative", loading && "opacity-50")}
-      >
-        {loading && (
-          <Loader2 className="size-4 animate-spin absolute top-0 left-0" />
-        )}
-        <ToggleLayout>
-          <SelectLayoutGroup className="mb-8" />
-          <ToggleLayoutContainer>
-            {data.map((product: Product) => {
-              return (
-                <ToggleLayoutCell key={product.id}>
-                  <h2>{product.name}</h2>
-                </ToggleLayoutCell>
-              );
-            })}
-          </ToggleLayoutContainer>
-        </ToggleLayout>
-      </div>
-      <select
-        value={orderBy || "created_at"}
-        onChange={handleOrderByChange}
-        disabled={loading}
-      >
-        <option value="created_at">created at</option>
-        <option value="name">name</option>
-        <option value="price">price</option>
-      </select>
-      <select value={limit?.toString() || "10"} onChange={handleLimitChange}>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-    </>
+    <div
+      className={cn("flex flex-col gap-4 relative", loading && "opacity-50")}
+    >
+      {loading && (
+        <Loader2 className="size-4 animate-spin absolute top-0 left-0" />
+      )}
+      <ToggleLayout>
+        {/* Fila de controles */}
+        <div className="flex items-center gap-3 mb-6 flex-wrap">
+          {/* OrderBy Select */}
+          <Select
+            value={orderBy || "created_at-desc"}
+            onValueChange={(value) => {
+              startTransition(() => {
+                setOrderBy(value);
+              });
+            }}
+            disabled={loading}
+          >
+            <SelectTrigger size="sm" className="w-[160px]">
+              <SelectValue placeholder="Sort by..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="name-asc">Name ↑</SelectItem>
+              <SelectItem value="name-desc">Name ↓</SelectItem>
+              <SelectItem value="price-asc">Price ↑</SelectItem>
+              <SelectItem value="price-desc">Price ↓</SelectItem>
+              <SelectItem value="created_at-asc">Created ↑</SelectItem>
+              <SelectItem value="created_at-desc">Created ↓</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Limit Select */}
+          <Select
+            value={limit?.toString() || "5"}
+            onValueChange={(value) => {
+              startTransition(() => {
+                setLimit(value);
+              });
+            }}
+            disabled={loading}
+          >
+            <SelectTrigger size="sm" className="w-[100px]">
+              <SelectValue placeholder="Limit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">1</SelectItem>
+              <SelectItem value="2">2</SelectItem>
+              <SelectItem value="3">3</SelectItem>
+              <SelectItem value="4">4</SelectItem>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Toggle List/Grid */}
+          <SelectLayoutGroup className="ml-auto" />
+        </div>
+
+        {/* Grid de productos */}
+        <ToggleLayoutContainer>
+          {data.map((product: Product) => {
+            return (
+              <ToggleLayoutCell key={product.id}>
+                <Card>
+                  <CardHeader>
+                    <h2>{product.name}</h2>
+                  </CardHeader>
+                </Card>
+              </ToggleLayoutCell>
+            );
+          })}
+        </ToggleLayoutContainer>
+      </ToggleLayout>
+    </div>
   );
 }
 
