@@ -296,6 +296,9 @@ function SaleInterface({ storeId, branchId, subdomain, processed_by_user_id, bra
     onClearCart: () => {
       clickWithRetry('[data-action="clear-cart"]')
     },
+    onOpenCameraScanner: () => {
+      clickWithRetry('[data-action="open-camera-scanner"]')
+    },
 
     // Acciones directas (sin botón visible)
     onRefund: handleRefund,

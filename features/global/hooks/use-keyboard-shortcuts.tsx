@@ -20,6 +20,7 @@ export function useKeyboardShortcuts(config: KeyboardShortcutsConfig = {}) {
         onClearSearch,
         onIncreaseQuantity,
         onDecreaseQuantity,
+        onOpenCameraScanner,
 
         // Account callbacks
         onEditProfile,
@@ -140,6 +141,15 @@ export function useKeyboardShortcuts(config: KeyboardShortcutsConfig = {}) {
         e.preventDefault()
         if (onRefund) {
             onRefund()
+        }
+    }, { enableOnFormTags: false })
+
+    // S - Scanner de cámara
+    useHotkeys('s', (e) => {
+        if (disabled || !isInSale) return
+        e.preventDefault()
+        if (onOpenCameraScanner) {
+            onOpenCameraScanner()
         }
     }, { enableOnFormTags: false })
 

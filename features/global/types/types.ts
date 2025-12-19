@@ -133,6 +133,7 @@ export interface KeyboardShortcutsConfig {
     onClearSearch?: () => void
     onIncreaseQuantity?: () => void
     onDecreaseQuantity?: () => void
+    onOpenCameraScanner?: () => void
 
     // ============ ACCOUNT CALLBACKS ============
     onEditProfile?: () => void

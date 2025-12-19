@@ -4,9 +4,11 @@ import { BarcodeScanner } from '@thewirv/react-barcode-scanner'
 import { Camera, X, AlertCircle } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
+import { InlineShortcut } from '@/features/global/components'
 import type { BarcodeScannerCammeraButtonProps } from '@/features/sale/types'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { Button } from '@/features/shadcn/components/ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shadcn/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
 function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammeraButtonProps) {
@@ -57,17 +59,28 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
 
     return (
         <>
-            <Button 
-                variant="outline" 
-                size="icon" 
-                onClick={handleOpen}
-                disabled={hasCamera === null}
-                className={cn(
-                    hasCamera === false && "border-destructive bg-destructive/10 text-destructive hover:bg-destructive/20"
-                )}
-            >
-                <Camera />
-            </Button>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button
+                        data-action="open-camera-scanner"
+                        variant="outline"
+                        size="icon"
+                        onClick={handleOpen}
+                        disabled={hasCamera === null}
+                        className={cn(
+                            hasCamera === false && "border-destructive bg-destructive/10 text-destructive hover:bg-destructive/20"
+                        )}
+                    >
+                        <Camera />
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <span className="flex items-center gap-1">
+                        Scanner de cámara
+                        <InlineShortcut keys={['S']} />
+                    </span>
+                </TooltipContent>
+            </Tooltip>
 
             {error && (
                 <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md mx-4">

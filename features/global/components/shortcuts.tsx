@@ -29,9 +29,11 @@ function ShortcutsStatusBar({ hasCartItems = false }: { hasCartItems?: boolean }
       { keys: ['V'], label: 'Vuelto' },
       { keys: ['P'], label: 'Imprimir' },
       { keys: ['L'], label: 'Limpiar' },
+      { keys: ['S'], label: 'Cámara' },
     ]
     : [
       { keys: ['Ctrl', 'B'], label: 'Buscar' },
+      { keys: ['S'], label: 'Cámara' },
       { keys: ['Esc'], label: 'Cancelar' },
       { keys: ['H'], label: 'Ayuda' },
     ]
