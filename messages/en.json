@@ -1565,7 +1565,8 @@
             }
         },
         "products-tab": {
-            "error-loading-store": "Error loading store information"
+            "error-loading-store": "Error loading store information",
+            "loading-products": "Loading products..."
         },
         "products-table": {
             "headers": {
@@ -1577,11 +1578,13 @@
                 "featured": "Featured",
                 "active": "Active",
                 "published": "Published",
+                "status": "Status",
                 "actions": "Actions"
             },
             "categories": {
                 "none": "None"
             },
+            "search-placeholder": "Search products...",
             "boolean": {
                 "yes": "Yes",
                 "no": "No"
@@ -1612,6 +1615,12 @@
                 "description": "Description",
                 "created_at": "Created at",
                 "updated_at": "Updated at"
+            },
+            "expanded": {
+                "description": "Description",
+                "barcode": "Barcode",
+                "stock-by-branch": "Stock by branch",
+                "no-additional-info": "No additional information available"
             }
         },
         "create-product": {

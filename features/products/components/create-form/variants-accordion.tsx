@@ -1,7 +1,7 @@
 "use client"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 import { VariantsTable } from "@/features/products/components/create-form/variants-table"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/features/shadcn/components/ui/accordion"
 
 interface VariantsAccordionProps {
     variantsCount: number

@@ -15,13 +15,23 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next"
-      }
+        "name": "next",
+      },
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": ["./*"],
+    },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs", ".next/types/**/*.ts", "app/auth/confirm-first-email", "features/global/components/media-selector/actions"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.mjs",
+    ".next/types/**/*.ts",
+    "app/auth/confirm-first-email",
+    "features/global/components/media-selector/actions",
+    "features/**/*",
+  ],
+  "exclude": ["node_modules"],
 }

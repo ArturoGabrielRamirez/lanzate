@@ -2,7 +2,7 @@
 
 import { EyeIcon, EyeOffIcon, InfoIcon } from "lucide-react"
 import { useState } from "react"
-import { useFormContext, Controller } from "react-hook-form"
+import { useFormContext, Controller, useForm } from "react-hook-form"
 
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/features/shadcn/components/field"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText } from "@/features/shadcn/components/input-group"
@@ -53,7 +53,9 @@ function InputField({
     autoFocus?: boolean
 }) {
 
-    const { control } = useFormContext();
+    const context = useFormContext();
+    const control = context?.control || undefined;
+    const backupControl = useForm().control;
     const [showPassword, setShowPassword] = useState(false);
 
     const handleTogglePasswordVisibility = () => {
@@ -63,7 +65,7 @@ function InputField({
     return (
         <Controller
             name={name}
-            control={control}
+            control={control || backupControl}
             render={({ field, fieldState }) => {
 
                 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

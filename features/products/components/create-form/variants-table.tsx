@@ -68,7 +68,7 @@ export function VariantsTable({ readOnly = false }: VariantsTableProps) {
 
     return (
         <div className="flex flex-col gap-2">
-            <div className="border rounded-lg overflow-hidden">
+            <div className="border rounded-lg">
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -79,7 +79,7 @@ export function VariantsTable({ readOnly = false }: VariantsTableProps) {
                             {!readOnly && <TableHead className="w-[50px]"></TableHead>}
                         </TableRow>
                     </TableHeader>
-                    <TableBody className="overflow-x-auto">
+                    <TableBody>
                         {variants.map((variant, index) => (
                             <TableRow key={variant.id || index}>
                                 <TableCell className="font-medium">

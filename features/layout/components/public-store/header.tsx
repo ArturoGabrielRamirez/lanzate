@@ -1,13 +1,13 @@
 import { Rocket, Facebook, Instagram } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 
 import CartIcon from "@/features/cart/components/cart-icon"
 import { getUserInfo } from "@/features/global/actions"
-import { LandingAccountDropdown } from "@/features/header/components"
+import { StoreAccountDropdown } from "@/features/layout/components/public-store/store-account-dropdown"
 import { XformerlyTwitter } from "@/features/layout/components/public-store/x-formerly-twitter"
 import { HeaderProps } from "@/features/layout/types/types"
+import { Link } from "@/i18n/naviation"
 
 async function Header({ title = "Store Name", socialMedia, showSocialLinks = true, logo }: HeaderProps) {
 
@@ -35,7 +35,7 @@ async function Header({ title = "Store Name", socialMedia, showSocialLinks = tru
                 {!user && <Link href='/login' className='p-2 hover:underline hover:!text-primary'>{t("login")}</Link>}
                 {!user && <Link href='/signup' className='p-2 hover:underline hover:text-primary'>{t("sign-up")}</Link>}
                 <CartIcon />
-                {user && <LandingAccountDropdown />}
+                {user && <StoreAccountDropdown />}
 
                 {showSocialLinks && hasSocialMedia && (
                     <div className="flex items-center gap-2 ml-4 pl-4 border-l border-border">

@@ -1439,7 +1439,8 @@
             }
         },
         "products-tab": {
-            "error-loading-store": "Error al cargar información de la tienda"
+            "error-loading-store": "Error al cargar información de la tienda",
+            "loading-products": "Cargando productos..."
         },
         "products-table": {
             "headers": {
@@ -1451,11 +1452,13 @@
                 "featured": "Destacado",
                 "active": "Activo",
                 "published": "Publicado",
+                "status": "Estado",
                 "actions": "Acciones"
             },
             "categories": {
                 "none": "Ninguna"
             },
+            "search-placeholder": "Buscar productos...",
             "boolean": {
                 "yes": "Sí",
                 "no": "No"
@@ -1486,6 +1489,12 @@
                 "description": "Descripción",
                 "created_at": "Fecha de creación",
                 "updated_at": "Fecha de actualización"
+            },
+            "expanded": {
+                "description": "Descripción",
+                "barcode": "Código de barras",
+                "stock-by-branch": "Stock por sucursal",
+                "no-additional-info": "No hay información adicional disponible"
             }
         },
         "create-product": {

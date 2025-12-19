@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '3mb',
     },
+    useCache : true
   },
   transpilePackages: ['yup'],
   devIndicators: {

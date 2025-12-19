@@ -1,17 +1,15 @@
 import { getTranslations } from "next-intl/server";
 
-import { getUserInfo } from "@/features/global/actions/get-user-info.action";
 import { HamburguerIcon } from "@/features/header/components/hamburguer-icon";
 import { LogoutLink } from "@/features/header/components/logout-link";
 import { SettingsToolbar } from "@/features/header/components/settings-toolbar";
 import { UserAvatar } from "@/features/header/components/user-avatar";
-import { DRAWER_MENU_ITEMS_GUEST, NAV_MENU_ITEMS_AUTH } from "@/features/header/constants";
+import type { MobileDrawerProps } from "@/features/header/types";
 import { DropDrawer, DropDrawerTrigger, DropDrawerContent, DropDrawerItem, DropDrawerGroup, DropDrawerLabel } from "@/features/shadcn/components/dropdrawer";
 import { Link } from "@/i18n/naviation";
 
-async function MobileDrawer() {
+async function MobileDrawer({ user, menuItems }: MobileDrawerProps) {
 
-    const { payload: user } = await getUserInfo()
     const t = await getTranslations('layout.header.mobileDrawer');
     const tNav = await getTranslations();
 
@@ -20,9 +18,7 @@ async function MobileDrawer() {
             <DropDrawerTrigger className="rounded-full border-none outline-none ml-4" asChild>
                 <div>
                     {user && <UserAvatar user={user} size="sm" />}
-                    {!user && (
-                        <HamburguerIcon />
-                    )}
+                    {!user && <HamburguerIcon />}
                 </div>
             </DropDrawerTrigger>
             <DropDrawerContent className="outline-none">
@@ -37,26 +33,14 @@ async function MobileDrawer() {
                         </DropDrawerItem>
                     </DropDrawerGroup>
                 )}
-                {user && (
-                    <DropDrawerGroup>
-                        <DropDrawerLabel>{t('menu')}</DropDrawerLabel>
-                        {NAV_MENU_ITEMS_AUTH.map((item) => (
-                            <DropDrawerItem key={item.href} icon={item.icon}>
-                                <Link href={item.href}>{tNav(item.label)}</Link>
-                            </DropDrawerItem>
-                        ))}
-                    </DropDrawerGroup>
-                )}
-                {!user && (
-                    <DropDrawerGroup>
-                        <DropDrawerLabel>{t('menu')}</DropDrawerLabel>
-                        {DRAWER_MENU_ITEMS_GUEST.map((item) => (
-                            <DropDrawerItem key={item.href} icon={item.icon}>
-                                <Link href={item.href} className="w-full">{tNav(item.label)}</Link>
-                            </DropDrawerItem>
-                        ))}
-                    </DropDrawerGroup>
-                )}
+                <DropDrawerGroup>
+                    <DropDrawerLabel>{t('menu')}</DropDrawerLabel>
+                    {menuItems.map((item) => (
+                        <DropDrawerItem key={item.href} icon={item.icon}>
+                            <Link href={item.href} className="w-full">{tNav(item.label)}</Link>
+                        </DropDrawerItem>
+                    ))}
+                </DropDrawerGroup>
                 <DropDrawerGroup className="md:hidden">
                     <DropDrawerLabel>{t('settings')}</DropDrawerLabel>
                     <DropDrawerItem className="justify-center">

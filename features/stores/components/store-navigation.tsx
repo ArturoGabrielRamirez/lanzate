@@ -16,7 +16,7 @@ export function StoreNavigation({ slug }: StoreNavigationProps) {
     const pathname = usePathname()
 
     return (
-        <ItemGroup className="grid @md:grid-cols-6 grid-cols-3 gap-4">
+        <ItemGroup className="grid grid-cols-4 @sm:grid-cols-5 @md:grid-cols-6 gap-4">
             {STORES_NAVIGATION_LINKS.map((link) => {
                 const linkPath = `/stores/${slug}${link.href === "/" ? "" : link.href}`
 

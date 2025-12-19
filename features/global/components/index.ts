@@ -1,6 +1,7 @@
 export * from "@/features/global/components/button-with-popup"
 export * from "@/features/global/components/data-table"
 export * from "@/features/global/components/global-shortcuts-wrapper"
+export * from "@/features/global/components/query-provider"
 export * from "@/features/global/components/image-cropper"
 export * from "@/features/global/components/keyboard-shortcuts-help"
 export * from "@/features/global/components/landing-section-icon-title"
