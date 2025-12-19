@@ -81,54 +81,53 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
         isInAccount: true,
         activeAccountTab: activeTab,
 
-        // Navegación entre tabs
+        // Navegación entre tabs (1-4)
         onNavigateToAccount: () => navigateToTab('account'),
         onNavigateToSecurity: () => navigateToTab('security'),
         onNavigateToMembership: () => navigateToTab('membership'),
         onNavigateToDangerZone: () => navigateToTab('danger-zone'),
 
-        // Editar perfil
+        // Navegación a tiendas (T)
+        onNavigateToStores: () => {
+            window.location.href = '/stores'
+        },
+
+        // Acciones en tab Info Básica (E, A, B)
         onEditProfile: () => {
-            if (activeTab === 'account') {
-                clickWithRetry('[data-action="edit-profile"]', 10, 100)
-            }
+            clickWithRetry('[data-action="edit-profile"]', 10, 100)
         },
 
         onChangeAvatar: () => {
             clickWithRetry('[data-action="change-avatar"]')
         },
 
+        onChangeBanner: () => {
+            clickWithRetry('[data-action="change-banner"]')
+        },
+
+        // Acciones en tab Seguridad (M, P)
         onChangeEmail: () => {
-            if (activeTab === 'security') {
-                clickWithRetry('[data-action="change-email"]')
-            }
+            clickWithRetry('[data-action="change-email"]')
         },
 
         onChangePassword: () => {
-            if (activeTab === 'security') {
-                clickWithRetry('[data-action="change-password"]')
-            }
+            clickWithRetry('[data-action="change-password"]')
         },
 
+        // Acciones en tab Membresía (U, X)
         onUpgradePlan: () => {
-            if (activeTab === 'membership') {
-                const upgradeButton = document.querySelector('[data-action="upgrade-plan"]') as HTMLButtonElement
-                upgradeButton?.scrollIntoView({ behavior: 'smooth' })
-                clickWithRetry('[data-action="upgrade-plan"]')
-            }
+            const upgradeButton = document.querySelector('[data-action="upgrade-plan"]') as HTMLButtonElement
+            upgradeButton?.scrollIntoView({ behavior: 'smooth' })
+            clickWithRetry('[data-action="upgrade-plan"]')
         },
 
         onCancelSubscription: () => {
-            if (activeTab === 'membership') {
-                clickWithRetry('[data-action="cancel-subscription"]')
-            }
+            clickWithRetry('[data-action="cancel-subscription"]')
         },
 
-        // Eliminar cuenta - MEJORADO
+        // Acción en tab Zona Peligro (D)
         onDeleteAccount: () => {
-            if (activeTab === 'danger-zone') {
-                openDangerZoneDialog()
-            }
+            openDangerZoneDialog()
         }
     })
 
@@ -146,34 +145,39 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
 
     // Obtener shortcuts según el tab activo
     const getAccountShortcuts = () => {
-        switch (activeTab) {
-            case 'account':
-                return [
-                    { keys: ['E'], label: 'Editar' },
-                    { keys: ['A'], label: 'Avatar' },
-                    { keys: ['H'], label: 'Ayuda' },
-                ]
-            case 'security':
-                return [
-                    { keys: ['E'], label: 'Volver' },
-                    { keys: ['1'], label: 'Email' },
-                    { keys: ['2'], label: 'Contraseña' },
-                    { keys: ['H'], label: 'Ayuda' },
-                ]
-            case 'membership':
-                return [
-                    { keys: ['E'], label: 'Volver' },
-                    { keys: ['U'], label: 'Upgrade' },
-                    { keys: ['C'], label: 'Cancelar' },
-                    { keys: ['H'], label: 'Ayuda' },
-                ]
-            case 'danger-zone':
-                return [
-                    { keys: ['E'], label: 'Volver' },
-                    { keys: ['D'], label: 'Eliminar' },
-                    { keys: ['H'], label: 'Ayuda' },
-                ]
+        // Navegación común
+        const navigation = [
+            { keys: ['1'], label: 'Info' },
+            { keys: ['2'], label: 'Seguridad' },
+            { keys: ['3'], label: 'Membresía' },
+            { keys: ['4'], label: 'Peligro' },
+            { keys: ['T'], label: 'Tiendas' },
+        ]
+
+        // Acciones específicas por tab
+        const actions: Record<typeof activeTab, { keys: string[], label: string }[]> = {
+            'account': [
+                { keys: ['E'], label: 'Editar' },
+                { keys: ['A'], label: 'Avatar' },
+                { keys: ['B'], label: 'Banner' },
+            ],
+            'security': [
+                { keys: ['M'], label: 'Email' },
+                { keys: ['P'], label: 'Contraseña' },
+            ],
+            'membership': [
+                { keys: ['U'], label: 'Upgrade' },
+                { keys: ['X'], label: 'Cancelar' },
+            ],
+            'danger-zone': [
+                { keys: ['D'], label: 'Eliminar' },
+            ]
         }
+
+        return [
+            ...actions[activeTab],
+            { keys: ['H'], label: 'Ayuda' },
+        ]
     }
 
     // Función para obtener el título según el tab activo
@@ -314,7 +318,7 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
                                         <User className="size-4" />
                                         <span>Información Básica</span>
                                         <kbd className={`hidden xl:inline-flex ml-2 px-1.5 py-0.5 text-xs font-semibold bg-muted/50 text-muted-foreground border border-border/50 rounded transition-opacity duration-200 ${getHintClasses()}`}>
-                                            E
+                                            1
                                         </kbd>
                                     </div>
                                 </TabsTab>
@@ -323,7 +327,7 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
                                         <Shield className="size-4" />
                                         <span>Seguridad</span>
                                         <kbd className={`hidden xl:inline-flex ml-2 px-1.5 py-0.5 text-xs font-semibold bg-muted/50 text-muted-foreground border border-border/50 rounded transition-opacity duration-200 ${getHintClasses()}`}>
-                                            1
+                                            2
                                         </kbd>
                                     </div>
                                 </TabsTab>
@@ -332,7 +336,7 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
                                         <CreditCard className="size-4" />
                                         <span>Membresía</span>
                                         <kbd className={`hidden xl:inline-flex ml-2 px-1.5 py-0.5 text-xs font-semibold bg-muted/50 text-muted-foreground border border-border/50 rounded transition-opacity duration-200 ${getHintClasses()}`}>
-                                            U
+                                            3
                                         </kbd>
                                     </div>
                                 </TabsTab>
@@ -341,7 +345,7 @@ export function AccountPageClient({ user: initialUser, translations: t }: Accoun
                                         <AlertTriangle className="size-4" />
                                         <span>Zona de Peligro</span>
                                         <kbd className={`hidden xl:inline-flex ml-2 px-1.5 py-0.5 text-xs font-semibold bg-muted/50 text-muted-foreground border border-border/50 rounded transition-opacity duration-200 ${getHintClasses()}`}>
-                                            D
+                                            4
                                         </kbd>
                                     </div>
                                 </TabsTab>

@@ -16,21 +16,25 @@ export function AccountNavigation() {
             icon: User,
             label: "Información",
             value: "account",
+            shortcut: "1",
         },
         {
             icon: Shield,
             label: "Seguridad",
             value: "security",
+            shortcut: "2",
         },
         {
             icon: CreditCard,
             label: "Membresía",
             value: "membership",
+            shortcut: "3",
         },
         {
             icon: AlertTriangle,
             label: "Peligro",
             value: "danger-zone",
+            shortcut: "4",
         },
         {
             icon: Settings,
@@ -127,8 +131,14 @@ export function AccountNavigation() {
                                 </Item>
                             </motion.div>
                         </TooltipTrigger>
-                        <TooltipContent>
-                            {section.label} {section.disabled && "(Próximamente)"}
+                        <TooltipContent className="flex items-center gap-2">
+                            <span>{section.label}</span>
+                            {section.disabled && <span className="text-muted-foreground">(Próximamente)</span>}
+                            {section.shortcut && !section.disabled && (
+                                <kbd className="px-1.5 py-0.5 text-xs font-semibold bg-muted border border-border rounded">
+                                    {section.shortcut}
+                                </kbd>
+                            )}
                         </TooltipContent>
                     </Tooltip>
                 )
