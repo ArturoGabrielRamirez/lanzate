@@ -9,7 +9,10 @@
       "Bash(rm:*)",
       "Bash(bunx tsc:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "WebFetch(domain:ui.shadcn.com)",
+      "Bash(bunx shadcn@latest add:*)",
+      "Bash(bun x shadcn@latest add:*)"
     ],
     "deny": [],
     "ask": []

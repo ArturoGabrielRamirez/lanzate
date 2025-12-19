@@ -1,40 +1,31 @@
-'use client';
+"use client";
 
-import { HTMLMotionProps, LayoutGroup, motion } from 'motion/react';
-import React from 'react';
+import { HTMLMotionProps, LayoutGroup, motion } from "motion/react";
+import { List, LayoutGrid } from "lucide-react";
+import React from "react";
 
-import { cn } from '@/features/shadcn/lib/utils';
-
+import { cn } from "@/features/shadcn/lib/utils";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/features/shadcn/components/ui/toggle-group";
 
 const layout_config = {
   list: {
-    mode: 'list',
-    className: 'flex flex-col space-y-4',
-    label: 'list view',
+    mode: "list",
+    className: "flex flex-col space-y-4",
+    label: "List view",
   },
-  col2: {
-    mode: 'col2',
-    className: 'md:grid md:grid-cols-2 gap-4',
-    label: '2 column view',
-  },
-  col3: {
-    mode: 'col3',
-    className: 'md:grid md:grid-cols-3 gap-4',
-    label: '3 column view',
-  },
-  col4: {
-    mode: 'col4',
-    className: 'md:grid md:grid-cols-4 gap-4',
-    label: '4 column view',
+  auto: {
+    mode: "auto",
+    className: "grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4",
+    label: "Grid view",
   },
 };
 const animation_variants = {
   container: {
     list: { transition: { staggerChildren: 0.02 } },
-    col2: { transition: { staggerChildren: 0.1 } },
-    col3: { transition: { staggerChildren: 0.15 } },
-    col4: { transition: { staggerChildren: 0.2 } },
-    auto: { transition: { staggerChildren: 0.25 } },
+    auto: { transition: { staggerChildren: 0.1 } },
   },
   card: {
     hidden: { opacity: 0, y: 20 },
@@ -48,11 +39,11 @@ interface ToggleLayoutContextValue {
 const ToggleLayoutContext = React.createContext<
   ToggleLayoutContextValue | undefined
 >(undefined);
-function useToggleLayoutContext() {
+export function useToggleLayoutContext() {
   const context = React.useContext(ToggleLayoutContext);
   if (context === undefined) {
     throw new Error(
-      'useToggleLayoutContext must be used within a ToggleLayoutProvider',
+      "useToggleLayoutContext must be used within a ToggleLayoutProvider",
     );
   }
   return context;
@@ -72,7 +63,7 @@ export function ToggleLayout({
 export function ToggleLayoutContainer({
   className,
   ...props
-}: HTMLMotionProps<'div'>) {
+}: HTMLMotionProps<"div">) {
   const { modeIndex } = useToggleLayoutContext();
   const layout_config_values = [...Object.values(layout_config)];
 
@@ -95,44 +86,51 @@ export function SelectLayoutGroup({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   const { modeIndex, setModeIndex } = useToggleLayoutContext();
-  const layout_config_values = [...Object.values(layout_config)];
+  const layout_config_values = Object.values(layout_config);
+
+  // Convert modeIndex to mode string for ToggleGroup
+  const currentMode = layout_config_values[modeIndex]?.mode || "list";
+
+  // Handle value change from ToggleGroup
+  const handleValueChange = (value: string) => {
+    if (value) {
+      const newIndex = layout_config_values.findIndex(
+        (config) => config.mode === value
+      );
+      if (newIndex !== -1) {
+        setModeIndex(newIndex);
+      }
+    }
+  };
 
   return (
-    <div
-      className={cn(
-        'relative flex -space-x-px -space-y-px flex-col items-start md:flex-row justify-start   w-fit',
-        className,
-      )}
+    <ToggleGroup
+      type="single"
+      value={currentMode}
+      onValueChange={handleValueChange}
+      className={cn("w-fit", className)}
       {...props}
     >
-      {layout_config_values.map((config, index) => (
-        <div className="relative" id="layout-toggle-button" key={config.mode}>
-          <button
-            onClick={() => setModeIndex(index)}
-            className="appearance-none border  bg-none text-nowrap text-sm px-2.5 font-medium py-2"
-          >
-            <span className="hover:underline-none">{config.label}</span>
-          </button>
-          {index === modeIndex && (
-            <motion.div
-              className="mix-blend-difference z-2 rounded-inherit absolute inset-0 bg-secondary"
-              layoutId="layout-toggle-button"
-            />
-          )}
-        </div>
-      ))}
-    </div>
+      <ToggleGroupItem value="list" aria-label="List view">
+        <List className="h-4 w-4" />
+        <span className="ml-2">List</span>
+      </ToggleGroupItem>
+      <ToggleGroupItem value="auto" aria-label="Grid view">
+        <LayoutGrid className="h-4 w-4" />
+        <span className="ml-2">Grid</span>
+      </ToggleGroupItem>
+    </ToggleGroup>
   );
 }
 
-export function ToggleLayoutCell({ ...props }: HTMLMotionProps<'div'>) {
+export function ToggleLayoutCell({ ...props }: HTMLMotionProps<"div">) {
   return (
     <motion.div
       layout
       variants={animation_variants.card}
       initial="hidden"
       animate="visible"
-      transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+      transition={{ type: "spring", stiffness: 200, damping: 25 }}
       exit="hidden"
       {...props}
     />
