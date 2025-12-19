@@ -134,6 +134,7 @@ export interface KeyboardShortcutsConfig {
     onIncreaseQuantity?: () => void
     onDecreaseQuantity?: () => void
     onOpenCameraScanner?: () => void
+    onToggleUsbScanner?: () => void
 
     // ============ ACCOUNT CALLBACKS ============
     onEditProfile?: () => void

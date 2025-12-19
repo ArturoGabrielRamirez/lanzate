@@ -21,6 +21,7 @@ export function useKeyboardShortcuts(config: KeyboardShortcutsConfig = {}) {
         onIncreaseQuantity,
         onDecreaseQuantity,
         onOpenCameraScanner,
+        onToggleUsbScanner,
 
         // Account callbacks
         onEditProfile,
@@ -153,6 +154,24 @@ export function useKeyboardShortcuts(config: KeyboardShortcutsConfig = {}) {
         }
     }, { enableOnFormTags: false })
 
+    // B - Toggle scanner USB (en Sale) / Cambiar Banner (en Account)
+    useHotkeys('b', (e) => {
+        if (disabled) return
+        // En Sale: toggle USB scanner
+        if (isInSale) {
+            e.preventDefault()
+            if (onToggleUsbScanner) {
+                onToggleUsbScanner()
+            }
+            return
+        }
+        // En Account tab account: cambiar banner
+        if (isInAccount && activeAccountTab === 'account') {
+            e.preventDefault()
+            if (onChangeBanner) onChangeBanner()
+        }
+    }, { enableOnFormTags: false })
+
     // Esc - Limpiar búsqueda
     useHotkeys('escape', (e) => {
         if (disabled || !isInSale) return
@@ -242,13 +261,6 @@ export function useKeyboardShortcuts(config: KeyboardShortcutsConfig = {}) {
         if (disabled || !isInAccount || activeAccountTab !== 'account') return
         e.preventDefault()
         if (onChangeAvatar) onChangeAvatar()
-    }, { enableOnFormTags: false })
-
-    // B - Cambiar Banner (solo en tab account)
-    useHotkeys('b', (e) => {
-        if (disabled || !isInAccount || activeAccountTab !== 'account') return
-        e.preventDefault()
-        if (onChangeBanner) onChangeBanner()
     }, { enableOnFormTags: false })
 
     // M - Cambiar eMail (solo en tab security)

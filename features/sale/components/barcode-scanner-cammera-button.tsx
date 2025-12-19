@@ -31,6 +31,21 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
         checkCamera();
     }, []);
 
+    // Cleanup al desmontar el componente
+    useEffect(() => {
+        return () => {
+            // Detener cualquier stream de video al desmontar
+            const videoElements = document.querySelectorAll('video');
+            videoElements.forEach((video) => {
+                const stream = video.srcObject as MediaStream;
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    video.srcObject = null;
+                }
+            });
+        };
+    }, []);
+
     const handleOpen = async () => {
         if (hasCamera === false) {
             setError('No se detectó ninguna cámara. Por favor, conecta una cámara y recarga la página.');
@@ -50,6 +65,20 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
 
     const handleClose = () => {
         setIsOpen(false);
+        // Forzar detención de todos los tracks de video activos
+        navigator.mediaDevices.enumerateDevices()
+            .then(() => {
+                // Obtener y detener cualquier stream de video activo
+                const videoElements = document.querySelectorAll('video');
+                videoElements.forEach((video) => {
+                    const stream = video.srcObject as MediaStream;
+                    if (stream) {
+                        stream.getTracks().forEach(track => track.stop());
+                        video.srcObject = null;
+                    }
+                });
+            })
+            .catch(() => {});
     }
 
     const handleScan = (text: string) => {

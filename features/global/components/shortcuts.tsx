@@ -34,6 +34,7 @@ function ShortcutsStatusBar({ hasCartItems = false }: { hasCartItems?: boolean }
     : [
       { keys: ['Ctrl', 'B'], label: 'Buscar' },
       { keys: ['S'], label: 'Cámara' },
+      { keys: ['B'], label: 'USB' },
       { keys: ['Esc'], label: 'Cancelar' },
       { keys: ['H'], label: 'Ayuda' },
     ]
