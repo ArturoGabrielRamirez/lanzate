@@ -12,9 +12,13 @@
       "Bash(git commit:*)",
       "WebFetch(domain:ui.shadcn.com)",
       "Bash(bunx shadcn@latest add:*)",
-      "Bash(bun x shadcn@latest add:*)"
+      "Bash(bun x shadcn@latest add:*)",
+      "Bash(tree:*)",
+      "Bash(grep:*)",
+      "Bash(bunx eslint:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "spinnerTipsEnabled": true
 }

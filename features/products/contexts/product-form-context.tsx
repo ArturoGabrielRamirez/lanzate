@@ -10,32 +10,9 @@ import type {
   ColorsSectionData,
   SettingsSectionData,
   DimensionsSectionData,
-  ProductColor
+  ProductFormState,
+  ProductFormContextValue,
 } from "@/features/products/types"
-
-type ProductFormState = {
-  media: MediaSectionData & { deferredFiles?: DeferredFile[] } // ✅ Agregado
-  categories: CategoriesSectionData
-  sizes: SizesSectionData
-  colors: ColorsSectionData
-  settings: SettingsSectionData
-  dimensions: DimensionsSectionData
-  variants: { id: string; size?: string; measure?: string; color?: ProductColor }[]
-  variantExclusions: string[]
-}
-
-type ProductFormContextValue = {
-  state: ProductFormState
-  updateMedia: (data: Partial<MediaSectionData & { deferredFiles?: DeferredFile[] }>) => void
-  updateCategories: (data: CategoriesSectionData) => void
-  updateSizes: (data: SizesSectionData) => void
-  updateColors: (data: ColorsSectionData) => void
-  updateSettings: (data: SettingsSectionData) => void
-  updateDimensions: (data: DimensionsSectionData) => void
-  updateVariants: (variants: ProductFormState['variants']) => void
-  updateVariantExclusions: (exclusions: string[]) => void
-  resetForm: () => void
-}
 
 const initialState: ProductFormState = {
   media: { files: [], primaryIndex: null },

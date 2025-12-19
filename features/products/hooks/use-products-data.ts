@@ -82,7 +82,7 @@ function useProductsDataInternal(
  * Returns a function that matches tnks-data-table fetchDataFn interface.
  */
 export function createProductsDataHook(storeId: number) {
-    const hook = (
+    const useHook = (
         page: number,
         pageSize: number,
         search: string,
@@ -92,7 +92,7 @@ export function createProductsDataHook(storeId: number) {
     ) => useProductsDataInternal(storeId, page, pageSize, search, dateRange, sortBy, sortOrder)
 
     // Mark as query hook for tnks-data-table
-    hook.isQueryHook = true as const
-    return hook
+    useHook.isQueryHook = true as const
+    return useHook
 }
 

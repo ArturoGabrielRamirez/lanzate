@@ -45,7 +45,7 @@ function getStockColorClass(quantity: number) {
  */
 export function getProductColumns(
     ctx: ColumnFactoryContext,
-    handleRowDeselection?: ((rowId: string) => void) | null
+    _handleRowDeselection?: ((rowId: string) => void) | null
 ): ColumnDef<ProductsTableVariantRow, unknown>[] {
     return [
         // Selection column

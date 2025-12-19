@@ -2,6 +2,9 @@ import {
   Category,
   Product,
   ProductVariant,
+  ProductVariantValue,
+  ProductOptionValue,
+  ProductOption,
   StoreCustomization,
   Store,
   ProductMedia,
@@ -83,6 +86,34 @@ export type TFunction = (
   key: string,
   values?: Record<string, string | number | boolean | Date | undefined>,
 ) => string;
+
+// =====================
+// Product Form Context Types
+// =====================
+
+export type ProductFormState = {
+  media: MediaSectionData & { deferredFiles?: DeferredFile[] };
+  categories: CategoriesSectionData;
+  sizes: SizesSectionData;
+  colors: ColorsSectionData;
+  settings: SettingsSectionData;
+  dimensions: DimensionsSectionData;
+  variants: { id: string; size?: string; measure?: string; color?: ProductColor }[];
+  variantExclusions: string[];
+};
+
+export type ProductFormContextValue = {
+  state: ProductFormState;
+  updateMedia: (data: Partial<MediaSectionData & { deferredFiles?: DeferredFile[] }>) => void;
+  updateCategories: (data: CategoriesSectionData) => void;
+  updateSizes: (data: SizesSectionData) => void;
+  updateColors: (data: ColorsSectionData) => void;
+  updateSettings: (data: SettingsSectionData) => void;
+  updateDimensions: (data: DimensionsSectionData) => void;
+  updateVariants: (variants: ProductFormState['variants']) => void;
+  updateVariantExclusions: (exclusions: string[]) => void;
+  resetForm: () => void;
+};
 
 export type VariantPreview = {
   id: string;
@@ -529,6 +560,19 @@ export type VariantWithMedia = ProductVariant & {
   media?: ProductMedia[];
 };
 
+// Variant with full relations (used by variant helpers)
+export type VariantWithRelations = ProductVariant & {
+  option_values: (ProductVariantValue & {
+    value: {
+      value: string;
+      option: {
+        name: string;
+      };
+    };
+  })[];
+  stock_items: VariantStock[];
+};
+
 // Composed relations
 export type VariantFull = VariantWithColor &
   VariantWithStock &
@@ -586,13 +630,7 @@ export type EmployeePermissions = {
 };
 
 export type ProductsTableProps = {
-  data: Product[];
-  storeId?: number;
-  userId?: number;
-  slug?: string;
-  employeePermissions?: EmployeePermissions;
-  branches?: (Branch & { stock_items: VariantStock[] })[];
-  headerActions?: React.ReactNode;
+  data: ProductWithRelations[];
 };
 
 export type ProductsTableWrapperProps = {
@@ -692,6 +730,25 @@ export type ProductListContainerProps = { children: React.ReactNode };
 
 export type RelatedProductsProps = { productId: number };
 
+// Store products page component props
+export type ProductsContentProps = {
+  data: ProductWithRelations[];
+  loading: boolean;
+  limit: string | null;
+  setLimit: (value: string) => void;
+  orderBy: string | null;
+  setOrderBy: (value: string) => void;
+  startTransition: (callback: () => void) => void;
+};
+
+export type ProductListItemProps = {
+  product: ProductWithRelations;
+};
+
+export type ProductCardItemProps = {
+  product: ProductWithRelations;
+};
+
 // =====================
 // Dimension aliases via Pick<PrismaModel>
 // =====================
@@ -729,3 +786,46 @@ export interface ProductMediaSelectorProps {
   onChange?: (files: DeferredFile[]) => void;
   maxFiles?: number;
 }
+
+// =====================
+// Products Table Types
+// =====================
+
+/**
+ * Variant con todas las relaciones necesarias para la tabla
+ */
+export type ProductTableVariant = ProductVariant & {
+  option_values: (ProductVariantValue & {
+    value: ProductOptionValue & {
+      option: ProductOption;
+    };
+  })[];
+  stock_items: (VariantStock & {
+    branch: Branch;
+  })[];
+};
+
+/**
+ * Stock item usado en cálculos de inventario
+ */
+export type ProductTableStockItem = VariantStock & {
+  branch: Branch;
+};
+
+/**
+ * Option value usado en labels de variantes
+ */
+export type ProductTableOptionValue = ProductVariantValue & {
+  value: ProductOptionValue & {
+    option: ProductOption;
+  };
+};
+
+/**
+ * Resultado del cálculo de rango de precios
+ */
+export type PriceRange = {
+  min: number;
+  max: number;
+  display: string;
+};

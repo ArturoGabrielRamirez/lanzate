@@ -13,7 +13,7 @@ import { cn } from "@/features/shadcn/lib/utils";
 const layout_config = {
   list: {
     mode: "list",
-    className: "flex flex-col",
+    className: "flex flex-col divide-y divide-border border border-border rounded-lg overflow-hidden",
     label: "List view",
   },
   auto: {
@@ -83,8 +83,9 @@ export function ToggleLayoutContainer({
 
 export function SelectLayoutGroup({
   className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: {
+  className?: string;
+}) {
   const { modeIndex, setModeIndex } = useToggleLayoutContext();
   const layout_config_values = Object.values(layout_config);
 
@@ -109,7 +110,6 @@ export function SelectLayoutGroup({
       value={currentMode}
       onValueChange={handleValueChange}
       className={cn("w-fit", className)}
-      {...props}
     >
       <ToggleGroupItem value="list" aria-label="List view">
         <List className="h-4 w-4" />

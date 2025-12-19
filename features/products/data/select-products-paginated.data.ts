@@ -2,8 +2,8 @@
 
 import { Prisma } from "@prisma/client"
 
-import { flattenProducts } from "@/features/products/utils/flatten-products"
 import type { ProductsTableVariantRow } from "@/features/products/types"
+import { flattenProducts } from "@/features/products/utils/flatten-products"
 import { prisma } from "@/utils/prisma"
 
 export type PaginatedProductsParams = {

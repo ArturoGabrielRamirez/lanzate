@@ -1,16 +1,4 @@
-import { ProductVariant, ProductVariantValue, VariantStock } from "@prisma/client"
-
-type VariantWithRelations = ProductVariant & {
-    option_values: (ProductVariantValue & {
-        value: {
-            value: string
-            option: {
-                name: string
-            }
-        }
-    })[]
-    stock_items: VariantStock[]
-}
+import type { VariantWithRelations } from "@/features/products/types";
 
 /**
  * Builds a variant label from option values
