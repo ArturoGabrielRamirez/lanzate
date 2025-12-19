@@ -13,10 +13,10 @@ async function ProductsTableContent({
     employeePermissions,
     branches,
     headerActions,
-    limit,
-    orderBy,
-    page,
-    search
+    limit = 20,
+    orderBy = "created_at",
+    page = 1,
+    search = ""
 }: ProductsTableWrapperProps) {
     // Determine which identifier to use
     let identifier: StoreIdentifier

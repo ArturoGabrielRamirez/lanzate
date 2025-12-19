@@ -74,65 +74,78 @@ export function ProductsTable({
 }
 
 export { ProductsTable } */
-"use client"
+"use client";
 
 import { Product } from "@prisma/client";
 import { Loader2 } from "lucide-react";
-import { useQueryState } from "nuqs"
+import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
-import { SelectLayoutGroup, ToggleLayout, ToggleLayoutCell, ToggleLayoutContainer } from "@/components/systaliko-ui/ecommerce/toggle-layout";
+import {
+  SelectLayoutGroup,
+  ToggleLayout,
+  ToggleLayoutCell,
+  ToggleLayoutContainer,
+} from "@/components/systaliko-ui/ecommerce/toggle-layout";
 import type { ProductsTableProps } from "@/features/products/types";
 import { cn } from "@/lib/utils";
 
 function ProductsTable({ data }: ProductsTableProps) {
-    const [limit, setLimit] = useQueryState("limit", { shallow: false })
-    const [orderBy, setOrderBy] = useQueryState("orderBy", { shallow: false })
-    const [loading, startTransition] = useTransition()
+  const [limit, setLimit] = useQueryState("limit", { shallow: false });
+  const [orderBy, setOrderBy] = useQueryState("orderBy", { shallow: false });
+  const [loading, startTransition] = useTransition();
 
-    const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        startTransition(() => {
-            setLimit(e.target.value)
-        })
-    }
+  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    startTransition(() => {
+      setLimit(e.target.value);
+    });
+  };
 
-    const handleOrderByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        startTransition(() => {
-            setOrderBy(e.target.value)
-        })
-    }
+  const handleOrderByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    startTransition(() => {
+      setOrderBy(e.target.value);
+    });
+  };
 
-    return (
-        <>
-            <div className={cn("flex flex-col gap-4 relative", loading && "opacity-50")}>
-                {loading && <Loader2 className="size-4 animate-spin absolute top-0 left-0" />}
-                <ToggleLayout>
-                    <SelectLayoutGroup className="mb-8" />
-                    <ToggleLayoutContainer>
-                        {data.map((product: Product) => {
-                            return (
-                                <ToggleLayoutCell key={product.id}>
-                                    <h2>{product.name}</h2>
-                                </ToggleLayoutCell>
-                            )
-                        })}
-                    </ToggleLayoutContainer>
-                </ToggleLayout>
-            </div>
-            <select value={orderBy || "created_at"} onChange={handleOrderByChange} disabled={loading}>
-                <option value="created_at">created at</option>
-                <option value="name">name</option>
-                <option value="price">price</option>
-            </select>
-            <select value={limit?.toString() || "10"} onChange={handleLimitChange}>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </>
-    )
+  return (
+    <>
+      <div
+        className={cn("flex flex-col gap-4 relative", loading && "opacity-50")}
+      >
+        {loading && (
+          <Loader2 className="size-4 animate-spin absolute top-0 left-0" />
+        )}
+        <ToggleLayout>
+          <SelectLayoutGroup className="mb-8" />
+          <ToggleLayoutContainer>
+            {data.map((product: Product) => {
+              return (
+                <ToggleLayoutCell key={product.id}>
+                  <h2>{product.name}</h2>
+                </ToggleLayoutCell>
+              );
+            })}
+          </ToggleLayoutContainer>
+        </ToggleLayout>
+      </div>
+      <select
+        value={orderBy || "created_at"}
+        onChange={handleOrderByChange}
+        disabled={loading}
+      >
+        <option value="created_at">created at</option>
+        <option value="name">name</option>
+        <option value="price">price</option>
+      </select>
+      <select value={limit?.toString() || "10"} onChange={handleLimitChange}>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </>
+  );
 }
 
-export { ProductsTable }
+export { ProductsTable };

@@ -1,71 +1,93 @@
-import { getTranslations } from "next-intl/server"
-import { SearchParams } from "nuqs"
-import { Suspense } from "react"
+import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 
-import { getUserInfo } from "@/features/global/actions/get-user-info.action"
-import { CreateProductButton } from "@/features/products/components/create-form/create-product-button"
-import { ProductsTable } from "@/features/products/components/products-table"
-import { getStoreBasicInfoBySlugAction } from "@/features/stores/actions/get-store-basic-info-by-slug.action"
-import { ProductsTabProps } from "@/features/stores/types"
+import { getUserInfo } from "@/features/global/actions/get-user-info.action";
+import { CreateProductButton } from "@/features/products/components/create-form/create-product-button";
+import { ProductsTableWrapper } from "@/features/products/components/products-table-wrapper";
+import { getStoreBasicInfoBySlugAction } from "@/features/stores/actions/get-store-basic-info-by-slug.action";
+import { ProductsTabProps } from "@/features/stores/types";
 
-async function ProductsTabContent({ slug, userId, ...queryParams }: ProductsTabProps & { userId: number } & { queryParams: Promise<SearchParams> }) {
-    const { payload: storeInfo, hasError: storeError, message: storeMessage } = await getStoreBasicInfoBySlugAction(slug)
+async function ProductsTabContent({
+  slug,
+  userId,
+  limit,
+  orderBy,
+  page,
+  search,
+}: ProductsTabProps & {
+  userId: number;
+  limit: number;
+  orderBy: string;
+  page: number;
+  search: string;
+}) {
+  const {
+    payload: storeInfo,
+    hasError: storeError,
+    message: storeMessage,
+  } = await getStoreBasicInfoBySlugAction(slug);
 
-    if (storeError || !storeInfo) {
-        console.error(storeMessage || "Error al cargar información de la tienda")
-        return null
-    }
+  if (storeError || !storeInfo) {
+    console.error(storeMessage || "Error al cargar información de la tienda");
+    return null;
+  }
 
-    // Default employee permissions - assuming user is admin/owner for now
-    // This can be enhanced later if needed
-    const employeePermissions = {
-        isAdmin: true,
-        permissions: {
-            can_create_orders: true,
-            can_update_orders: true,
-            can_create_products: true,
-            can_update_products: true,
-            can_manage_stock: true,
-            can_process_refunds: true,
-            can_view_reports: true,
-            can_manage_employees: true,
-            can_manage_store: true
-        }
-    }
-
-    return (
-        <ProductsTable
-            slug={slug}
-            storeId={storeInfo.id}
-            userId={userId}
-            employeePermissions={employeePermissions}
-            branches={storeInfo.branches}
-            {...queryParams}
-            headerActions={
-                <CreateProductButton
-                    storeId={storeInfo.id}
-                    userId={userId}
-                />
-            }
-        />
-    )
+  return (
+    <ProductsTableWrapper
+      storeId={storeInfo.id}
+      slug={slug}
+      userId={userId}
+      branches={storeInfo.branches}
+      headerActions={
+        <CreateProductButton storeId={storeInfo.id} userId={userId} />
+      }
+      limit={limit}
+      orderBy={orderBy}
+      page={page}
+      search={search}
+    />
+  );
 }
 
-async function ProductsTab({ slug, ...queryParams }: ProductsTabProps & { queryParams: Promise<SearchParams> }) {
-    const t = await getTranslations("store.products-tab")
+async function ProductsTab({
+  slug,
+  limit,
+  orderBy,
+  page,
+  search,
+}: ProductsTabProps & {
+  limit: number;
+  orderBy: string;
+  page: number;
+  search: string;
+}) {
+  const t = await getTranslations("store.products-tab");
 
-    const { payload: user, hasError: userError, message: userMessage } = await getUserInfo()
+  const {
+    payload: user,
+    hasError: userError,
+    message: userMessage,
+  } = await getUserInfo();
 
-    if (userError || !user) {
-        console.error(userMessage)
-        return null
-    }
+  if (userError || !user) {
+    console.error(userMessage);
+    return null;
+  }
 
-    return (
-        <Suspense fallback={<div>{t("loading-products") || "Cargando productos..."}</div>}>
-            <ProductsTabContent slug={slug} {...queryParams} userId={user.id} />
-        </Suspense>
-    )
+  return (
+    <Suspense
+      fallback={<div>{t("loading-products") || "Cargando productos..."}</div>}
+    >
+      <ProductsTabContent
+        slug={slug}
+        userId={user.id}
+        limit={limit}
+        orderBy={orderBy}
+        page={page}
+        search={search}
+      />
+    </Suspense>
+  );
 }
 
-export default ProductsTab
+export default ProductsTab;
