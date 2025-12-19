@@ -17,7 +17,8 @@ function ChangePasswordButton({
   buttonText,
   title,
   /*  className  */
-}: ChangePasswordButtonProps) {
+  'data-action': dataAction
+}: ChangePasswordButtonProps & { 'data-action'?: string }) {
   const t = useTranslations("auth.password-change")
   const { hasPassword, loading, refreshPasswordStatus } = usePasswordGuard()
 
@@ -54,6 +55,7 @@ function ChangePasswordButton({
     <div className="flex items-center gap-3">
 
       <ButtonWithPopup<{ currentPassword: string; password: string; confirmPassword: string }>
+        data-action={dataAction}
         text={buttonText}
         title={title}
         description={t("security-description")}

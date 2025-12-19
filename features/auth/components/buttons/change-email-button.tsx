@@ -14,8 +14,9 @@ function ChangeEmailButton({
     buttonText,
     title,
     /* className, */
-    currentEmail
-}: ChangeEmailButtonProps) {
+    currentEmail,
+    'data-action': dataAction
+}: ChangeEmailButtonProps & { 'data-action'?: string }) {
     const { hasPassword, loading, refreshPasswordStatus } = usePasswordGuard()
     const {
         showMonitor,
@@ -61,6 +62,7 @@ function ChangeEmailButton({
         <>
             <div className="flex items-center gap-2">
                 <ButtonWithPopup
+                    data-action={dataAction}
                     text={buttonText}
                     title={title}
                     description="Por seguridad, confirma tu contraseña actual. Te enviaremos correos de verificación a ambas direcciones."

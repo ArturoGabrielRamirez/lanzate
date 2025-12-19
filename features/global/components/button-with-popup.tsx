@@ -39,7 +39,8 @@ function ButtonWithPopup<P extends FieldValues>({
   formDisabled = false,
   contentButton,
   onlyIcon,
-  defaultValues, 
+  defaultValues,
+  'data-action': dataAction,
 }: ButtonWithPopupPropsType<P>) {
 
   const [open, setOpen] = useState(false)
@@ -91,6 +92,7 @@ function ButtonWithPopup<P extends FieldValues>({
             <Tooltip>
               <TooltipTrigger asChild>
                 <IconButton
+                  data-action={dataAction}
                   disabled={disabled}
                   type="button"
                   className={cn(disabled && "cursor-not-allowed text-muted-foreground", _className)}
@@ -102,9 +104,14 @@ function ButtonWithPopup<P extends FieldValues>({
               <TooltipContent>{title}</TooltipContent>
             </Tooltip>
           ) : (
-            <Button disabled={disabled} variant={variant} type="button"
+            <Button
+              data-action={dataAction}
+              disabled={disabled}
+              variant={variant}
+              type="button"
               className={cn(_className)}
-              size={size}>
+              size={size}
+            >
               {text}
             </Button>
           )}
