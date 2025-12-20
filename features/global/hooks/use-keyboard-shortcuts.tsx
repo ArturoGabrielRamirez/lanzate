@@ -20,15 +20,19 @@ export function useKeyboardShortcuts(config: KeyboardShortcutsConfig = {}) {
         onClearSearch,
         onIncreaseQuantity,
         onDecreaseQuantity,
+        onOpenCameraScanner,
+        onToggleUsbScanner,
 
         // Account callbacks
         onEditProfile,
         onChangeAvatar,
+        onChangeBanner,
         onChangeEmail,
         onChangePassword,
         onUpgradePlan,
         onCancelSubscription,
         onDeleteAccount,
+        onNavigateToStores,
 
         // Navigation callbacks
         onNavigateToAccount,
@@ -141,6 +145,33 @@ export function useKeyboardShortcuts(config: KeyboardShortcutsConfig = {}) {
         }
     }, { enableOnFormTags: false })
 
+    // S - Scanner de cámara
+    useHotkeys('s', (e) => {
+        if (disabled || !isInSale) return
+        e.preventDefault()
+        if (onOpenCameraScanner) {
+            onOpenCameraScanner()
+        }
+    }, { enableOnFormTags: false })
+
+    // B - Toggle scanner USB (en Sale) / Cambiar Banner (en Account)
+    useHotkeys('b', (e) => {
+        if (disabled) return
+        // En Sale: toggle USB scanner
+        if (isInSale) {
+            e.preventDefault()
+            if (onToggleUsbScanner) {
+                onToggleUsbScanner()
+            }
+            return
+        }
+        // En Account tab account: cambiar banner
+        if (isInAccount && activeAccountTab === 'account') {
+            e.preventDefault()
+            if (onChangeBanner) onChangeBanner()
+        }
+    }, { enableOnFormTags: false })
+
     // Esc - Limpiar búsqueda
     useHotkeys('escape', (e) => {
         if (disabled || !isInSale) return
@@ -175,118 +206,105 @@ export function useKeyboardShortcuts(config: KeyboardShortcutsConfig = {}) {
         // El modal se abre desde el componente KeyboardShortcutsHelp
     }, { enableOnFormTags: false })
 
-    // ============ ATAJOS EN ACCOUNT (LÓGICA MEJORADA) ============
+    // ============ ATAJOS EN ACCOUNT - NAVEGACIÓN (Números 1-4) ============
 
-    // E - Navegar a Account O Editar perfil
-    useHotkeys('e', (e) => {
-        if (disabled || !isInAccount) return
-        e.preventDefault()
-
-        if (activeAccountTab === 'account') {
-            // Ya estamos en account, ejecutar acción
-            if (onEditProfile) {
-                onEditProfile()
-            }
-        } else {
-            // Navegar al tab account
-            if (onNavigateToAccount) {
-                onNavigateToAccount()
-            }
-        }
-    }, { enableOnFormTags: false })
-
-    // A - Cambiar avatar (solo en tab account)
-    useHotkeys('a', (e) => {
-        if (disabled || !isInAccount || activeAccountTab !== 'account') return
-        e.preventDefault()
-        if (onChangeAvatar) {
-            onChangeAvatar()
-        }
-    }, { enableOnFormTags: false })
-
-    // 1 - Navegar a Security O Cambiar email
+    // 1 - Navegar a Info Básica
     useHotkeys('1', (e) => {
         if (disabled || !isInAccount) return
         e.preventDefault()
+        if (onNavigateToAccount) onNavigateToAccount()
+    }, { enableOnFormTags: false })
 
-        if (activeAccountTab === 'security') {
-            // Ya estamos en security, ejecutar acción
-            if (onChangeEmail) {
-                onChangeEmail()
-            }
+    // 2 - Navegar a Seguridad
+    useHotkeys('2', (e) => {
+        if (disabled || !isInAccount) return
+        e.preventDefault()
+        if (onNavigateToSecurity) onNavigateToSecurity()
+    }, { enableOnFormTags: false })
+
+    // 3 - Navegar a Membresía
+    useHotkeys('3', (e) => {
+        if (disabled || !isInAccount) return
+        e.preventDefault()
+        if (onNavigateToMembership) onNavigateToMembership()
+    }, { enableOnFormTags: false })
+
+    // 4 - Navegar a Zona Peligro
+    useHotkeys('4', (e) => {
+        if (disabled || !isInAccount) return
+        e.preventDefault()
+        if (onNavigateToDangerZone) onNavigateToDangerZone()
+    }, { enableOnFormTags: false })
+
+    // T - Ir a Tiendas
+    useHotkeys('t', (e) => {
+        if (disabled || !isInAccount) return
+        e.preventDefault()
+        if (onNavigateToStores) {
+            onNavigateToStores()
         } else {
-            // Navegar al tab security
-            if (onNavigateToSecurity) {
-                onNavigateToSecurity()
-            }
+            router.push('/stores')
         }
     }, { enableOnFormTags: false })
 
-    // 2 - Cambiar contraseña (solo en tab security)
-    useHotkeys('2', (e) => {
+    // ============ ATAJOS EN ACCOUNT - ACCIONES (Letras mnemónicas) ============
+
+    // E - Editar perfil (solo en tab account)
+    useHotkeys('e', (e) => {
+        if (disabled || !isInAccount || activeAccountTab !== 'account') return
+        e.preventDefault()
+        if (onEditProfile) onEditProfile()
+    }, { enableOnFormTags: false })
+
+    // A - Cambiar Avatar (solo en tab account)
+    useHotkeys('a', (e) => {
+        if (disabled || !isInAccount || activeAccountTab !== 'account') return
+        e.preventDefault()
+        if (onChangeAvatar) onChangeAvatar()
+    }, { enableOnFormTags: false })
+
+    // M - Cambiar eMail (solo en tab security)
+    useHotkeys('m', (e) => {
         if (disabled || !isInAccount || activeAccountTab !== 'security') return
         e.preventDefault()
-        if (onChangePassword) {
-            onChangePassword()
-        }
+        if (onChangeEmail) onChangeEmail()
     }, { enableOnFormTags: false })
 
-    // U - Navegar a Membership O Actualizar plan
+    // P - Cambiar Password (solo en tab security)
+    useHotkeys('p', (e) => {
+        // En Sale, P es para imprimir - tiene prioridad
+        if (disabled || isInSale) return
+        if (!isInAccount || activeAccountTab !== 'security') return
+        e.preventDefault()
+        if (onChangePassword) onChangePassword()
+    }, { enableOnFormTags: false })
+
+    // U - Upgrade plan (solo en tab membership)
     useHotkeys('u', (e) => {
-        if (disabled || !isInAccount) return
+        if (disabled || !isInAccount || activeAccountTab !== 'membership') return
         e.preventDefault()
-
-        if (activeAccountTab === 'membership') {
-            // Ya estamos en membership, ejecutar acción
-            if (onUpgradePlan) {
-                onUpgradePlan()
-            }
-        } else {
-            // Navegar al tab membership
-            if (onNavigateToMembership) {
-                onNavigateToMembership()
-            }
-        }
+        if (onUpgradePlan) onUpgradePlan()
     }, { enableOnFormTags: false })
 
-    // C - Finalizar venta O Cancelar suscripción
-    useHotkeys('c', (e) => {
-        if (disabled) return
-
-        // Prioridad 1: Sale
-        if (isInSale && hasCartItems) {
-            e.preventDefault()
-            if (onFinalizeSale) {
-                onFinalizeSale()
-            }
-            return
-        }
-
-        // Prioridad 2: Account membership
-        if (isInAccount && activeAccountTab === 'membership') {
-            e.preventDefault()
-            if (onCancelSubscription) {
-                onCancelSubscription()
-            }
-        }
+    // X - Cancelar suscripción (solo en tab membership)
+    useHotkeys('x', (e) => {
+        if (disabled || !isInAccount || activeAccountTab !== 'membership') return
+        e.preventDefault()
+        if (onCancelSubscription) onCancelSubscription()
     }, { enableOnFormTags: false })
 
-    // D - Navegar a Danger Zone O Eliminar cuenta
+    // D - Eliminar cuenta (solo en tab danger-zone)
     useHotkeys('d', (e) => {
-        if (disabled || !isInAccount) return
+        if (disabled || !isInAccount || activeAccountTab !== 'danger-zone') return
         e.preventDefault()
+        if (onDeleteAccount) onDeleteAccount()
+    }, { enableOnFormTags: false })
 
-        if (activeAccountTab === 'danger-zone') {
-            // Ya estamos en danger-zone, ejecutar acción
-            if (onDeleteAccount) {
-                onDeleteAccount()
-            }
-        } else {
-            // Navegar al tab danger-zone
-            if (onNavigateToDangerZone) {
-                onNavigateToDangerZone()
-            }
-        }
+    // C - Finalizar venta (solo en Sale, ya no hay conflicto con Account)
+    useHotkeys('c', (e) => {
+        if (disabled || !isInSale || !hasCartItems) return
+        e.preventDefault()
+        if (onFinalizeSale) onFinalizeSale()
     }, { enableOnFormTags: false })
 }
 

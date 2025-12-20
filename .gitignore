@@ -45,7 +45,8 @@ next-env.d.ts
 access-*
 access-*.log.gz
 
-agent_docs
 CLAUDE.md
+/agent_docs
 
-.claude
+.claude/
+*.claude-backup

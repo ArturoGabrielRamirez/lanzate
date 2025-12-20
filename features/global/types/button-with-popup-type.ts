@@ -26,4 +26,5 @@ export type ButtonWithPopupPropsType<P extends FieldValues> = {
     onlyIcon?: boolean
     // ✅ CORRECCIÓN: Usar DefaultValues<P> en lugar de UseFormProps
     defaultValues?: DefaultValues<P>
+    'data-action'?: string
 }

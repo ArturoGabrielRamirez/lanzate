@@ -40,13 +40,12 @@ export function SecurityCard({ user }: { user: UserType }) {
                             </div>
                         </div>
                         <div className="flex-shrink-0 w-full lg:w-auto">
-                            <div data-action="change-email">
-                                <ChangeEmailButton
-                                    buttonText={<Edit className="size-4" />}
-                                    title="Cambiar email"
-                                    currentEmail={user.email}
-                                />
-                            </div>
+                            <ChangeEmailButton
+                                data-action="change-email"
+                                buttonText={<Edit className="size-4" />}
+                                title="Cambiar email"
+                                currentEmail={user.email}
+                            />
                         </div>
                     </div>
 
@@ -60,12 +59,11 @@ export function SecurityCard({ user }: { user: UserType }) {
                             </div>
                         </div>
                         <div className="flex-shrink-0 w-full lg:w-auto">
-                            <div data-action="change-password">
-                                <ChangePasswordButton
-                                    buttonText={<Edit className="size-4" />}
-                                    title="Cambiar contraseña"
-                                />
-                            </div>
+                            <ChangePasswordButton
+                                data-action="change-password"
+                                buttonText={<Edit className="size-4" />}
+                                title="Cambiar contraseña"
+                            />
                         </div>
                     </div>
 

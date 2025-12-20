@@ -4,11 +4,13 @@ import { ScanBarcode } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
+import { InlineShortcut } from '@/features/global/components'
 import { BarcodeScannerCammeraButton } from '@/features/sale/components'
 import { useBarcodeScanner } from '@/features/sale/lib/use-barcode-scanner'
 import type { ScannedData, BarcodeScannerUSBProps } from '@/features/sale/types'
 import { Button } from '@/features/shadcn/components/ui/button'
 import { Card, CardContent } from '@/features/shadcn/components/ui/card'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shadcn/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
 function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBProps) {
@@ -58,9 +60,25 @@ function BarcodeScannerUSB({ onProductScanned, className }: BarcodeScannerUSBPro
         </div>
         <div className="flex items-center gap-2">
           <BarcodeScannerCammeraButton onProductScanned={onProductScanned} />
-          <Button variant="outline" size="icon" className={cn(enabled ? '!bg-green-500/50 text-white' : '!bg-gray-400 text-muted-foreground')} onClick={() => setEnabled(!enabled)}>
-            <ScanBarcode />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                data-action="toggle-usb-scanner"
+                variant="outline"
+                size="icon"
+                className={cn(enabled ? '!bg-green-500/50 text-white' : '!bg-gray-400 text-muted-foreground')}
+                onClick={() => setEnabled(!enabled)}
+              >
+                <ScanBarcode />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <span className="flex items-center gap-1">
+                Scanner USB
+                <InlineShortcut keys={['B']} />
+              </span>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </CardContent>
     </Card>

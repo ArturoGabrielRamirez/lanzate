@@ -49,6 +49,7 @@ function ActionsSection({
         />
 
         <Button
+          data-action="print-receipt"
           onClick={onPrintReceipt}
           disabled={disabled || isFinalizingSale}
           className="lg:w-full gap-2"
@@ -62,6 +63,7 @@ function ActionsSection({
         </Button>
 
         <Button
+          data-action="clear-cart"
           onClick={onClearCart}
           disabled={disabled || cartItemCount === 0 || isFinalizingSale}
           className="lg:w-full gap-2"
