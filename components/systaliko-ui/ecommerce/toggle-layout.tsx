@@ -107,7 +107,7 @@ export function SelectLayoutGroup({ className }: { className?: string }) {
       type="single"
       value={currentMode}
       onValueChange={handleValueChange}
-      className={cn("w-fit", className)}
+      className={cn("w-fit bg-card", className)}
     >
       <ToggleGroupItem value="list" aria-label="List view" asChild>
         <Button size="icon" variant="outline">

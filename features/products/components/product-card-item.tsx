@@ -48,7 +48,7 @@ export function ProductCardItem({ product }: ProductCardItemProps) {
 
       {/* Accordion de variantes */}
       {variantCount > 0 && (
-        <div className="px-6 pb-6 mt-auto">
+        <div className="px-6 mt-auto">
           <Accordion type="single" collapsible>
             <AccordionItem value="variants" className="border-0">
               <AccordionTrigger className="py-2 hover:no-underline text-muted-foreground text-sm">
