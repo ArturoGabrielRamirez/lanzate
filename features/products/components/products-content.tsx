@@ -52,7 +52,7 @@ export function ProductsContent({
           }}
           disabled={loading}
         >
-          <SelectTrigger size="sm" className="w-40 bg-card">
+          <SelectTrigger className="w-40 bg-card">
             <SelectValue placeholder="Sort by..." />
           </SelectTrigger>
           <SelectContent>
@@ -75,7 +75,7 @@ export function ProductsContent({
           }}
           disabled={loading}
         >
-          <SelectTrigger size="sm" className="w-16 bg-card">
+          <SelectTrigger  className="w-16 bg-card">
             <SelectValue placeholder="Limit" />
           </SelectTrigger>
           <SelectContent>

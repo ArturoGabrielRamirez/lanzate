@@ -110,12 +110,12 @@ export function SelectLayoutGroup({ className }: { className?: string }) {
       className={cn("w-fit bg-card", className)}
     >
       <ToggleGroupItem value="list" aria-label="List view" asChild>
-        <Button size="icon" variant="outline">
+        <Button variant="outline">
           <List className="h-4 w-4" />
         </Button>
       </ToggleGroupItem>
       <ToggleGroupItem value="auto" aria-label="Grid view" asChild>
-        <Button size="icon" variant="outline">
+        <Button variant="outline">
           <LayoutGrid className="h-4 w-4" />
         </Button>
       </ToggleGroupItem>
