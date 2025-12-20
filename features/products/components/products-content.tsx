@@ -1,5 +1,7 @@
 "use client";
 
+import { AnimatePresence } from "motion/react";
+
 import {
   SelectLayoutGroup,
   ToggleLayoutCell,
@@ -95,11 +97,13 @@ export function ProductsContent({
         {data.map((product: ProductWithRelations) => {
           return (
             <ToggleLayoutCell key={product.id}>
-              {modeIndex === 0 ? (
-                <ProductListItem product={product} />
-              ) : (
-                <ProductCardItem product={product} />
-              )}
+              <AnimatePresence key={modeIndex}>
+                {modeIndex === 0 ? (
+                  <ProductListItem product={product} />
+                ) : (
+                  <ProductCardItem product={product} />
+                )}
+              </AnimatePresence>
             </ToggleLayoutCell>
           );
         })}

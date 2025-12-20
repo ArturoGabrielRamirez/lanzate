@@ -4,12 +4,12 @@ import { List, LayoutGrid } from "lucide-react";
 import { HTMLMotionProps, LayoutGroup, motion } from "motion/react";
 import React from "react";
 
+import { Button } from "@/features/shadcn/components/ui/button";
 import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/features/shadcn/components/ui/toggle-group";
 import { cn } from "@/features/shadcn/lib/utils";
-import { Button } from "@/features/shadcn/components/ui/button";
 
 const layout_config = {
   list: {
@@ -20,7 +20,7 @@ const layout_config = {
   auto: {
     mode: "auto",
     className:
-      "grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4",
+      "grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-4 items-start",
     label: "Grid view",
   },
 };

@@ -1,5 +1,7 @@
 "use client";
 
+import { Crown } from "lucide-react";
+
 import type {
   ProductTableVariant,
   ProductCardItemProps,
@@ -29,17 +31,17 @@ export function ProductCardItem({ product }: ProductCardItemProps) {
     <Card className="h-full flex flex-col">
       <CardHeader>
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-lg">{product.name}</h3>
+          <h3 className="font-semibold text-lg line-clamp-1">{product.name}</h3>
           {product.is_featured && (
             <Badge variant="default" className="shrink-0">
-              ⭐ Featured
+              <Crown />
             </Badge>
           )}
         </div>
         <div className="space-y-1 mt-2">
           <p className="text-2xl font-bold text-primary">{priceRange.display}</p>
           <p className="text-sm text-muted-foreground">
-            {variantCount} {variantCount === 1 ? 'variant' : 'variants'}
+
           </p>
         </div>
       </CardHeader>
@@ -49,8 +51,8 @@ export function ProductCardItem({ product }: ProductCardItemProps) {
         <div className="px-6 pb-6 mt-auto">
           <Accordion type="single" collapsible>
             <AccordionItem value="variants" className="border-0">
-              <AccordionTrigger className="py-2 hover:no-underline">
-                <span className="text-sm font-medium">View variants</span>
+              <AccordionTrigger className="py-2 hover:no-underline text-muted-foreground text-sm">
+                <span className="text-sm font-medium">{variantCount} {variantCount === 1 ? 'variant' : 'variants'}</span>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-2 mt-2">
