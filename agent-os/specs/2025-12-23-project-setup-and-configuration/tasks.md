@@ -370,37 +370,37 @@ Estimated Effort: Medium (Foundation for entire application)
 **Dependencies:** Task Group 6 (next-intl), Task Group 2 (shadcn/ui)
 **Assigned To:** UI Designer
 
-- [ ] 8.0 Set up theme system and layout components
-  - [ ] 8.1 Install next-themes
+- [x] 8.0 Set up theme system and layout components
+  - [x] 8.1 Install next-themes
     - `bun add next-themes`
-  - [ ] 8.2 Create features/layout/components/theme-provider.tsx
+  - [x] 8.2 Create features/layout/components/theme-provider.tsx
     - Wrap next-themes ThemeProvider
     - Configure attribute: 'class'
     - Set defaultTheme: 'dark' (matching landing.png)
     - Enable system theme detection
-  - [ ] 8.3 Update app/[locale]/layout.tsx
+  - [x] 8.3 Update app/[locale]/layout.tsx
     - Wrap children with ThemeProvider
     - Add suppressHydrationWarning to html tag
     - Configure metadata with app name and description
-  - [ ] 8.4 Create features/layout/components/theme-toggle.tsx
+  - [x] 8.4 Create features/layout/components/theme-toggle.tsx
     - Use shadcn/ui Button component
     - Use lucide-react icons (Sun, Moon)
     - Implement theme switching logic with next-themes
     - Add framer-motion animations for icon transitions
-  - [ ] 8.5 Create features/layout/components/language-switcher.tsx
+  - [x] 8.5 Create features/layout/components/language-switcher.tsx
     - Create toggle between ES/EN
     - Use useRouter and usePathname from next/navigation
     - Implement locale switching with next-intl
     - Style with shadcn/ui components
-  - [ ] 8.6 Install additional shadcn/ui components
+  - [x] 8.6 Install additional shadcn/ui components
     - `bunx shadcn@latest add dropdown-menu`
     - Install any other components needed for layout
-  - [ ] 8.7 Write 2-4 focused tests for theme components
+  - [x] 8.7 Write 2-4 focused tests for theme components
     - Test ThemeProvider renders children
     - Test theme toggle changes theme
     - Test language switcher changes locale
     - Skip comprehensive interaction testing
-  - [ ] 8.8 Verify theme system
+  - [x] 8.8 Verify theme system
     - Run ONLY the 2-4 tests written in 8.7
     - Toggle theme and verify class changes on html element
     - Switch language and verify URL changes

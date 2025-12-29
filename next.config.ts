@@ -5,7 +5,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  reactCompiler: true,
+  // React compiler is disabled for now due to compatibility issues with Turbopack
+  // reactCompiler: true,
 
   // Server Actions configuration
   experimental: {
