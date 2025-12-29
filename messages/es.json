@@ -9,5 +9,20 @@
   "language": "Idioma",
   "theme": "Tema",
   "light": "Claro",
-  "dark": "Oscuro"
+  "dark": "Oscuro",
+  "hero": {
+    "titleBefore": "Lo sueñas,",
+    "titleHighlight": "Lanzate",
+    "titleAfter": "lo hace realidad",
+    "subtitle": "Administrar tu negocio nunca ha sido tan fácil. Enfócate en el crecimiento mientras te damos el control total",
+    "cta": {
+      "primary": "Comenzar",
+      "secondary": "Más información"
+    }
+  },
+  "nav": {
+    "home": "Inicio",
+    "access": "Acceso",
+    "moreInfo": "Más Info"
+  }
 }

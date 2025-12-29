@@ -5,3 +5,4 @@
  */
 
 export { getUserAction, getCurrentUserAction } from "./example.action";
+export { logoutAction } from "./logout.action";

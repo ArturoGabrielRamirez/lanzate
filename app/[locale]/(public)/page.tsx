@@ -1,57 +1,87 @@
 import { useTranslations } from 'next-intl';
-import Image from "next/image";
 import { Header } from '@/features/layout/components/header';
+import { HeroSection } from '@/features/landing/components';
+import { Separator } from '@/components/ui/separator';
 
 /**
- * Public landing page demonstrating next-intl integration.
+ * Public Landing Page
  *
- * This is a Server Component that uses next-intl for translations.
- * It displays a simple welcome message in the current locale (Spanish or English).
+ * This is the main landing page demonstrating all integrations:
+ * - next-intl for internationalization (Spanish/English)
+ * - framer-motion for animations
+ * - shadcn/ui components (Button, Card, Separator)
+ * - Theme system (light/dark mode)
+ * - Responsive design matching landing.png visual
  *
- * The page demonstrates:
- * - Internationalization with next-intl
- * - Server Component data fetching (translations)
- * - Basic Next.js Image component usage
- * - Theme toggle and language switcher
+ * The page is a Server Component that renders client components
+ * for interactive elements (animations, theme toggle, language switcher).
+ *
+ * Design features:
+ * - Dark theme with grid background pattern
+ * - Orange brand color (#FF6B4A) for CTAs
+ * - Hero section with fade-in and slide-up animations
+ * - Fully responsive layout (mobile, tablet, desktop)
  */
 export default function HomePage() {
   const t = useTranslations();
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="relative min-h-screen overflow-hidden bg-background">
+      {/* Grid background pattern - visible in dark mode */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-0 dark:opacity-100" />
+
+      {/* Gradient overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+
+      {/* Header with theme toggle and language switcher */}
       <Header />
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            {t('welcome')}
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            {t('description')}
-          </p>
+
+      {/* Main content */}
+      <main className="relative z-10">
+        {/* Hero Section */}
+        <HeroSection />
+
+        {/* Separator */}
+        <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
+          <Separator className="opacity-20" />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="#"
-          >
-            {t('getStarted')}
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="#"
-          >
-            {t('dashboard')}
-          </a>
-        </div>
+
+        {/* Features section placeholder - can be expanded later */}
+        <section id="features" className="mx-auto max-w-7xl px-6 py-20 md:px-12 lg:px-16">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-foreground">
+              {t('welcome')}
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              {t('description')}
+            </p>
+          </div>
+        </section>
       </main>
+
+      {/* Footer placeholder */}
+      <footer className="relative z-10 border-t border-border/40 bg-background/80 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-6 py-12 md:px-12 lg:px-16">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <div className="text-center md:text-left">
+              <p className="text-sm text-muted-foreground">
+                © 2025 Lanzate. All rights reserved.
+              </p>
+            </div>
+            <div className="flex gap-6">
+              <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                {t('nav.home')}
+              </a>
+              <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                {t('nav.access')}
+              </a>
+              <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                {t('nav.moreInfo')}
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

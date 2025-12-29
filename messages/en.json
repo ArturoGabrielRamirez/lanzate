@@ -9,5 +9,20 @@
   "language": "Language",
   "theme": "Theme",
   "light": "Light",
-  "dark": "Dark"
+  "dark": "Dark",
+  "hero": {
+    "titleBefore": "You dream it,",
+    "titleHighlight": "Lanzate",
+    "titleAfter": "makes it happen",
+    "subtitle": "Managing your business has never been easier. Focus on growth while we give you full control",
+    "cta": {
+      "primary": "Get Started",
+      "secondary": "More Info"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "access": "Access",
+    "moreInfo": "More Info"
+  }
 }

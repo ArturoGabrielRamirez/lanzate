@@ -420,41 +420,41 @@ Estimated Effort: Medium (Foundation for entire application)
 **Dependencies:** Task Group 8 (Theme), Task Group 6 (next-intl)
 **Assigned To:** UI Designer
 
-- [ ] 9.0 Create public landing page demonstrating all integrations
-  - [ ] 9.1 Create app/[locale]/(public)/page.tsx
+- [x] 9.0 Create public landing page demonstrating all integrations
+  - [x] 9.1 Create app/[locale]/(public)/page.tsx
     - Make it a Server Component
     - Use useTranslations from next-intl
     - Fetch translations for landing page
-  - [ ] 9.2 Install additional shadcn/ui components
+  - [x] 9.2 Install additional shadcn/ui components
     - `bunx shadcn@latest add separator`
     - Install any other components needed for landing
-  - [ ] 9.3 Build hero section
+  - [x] 9.3 Build hero section
     - Add welcome message with translation key 'welcome'
     - Add description with translation key 'description'
     - Use framer-motion for fade-in animation
     - Style with Tailwind CSS using warm orange brand color (#FF6B4A)
     - Match dark theme grid background from landing.png
-  - [ ] 9.4 Add interactive elements
+  - [x] 9.4 Add interactive elements
     - Import ThemeToggle component
     - Import LanguageSwitcher component
     - Add Button component linking to /dashboard
     - Use lucide-react icons where appropriate
-  - [ ] 9.5 Create features/landing/components/hero-section.tsx (Client Component)
+  - [x] 9.5 Create features/landing/components/hero-section.tsx (Client Component)
     - Extract hero content to separate component
     - Add 'use client' directive
     - Implement framer-motion animations (fade in, slide up)
     - Use Card component from shadcn/ui
-  - [ ] 9.6 Style landing page to match visuals
+  - [x] 9.6 Style landing page to match visuals
     - Apply dark background with grid pattern
     - Use orange accent color (#FF6B4A) for CTAs
     - Implement responsive design (mobile, tablet, desktop)
     - Add proper spacing and typography hierarchy
-  - [ ] 9.7 Write 2-4 focused tests for landing page
+  - [x] 9.7 Write 2-4 focused tests for landing page
     - Test landing page renders without errors
     - Test translations load for both ES and EN
     - Test framer-motion animations initialize
     - Skip comprehensive E2E testing
-  - [ ] 9.8 Verify landing page
+  - [x] 9.8 Verify landing page
     - Run ONLY the 2-4 tests written in 9.7
     - Visit /es and /en routes
     - Test theme toggle works
