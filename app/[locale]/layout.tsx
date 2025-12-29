@@ -1,43 +1,62 @@
-import { NextIntlClientProvider } from 'next-intl'
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
+import "../globals.css";
 
-/* 
-import { GlobalEmailConfirmationDetector } from '@/features/auth/components'
-import { SubdomainProvider } from "@/features/layout/components"
-import { ChatDoc } from "@/features/layout/components/chat-doc"
-import { ChatProvider } from "@/features/layout/components/chat-provider" 
-*/
-import { LayoutType } from '@/features/layout/types'
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-export default async function RootLayout({ children, params }: LayoutType) {
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
+export const metadata: Metadata = {
+  title: "Lanzate - You dream it, we make it happen",
+  description: "E-commerce platform for creating and managing your online stores",
+};
+
+type Props = {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+};
+
+/**
+ * Generate static params for all supported locales.
+ * This enables static generation for each locale route.
+ */
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: Props) {
   const { locale } = await params;
 
-  return (
-    <NextIntlClientProvider locale={locale}>
-      {children}
-    </NextIntlClientProvider>
-  )
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
 
-  /* return (
-          <ChatProvider>
-              <SubdomainProvider
-                adminLayout={(
-                  <>
-                    <main className='flex flex-col grow'>
-                      {children}
-                    </main>
-                    <ChatDoc />
-                    <GlobalEmailConfirmationDetector />
-                  </>
-                )}
-                userLayout={(
-                  <>
-                    {children}
-                    <ChatDoc />
-                    <GlobalEmailConfirmationDetector />
-                  </>
-                )}
-              />
-          </ChatProvider>
-    ) */
+  // Fetch messages for the current locale
+  const messages = await getMessages();
+
+  return (
+    <html lang={locale} suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
 }

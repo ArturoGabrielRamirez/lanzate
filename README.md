@@ -1,75 +1,36 @@
-# LANZATE APP
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-This is the main repository for the LANZATE app. A customizable app for your home business.
+## Getting Started
 
-## Stack
+First, run the development server:
 
-- Next.js
-- Tailwind CSS
-- TypeScript
-- Supabase
-- Prisma
-- Next-Intl & Next-International
-- React Hook Form
-- ShadCN UI
-- Yup
-- Resend
-- Featured directory architecture
-- Lucide Icons
-
-
-## Supabase Access Grant
-
-These are the grants that are needed to be able to use the database back again after a prisma reset
-
-```sql
-grant usage on schema "public" to anon;
-grant usage on schema "public" to authenticated;
-
-GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA "public" TO authenticated;
-GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA "public" TO anon;
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Implementations
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-* #### React Components
-    - Implement each component in a separate file
-    - Use the component name as the file name but lowercase and hyphenated
-    - Use the component name as the export name
-    - Add the new file to the index.ts file for barrel export consistency
-    - Use Server Component first approach. If it needs browser interaction then it should be decoupled in a Client Component only the parts that need it.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```tsx
-//Example 1
-// my-server-component.tsx
-function MyComponent() {
-    return <div>My Component</div>
-}
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-export { MyComponent }
-```
+## Learn More
 
-```tsx
-//Example 2
-// my-server-component.tsx
-function MyComponent() {
-    return <MyClientComponent />
-}
+To learn more about Next.js, take a look at the following resources:
 
-export { MyComponent }
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-// my-client-component.tsx
-"use client"
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-function MyClientComponent() {
-    return <div>My Client Component</div>
-}
-export { MyClientComponent }
+## Deploy on Vercel
 
-//
-```
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-* #### Fetching Data
-* #### Forms
-* #### Server Actions
-* #### Events
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

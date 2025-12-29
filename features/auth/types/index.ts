@@ -1,3 +1,7 @@
-export * from "@/features/auth/types/types"
-export type { FacebookLogoProps } from '@/features/auth/types/facebook-logo'
-export type { GoogleLogoProps } from '@/features/auth/types/google-logo'
+/**
+ * Auth types index file
+ *
+ * Exports all authentication-related type definitions
+ */
+
+export type { UserData, AuthResponse, UserWithStores } from "./types";

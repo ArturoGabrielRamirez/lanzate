@@ -1,62 +1,36 @@
-import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
-import createNextIntlPlugin from 'next-intl/plugin';
-
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+// Configure next-intl plugin to load translations
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  allowedDevOrigins: ["lanzate.app", "lodemauri.lanzate.app", "www.lanzate.app", "lanzate.lanzate.app"],
+  reactCompiler: true,
+
+  // Server Actions configuration
   experimental: {
     serverActions: {
-      bodySizeLimit: '3mb',
+      bodySizeLimit: "3mb",
     },
-    useCache : true
   },
-  transpilePackages: ['yup'],
-  devIndicators: {
-    position: "top-right"
-  },
+
+  // Image configuration for Supabase storage
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "api.dicebear.com",
-        pathname: "/**",
+        hostname: "*.supabase.co",
+        pathname: "/storage/v1/object/**",
       },
-      {
-        hostname: "ugsxvnqkbxihxjxchckw.supabase.co"
-      },
-      {
-        hostname: "picsum.photos"
-      },
-      {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-        pathname: "/**",
-      },
-      // 👇👇 AQUÍ ESTÁ LO NUEVO 👇👇
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      }
-    ]
+    ],
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.plugins = [...config.plugins, new PrismaPlugin()];
-    }
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-        crypto: false,
-      };
-    }
-    return config;
-  },
+
+  // Transpile packages
+  transpilePackages: ["yup"],
+
+  // Turbopack configuration (empty to silence warning, Prisma plugin will be added when needed)
+  turbopack: {},
 };
 
-const withNextIntl = createNextIntlPlugin();
+// Wrap Next.js config with next-intl plugin
 export default withNextIntl(nextConfig);

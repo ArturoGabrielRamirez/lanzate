@@ -1,13 +1,7 @@
-export * from "@/features/auth/actions/get-current-user-action.action"
-export * from "@/features/auth/actions/get-current-user-with-id-and-email.action"
-export * from "@/features/auth/actions/get-email-change-status.action.action"
-export * from "@/features/auth/actions/handle-edit-email.action"
-export * from "@/features/auth/actions/handle-edit-password.action"
-export * from "@/features/auth/actions/handle-facebook-log-in.action"
-export * from "@/features/auth/actions/handle-google-log-in.action"
-export * from "@/features/auth/actions/handle-log-in.action"
-export * from "@/features/auth/actions/handle-setup-password.action"
-export * from "@/features/auth/actions/handle-reset-password.action"
-export * from "@/features/auth/actions/handle-sign-up.action"
-export * from "@/features/auth/actions/handle-sign-out.action"
-export * from "@/features/auth/actions/join-waitlist.action"
+/**
+ * Auth actions index file
+ *
+ * Exports all Server Actions for the auth feature
+ */
+
+export { getUserAction, getCurrentUserAction } from "./example.action";

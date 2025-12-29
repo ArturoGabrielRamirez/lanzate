@@ -1,0 +1,2377 @@
+{
+    "account": {
+        "title": "Account",
+        "description": {
+            "upgrade-plan": "Upgrade Plan",
+            "account-details": "Store Settings",
+            "membership": "Membership",
+            "first-name": "First Name",
+            "last-name": "Last Name",
+            "email": "Email",
+            "password": "Password",
+            "change-password": "Change Password",
+            "change-email": "Change Email",
+            "currently-not-available": "Currently not available"
+        }
+    },
+    "Auth": {},
+    "auth": {
+        "_legacy_login": "Log In",
+        "_legacy_signup": "Sign Up",
+        "email": "Email",
+        "email-placeholder": "email@example.com",
+        "password": "Password",
+        "username": "Username",
+        "confirm-password": "Confirm Password",
+        "buttons": {
+            "login": "Log In",
+            "sign-up": "Sign Up",
+            "send-reset-link": "Send Reset Link",
+            "update-password": "Update Password"
+        },
+        "check-email": {
+            "message-1": "Almost there, please check your email. You should receive a confirmation link.",
+            "message-2": "Click the link in your email to complete your registration and validate your account."
+        },
+        "description": {
+            "or-login-with": "Or login with"
+        },
+        "toast-message": {
+            "success-logged-in": "You have been logged in successfully",
+            "success-registered": "You have been registered successfully",
+            "success-reset-password": "Reset link sent!",
+            "success-password-updated": "Password updated!",
+            "signing-in": "Signing in...",
+            "signing-up": "Signing up...",
+            "reset-password": "Sending reset link...",
+            "updating-password": "Updating password...",
+            "success-joined-waitlist": "You have successfully joined the waitlist",
+            "joining-waitlist": "Joining the waitlist"
+        },
+        "reset-password": {
+            "new-password": "New Password",
+            "title": "Reset Password",
+            "description": {
+                "forgot-password": "Forgot password?",
+                "reset-password": "Reset your password",
+                "password-updated": "Password updated! You can now log in."
+            }
+        },
+        "update-password": {
+            "title": "Update Password"
+        },
+        "errors": {
+            "oauth": {
+                "cancelled": {
+                    "title": "Login cancelled",
+                    "description": "You can try again with the same method or use your email and password."
+                },
+                "failed": {
+                    "title": "Authentication error",
+                    "description": "There was a problem with authentication. Try again or use another method."
+                },
+                "temporary": {
+                    "title": "Service unavailable",
+                    "description": "The service is temporarily unavailable. Try again in a few minutes."
+                },
+                "invalid": {
+                    "title": "Invalid request",
+                    "description": "The request is invalid. Please try again."
+                },
+                "unexpected": {
+                    "title": "Unexpected error",
+                    "description": "An unexpected error occurred. Please try again."
+                },
+                "generic": {
+                    "title": "Authentication error",
+                    "description": "Try again or use your email and password."
+                }
+            }
+        },
+        "email-change": {
+            "title": "Email Change Confirmation",
+            "step1": {
+                "title": "Confirm current email",
+                "status": {
+                    "pending": "Waiting for confirmation...",
+                    "confirmed": "✓ Confirmed"
+                }
+            },
+            "step2": {
+                "title": "Confirm new email",
+                "status": {
+                    "waiting": "Waiting for current email confirmation...",
+                    "pending": "⏳ Check this email and confirm",
+                    "confirmed": "✓ Confirmed - Change completed!"
+                }
+            },
+            "instructions": {
+                "step1": "Step 1: Check your current email ({email}) and confirm the change.",
+                "step2": "Step 2: Now check your new email ({email}) and confirm to complete the change.",
+                "completed": "Completed! Your email has been updated successfully."
+            },
+            "actions": {
+                "back-to-account": "Back to my account",
+                "check-status": "Check status",
+                "checking": "Checking..."
+            },
+            "auto-refresh": "The page updates automatically every 3 seconds",
+            "current-email": "Current email:",
+            "new-email": "New email:",
+            "email-must-be-different": "The new email must be different from the current one",
+            "verification-emails-sent": "Verification emails sent",
+            "error-changing-email": "Error changing email",
+            "sending-verification": "Sending verification emails...",
+            "change-in-progress": "⚠️ There is a change in progress",
+            "complete-current-process": "Complete the current process before starting a new one.",
+            "change-completed": "✅ Change completed",
+            "email-updated-successfully": "Your email has been updated successfully. You can start a new change if necessary.",
+            "new-email-label": "New email",
+            "new-email-placeholder": "new-email@example.com",
+            "current-password-label": "Current password",
+            "current-password-placeholder": "Your current password",
+            "security-description": "For security, confirm your current password. We will send verification emails to both addresses."
+        },
+        "email-status": {
+            "updated-successfully": "Email updated successfully! You can now use {email}",
+            "last-step": "Last step: Check your new email ({email}) and confirm to complete the change.",
+            "change-in-progress": "Email change in progress: Confirm from your current email ({email}) to continue."
+        },
+        "password-change": {
+            "security-description": "For security, confirm your current password before changing it.",
+            "current-password-label": "Current password",
+            "current-password-placeholder": "Your current password",
+            "new-password-label": "New password",
+            "new-password-placeholder": "Minimum 6 characters",
+            "confirm-password-label": "Confirm new password",
+            "confirm-password-placeholder": "Confirm your new password",
+            "password-updated": "Password updated correctly",
+            "error-updating-password": "Error updating password",
+            "verifying-updating": "Verifying and updating password..."
+        },
+        "close": "Close",
+        "try-facebook-again": "Try with Facebook again",
+        "help": "Contact us",
+        "back-to-home": "Back to homepage",
+        "join-waitlist": "Join",
+        "login": {
+            "page": {
+                "title": "Login",
+                "description": "Login to your account",
+                "header": {
+                    "title": "Log In",
+                    "description": "Sign in to access your account"
+                },
+                "links": {
+                    "noAccount": "Don't have an account?",
+                    "needHelp": "Need help?",
+                    "signupLink": "Sign Up",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Login illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account."
+                    },
+                    "password": {
+                        "label": "Password",
+                        "placeholder": "Password",
+                        "tooltip": "Enter the password associated with your account."
+                    }
+                },
+                "actions": {
+                    "submit": "Log In"
+                },
+                "messages": {
+                    "success": "You have been logged in successfully",
+                    "loading": "Signing in..."
+                }
+            },
+            "social": {
+                "label": "Or login with",
+                "providers": {
+                    "google": "Google",
+                    "facebook": "Facebook"
+                }
+            },
+            "errors": {
+                "oauth": {
+                    "cancelled": {
+                        "title": "Login cancelled",
+                        "description": "You can try again with the same method or use your email and password.",
+                        "action": "Try again"
+                    },
+                    "failed": {
+                        "title": "Authentication error",
+                        "description": "There was a problem with authentication. Try again or use another method."
+                    },
+                    "temporary": {
+                        "title": "Service unavailable",
+                        "description": "The service is temporarily unavailable. Try again in a few minutes."
+                    },
+                    "invalid": {
+                        "title": "Invalid request",
+                        "description": "The request is invalid. Please try again."
+                    },
+                    "unexpected": {
+                        "title": "Unexpected error",
+                        "description": "An unexpected error occurred. Please try again."
+                    },
+                    "generic": {
+                        "title": "Authentication error",
+                        "description": "Try again or use your email and password."
+                    }
+                },
+                "close": "Close"
+            },
+            "resetPassword": {
+                "question": "Forgot password?",
+                "link": "Reset your password"
+            }
+        },
+        "signup": {
+            "page": {
+                "title": "Signup",
+                "description": "Signup to your account",
+                "header": {
+                    "title": "Sign Up",
+                    "description": "Create your account to get started"
+                },
+                "links": {
+                    "hasAccount": "Already have an account?",
+                    "needHelp": "Need help?",
+                    "loginLink": "Log In",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Sign up illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account."
+                    },
+                    "username": {
+                        "label": "Username",
+                        "placeholder": "Username",
+                        "tooltip": "Enter the username associated with your account."
+                    },
+                    "password": {
+                        "label": "Password",
+                        "placeholder": "Password",
+                        "tooltip": "Enter the password associated with your account."
+                    },
+                    "confirmPassword": {
+                        "label": "Confirm Password",
+                        "placeholder": "Confirm Password",
+                        "tooltip": "Enter the password associated with your account."
+                    }
+                },
+                "actions": {
+                    "submit": "Sign Up"
+                },
+                "messages": {
+                    "success": "You have been registered successfully",
+                    "loading": "Signing up..."
+                }
+            },
+            "social": {
+                "label": "Or sign up with",
+                "providers": {
+                    "google": "Google",
+                    "facebook": "Facebook"
+                }
+            }
+        },
+        "resetPassword": {
+            "page": {
+                "title": "Reset Password",
+                "description": "Reset your password",
+                "header": {
+                    "title": "Reset Password",
+                    "description": "Recover your password to access your account"
+                },
+                "links": {
+                    "rememberedPassword": "Remembered your password?",
+                    "loginLink": "Log In",
+                    "noAccount": "Don't have an account?",
+                    "signupLink": "Sign Up",
+                    "needHelp": "Need help?",
+                    "helpLink": "Contact us"
+                },
+                "image": {
+                    "alt": "Reset password illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address associated with your account.",
+                        "description": "Please enter the email address associated with your account. We will send a reset link to your email."
+                    }
+                },
+                "actions": {
+                    "submit": "Send Reset Link"
+                },
+                "messages": {
+                    "success": "Reset link sent!",
+                    "loading": "Sending reset link..."
+                }
+            }
+        },
+        "updatePassword": {
+            "form": {
+                "fields": {
+                    "newPassword": {
+                        "label": "New Password",
+                        "placeholder": "New Password",
+                        "tooltip": "Enter new password"
+                    }
+                },
+                "actions": {
+                    "submit": "Update Password"
+                },
+                "messages": {
+                    "success": "Password updated!",
+                    "loading": "Updating password...",
+                    "completed": "Password updated! You can now log in."
+                }
+            },
+            "page": {
+                "image": {
+                    "alt": "Update password image"
+                },
+                "header": {
+                    "title": "Update password",
+                    "description": " Update your password to ensure your account is secure."
+                }
+            }
+        },
+        "waitlist": {
+            "alert": {
+                "title": "Join the waitlist",
+                "description1": "Lanzate is still in development, but you can already join the waitlist.",
+                "description2": "Leave us your email and we'll notify you when the product is available.",
+                "button": "Join"
+            },
+            "form": {
+                "fields": {
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "email@example.com",
+                        "tooltip": "Enter the email address to join the waitlist"
+                    }
+                },
+                "actions": {
+                    "submit": "Join"
+                },
+                "messages": {
+                    "success": "You have successfully joined the waitlist",
+                    "loading": "Joining the waitlist"
+                }
+            },
+            "page": {
+                "title": "Join the waitlist",
+                "description": "Join the waitlist to receive notifications when the product is available",
+                "header": {
+                    "title": "Waitlist",
+                    "description": "Join the waitlist to receive notifications when the product is available"
+                },
+                "links": {
+                    "needHelp": "Need help?",
+                    "helpLink": "Contact us",
+                    "hasAccount": "Already have an account?",
+                    "loginLink": "Log In",
+                    "backToHomeLabel": "Back to homepage",
+                    "backToHomeLink": "Back to homepage"
+                },
+                "image": {
+                    "alt": "Waitlist illustration"
+                }
+            },
+            "success": {
+                "page": {
+                    "title": "Congratulations!",
+                    "description": "We'll notify you when the product is available. You can close this window and continue with your day.",
+                    "link": {
+                        "text": "Back to homepage"
+                    },
+                    "image": {
+                        "alt": "Success illustration"
+                    }
+                }
+            }
+        },
+        "contact": {
+            "page": {
+                "title": "Help",
+                "description": "Contact us for help",
+                "header": {
+                    "title": "Help",
+                    "description": "Contact us for help"
+                },
+                "links": {
+                    "hasAccount": "Already have an account?",
+                    "loginLink": "Log In",
+                    "solvedProblem": "Problem solved?",
+                    "backToHome": "Back to homepage"
+                },
+                "image": {
+                    "alt": "Contact us illustration"
+                }
+            },
+            "form": {
+                "fields": {
+                    "name": {
+                        "label": "Name",
+                        "placeholder": "Name",
+                        "tooltip": "Enter your full name"
+                    },
+                    "email": {
+                        "label": "Email",
+                        "placeholder": "Email",
+                        "tooltip": "Enter an email address where we can contact you"
+                    },
+                    "category": {
+                        "label": "Category",
+                        "placeholder": "Select the type of inquiry",
+                        "tooltip": "Select the category that best describes your inquiry"
+                    },
+                    "message": {
+                        "label": "Message",
+                        "placeholder": "Message",
+                        "tooltip": "How can we help you?"
+                    }
+                },
+                "categories": {
+                    "technical": "Technical issue",
+                    "products": "Product management",
+                    "ecommerce": "E-commerce and sales",
+                    "subdomain": "Subdomains and custom domain",
+                    "billing": "Account and billing",
+                    "integrations": "Integrations",
+                    "general": "General inquiry"
+                },
+                "actions": {
+                    "submit": "Send message"
+                },
+                "messages": {
+                    "success": "Message sent successfully! Our team will contact you soon. We typically respond within 24-48 hours.",
+                    "successShort": "Message sent successfully! Our team will contact you soon.",
+                    "loading": "Sending message...",
+                    "error": "Error sending message"
+                }
+            }
+        }
+    },
+    "cart": {
+        "title": "Cart",
+        "description": {
+            "products": "FEATURED PRODUCTS",
+            "coming-soon": "Coming soon",
+            "no-items": "No items in cart"
+        },
+        "buttons": {
+            "remove": "Empty Cart",
+            "checkout": "Checkout"
+        },
+        "resume": {
+            "title": "Cart Summary",
+            "quantity": "Quantity",
+            "sub-total": "Sub-total",
+            "shipping": "Shipping",
+            "discount": "Discount",
+            "total": "Total",
+            "item": "item",
+            "items": "items"
+        },
+        "item": {
+            "item": "item",
+            "items": "items"
+        }
+    },
+    "dashboard": {
+        "title": "Welcome!",
+        "stats": {
+            "title": "Your Stats",
+            "total-revenue": "Total Revenue",
+            "orders": "Orders",
+            "products": "Products",
+            "active-stores": "Active Stores"
+        },
+        "your-stores": {
+            "title": "Your Stores ({count})",
+            "see-all": "see all",
+            "new-store": "New store"
+        },
+        "new-order": {
+            "title": "New order",
+            "description": "Create a new order to start selling!"
+        },
+        "share-store": {
+            "select-store": "Select Store to Share",
+            "choose-store": "Choose a store...",
+            "store-url": "Store URL",
+            "copy-url": "Copy URL",
+            "open-store": "Open Store",
+            "ready-to-share": "Ready to share!",
+            "store-live": "Your store \"{storeName}\" is live and ready for customers.",
+            "share-instructions": "Share this link on social media, send it to customers, or add it to your business cards.",
+            "toast": {
+                "select-store-first": "Please select a store first",
+                "url-copied": "Store URL copied to clipboard!",
+                "copy-failed": "Failed to copy URL to clipboard"
+            }
+        },
+        "create-product": {
+            "button": "Create Product",
+            "title": "Create new product",
+            "description": "Description",
+            "popup-description": "Select a store and create a new product to start selling!",
+            "select-store": "Select Store",
+            "choose-store": "Choose a store...",
+            "product-will-be-created": "Product will be created in: {storeName}",
+            "drag-drop-image": "Drag & drop product image",
+            "click-browse": "Or click to browse (max 1 file, up to 2MB)",
+            "browse-files": "Browse files",
+            "product-name": "Product Name",
+            "price": "Price",
+            "stock": "Stock",
+            "messages": {
+                "select-store-first": "Please select a store first",
+                "success": "Product created successfully!",
+                "error": "Failed to create product",
+                "loading": "Creating product..."
+            }
+        },
+        "configure-operations": {
+            "button": "Configure Operations",
+            "title": "Configure Store Operations",
+            "description": "Set up delivery, business hours, and payment methods for your store.",
+            "select-store": "Select Store",
+            "choose-store": "Choose a store...",
+            "configuring-for": "Configuring operations for: {storeName}",
+            "delivery-settings": "Delivery Settings",
+            "offer-delivery": "Offer Delivery Service",
+            "delivery-price": "Delivery Price ($)",
+            "free-delivery-minimum": "Free Delivery Minimum ($)",
+            "delivery-time-min": "Delivery Time Min (minutes)",
+            "delivery-time-max": "Delivery Time Max (minutes)",
+            "business-hours": "Business Hours",
+            "monday-open": "Monday Open",
+            "monday-close": "Monday Close",
+            "tuesday-open": "Tuesday Open",
+            "tuesday-close": "Tuesday Close",
+            "wednesday-open": "Wednesday Open",
+            "wednesday-close": "Wednesday Close",
+            "thursday-open": "Thursday Open",
+            "thursday-close": "Thursday Close",
+            "friday-open": "Friday Open",
+            "friday-close": "Friday Close",
+            "saturday-open": "Saturday Open",
+            "saturday-close": "Saturday Close",
+            "sunday-open": "Sunday Open",
+            "sunday-close": "Sunday Close",
+            "pickup-times": "Pickup Times",
+            "pickup-time-min": "Pickup Time Min (minutes)",
+            "pickup-time-max": "Pickup Time Max (minutes)",
+            "payment-methods": "Payment Methods",
+            "cash": "Cash",
+            "credit-card": "Credit Card",
+            "debit-card": "Debit Card",
+            "transfer": "Bank Transfer",
+            "mercado-pago": "Mercado Pago",
+            "paypal": "PayPal",
+            "crypto": "Cryptocurrency",
+            "payment-required": "At least one payment method is required",
+            "additional-settings": "Additional Settings",
+            "require-phone": "Require Phone for Delivery",
+            "minimum-order": "Minimum Order Amount ($)",
+            "preparation-buffer": "Preparation Buffer (minutes)",
+            "temporarily-closed": "Temporarily Closed",
+            "closure-reason": "Closure Reason (if temporarily closed)",
+            "messages": {
+                "select-store-first": "Please select a store first",
+                "success": "Store operations configured successfully!",
+                "error": "Failed to configure store operations",
+                "loading": "Configuring operations..."
+            }
+        },
+        "step-1": {
+            "title": "Step 1",
+            "complete": " Complete",
+            "create-a-new-store": "Create a new store",
+            "to-continue": "To get started selling like a pro, you need to create a new store. This will give you your storefront, a place to list your products, and a place to manage your orders.",
+            "stores-created": "You have {count} store{plural} created",
+            "store": "",
+            "stores": "s"
+        },
+        "step-2": {
+            "title": "Step 2",
+            "available": "Available",
+            "create-a-product": "Create a product",
+            "to-continue": "Once created, your products will be visible to customers and ready for sale. You can add images, descriptions, pricing, and inventory tracking.",
+            "first-complete": "Complete Step 1 first to unlock this feature",
+            "products-created": "You have {count} product{plural} created",
+            "product": "",
+            "products": "s"
+        },
+        "step-3": {
+            "title": "Step 3",
+            "configure-operations": "Configure operations",
+            "to-continue": "Set up delivery options, business hours, payment methods, and operational settings for your store.",
+            "first-complete": "Complete previous steps to unlock this feature",
+            "operations-configured": "Operations configured for {count} store{plural}",
+            "store": "",
+            "stores": "s"
+        },
+        "step-4": {
+            "title": "Step 4",
+            "share-your-store": "Share your store's link!",
+            "share-your-store-with": "Share your store's link with your customers to start selling!",
+            "first-complete": "Complete previous steps to unlock this feature"
+        },
+        "your-store": {
+            "title": "Your Store",
+            "see-all": "See All",
+            "new-store": "New Store"
+        },
+        "help": {
+            "title": "Need help?",
+            "contact-us": "Contact us",
+            "description": "Our experts are here to help you.",
+            "send-message": "Send message",
+            "dialog": {
+                "title": "Contact us",
+                "description": "Send us a message and we will get back to you as soon as possible.",
+                "email": "Email",
+                "name": "Name",
+                "message": "Message",
+                "messages": {
+                    "success": "Message sent",
+                    "error": "Error sending message",
+                    "loading": "Sending message..."
+                }
+            }
+        },
+        "welcome-tutorial": {
+            "section-title": "Feeling lost?",
+            "dialog-title": "Welcome to Lanzate!",
+            "steps": {
+                "1": {
+                    "title": "Welcome!",
+                    "descriptions": {
+                        "0": "This is a brief tutorial to help you get started with your business.",
+                        "1": "Once you have completed the tutorial, you will be able to start using Lanzate."
+                    }
+                },
+                "2": {
+                    "title": "Create a store",
+                    "descriptions": {
+                        "0": "Create a store to start selling your products.",
+                        "1": "Choose a name, logo and shipping methods to get started; you can edit your store details later."
+                    }
+                },
+                "3": {
+                    "title": "Create a product",
+                    "descriptions": {
+                        "0": "Add products to your store to start selling.",
+                        "1": "Add as many details as you want such as images, descriptions, prices, and more."
+                    }
+                },
+                "4": {
+                    "title": "Share your store",
+                    "descriptions": {
+                        "0": "Share your store's custom link with your customers!",
+                        "1": "They'll be able to see your products, add them to their cart, and checkout with ease.",
+                        "2": "You can also share your store on social media, send it to customers, or add it to your business cards."
+                    }
+                }
+            },
+            "buttons": {
+                "previous": "Previous",
+                "next": "Next",
+                "finish": "Finish Tutorial"
+            },
+            "alt-image": "Welcome Image"
+        }
+    },
+    "error": {
+        "oops": "Oops...nothing to see here",
+        "something-went-wrong": "Something went wrong",
+        "page-not-founded": "The page you are looking for does not exist.",
+        "go-back": "Go back to home"
+    },
+    "home": {
+        "hero": {
+            "just_released": "Last update: Enhanced customization and new components"
+        },
+        "slogan": {
+            "1": "You",
+            "2": "dream it. ",
+            "3": "Lanzate makes it",
+            "4": "happen.",
+            "word-1": "dream it",
+            "word-2": "build it",
+            "word-3": "grow it",
+            "finish": "makes it happen"
+        },
+        "beam": {
+            "sales": {
+                "1": "New sale!",
+                "2": "Product sold!",
+                "3": "Sale completed!",
+                "4": "New purchase!",
+                "5": "Order received!",
+                "6": "Payment processed!",
+                "7": "Sale confirmed!"
+            },
+            "following": {
+                "users": "Users won't stop buying!",
+                "rocket": "Lanzate makes it easy to sell",
+                "mobile": "Power outage? Use it on your phone!",
+                "tablet": "Available on any device!",
+                "barcode": "Benefit from our USB Barcode Scanner!"
+            }
+        },
+        "description": {
+            "slogan": "Managing your business has never been easier. Focus on growth while we give you full control",
+            "slogan-items": {
+                "1": "manage your products",
+                "2": "process sales",
+                "3": "organize your team"
+            },
+            "how-it-work": {
+                "title": "How it works",
+                "description": "How Lanzate empowers your business?"
+            },
+            "centralize": {
+                "title": "Comfort",
+                "description": "Work from anywhere, anytime, with any device."
+            },
+            "sell": {
+                "title": "Customize",
+                "title-2": "Grow.",
+                "description": "Get your custom domain and store with your name."
+            },
+            "ship-easily": {
+                "title": "Accessibility",
+                "description": "Access your store from any device, anytime, with any internet connection."
+            },
+            "analytics": {
+                "orders": "Orders",
+                "new-customers": "New customers",
+                "growth": "Growth",
+                "bounce-rate": "Bounce rate"
+            },
+            "plan": {
+                "title": "Pricing",
+                "description": "Choose the plan that fits your business and start simplifying your online management with Lánzate. Scale as you grow, with all the tools you need in one place.",
+                "personal": {
+                    "title": "Personal",
+                    "price": "FREE",
+                    "benefits": {
+                        "1": "Up to 1 free store and branch",
+                        "2": "All-in-one product and inventory management",
+                        "3": "Up to 200 product listings",
+                        "4": "Basic analytics dashboard",
+                        "5": "Community support"
+                    }
+                },
+                "professional": {
+                    "title": "Professional",
+                    "price": "/mo",
+                    "benefits": {
+                        "1": "All features in FREE plan",
+                        "2": "Up to 3 stores and 3 branches each store",
+                        "3": "Advanced sales analytics",
+                        "4": "Up to 1000 product listings",
+                        "5": "Priority customer support",
+                        "6": "Real-time delivery tracking and payment"
+                    }
+                },
+                "enterprise": {
+                    "title": "Enterprise",
+                    "price": "/mo",
+                    "benefits": {
+                        "1": "All features in PROFESSIONAL plan",
+                        "2": "AI inventory assistant",
+                        "3": "Up to 10 stores and 10 branches each store",
+                        "4": "Enterprise-level analytics",
+                        "5": "Dedicated account manager",
+                        "6": "Personalized onboarding",
+                        "7": "Unlimited product listings"
+                    }
+                }
+            }
+        },
+        "customization": {
+            "title": "Customize your store",
+            "description": "If you want to customize your store beyond what we offer, please contact us!"
+        },
+        "buttons": {
+            "login": "Login",
+            "sign-up": "Sign up",
+            "get-started": "Get started",
+            "learn-more": "Learn more",
+            "monthly": "Monthly",
+            "annually": "Annually",
+            "subscribe": "Subscribe"
+        },
+        "footer": {
+            "links": {
+                "1": "Terms and conditions",
+                "2": "Privacy policy",
+                "3": "Cookies"
+            },
+            "getting-started": {
+                "title": "Getting started",
+                "links": {
+                    "1": "Installation",
+                    "2": "Release Notes",
+                    "3": "Update Guide",
+                    "4": "Using with Preprocessors",
+                    "5": "Optimizing for Production",
+                    "6": "Browser Support",
+                    "7": "IntelliSense"
+                }
+            },
+            "core-concepts": {
+                "title": "Core concepts",
+                "links": {
+                    "1": "Utility-First",
+                    "2": "Responsive Design",
+                    "3": "Hover, Focus, &amp; Other States",
+                    "4": "Dark Mode",
+                    "5": "Adding Base Styles",
+                    "6": "Extracting Components",
+                    "7": "Adding New Utilities"
+                }
+            },
+            "customization": {
+                "title": "Customization",
+                "links": {
+                    "1": "Configuration",
+                    "2": "Theme Configuration",
+                    "3": "Breakpoints",
+                    "4": "Customizing Colors",
+                    "5": "Customizing Spacing",
+                    "6": "Configuring Variants",
+                    "7": "Plugins"
+                }
+            },
+            "community": {
+                "title": "Community"
+            },
+            "copyright": "© Copyright 2025. All Rights Reserved."
+        },
+        "announcement": {
+            "last-update": "Last update",
+            "title": "New cash register added"
+        },
+        "features": {
+            "title": "Features",
+            "feature": {
+                "customizable": "Customizable",
+                "all-in-one": {
+                    "description": "Manage your store from anywhere, available on all your devices.",
+                    "title": "All-in-one"
+                },
+                "custom-domain": {
+                    "title": "Custom domain",
+                    "description": {
+                        "own-brand": "Get your own domain URL and publish your products under your brand!"
+                    }
+                }
+            }
+        },
+        "who-we-are": {
+            "title": "Who we are",
+            "description": "On a mission to help you launch your business",
+            "description-long": "We believe that every entrepreneur deserves the tools to make their ideas a reality. Our platform provides everything you need to create, manage and grow your digital business from day one, without technical complications.",
+            "description-long-2": "We know that starting a business can be overwhelming. That's why we've created an integrated solution that eliminates technical barriers and allows you to focus on what really matters: your vision. From your custom website to customer management, everything is designed to be simple, fast and effective.",
+            "description-long-3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something of their own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business.",
+            "founded": "Founded",
+            "users": "Users",
+            "country": "Countries",
+            "sold": "Sold",
+            "learn-more": "Learn more about our company"
+        }
+    },
+    "sale": {
+        "title": "New Order",
+        "store-selector": {
+            "title": "Select Store",
+            "description": "Choose a store to create a new order",
+            "placeholder": "Select a store...",
+            "confirm": "Confirm Store"
+        },
+        "breadcrumbs": {
+            "sale": "Sale"
+        },
+        "search": {
+            "placeholder": "Search by name, description or SKU...",
+            "searching": "Searching products...",
+            "found": "Found {count} products",
+            "no-results": "No products found",
+            "error": "Error searching products"
+        },
+        "cart": {
+            "title": "Cart",
+            "items": "items",
+            "item": "item",
+            "empty-title": "Cart is empty",
+            "empty-description": "Scan or search products to add",
+            "total": "Total:",
+            "add": "Add",
+            "remove": "Remove"
+        },
+        "scanner": {
+            "scanning": "Scanning...",
+            "waiting": "Waiting for scan",
+            "disabled": "Scanner disabled",
+            "enabled": "Enabled",
+            "start": "Starting scan...",
+            "completed": "Scan completed"
+        },
+        "product-results": {
+            "title": "Search Results",
+            "barcode-found": "Product found by barcode",
+            "search-found": "Found {count} products",
+            "scanned": "Scanned",
+            "search": "Search",
+            "add": "Add",
+            "units-remaining": "{count} {units} remaining",
+            "unit": "unit",
+            "units": "units",
+            "try-again": "Try again with different search terms",
+            "search-instruction": "Search products by name or scan a barcode",
+            "results-here": "Results will appear here"
+        },
+        "actions": {
+            "finalize-sale": "Finalize Sale",
+            "calculate-change": "Calculate Change",
+            "print-receipt": "Print Receipt",
+            "process-refund": "Process Refund",
+            "clear-cart": "Clear Cart"
+        },
+        "messages": {
+            "searching-product": "Searching product...",
+            "product-found": "Product found",
+            "product-not-found": "Product not found",
+            "search-error": "Error searching the product",
+            "sale-completed": "Sale completed. Total: {total}",
+            "refund-not-implemented": "Refund function not implemented yet",
+            "print-not-implemented": "Print function not implemented yet",
+            "change-calculation": "Total to charge: ${total}\nHow much did the customer pay?",
+            "change-result": "Change: ${change}",
+            "insufficient-payment": "Insufficient payment"
+        },
+        "calculate-change": {
+            "title": "Calculate Change",
+            "popup-title": "Calculate Change",
+            "popup-description": "Total to charge: {total}",
+            "payment-amount-label": "Payment amount",
+            "payment-amount-placeholder": "Enter the amount the customer paid",
+            "preset-amounts-label": "Preset amounts",
+            "change-amount-label": "Change due",
+            "insufficient-amount-label": "Remaining balance",
+            "success-message": "Change calculated successfully",
+            "error-message": "Error calculating change",
+            "loading-message": "Calculating change..."
+        },
+        "finalize-sale": {
+            "title": "Finalize Sale",
+            "popup-title": "Confirm Sale",
+            "popup-description": "Total: {total} • {items} {itemText}",
+            "summary-title": "Sale Total",
+            "payment-method": "Payment method",
+            "transaction-type": "Transaction type",
+            "status": "Status",
+            "cash": "Cash",
+            "sale": "Sale",
+            "completed": "Completed",
+            "confirmation-message": "Are you sure you want to finalize this sale?",
+            "info-message": "Toggle the switch above to confirm and finalize the sale",
+            "item": "item",
+            "items": "items",
+            "success-message": "Sale finalized successfully!",
+            "error-message": "Error finalizing sale",
+            "loading-message": "Finalizing sale..."
+        }
+    },
+    "overview": {
+        "error-loading-overview": "Error loading overview data",
+        "error-loading-store": "Error loading store information",
+        "quick-actions": {
+            "title": "Quick Actions",
+            "description": "Here you can find the most important actions for your store together with some quick links to get you started.",
+            "advanced-analytics": "Advanced Analytics",
+            "marketing-tools": "Marketing Tools",
+            "coming-soon": "Coming Soon"
+        },
+        "top-products": {
+            "title": "Top Selling Products",
+            "no-data": "No sales data available",
+            "sold": "sold"
+        },
+        "sales-by-month": {
+            "title": "Sales by Month",
+            "revenue": "Revenue",
+            "orders": "Orders"
+        },
+        "sales-overview": {
+            "title": "Sales Overview",
+            "total-revenue": "Total revenue",
+            "orders": "Orders",
+            "average": "Average"
+        },
+        "product-store-count": {
+            "title": "Products and Branches",
+            "total-products": "Total products",
+            "branches": "Branches",
+            "active": "Active",
+            "published": "Published"
+        }
+    },
+    "layout": {
+        "title": "Home",
+        "header": {
+            "navigation": {
+                "home": "Home",
+                "about": "About",
+                "contact": "Contact",
+                "help": "Help",
+                "access": "Access",
+                "moreInfo": "More",
+                "pricing": "Pricing",
+                "auth": {
+                    "login": "Login",
+                    "signup": "Signup",
+                    "signout": "Signout",
+                    "forgotPassword": "Forgot password",
+                    "googleAuth": "Google auth"
+                },
+                "sections": {
+                    "hero": "Start",
+                    "heroDesc": "Get started with Lanzate",
+                    "howItWorks": "Features",
+                    "howItWorksDesc": "Get to know how it works",
+                    "integrations": "Integrations",
+                    "integrationsDesc": "Integrate with your favorite tools",
+                    "faq": "FAQ",
+                    "faqDesc": "Frequently asked questions",
+                    "dashboard": "Dashboard",
+                    "dashboardDesc": "Dashboard description",
+                    "newSale": "New sale",
+                    "newSaleDesc": "New sale description",
+                    "stores": "Stores",
+                    "storesDesc": "Stores description",
+                    "account": "Account",
+                    "accountDesc": "Account description",
+                    "aboutDesc": "Know more about us",
+                    "contactDesc": "Contact us",
+                    "loginDesc": "Access your account",
+                    "signupDesc": "Create your account",
+                    "forgotPasswordDesc": "Reset your password manually",
+                    "googleAuthDesc": "Access using your Google account",
+                    "helpDesc": "If you need help, contact us",
+                    "pricingDesc": "Know our plans"
+                }
+            },
+            "mobileDrawer": {
+                "welcome": "Welcome!",
+                "menu": "Menu",
+                "settings": "Settings"
+            },
+            "accountDropdown": {
+                "account": "Account",
+                "cart": "Cart",
+                "myOrders": "My Orders",
+                "signOut": "Sign out"
+            }
+        },
+        "footer": {
+            "links": {
+                "termsAndConditions": "Terms and Conditions",
+                "privacyPolicy": "Privacy Policy",
+                "cookiePolicy": "Cookie Policy",
+                "contactUs": "Contact Us"
+            },
+            "copyright": {
+                "text": "© {year} Lanzate, All rights reserved",
+                "year": "2025"
+            },
+            "socialMedia": {
+                "ariaLabels": {
+                    "twitter": "X/Twitter",
+                    "facebook": "Facebook",
+                    "instagram": "Instagram"
+                }
+            }
+        }
+    },
+    "store": {
+        "title": "Stores",
+        "plural-title": "Stores",
+        "current-balance": "Current Balance",
+        "store-details": "Store Details",
+        "loading": "Loading...",
+        "no-stores": "No stores found",
+        "store-not-found": "Store not found",
+        "product-not-found": "Product not found",
+        "store-details-page": "Store Details Page",
+        "branches": {
+            "branch-details": "Branch Details",
+            "main-branch": "Main Branch",
+            "address": "Address",
+            "no-address": "No address",
+            "phone": "Phone",
+            "no-phone": "No phone",
+            "email": "Email",
+            "no-email": "No email",
+            "products-in-stock": "Products in Stock",
+            "total-orders": "Total Orders",
+            "revenue": "Revenue",
+            "created-on": "Created on ",
+            "recent-orders": "Recent Orders",
+            "order": "Order ",
+            "store-pickup": "Store Pickup",
+            "delivery": "Delivery"
+        },
+        "buttons": {
+            "new-store": "New Store"
+        },
+        "create-store": {
+            "button": "New store",
+            "title": "Create new store",
+            "description": "Create a new store to start selling your products! Choose a name for your store and click the button below, you can continue to add more details of the store once it's created.",
+            "name": "Name",
+            "description-field": "Description",
+            "subdomain": "Subdomain",
+            "contact-section": "Contact Information",
+            "contact-phone": "Phone",
+            "contact-whatsapp": "WhatsApp",
+            "social-media-section": "Social Media",
+            "facebook-url": "Facebook URL",
+            "instagram-url": "Instagram URL",
+            "x-url": "X (Twitter) URL",
+            "address-section": "Store Address",
+            "is-physical-store": "This is a physical store",
+            "address": "Address",
+            "city": "City",
+            "province": "Province/State",
+            "country": "Country",
+            "messages": {
+                "name-required": "Name is required",
+                "user-id-required": "User ID is required",
+                "success": "Store created successfully!",
+                "error": "Failed to create store",
+                "loading": "Creating store..."
+            }
+        },
+        "store-card": {
+            "no-description": "No description",
+            "products": "products",
+            "product": "product"
+        },
+        "product-card": {
+            "no-description": "No description available",
+            "items-left": "left",
+            "item-left": "left"
+        },
+        "tabs": {
+            "overview": "Overview",
+            "account": "Store Settings",
+            "branches": "Branches",
+            "employees": "Employees",
+            "products": "Products",
+            "orders": "Orders",
+            "settings": "Settings",
+            "analytics": "Analytics",
+            "history": "History",
+            "styles": "Styles"
+        },
+        "account-tab": {
+            "name": "Name",
+            "description": "Description",
+            "website": "Website",
+            "no-description": "No description available",
+            "contact-phone": "Phone",
+            "contact-whatsapp": "WhatsApp",
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "x-twitter": "X (Twitter)",
+            "not-provided": "Not provided",
+            "danger-zone": "Danger zone",
+            "delete-warning": "You can delete your store by clicking the button below.",
+            "delete-irreversible": "Keep in mind that this action is irreversible and it will delete all the data associated with your store."
+        },
+        "edit-store": {
+            "button": "Edit store",
+            "title": "Edit store",
+            "description": "Edit the details of your store",
+            "name": "Name",
+            "description-field": "Description",
+            "subdomain": "Subdomain",
+            "contact-section": "Contact Information",
+            "contact-phone": "Phone",
+            "contact-phone-placeholder": "Enter phone number",
+            "contact-email-placeholder": "Enter email address",
+            "edit-contact": "Edit Contact",
+            "edit-contact-title": "Edit Contact Information",
+            "edit-contact-description": "Update your store's contact information",
+            "contact-updated-success": "Contact information updated successfully",
+            "contact-updated-error": "Failed to update contact information",
+            "contact-updating": "Updating contact information...",
+            "contact-whatsapp": "WhatsApp",
+            "social-media-section": "Social Media",
+            "facebook-url": "Facebook URL",
+            "instagram-url": "Instagram URL",
+            "x-url": "X (Twitter) URL",
+            "edit-social-media": "Edit Social Media",
+            "edit-social-media-title": "Edit Social Media Links",
+            "edit-social-media-description": "Update your store's social media links",
+            "social-media-updated-success": "Social media links updated successfully",
+            "social-media-updated-error": "Failed to update social media links",
+            "social-media-updating": "Updating social media links...",
+            "facebook-url-placeholder": "Enter Facebook URL",
+            "instagram-url-placeholder": "Enter Instagram URL",
+            "x-url-placeholder": "Enter X (Twitter) URL",
+            "address-section": "Store Address",
+            "is-physical-store": "This is a physical store",
+            "address": "Address",
+            "city": "City",
+            "province": "Province/State",
+            "country": "Country",
+            "messages": {
+                "name-required": "Name is required",
+                "user-id-required": "User ID is required",
+                "success": "Store updated successfully!",
+                "error": "Failed to update store",
+                "loading": "Updating store..."
+            }
+        },
+        "delete-store": {
+            "button": "Delete Store",
+            "title": "Delete Store",
+            "description": "You can delete your store by clicking the button below. Keep in mind that this action is irreversible and it will delete all the data associated with your store.",
+            "messages": {
+                "success": "Store deleted successfully",
+                "error": "Error deleting store",
+                "loading": "Deleting store..."
+            }
+        },
+        "update-prices": {
+            "button": "Update prices",
+            "title": "Update prices",
+            "description": "Update your product prices in bulk",
+            "selected-products": "{count} products selected",
+            "no-selection-disclaimer": "No products selected. Select products from the table or choose a category to update prices in bulk.",
+            "select-category": "Select category",
+            "choose-category": "Choose a category...",
+            "products-in-category": "{count} products in this category",
+            "amount": "Amount",
+            "amount-placeholder": "Enter the amount",
+            "update-type": "Update type",
+            "fixed": "Fixed",
+            "percentage": "Percentage",
+            "save": "Save",
+            "messages": {
+                "success": "Prices updated successfully",
+                "error": "Error updating prices",
+                "loading": "Updating prices..."
+            }
+        },
+        "edit-operational-settings": {
+            "button": "Edit settings",
+            "title": "Edit operational settings",
+            "description": "Configure your store's delivery options and payment methods",
+            "delivery-section": "Delivery Settings",
+            "payment-section": "Payment Settings",
+            "offers-delivery": "Offers delivery",
+            "offers-delivery-description": "Allows home delivery",
+            "delivery-price": "Delivery price",
+            "free-delivery-minimum": "Minimum for free delivery",
+            "free-delivery-minimum-placeholder": "Leave empty if you don't want free delivery",
+            "delivery-radius": "Delivery radius (km)",
+            "minimum-order-amount": "Minimum order amount",
+            "payment-methods": "Accepted payment methods",
+            "messages": {
+                "success": "Operational settings updated successfully",
+                "error": "Error updating operational settings",
+                "loading": "Updating settings..."
+            }
+        },
+        "branches-tab": {
+            "no-branches": "No branches found"
+        },
+        "branch-table": {
+            "headers": {
+                "name": "Name",
+                "address": "Address",
+                "phone": "Phone",
+                "email": "Email",
+                "actions": "Actions"
+            },
+            "main-badge": "Main",
+            "no-address": "No address",
+            "no-phone": "No phone",
+            "no-email": "No email",
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "cannot-delete-main": "Cannot delete main branch",
+                "open-menu": "Open menu"
+            }
+        },
+        "create-branch": {
+            "button": "Create Branch",
+            "title": "Create new branch",
+            "description": "Create a new branch to start selling your products! Choose a name for your branch and click on the button below, you can continue to add more details of the branch once it's created.",
+            "name": "Name",
+            "address": "Address",
+            "phone": "Phone",
+            "email": "Email",
+            "basic-info": "Basic info",
+            "contact-info": "Contact info",
+            "messages": {
+                "success": "Branch created successfully!",
+                "error": "Failed to create branch",
+                "loading": "Creating branch..."
+            }
+        },
+        "edit-branch": {
+            "button": "Edit Branch",
+            "title": "Edit branch",
+            "description-popup": "Edit the branch details including name, address, phone, and email. You can also designate this branch as the main branch.",
+            "name": "Name",
+            "description": "Description",
+            "description-placeholder": "Branch description",
+            "address": "Address",
+            "phone": "Phone",
+            "email": "Email",
+            "set-as-main": "Set as main branch",
+            "main-branch-note": "This will be the primary branch for the store. All other branches will be unset as main.",
+            "messages": {
+                "success": "Branch updated successfully!",
+                "error": "Failed to update branch",
+                "loading": "Updating branch..."
+            }
+        },
+        "delete-branch": {
+            "button": "Delete Branch",
+            "title": "Delete Branch",
+            "description": "Are you sure you want to delete this branch? This action is irreversible. Orders associated with this branch will be preserved but the branch reference will be removed.",
+            "messages": {
+                "success": "Branch deleted successfully",
+                "error": "Error deleting branch",
+                "loading": "Deleting branch..."
+            }
+        },
+        "employees-tab": {
+            "error-loading-employees": "Error loading employees",
+            "error-loading-store": "Error loading store"
+        },
+        "employees-table": {
+            "headers": {
+                "id": "ID",
+                "user": "User",
+                "role": "Role",
+                "active": "Active",
+                "published": "Published",
+                "hired": "Hired",
+                "department": "Department",
+                "actions": "Actions"
+            },
+            "yes": "Yes",
+            "no": "No",
+            "no-department": "-",
+            "no-hired-date": "-",
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "open-menu": "Open menu"
+            }
+        },
+        "create-employee": {
+            "button": "Add employee",
+            "title": "Add employee",
+            "description": "Search for a registered user to add them as an employee of this store.",
+            "search-user": "Search user",
+            "search-button": "Search",
+            "user-selected": "User selected:",
+            "users-found": "Users found:",
+            "already-employee": "Already employee",
+            "role-label": "Role:",
+            "hired-label": "Hired:",
+            "messages": {
+                "select-user-first": "You must select a user first",
+                "user-already-employee": "This user is already an employee of this store",
+                "success": "Employee added successfully!",
+                "error": "Error adding employee",
+                "loading": "Adding employee...",
+                "searching": "Searching users...",
+                "searching-description": "This may take a few seconds",
+                "search-error": "Error searching users",
+                "no-users-found": "No users found"
+            }
+        },
+        "edit-employee": {
+            "button": "Edit Employee",
+            "title": "Edit employee",
+            "description": "Edit the employee's role, permissions and other details. Note: Email and name cannot be changed as they belong to the user account.",
+            "user-info-title": "Employee User Information",
+            "email": "Email:",
+            "name": "Name:",
+            "email-name-note": "Note: Email and name cannot be edited here as they are part of the user's account",
+            "role": "Role",
+            "role-placeholder": "Select a role",
+            "position": "Position",
+            "department": "Department",
+            "salary": "Salary",
+            "salary-placeholder": "Enter salary",
+            "notes": "Notes",
+            "notes-placeholder": "Additional notes about the employee...",
+            "employee-active": "Employee is active",
+            "permissions-title": "Permissions",
+            "roles": {
+                "employee": "Employee",
+                "cashier": "Cashier",
+                "stockist": "Stock Clerk",
+                "sales": "Sales",
+                "supervisor": "Supervisor",
+                "manager": "Manager"
+            },
+            "permissions": {
+                "can-create-orders": "Can create orders",
+                "can-update-orders": "Can update orders",
+                "can-create-products": "Can create products",
+                "can-update-products": "Can update products",
+                "can-manage-stock": "Can manage stock",
+                "can-process-refunds": "Can process refunds",
+                "can-view-reports": "Can view reports",
+                "can-manage-employees": "Can manage employees",
+                "can-manage-store": "Can manage store"
+            },
+            "messages": {
+                "success": "Employee updated successfully!",
+                "error": "Failed to update employee",
+                "loading": "Updating employee..."
+            }
+        },
+        "delete-employee": {
+            "button": "Delete Employee",
+            "title": "Delete Employee",
+            "description": "Are you sure you want to delete this employee? This action is irreversible. Orders created by this employee will be preserved but the employee reference will be removed.",
+            "messages": {
+                "success": "Employee deleted successfully",
+                "error": "Error deleting employee",
+                "loading": "Deleting employee..."
+            }
+        },
+        "orders-tab": {
+            "error-loading-user": "Error loading user information",
+            "error-loading-orders": "Error loading orders"
+        },
+        "orders-table": {
+            "headers": {
+                "id": "ID",
+                "status": "Status",
+                "total": "Total",
+                "customer": "Customer",
+                "date": "Date",
+                "items": "Items",
+                "type": "Type"
+            },
+            "statuses": {
+                "pending": "Pending",
+                "processing": "Processing",
+                "ready": "Ready",
+                "shipped": "Shipped",
+                "delivered": "Delivered",
+                "cancelled": "Cancelled",
+                "completed": "Completed"
+            },
+            "items-count": {
+                "item": "item",
+                "items": "items"
+            },
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "open-menu": "Open menu"
+            },
+            "export": {
+                "button": "Export to Excel",
+                "payment_status": "Payment Status",
+                "created_at": "Created at",
+                "updated_at": "Updated at",
+                "no-customer": "No customer",
+                "no-shipping": "No shipping method",
+                "no-payment-status": "No payment status"
+            }
+        },
+        "change-order-status": {
+            "button": "Change Status",
+            "title": "Change Order Status",
+            "current-order-status": "Current Order Status",
+            "new-status": "New Status",
+            "status-placeholder": "Select new status",
+            "new-status-preview": "New Status Preview",
+            "payment-marked-paid": "Payment will be automatically marked as PAID",
+            "payment-explanation": "Changing from PENDING to {status} indicates the order has been paid. The payment status will be updated accordingly.",
+            "confirm-payment": "I confirm this order has been paid",
+            "stock-restore-warning": "This will restore product stock and reverse store balance",
+            "cancellation-consequences": "Cancelling this order will:",
+            "restore-stock": "Restore product stock quantities",
+            "reverse-balance": "Reverse the store balance transaction",
+            "create-refund": "Create a new REFUND transaction",
+            "log-action": "Log the cancellation action",
+            "understand-consequences": "I understand the consequences of cancelling this order",
+            "no-changes-warning": "The selected status is the same as the current status. No changes will be made.",
+            "descriptions": {
+                "cancel": "Cancelling this order will restore product stock and reverse the store balance.",
+                "from-pending": "Changing from PENDING status will mark the order as paid and update payment records.",
+                "default": "Update the order status to reflect its current state."
+            },
+            "messages": {
+                "confirm-required": "Please confirm all required fields",
+                "success": "Order status updated successfully!",
+                "error": "Failed to update order status",
+                "loading": "Updating order status..."
+            }
+        },
+        "cancel-order": {
+            "button": "Cancel Order",
+            "title": "Cancel Order",
+            "description": "Are you sure you want to cancel this order? This will restore product stock and reverse the store balance. This action cannot be undone.",
+            "cannot-cancel": "Cannot cancel",
+            "messages": {
+                "success": "Order cancelled successfully!",
+                "error": "Failed to cancel order",
+                "loading": "Cancelling order..."
+            }
+        },
+        "products-tab": {
+            "error-loading-store": "Error loading store information",
+            "loading-products": "Loading products..."
+        },
+        "products-table": {
+            "headers": {
+                "id": "ID",
+                "name": "Name",
+                "price": "Price",
+                "categories": "Categories",
+                "stock": "Stock",
+                "featured": "Featured",
+                "active": "Active",
+                "published": "Published",
+                "status": "Status",
+                "actions": "Actions"
+            },
+            "categories": {
+                "none": "None"
+            },
+            "search-placeholder": "Search products...",
+            "boolean": {
+                "yes": "Yes",
+                "no": "No"
+            },
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "open-menu": "Open menu"
+            },
+            "actions": {
+                "distribute-stock": "Redistribute stock"
+            },
+            "distribute-stock": {
+                "title": "Redistribute Stock",
+                "description": "Redistribute stock of \"{productName}\" among branches",
+                "available-stock": "Total available stock",
+                "total-to-distribute": "Total to redistribute",
+                "branch-distribution": "Branch redistribution",
+                "main-branch": "Main",
+                "remaining-stock": "Remaining stock",
+                "error-exceeds-stock": "Total redistribution cannot exceed available stock",
+                "success": "Stock redistributed successfully!",
+                "error": "Error redistributing stock",
+                "loading": "Redistributing stock..."
+            },
+            "export": {
+                "button": "Export to Excel",
+                "description": "Description",
+                "created_at": "Created at",
+                "updated_at": "Updated at"
+            },
+            "expanded": {
+                "description": "Description",
+                "barcode": "Barcode",
+                "stock-by-branch": "Stock by branch",
+                "no-additional-info": "No additional information available"
+            }
+        },
+        "create-product": {
+            "button": "Create Product",
+            "title": "Create new product",
+            "description": "Description",
+            "popup-description": "Select a store and create a new product to start selling!",
+            "drag-drop": "Drag & drop files here",
+            "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
+            "browse-files": "Browse files",
+            "name": "Name",
+            "price": "Price",
+            "stock": "Stock",
+            "descriptions": {
+                "step1": "Choose how you want to upload your product.",
+                "step2": "Complete basic product information.",
+                "step3": "Add images and videos.",
+                "step4": "Define price and available stock.",
+                "step5": "Configure product visibility and status.",
+                "step6": "Configure product type and settings.",
+                "creating": "Processing and saving your product...",
+                "created": "Your product has been created successfully."
+            },
+            "titles": {
+                "creating": "Creating product...",
+                "created": "Product created!"
+            },
+            "steps": {
+                "basic": "Basic Info",
+                "media": "Media",
+                "price_stock": "Price & Stock",
+                "settings": "Product Type",
+                "step6": "Settings"
+            },
+            "file-rejected": "\"{filename}\" has been rejected",
+            "messages": {
+                "success": "Product created successfully!",
+                "error": "Failed to create product",
+                "loading": "Creating product..."
+            },
+            "step-locked": "Complete the previous steps first"
+        },
+        "edit-product": {
+            "button": "Edit Product",
+            "title": "Edit product",
+            "description": "Description",
+            "drag-drop": "Drag & drop files here",
+            "click-browse": "Or click to browse (max 1 files, up to 2MB each)",
+            "browse-files": "Browse files",
+            "name": "Name",
+            "price": "Price",
+            "stock": "Stock",
+            "file-rejected": "\"{filename}\" has been rejected",
+            "validation": {
+                "name-required": "Name is required",
+                "price-required": "Price is required",
+                "stock-required": "Stock is required"
+            },
+            "messages": {
+                "success": "Product updated successfully!",
+                "error": "Failed to update product",
+                "loading": "Updating product..."
+            }
+        },
+        "delete-product": {
+            "button": "Delete Product",
+            "title": "Delete Product",
+            "description": "Are you sure you want to delete this product? This action is irreversible.",
+            "messages": {
+                "success": "Product deleted successfully",
+                "error": "Error deleting product",
+                "loading": "Deleting product..."
+            }
+        },
+        "delete-variant": {
+            "button": "Delete Variant",
+            "title": "Delete Variant",
+            "description": "Are you sure you want to delete this variant? This action is irreversible.",
+            "messages": {
+                "success": "Variant deleted successfully",
+                "error": "Error deleting variant",
+                "loading": "Deleting variant..."
+            }
+        },
+        "history-tab": {
+            "error-loading-logs": "Error loading logs"
+        },
+        "history-table": {
+            "headers": {
+                "date": "Date",
+                "user": "User",
+                "action": "Action",
+                "entity-type": "Entity Type",
+                "actions": "Actions"
+            },
+            "employee": "(Employee)",
+            "unknown-user": "Unknown user",
+            "actions": {
+                "create": "CREATE",
+                "update": "UPDATE",
+                "delete": "DELETE",
+                "login": "LOGIN",
+                "logout": "LOGOUT"
+            },
+            "entities": {
+                "store": "STORE",
+                "product": "PRODUCT",
+                "order": "ORDER",
+                "branch": "BRANCH",
+                "user": "USER",
+                "employee": "EMPLOYEE"
+            },
+            "dropdown": {
+                "actions": "Actions",
+                "view-details": "View details",
+                "open-menu": "Open menu"
+            }
+        },
+        "layout": {
+            "overview": "Overview",
+            "account-details": "Store Settings",
+            "branches": "Branches",
+            "employees": "Employees",
+            "products": "Products",
+            "orders": "Orders",
+            "settings": "Settings",
+            "analytics": "Analytics",
+            "history": "History",
+            "store-details": "Store Details",
+            "no-description": "No description available",
+            "styles": "Customization"
+        },
+        "logs": {
+            "log-details": "Log Details ",
+            "log-id": "Log ID ",
+            "created-at": "Created At",
+            "action": "Action",
+            "entity-type": "Entity Type",
+            "entity-id": "Entity ID: ",
+            "user-information": "User Information",
+            "name": "Name: ",
+            "user-id": "User ID: ",
+            "employee": "Employee",
+            "employee-id": "Employee ID: ",
+            "unknown-user": "Unknown User",
+            "action-initiator": "Action Initiator",
+            "details": "Details",
+            "timestamps": "Timestamps",
+            "updated-at": "Updated At"
+        },
+        "orders": {
+            "order-details": "Order Details",
+            "status": "Status",
+            "date-created": "Date Created",
+            "total": "Total",
+            "item": "item",
+            "items": "items",
+            "customer-information": "Customer Information",
+            "shipping-method": "Shipping Method",
+            "order-items": "Order Items",
+            "quantity": "Quantity: ",
+            "payment-information": "Payment Information",
+            "amount": "Amount",
+            "employee-information": "Employee Information",
+            "created-by": "Created By",
+            "last-updated-by": "Last Updated By"
+        },
+        "products": {
+            "product-details": "Product Details ",
+            "no-categories": "No categories"
+        },
+        "create-form": {
+            "button": "Create Store",
+            "steps": {
+                "basic": "Basic",
+                "address": "Address",
+                "contact": "Contact",
+                "hours": "Hours",
+                "delivery": "Payment methods",
+                "success": "Success"
+            },
+            "step-tooltips": {
+                "basic": "Basic information",
+                "address": "Address information",
+                "contact": "Contact information",
+                "hours": "Hours information",
+                "delivery": "Delivery information",
+                "success": "Success"
+            },
+            "step-locked": "You must complete all required previous steps to unlock this step",
+            "descriptions": {
+                "step1": "Choose a name, logo and shipping methods to get started; you can edit your store details later.",
+                "step2": "Choose whether this is a physical store or an online store and add your address information.",
+                "step3": "Add your contact information and social media links so customers can contact you.",
+                "step4": "Choose attention dates and hours so customers know when you are open.",
+                "step5": "Set up your payment methods so customers can pay for their orders.",
+                "step6": "Creating your store…",
+                "step7": "All set! Redirecting…"
+            },
+            "titles": {
+                "create-store": "Create Store",
+                "creating": "Creating your store…",
+                "created": "Store created successfully"
+            },
+            "basic-info": {
+                "name": "Name",
+                "name-placeholder": "Ej: My Store",
+                "name-tooltip": "This is the name of your store. It will be used to identify your store in the system.",
+                "url": "URL",
+                "url-placeholder": "Ej: my-store",
+                "url-tooltip": "This is the URL of your store. People will use it to access your store.",
+                "description": "Description",
+                "description-placeholder": "Ej: My Store Description"
+            },
+            "address": {
+                "store-type": "Store Type",
+                "online-store": "Online",
+                "online-store-description": "Your store operates online only using an e-commerce platform.",
+                "physical-store": "Physical",
+                "physical-store-description": "Your store has a physical location available for public attention.",
+                "address": "Address",
+                "address-placeholder": "Ej: 123 Main St",
+                "address-tooltip": "This is the address of your store. It will be used to display your store on the map.",
+                "city": "City",
+                "city-placeholder": "Ej: New York",
+                "city-tooltip": "This is the city of your store. It will be used to display your store on the map.",
+                "province": "Province",
+                "province-placeholder": "Ej: New York",
+                "province-tooltip": "This is the province of your store. It will be used to display your store on the map.",
+                "country": "Country",
+                "country-placeholder": "Ej: United States",
+                "country-tooltip": "This is the country of your store. It will be used to display your store on the map."
+            },
+            "contact": {
+                "phone": "Phone",
+                "phone-placeholder": "Ej: 1234567890",
+                "phone-tooltip": "This is the phone number of your store. It will be used to contact your store.",
+                "email": "Email",
+                "email-placeholder": "Ej: test@example.com",
+                "email-tooltip": "This is the email of your store. It will be used to contact your store.",
+                "social-media": "Social Media",
+                "facebook": "Facebook",
+                "facebook-placeholder": "Ej: https://www.facebook.com/your-page",
+                "facebook-tooltip": "This is the Facebook URL of your store. It will be used to display your store on Facebook.",
+                "instagram": "Instagram",
+                "instagram-placeholder": "Ej: https://www.instagram.com/your-page",
+                "instagram-tooltip": "This is the Instagram URL of your store. It will be used to display your store on Instagram.",
+                "x-twitter": "X (Twitter)",
+                "x-twitter-placeholder": "Ej: https://x.com/your-page",
+                "x-twitter-tooltip": "This is the X (Twitter) URL of your store. It will be used to display your store on X (Twitter)."
+            },
+            "settings": {
+                "attention-type": "Attention Type",
+                "24-hours": "24 Hours",
+                "24-hours-description": "This store is open 24 hours and customers can place orders at any time.",
+                "schedule": "Schedule",
+                "schedule-description": "This store operates on a schedule and customers can only place orders during specified hours.",
+                "no-days-configured": "No attention days configured",
+                "no-days-selected": "No days selected",
+                "opening-hours": "Opening Hours",
+                "add-date": "Add date",
+                "delete": "Delete",
+                "cancel": "Cancel",
+                "save": "Save",
+                "operating-days-hours": "Operating Days & Hours",
+                "day-selected": "day selected",
+                "days-selected": "days selected",
+                "set-mon-fri": "Mon-Fri",
+                "set-fri-sun": "Fri-Sun",
+                "select-days-above": "Select days above",
+                "select-days-description": "Choose operating days to configure hours.",
+                "start-time": "Start Time",
+                "end-time": "End Time",
+                "save-schedule": "Save",
+                "select-at-least-one-day": "Select at least one day to save",
+                "days": {
+                    "monday": "Monday",
+                    "tuesday": "Tuesday",
+                    "wednesday": "Wednesday",
+                    "thursday": "Thursday",
+                    "friday": "Friday",
+                    "saturday": "Saturday",
+                    "sunday": "Sunday"
+                }
+            },
+            "shipping": {
+                "payment-methods": "Payment Methods",
+                "shipping-methods": "Shipping Methods",
+                "pickup-only": "Pickup Only",
+                "pickup-only-description": "This store does not offer delivery service; only pickup.",
+                "delivery-pickup": "Delivery & Pickup",
+                "delivery-pickup-description": "This store offers delivery as well as pickup.",
+                "no-shipping-configured": "No shipping methods configured",
+                "add-shipping-method": "Add shipping method",
+                "providers": "Providers",
+                "providers-error": "Select at least one provider",
+                "providers-options": {
+                    "own-delivery": "Own Delivery",
+                    "oca": "OCA",
+                    "correo-argentino": "Correo Argentino",
+                    "others": "Others"
+                },
+                "delivery-price": "Delivery Price",
+                "delivery-price-placeholder": "Ej: 1500",
+                "min-purchase": "Min. $ shipping",
+                "min-purchase-placeholder": "Ej: 10000",
+                "min-purchase-tooltip": "The minimum price of an order for the customer to be able to place an order with shipping",
+                "free-shipping-min": "Min. $ free shipping",
+                "free-shipping-min-placeholder": "Ej: 20000",
+                "estimated-time": "Estimated delivery time",
+                "estimated-time-placeholder": "Ej: 24-48 hs",
+                "no-provider-selected": "No provider selected",
+                "no-minimum": "No minimum",
+                "no-free-shipping": "No free shipping",
+                "eta-not-set": "ETA not set",
+                "price": "Price",
+                "payment-options": {
+                    "cash": "Cash",
+                    "credit": "Credit",
+                    "debit": "Debit",
+                    "mercado-pago": "Mercado Pago",
+                    "transfer": "Transfer"
+                },
+                "cancel": "Cancel",
+                "save": "Save",
+                "delete": "Delete"
+            },
+            "messages": {
+                "store-created-success": "Store created successfully",
+                "creating-store": "Creating your store…"
+            },
+            "payment": {
+                "cbu-cvu-placeholder": "Ex: 0000003100061234567890"
+            }
+        }
+    },
+    "checkout": {
+        "title": "Checkout",
+        "steps": {
+            "personal-information": {
+                "title": "Personal Information",
+                "description": "Provide your personal information"
+            },
+            "delivery-information": {
+                "title": "Delivery Information",
+                "description": "Choose how your order gets to you"
+            },
+            "payment-information": {
+                "title": "Payment Information",
+                "description": "Choose how you want to pay"
+            }
+        },
+        "navigation": {
+            "previous": "Previous",
+            "next": "Next",
+            "continue": "Continue"
+        },
+        "personal-info": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone"
+        },
+        "delivery": {
+            "title": "Delivery Information",
+            "method-selector": {
+                "label": "Choose your delivery method",
+                "delivery": {
+                    "title": "Delivery",
+                    "description": "Delivery takes 30 min to 2 hours"
+                },
+                "pickup": {
+                    "title": "Pickup",
+                    "description": "Orders take 5-10 minutes"
+                }
+            },
+            "address": {
+                "label": "Delivery Address",
+                "address": "Address",
+                "city": "City",
+                "state": "State",
+                "country": "Country"
+            },
+            "branch-selector": {
+                "label": "Select Branch",
+                "placeholder": "Choose a branch"
+            }
+        },
+        "payment": {
+            "title": "Payment Information",
+            "method-selector": {
+                "label": "Select Payment Method",
+                "placeholder": "Choose a payment method",
+                "cash": "Cash",
+                "credit-debit-card": "Credit/Debit Card",
+                "bank-transfer": "Bank Transfer",
+                "mercado-pago": "Mercado Pago",
+                "paypal": "Paypal",
+                "crypto": "Crypto"
+            },
+            "card-info": {
+                "label": "Card Information",
+                "card-number": "Card Number",
+                "card-number-placeholder": "1234 5678 9012 3456",
+                "cardholder-name": "Cardholder Name",
+                "cardholder-placeholder": "John Doe",
+                "expiry-date": "Expiry Date",
+                "expiry-placeholder": "MM/YY",
+                "cvv": "CVV",
+                "cvv-placeholder": "123"
+            },
+            "bank-transfer": {
+                "title": "Bank Transfer Details:",
+                "cvu": "CVU: 0000003100061234567890",
+                "alias": "Alias: MI.TIENDA.ONLINE",
+                "instructions": "Please include your order number in the transfer description. Your order will be confirmed once the payment is received."
+            },
+            "mercado-pago": {
+                "title": "Mercado Pago Payment",
+                "description": "When you click \"Confirm Order\", you will be redirected to Mercado Pago to complete your payment securely. After payment, you will be brought back to our site with your order confirmation."
+            }
+        },
+        "messages": {
+            "order-created": "Order created successfully"
+        }
+    },
+    "subdomain": {
+        "title": "My Products",
+        "sidebar": {
+            "placeholder": {
+                "search": "Search"
+            },
+            "filters": {
+                "search": "Search",
+                "sort-by": "Sort by",
+                "categories": "Categories",
+                "price-range": "Price range"
+            },
+            "order-by": {
+                "select-a-product": "Select a product",
+                "name-ascending": "Name (A-Z)",
+                "name-descending": "Name (Z-A)",
+                "price-ascending": "Price (low to high)",
+                "price-descending": "Price (high to low)",
+                "oldest": "Oldest",
+                "newest": "Newest"
+            },
+            "categories": {
+                "category": "Category",
+                "searching-categories": "Searching categories...",
+                "no-categories-found": "No categories found",
+                "creating-category": "Creating category \"{name}\"...",
+                "error-searching": "Error searching categories",
+                "error-creating": "Error creating category",
+                "category-created": "Category \"{name}\" created successfully"
+            },
+            "limit": {
+                "1": "Showing",
+                "2": "of",
+                "3": "items",
+                "4": "item"
+            }
+        }
+    },
+    "feature/header": {
+        "navigation": {
+            "home": "Home",
+            "about": "About",
+            "contact": "Contact",
+            "login": "Login",
+            "signup": "Signup",
+            "signout": "Signout",
+            "access": "Access",
+            "moreInfo": "More",
+            "help": "Help",
+            "sections": {
+                "hero": "Hero",
+                "heroDesc": "Hero description",
+                "howItWorks": "How it works",
+                "howItWorksDesc": "How it works description",
+                "integrations": "Integrations",
+                "integrationsDesc": "Integrations description",
+                "faq": "FAQ",
+                "faqDesc": "FAQ description",
+                "dashboardDesc": "Dashboard description",
+                "newSale": "New sale",
+                "newSaleDesc": "New sale description",
+                "stores": "Stores",
+                "storesDesc": "Stores description",
+                "account": "Account",
+                "accountDesc": "Account description",
+                "googleAuthDesc": "Google auth description",
+                "aboutDesc": "About description",
+                "contactDesc": "Contact description",
+                "loginDesc": "Login description",
+                "signupDesc": "Signup description",
+                "forgotPassword": "Forgot password",
+                "forgotPasswordDesc": "Forgot password description",
+                "googleAuth": "Google auth",
+                "dashboard": "Dashboard",
+                "helpDesc": "If you need help, contact us"
+            }
+        }
+    },
+    "address-section": "Address",
+    "features": {
+        "speed": {
+            "headline": "Faster than light!",
+            "description": "Lanzate loads instantly; ensuring that your customers have a fast and fluid experience at all times."
+        },
+        "stay-connected": {
+            "headline": "Stay connected",
+            "description": "Stay connected with your customers through our integrated social media features."
+        }
+    },
+    "landing": {
+        "contact-section": {
+            "contact-us": "Contact us"
+        },
+        "hero": {
+            "announcement": {
+                "badge": "New version",
+                "title": "Beta! Opening soon..."
+            },
+            "slogan": {
+                "prefix": "You",
+                "rotatingWords": {
+                    "word1": "dream it",
+                    "word2": "build it",
+                    "word3": "grow it"
+                },
+                "brandName": "Lanzate",
+                "suffix": "makes it happen"
+            },
+            "description": {
+                "text": "Managing your business has never been easier. Focus on growth while we give you full control"
+            },
+            "actions": {
+                "learnMore": "Learn more",
+                "getStarted": "Get started"
+            }
+        },
+        "features": {
+            "header": {
+                "label": "Features",
+                "title": "Features"
+            },
+            "highlights": {
+                "customizable": {
+                    "percentage": "100%",
+                    "title": "Barcode support",
+                    "description": "USB barcode scanner support"
+                },
+                "allInOne": {
+                    "title": "All-in-one",
+                    "description": "Manage your store from anywhere, available on all your devices."
+                },
+                "customDomain": {
+                    "title": "Custom domain",
+                    "description": "Get your own domain URL and publish your products under your brand!"
+                },
+                "speed": {
+                    "title": "Faster than light!",
+                    "description": "Lanzate loads instantly; ensuring that your customers have a fast and fluid experience at all times."
+                },
+                "stayConnected": {
+                    "title": "Stay connected",
+                    "description": "Stay connected with your customers through our integrated social media features."
+                }
+            },
+            "about": {
+                "label": "Who we are",
+                "title": "On a mission to help you launch your business",
+                "description": {
+                    "paragraph1": "Lanzate is an all-in-one web application designed to let you manage your store from anywhere, on any device. From inventory and sales tracking to barcode scanner support, Lanzate gives you all the tools you need to run your business easily and efficiently.",
+                    "paragraph2": "Forget about complicated setups — just open your browser to manage products, orders, customers, and billing in real time. Everything stays perfectly synced in the cloud.",
+                    "paragraph3": "Our commitment goes beyond software. We're building a community of brave entrepreneurs who share the dream of creating something of their own. By choosing Lanzate, you not only get a powerful tool, you join a community designed to help you succeed and grow your business."
+                },
+                "stats": {
+                    "founded": {
+                        "value": "2025",
+                        "label": "Founded"
+                    },
+                    "users": {
+                        "value": "+100",
+                        "label": "Users"
+                    },
+                    "countries": {
+                        "value": "3",
+                        "label": "Countries"
+                    },
+                    "sales": {
+                        "value": "+$100K",
+                        "label": "Sold"
+                    }
+                },
+                "link": "Learn more about our company"
+            }
+        },
+        "integrations": {
+            "header": {
+                "label": "Integrations",
+                "title": "All your favorite tools. One single place.",
+                "description": "Connect seamlessly with the platforms and services you already use. Our integrations make it easy to sync your data, manage your workflow, and grow your business without switching between multiple tools."
+            },
+            "marquee": {
+                "title": "Trusted by Businesses Worldwide",
+                "description": "Founders, developers, and business leaders across the globe chose us for their digital asset operations."
+            }
+        },
+        "faq": {
+            "header": {
+                "label": "FAQ",
+                "title": "Frequently Asked Questions",
+                "description": "Find answers to common questions about Lanzate. If you can't find what you're looking for, feel free to contact our support team."
+            },
+            "items": {
+                "item1": {
+                    "question": "What is Lanzate?",
+                    "answer": "Lanzate is a comprehensive all-in-one platform designed to help entrepreneurs and businesses create, manage, and scale their online presence. Our platform combines product management, inventory tracking, social media integration, and sales analytics into a single, powerful solution. Whether you're just starting out or looking to expand your existing business, Lanzate provides the tools you need to manage multiple stores, track your products, engage with customers through social media, and grow your brand—all from one intuitive dashboard."
+                },
+                "item2": {
+                    "question": "How much does Lanzate cost?",
+                    "answer": "Lanzate offers flexible pricing options to suit businesses of all sizes. Our Starter plan is completely free and perfect for getting started—it includes up to 2 stores and branches, management for up to 500 products, basic analytics, and social media integration. For growing businesses, our Business plan costs $10 per month and expands your capabilities with up to 5 stores and branches, support for up to 2,000 products, custom branding options, and AI-powered features. Our Enterprise plan, priced at $25 per month, is designed for larger operations and includes unlimited stores and branches, unlimited products, advanced inventory management, comprehensive analytics with custom reports, and dedicated support. You can upgrade or downgrade your plan at any time."
+                },
+                "item3": {
+                    "question": "What features are included in Lanzate?",
+                    "answer": "Lanzate provides a complete suite of features to manage your online business efficiently. Our platform includes 100% customizable storefronts, allowing you to create a unique brand experience. You can manage multiple stores and branches from a single dashboard, track inventory in real-time, and organize up to hundreds or thousands of products depending on your plan. We seamlessly integrate with popular social media platforms, enabling you to engage with customers through likes, comments, and direct order management. Additionally, Lanzate offers custom domain support so you can build your brand with your own domain name, comprehensive sales analytics to track performance, and AI-powered features to help optimize your business operations. All features are designed to work together seamlessly for a streamlined experience."
+                },
+                "item4": {
+                    "question": "Can I use my own domain name with Lanzate?",
+                    "answer": "Yes, absolutely! Lanzate supports custom domain names, allowing you to establish a professional online presence with your own branded domain. This feature enables you to build trust with your customers by using a domain that reflects your brand identity rather than a generic subdomain. Setting up your custom domain is straightforward—simply connect your domain through our dashboard, and we'll guide you through the configuration process. Custom domain support is available on our Business and Enterprise plans, giving you the flexibility to scale your brand as your business grows. This is a key feature for businesses looking to establish a strong, recognizable online presence."
+                },
+                "item5": {
+                    "question": "How do I get started with Lanzate?",
+                    "answer": "Getting started with Lanzate is quick and easy. Simply sign up for a free account to access our Starter plan—no credit card required. Once you've created your account, you can immediately start setting up your first store, adding products, and configuring your inventory. Our intuitive dashboard will guide you through the initial setup process, and you'll have access to all the core features right away. If you need assistance, our community support is available to help answer questions and guide you through any challenges. As your business grows, you can seamlessly upgrade to a plan that better suits your needs, unlocking additional features like custom domains, advanced analytics, and AI tools. Start building your online business today with Lanzate's free plan!"
+                }
+            }
+        },
+        "contact": {
+            "header": {
+                "label": "Contact",
+                "title": "Contact Us",
+                "description": "Have questions or need help? We're here to assist you. Reach out to our team and we'll get back to you as soon as possible."
+            },
+            "actions": {
+                "button": "Contact us"
+            }
+        },
+        "pricing": {
+            "header": {
+                "label": "Pricing",
+                "title": "Simple, transparent pricing for every business",
+                "description": "Choose the plan that fits your business needs. Start free and scale as you grow with our flexible pricing options designed for businesses of all sizes."
+            },
+            "actions": {
+                "button": "Get started"
+            },
+            "plans": {
+                "starter": {
+                    "name": "Starter",
+                    "price": "$0 / FREE",
+                    "description": "Perfect for getting started. Manage your products and sales without any initial cost.",
+                    "features": {
+                        "feature1": "All-in-one product and inventory management",
+                        "feature2": "Social media integration",
+                        "feature3": "Up to 2 free store and branch",
+                        "feature4": "Up to 500 products",
+                        "feature5": "Basic sales analytics",
+                        "feature6": "Community support"
+                    }
+                },
+                "business": {
+                    "name": "Business",
+                    "price": "ARS $10.000/mo",
+                    "description": "Ideal for growing businesses that want to expand their reach with advanced tools.",
+                    "features": {
+                        "feature1": "Everything in Starter plan",
+                        "feature2": "Up to 5 stores and branches",
+                        "feature3": "Up to 2000 products",
+                        "feature4": "Custom branding options",
+                        "feature5": "AI features"
+                    }
+                },
+                "enterprise": {
+                    "name": "Enterprise",
+                    "price": "ARS $25.000/mo",
+                    "description": "For businesses looking to scale. Complete management with premium tools and dedicated support.",
+                    "features": {
+                        "feature1": "Everything in Business plan",
+                        "feature2": "Unlimited stores and branches",
+                        "feature3": "Unlimited products",
+                        "feature4": "Advanced inventory management",
+                        "feature5": "Advanced analytics & custom reports",
+                        "feature6": "Dedicated support team"
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "title": "Home"
+        }
+    },
+    "about": {
+        "metadata": {
+            "title": "About us",
+            "header": {
+                "title": "About Us"
+            }
+        },
+        "page": {
+            "header": {
+                "title": "About us",
+                "description": "Get to know more about us."
+            },
+            "description": {
+                "paragraph1": "Lanzate was born out of a very real need that we experienced firsthand. We are Horacio Gutiérrez and Arturo Ramírez, two programmers who, together with Felipe (our cat and quality supervisor), realized that starting an informal business is not easy. Through experiences with close family and friends who wanted to start their own business, we saw how they struggled with scattered tools, Excel spreadsheets that were lost, and the lack of a simple solution that would allow them to manage everything from a single place.",
+                "paragraph2": "The idea of creating an all-in-one platform for the management of informal stores arose after seeing our loved ones struggling with multiple apps, notebooks, and homemade methods for controlling their sales, inventory, and customers. We realized that there was a huge gap between complex and expensive business solutions and the real needs of someone just starting out. Then we thought: Why not make something that really works for them, is intuitive, accessible, and helps them grow without complicating their lives?",
+                "paragraph3": "So we got to work. With Horacio and Arturo coding day and night (and Felipe supervising from the keyboard), we developed Lanzate thinking about all those people who have a dream and need the right tools to make it a reality. Our platform integrates everything you need to manage your business: from inventory control to customer tracking, through sales and reports. Because we believe that starting a business shouldn't be complicated, and that with the right tools, anyone can launch."
+            }
+        }
+    },
+    "cookie": {
+        "title": "This site uses cookies",
+        "message": "We use cookies to enhance your experience.",
+        "acceptText": "Accept all",
+        "customizeText": "Customize",
+        "cancel": "Cancel",
+        "savePreferences": "Save preferences",
+        "preferences": {
+            "necessary": {
+                "title": "Strictly necessary",
+                "description": "Required for site functionality.",
+                "required": "(required)"
+            },
+            "functional": {
+                "title": "Functional",
+                "description": "Remembers your preferences."
+            },
+            "analytics": {
+                "title": "Analytics",
+                "description": "Helps us improve the site."
+            },
+            "marketing": {
+                "title": "Marketing",
+                "description": "Personalized ads."
+            }
+        },
+        "privacyPolicy": "Privacy Policy",
+        "termsAndConditions": "Terms & Conditions",
+        "seeOur": "See our",
+        "and": "and",
+        "close": "Close cookie banner"
+    }
+}

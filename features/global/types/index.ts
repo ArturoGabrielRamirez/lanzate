@@ -1,3 +1,12 @@
-export * from "@/features/global/types/global.types"
-export * from "@/features/global/types/action-wrapper.types"
-export * from "@/features/global/types/types"
+/**
+ * Global types index file
+ *
+ * Exports all type definitions for easier imports
+ */
+
+export type {
+  ServerResponse,
+  ServerError,
+  ServerSuccess,
+  ActionFunction,
+} from "./action-wrapper.types";

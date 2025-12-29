@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@/features/shadcn/components",
+    "utils": "@/features/shadcn/utils",
+    "ui": "@/features/shadcn/components/ui",
+    "lib": "@/features/shadcn/lib",
+    "hooks": "@/features/shadcn/hooks"
+  },
+  "registries": {
+    "@eldoraui": "https://eldoraui.site/r/{name}.json",
+    "@tailark": "https://tailark.com/r/{name}.json",
+    "@rigidui": "https://rigidui.com/r/{name}.json",
+    "@intentui": "https://intentui.com/r/{name}",
+    "@ncdai": "https://chanhdai.com/r/{name}.json",
+    "@coss": "https://coss.com/ui/r/{name}.json",
+    "@supabase": "https://supabase.com/ui/r/{name}.json",
+    "@systaliko-ui": "https://systaliko-ui.vercel.app/r/{name}.json"
+  }
+}
