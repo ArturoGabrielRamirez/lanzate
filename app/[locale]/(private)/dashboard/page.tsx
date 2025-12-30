@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { prisma } from '@/lib/prisma';
+import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
 import { StoreStats } from '@/features/dashboard/components/store-stats';
 import { DashboardNavigation } from '@/features/dashboard/components/dashboard-navigation';
@@ -11,10 +11,15 @@ import { DashboardNavigation } from '@/features/dashboard/components/dashboard-n
  * This is the main dashboard page that requires authentication.
  * It demonstrates:
  * - Supabase authentication check (Server Component)
- * - Prisma database queries for user data
+ * - Server Actions and data layer pattern for fetching user data
  * - Personalized greeting with user information
  * - Store statistics from database
  * - Protected route pattern with redirect
+ *
+ * Architecture:
+ * - Uses Server Actions (getDashboardDataAction)
+ * - Follows action -> data layer pattern
+ * - Handles authentication at the page level
  *
  * Design features:
  * - Warm beige/pink background for light theme
@@ -34,31 +39,28 @@ export default async function DashboardPage() {
     redirect('/login');
   }
 
-  // Fetch user data from Prisma database
-  let userData = null;
-  let storesCount = 0;
+  // Fetch dashboard data using Server Action
+  const result = await getDashboardDataAction();
 
-  try {
-    userData = await prisma.user.findUnique({
-      where: {
-        supabaseId: user.id,
-      },
-      include: {
-        stores: true,
-      },
-    });
-
-    if (userData) {
-      storesCount = userData.stores.length;
-    }
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-    // Continue rendering even if database query fails
+  // Handle error case
+  if (result.hasError || !result.payload) {
+    return (
+      <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
+        <DashboardNavigation />
+        <main className="mx-auto max-w-7xl px-6 py-8 md:px-12 lg:px-16">
+          <div className="rounded-lg border border-destructive bg-destructive/10 p-6 text-center">
+            <h2 className="text-lg font-semibold text-destructive">
+              Error loading dashboard
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">{result.message}</p>
+          </div>
+        </main>
+      </div>
+    );
   }
 
-  // Get user display information
-  const userEmail = user.email || 'User';
-  const userName = user.user_metadata?.name || user.user_metadata?.full_name || null;
+  // Extract data from response
+  const { userName, userEmail, storesCount } = result.payload;
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
