@@ -50,11 +50,11 @@
 
 :root {
   --radius: 0.625rem;
-  
+
   /* Brand colors - Orange/Coral (#FF6B4A) */
   --brand: oklch(0.68 0.18 35);
   --brand-foreground: oklch(1 0 0);
-  
+
   /* Light theme - Warm beige/pink backgrounds */
   --background: oklch(0.98 0.01 80);
   --foreground: oklch(0.15 0.004 49.25);
@@ -62,33 +62,33 @@
   --card-foreground: oklch(0.15 0.004 49.25);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.004 49.25);
-  
+
   /* Primary color set to brand orange/coral */
   --primary: oklch(0.68 0.18 35);
   --primary-foreground: oklch(1 0 0);
-  
+
   /* Secondary colors - Warm beige tones */
   --secondary: oklch(0.95 0.015 80);
   --secondary-foreground: oklch(0.15 0.004 49.25);
   --muted: oklch(0.96 0.01 80);
   --muted-foreground: oklch(0.55 0.013 58.071);
-  
+
   /* Accent colors - Light coral/pink */
   --accent: oklch(0.94 0.02 35);
   --accent-foreground: oklch(0.15 0.004 49.25);
-  
+
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.90 0.01 80);
   --input: oklch(0.90 0.01 80);
   --ring: oklch(0.68 0.18 35);
-  
+
   /* Chart colors with brand theme */
   --chart-1: oklch(0.68 0.18 35);
   --chart-2: oklch(0.75 0.15 70);
   --chart-3: oklch(0.60 0.12 50);
   --chart-4: oklch(0.65 0.10 100);
   --chart-5: oklch(0.70 0.08 150);
-  
+
   /* Sidebar colors */
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.15 0.004 49.25);
@@ -108,33 +108,33 @@
   --card-foreground: oklch(0.985 0.001 106.423);
   --popover: oklch(0.20 0.006 56.043);
   --popover-foreground: oklch(0.985 0.001 106.423);
-  
+
   /* Primary color remains brand orange/coral in dark mode */
   --primary: oklch(0.70 0.18 35);
   --primary-foreground: oklch(0.15 0.004 49.25);
-  
+
   /* Secondary colors for dark mode */
   --secondary: oklch(0.25 0.007 34.298);
   --secondary-foreground: oklch(0.985 0.001 106.423);
   --muted: oklch(0.25 0.007 34.298);
   --muted-foreground: oklch(0.70 0.01 56.259);
-  
+
   /* Accent colors in dark mode */
   --accent: oklch(0.30 0.05 35);
   --accent-foreground: oklch(0.985 0.001 106.423);
-  
+
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.70 0.18 35);
-  
+
   /* Chart colors for dark mode */
   --chart-1: oklch(0.70 0.18 35);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  
+
   /* Sidebar colors for dark mode */
   --sidebar: oklch(0.20 0.006 56.043);
   --sidebar-foreground: oklch(0.985 0.001 106.423);
@@ -150,15 +150,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
-  /* Grid background pattern for dark mode */
-  .bg-grid-pattern {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
+/* Grid background pattern */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, oklch(from var(--primary) l c h / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(from var(--primary) l c h / 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
