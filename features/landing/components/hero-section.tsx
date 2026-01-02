@@ -10,7 +10,7 @@ async function HeroSection() {
 
   return (
     <div className="relative w-full">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 px-6 py-20 md:flex-row md:gap-16 md:px-12 lg:px-16 lg:py-32">
+      <div className="mx-auto md:flex max-w-7xl items-center gap-12 px-6 py-20 md:flex-row md:gap-16 md:px-12 lg:px-16 lg:py-32">
         {/* Left side - Text content */}
         <div className="flex flex-1 flex-col gap-8 text-center md:text-left">
           <div className="flex flex-col gap-4">
@@ -50,7 +50,7 @@ async function HeroSection() {
         </div>
 
         {/* Right side - Illustration */}
-        <div className="flex flex-1 items-center justify-center">
+        <div className="hidden md:flex md:flex-1 md:items-center md:justify-center">
           <Card className="relative flex h-100 w-full max-w-md items-center justify-center overflow-hidden border-primary/20 bg-linear-to-br from-primary/5 to-primary/10 shadow-xl md:h-125">
             <div className="flex flex-col items-center gap-6">
               <div className="rounded-2xl bg-primary/20 p-8">
