@@ -28,8 +28,8 @@ async function HeroSection() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <Button
               asChild
-              size="lg"
-              className="group gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
+              variant="default"
+              className="group gap-2 text-primary-foreground"
             >
               <Link href="/dashboard">
                 {t('hero.cta.primary')}
@@ -40,7 +40,6 @@ async function HeroSection() {
             <Button
               asChild
               variant="outline"
-              size="lg"
               className="gap-2"
             >
               <Link href="#features">
