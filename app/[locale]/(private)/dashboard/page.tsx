@@ -1,9 +1,10 @@
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
+
 import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
-import { StoreStats } from '@/features/dashboard/components/store-stats';
 import { DashboardNavigation } from '@/features/dashboard/components/dashboard-navigation';
+import { StoreStats } from '@/features/dashboard/components/store-stats';
+import { createClient } from '@/lib/supabase/server';
 
 /**
  * Protected Dashboard Page

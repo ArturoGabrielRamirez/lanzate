@@ -22,7 +22,8 @@
     "cta": {
       "primary": "Get Started",
       "secondary": "More Info"
-    }
+    },
+    "imageAlt": "Illustration of a person launching a rocket, symbolizing the launch of a new online store with Lanzate"
   },
   "nav": {
     "home": "Home",

@@ -22,7 +22,8 @@
     "cta": {
       "primary": "Comenzar",
       "secondary": "Más información"
-    }
+    },
+    "imageAlt": "Ilustración de una persona trabajando en su tienda en línea"
   },
   "nav": {
     "home": "Inicio",
