@@ -1,6 +1,5 @@
 'use client';
 
-import { Globe } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { Button } from '@/features/shadcn/components/ui/button';
@@ -35,7 +34,6 @@ function LanguageSwitcher() {
       title={`Switch to ${nextLocale === 'es' ? 'Spanish' : 'English'}`}
     >
       <div className="flex items-center justify-center gap-1">
-        <Globe className="h-[1.2rem] w-[1.2rem]" />
         <span className="text-xs font-semibold uppercase">
           {currentLocale}
         </span>

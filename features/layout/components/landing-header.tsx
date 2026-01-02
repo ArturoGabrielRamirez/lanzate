@@ -5,7 +5,7 @@ import { ThemeToggle } from '@/features/layout/components/theme-toggle';
 
 function LandingHeader() {
   return (
-    <header className="fixed right-4 top-4 z-50 flex items-center gap-2">
+    <header className="fixed z-50 flex items-center gap-2 w-full px-4 py-3 bg-background/80 backdrop-blur-sm border-b border-border">
       <LanguageSwitcher />
       <ThemeToggle />
     </header>
