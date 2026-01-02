@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 
 import "@/app/globals.css";
 import { ThemeProvider } from '@/features/layout/components/theme-provider';
@@ -20,10 +20,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Lanzate - You dream it, we make it happen",
-  description: "E-commerce platform for creating and managing your online stores",
-};
+export async function generateMetadata({ params }: LocaleLayoutProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations('metadata');
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: {
+      languages: {
+        en: '/en',
+        es: '/es',
+      },
+    },
+    other: {
+      'current-locale': locale,
+    },
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

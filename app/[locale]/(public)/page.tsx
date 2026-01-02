@@ -1,7 +1,8 @@
-import { Header } from '@/features/layout/components/header';
-import { HeroSection } from '@/features/landing/components';
-import { Separator } from '@/features/shadcn/components/ui/separator';
 import { getTranslations } from 'next-intl/server';
+
+import { HeroSection } from '@/features/landing/components';
+import { Header } from '@/features/layout/components/header';
+import { Separator } from '@/features/shadcn/components/ui/separator';
 
 async function HomePage() {
   const t = await getTranslations();

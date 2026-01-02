@@ -10,6 +10,10 @@
   "theme": "Tema",
   "light": "Claro",
   "dark": "Oscuro",
+  "metadata": {
+    "title": "Lanzate - Lo sueñas, nosotros lo hacemos realidad",
+    "description": "Plataforma de e-commerce para crear y administrar tus tiendas en línea"
+  },
   "hero": {
     "titleBefore": "Lo sueñas,",
     "titleHighlight": "Lanzate",

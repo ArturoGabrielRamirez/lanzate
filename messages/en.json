@@ -10,6 +10,10 @@
   "theme": "Theme",
   "light": "Light",
   "dark": "Dark",
+  "metadata": {
+    "title": "Lanzate - You dream it, we make it happen",
+    "description": "E-commerce platform for creating and managing your online stores"
+  },
   "hero": {
     "titleBefore": "You dream it,",
     "titleHighlight": "Lanzate",
