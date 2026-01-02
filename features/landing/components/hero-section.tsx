@@ -16,7 +16,7 @@ async function HeroSection() {
         {/* Left side - Text content */}
         <div className="flex flex-1 flex-col gap-8 text-center md:text-left">
           <div className="flex flex-col gap-4 max-w-lg">
-            <h2 className="text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
+            <h2 className="text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-7xl">
               {t('hero.titleBefore')}{' '}
               <span className="text-primary">{t('hero.titleHighlight')}</span>{' '}
               {t('hero.titleAfter')}
@@ -52,7 +52,7 @@ async function HeroSection() {
         </div>
 
         {/* Right side - Illustration */}
-        <div className="hidden md:flex md:flex-1 md:items-center md:justify-end relative grow h-full aspect-560/560 justify-self-end w-full max-w-150 max-h-150">
+        <div className="hidden md:flex md:flex-1 md:items-center md:justify-end relative grow h-full aspect-560/560 justify-self-end w-full max-w-160 max-h-160">
           <Image
             src={HeroImage}
             alt={t('hero.imageAlt')}
