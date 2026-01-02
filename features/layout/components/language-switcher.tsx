@@ -1,11 +1,12 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
 import { Globe } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+
 import { Button } from '@/features/shadcn/components/ui/button';
 import { Locale, routing } from '@/i18n/routing';
 
-export function LanguageSwitcher() {
+function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -42,3 +43,5 @@ export function LanguageSwitcher() {
     </Button>
   );
 }
+
+export { LanguageSwitcher };

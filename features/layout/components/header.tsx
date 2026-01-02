@@ -1,9 +1,9 @@
 'use client';
 
-import { ThemeToggle } from './theme-toggle';
-import { LanguageSwitcher } from './language-switcher';
+import { LanguageSwitcher } from '@/features/layout/components/language-switcher';
+import { ThemeToggle } from '@/features/layout/components/theme-toggle';
 
-export function Header() {
+function Header() {
   return (
     <header className="fixed right-4 top-4 z-50 flex items-center gap-2">
       <LanguageSwitcher />
@@ -11,3 +11,5 @@ export function Header() {
     </header>
   );
 }
+
+export { Header };

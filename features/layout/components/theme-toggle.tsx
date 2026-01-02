@@ -1,18 +1,18 @@
 'use client';
 
-import * as React from 'react';
-import { Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
-import { Button } from '@/features/shadcn/components/ui/button';
-import * as motion from 'motion/react-client';
 import { AnimatePresence } from 'framer-motion';
+import { Moon, Sun } from 'lucide-react';
+import * as motion from 'motion/react-client';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
+import { Button } from '@/features/shadcn/components/ui/button';
 
-export function ThemeToggle() {
+function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
@@ -63,3 +63,5 @@ export function ThemeToggle() {
     </Button>
   );
 }
+
+export { ThemeToggle };

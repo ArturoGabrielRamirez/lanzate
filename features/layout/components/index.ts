@@ -1,9 +1,4 @@
-/**
- * Layout Components
- *
- * Exports all layout-related components for easy importing
- */
-export { ThemeProvider } from './theme-provider';
-export { ThemeToggle } from './theme-toggle';
-export { LanguageSwitcher } from './language-switcher';
-export { Header } from './header';
+export { ThemeProvider } from '@/features/layout/components/theme-provider';
+export { ThemeToggle } from '@/features/layout/components/theme-toggle';
+export { LanguageSwitcher } from '@/features/layout/components/language-switcher';
+export { Header } from '@/features/layout/components/header';

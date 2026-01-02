@@ -1,1 +1,1 @@
-export { HeroSection } from './hero-section';
+export { HeroSection } from '@/features/landing/components/hero-section';

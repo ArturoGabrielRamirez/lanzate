@@ -72,6 +72,7 @@ const eslintConfig = defineConfig([
       ],
       "react/react-in-jsx-scope": "off",
       "react/function-component-definition": ["error"],
+      "react-hooks/set-state-in-effect": "off",
     }
   }
 ]);
