@@ -1,5 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
+import { Link } from '@/i18n/navigation';
+
 export async function LandingFooter() {
   const t = await getTranslations();
 
@@ -12,15 +14,15 @@ export async function LandingFooter() {
           </p>
         </div>
         <div className="flex gap-6">
-          <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+          <Link href="/" className="text-sm text-muted-foreground transition-colors hover:text-primary">
             {t('nav.home')}
-          </a>
-          <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+          </Link>
+          <Link href="/login" className="text-sm text-muted-foreground transition-colors hover:text-primary">
             {t('nav.access')}
-          </a>
-          <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+          </Link>
+          <Link href="#" className="text-sm text-muted-foreground transition-colors hover:text-primary">
             {t('nav.moreInfo')}
-          </a>
+          </Link>
         </div>
       </div>
     </footer>
