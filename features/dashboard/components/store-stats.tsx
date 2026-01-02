@@ -1,10 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Store, Plus, Calendar } from 'lucide-react';
 import Link from 'next/link';
+
+import { Button } from '@/features/shadcn/components/ui/button';
+import { Card } from '@/features/shadcn/components/ui/card';
 
 interface StoreStatsProps {
   storesCount: number;

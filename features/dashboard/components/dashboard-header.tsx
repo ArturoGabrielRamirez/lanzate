@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
 import { Search } from 'lucide-react';
+
+import { Card } from '@/features/shadcn/components/ui/card';
 
 interface DashboardHeaderProps {
   userName: string | null;

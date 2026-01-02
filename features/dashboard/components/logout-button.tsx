@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useTransition } from 'react';
 import { LogOut } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState, useTransition } from 'react';
+
 import { logoutAction } from '@/features/auth/actions/logout.action';
+import { Button } from '@/features/shadcn/components/ui/button';
 
 /**
  * Logout Button Component
