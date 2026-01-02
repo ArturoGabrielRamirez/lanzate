@@ -1,7 +1,7 @@
 import createIntlMiddleware from 'next-intl/middleware';
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest } from 'next/server';
 import { updateSession } from '@/lib/supabase/proxy';
-import { routing } from './i18n/routing';
+import { routing } from '@/i18n/routing';
 
 /**
  * Next.js Proxy (formerly called middleware) for internationalization and authentication.

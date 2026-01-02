@@ -1,11 +1,14 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
+
+import "@/app/globals.css";
 import { ThemeProvider } from '@/features/layout/components/theme-provider';
-import "../globals.css";
+import type { LocaleLayoutProps } from "@/features/layout/types";
+import { Locale, routing } from '@/i18n/routing';
+
+import type { Metadata } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,38 +25,23 @@ export const metadata: Metadata = {
   description: "E-commerce platform for creating and managing your online stores",
 };
 
-type Props = {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-};
-
-/**
- * Generate static params for all supported locales.
- * This enables static generation for each locale route.
- */
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: Props) {
+export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+
   const { locale } = await params;
 
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
 
-  // Fetch messages for the current locale
   const messages = await getMessages();
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             {children}

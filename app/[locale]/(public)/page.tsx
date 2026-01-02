@@ -1,29 +1,10 @@
-import { useTranslations } from 'next-intl';
 import { Header } from '@/features/layout/components/header';
 import { HeroSection } from '@/features/landing/components';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/features/shadcn/components/ui/separator';
+import { getTranslations } from 'next-intl/server';
 
-/**
- * Public Landing Page
- *
- * This is the main landing page demonstrating all integrations:
- * - next-intl for internationalization (Spanish/English)
- * - framer-motion for animations
- * - shadcn/ui components (Button, Card, Separator)
- * - Theme system (light/dark mode)
- * - Responsive design matching landing.png visual
- *
- * The page is a Server Component that renders client components
- * for interactive elements (animations, theme toggle, language switcher).
- *
- * Design features:
- * - Dark theme with grid background pattern
- * - Orange brand color (#FF6B4A) for CTAs
- * - Hero section with fade-in and slide-up animations
- * - Fully responsive layout (mobile, tablet, desktop)
- */
-export default function HomePage() {
-  const t = useTranslations();
+async function HomePage() {
+  const t = await getTranslations();
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
@@ -31,7 +12,7 @@ export default function HomePage() {
       <div className="absolute inset-0 bg-grid-pattern opacity-0 dark:opacity-100" />
 
       {/* Gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/50 to-background" />
 
       {/* Header with theme toggle and language switcher */}
       <Header />
@@ -85,3 +66,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+export default HomePage;

@@ -7,10 +7,6 @@
  * The middleware (proxy.ts) will handle redirecting users to the
  * appropriate locale-specific route (e.g., /es or /en).
  */
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: React.PropsWithChildren) {
   return children;
 }

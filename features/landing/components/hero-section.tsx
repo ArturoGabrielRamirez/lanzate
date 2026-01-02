@@ -1,28 +1,12 @@
-'use client';
-
-import * as React from 'react';
-import { motion } from 'framer-motion';
-import { useTranslations } from 'next-intl';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import * as motion from "motion/react-client"
+import { Card } from '@/features/shadcn/components/ui/card';
+import { Button } from '@/features/shadcn/components/ui/button';
 import { ArrowRight, Rocket } from 'lucide-react';
 import Link from 'next/link';
+import { getTranslations } from "next-intl/server";
 
-/**
- * Hero Section Component
- *
- * A client component that displays the main hero section of the landing page
- * with animated text and call-to-action buttons.
- *
- * Features:
- * - Framer-motion fade-in and slide-up animations
- * - Translated content using next-intl
- * - Orange brand color (#FF6B4A) for CTAs
- * - Responsive design for mobile, tablet, and desktop
- * - Card component for visual structure
- */
-export function HeroSection() {
-  const t = useTranslations();
+async function HeroSection() {
+  const t = await getTranslations();
 
   return (
     <motion.div
@@ -177,3 +161,5 @@ export function HeroSection() {
     </motion.div>
   );
 }
+
+export { HeroSection };

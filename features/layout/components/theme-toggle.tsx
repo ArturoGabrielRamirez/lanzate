@@ -3,27 +3,15 @@
 import * as React from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/features/shadcn/components/ui/button';
+import * as motion from 'motion/react-client';
+import { AnimatePresence } from 'framer-motion';
 
-/**
- * Theme Toggle Component
- *
- * Provides a button to switch between light and dark themes.
- * Uses framer-motion for smooth icon transitions and lucide-react
- * for the Sun and Moon icons.
- *
- * Features:
- * - Animated icon transitions
- * - Shows Sun icon in dark mode (click to go light)
- * - Shows Moon icon in light mode (click to go dark)
- * - Accessible button with proper ARIA labels
- */
+
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
-  // Prevent hydration mismatch by only rendering after mount
   React.useEffect(() => {
     setMounted(true);
   }, []);
