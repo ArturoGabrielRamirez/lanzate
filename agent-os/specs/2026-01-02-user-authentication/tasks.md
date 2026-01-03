@@ -119,19 +119,19 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 #### Task Group 3: Data Layer and Business Logic
 **Dependencies:** Task Group 2
 
-- [ ] 3.0 Complete data layer and services
-  - [ ] 3.1 Write 2-8 focused tests for data and service layers
+- [x] 3.0 Complete data layer and services
+  - [x] 3.1 Write 2-8 focused tests for data and service layers
     - Test user creation in database
     - Test username generation from email
     - Test duplicate email handling
     - Test user retrieval by ID and email
     - Limit to 2-8 highly focused tests maximum
-  - [ ] 3.2 Create Prisma user model (if not exists)
+  - [x] 3.2 Create Prisma user model (if not exists)
     - Location: `prisma/schema.prisma`
     - Fields: id, email (unique), username, createdAt, updatedAt
     - Index on email for performance
     - Generate migration
-  - [ ] 3.3 Create data layer functions
+  - [x] 3.3 Create data layer functions
     - Location: `features/auth/data/`
     - `createUser.data.ts`: Insert user record in database
     - `findUserByEmail.data.ts`: Find user by email
@@ -139,18 +139,18 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - `updateUser.data.ts`: Update user record
     - Pure database queries only (no business logic)
     - Reference: `backup/features/auth/data/insert-user.data.ts`
-  - [ ] 3.4 Create service layer functions
+  - [x] 3.4 Create service layer functions
     - Location: `features/auth/services/`
     - `createUser.service.ts`: Auto-generate username, validate uniqueness, create user
     - `validateCredentials.service.ts`: Check email/password (Supabase Auth)
     - `updateUserProfile.service.ts`: Update email and password
     - Business logic and orchestration only
-  - [ ] 3.5 Create utility functions
+  - [x] 3.5 Create utility functions
     - Location: `features/auth/utils/`
     - `generateUsername.ts`: Extract username from email (part before @)
     - `getAuthUser.ts`: Get current Supabase auth user
     - `getAuthSession.ts`: Get current Supabase session
-  - [ ] 3.6 Ensure data and service layer tests pass
+  - [x] 3.6 Ensure data and service layer tests pass
     - Run ONLY the 2-8 tests written in 3.1
     - Verify user creation works end-to-end
     - Do NOT run the entire test suite at this stage

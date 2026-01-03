@@ -18,3 +18,5 @@ export type {
 } from "@/features/auth/types/auth";
 
 export * from "@/features/auth/types/types";
+export * from "@/features/auth/types/service";
+export * from "@/features/auth/types/data";
