@@ -6,6 +6,7 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import "@/app/globals.css";
 import { ThemeProvider } from '@/features/layout/components/theme-provider';
 import type { LocaleLayoutProps } from "@/features/layout/types";
+import { Toaster } from '@/features/shadcn/components/ui/toaster';
 import { Locale, routing } from '@/i18n/routing';
 
 import type { Metadata } from "next";
@@ -59,6 +60,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             {children}
+            <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

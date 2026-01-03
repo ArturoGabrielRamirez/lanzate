@@ -4,6 +4,7 @@ import { EyeIcon, EyeOffIcon, InfoIcon } from "lucide-react";
 import { useState } from "react";
 import { useFormContext, Controller, useForm } from "react-hook-form";
 
+import { InputFieldProps } from "@/features/global/types/form";
 import {
   Field,
   FieldDescription,
@@ -23,38 +24,6 @@ import {
   TooltipTrigger,
 } from "@/features/shadcn/components/ui/tooltip";
 import { cn } from "@/features/shadcn/utils/cn";
-
-export type InputFieldProps = {
-  name: string;
-  label: string;
-  placeholder: string;
-  startIcon?: React.ReactNode;
-  startText?: string;
-  endIcon?: React.ReactNode;
-  endText?: string | React.ReactNode;
-  description?: string | React.ReactNode;
-  type?: string;
-  tooltip?: string | React.ReactNode;
-  defaultValue?: string;
-  isRequired?: boolean;
-  disabled?: boolean;
-  readOnly?: boolean;
-  inputMode?:
-    | "text"
-    | "email"
-    | "search"
-    | "tel"
-    | "url"
-    | "none"
-    | "decimal"
-    | "numeric"
-    | undefined;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  hideLabel?: boolean;
-  className?: string;
-  maxLength?: number;
-  autoFocus?: boolean;
-};
 
 /**
  * Global reusable InputField component

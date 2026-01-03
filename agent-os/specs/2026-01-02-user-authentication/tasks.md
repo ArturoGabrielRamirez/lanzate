@@ -36,7 +36,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Display inline validation errors
     - Support required field indicators
     - Reference: `backup/features/global/components/form/input-field.tsx`
-  - [ ] 1.5 Create global Form wrapper component
+  - [x] 1.5 Create global Form wrapper component
     - Location: `features/global/components/form/Form.tsx`
     - Integrate React Hook Form with yupResolver
     - Use useTransition for form submission
@@ -45,12 +45,12 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Loading states during submission
     - Reset form option after success
     - Reference: `backup/features/global/components/form/form.tsx`
-  - [ ] 1.6 Define global component prop types
+  - [x] 1.6 Define global component prop types
     - Location: `features/global/types/form.ts`
     - InputFieldProps interface
     - FormProps interface
     - Common form-related types
-  - [ ] 1.7 Ensure core infrastructure tests pass
+  - [x] 1.7 Ensure core infrastructure tests pass
     - Run ONLY the 2-8 tests written in 1.1
     - Verify actionWrapper handles all error types
     - Do NOT run the entire test suite at this stage
