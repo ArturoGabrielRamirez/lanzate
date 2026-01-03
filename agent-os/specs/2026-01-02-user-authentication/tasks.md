@@ -192,7 +192,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Wrap with actionWrapper
     - Revalidate /dashboard path
     - Reference: `backup/features/auth/actions/handle-log-in.action.ts`
-  - [ ] 4.4 Create Google OAuth action
+  - [x] 4.4 Create Google OAuth action
     - Location: `features/auth/actions/handleGoogleLogin.action.ts`
     - Initiate OAuth flow with Supabase
     - Return redirect URL
