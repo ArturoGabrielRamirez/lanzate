@@ -171,13 +171,13 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 **Dependencies:** Task Group 3
 
 - [ ] 4.0 Complete server actions
-  - [ ] 4.1 Write 2-8 focused tests for server actions
+  - [x] 4.1 Write 2-8 focused tests for server actions
     - Test signup action flow (validation -> service -> response)
     - Test login action flow
     - Test logout action
     - Test password reset request action
     - Limit to 2-8 highly focused tests maximum
-  - [ ] 4.2 Create signup server action
+  - [x] 4.2 Create signup server action
     - Location: `features/auth/actions/handleSignup.action.ts`
     - Validate with signupSchema
     - Create Supabase auth user
