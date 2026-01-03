@@ -204,7 +204,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Create database user if first login (auto-generate username)
     - Redirect to /dashboard
     - Handle errors gracefully
-  - [ ] 4.6 Create logout server action
+  - [x] 4.6 Create logout server action
     - Location: `features/auth/actions/handleLogout.action.ts`
     - Clear Supabase session
     - Wrap with actionWrapper
