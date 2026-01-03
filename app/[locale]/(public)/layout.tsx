@@ -8,10 +8,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/50 to-background" />
 
             <LandingHeader />
+            
             <main className="relative z-10 grow flex items-center">
                 {children}
             </main>
+
             <LandingFooter />
+            
         </div>
     );
 }

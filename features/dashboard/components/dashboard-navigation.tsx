@@ -1,11 +1,12 @@
 'use client';
 
+import { Store } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ThemeToggle } from '@/features/layout/components/theme-toggle';
-import { LanguageSwitcher } from '@/features/layout/components/language-switcher';
+
 import { LogoutButton } from '@/features/dashboard/components/logout-button';
-import { Store } from 'lucide-react';
+import { LanguageSwitcher } from '@/features/layout/components/language-switcher';
+import { ThemeToggle } from '@/features/layout/components/theme-toggle';
 
 /**
  * Dashboard Navigation Component
@@ -29,7 +30,7 @@ export function DashboardNavigation() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12 lg:px-16">
+      <nav className="mx-auto flex h-16 container items-center justify-between px-6 md:px-12 lg:px-16">
         {/* Logo/Brand */}
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">

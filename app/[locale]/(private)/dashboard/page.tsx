@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+/* import { redirect } from 'next/navigation'; */
 
 import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
@@ -32,13 +32,13 @@ export default async function DashboardPage() {
   // Check authentication status
   const supabase = await createClient();
   const {
-    data: { user },
+    data: { /* user */ },
   } = await supabase.auth.getUser();
 
   // Redirect to login if not authenticated
-  if (!user) {
+  /* if (!user) {
     redirect('/login');
-  }
+  } */
 
   // Fetch dashboard data using Server Action
   const result = await getDashboardDataAction();
