@@ -70,36 +70,36 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 #### Task Group 2: Validation Schemas and Types
 **Dependencies:** Task Group 1
 
-- [ ] 2.0 Complete validation schemas and types
-  - [ ] 2.1 Write 2-8 focused tests for validation schemas
+- [x] 2.0 Complete validation schemas and types
+  - [x] 2.1 Write 2-8 focused tests for validation schemas
     - Test email validation (format, lowercase, trimmed)
     - Test password strength validation
     - Test confirm password matching
     - Test schema composition (signup, login, reset)
     - Limit to 2-8 highly focused tests maximum
-  - [ ] 2.2 Create reusable field validators
+  - [x] 2.2 Create reusable field validators
     - Location: `features/auth/schemas/authFields.ts`
     - emailField: valid format, lowercase, trimmed
     - passwordField: min 8 chars, uppercase, number
     - Reference: `backup/features/auth/schemas`
-  - [ ] 2.3 Compose authentication schemas
+  - [x] 2.3 Compose authentication schemas
     - Location: `features/auth/schemas/auth.schema.ts`
     - signupSchema: email, password, confirmPassword (must match)
     - loginSchema: email, password (minimal validation)
     - resetPasswordRequestSchema: email only
     - resetPasswordSchema: password, confirmPassword
     - Export inferred types: SignupInput, LoginInput, etc.
-  - [ ] 2.4 Define authentication types
+  - [x] 2.4 Define authentication types
     - Location: `features/auth/types/auth.ts`
     - User type (matching database schema)
     - AuthSession type (Supabase session)
     - Component prop types (LoginFormProps, SignupFormProps, etc.)
-  - [ ] 2.5 Create auth constants for messages
+  - [x] 2.5 Create auth constants for messages
     - Location: `features/auth/constants/messages.ts`
     - Success messages (signup, login, logout, password reset)
     - Error messages (invalid credentials, user exists, etc.)
     - Support i18n structure for Spanish and English
-  - [ ] 2.6 Ensure validation schema tests pass
+  - [x] 2.6 Ensure validation schema tests pass
     - Run ONLY the 2-8 tests written in 2.1
     - Verify all validation rules work correctly
     - Do NOT run the entire test suite at this stage

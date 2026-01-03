@@ -4,4 +4,17 @@
  * Exports all authentication-related type definitions
  */
 
-export type { UserData, AuthResponse, UserWithStores } from "./types";
+export type {
+  User,
+  AuthSession,
+  AuthUser,
+  LoginFormProps,
+  SignupFormProps,
+  PasswordResetRequestFormProps,
+  PasswordResetFormProps,
+  ProfileEditFormProps,
+  GoogleAuthButtonProps,
+  AuthCardProps,
+} from "@/features/auth/types/auth";
+
+export * from "@/features/auth/types/types";

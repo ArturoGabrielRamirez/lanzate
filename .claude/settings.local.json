@@ -38,7 +38,8 @@
       "Bash(timeout 10 bun run dev:*)",
       "Bash(bun run lint)",
       "Bash(bun x:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm test:*)"
     ],
     "deny": [],
     "ask": []
