@@ -12,12 +12,12 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 **Dependencies:** None
 
 - [ ] 1.0 Complete core infrastructure and global components
-  - [ ] 1.1 Write 2-8 focused tests for core utilities
+  - [x] 1.1 Write 2-8 focused tests for core utilities
     - Test actionWrapper error handling (validation, database, generic errors)
     - Test ServerResponse format consistency
     - Verify error message normalization
     - Limit to 2-8 highly focused tests maximum
-  - [ ] 1.2 Create actionWrapper utility
+  - [x] 1.2 Create actionWrapper utility
     - Location: `features/global/utils/actionWrapper.ts`
     - Handle validation errors (Yup ValidationError)
     - Handle database errors (Prisma errors)
