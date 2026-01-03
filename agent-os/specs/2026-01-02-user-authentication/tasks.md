@@ -24,11 +24,11 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Handle generic errors
     - Return standardized ServerResponse<T> format
     - Reference: `backup/features/global/utils/action-wrapper.ts`
-  - [ ] 1.3 Define ServerResponse type
+  - [x] 1.3 Define ServerResponse type
     - Location: `features/global/types/server-response.ts`
     - Fields: hasError, message, payload?, errors?
     - Generic type parameter for payload
-  - [ ] 1.4 Create global InputField component
+  - [x] 1.4 Create global InputField component
     - Location: `features/global/components/form/InputField.tsx`
     - Use shadcn Field and InputGroup components
     - Support: icons (start/end), tooltips, password visibility toggle
