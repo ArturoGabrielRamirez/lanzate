@@ -198,7 +198,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Return redirect URL
     - Wrap with actionWrapper
     - Reference: `backup/features/auth/actions/handle-google-log-in.action.ts`
-  - [ ] 4.5 Create OAuth callback handler
+  - [x] 4.5 Create OAuth callback handler
     - Location: `app/[locale]/auth/callback/route.ts`
     - Handle OAuth callback from Supabase
     - Create database user if first login (auto-generate username)
