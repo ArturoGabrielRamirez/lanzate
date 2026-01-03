@@ -167,3 +167,29 @@ describe('Password Reset Request Action', () => {
     expect(result).toHaveProperty('payload');
   });
 });
+
+describe('Password Reset Action', () => {
+  it('should validate password format and strength', async () => {
+    const { handleResetPasswordAction } = await import('@/features/auth/actions/handleResetPassword.action');
+    
+    const result = await handleResetPasswordAction({
+      password: 'weak',
+      confirmPassword: 'weak',
+    });
+
+    expect(result.hasError).toBe(true);
+    expect(result.payload).toBeNull();
+  });
+
+  it('should reject non-matching password confirmation', async () => {
+    const { handleResetPasswordAction } = await import('@/features/auth/actions/handleResetPassword.action');
+    
+    const result = await handleResetPasswordAction({
+      password: 'Password123',
+      confirmPassword: 'DifferentPassword123',
+    });
+
+    expect(result.hasError).toBe(true);
+    expect(result.payload).toBeNull();
+  });
+});
