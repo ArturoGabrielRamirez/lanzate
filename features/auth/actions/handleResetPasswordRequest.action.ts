@@ -1,5 +1,8 @@
 'use server';
 
+import { headers } from 'next/headers';
+
+import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
 import {
   resetPasswordRequestSchema,
   type ResetPasswordRequestInput,
@@ -11,15 +14,20 @@ import { createClient } from '@/lib/supabase/server';
 /**
  * Password Reset Request Server Action
  *
- * Sends a password reset email to the user.
- * The email contains a link to reset their password.
+ * Sends a password reset email to the user via Supabase Auth.
+ * The email contains a link to the password reset form.
  *
  * Flow:
- * 1. Validate input with resetPasswordRequestSchema
- * 2. Send reset email via Supabase Auth
- * 3. Return success response
+ * 1. Validate email with resetPasswordRequestSchema
+ * 2. Extract host from headers to build redirect URL
+ * 3. Send reset email via Supabase resetPasswordForEmail
+ * 4. Return success response
  *
- * @param input - Password reset request data (email)
+ * Security Note:
+ * - Always returns success even if email doesn't exist in system
+ * - This prevents email enumeration attacks
+ *
+ * @param input - Password reset request form data (email only)
  * @returns ServerResponse indicating success or error
  *
  * @example
@@ -31,7 +39,7 @@ import { createClient } from '@/lib/supabase/server';
  * });
  *
  * if (!result.hasError) {
- *   // Show "check your email" confirmation page
+ *   // Show confirmation page
  *   redirect('/reset-password/confirmation');
  * }
  * ```
@@ -46,13 +54,19 @@ export async function handleResetPasswordRequestAction(
 
     const { email } = validatedData;
 
+    // Get host from headers to build redirect URL dynamically
+    const headersList = await headers();
+    const host = headersList.get('host') || '';
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+    const baseUrl = `${protocol}://${host}`;
+
     // Create Supabase client
     const supabase = await createClient();
 
     // Send password reset email
-    // The redirectTo URL should point to the password reset form page
+    // The user will receive an email with a link to reset their password
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/reset-password/update`,
+      redirectTo: `${baseUrl}/reset-password/update`,
     });
 
     if (error) {
@@ -60,9 +74,8 @@ export async function handleResetPasswordRequestAction(
     }
 
     // Return success response
-    return formatSuccess(
-      'Password reset email sent. Please check your email.',
-      null
-    );
+    // Note: We always return success even if email doesn't exist
+    // This prevents email enumeration attacks
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.PASSWORD_RESET_REQUEST.en, null);
   });
 }

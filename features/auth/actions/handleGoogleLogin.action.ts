@@ -1,5 +1,6 @@
 'use server';
 
+import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { createClient } from '@/lib/supabase/server';
@@ -57,7 +58,7 @@ export async function handleGoogleLoginAction() {
     }
 
     // Return success response with redirect URL
-    return formatSuccess('Google OAuth initiated successfully', {
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.OAUTH_INITIATED.en, {
       url: data.url,
     });
   });

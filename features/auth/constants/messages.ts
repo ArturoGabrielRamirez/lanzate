@@ -47,6 +47,10 @@ export const AUTH_SUCCESS_MESSAGES = {
     es: 'Contraseña actualizada exitosamente',
     en: 'Password updated successfully',
   },
+  OAUTH_INITIATED: {
+    es: 'Autenticación con Google iniciada exitosamente',
+    en: 'Google OAuth initiated successfully',
+  },
 } as const;
 
 /**

@@ -210,7 +210,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Wrap with actionWrapper
     - Revalidate / path
     - Reference: `backup/features/auth/actions/handle-sign-out.action.ts`
-  - [ ] 4.7 Create password reset request action
+  - [x] 4.7 Create password reset request action
     - Location: `features/auth/actions/handleResetPasswordRequest.action.ts`
     - Validate with resetPasswordRequestSchema
     - Send reset email via Supabase

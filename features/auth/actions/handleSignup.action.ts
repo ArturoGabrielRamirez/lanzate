@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
 import { signupSchema, type SignupInput } from '@/features/auth/schemas/auth.schema';
 import { createUserService } from '@/features/auth/services';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
@@ -76,7 +77,7 @@ export async function handleSignupAction(input: SignupInput) {
     revalidatePath('/dashboard');
 
     // Return success response
-    return formatSuccess('User registered successfully', {
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.SIGNUP.en, {
       user: dbUser,
       authUser: authData.user,
     });

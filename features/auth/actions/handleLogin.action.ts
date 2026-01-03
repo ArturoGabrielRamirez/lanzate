@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
 import { loginSchema, type LoginInput } from '@/features/auth/schemas/auth.schema';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
@@ -67,7 +68,7 @@ export async function handleLoginAction(input: LoginInput) {
     revalidatePath('/dashboard');
 
     // Return success response
-    return formatSuccess('Login successful', {
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.LOGIN.en, {
       user: authData.user,
       session: authData.session,
     });
