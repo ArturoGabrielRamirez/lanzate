@@ -375,7 +375,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Server component with async generateMetadata
     - Render PasswordResetRequestForm in AuthCard
     - Link back to /login
-  - [ ] 6.5 Create password reset confirmation page
+  - [x] 6.5 Create password reset confirmation page
     - Location: `app/[locale]/(public)/reset-password/confirmation/page.tsx`
     - Server component
     - Display "check your email" message

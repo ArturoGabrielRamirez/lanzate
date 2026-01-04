@@ -171,6 +171,22 @@
           "success": "Correo de restablecimiento enviado. Por favor revisa tu bandeja de entrada.",
           "loading": "Enviando correo..."
         }
+      },
+      "confirmation": {
+        "title": "Revisa tu correo electrónico",
+        "description": "Hemos enviado un enlace de restablecimiento de contraseña a tu correo electrónico",
+        "instructions": "Por favor revisa tu bandeja de entrada y haz clic en el enlace del correo para restablecer tu contraseña. El enlace expirará en 24 horas.",
+        "note": {
+          "title": "¿No recibiste el correo?",
+          "message": "Revisa tu carpeta de spam o intenta solicitar un nuevo enlace de restablecimiento de contraseña."
+        },
+        "actions": {
+          "backToLogin": "Volver a iniciar sesión"
+        },
+        "links": {
+          "needHelp": "¿Necesitas ayuda?",
+          "helpLink": "Contáctanos"
+        }
       }
     }
   }

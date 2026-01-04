@@ -171,6 +171,22 @@
           "success": "Password reset email sent. Please check your inbox.",
           "loading": "Sending email..."
         }
+      },
+      "confirmation": {
+        "title": "Check Your Email",
+        "description": "We've sent a password reset link to your email address",
+        "instructions": "Please check your inbox and click the link in the email to reset your password. The link will expire in 24 hours.",
+        "note": {
+          "title": "Didn't receive the email?",
+          "message": "Check your spam folder or try requesting a new password reset link."
+        },
+        "actions": {
+          "backToLogin": "Back to Login"
+        },
+        "links": {
+          "needHelp": "Need help?",
+          "helpLink": "Contact us"
+        }
       }
     }
   }
