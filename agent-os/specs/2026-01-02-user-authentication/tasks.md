@@ -306,7 +306,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Use Form wrapper and InputField components
     - Integrate with handleResetPassword action
     - Success redirect to /login
-  - [ ] 5.7 Create ProfileEditForm component
+  - [x] 5.7 Create ProfileEditForm component
     - Location: `features/auth/components/ProfileEditForm.tsx`
     - Client component ("use client")
     - Fields: email, password (optional)
