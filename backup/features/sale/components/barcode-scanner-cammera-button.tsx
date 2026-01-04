@@ -2,17 +2,21 @@
 
 import { BarcodeScanner } from '@thewirv/react-barcode-scanner'
 import { Camera, X, AlertCircle } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
+import { InlineShortcut } from '@/features/global/components'
 import type { BarcodeScannerCammeraButtonProps } from '@/features/sale/types'
 import { Alert, AlertDescription } from '@/features/shadcn/components/ui/alert'
 import { Button } from '@/features/shadcn/components/ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shadcn/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
 function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammeraButtonProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [hasCamera, setHasCamera] = useState<boolean | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const streamRef = useRef<MediaStream | null>(null);
 
     useEffect(() => {
         const checkCamera = async () => {
@@ -29,6 +33,61 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
         checkCamera();
     }, []);
 
+    // Cleanup al desmontar el componente
+    useEffect(() => {
+        return () => {
+            if (streamRef.current) {
+                streamRef.current.getTracks().forEach(track => track.stop());
+                streamRef.current = null;
+            }
+        };
+    }, []);
+
+    // Listener para cerrar con ESC
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                handleClose();
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen]);
+
+    const stopAllVideoTracks = () => {
+        // Detener stream guardado en ref
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach(track => track.stop());
+            streamRef.current = null;
+        }
+
+        // Detener video dentro del contenedor
+        if (containerRef.current) {
+            const video = containerRef.current.querySelector('video');
+            if (video) {
+                const stream = video.srcObject as MediaStream;
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    video.srcObject = null;
+                }
+                video.pause();
+            }
+        }
+
+        // Fallback: detener todos los videos del documento
+        document.querySelectorAll('video').forEach((video) => {
+            const stream = video.srcObject as MediaStream;
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+            }
+        });
+    };
+
     const handleOpen = async () => {
         if (hasCamera === false) {
             setError('No se detectó ninguna cámara. Por favor, conecta una cámara y recarga la página.');
@@ -36,8 +95,9 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
         }
 
         try {
+            // Obtener y guardar el stream para poder detenerlo después
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            stream.getTracks().forEach(track => track.stop());
+            streamRef.current = stream;
             setIsOpen(true);
             setError(null);
         } catch (err) {
@@ -47,6 +107,10 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
     }
 
     const handleClose = () => {
+        // PRIMERO: Detener todos los tracks de video
+        stopAllVideoTracks();
+
+        // DESPUÉS: Cerrar el modal
         setIsOpen(false);
     }
 
@@ -57,17 +121,28 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
 
     return (
         <>
-            <Button 
-                variant="outline" 
-                size="icon" 
-                onClick={handleOpen}
-                disabled={hasCamera === null}
-                className={cn(
-                    hasCamera === false && "border-destructive bg-destructive/10 text-destructive hover:bg-destructive/20"
-                )}
-            >
-                <Camera />
-            </Button>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button
+                        data-action="open-camera-scanner"
+                        variant="outline"
+                        size="icon"
+                        onClick={handleOpen}
+                        disabled={hasCamera === null}
+                        className={cn(
+                            hasCamera === false && "border-destructive bg-destructive/10 text-destructive hover:bg-destructive/20"
+                        )}
+                    >
+                        <Camera />
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <span className="flex items-center gap-1">
+                        Scanner de cámara
+                        <InlineShortcut keys={['S']} />
+                    </span>
+                </TooltipContent>
+            </Tooltip>
 
             {error && (
                 <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md mx-4">
@@ -89,7 +164,7 @@ function BarcodeScannerCammeraButton({ onProductScanned }: BarcodeScannerCammera
             )}
 
             {isOpen && (
-                <div className='fixed top-0 left-0 right-0 bottom-0 z-50' onClick={handleClose}>
+                <div ref={containerRef} className='fixed top-0 left-0 right-0 bottom-0 z-50' onClick={handleClose}>
                     <Button variant="outline" size="icon" onClick={handleClose} className='absolute top-4 right-4 z-[100]'>
                         <X />
                     </Button>

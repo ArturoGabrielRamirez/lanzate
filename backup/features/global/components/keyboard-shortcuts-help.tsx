@@ -36,24 +36,28 @@ const shortcuts: KeyboardShortcut[] = [
   { keys: ['+'], description: 'Aumentar cantidad último item', category: 'sale', condition: 'Con artículos en carrito' },
   { keys: ['-'], description: 'Disminuir cantidad último item', category: 'sale', condition: 'Con artículos en carrito' },
 
-  // Atajos en Account
-  { keys: ['E'], description: 'Ir a tab Información Básica', category: 'account', condition: 'Desde cualquier tab' },
-  { keys: ['E'], description: 'Editar perfil', category: 'account', condition: 'Dentro del tab' },
-  { keys: ['A'], description: 'Cambiar avatar', category: 'account', condition: 'En tab Información Básica' },
+  // Navegación en Account (números 1-4 + T)
+  { keys: ['1'], description: 'Ir a Info Básica', category: 'navigation' },
+  { keys: ['2'], description: 'Ir a Seguridad', category: 'navigation' },
+  { keys: ['3'], description: 'Ir a Membresía', category: 'navigation' },
+  { keys: ['4'], description: 'Ir a Zona Peligro', category: 'navigation' },
+  { keys: ['T'], description: 'Ir a Tiendas', category: 'navigation' },
 
-  // Atajos en Security
-  { keys: ['1'], description: 'Ir a tab Seguridad', category: 'security', condition: 'Desde cualquier tab' },
-  { keys: ['1'], description: 'Cambiar email', category: 'security', condition: 'Dentro del tab' },
-  { keys: ['2'], description: 'Cambiar contraseña', category: 'security', condition: 'En tab Seguridad' },
+  // Atajos en tab Info Básica
+  { keys: ['E'], description: 'Editar perfil', category: 'account' },
+  { keys: ['A'], description: 'Cambiar avatar', category: 'account' },
+  { keys: ['B'], description: 'Cambiar banner', category: 'account' },
 
-  // Atajos en Membership
-  { keys: ['U'], description: 'Ir a tab Membresía', category: 'membership', condition: 'Desde cualquier tab' },
-  { keys: ['U'], description: 'Actualizar plan', category: 'membership', condition: 'Dentro del tab' },
-  { keys: ['C'], description: 'Cancelar suscripción', category: 'membership', condition: 'En tab Membresía' },
+  // Atajos en tab Seguridad
+  { keys: ['M'], description: 'Cambiar eMail', category: 'security' },
+  { keys: ['P'], description: 'Cambiar contraseña', category: 'security' },
 
-  // Atajos en Danger Zone
-  { keys: ['D'], description: 'Ir a tab Zona de Peligro', category: 'danger-zone', condition: 'Desde cualquier tab' },
-  { keys: ['D'], description: 'Eliminar cuenta', category: 'danger-zone', condition: 'Dentro del tab' },
+  // Atajos en tab Membresía
+  { keys: ['U'], description: 'Actualizar plan', category: 'membership' },
+  { keys: ['X'], description: 'Cancelar suscripción', category: 'membership' },
+
+  // Atajos en Zona de Peligro
+  { keys: ['D'], description: 'Eliminar cuenta', category: 'danger-zone' },
 ]
 
 
@@ -71,6 +75,7 @@ function KeyboardShortcutsHelp({
 
   const globalShortcuts = shortcuts.filter(s => s.category === 'global')
   const saleShortcuts = shortcuts.filter(s => s.category === 'sale')
+  const navigationShortcuts = shortcuts.filter(s => s.category === 'navigation')
   const accountShortcuts = shortcuts.filter(s => {
     if (isInAccount) {
       return s.category === activeAccountTab || s.category === 'account'
@@ -129,7 +134,7 @@ function KeyboardShortcutsHelp({
             {isInAccount && (
               <Alert>
                 <AlertDescription>
-                  💡 Los atajos de navegación (E, 1, U, D) tienen <strong>doble función</strong>: te llevan al tab correspondiente O ejecutan la acción principal si ya estás en ese tab.
+                  💡 Usa los <strong>números 1-4</strong> para navegar entre tabs y las <strong>letras</strong> para ejecutar acciones en cada tab. Cada tecla hace una sola cosa.
                 </AlertDescription>
               </Alert>
             )}
@@ -160,6 +165,35 @@ function KeyboardShortcutsHelp({
                 ))}
               </div>
             </div>
+
+            {/* Navegación en Account */}
+            {isInAccount && (
+              <div>
+                <h3 className="font-semibold mb-3 text-sm text-muted-foreground uppercase tracking-wider">
+                  Navegación entre tabs
+                </h3>
+                <div className="space-y-2">
+                  {navigationShortcuts.map((shortcut, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between py-2 px-3 rounded-md hover:bg-muted/50 transition-colors"
+                    >
+                      <span className="text-sm">{shortcut.description}</span>
+                      <div className="flex gap-1">
+                        {shortcut.keys.map((key, keyIndex) => (
+                          <kbd
+                            key={keyIndex}
+                            className="px-2 py-1 text-xs font-semibold text-foreground bg-muted border border-border rounded min-w-[28px] text-center"
+                          >
+                            {key}
+                          </kbd>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Atajos en Venta */}
             {isInSale && (
@@ -241,7 +275,7 @@ function KeyboardShortcutsHelp({
               )}
               {isInAccount && (
                 <p className="text-xs text-muted-foreground">
-                  <strong>Navegación:</strong> Los atajos te llevan al tab desde cualquier lugar. Una vez en el tab, ejecutan la acción principal.
+                  <strong>Navegación:</strong> Usa 1-4 para cambiar de tab y T para ir a tiendas. Cada letra ejecuta una acción específica del tab actual.
                 </p>
               )}
             </div>

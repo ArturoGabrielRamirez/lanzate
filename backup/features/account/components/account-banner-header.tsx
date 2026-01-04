@@ -152,6 +152,7 @@ export function AccountBannerHeader({
             onUpdate={handleBackgroundUpdate}
             triggerButton={
               <Button
+                data-action="change-banner"
                 size="sm"
                 variant="ghost"
                 className="p-2 size-8 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity hover:bg-background/60"

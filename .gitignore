@@ -58,3 +58,11 @@ next-env.d.ts
 
 # OS
 Thumbs.db
+access-*
+access-*.log.gz
+
+CLAUDE.md
+/agent_docs
+
+.claude/
+*.claude-backup

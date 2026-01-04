@@ -117,7 +117,7 @@ export interface ShortcutHintProps {
 export interface KeyboardShortcut {
     keys: string[]
     description: string
-    category: 'global' | 'sale' | 'account' | 'security' | 'membership' | 'danger-zone'
+    category: 'global' | 'sale' | 'account' | 'security' | 'membership' | 'danger-zone' | 'navigation'
     condition?: string
 }
 
@@ -133,15 +133,19 @@ export interface KeyboardShortcutsConfig {
     onClearSearch?: () => void
     onIncreaseQuantity?: () => void
     onDecreaseQuantity?: () => void
+    onOpenCameraScanner?: () => void
+    onToggleUsbScanner?: () => void
 
     // ============ ACCOUNT CALLBACKS ============
     onEditProfile?: () => void
     onChangeAvatar?: () => void
+    onChangeBanner?: () => void
     onChangeEmail?: () => void
     onChangePassword?: () => void
     onUpgradePlan?: () => void
     onCancelSubscription?: () => void
     onDeleteAccount?: () => void
+    onNavigateToStores?: () => void
 
     // ============ CONTEXT CONTROL ============
     // Sale context

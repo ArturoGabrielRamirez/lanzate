@@ -71,7 +71,7 @@ function MembershipTab({ user }: { user: UserType }) {
 
                     <div className="pt-4 border-t">
                         <h3 className="text-sm font-semibold mb-3">Cambiar plan</h3>
-                        <div className="grid gap-3 lg:grid-cols-3" data-action="upgrade-plan">
+                        <div className="grid gap-3 lg:grid-cols-3">
                             <Button
                                 disabled={accountType === 'FREE' || accountType === 'PRO' || accountType === 'ENTERPRISE'}
                                 variant="outline"
@@ -80,6 +80,7 @@ function MembershipTab({ user }: { user: UserType }) {
                                 Starter
                             </Button>
                             <Button
+                                data-action="upgrade-plan"
                                 disabled={accountType === 'PRO' || accountType === 'ENTERPRISE'}
                                 onClick={handleBusinessPlan}
                                 variant={accountType === 'FREE' ? 'default' : 'outline'}
@@ -99,8 +100,9 @@ function MembershipTab({ user }: { user: UserType }) {
                     </div>
 
                     {accountType !== "FREE" && (
-                        <div className="pt-4 border-t" data-action="cancel-subscription">
+                        <div className="pt-4 border-t">
                             <Button
+                                data-action="cancel-subscription"
                                 variant="destructive"
                                 onClick={handleCancelSubscription}
                                 className="w-full"
