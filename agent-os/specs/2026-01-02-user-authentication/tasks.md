@@ -352,7 +352,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Test password reset pages render forms
     - Test metadata generation
     - Limit to 2-8 highly focused tests maximum
-  - [ ] 6.2 Create signup page
+  - [x] 6.2 Create signup page
     - Location: `app/[locale]/(public)/signup/page.tsx`
     - Server component with async generateMetadata
     - Two-column layout (form left, illustration right on desktop)
