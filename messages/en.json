@@ -87,6 +87,53 @@
           "facebook": "Facebook"
         }
       }
+    },
+    "login": {
+      "page": {
+        "title": "Login - Lanzate",
+        "description": "Sign in to your account to continue",
+        "header": {
+          "title": "Welcome Back",
+          "description": "Sign in to your account to continue"
+        },
+        "links": {
+          "noAccount": "Don't have an account?",
+          "needHelp": "Need help?",
+          "signupLink": "Sign Up",
+          "helpLink": "Contact us",
+          "resetPassword": "Forgot password?"
+        },
+        "image": {
+          "alt": "Login illustration"
+        }
+      },
+      "form": {
+        "fields": {
+          "email": {
+            "label": "Email",
+            "placeholder": "email@example.com",
+            "tooltip": "Enter your email address"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Enter your password",
+            "tooltip": "Enter your password"
+          }
+        },
+        "actions": {
+          "submit": "Log In"
+        },
+        "messages": {
+          "success": "Login successful. Welcome back!",
+          "loading": "Signing in..."
+        }
+      },
+      "social": {
+        "label": "Or continue with",
+        "providers": {
+          "google": "Google"
+        }
+      }
     }
   }
 }

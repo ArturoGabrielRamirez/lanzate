@@ -87,6 +87,53 @@
           "facebook": "Facebook"
         }
       }
+    },
+    "login": {
+      "page": {
+        "title": "Iniciar sesión - Lanzate",
+        "description": "Inicia sesión en tu cuenta para continuar",
+        "header": {
+          "title": "Bienvenido de nuevo",
+          "description": "Inicia sesión en tu cuenta para continuar"
+        },
+        "links": {
+          "noAccount": "¿No tienes una cuenta?",
+          "needHelp": "¿Necesitas ayuda?",
+          "signupLink": "Registrarse",
+          "helpLink": "Contáctanos",
+          "resetPassword": "¿Olvidaste tu contraseña?"
+        },
+        "image": {
+          "alt": "Ilustración de inicio de sesión"
+        }
+      },
+      "form": {
+        "fields": {
+          "email": {
+            "label": "Correo electrónico",
+            "placeholder": "correo@ejemplo.com",
+            "tooltip": "Ingresa tu correo electrónico"
+          },
+          "password": {
+            "label": "Contraseña",
+            "placeholder": "Ingresa tu contraseña",
+            "tooltip": "Ingresa tu contraseña"
+          }
+        },
+        "actions": {
+          "submit": "Iniciar sesión"
+        },
+        "messages": {
+          "success": "Inicio de sesión exitoso. ¡Bienvenido de nuevo!",
+          "loading": "Iniciando sesión..."
+        }
+      },
+      "social": {
+        "label": "O continúa con",
+        "providers": {
+          "google": "Google"
+        }
+      }
     }
   }
 }

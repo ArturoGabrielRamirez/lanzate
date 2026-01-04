@@ -361,7 +361,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Include GoogleAuthButton below form
     - Links to /login and help pages
     - Reference: `backup/app/[locale]/(public)/signup`
-  - [ ] 6.3 Create login page
+  - [x] 6.3 Create login page
     - Location: `app/[locale]/(public)/login/page.tsx`
     - Server component with async generateMetadata
     - Two-column layout (form left, illustration right on desktop)
