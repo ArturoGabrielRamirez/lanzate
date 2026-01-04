@@ -2,6 +2,7 @@
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LockIcon, MailIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { getCurrentUserAction } from "@/features/auth/actions/getCurrentUser.action";
@@ -28,6 +29,7 @@ import { InputField } from "@/features/global/components/form";
  * - Loading states during submission with disabled button
  * - Toast notifications for success/error feedback
  * - At least one field must be updated (enforced by schema)
+ * - Internationalization support (English and Spanish)
  *
  * @example
  * ```tsx
@@ -44,6 +46,7 @@ import { InputField } from "@/features/global/components/form";
  * ```
  */
 export function ProfileEditForm() {
+  const t = useTranslations("auth.profile.form");
   const [currentEmail, setCurrentEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -70,7 +73,7 @@ export function ProfileEditForm() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <p className="text-muted-foreground">Cargando datos del perfil...</p>
+        <p className="text-muted-foreground">{t("messages.loadingData")}</p>
       </div>
     );
   }
@@ -79,9 +82,9 @@ export function ProfileEditForm() {
     <Form<UpdateProfileInput>
       resolver={yupResolver(updateProfileSchema)}
       formAction={updateProfileAction}
-      successMessage="Perfil actualizado exitosamente"
-      loadingMessage="Actualizando tu perfil..."
-      contentButton="Actualizar perfil"
+      successMessage={t("messages.success")}
+      loadingMessage={t("messages.loading")}
+      contentButton={t("actions.submit")}
       className="flex flex-col gap-4 w-full"
       resetOnSuccess={false}
       defaultValues={{
@@ -92,27 +95,27 @@ export function ProfileEditForm() {
     >
       <InputField
         name="email"
-        label="Email"
-        placeholder="tu@email.com"
+        label={t("fields.email.label")}
+        placeholder={t("fields.email.placeholder")}
         type="email"
         startIcon={<MailIcon className="h-4 w-4" />}
-        tooltip="Actualiza tu dirección de correo electrónico"
+        tooltip={t("fields.email.tooltip")}
       />
       <InputField
         name="password"
-        label="Nueva contraseña"
-        placeholder="Deja en blanco para mantener la actual"
+        label={t("fields.password.label")}
+        placeholder={t("fields.password.placeholder")}
         type="password"
         startIcon={<LockIcon className="h-4 w-4" />}
-        tooltip="Debe tener al menos 8 caracteres, una letra mayúscula y un número"
+        tooltip={t("fields.password.tooltip")}
       />
       <InputField
         name="confirmPassword"
-        label="Confirmar nueva contraseña"
-        placeholder="Confirma tu nueva contraseña"
+        label={t("fields.confirmPassword.label")}
+        placeholder={t("fields.confirmPassword.placeholder")}
         type="password"
         startIcon={<LockIcon className="h-4 w-4" />}
-        tooltip="Debe coincidir con la nueva contraseña ingresada arriba"
+        tooltip={t("fields.confirmPassword.tooltip")}
       />
     </Form>
   );

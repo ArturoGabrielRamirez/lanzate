@@ -228,6 +228,43 @@
           "loading": "Resetting password..."
         }
       }
+    },
+    "profile": {
+      "page": {
+        "title": "Edit Profile - Lanzate",
+        "description": "Manage your account settings and personal information",
+        "header": {
+          "title": "Edit Profile",
+          "description": "Update your email and password settings"
+        }
+      },
+      "form": {
+        "fields": {
+          "email": {
+            "label": "Email",
+            "placeholder": "your@email.com",
+            "tooltip": "Update your email address"
+          },
+          "password": {
+            "label": "New Password",
+            "placeholder": "Leave blank to keep current",
+            "tooltip": "Must be at least 8 characters with an uppercase letter and a number"
+          },
+          "confirmPassword": {
+            "label": "Confirm New Password",
+            "placeholder": "Confirm your new password",
+            "tooltip": "Must match the new password entered above"
+          }
+        },
+        "actions": {
+          "submit": "Update Profile"
+        },
+        "messages": {
+          "success": "Profile updated successfully",
+          "loading": "Updating your profile...",
+          "loadingData": "Loading profile data..."
+        }
+      }
     }
   }
 }

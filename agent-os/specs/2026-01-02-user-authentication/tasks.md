@@ -386,7 +386,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Render PasswordResetForm in AuthCard
     - Extract token from URL params
     - Link back to /login
-  - [ ] 6.7 Create profile page
+  - [x] 6.7 Create profile page
     - Location: `app/[locale]/(private)/profile/page.tsx`
     - Server component with async generateMetadata
     - Fetch current user data

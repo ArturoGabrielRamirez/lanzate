@@ -228,6 +228,43 @@
           "loading": "Restableciendo contraseña..."
         }
       }
+    },
+    "profile": {
+      "page": {
+        "title": "Editar perfil - Lanzate",
+        "description": "Administra la configuración de tu cuenta e información personal",
+        "header": {
+          "title": "Editar perfil",
+          "description": "Actualiza tu correo electrónico y contraseña"
+        }
+      },
+      "form": {
+        "fields": {
+          "email": {
+            "label": "Correo electrónico",
+            "placeholder": "tu@correo.com",
+            "tooltip": "Actualiza tu dirección de correo electrónico"
+          },
+          "password": {
+            "label": "Nueva contraseña",
+            "placeholder": "Deja en blanco para mantener la actual",
+            "tooltip": "Debe tener al menos 8 caracteres, una letra mayúscula y un número"
+          },
+          "confirmPassword": {
+            "label": "Confirmar nueva contraseña",
+            "placeholder": "Confirma tu nueva contraseña",
+            "tooltip": "Debe coincidir con la nueva contraseña ingresada arriba"
+          }
+        },
+        "actions": {
+          "submit": "Actualizar perfil"
+        },
+        "messages": {
+          "success": "Perfil actualizado exitosamente",
+          "loading": "Actualizando tu perfil...",
+          "loadingData": "Cargando datos del perfil..."
+        }
+      }
     }
   }
 }
