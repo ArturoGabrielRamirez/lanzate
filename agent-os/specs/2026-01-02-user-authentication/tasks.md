@@ -221,7 +221,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Validate with resetPasswordSchema
     - Update password via Supabase Auth
     - Wrap with actionWrapper
-  - [ ] 4.9 Create get current user action
+  - [x] 4.9 Create get current user action
     - Location: `features/auth/actions/getCurrentUser.action.ts`
     - Fetch current auth user and database record
     - Wrap with actionWrapper
