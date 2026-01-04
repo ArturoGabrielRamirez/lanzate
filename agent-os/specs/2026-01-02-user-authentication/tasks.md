@@ -346,7 +346,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 **Dependencies:** Task Group 5
 
 - [ ] 6.0 Complete authentication pages and routes
-  - [ ] 6.1 Write 2-8 focused tests for pages
+  - [x] 6.1 Write 2-8 focused tests for pages
     - Test signup page renders SignupForm
     - Test login page renders LoginForm
     - Test password reset pages render forms
