@@ -8,8 +8,8 @@
  * It should be called from service or action layers, not directly from UI components.
  */
 
-import { prisma } from '@/lib/prisma';
 import { UserWithStores } from '@/features/auth/types';
+import { prisma } from '@/lib/prisma';
 
 /**
  * Fetch user by Supabase ID with stores count
