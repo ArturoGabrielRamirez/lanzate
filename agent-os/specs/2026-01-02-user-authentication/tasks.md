@@ -275,7 +275,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Loading states with disabled button
     - Success redirect to /dashboard
     - Reference: `backup/features/auth/components/form-signup.tsx`
-  - [ ] 5.3 Create LoginForm component
+  - [x] 5.3 Create LoginForm component
     - Location: `features/auth/components/LoginForm.tsx`
     - Client component ("use client")
     - Fields: email, password
