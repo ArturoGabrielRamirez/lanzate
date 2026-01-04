@@ -9,6 +9,7 @@
  * - loginSchema: Minimal validation (don't reject existing weak passwords)
  * - resetPasswordRequestSchema: Email-only validation
  * - resetPasswordSchema: Password validation for reset flow
+ * - updateProfileSchema: Optional email and password validation for profile updates
  *
  * Types are automatically inferred from schemas using yup.InferType
  * to ensure type safety across the application.
@@ -80,6 +81,34 @@ export const resetPasswordSchema = yup.object({
 });
 
 /**
+ * Update Profile Schema
+ *
+ * Validates profile update with optional fields:
+ * - Email (optional, but must be valid if provided)
+ * - Password (optional, but must be strong if provided)
+ * - Confirm password (required if password is provided)
+ *
+ * Used when user updates their profile information
+ */
+export const updateProfileSchema = yup.object({
+  email: emailField.optional(),
+  password: passwordField.optional(),
+  confirmPassword: yup
+    .string()
+    .when('password', {
+      is: (password: string | undefined) => password && password.length > 0,
+      then: (schema) => schema
+        .oneOf([yup.ref('password')], 'Las contraseñas no coinciden')
+        .required('Debes confirmar la contraseña'),
+      otherwise: (schema) => schema.optional(),
+    }),
+}).test(
+  'at-least-one-field',
+  'Debes proporcionar al menos un campo para actualizar',
+  (value) => !!(value.email || value.password)
+);
+
+/**
  * Inferred TypeScript types from schemas
  *
  * These types are automatically generated from the Yup schemas
@@ -90,3 +119,4 @@ export type SignupInput = yup.InferType<typeof signupSchema>;
 export type LoginInput = yup.InferType<typeof loginSchema>;
 export type ResetPasswordRequestInput = yup.InferType<typeof resetPasswordRequestSchema>;
 export type ResetPasswordInput = yup.InferType<typeof resetPasswordSchema>;
+export type UpdateProfileInput = yup.InferType<typeof updateProfileSchema>;

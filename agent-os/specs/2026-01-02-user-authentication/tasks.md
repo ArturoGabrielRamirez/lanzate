@@ -226,7 +226,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Fetch current auth user and database record
     - Wrap with actionWrapper
     - Reference: `backup/features/auth/actions/get-current-user-action.action.ts`
-  - [ ] 4.10 Create profile update action
+  - [x] 4.10 Create profile update action
     - Location: `features/auth/actions/updateProfile.action.ts`
     - Support email and password updates
     - Validate inputs

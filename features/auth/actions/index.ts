@@ -12,3 +12,4 @@ export { handleGoogleLoginAction } from "@/features/auth/actions/handleGoogleLog
 export { handleResetPasswordAction } from "@/features/auth/actions/handleResetPassword.action";
 export { handleLogoutAction } from "@/features/auth/actions/handleLogout.action";
 export { getCurrentUserAction } from "@/features/auth/actions/getCurrentUser.action";
+export { updateProfileAction } from "@/features/auth/actions/updateProfile.action";
