@@ -8,6 +8,9 @@ export type {
   User,
   AuthSession,
   AuthUser,
+} from "@/features/auth/types/auth";
+
+export type {
   LoginFormProps,
   SignupFormProps,
   PasswordResetRequestFormProps,
@@ -15,7 +18,7 @@ export type {
   ProfileEditFormProps,
   GoogleAuthButtonProps,
   AuthCardProps,
-} from "@/features/auth/types/auth";
+} from "@/features/auth/types/components";
 
 export * from "@/features/auth/types/types";
 export * from "@/features/auth/types/service";

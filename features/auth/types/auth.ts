@@ -2,9 +2,11 @@
  * Authentication Types
  *
  * This file contains type definitions for authentication-related
- * data structures, sessions, and component props.
+ * data structures and sessions.
  *
  * These types ensure type safety across the authentication feature.
+ *
+ * Note: Component prop types are defined in components.ts
  */
 
 import type { User as SupabaseUser, Session as SupabaseSession } from '@supabase/supabase-js';
@@ -37,74 +39,3 @@ export type AuthSession = SupabaseSession;
  * operations
  */
 export type AuthUser = SupabaseUser;
-
-/**
- * Login Form Props
- *
- * Props for the LoginForm component
- */
-export type LoginFormProps = {
-  redirectTo?: string;
-  className?: string;
-};
-
-/**
- * Signup Form Props
- *
- * Props for the SignupForm component
- */
-export type SignupFormProps = {
-  redirectTo?: string;
-  className?: string;
-};
-
-/**
- * Password Reset Request Form Props
- *
- * Props for the PasswordResetRequestForm component
- */
-export type PasswordResetRequestFormProps = {
-  className?: string;
-};
-
-/**
- * Password Reset Form Props
- *
- * Props for the PasswordResetForm component
- */
-export type PasswordResetFormProps = {
-  className?: string;
-};
-
-/**
- * Profile Edit Form Props
- *
- * Props for the ProfileEditForm component
- */
-export type ProfileEditFormProps = {
-  user: User;
-  className?: string;
-};
-
-/**
- * Google Auth Button Props
- *
- * Props for the GoogleAuthButton component
- */
-export type GoogleAuthButtonProps = {
-  className?: string;
-  label?: string;
-};
-
-/**
- * Auth Card Props
- *
- * Props for the AuthCard wrapper component
- */
-export type AuthCardProps = {
-  children: React.ReactNode;
-  heading?: string;
-  description?: string;
-  footer?: React.ReactNode;
-  className?: string;
-};

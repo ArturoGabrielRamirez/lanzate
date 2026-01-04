@@ -319,7 +319,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Wrapper for auth forms with consistent styling
     - Use shadcn Card components
     - Support heading, description, footer links
-  - [ ] 5.9 Define component prop types
+  - [x] 5.9 Define component prop types
     - Location: `features/auth/types/components.ts`
     - SignupFormProps, LoginFormProps, etc.
     - AuthCardProps

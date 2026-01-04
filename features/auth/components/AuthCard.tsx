@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/features/shadcn/components/ui/card";
 
-import type { AuthCardProps } from "../types/auth";
+import type { AuthCardProps } from "../types/components";
 
 /**
  * AuthCard Component
