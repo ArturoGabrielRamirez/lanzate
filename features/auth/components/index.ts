@@ -11,3 +11,4 @@ export { GoogleAuthButton } from "@/features/auth/components/GoogleAuthButton";
 export { PasswordResetRequestForm } from "@/features/auth/components/PasswordResetRequestForm";
 export { PasswordResetForm } from "@/features/auth/components/PasswordResetForm";
 export { ProfileEditForm } from "@/features/auth/components/ProfileEditForm";
+export { AuthCard } from "@/features/auth/components/AuthCard";

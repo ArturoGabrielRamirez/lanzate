@@ -313,7 +313,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Use Form wrapper and InputField components
     - Integrate with updateProfile action
     - Display current user data
-  - [ ] 5.8 Create AuthCard wrapper component
+  - [x] 5.8 Create AuthCard wrapper component
     - Location: `features/auth/components/AuthCard.tsx`
     - Server component (default)
     - Wrapper for auth forms with consistent styling
