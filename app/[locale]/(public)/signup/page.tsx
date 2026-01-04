@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-import signupImage from "@/features/auth/assets/Sign up-pana.svg";
+import signupImage from "@/features/auth/assets/signup-pana.svg";
 import { AuthCard, GoogleAuthButton, SignupForm } from "@/features/auth/components";
 import { Link } from "@/i18n/navigation";
 
