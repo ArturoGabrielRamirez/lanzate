@@ -134,6 +134,44 @@
           "google": "Google"
         }
       }
+    },
+    "resetPassword": {
+      "page": {
+        "title": "Reset Password - Lanzate",
+        "description": "Request a password reset link to recover your account",
+        "header": {
+          "title": "Reset Password",
+          "description": "Enter your email address and we'll send you a link to reset your password"
+        },
+        "links": {
+          "rememberedPassword": "Remembered your password?",
+          "loginLink": "Log In",
+          "noAccount": "Don't have an account?",
+          "signupLink": "Sign Up",
+          "needHelp": "Need help?",
+          "helpLink": "Contact us"
+        },
+        "image": {
+          "alt": "Password reset illustration"
+        }
+      },
+      "form": {
+        "fields": {
+          "email": {
+            "label": "Email",
+            "placeholder": "email@example.com",
+            "tooltip": "Enter the email address associated with your account",
+            "description": "We'll send you a link to reset your password"
+          }
+        },
+        "actions": {
+          "submit": "Send Reset Link"
+        },
+        "messages": {
+          "success": "Password reset email sent. Please check your inbox.",
+          "loading": "Sending email..."
+        }
+      }
     }
   }
 }

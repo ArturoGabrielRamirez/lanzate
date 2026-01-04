@@ -370,7 +370,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Include GoogleAuthButton below form
     - Links to /signup, /reset-password, and help pages
     - Reference: `backup/app/[locale]/(public)/login`
-  - [ ] 6.4 Create password reset request page
+  - [x] 6.4 Create password reset request page
     - Location: `app/[locale]/(public)/reset-password/page.tsx`
     - Server component with async generateMetadata
     - Render PasswordResetRequestForm in AuthCard

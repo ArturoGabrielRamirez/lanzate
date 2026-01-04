@@ -134,6 +134,44 @@
           "google": "Google"
         }
       }
+    },
+    "resetPassword": {
+      "page": {
+        "title": "Restablecer contraseña - Lanzate",
+        "description": "Solicita un enlace para restablecer tu contraseña y recuperar tu cuenta",
+        "header": {
+          "title": "Restablecer contraseña",
+          "description": "Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña"
+        },
+        "links": {
+          "rememberedPassword": "¿Recordaste tu contraseña?",
+          "loginLink": "Iniciar sesión",
+          "noAccount": "¿No tienes una cuenta?",
+          "signupLink": "Registrarse",
+          "needHelp": "¿Necesitas ayuda?",
+          "helpLink": "Contáctanos"
+        },
+        "image": {
+          "alt": "Ilustración de restablecimiento de contraseña"
+        }
+      },
+      "form": {
+        "fields": {
+          "email": {
+            "label": "Correo electrónico",
+            "placeholder": "correo@ejemplo.com",
+            "tooltip": "Ingresa el correo electrónico asociado a tu cuenta",
+            "description": "Te enviaremos un enlace para restablecer tu contraseña"
+          }
+        },
+        "actions": {
+          "submit": "Enviar enlace de restablecimiento"
+        },
+        "messages": {
+          "success": "Correo de restablecimiento enviado. Por favor revisa tu bandeja de entrada.",
+          "loading": "Enviando correo..."
+        }
+      }
     }
   }
 }

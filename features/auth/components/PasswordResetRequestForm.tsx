@@ -2,6 +2,7 @@
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { MailIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { handleResetPasswordRequestAction } from "@/features/auth/actions/handleResetPasswordRequest.action";
 import {
@@ -25,6 +26,7 @@ import { InputField } from "@/features/global/components/form";
  * - Loading states during submission with disabled button
  * - Success redirect to /reset-password/confirmation page
  * - Toast notifications for success/error feedback
+ * - Full internationalization support (Spanish and English)
  *
  * Security Note:
  * - Always shows success message even if email doesn't exist
@@ -45,25 +47,27 @@ import { InputField } from "@/features/global/components/form";
  * ```
  */
 export function PasswordResetRequestForm() {
+  const t = useTranslations("auth.resetPassword.form");
+
   return (
     <Form<ResetPasswordRequestInput>
       resolver={yupResolver(resetPasswordRequestSchema)}
       formAction={handleResetPasswordRequestAction}
       successRedirect="/reset-password/confirmation"
-      successMessage="Se ha enviado un correo con instrucciones para restablecer tu contraseña."
-      loadingMessage="Enviando correo..."
-      contentButton="Enviar instrucciones"
+      successMessage={t("messages.success")}
+      loadingMessage={t("messages.loading")}
+      contentButton={t("actions.submit")}
       className="flex flex-col gap-4 w-full"
       resetOnSuccess={false}
     >
       <InputField
         name="email"
-        label="Email"
-        placeholder="tu@email.com"
+        label={t("fields.email.label")}
+        placeholder={t("fields.email.placeholder")}
         type="email"
         startIcon={<MailIcon className="h-4 w-4" />}
-        tooltip="Ingresa el correo electrónico asociado a tu cuenta"
-        description="Te enviaremos un enlace para restablecer tu contraseña"
+        tooltip={t("fields.email.tooltip")}
+        description={t("fields.email.description")}
         isRequired
       />
     </Form>
