@@ -380,7 +380,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Server component
     - Display "check your email" message
     - Link back to /login
-  - [ ] 6.6 Create password reset form page
+  - [x] 6.6 Create password reset form page
     - Location: `app/[locale]/(public)/reset-password/update/page.tsx`
     - Server component with async generateMetadata
     - Render PasswordResetForm in AuthCard

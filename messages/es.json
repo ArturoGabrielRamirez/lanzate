@@ -188,6 +188,46 @@
           "helpLink": "Contáctanos"
         }
       }
+    },
+    "resetPasswordUpdate": {
+      "page": {
+        "title": "Crear nueva contraseña - Lanzate",
+        "description": "Ingresa tu nueva contraseña para completar el proceso de restablecimiento",
+        "header": {
+          "title": "Crear nueva contraseña",
+          "description": "Ingresa una contraseña segura para proteger tu cuenta"
+        },
+        "links": {
+          "rememberedPassword": "¿Recordaste tu contraseña?",
+          "loginLink": "Iniciar sesión",
+          "needHelp": "¿Necesitas ayuda?",
+          "helpLink": "Contáctanos"
+        },
+        "image": {
+          "alt": "Ilustración de restablecimiento de contraseña"
+        }
+      },
+      "form": {
+        "fields": {
+          "password": {
+            "label": "Nueva contraseña",
+            "placeholder": "Mínimo 8 caracteres",
+            "tooltip": "Debe tener al menos 8 caracteres, una letra mayúscula y un número"
+          },
+          "confirmPassword": {
+            "label": "Confirmar nueva contraseña",
+            "placeholder": "Confirma tu nueva contraseña",
+            "tooltip": "Debe coincidir con la contraseña ingresada arriba"
+          }
+        },
+        "actions": {
+          "submit": "Restablecer contraseña"
+        },
+        "messages": {
+          "success": "Contraseña restablecida exitosamente. Ya puedes iniciar sesión.",
+          "loading": "Restableciendo contraseña..."
+        }
+      }
     }
   }
 }

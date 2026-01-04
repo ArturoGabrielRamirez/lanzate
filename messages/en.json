@@ -188,6 +188,46 @@
           "helpLink": "Contact us"
         }
       }
+    },
+    "resetPasswordUpdate": {
+      "page": {
+        "title": "Create New Password - Lanzate",
+        "description": "Enter your new password to complete the reset process",
+        "header": {
+          "title": "Create New Password",
+          "description": "Enter a strong password to secure your account"
+        },
+        "links": {
+          "rememberedPassword": "Remembered your password?",
+          "loginLink": "Log In",
+          "needHelp": "Need help?",
+          "helpLink": "Contact us"
+        },
+        "image": {
+          "alt": "Password reset illustration"
+        }
+      },
+      "form": {
+        "fields": {
+          "password": {
+            "label": "New Password",
+            "placeholder": "Minimum 8 characters",
+            "tooltip": "Must be at least 8 characters with an uppercase letter and a number"
+          },
+          "confirmPassword": {
+            "label": "Confirm New Password",
+            "placeholder": "Confirm your new password",
+            "tooltip": "Must match the password entered above"
+          }
+        },
+        "actions": {
+          "submit": "Reset Password"
+        },
+        "messages": {
+          "success": "Password reset successfully. You can now log in.",
+          "loading": "Resetting password..."
+        }
+      }
     }
   }
 }
