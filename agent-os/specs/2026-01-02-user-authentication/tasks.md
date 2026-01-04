@@ -392,7 +392,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Fetch current user data
     - Render ProfileEditForm
     - Protected route (requires authentication)
-  - [ ] 6.8 Add shared auth layout
+  - [x] 6.8 Add shared auth layout
     - Location: `app/[locale]/(public)/layout.tsx` (if not exists)
     - Background pattern with reduced brightness
     - Consistent padding and spacing
