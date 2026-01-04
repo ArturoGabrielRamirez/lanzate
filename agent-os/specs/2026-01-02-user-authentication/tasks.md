@@ -292,14 +292,14 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Display Google logo icon
     - Loading states
     - Error handling with toast
-  - [ ] 5.5 Create PasswordResetRequestForm component
+  - [x] 5.5 Create PasswordResetRequestForm component
     - Location: `features/auth/components/PasswordResetRequestForm.tsx`
     - Client component ("use client")
     - Field: email
     - Use Form wrapper and InputField components
     - Integrate with handleResetPasswordRequest action
     - Success shows confirmation message
-  - [ ] 5.6 Create PasswordResetForm component
+  - [x] 5.6 Create PasswordResetForm component
     - Location: `features/auth/components/PasswordResetForm.tsx`
     - Client component ("use client")
     - Fields: password, confirmPassword
