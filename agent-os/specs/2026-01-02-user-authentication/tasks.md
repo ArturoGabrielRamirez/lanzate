@@ -170,7 +170,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 #### Task Group 4: Server Actions for Authentication
 **Dependencies:** Task Group 3
 
-- [ ] 4.0 Complete server actions
+- [x] 4.0 Complete server actions
   - [x] 4.1 Write 2-8 focused tests for server actions
     - Test signup action flow (validation -> service -> response)
     - Test login action flow
@@ -185,7 +185,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Wrap with actionWrapper
     - Revalidate /dashboard path
     - Reference: `backup/features/auth/actions/handle-sign-up.action.ts`
-  - [ ] 4.3 Create login server action
+  - [x] 4.3 Create login server action
     - Location: `features/auth/actions/handleLogin.action.ts`
     - Validate with loginSchema
     - Sign in via Supabase Auth
@@ -233,7 +233,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Update via Supabase and database
     - Wrap with actionWrapper
     - Reference: `backup/features/auth/actions/handle-edit-password.action.ts`
-  - [ ] 4.11 Ensure server action tests pass
+  - [x] 4.11 Ensure server action tests pass
     - Run ONLY the 2-8 tests written in 4.1
     - Verify actions return proper ServerResponse format
     - Do NOT run the entire test suite at this stage
