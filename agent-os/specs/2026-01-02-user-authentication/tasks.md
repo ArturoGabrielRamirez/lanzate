@@ -345,7 +345,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 #### Task Group 6: Authentication Pages and Routes
 **Dependencies:** Task Group 5
 
-- [ ] 6.0 Complete authentication pages and routes
+- [x] 6.0 Complete authentication pages and routes
   - [x] 6.1 Write 2-8 focused tests for pages
     - Test signup page renders SignupForm
     - Test login page renders LoginForm
@@ -397,7 +397,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Background pattern with reduced brightness
     - Consistent padding and spacing
     - Responsive container
-  - [ ] 6.9 Ensure page tests pass
+  - [x] 6.9 Ensure page tests pass
     - Run ONLY the 2-8 tests written in 6.1
     - Verify pages render correct components
     - Do NOT run the entire test suite at this stage
