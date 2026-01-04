@@ -285,7 +285,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Loading states with disabled button
     - Success redirect to /dashboard
     - Reference: `backup/features/auth/components/form-login.tsx`
-  - [ ] 5.4 Create GoogleAuthButton component
+  - [x] 5.4 Create GoogleAuthButton component
     - Location: `features/auth/components/GoogleAuthButton.tsx`
     - Client component ("use client")
     - Trigger handleGoogleLogin action

@@ -39,7 +39,6 @@ export function LoadingSubmitButton({
       type="submit"
       disabled={isSubmitting || disabled}
       className={cn(
-        "bg-gradient-to-t from-chart-5 to-primary",
         className
       )}
       size="lg"
