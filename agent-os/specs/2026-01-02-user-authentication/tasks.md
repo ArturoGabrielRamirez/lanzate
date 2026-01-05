@@ -414,52 +414,59 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 
 ---
 
-### Middleware and Route Protection Layer
+### Proxy and Route Protection Layer
 
-#### Task Group 7: Middleware and Session Management
+#### Task Group 7: Proxy and Session Management
 **Dependencies:** Task Group 6
 
-- [ ] 7.0 Complete middleware and route protection
-  - [ ] 7.1 Write 2-8 focused tests for middleware
+- [ ] 7.0 Complete proxy and route protection
+  - [ ] 7.1 Write 2-8 focused tests for proxy
     - Test unauthenticated user redirect to /login
     - Test authenticated user redirect from /login to /dashboard
     - Test authenticated user redirect from /signup to /dashboard
     - Test protected route access
     - Limit to 2-8 highly focused tests maximum
-  - [ ] 7.2 Create Next.js middleware
-    - Location: `middleware.ts` (root level)
-    - Update Supabase session
-    - Check session validity on every request
+  - [ ] 7.2 Create Next.js proxy (Next.js 16+ requirement)
+    - Location: `proxy.ts` (root level, same level as app directory)
+    - Export named function `proxy` (Next.js 16+ convention)
+    - Perform optimistic session checks (lightweight validation only)
     - Protect routes: /dashboard/*, /profile/*
     - Redirect unauthenticated users to /login
     - Redirect authenticated users from /login and /signup to /dashboard
-    - Use Next.js middleware matcher config
-  - [ ] 7.3 Create Supabase middleware helper
-    - Location: `features/auth/utils/supabase-middleware.ts`
-    - Create Supabase client for middleware
-    - Session refresh logic
-    - Handle session expiration gracefully
+    - Use matcher config to filter paths
+    - **Important**: Proxy is NOT suitable for full session management or slow data fetching
+    - **Use case**: Optimistic permission-based redirects only
+  - [ ] 7.3 Create Supabase proxy helper
+    - Location: `features/auth/utils/supabase-proxy.ts`
+    - Create lightweight Supabase client for proxy
+    - Optimistic session check logic (fast validation only)
+    - Handle session validation gracefully
+    - Keep logic minimal and fast (proxy has performance constraints)
   - [ ] 7.4 Create auth route guards utility
     - Location: `features/auth/utils/routeGuards.ts`
     - Helper functions: isPublicRoute, isProtectedRoute, isAuthRoute
     - Route path matching logic
-  - [ ] 7.5 Add middleware config
-    - Location: `middleware.ts`
-    - Matcher config to specify which routes use middleware
-    - Exclude static files, _next, api routes from middleware
-  - [ ] 7.6 Ensure middleware tests pass
+  - [ ] 7.5 Add proxy matcher config
+    - Location: `proxy.ts`
+    - Export `config` object with matcher property
+    - Matcher config to specify which routes use proxy
+    - Exclude static files, _next, api routes from proxy
+    - Example: `matcher: ['/dashboard/:path*', '/profile/:path*', '/login', '/signup']`
+  - [ ] 7.6 Ensure proxy tests pass
     - Run ONLY the 2-8 tests written in 7.1
     - Verify redirects work correctly
     - Do NOT run the entire test suite at this stage
 
 **Acceptance Criteria:**
 - The 2-8 tests written in 7.1 pass
-- Middleware updates session on every request
+- Proxy file uses Next.js 16+ convention (named `proxy` function export)
+- Proxy performs lightweight session checks only (optimistic validation)
 - Unauthenticated users redirected to /login for protected routes
 - Authenticated users redirected to /dashboard from /login and /signup
-- Session expiration handled gracefully
-- Middleware matcher excludes static assets
+- Session validation is fast and doesn't block requests
+- Proxy matcher excludes static assets
 - Route guards correctly identify route types
+- Proxy logic is minimal and focused on redirects only
 
 ---
 
@@ -476,7 +483,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Review the 2-8 tests written by api-engineer (Task 4.1)
     - Review the 2-8 tests written by ui-designer (Task 5.1)
     - Review the 2-8 tests written by pages-engineer (Task 6.1)
-    - Review the 2-8 tests written by middleware-engineer (Task 7.1)
+    - Review the 2-8 tests written by proxy-engineer (Task 7.1)
     - Total existing tests: approximately 14-56 tests
   - [ ] 8.2 Create translation files for Spanish
     - Location: `messages/es/auth.json`
@@ -509,7 +516,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Test complete user journeys (signup -> login -> profile edit)
     - Test OAuth flow end-to-end
     - Test password reset flow end-to-end
-    - Test middleware redirect flows
+    - Test proxy redirect flows
     - Do NOT write comprehensive coverage for all scenarios
     - Skip edge cases unless business-critical
   - [ ] 8.8 Run feature-specific tests only
@@ -565,8 +572,9 @@ Recommended implementation sequence:
    - Public and protected routes
    - Dependencies: Task Group 5
 
-7. **Middleware and Protection Layer** (Task Group 7)
-   - Implement route protection and session management
+7. **Proxy and Protection Layer** (Task Group 7)
+   - Implement route protection with Next.js 16+ proxy
+   - Lightweight session validation and redirects
    - Critical for security
    - Dependencies: Task Group 6
 
@@ -617,14 +625,14 @@ Recommended implementation sequence:
 - **Server Actions**: Three-layer architecture (Action → Service → Data)
 - **Error Handling**: Centralized via actionWrapper
 - **Validation**: Yup schemas for runtime validation and type inference
-- **Route Protection**: Next.js middleware with Supabase session checks
+- **Route Protection**: Next.js 16+ proxy with optimistic Supabase session checks
 
 ### Key Deliverables
 
 By the end of this implementation, the application will have:
 
 1. Complete user authentication system (email/password + Google OAuth)
-2. Protected routes with middleware-based session management
+2. Protected routes with Next.js 16+ proxy-based session management
 3. Password recovery flow with email confirmation
 4. Basic profile editing (email and password)
 5. Reusable global Form and InputField components

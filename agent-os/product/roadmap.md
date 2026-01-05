@@ -1,6 +1,6 @@
 # Product Roadmap
 
-0. [ ] Project Setup & Configuration — Initialize Next.js project with TypeScript, install all dependencies (Tailwind, shadcn/ui, framer-motion, etc.), configure Supabase client and environment variables, set up Prisma with database schema, configure next-intl for internationalization, and verify all integrations are working. `M`
+0. [x] Project Setup & Configuration — Initialize Next.js project with TypeScript, install all dependencies (Tailwind, shadcn/ui, framer-motion, etc.), configure Supabase client and environment variables, set up Prisma with database schema, configure next-intl for internationalization, and verify all integrations are working. `M`
 
 1. [ ] User Authentication & Authorization — Complete user registration, login, password reset flows with Supabase auth. Include email verification and basic profile management. `M`
 
