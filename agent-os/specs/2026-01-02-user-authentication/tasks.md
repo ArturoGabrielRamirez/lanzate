@@ -419,14 +419,14 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 #### Task Group 7: Proxy and Session Management
 **Dependencies:** Task Group 6
 
-- [ ] 7.0 Complete proxy and route protection
-  - [ ] 7.1 Write 2-8 focused tests for proxy
+- [x] 7.0 Complete proxy and route protection
+  - [x] 7.1 Write 2-8 focused tests for proxy
     - Test unauthenticated user redirect to /login
     - Test authenticated user redirect from /login to /dashboard
     - Test authenticated user redirect from /signup to /dashboard
     - Test protected route access
     - Limit to 2-8 highly focused tests maximum
-  - [ ] 7.2 Create Next.js proxy (Next.js 16+ requirement)
+  - [x] 7.2 Create Next.js proxy (Next.js 16+ requirement)
     - Location: `proxy.ts` (root level, same level as app directory)
     - Export named function `proxy` (Next.js 16+ convention)
     - Perform optimistic session checks (lightweight validation only)
@@ -436,23 +436,23 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Use matcher config to filter paths
     - **Important**: Proxy is NOT suitable for full session management or slow data fetching
     - **Use case**: Optimistic permission-based redirects only
-  - [ ] 7.3 Create Supabase proxy helper
+  - [x] 7.3 Create Supabase proxy helper
     - Location: `features/auth/utils/supabase-proxy.ts`
     - Create lightweight Supabase client for proxy
     - Optimistic session check logic (fast validation only)
     - Handle session validation gracefully
     - Keep logic minimal and fast (proxy has performance constraints)
-  - [ ] 7.4 Create auth route guards utility
+  - [x] 7.4 Create auth route guards utility
     - Location: `features/auth/utils/routeGuards.ts`
     - Helper functions: isPublicRoute, isProtectedRoute, isAuthRoute
     - Route path matching logic
-  - [ ] 7.5 Add proxy matcher config
+  - [x] 7.5 Add proxy matcher config
     - Location: `proxy.ts`
     - Export `config` object with matcher property
     - Matcher config to specify which routes use proxy
     - Exclude static files, _next, api routes from proxy
     - Example: `matcher: ['/dashboard/:path*', '/profile/:path*', '/login', '/signup']`
-  - [ ] 7.6 Ensure proxy tests pass
+  - [x] 7.6 Ensure proxy tests pass
     - Run ONLY the 2-8 tests written in 7.1
     - Verify redirects work correctly
     - Do NOT run the entire test suite at this stage

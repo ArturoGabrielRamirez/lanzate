@@ -5,3 +5,4 @@
  */
 
 export * from '@/features/auth/constants/messages';
+export * from "@/features/auth/constants/routes";
