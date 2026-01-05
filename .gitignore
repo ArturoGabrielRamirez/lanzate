@@ -66,3 +66,4 @@ CLAUDE.md
 
 .claude/
 *.claude-backup
+settings.local.json
