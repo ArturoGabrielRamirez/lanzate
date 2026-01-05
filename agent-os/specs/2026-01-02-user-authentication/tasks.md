@@ -485,56 +485,127 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Review the 2-8 tests written by pages-engineer (Task 6.1)
     - Review the 2-8 tests written by proxy-engineer (Task 7.1)
     - Total existing tests: approximately 14-56 tests
-  - [ ] 8.2 Create translation files for Spanish
-    - Location: `messages/es/auth.json`
-    - Translate all form labels, placeholders, tooltips
-    - Translate error messages
-    - Translate success messages
-    - Translate page headings and descriptions
-    - Translate button text and links
-  - [ ] 8.3 Create translation files for English
-    - Location: `messages/en/auth.json`
-    - Same structure as Spanish translations
-    - All authentication-related text
-  - [ ] 8.4 Integrate translations in components
-    - Use next-intl useTranslations hook
-    - Update SignupForm, LoginForm, and all auth components
-    - Update page metadata with translations
-    - Update validation error messages with translations
-  - [ ] 8.5 Update validation schemas with translated messages
-    - Use translation keys in Yup schemas
-    - Ensure error messages support both languages
-  - [ ] 8.6 Analyze test coverage gaps for authentication feature only
+  - [ ] 8.2 Add validation error messages to translation files
+    - Location: `messages/es.json` and `messages/en.json`
+    - Add `auth.validation` namespace for error messages
+    - Include all Yup validation error messages:
+      - Email validation errors (required, invalid format)
+      - Password validation errors (required, min length, uppercase, number)
+      - Confirm password errors (required, must match)
+      - Profile update errors (at least one field required)
+    - Organize by field type for reusability
+    - Structure example:
+      ```json
+      {
+        "auth": {
+          "validation": {
+            "email": {
+              "required": "Email is required",
+              "invalid": "Invalid email format"
+            },
+            "password": {
+              "required": "Password is required",
+              "minLength": "Password must be at least 8 characters",
+              "uppercase": "Must contain at least one uppercase letter",
+              "number": "Must contain at least one number"
+            }
+          }
+        }
+      }
+      ```
+  - [ ] 8.3 Create validation schema factory functions
+    - Location: `features/auth/schemas/schemaFactory.ts`
+    - Create functions that accept translation function `t` and return Yup schemas
+    - Example:
+      ```typescript
+      export const createSignupSchema = (t: (key: string) => string) =>
+        yup.object({
+          email: emailField(t).required(t('auth.validation.email.required')),
+          password: passwordField(t).required(t('auth.validation.password.required')),
+          confirmPassword: yup.string()
+            .oneOf([yup.ref('password')], t('auth.validation.password.mustMatch'))
+            .required(t('auth.validation.password.confirmRequired'))
+        });
+      ```
+    - Create factories for: signup, login, resetPasswordRequest, resetPassword, updateProfile
+    - Keep original schemas in `auth.schema.ts` as fallback/reference
+  - [ ] 8.4 Update auth components to use schema factories
+    - Location: `features/auth/components/`
+    - Components to update: SignupForm, LoginForm, PasswordResetRequestForm, PasswordResetForm, ProfileEditForm
+    - Use `useTranslations('auth.validation')` hook in Client Components
+    - Pass translation function to schema factory:
+      ```typescript
+      const t = useTranslations();
+      const schema = createSignupSchema((key) => t(key));
+      ```
+    - Ensure yupResolver uses the translated schema
+  - [ ] 8.5 Verify existing translations are complete
+    - Location: `messages/es.json` and `messages/en.json`
+    - Verify all auth page translations exist (already implemented)
+    - Verify all form field translations exist (already implemented)
+    - Check that page metadata uses `getTranslations` in Server Components
+    - Ensure consistency between Spanish and English message structures
+  - [ ] 8.6 Add TypeScript type safety for translations (optional but recommended)
+    - Location: `global.d.ts` or `types/i18n.d.ts`
+    - Augment next-intl module with message types:
+      ```typescript
+      import messages from './messages/en.json';
+      import { routing } from '@/i18n/routing';
+
+      declare module 'next-intl' {
+        interface AppConfig {
+          Locale: (typeof routing.locales)[number];
+          Messages: typeof messages;
+        }
+      }
+      ```
+    - This provides autocomplete for translation keys
+    - Catches typos in translation keys at compile time
+    - Optional: Can be skipped if build performance is a concern
+  - [ ] 8.7 Test translation switching
+    - Verify all auth pages display correctly in both Spanish and English
+    - Test validation errors appear in correct language
+    - Test form field labels, placeholders, and tooltips in both languages
+    - Verify page metadata (title, description) changes with locale
+    - Test locale persistence across navigation
+  - [ ] 8.8 Analyze test coverage gaps for authentication feature only
     - Identify critical user workflows that lack test coverage
     - Focus ONLY on gaps related to authentication feature
     - Do NOT assess entire application test coverage
     - Prioritize end-to-end workflows over unit test gaps
     - Examples: full signup flow, full login flow, password reset flow, OAuth flow
-  - [ ] 8.7 Write up to 10 additional strategic tests maximum
+  - [ ] 8.9 Write up to 10 additional strategic tests maximum
     - Add maximum of 10 new tests to fill identified critical gaps
     - Focus on integration points and end-to-end workflows
     - Test complete user journeys (signup -> login -> profile edit)
-    - Test OAuth flow end-to-end
+    - Test OAuth flow end-to-end with locale preservation
     - Test password reset flow end-to-end
     - Test proxy redirect flows
+    - Test translation switching in auth flows
     - Do NOT write comprehensive coverage for all scenarios
     - Skip edge cases unless business-critical
-  - [ ] 8.8 Run feature-specific tests only
+  - [ ] 8.10 Run feature-specific tests only
     - Run ONLY tests related to authentication feature
     - Expected total: approximately 24-66 tests maximum
     - Do NOT run the entire application test suite
     - Verify critical workflows pass
     - Verify all translations load correctly
+    - Verify validation messages display in correct language
 
 **Acceptance Criteria:**
 - All feature-specific tests pass (approximately 24-66 tests total)
-- Spanish and English translations complete for all auth flows
+- Validation error messages exist in both Spanish and English
+- All validation errors display in the correct language based on locale
+- Schema factory functions work with translation function
+- All auth components use translated validation schemas
+- Existing page and form translations remain functional
+- TypeScript provides autocomplete for translation keys (if type safety added)
 - Components display correct language based on locale
-- Validation errors show in correct language
 - Page metadata supports both languages
 - No more than 10 additional tests added when filling in testing gaps
 - Testing focused exclusively on authentication feature requirements
 - End-to-end user workflows covered by tests
+- Locale switches correctly between Spanish and English
 
 ---
 
@@ -593,6 +664,27 @@ Recommended implementation sequence:
 - Task Group 8 adds **maximum of 10 additional tests** to fill critical gaps
 - Total expected tests: **approximately 24-66 tests** for the entire feature
 
+### Internationalization Implementation Notes
+
+**Current Status:**
+- next-intl is already configured and working
+- Translation files (`messages/es.json`, `messages/en.json`) exist with auth content
+- Routing configuration in `i18n/routing.ts` supports Spanish and English
+- Request configuration in `i18n/request.ts` handles locale detection
+
+**Task Group 8 Focus:**
+- The main work is adding validation error messages to existing translation files
+- Creating schema factory functions to inject translations into Yup schemas
+- Updating form components to use translated schemas
+- Current hardcoded Spanish validation messages need to be replaced with translation keys
+- Optional TypeScript type safety can be added for better DX
+
+**Implementation Approach:**
+- Use schema factory pattern: `createSignupSchema(t)` instead of static `signupSchema`
+- Pass `useTranslations()` result to schema factories in Client Components
+- Keep original schemas as fallback/reference during migration
+- Validate that all translation keys exist in both `es.json` and `en.json`
+
 ### Reusability Focus
 
 **Global Components** (Task Group 1):
@@ -626,6 +718,12 @@ Recommended implementation sequence:
 - **Error Handling**: Centralized via actionWrapper
 - **Validation**: Yup schemas for runtime validation and type inference
 - **Route Protection**: Next.js 16+ proxy with optimistic Supabase session checks
+- **Internationalization**:
+  - Translation files: `messages/es.json` and `messages/en.json` (flat structure)
+  - Server Components: Use `getTranslations` async function
+  - Client Components: Use `useTranslations` hook
+  - Validation schemas: Factory pattern with translation function injection
+  - Type safety: Optional TypeScript augmentation for autocomplete
 
 ### Key Deliverables
 
