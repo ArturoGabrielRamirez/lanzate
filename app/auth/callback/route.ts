@@ -11,20 +11,21 @@ import { createClient } from '@/lib/supabase/server';
  * with Google OAuth provider.
  *
  * Flow:
- * 1. Extract authorization code from URL params
- * 2. Exchange code for session with Supabase
- * 3. Get authenticated user
- * 4. Check if user exists in database
- * 5. Create database user if first login (auto-generate username)
- * 6. Redirect to /dashboard on success
- * 7. Redirect to /login with error on failure
+ * 1. Extract authorization code and locale from URL params
+ * 2. Validate locale (es/en) with fallback to 'es'
+ * 3. Exchange code for session with Supabase
+ * 4. Get authenticated user
+ * 5. Check if user exists in database
+ * 6. Create database user if first login (auto-generate username)
+ * 7. Redirect to /{locale}/dashboard on success
+ * 8. Redirect to /{locale}/login with error on failure
  *
  * @param request - The incoming request with OAuth callback params
- * @returns NextResponse with redirect to dashboard or login
+ * @returns NextResponse with redirect to dashboard or login (with locale preserved)
  *
  * @example
- * Google OAuth redirects to: /auth/callback?code=xxx
- * This handler processes the code and redirects to /dashboard
+ * Google OAuth redirects to: /auth/callback?code=xxx&locale=en
+ * This handler processes the code and redirects to /en/dashboard
  */
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -32,9 +33,19 @@ export async function GET(request: Request) {
   const error = url.searchParams.get('error');
   const errorDescription = url.searchParams.get('error_description');
 
-  // Extract locale from URL path (e.g., /es/auth/callback)
+  // Extract locale from query parameter first (passed from OAuth flow)
+  // Fallback to extracting from pathname, then default to 'es'
+  const localeFromQuery = url.searchParams.get('locale');
   const pathSegments = url.pathname.split('/').filter(Boolean);
-  const locale = pathSegments[0] || 'es'; // Default to 'es' if not found
+  const localeFromPath = pathSegments[0];
+
+  // Validate locale is one of the supported locales
+  const validLocales = ['es', 'en'];
+  const locale = (localeFromQuery && validLocales.includes(localeFromQuery))
+    ? localeFromQuery
+    : (localeFromPath && validLocales.includes(localeFromPath))
+    ? localeFromPath
+    : 'es'; // Default fallback
 
   // Handle OAuth errors (e.g., user cancelled)
   if (error) {

@@ -20,22 +20,25 @@ import { Button } from "@/features/shadcn/components/ui/button";
  * - Error handling with toast notifications
  * - Automatic redirect to Google OAuth page on success
  * - Disabled state while loading
+ * - Locale preservation through OAuth flow
+ *
+ * @param locale - The user's locale preference ('es' or 'en')
  *
  * @example
  * ```tsx
  * import { GoogleAuthButton } from '@/features/auth/components/GoogleAuthButton';
  *
- * export function LoginPage() {
+ * export function LoginPage({ params }: { params: { locale: string } }) {
  *   return (
  *     <div>
  *       <h1>Login</h1>
- *       <GoogleAuthButton />
+ *       <GoogleAuthButton locale={params.locale} />
  *     </div>
  *   );
  * }
  * ```
  */
-export function GoogleAuthButton() {
+export function GoogleAuthButton({ locale }: { locale: string }) {
   const [isPending, startTransition] = useTransition();
 
   const handleGoogleLogin = async () => {
@@ -44,8 +47,8 @@ export function GoogleAuthButton() {
         // Show loading toast
         const loadingToast = toast.loading("Iniciando sesión con Google...");
 
-        // Call the server action to get OAuth URL
-        const result = await handleGoogleLoginAction();
+        // Call the server action to get OAuth URL, passing locale
+        const result = await handleGoogleLoginAction(locale);
 
         // Dismiss loading toast
         toast.dismiss(loadingToast);

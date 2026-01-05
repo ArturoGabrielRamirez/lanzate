@@ -16,15 +16,16 @@ import { createClient } from '@/lib/supabase/server';
  * 2. Initiate OAuth flow with Google provider
  * 3. Return redirect URL for OAuth
  * 4. User completes OAuth on Google's site
- * 5. Google redirects to /auth/callback
+ * 5. Google redirects to /auth/callback with locale preserved
  *
+ * @param locale - The user's locale preference ('es' or 'en')
  * @returns ServerResponse with OAuth redirect URL
  *
  * @example
  * ```tsx
  * import { handleGoogleLoginAction } from '@/features/auth/actions/handleGoogleLogin.action';
  *
- * const result = await handleGoogleLoginAction();
+ * const result = await handleGoogleLoginAction('en');
  *
  * if (!result.hasError && result.payload?.url) {
  *   // Redirect user to Google OAuth page
@@ -32,14 +33,15 @@ import { createClient } from '@/lib/supabase/server';
  * }
  * ```
  */
-export async function handleGoogleLoginAction() {
+export async function handleGoogleLoginAction(locale: string = 'es') {
   return actionWrapper(async () => {
     // Create Supabase client
     const supabase = await createClient();
 
     // Get the base URL for the redirect
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const redirectUrl = `${baseUrl}/auth/callback`;
+    // Include locale as query parameter to preserve user's language preference
+    const redirectUrl = `${baseUrl}/auth/callback?locale=${locale}`;
 
     // Initiate OAuth flow with Google
     const { data, error } = await supabase.auth.signInWithOAuth({

@@ -45,7 +45,12 @@ export async function generateMetadata(): Promise<Metadata> {
  * @example
  * Access via: /en/login or /es/login
  */
-export default async function LoginPage() {
+export default async function LoginPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const t = await getTranslations("auth.login");
 
   return (
@@ -69,7 +74,7 @@ export default async function LoginPage() {
                     </span>
                   </div>
                 </div>
-                <GoogleAuthButton />
+                <GoogleAuthButton locale={locale} />
 
                 {/* Links Section */}
                 <div className="pt-4 space-y-2">
