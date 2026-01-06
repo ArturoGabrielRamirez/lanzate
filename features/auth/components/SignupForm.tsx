@@ -2,9 +2,10 @@
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LockIcon, MailIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { handleSignupAction } from "@/features/auth/actions/handleSignup.action";
-import { signupSchema, type SignupInput } from "@/features/auth/schemas/auth.schema";
+import { createSignupSchema, type SignupInput } from "@/features/auth/schemas/schemaFactory";
 import { Form } from "@/features/global/components/form";
 import { InputField } from "@/features/global/components/form";
 
@@ -24,6 +25,7 @@ import { InputField } from "@/features/global/components/form";
  * - Loading states during submission with disabled button
  * - Success redirect to /dashboard
  * - Toast notifications for success/error feedback
+ * - Full internationalization support (Spanish and English)
  *
  * @example
  * ```tsx
@@ -40,42 +42,48 @@ import { InputField } from "@/features/global/components/form";
  * ```
  */
 export function SignupForm() {
+  const t = useTranslations();
+  const tForm = useTranslations("auth.signup.form");
+
+  // Create schema with translation function
+  const signupSchema = createSignupSchema((key) => t(key));
+
   return (
     <Form<SignupInput>
       resolver={yupResolver(signupSchema)}
       formAction={handleSignupAction}
       successRedirect="/dashboard"
-      successMessage="Cuenta creada exitosamente. Bienvenido!"
-      loadingMessage="Creando tu cuenta..."
-      contentButton="Crear cuenta"
+      successMessage={tForm("messages.success")}
+      loadingMessage={tForm("messages.loading")}
+      contentButton={tForm("actions.submit")}
       className="flex flex-col gap-4 w-full"
       resetOnSuccess={false}
     >
       <InputField
         name="email"
-        label="Email"
-        placeholder="tu@email.com"
+        label={tForm("fields.email.label")}
+        placeholder={tForm("fields.email.placeholder")}
         type="email"
         startIcon={<MailIcon className="h-4 w-4" />}
-        tooltip="Ingresa un correo electrónico válido"
+        tooltip={tForm("fields.email.tooltip")}
         isRequired
       />
       <InputField
         name="password"
-        label="Contraseña"
-        placeholder="Mínimo 8 caracteres"
+        label={tForm("fields.password.label")}
+        placeholder={tForm("fields.password.placeholder")}
         type="password"
         startIcon={<LockIcon className="h-4 w-4" />}
-        tooltip="Debe tener al menos 8 caracteres, una letra mayúscula y un número"
+        tooltip={tForm("fields.password.tooltip")}
         isRequired
       />
       <InputField
         name="confirmPassword"
-        label="Confirmar contraseña"
-        placeholder="Confirma tu contraseña"
+        label={tForm("fields.confirmPassword.label")}
+        placeholder={tForm("fields.confirmPassword.placeholder")}
         type="password"
         startIcon={<LockIcon className="h-4 w-4" />}
-        tooltip="Debe coincidir con la contraseña ingresada arriba"
+        tooltip={tForm("fields.confirmPassword.tooltip")}
         isRequired
       />
     </Form>

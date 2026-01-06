@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 import { getCurrentUserAction } from "@/features/auth/actions/getCurrentUser.action";
 import { updateProfileAction } from "@/features/auth/actions/updateProfile.action";
-import { updateProfileSchema, type UpdateProfileInput } from "@/features/auth/schemas/auth.schema";
+import { createUpdateProfileSchema, type UpdateProfileInput } from "@/features/auth/schemas/schemaFactory";
 import { Form } from "@/features/global/components/form";
 import { InputField } from "@/features/global/components/form";
 
@@ -29,7 +29,7 @@ import { InputField } from "@/features/global/components/form";
  * - Loading states during submission with disabled button
  * - Toast notifications for success/error feedback
  * - At least one field must be updated (enforced by schema)
- * - Internationalization support (English and Spanish)
+ * - Full internationalization support (Spanish and English)
  *
  * @example
  * ```tsx
@@ -46,9 +46,13 @@ import { InputField } from "@/features/global/components/form";
  * ```
  */
 export function ProfileEditForm() {
-  const t = useTranslations("auth.profile.form");
+  const t = useTranslations();
+  const tForm = useTranslations("auth.profile.form");
   const [currentEmail, setCurrentEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
+
+  // Create schema with translation function
+  const updateProfileSchema = createUpdateProfileSchema((key) => t(key));
 
   // Fetch current user data on component mount
   useEffect(() => {
@@ -73,7 +77,7 @@ export function ProfileEditForm() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <p className="text-muted-foreground">{t("messages.loadingData")}</p>
+        <p className="text-muted-foreground">{tForm("messages.loadingData")}</p>
       </div>
     );
   }
@@ -82,9 +86,9 @@ export function ProfileEditForm() {
     <Form<UpdateProfileInput>
       resolver={yupResolver(updateProfileSchema)}
       formAction={updateProfileAction}
-      successMessage={t("messages.success")}
-      loadingMessage={t("messages.loading")}
-      contentButton={t("actions.submit")}
+      successMessage={tForm("messages.success")}
+      loadingMessage={tForm("messages.loading")}
+      contentButton={tForm("actions.submit")}
       className="flex flex-col gap-4 w-full"
       resetOnSuccess={false}
       defaultValues={{
@@ -95,27 +99,27 @@ export function ProfileEditForm() {
     >
       <InputField
         name="email"
-        label={t("fields.email.label")}
-        placeholder={t("fields.email.placeholder")}
+        label={tForm("fields.email.label")}
+        placeholder={tForm("fields.email.placeholder")}
         type="email"
         startIcon={<MailIcon className="h-4 w-4" />}
-        tooltip={t("fields.email.tooltip")}
+        tooltip={tForm("fields.email.tooltip")}
       />
       <InputField
         name="password"
-        label={t("fields.password.label")}
-        placeholder={t("fields.password.placeholder")}
+        label={tForm("fields.password.label")}
+        placeholder={tForm("fields.password.placeholder")}
         type="password"
         startIcon={<LockIcon className="h-4 w-4" />}
-        tooltip={t("fields.password.tooltip")}
+        tooltip={tForm("fields.password.tooltip")}
       />
       <InputField
         name="confirmPassword"
-        label={t("fields.confirmPassword.label")}
-        placeholder={t("fields.confirmPassword.placeholder")}
+        label={tForm("fields.confirmPassword.label")}
+        placeholder={tForm("fields.confirmPassword.placeholder")}
         type="password"
         startIcon={<LockIcon className="h-4 w-4" />}
-        tooltip={t("fields.confirmPassword.tooltip")}
+        tooltip={tForm("fields.confirmPassword.tooltip")}
       />
     </Form>
   );

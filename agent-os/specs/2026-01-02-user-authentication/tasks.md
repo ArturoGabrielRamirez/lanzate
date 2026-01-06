@@ -529,7 +529,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
       ```
     - Create factories for: signup, login, resetPasswordRequest, resetPassword, updateProfile
     - Keep original schemas in `auth.schema.ts` as fallback/reference
-  - [ ] 8.4 Update auth components to use schema factories
+  - [x] 8.4 Update auth components to use schema factories
     - Location: `features/auth/components/`
     - Components to update: SignupForm, LoginForm, PasswordResetRequestForm, PasswordResetForm, ProfileEditForm
     - Use `useTranslations('auth.validation')` hook in Client Components

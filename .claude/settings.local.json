@@ -53,7 +53,8 @@
       "Bash(cp:*)",
       "Bash(mv:*)",
       "Bash(ls -la \"E:\\personal-dev\\lanzate\\app\\auth\"\" 2>/dev/null || echo \"Directory may not exist yet \")",
-      "WebFetch(domain:next-intl.dev)"
+      "WebFetch(domain:next-intl.dev)",
+      "Bash(timeout 30 npm run dev)"
     ],
     "deny": [],
     "ask": []
