@@ -513,7 +513,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
         }
       }
       ```
-  - [ ] 8.3 Create validation schema factory functions
+  - [x] 8.3 Create validation schema factory functions
     - Location: `features/auth/schemas/schemaFactory.ts`
     - Create functions that accept translation function `t` and return Yup schemas
     - Example:
