@@ -29,8 +29,8 @@ export function DashboardNavigation() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
-      <nav className="mx-auto flex h-16 container items-center justify-between px-6 md:px-12 lg:px-16">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm px-2">
+      <nav className="mx-auto flex h-16 container items-center justify-between">
         {/* Logo/Brand */}
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">

@@ -64,12 +64,12 @@ export default async function DashboardPage() {
   const { userName, userEmail, storesCount } = result.payload;
 
   return (
-    <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
+    <div className="min-h-screen bg-[#f8f5f2] dark:bg-background px-2">
       {/* Dashboard Navigation */}
       <DashboardNavigation />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-6 py-8 md:px-12 lg:px-16">
+      <main className="mx-auto container py-8">
         {/* Dashboard Header with personalized greeting */}
         <DashboardHeader userName={userName} userEmail={userEmail} />
 

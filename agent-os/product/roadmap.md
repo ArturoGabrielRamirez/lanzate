@@ -2,7 +2,7 @@
 
 0. [x] Project Setup & Configuration — Initialize Next.js project with TypeScript, install all dependencies (Tailwind, shadcn/ui, framer-motion, etc.), configure Supabase client and environment variables, set up Prisma with database schema, configure next-intl for internationalization, and verify all integrations are working. `M`
 
-1. [ ] User Authentication & Authorization — Complete user registration, login, password reset flows with Supabase auth. Include email verification and basic profile management. `M`
+1. [x] User Authentication & Authorization — Complete user registration, login, password reset flows with Supabase auth. Include email verification and basic profile management. `M`
 
 2. [ ] Store Creation & Management — Enable merchants to create their first store with basic information (name, description, subdomain). Implement subdomain routing and store ownership assignment. `L`
 
