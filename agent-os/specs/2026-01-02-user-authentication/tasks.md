@@ -476,7 +476,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
 **Dependencies:** Task Groups 1-7
 
 - [ ] 8.0 Complete internationalization and testing
-  - [ ] 8.1 Review tests from Task Groups 1-7
+  - [x] 8.1 Review tests from Task Groups 1-7
     - Review the 2-8 tests written by foundation-engineer (Task 1.1)
     - Review the 2-8 tests written by validation-engineer (Task 2.1)
     - Review the 2-8 tests written by backend-engineer (Task 3.1)
@@ -485,7 +485,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Review the 2-8 tests written by pages-engineer (Task 6.1)
     - Review the 2-8 tests written by proxy-engineer (Task 7.1)
     - Total existing tests: approximately 14-56 tests
-  - [ ] 8.2 Add validation error messages to translation files
+  - [x] 8.2 Add validation error messages to translation files
     - Location: `messages/es.json` and `messages/en.json`
     - Add `auth.validation` namespace for error messages
     - Include all Yup validation error messages:

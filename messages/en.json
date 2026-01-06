@@ -31,6 +31,23 @@
     "moreInfo": "More Info"
   },
   "auth": {
+    "validation": {
+      "email": {
+        "required": "Email is required",
+        "invalid": "Invalid email format"
+      },
+      "password": {
+        "required": "Password is required",
+        "minLength": "Password must be at least 8 characters",
+        "uppercase": "Must contain at least one uppercase letter",
+        "number": "Must contain at least one number",
+        "confirmRequired": "You must confirm the password",
+        "mustMatch": "Passwords do not match"
+      },
+      "profile": {
+        "atLeastOneField": "You must provide at least one field to update"
+      }
+    },
     "signup": {
       "page": {
         "title": "Signup - Lanzate",

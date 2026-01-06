@@ -265,6 +265,23 @@
           "loadingData": "Cargando datos del perfil..."
         }
       }
+    },
+    "validation": {
+      "email": {
+        "required": "El email es obligatorio",
+        "invalid": "Email inválido"
+      },
+      "password": {
+        "required": "La contraseña es obligatoria",
+        "minLength": "La contraseña debe tener al menos 8 caracteres",
+        "uppercase": "Debe contener al menos una letra mayúscula",
+        "number": "Debe contener al menos un número",
+        "confirmRequired": "Debes confirmar la contraseña",
+        "mustMatch": "Las contraseñas no coinciden"
+      },
+      "profile": {
+        "atLeastOneField": "Debes proporcionar al menos un campo para actualizar"
+      }
     }
   }
 }
