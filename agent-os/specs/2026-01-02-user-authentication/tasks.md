@@ -539,13 +539,13 @@ Feature: Comprehensive authentication system with email/password and Google OAut
       const schema = createSignupSchema((key) => t(key));
       ```
     - Ensure yupResolver uses the translated schema
-  - [ ] 8.5 Verify existing translations are complete
+  - [x] 8.5 Verify existing translations are complete
     - Location: `messages/es.json` and `messages/en.json`
     - Verify all auth page translations exist (already implemented)
     - Verify all form field translations exist (already implemented)
     - Check that page metadata uses `getTranslations` in Server Components
     - Ensure consistency between Spanish and English message structures
-  - [ ] 8.6 Add TypeScript type safety for translations (optional but recommended)
+  - [x] 8.6 Add TypeScript type safety for translations (optional but recommended)
     - Location: `global.d.ts` or `types/i18n.d.ts`
     - Augment next-intl module with message types:
       ```typescript
@@ -562,19 +562,19 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - This provides autocomplete for translation keys
     - Catches typos in translation keys at compile time
     - Optional: Can be skipped if build performance is a concern
-  - [ ] 8.7 Test translation switching
+  - [x] 8.7 Test translation switching
     - Verify all auth pages display correctly in both Spanish and English
     - Test validation errors appear in correct language
     - Test form field labels, placeholders, and tooltips in both languages
     - Verify page metadata (title, description) changes with locale
     - Test locale persistence across navigation
-  - [ ] 8.8 Analyze test coverage gaps for authentication feature only
+  - [x] 8.8 Analyze test coverage gaps for authentication feature only
     - Identify critical user workflows that lack test coverage
     - Focus ONLY on gaps related to authentication feature
     - Do NOT assess entire application test coverage
     - Prioritize end-to-end workflows over unit test gaps
     - Examples: full signup flow, full login flow, password reset flow, OAuth flow
-  - [ ] 8.9 Write up to 10 additional strategic tests maximum
+  - [x] 8.9 Write up to 10 additional strategic tests maximum
     - Add maximum of 10 new tests to fill identified critical gaps
     - Focus on integration points and end-to-end workflows
     - Test complete user journeys (signup -> login -> profile edit)
@@ -584,7 +584,7 @@ Feature: Comprehensive authentication system with email/password and Google OAut
     - Test translation switching in auth flows
     - Do NOT write comprehensive coverage for all scenarios
     - Skip edge cases unless business-critical
-  - [ ] 8.10 Run feature-specific tests only
+  - [x] 8.10 Run feature-specific tests only
     - Run ONLY tests related to authentication feature
     - Expected total: approximately 24-66 tests maximum
     - Do NOT run the entire application test suite
