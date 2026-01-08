@@ -14,6 +14,11 @@
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
 import { prisma } from '@/lib/prisma';
 import { AccountType } from '@prisma/client';
+import {
+  createStoreData,
+  findUserStoresData,
+  countUserStoresData,
+} from '@/features/stores/data';
 
 // Test user IDs for different account types
 const testUserIds = {
@@ -132,19 +137,13 @@ afterAll(async () => {
 
 describe('Data Layer - Store Creation', () => {
   it('should create store in database with correct fields', async () => {
-    // This test will use mock data layer functions once they are implemented
-    // For now, we'll test with direct Prisma calls to verify database schema
-
     const storeData = {
       name: 'Test Store',
       description: 'This is a test store',
       subdomain: 'test-store',
-      ownerId: testUserIds.free,
     };
 
-    const store = await prisma.store.create({
-      data: storeData,
-    });
+    const store = await createStoreData(storeData, testUserIds.free);
 
     expect(store).toBeDefined();
     expect(store.name).toBe('Test Store');
@@ -186,17 +185,9 @@ describe('Data Layer - Store Count and Retrieval', () => {
   });
 
   it('should count user stores correctly', async () => {
-    const freeUserCount = await prisma.store.count({
-      where: { ownerId: testUserIds.free },
-    });
-
-    const proUserCount = await prisma.store.count({
-      where: { ownerId: testUserIds.pro },
-    });
-
-    const enterpriseUserCount = await prisma.store.count({
-      where: { ownerId: testUserIds.enterprise },
-    });
+    const freeUserCount = await countUserStoresData(testUserIds.free);
+    const proUserCount = await countUserStoresData(testUserIds.pro);
+    const enterpriseUserCount = await countUserStoresData(testUserIds.enterprise);
 
     expect(freeUserCount).toBe(2); // Created 1 in previous test + 1 here
     expect(proUserCount).toBe(2);
@@ -204,9 +195,7 @@ describe('Data Layer - Store Count and Retrieval', () => {
   });
 
   it('should retrieve all stores for a user', async () => {
-    const stores = await prisma.store.findMany({
-      where: { ownerId: testUserIds.pro },
-    });
+    const stores = await findUserStoresData(testUserIds.pro);
 
     expect(stores).toBeDefined();
     expect(stores.length).toBe(2);

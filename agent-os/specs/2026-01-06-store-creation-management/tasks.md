@@ -132,7 +132,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Test service allows ENTERPRISE users unlimited stores
     - Test findUserStoresData query
     - Limit to critical business logic behaviors only
-  - [ ] 3.2 Create data layer functions
+  - [x] 3.2 Create data layer functions
     - Path: features/stores/data/createStore.data.ts
     - Function: createStoreData(input: CreateStoreInput, userId: string): Promise<Store>
     - Pure Prisma query: prisma.store.create({ data: { ...input, ownerId: userId } })
