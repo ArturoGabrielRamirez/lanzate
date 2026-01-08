@@ -123,7 +123,7 @@ This feature enables merchants to create stores with name, description, and subd
 #### Store Creation Business Logic
 **Dependencies:** Task Group 2
 
-- [ ] 3.0 Complete data and service layers
+- [x] 3.0 Complete data and service layers
   - [x] 3.1 Write 2-8 focused tests for data and service layers
     - Test createStoreData inserts store record with correct fields
     - Test createStoreService checks store count against account limits
@@ -162,7 +162,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Path: locales/en/common.json and locales/es/common.json
     - Add: errors.store.limitReached.free, errors.store.limitReached.pro
     - Add: errors.store.subdomainTaken
-  - [ ] 3.6 Run data and service layer tests
+  - [x] 3.6 Run data and service layer tests
     - Execute ONLY the 2-8 tests written in 3.1
     - Verify store creation limits work correctly
     - Do NOT run entire test suite
