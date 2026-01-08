@@ -183,7 +183,7 @@ This feature enables merchants to create stores with name, description, and subd
 #### Server Action for Store Creation
 **Dependencies:** Task Group 3
 
-- [ ] 4.0 Complete server action layer
+- [x] 4.0 Complete server action layer
   - [x] 4.1 Write 2-8 focused tests for createStoreAction
     - Test action validates input with schema
     - Test action returns error when limit reached
@@ -204,10 +204,10 @@ This feature enables merchants to create stores with name, description, and subd
     - Return: { payload: store, message: 'Store created successfully' }
     - Handle Prisma unique constraint error (P2002) for subdomain
     - Return error message using translation key: errors.store.subdomainTaken
-  - [ ] 4.3 Add action success message translations
+  - [x] 4.3 Add action success message translations
     - Path: locales/en/common.json and locales/es/common.json
     - Add: success.store.created
-  - [ ] 4.4 Run server action tests
+  - [x] 4.4 Run server action tests
     - Execute ONLY the 2-8 tests written in 4.1
     - Verify action validates, creates, and revalidates correctly
     - Do NOT run entire test suite

@@ -311,5 +311,10 @@
       },
       "subdomainTaken": "Este subdominio ya está en uso. Por favor elige uno diferente."
     }
+  },
+  "success": {
+    "store": {
+      "created": "Tienda creada exitosamente"
+    }
   }
 }

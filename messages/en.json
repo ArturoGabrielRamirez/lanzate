@@ -311,5 +311,10 @@
       },
       "subdomainTaken": "This subdomain is already taken. Please choose a different one."
     }
+  },
+  "success": {
+    "store": {
+      "created": "Store created successfully"
+    }
   }
 }
