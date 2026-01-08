@@ -5,6 +5,6 @@
  * Data layer functions contain pure database operations with no business logic.
  */
 
-export { createStoreData } from './createStore.data';
-export { findUserStoresData } from './findUserStores.data';
-export { countUserStoresData } from './countUserStores.data';
+export { createStoreData } from '@/features/stores/data/createStore.data';
+export { findUserStoresData } from '@/features/stores/data/findUserStores.data';
+export { countUserStoresData } from '@/features/stores/data/countUserStores.data';

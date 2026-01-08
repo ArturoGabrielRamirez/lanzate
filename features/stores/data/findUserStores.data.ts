@@ -11,8 +11,9 @@
  * const stores = await findUserStoresData('user-id-123');
  * console.log(stores.length); // Number of stores owned by user
  */
-import type { Store } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
+
+import type { Store } from '@prisma/client';
 
 export async function findUserStoresData(userId: string): Promise<Store[]> {
   const stores = await prisma.store.findMany({

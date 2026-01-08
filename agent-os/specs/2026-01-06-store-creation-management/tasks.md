@@ -143,7 +143,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Path: features/stores/data/countUserStores.data.ts
     - Function: countUserStoresData(userId: string): Promise<number>
     - Query: prisma.store.count({ where: { ownerId: userId } })
-  - [ ] 3.3 Create getUserSubscription data function
+  - [x] 3.3 Create getUserSubscription data function
     - Path: features/subscriptions/data/getUserSubscription.data.ts
     - Function: getUserSubscriptionData(userId: string): Promise<Subscription | null>
     - Query: prisma.subscription.findUnique({ where: { userId } })

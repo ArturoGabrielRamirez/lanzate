@@ -15,9 +15,10 @@
  *   subdomain: 'my-store'
  * }, 'user-id-123');
  */
-import type { Store } from '@prisma/client';
 import type { CreateStoreInput } from '@/features/stores/schemas/schemaFactory';
 import { prisma } from '@/lib/prisma';
+
+import type { Store } from '@prisma/client';
 
 export async function createStoreData(
   input: CreateStoreInput,
