@@ -19,7 +19,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Test Store model: subdomain uniqueness, ownerId relationship
     - Test Store-User relationship (one-to-many)
     - Limit to critical model behaviors only
-  - [ ] 1.2 Create Subscription model in Prisma schema
+  - [x] 1.2 Create Subscription model in Prisma schema
     - Fields: id (cuid), userId (foreign key to User), accountType (enum: FREE, PRO, ENTERPRISE), createdAt, updatedAt
     - Add one-to-one relationship between User and Subscription
     - Add @@map("subscriptions") for plural table name

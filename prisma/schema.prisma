@@ -11,6 +11,12 @@ datasource db {
   provider = "postgresql"
 }
 
+enum AccountType {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
 model User {
   id         String   @id @default(cuid())
   supabaseId String   @unique @map("supabase_user_id")
@@ -20,10 +26,25 @@ model User {
   updatedAt  DateTime @updatedAt @map("updated_at")
 
   // Relations
-  stores Store[]
+  stores       Store[]
+  subscription Subscription?
 
   @@index([email])
   @@map("users")
+}
+
+model Subscription {
+  id          String      @id @default(cuid())
+  userId      String      @unique @map("user_id")
+  accountType AccountType @map("account_type")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("subscriptions")
 }
 
 model Store {
