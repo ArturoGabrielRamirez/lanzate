@@ -302,5 +302,14 @@
         "max": "Description must not exceed 500 characters"
       }
     }
+  },
+  "errors": {
+    "store": {
+      "limitReached": {
+        "free": "You have reached the maximum of 2 stores for your FREE account. Upgrade to PRO for up to 5 stores.",
+        "pro": "You have reached the maximum of 5 stores for your PRO account. Upgrade to ENTERPRISE for unlimited stores."
+      },
+      "subdomainTaken": "This subdomain is already taken. Please choose a different one."
+    }
   }
 }

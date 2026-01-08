@@ -48,13 +48,13 @@ export async function createStoreService(
     case AccountType.FREE:
       if (currentStoreCount >= 2) {
         limitReached = true;
-        errorMessage = 'STORE_LIMIT_REACHED_FREE';
+        errorMessage = 'errors.store.limitReached.free';
       }
       break;
     case AccountType.PRO:
       if (currentStoreCount >= 5) {
         limitReached = true;
-        errorMessage = 'STORE_LIMIT_REACHED_PRO';
+        errorMessage = 'errors.store.limitReached.pro';
       }
       break;
     case AccountType.ENTERPRISE:

@@ -302,5 +302,14 @@
         "max": "La descripción no debe exceder 500 caracteres"
       }
     }
+  },
+  "errors": {
+    "store": {
+      "limitReached": {
+        "free": "Has alcanzado el máximo de 2 tiendas para tu cuenta GRATUITA. Actualiza a PRO para hasta 5 tiendas.",
+        "pro": "Has alcanzado el máximo de 5 tiendas para tu cuenta PRO. Actualiza a ENTERPRISE para tiendas ilimitadas."
+      },
+      "subdomainTaken": "Este subdominio ya está en uso. Por favor elige uno diferente."
+    }
   }
 }

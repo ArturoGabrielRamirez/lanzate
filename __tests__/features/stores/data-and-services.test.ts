@@ -224,7 +224,7 @@ describe('Service Layer - Store Limit Enforcement', () => {
         },
         testUserIds.free
       )
-    ).rejects.toThrow('STORE_LIMIT_REACHED_FREE');
+    ).rejects.toThrow('errors.store.limitReached.free');
   });
 
   it('should allow PRO user to create up to 5 stores', async () => {
@@ -268,7 +268,7 @@ describe('Service Layer - Store Limit Enforcement', () => {
         },
         testUserIds.pro
       )
-    ).rejects.toThrow('STORE_LIMIT_REACHED_PRO');
+    ).rejects.toThrow('errors.store.limitReached.pro');
   });
 
   it('should allow ENTERPRISE user to create unlimited stores', async () => {
@@ -325,7 +325,7 @@ describe('Service Layer - Store Limit Enforcement', () => {
       expect(true).toBe(false);
     } catch (error) {
       expect(error instanceof Error).toBe(true);
-      expect((error as Error).message).toBe('STORE_LIMIT_REACHED_FREE');
+      expect((error as Error).message).toBe('errors.store.limitReached.free');
     }
   });
 });

@@ -158,7 +158,7 @@ This feature enables merchants to create stores with name, description, and subd
       5. Call createStoreData if allowed
       6. Return created store
     - Transform subdomain to lowercase before passing to data layer
-  - [ ] 3.5 Add service error message translations
+  - [x] 3.5 Add service error message translations
     - Path: locales/en/common.json and locales/es/common.json
     - Add: errors.store.limitReached.free, errors.store.limitReached.pro
     - Add: errors.store.subdomainTaken
