@@ -184,7 +184,7 @@ This feature enables merchants to create stores with name, description, and subd
 **Dependencies:** Task Group 3
 
 - [ ] 4.0 Complete server action layer
-  - [ ] 4.1 Write 2-8 focused tests for createStoreAction
+  - [x] 4.1 Write 2-8 focused tests for createStoreAction
     - Test action validates input with schema
     - Test action returns error when limit reached
     - Test action creates store successfully with valid input
