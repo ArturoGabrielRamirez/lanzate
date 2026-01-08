@@ -55,7 +55,8 @@
       "Bash(ls -la \"E:\\personal-dev\\lanzate\\app\\auth\"\" 2>/dev/null || echo \"Directory may not exist yet \")",
       "WebFetch(domain:next-intl.dev)",
       "Bash(timeout 30 npm run dev)",
-      "Bash(bun test --help:*)"
+      "Bash(bun test --help:*)",
+      "Bash(ls -la \"E:\\personal-dev\\lanzate\\__tests__\\features\\stores\"\" 2>/dev/null || echo \"Directory does not exist \")"
     ],
     "deny": [],
     "ask": []
