@@ -191,7 +191,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Test action revalidates paths after creation
     - Test action handles unique constraint violation (subdomain taken)
     - Limit to critical action behaviors only
-  - [ ] 4.2 Create createStoreAction
+  - [x] 4.2 Create createStoreAction
     - Path: features/stores/actions/createStore.action.ts
     - Directive: "use server" at top of file
     - Function: createStoreAction(formData: FormData): Promise<ActionResponse<Store>>
