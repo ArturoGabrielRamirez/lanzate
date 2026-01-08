@@ -124,7 +124,7 @@ This feature enables merchants to create stores with name, description, and subd
 **Dependencies:** Task Group 2
 
 - [ ] 3.0 Complete data and service layers
-  - [ ] 3.1 Write 2-8 focused tests for data and service layers
+  - [x] 3.1 Write 2-8 focused tests for data and service layers
     - Test createStoreData inserts store record with correct fields
     - Test createStoreService checks store count against account limits
     - Test service throws error when FREE user has 2 stores
