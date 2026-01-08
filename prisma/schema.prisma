@@ -48,15 +48,19 @@ model Subscription {
 }
 
 model Store {
-  id        String   @id @default(cuid())
-  name      String
-  slug      String   @unique
-  ownerId   String   @map("owner_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  subdomain   String   @unique
+  ownerId     String   @map("owner_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  owner User @relation(fields: [ownerId], references: [id])
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
+  @@unique([subdomain])
+  @@index([subdomain])
+  @@index([ownerId])
   @@map("stores")
 }

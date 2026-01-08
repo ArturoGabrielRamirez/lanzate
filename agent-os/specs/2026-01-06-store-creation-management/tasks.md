@@ -24,7 +24,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Add one-to-one relationship between User and Subscription
     - Add @@map("subscriptions") for plural table name
     - Add @@index([userId]) for query performance
-  - [ ] 1.3 Update Store model in Prisma schema
+  - [x] 1.3 Update Store model in Prisma schema
     - Add description field (String?, @db.Text, optional)
     - Rename slug field to subdomain (String, unique, required)
     - Ensure fields: id (cuid), name (String, required), description (String?, @db.Text), subdomain (String, unique, indexed), ownerId (foreign key to User), createdAt, updatedAt
