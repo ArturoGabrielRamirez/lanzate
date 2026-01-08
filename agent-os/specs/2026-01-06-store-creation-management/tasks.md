@@ -36,17 +36,17 @@ This feature enables merchants to create stores with name, description, and subd
   - [x] 1.4 Update User model relationships
     - Add subscription Subscription? relationship
     - Update stores Store[] relationship to match new Store model
-  - [ ] 1.5 Create database migration
+  - [x] 1.5 Create database migration
     - Run: bunx prisma migrate dev --name add_subscription_and_update_store
     - Review generated SQL before applying
     - Verify migration creates Subscription table
     - Verify migration renames Store.slug to Store.subdomain
     - Verify migration adds Store.description field
     - Verify all indexes are created
-  - [ ] 1.6 Regenerate Prisma types
+  - [x] 1.6 Regenerate Prisma types
     - Run: bunx prisma generate
     - Verify @prisma/client exports updated types
-  - [ ] 1.7 Run database layer tests
+  - [x] 1.7 Run database layer tests
     - Execute ONLY the 2-8 tests written in 1.1
     - Verify migrations run successfully
     - Do NOT run entire test suite
@@ -69,7 +69,7 @@ This feature enables merchants to create stores with name, description, and subd
 **Dependencies:** Task Group 1
 
 - [ ] 2.0 Complete types and validation schemas
-  - [ ] 2.1 Write 2-8 focused tests for validation schemas
+  - [x] 2.1 Write 2-8 focused tests for validation schemas
     - Test createStoreSchema with valid input
     - Test subdomain validation (lowercase, alphanumeric + hyphens)
     - Test subdomain format transformation (auto-lowercase)
