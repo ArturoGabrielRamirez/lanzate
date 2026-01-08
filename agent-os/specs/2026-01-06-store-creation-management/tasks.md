@@ -68,7 +68,7 @@ This feature enables merchants to create stores with name, description, and subd
 #### Type Definitions & Validation Layer
 **Dependencies:** Task Group 1
 
-- [ ] 2.0 Complete types and validation schemas
+- [x] 2.0 Complete types and validation schemas
   - [x] 2.1 Write 2-8 focused tests for validation schemas
     - Test createStoreSchema with valid input
     - Test subdomain validation (lowercase, alphanumeric + hyphens)
@@ -102,7 +102,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Add validation.store.subdomain.required, validation.store.subdomain.format, validation.store.subdomain.min, validation.store.subdomain.max
     - Add validation.store.description.max
     - Add validation.store.subdomain.taken for uniqueness errors
-  - [ ] 2.6 Run validation schema tests
+  - [x] 2.6 Run validation schema tests
     - Execute ONLY the 2-8 tests written in 2.1
     - Verify schema validation works correctly
     - Do NOT run entire test suite
