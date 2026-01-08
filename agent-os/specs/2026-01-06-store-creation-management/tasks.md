@@ -81,7 +81,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Re-export: Subscription, AccountType from @prisma/client
     - Create: SubscriptionWithUser extends Subscription with User relation
     - Follow models.md pattern for Prisma type reuse
-  - [ ] 2.3 Update Store types file
+  - [x] 2.3 Update Store types file
     - Path: features/stores/types/store.ts
     - Re-export: Store from @prisma/client
     - Update: StoreWithOwner to include subdomain and description
