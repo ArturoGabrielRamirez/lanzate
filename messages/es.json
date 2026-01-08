@@ -283,5 +283,24 @@
         "atLeastOneField": "Debes proporcionar al menos un campo para actualizar"
       }
     }
+  },
+  "validation": {
+    "store": {
+      "name": {
+        "required": "El nombre de la tienda es obligatorio",
+        "min": "El nombre de la tienda debe tener al menos 1 carácter",
+        "max": "El nombre de la tienda no debe exceder 100 caracteres"
+      },
+      "subdomain": {
+        "required": "El subdominio es obligatorio",
+        "format": "El subdominio solo puede contener letras minúsculas, números y guiones",
+        "min": "El subdominio debe tener al menos 3 caracteres",
+        "max": "El subdominio no debe exceder 63 caracteres",
+        "taken": "Este subdominio ya está en uso"
+      },
+      "description": {
+        "max": "La descripción no debe exceder 500 caracteres"
+      }
+    }
   }
 }

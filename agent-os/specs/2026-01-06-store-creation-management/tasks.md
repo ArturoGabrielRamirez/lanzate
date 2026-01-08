@@ -96,7 +96,7 @@ This feature enables merchants to create stores with name, description, and subd
       - subdomain: string, required, lowercase transformation, regex /^[a-z0-9-]+$/, min 3 chars, max 63 chars, trim
     - Export: CreateStoreInput type using yup.InferType<typeof createStoreSchema>
     - Use translation keys for all error messages: 'validation.store.name.required', etc.
-  - [ ] 2.5 Add validation translation keys
+  - [x] 2.5 Add validation translation keys
     - Path: locales/en/common.json and locales/es/common.json
     - Add validation.store.name.required, validation.store.name.min, validation.store.name.max
     - Add validation.store.subdomain.required, validation.store.subdomain.format, validation.store.subdomain.min, validation.store.subdomain.max

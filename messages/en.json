@@ -283,5 +283,24 @@
         }
       }
     }
+  },
+  "validation": {
+    "store": {
+      "name": {
+        "required": "Store name is required",
+        "min": "Store name must be at least 1 character",
+        "max": "Store name must not exceed 100 characters"
+      },
+      "subdomain": {
+        "required": "Subdomain is required",
+        "format": "Subdomain must contain only lowercase letters, numbers, and hyphens",
+        "min": "Subdomain must be at least 3 characters",
+        "max": "Subdomain must not exceed 63 characters",
+        "taken": "This subdomain is already taken"
+      },
+      "description": {
+        "max": "Description must not exceed 500 characters"
+      }
+    }
   }
 }
