@@ -86,7 +86,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Re-export: Store from @prisma/client
     - Update: StoreWithOwner to include subdomain and description
     - Create: CreateStoreInput = Omit<Store, 'id' | 'createdAt' | 'updatedAt'>
-  - [ ] 2.4 Create store validation schema factory
+  - [x] 2.4 Create store validation schema factory
     - Path: features/stores/schemas/schemaFactory.ts
     - Create: createStoreSchema(t: (key: string) => string)
     - Follow schemaFactory.ts pattern from features/auth/schemas/
