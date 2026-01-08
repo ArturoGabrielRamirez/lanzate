@@ -33,7 +33,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Add @@index([ownerId]) for user queries
     - Add @@map("stores") for plural table name
     - Add relationship: owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  - [ ] 1.4 Update User model relationships
+  - [x] 1.4 Update User model relationships
     - Add subscription Subscription? relationship
     - Update stores Store[] relationship to match new Store model
   - [ ] 1.5 Create database migration

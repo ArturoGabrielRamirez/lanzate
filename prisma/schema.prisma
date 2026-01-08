@@ -59,7 +59,6 @@ model Store {
   // Relations
   owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
-  @@unique([subdomain])
   @@index([subdomain])
   @@index([ownerId])
   @@map("stores")
