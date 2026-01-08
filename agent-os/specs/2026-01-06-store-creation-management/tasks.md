@@ -76,7 +76,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Test field length constraints (name, description, subdomain)
     - Test required field validation
     - Limit to critical validation behaviors only
-  - [ ] 2.2 Create Subscription types file
+  - [x] 2.2 Create Subscription types file
     - Path: features/subscriptions/types/subscription.ts
     - Re-export: Subscription, AccountType from @prisma/client
     - Create: SubscriptionWithUser extends Subscription with User relation
