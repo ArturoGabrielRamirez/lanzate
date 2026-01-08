@@ -147,7 +147,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Path: features/subscriptions/data/getUserSubscription.data.ts
     - Function: getUserSubscriptionData(userId: string): Promise<Subscription | null>
     - Query: prisma.subscription.findUnique({ where: { userId } })
-  - [ ] 3.4 Create service layer for store creation
+  - [x] 3.4 Create service layer for store creation
     - Path: features/stores/services/createStore.service.ts
     - Function: createStoreService(input: CreateStoreInput, userId: string): Promise<Store>
     - Business logic:

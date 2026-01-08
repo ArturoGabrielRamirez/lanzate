@@ -19,6 +19,7 @@ import {
   findUserStoresData,
   countUserStoresData,
 } from '@/features/stores/data';
+import { createStoreService } from '@/features/stores/services';
 
 // Test user IDs for different account types
 const testUserIds = {
@@ -206,9 +207,7 @@ describe('Data Layer - Store Count and Retrieval', () => {
 
 describe('Service Layer - Store Limit Enforcement', () => {
   it('should allow FREE user to create up to 2 stores', async () => {
-    const freeUserStoreCount = await prisma.store.count({
-      where: { ownerId: testUserIds.free },
-    });
+    const freeUserStoreCount = await countUserStoresData(testUserIds.free);
 
     // FREE users can have up to 2 stores
     const canCreate = freeUserStoreCount < 2;
@@ -216,141 +215,117 @@ describe('Service Layer - Store Limit Enforcement', () => {
   });
 
   it('should prevent FREE user from creating more than 2 stores', async () => {
-    const freeUserStoreCount = await prisma.store.count({
-      where: { ownerId: testUserIds.free },
-    });
-
-    const subscription = await prisma.subscription.findUnique({
-      where: { userId: testUserIds.free },
-    });
-
-    // Check if limit is reached
-    const limitReached =
-      subscription?.accountType === AccountType.FREE && freeUserStoreCount >= 2;
-
-    expect(limitReached).toBe(true);
+    // Try to create a third store for FREE user (should throw error)
+    await expect(
+      createStoreService(
+        {
+          name: 'Third Store',
+          subdomain: 'third-store',
+        },
+        testUserIds.free
+      )
+    ).rejects.toThrow('STORE_LIMIT_REACHED_FREE');
   });
 
   it('should allow PRO user to create up to 5 stores', async () => {
-    // Create additional stores for PRO user
-    await prisma.store.create({
-      data: {
+    // Create additional stores for PRO user using the service
+    await createStoreService(
+      {
         name: 'Store 4',
         subdomain: 'store-4',
-        ownerId: testUserIds.pro,
       },
-    });
+      testUserIds.pro
+    );
 
-    await prisma.store.create({
-      data: {
+    await createStoreService(
+      {
         name: 'Store 5',
         subdomain: 'store-5',
-        ownerId: testUserIds.pro,
       },
-    });
+      testUserIds.pro
+    );
 
-    await prisma.store.create({
-      data: {
+    await createStoreService(
+      {
         name: 'Store 6',
         subdomain: 'store-6',
-        ownerId: testUserIds.pro,
       },
-    });
+      testUserIds.pro
+    );
 
-    const proUserStoreCount = await prisma.store.count({
-      where: { ownerId: testUserIds.pro },
-    });
+    const proUserStoreCount = await countUserStoresData(testUserIds.pro);
 
     expect(proUserStoreCount).toBe(5);
-
-    const subscription = await prisma.subscription.findUnique({
-      where: { userId: testUserIds.pro },
-    });
-
-    // Check if can create more
-    const canCreate =
-      subscription?.accountType === AccountType.PRO && proUserStoreCount < 5;
-
-    expect(canCreate).toBe(false); // Already at limit
   });
 
   it('should prevent PRO user from creating more than 5 stores', async () => {
-    const proUserStoreCount = await prisma.store.count({
-      where: { ownerId: testUserIds.pro },
-    });
-
-    const subscription = await prisma.subscription.findUnique({
-      where: { userId: testUserIds.pro },
-    });
-
-    // Check if limit is reached
-    const limitReached =
-      subscription?.accountType === AccountType.PRO && proUserStoreCount >= 5;
-
-    expect(limitReached).toBe(true);
+    // Try to create a sixth store for PRO user (should throw error)
+    await expect(
+      createStoreService(
+        {
+          name: 'Sixth Store',
+          subdomain: 'sixth-store',
+        },
+        testUserIds.pro
+      )
+    ).rejects.toThrow('STORE_LIMIT_REACHED_PRO');
   });
 
   it('should allow ENTERPRISE user to create unlimited stores', async () => {
-    // Create multiple stores for ENTERPRISE user
+    // Create multiple stores for ENTERPRISE user using the service
     for (let i = 1; i <= 10; i++) {
-      await prisma.store.create({
-        data: {
+      await createStoreService(
+        {
           name: `Enterprise Store ${i}`,
           subdomain: `enterprise-store-${i}`,
-          ownerId: testUserIds.enterprise,
         },
-      });
+        testUserIds.enterprise
+      );
     }
 
-    const enterpriseUserStoreCount = await prisma.store.count({
-      where: { ownerId: testUserIds.enterprise },
-    });
+    const enterpriseUserStoreCount = await countUserStoresData(
+      testUserIds.enterprise
+    );
 
     expect(enterpriseUserStoreCount).toBe(10);
-
-    const subscription = await prisma.subscription.findUnique({
-      where: { userId: testUserIds.enterprise },
-    });
-
-    // ENTERPRISE users have no limit
-    const hasNoLimit = subscription?.accountType === AccountType.ENTERPRISE;
-
-    expect(hasNoLimit).toBe(true);
   });
 
   it('should treat users without subscription as FREE (2 store limit)', async () => {
-    // Create 2 stores for user without subscription
-    await prisma.store.create({
-      data: {
+    // Create 2 stores for user without subscription using the service
+    await createStoreService(
+      {
         name: 'No Sub Store 1',
         subdomain: 'nosub-store-1',
-        ownerId: testUserIds.noSubscription,
       },
-    });
+      testUserIds.noSubscription
+    );
 
-    await prisma.store.create({
-      data: {
+    await createStoreService(
+      {
         name: 'No Sub Store 2',
         subdomain: 'nosub-store-2',
-        ownerId: testUserIds.noSubscription,
       },
-    });
+      testUserIds.noSubscription
+    );
 
-    const storeCount = await prisma.store.count({
-      where: { ownerId: testUserIds.noSubscription },
-    });
+    const storeCount = await countUserStoresData(testUserIds.noSubscription);
 
-    const subscription = await prisma.subscription.findUnique({
-      where: { userId: testUserIds.noSubscription },
-    });
-
-    expect(subscription).toBeNull();
     expect(storeCount).toBe(2);
 
-    // Should default to FREE limit (2) when no subscription
-    const defaultAccountType = subscription?.accountType ?? AccountType.FREE;
-    const limitReached = defaultAccountType === AccountType.FREE && storeCount >= 2;
-
-    expect(limitReached).toBe(true);
+    // Try to create a third store (should throw error with FREE limit)
+    try {
+      await createStoreService(
+        {
+          name: 'No Sub Store 3',
+          subdomain: 'nosub-store-3',
+        },
+        testUserIds.noSubscription
+      );
+      // If we get here, the test should fail
+      expect(true).toBe(false);
+    } catch (error) {
+      expect(error instanceof Error).toBe(true);
+      expect((error as Error).message).toBe('STORE_LIMIT_REACHED_FREE');
+    }
   });
 });
