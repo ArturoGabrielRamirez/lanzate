@@ -238,7 +238,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Test AccessGate disables button when limit reached
     - Test CreateStoreButton shows correct upgrade message
     - Limit to critical UI behaviors only
-  - [ ] 5.2 Copy AccessGate components to project
+  - [x] 5.2 Copy AccessGate components to project
     - Source: backup/features/shadcn/components/gate.tsx
     - Destination: features/access/components/
     - Copy: AccessGate, AccessManagerProvider, usePermissionCheck
