@@ -247,7 +247,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Path: features/access/types/access.ts
     - Define: AccessGateProps, AccessManagerProviderProps
     - Define: UserSession interface with roles: string[]
-  - [ ] 5.4 Create CreateStoreForm component
+  - [x] 5.4 Create CreateStoreForm component
     - Path: features/stores/components/CreateStoreForm.tsx
     - Directive: "use client"
     - Use react-hook-form with yupResolver(createStoreSchema(t))

@@ -2,33 +2,33 @@
   "welcome": "Bienvenido a Lanzate",
   "description": "Lo sueñas, Lanzate lo hace realidad",
   "getStarted": "Comenzar",
-  "login": "Iniciar sesión",
+  "login": "Iniciar sesion",
   "dashboard": "Panel de control",
   "stores": "Tiendas",
-  "logout": "Cerrar sesión",
+  "logout": "Cerrar sesion",
   "language": "Idioma",
   "theme": "Tema",
   "light": "Claro",
   "dark": "Oscuro",
   "metadata": {
     "title": "Lanzate - Lo sueñas, nosotros lo hacemos realidad",
-    "description": "Plataforma de e-commerce para crear y administrar tus tiendas en línea"
+    "description": "Plataforma de e-commerce para crear y administrar tus tiendas en linea"
   },
   "hero": {
     "titleBefore": "Lo sueñas,",
     "titleHighlight": "Lanzate",
     "titleAfter": "lo hace realidad",
-    "subtitle": "Administrar tu negocio nunca ha sido tan fácil. Enfócate en el crecimiento mientras te damos el control total",
+    "subtitle": "Administrar tu negocio nunca ha sido tan facil. Enfocate en el crecimiento mientras te damos el control total",
     "cta": {
       "primary": "Comenzar",
-      "secondary": "Más información"
+      "secondary": "Mas informacion"
     },
-    "imageAlt": "Ilustración de una persona trabajando en su tienda en línea"
+    "imageAlt": "Ilustracion de una persona trabajando en su tienda en linea"
   },
   "nav": {
     "home": "Inicio",
     "access": "Acceso",
-    "moreInfo": "Más Info"
+    "moreInfo": "Mas Info"
   },
   "auth": {
     "signup": {
@@ -42,19 +42,19 @@
         "links": {
           "hasAccount": "¿Ya tienes una cuenta?",
           "needHelp": "¿Necesitas ayuda?",
-          "loginLink": "Iniciar sesión",
-          "helpLink": "Contáctanos"
+          "loginLink": "Iniciar sesion",
+          "helpLink": "Contactanos"
         },
         "image": {
-          "alt": "Ilustración de registro"
+          "alt": "Ilustracion de registro"
         }
       },
       "form": {
         "fields": {
           "email": {
-            "label": "Correo electrónico",
+            "label": "Correo electronico",
             "placeholder": "correo@ejemplo.com",
-            "tooltip": "Ingresa la dirección de correo electrónico asociada con tu cuenta."
+            "tooltip": "Ingresa la direccion de correo electronico asociada con tu cuenta."
           },
           "username": {
             "label": "Nombre de usuario",
@@ -77,11 +77,11 @@
         },
         "messages": {
           "success": "Te has registrado exitosamente",
-          "loading": "Registrándote..."
+          "loading": "Registrandote..."
         }
       },
       "social": {
-        "label": "O continúa con",
+        "label": "O continua con",
         "providers": {
           "google": "Google",
           "facebook": "Facebook"
@@ -90,29 +90,29 @@
     },
     "login": {
       "page": {
-        "title": "Iniciar sesión - Lanzate",
-        "description": "Inicia sesión en tu cuenta para continuar",
+        "title": "Iniciar sesion - Lanzate",
+        "description": "Inicia sesion en tu cuenta para continuar",
         "header": {
           "title": "Bienvenido de nuevo",
-          "description": "Inicia sesión en tu cuenta para continuar"
+          "description": "Inicia sesion en tu cuenta para continuar"
         },
         "links": {
           "noAccount": "¿No tienes una cuenta?",
           "needHelp": "¿Necesitas ayuda?",
           "signupLink": "Registrarse",
-          "helpLink": "Contáctanos",
+          "helpLink": "Contactanos",
           "resetPassword": "¿Olvidaste tu contraseña?"
         },
         "image": {
-          "alt": "Ilustración de inicio de sesión"
+          "alt": "Ilustracion de inicio de sesion"
         }
       },
       "form": {
         "fields": {
           "email": {
-            "label": "Correo electrónico",
+            "label": "Correo electronico",
             "placeholder": "correo@ejemplo.com",
-            "tooltip": "Ingresa tu correo electrónico"
+            "tooltip": "Ingresa tu correo electronico"
           },
           "password": {
             "label": "Contraseña",
@@ -121,15 +121,15 @@
           }
         },
         "actions": {
-          "submit": "Iniciar sesión"
+          "submit": "Iniciar sesion"
         },
         "messages": {
-          "success": "Inicio de sesión exitoso. ¡Bienvenido de nuevo!",
-          "loading": "Iniciando sesión..."
+          "success": "Inicio de sesion exitoso. ¡Bienvenido de nuevo!",
+          "loading": "Iniciando sesion..."
         }
       },
       "social": {
-        "label": "O continúa con",
+        "label": "O continua con",
         "providers": {
           "google": "Google"
         }
@@ -141,26 +141,26 @@
         "description": "Solicita un enlace para restablecer tu contraseña y recuperar tu cuenta",
         "header": {
           "title": "Restablecer contraseña",
-          "description": "Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña"
+          "description": "Ingresa tu correo electronico y te enviaremos un enlace para restablecer tu contraseña"
         },
         "links": {
           "rememberedPassword": "¿Recordaste tu contraseña?",
-          "loginLink": "Iniciar sesión",
+          "loginLink": "Iniciar sesion",
           "noAccount": "¿No tienes una cuenta?",
           "signupLink": "Registrarse",
           "needHelp": "¿Necesitas ayuda?",
-          "helpLink": "Contáctanos"
+          "helpLink": "Contactanos"
         },
         "image": {
-          "alt": "Ilustración de restablecimiento de contraseña"
+          "alt": "Ilustracion de restablecimiento de contraseña"
         }
       },
       "form": {
         "fields": {
           "email": {
-            "label": "Correo electrónico",
+            "label": "Correo electronico",
             "placeholder": "correo@ejemplo.com",
-            "tooltip": "Ingresa el correo electrónico asociado a tu cuenta",
+            "tooltip": "Ingresa el correo electronico asociado a tu cuenta",
             "description": "Te enviaremos un enlace para restablecer tu contraseña"
           }
         },
@@ -173,19 +173,19 @@
         }
       },
       "confirmation": {
-        "title": "Revisa tu correo electrónico",
-        "description": "Hemos enviado un enlace de restablecimiento de contraseña a tu correo electrónico",
-        "instructions": "Por favor revisa tu bandeja de entrada y haz clic en el enlace del correo para restablecer tu contraseña. El enlace expirará en 24 horas.",
+        "title": "Revisa tu correo electronico",
+        "description": "Hemos enviado un enlace de restablecimiento de contraseña a tu correo electronico",
+        "instructions": "Por favor revisa tu bandeja de entrada y haz clic en el enlace del correo para restablecer tu contraseña. El enlace expirara en 24 horas.",
         "note": {
           "title": "¿No recibiste el correo?",
           "message": "Revisa tu carpeta de spam o intenta solicitar un nuevo enlace de restablecimiento de contraseña."
         },
         "actions": {
-          "backToLogin": "Volver a iniciar sesión"
+          "backToLogin": "Volver a iniciar sesion"
         },
         "links": {
           "needHelp": "¿Necesitas ayuda?",
-          "helpLink": "Contáctanos"
+          "helpLink": "Contactanos"
         }
       }
     },
@@ -199,20 +199,20 @@
         },
         "links": {
           "rememberedPassword": "¿Recordaste tu contraseña?",
-          "loginLink": "Iniciar sesión",
+          "loginLink": "Iniciar sesion",
           "needHelp": "¿Necesitas ayuda?",
-          "helpLink": "Contáctanos"
+          "helpLink": "Contactanos"
         },
         "image": {
-          "alt": "Ilustración de restablecimiento de contraseña"
+          "alt": "Ilustracion de restablecimiento de contraseña"
         }
       },
       "form": {
         "fields": {
           "password": {
             "label": "Nueva contraseña",
-            "placeholder": "Mínimo 8 caracteres",
-            "tooltip": "Debe tener al menos 8 caracteres, una letra mayúscula y un número"
+            "placeholder": "Minimo 8 caracteres",
+            "tooltip": "Debe tener al menos 8 caracteres, una letra mayuscula y un numero"
           },
           "confirmPassword": {
             "label": "Confirmar nueva contraseña",
@@ -224,7 +224,7 @@
           "submit": "Restablecer contraseña"
         },
         "messages": {
-          "success": "Contraseña restablecida exitosamente. Ya puedes iniciar sesión.",
+          "success": "Contraseña restablecida exitosamente. Ya puedes iniciar sesion.",
           "loading": "Restableciendo contraseña..."
         }
       }
@@ -232,23 +232,23 @@
     "profile": {
       "page": {
         "title": "Editar perfil - Lanzate",
-        "description": "Administra la configuración de tu cuenta e información personal",
+        "description": "Administra la configuracion de tu cuenta e informacion personal",
         "header": {
           "title": "Editar perfil",
-          "description": "Actualiza tu correo electrónico y contraseña"
+          "description": "Actualiza tu correo electronico y contraseña"
         }
       },
       "form": {
         "fields": {
           "email": {
-            "label": "Correo electrónico",
+            "label": "Correo electronico",
             "placeholder": "tu@correo.com",
-            "tooltip": "Actualiza tu dirección de correo electrónico"
+            "tooltip": "Actualiza tu direccion de correo electronico"
           },
           "password": {
             "label": "Nueva contraseña",
             "placeholder": "Deja en blanco para mantener la actual",
-            "tooltip": "Debe tener al menos 8 caracteres, una letra mayúscula y un número"
+            "tooltip": "Debe tener al menos 8 caracteres, una letra mayuscula y un numero"
           },
           "confirmPassword": {
             "label": "Confirmar nueva contraseña",
@@ -269,13 +269,13 @@
     "validation": {
       "email": {
         "required": "El email es obligatorio",
-        "invalid": "Email inválido"
+        "invalid": "Email invalido"
       },
       "password": {
         "required": "La contraseña es obligatoria",
         "minLength": "La contraseña debe tener al menos 8 caracteres",
-        "uppercase": "Debe contener al menos una letra mayúscula",
-        "number": "Debe contener al menos un número",
+        "uppercase": "Debe contener al menos una letra mayuscula",
+        "number": "Debe contener al menos un numero",
         "confirmRequired": "Debes confirmar la contraseña",
         "mustMatch": "Las contraseñas no coinciden"
       },
@@ -288,33 +288,67 @@
     "store": {
       "name": {
         "required": "El nombre de la tienda es obligatorio",
-        "min": "El nombre de la tienda debe tener al menos 1 carácter",
+        "min": "El nombre de la tienda debe tener al menos 1 caracter",
         "max": "El nombre de la tienda no debe exceder 100 caracteres"
       },
       "subdomain": {
         "required": "El subdominio es obligatorio",
-        "format": "El subdominio solo puede contener letras minúsculas, números y guiones",
+        "format": "El subdominio solo puede contener letras minusculas, numeros y guiones",
         "min": "El subdominio debe tener al menos 3 caracteres",
         "max": "El subdominio no debe exceder 63 caracteres",
-        "taken": "Este subdominio ya está en uso"
+        "taken": "Este subdominio ya esta en uso"
       },
       "description": {
-        "max": "La descripción no debe exceder 500 caracteres"
+        "max": "La descripcion no debe exceder 500 caracteres"
       }
     }
   },
   "errors": {
     "store": {
       "limitReached": {
-        "free": "Has alcanzado el máximo de 2 tiendas para tu cuenta GRATUITA. Actualiza a PRO para hasta 5 tiendas.",
-        "pro": "Has alcanzado el máximo de 5 tiendas para tu cuenta PRO. Actualiza a ENTERPRISE para tiendas ilimitadas."
+        "free": "Has alcanzado el maximo de 2 tiendas para tu cuenta GRATUITA. Actualiza a PRO para hasta 5 tiendas.",
+        "pro": "Has alcanzado el maximo de 5 tiendas para tu cuenta PRO. Actualiza a ENTERPRISE para tiendas ilimitadas."
       },
-      "subdomainTaken": "Este subdominio ya está en uso. Por favor elige uno diferente."
+      "subdomainTaken": "Este subdominio ya esta en uso. Por favor elige uno diferente."
     }
   },
   "success": {
     "store": {
       "created": "Tienda creada exitosamente"
+    }
+  },
+  "store": {
+    "create": {
+      "title": "Crear Tienda",
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Nombre de la Tienda",
+            "placeholder": "Mi Tienda Increible",
+            "tooltip": "Ingresa el nombre de tu tienda"
+          },
+          "description": {
+            "label": "Descripcion",
+            "placeholder": "Describe tu tienda...",
+            "tooltip": "Descripcion opcional de tu tienda"
+          },
+          "subdomain": {
+            "label": "Subdominio",
+            "placeholder": "mi-tienda",
+            "tooltip": "La URL de tu tienda sera subdominio.lanzate.com",
+            "prefix": "https://",
+            "suffix": ".lanzate.com"
+          }
+        },
+        "actions": {
+          "submit": "Crear Tienda"
+        },
+        "messages": {
+          "success": "Tienda creada exitosamente. Redirigiendo a tu tienda...",
+          "loading": "Creando tu tienda...",
+          "redirecting": "Redirigiendo a tu tienda..."
+        }
+      }
     }
   }
 }

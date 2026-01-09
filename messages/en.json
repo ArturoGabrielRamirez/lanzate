@@ -316,5 +316,39 @@
     "store": {
       "created": "Store created successfully"
     }
+  },
+  "store": {
+    "create": {
+      "title": "Create Store",
+      "form": {
+        "fields": {
+          "name": {
+            "label": "Store Name",
+            "placeholder": "My Awesome Store",
+            "tooltip": "Enter the name of your store"
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Describe your store...",
+            "tooltip": "Optional description of your store"
+          },
+          "subdomain": {
+            "label": "Subdomain",
+            "placeholder": "my-store",
+            "tooltip": "Your store URL will be subdomain.lanzate.com",
+            "prefix": "https://",
+            "suffix": ".lanzate.com"
+          }
+        },
+        "actions": {
+          "submit": "Create Store"
+        },
+        "messages": {
+          "success": "Store created successfully. Redirecting to your store...",
+          "loading": "Creating your store...",
+          "redirecting": "Redirecting to your store..."
+        }
+      }
+    }
   }
 }

@@ -32,3 +32,12 @@ export interface StoreWithOwner extends PrismaStore {
  * Used in forms and server actions for store creation
  */
 export type CreateStoreInput = Omit<Store, 'id' | 'createdAt' | 'updatedAt'>;
+
+/**
+ * Props for CreateStoreForm component
+ *
+ * Optional className for styling customization
+ */
+export interface CreateStoreFormProps {
+  className?: string;
+}

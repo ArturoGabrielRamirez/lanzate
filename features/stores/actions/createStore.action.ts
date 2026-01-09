@@ -1,10 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatSuccess } from '@/features/global/utils/format-response';
 import { createStoreSchema } from '@/features/stores/schemas/schemaFactory';
 import { createStoreService } from '@/features/stores/services';
 import { createClient } from '@/lib/supabase/server';
@@ -99,15 +99,9 @@ export async function createStoreAction(formData: FormData) {
 
     // Create store via service layer (enforces account limits)
     // Service may throw errors for limit violations
+    let store;
     try {
-      const store = await createStoreService(validatedData, dbUser.id);
-
-      // Revalidate paths to ensure fresh data
-      revalidatePath('/[locale]/dashboard');
-      revalidatePath('/[locale]/stores');
-
-      // Return success response
-      return formatSuccess('Store created successfully', store);
+      store = await createStoreService(validatedData, dbUser.id);
     } catch (error) {
       // Handle service layer errors (limit violations)
       if (error instanceof Error) {
@@ -124,5 +118,13 @@ export async function createStoreAction(formData: FormData) {
       }
       throw error;
     }
+
+    // Revalidate paths to ensure fresh data
+    revalidatePath('/[locale]/dashboard');
+    revalidatePath('/[locale]/stores');
+
+    // Redirect to the new store page
+    // Note: redirect() throws a special error, so this must be outside try-catch
+    redirect(`/store/${store.subdomain}`);
   });
 }

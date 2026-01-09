@@ -58,7 +58,8 @@
       "Bash(bun test --help:*)",
       "Bash(ls -la \"E:\\personal-dev\\lanzate\\__tests__\\features\\stores\"\" 2>/dev/null || echo \"Directory does not exist \")",
       "Bash(bun run typecheck:*)",
-      "Bash(bun run tsc:*)"
+      "Bash(bun run tsc:*)",
+      "Bash(./node_modules/.bin/tsc:*)"
     ],
     "deny": [],
     "ask": []

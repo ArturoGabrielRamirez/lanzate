@@ -44,6 +44,12 @@ export async function actionWrapper<T = unknown>(
   try {
     return await action();
   } catch (error) {
+    // Allow Next.js redirect errors to pass through
+    // redirect() throws an error with digest starting with 'NEXT_REDIRECT'
+    if (isRedirectError(error)) {
+      throw error;
+    }
+
     // Log error for debugging
     console.error("🚀 ~ actionWrapper ~ error:", error);
 
@@ -70,6 +76,23 @@ export async function actionWrapper<T = unknown>(
     // Fallback for unknown error types
     return formatError("An unexpected error occurred");
   }
+}
+
+/**
+ * Checks if an error is a Next.js redirect error
+ *
+ * @param error - Error to check
+ * @returns True if the error is a redirect error
+ *
+ * @internal
+ */
+function isRedirectError(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    "digest" in error &&
+    typeof error.digest === "string" &&
+    error.digest.startsWith("NEXT_REDIRECT")
+  );
 }
 
 /**

@@ -55,9 +55,9 @@ export const createStoreSchema = (t: TranslationFunction) =>
       .trim(),
     description: yup
       .string()
-      .optional()
       .max(500, t('validation.store.description.max'))
-      .trim(),
+      .trim()
+      .default(undefined),
     subdomain: yup
       .string()
       .required(t('validation.store.subdomain.required'))

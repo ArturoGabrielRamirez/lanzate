@@ -14,6 +14,7 @@ import { ServerResponse } from "@/features/global/types";
  *
  * Defines all possible configuration options for the global InputField component
  * including icons, tooltips, validation, and accessibility features.
+ * Supports both input and textarea variants through the 'as' prop.
  */
 export type InputFieldProps = {
   name: string;
@@ -40,11 +41,17 @@ export type InputFieldProps = {
     | "decimal"
     | "numeric"
     | undefined;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   hideLabel?: boolean;
   className?: string;
   maxLength?: number;
   autoFocus?: boolean;
+  /** Render as textarea instead of input */
+  as?: "input" | "textarea";
+  /** Minimum height for textarea (only applies when as="textarea") */
+  minHeight?: string;
+  /** Number of rows for textarea (only applies when as="textarea") */
+  rows?: number;
 };
 
 /**
