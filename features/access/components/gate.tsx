@@ -1,42 +1,30 @@
 "use client"
 
-import React, { createContext, useContext, useMemo, ReactNode } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 
+import type {
+  UserSession,
+  RolePermissionMap,
+  AccessManagerContextType,
+  AccessManagerProviderProps,
+  AccessGateProps,
+  PermissionCheckProps,
+  ConditionalWrapperProps,
+  SessionGuardProps,
+} from '@/features/access/types/access'
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from '@/features/shadcn/utils/cn'
 
-
-export interface UserSession {
-  id: string
-  email?: string
-  username?: string
-  name?: string
-  avatar?: string
-  roles: string[]
-  permissions: string[]
-  metadata?: Record<string, unknown>
-  isActive?: boolean
-  expiresAt?: Date | string
-  lastActivity?: Date | string
-  sessionId?: string
-}
-
-export interface RolePermissionMap {
-  [role: string]: string[]
-}
-
-export interface AccessManagerContextType {
-  user: UserSession | null
-  rolePermissionMap: RolePermissionMap
-  hasRole: (role: string | string[]) => boolean
-  hasPermission: (permission: string | string[]) => boolean
-  hasAnyRole: (roles: string[]) => boolean
-  hasAllRoles: (roles: string[]) => boolean
-  hasAnyPermission: (permissions: string[]) => boolean
-  hasAllPermissions: (permissions: string[]) => boolean
-  isSessionValid: () => boolean
-  getSessionTimeRemaining: () => number | null
-  isSessionExpiring: (thresholdMinutes?: number) => boolean
+// Re-export types for backward compatibility
+export type {
+  UserSession,
+  RolePermissionMap,
+  AccessManagerContextType,
+  AccessManagerProviderProps,
+  AccessGateProps,
+  PermissionCheckProps,
+  ConditionalWrapperProps,
+  SessionGuardProps,
 }
 
 const AccessManagerContext = createContext<AccessManagerContextType | null>(null)
@@ -50,13 +38,6 @@ export const useAccessManager = () => {
 }
 
 export const useRoleBasedAccess = useAccessManager
-
-export interface AccessManagerProviderProps {
-  children: ReactNode
-  user: UserSession | null
-  rolePermissionMap?: RolePermissionMap
-  onUnauthorized?: () => void
-}
 
 export function AccessManagerProvider({
   children,
@@ -181,21 +162,6 @@ export function AccessManagerProvider({
   )
 }
 
-export interface AccessGateProps {
-  children: ReactNode
-  roles?: string | string[]
-  permissions?: string | string[]
-  requireAllRoles?: boolean
-  requireAllPermissions?: boolean
-  requireValidSession?: boolean
-  fallback?: ReactNode
-  onUnauthorized?: () => void
-  mode?: 'hide' | 'disable' | 'show-fallback'
-  className?: string
-  disabledClassName?: string
-  tooltip?: string
-}
-
 export function AccessGate({
   children,
   roles,
@@ -301,14 +267,6 @@ export function AccessGate({
   return content
 }
 
-export interface PermissionCheckProps {
-  roles?: string | string[]
-  permissions?: string | string[]
-  requireAllRoles?: boolean
-  requireAllPermissions?: boolean
-  requireValidSession?: boolean
-}
-
 export function usePermissionCheck({
   roles,
   permissions,
@@ -361,17 +319,6 @@ export function usePermissionCheck({
   ])
 }
 
-export interface ConditionalWrapperProps {
-  children: ReactNode
-  roles?: string | string[]
-  permissions?: string | string[]
-  requireAllRoles?: boolean
-  requireAllPermissions?: boolean
-  requireValidSession?: boolean
-  wrapper: (children: ReactNode) => ReactNode
-  fallbackWrapper?: (children: ReactNode) => ReactNode
-}
-
 export function ConditionalWrapper({
   children,
   roles,
@@ -399,13 +346,6 @@ export function ConditionalWrapper({
   }
 
   return <>{children}</>
-}
-
-export interface SessionGuardProps {
-  children: ReactNode
-  fallback?: ReactNode
-  redirectTo?: string
-  onSessionExpired?: () => void
 }
 
 export function SessionGuard({

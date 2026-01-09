@@ -57,7 +57,8 @@
       "Bash(timeout 30 npm run dev)",
       "Bash(bun test --help:*)",
       "Bash(ls -la \"E:\\personal-dev\\lanzate\\__tests__\\features\\stores\"\" 2>/dev/null || echo \"Directory does not exist \")",
-      "Bash(bun run typecheck:*)"
+      "Bash(bun run typecheck:*)",
+      "Bash(bun run tsc:*)"
     ],
     "deny": [],
     "ask": []
