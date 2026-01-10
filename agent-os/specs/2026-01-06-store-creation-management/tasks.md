@@ -307,7 +307,7 @@ This feature enables merchants to create stores with name, description, and subd
 **Dependencies:** Task Group 5
 
 - [ ] 6.0 Complete private layout and navigation refactor
-  - [ ] 6.1 Write 2-8 focused tests for navigation
+  - [x] 6.1 Write 2-8 focused tests for navigation
     - Test PrivateHeader renders all navigation links
     - Test PrivateHeader includes LanguageSwitcher and ThemeToggle
     - Test profile link (not account)
