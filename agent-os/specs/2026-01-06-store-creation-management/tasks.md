@@ -421,18 +421,18 @@ This feature enables merchants to create stores with name, description, and subd
 **Dependencies:** Task Group 7
 
 - [ ] 8.0 Complete subdomain routing middleware
-  - [ ] 8.1 Write 2-8 focused tests for middleware
+  - [x] 8.1 Write 2-8 focused tests for middleware
     - Test subdomain extraction from hostname
     - Test rewrite to /s/[subdomain] for valid subdomains
     - Test localhost development pattern (subdomain.localhost:3000)
     - Test exclusion of API routes, _next, static files
     - Test port number stripping from hostname
     - Limit to critical middleware behaviors only
-  - [ ] 8.2 Create middleware.ts file
-    - Path: middleware.ts (project root)
-    - Reference: https://github.com/vercel/platforms/blob/main/middleware.ts
+  - [ ] 8.2 Create proxy.ts file
+    - Path: proxy.ts (project root)
+    - Reference: https://nextjs.org/docs/app/getting-started/proxy
     - Import: NextRequest, NextResponse from 'next/server'
-    - Function: middleware(req: NextRequest): NextResponse
+    - Function: proxy(req: NextRequest): NextResponse
     - Export: config object with matcher patterns
   - [ ] 8.3 Implement subdomain extraction logic
     - Get hostname from req.headers.get('host')

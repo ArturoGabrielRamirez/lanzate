@@ -60,7 +60,8 @@
       "Bash(bun run typecheck:*)",
       "Bash(bun run tsc:*)",
       "Bash(./node_modules/.bin/tsc:*)",
-      "Bash(npx vitest:*)"
+      "Bash(npx vitest:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": []
