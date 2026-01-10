@@ -54,3 +54,15 @@ export interface CreateStoreButtonProps {
   disabled?: boolean;
 }
 
+/**
+ * Props for FirstStoreCTA component
+ *
+ * CTA card displayed when user has no stores
+ */
+export interface FirstStoreCTAProps {
+  /** Current number of stores the user has */
+  currentStoreCount: number;
+  /** User's account type (FREE, PRO, ENTERPRISE) */
+  accountType: 'FREE' | 'PRO' | 'ENTERPRISE';
+}
+

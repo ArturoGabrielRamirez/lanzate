@@ -393,7 +393,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Fetch user's subscription using getUserSubscriptionData
     - Pass accountType to StoreStats component
     - Default to FREE if no subscription found
-  - [ ] 7.5 Create FirstStoreCTA types
+  - [x] 7.5 Create FirstStoreCTA types
     - Path: features/stores/types/store.ts
     - Add: FirstStoreCTAProps
   - [ ] 7.6 Add CTA translation keys

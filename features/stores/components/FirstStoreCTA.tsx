@@ -6,13 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { Card } from '@/features/shadcn/components/ui/card';
 import { CreateStoreButtonGate } from '@/features/stores/components/CreateStoreButtonGate';
-
-import type { AccountType } from '@prisma/client';
-
-interface FirstStoreCTAProps {
-  currentStoreCount: number;
-  accountType: AccountType;
-}
+import type { FirstStoreCTAProps } from '@/features/stores/types/store';
 
 /**
  * FirstStoreCTA Component
