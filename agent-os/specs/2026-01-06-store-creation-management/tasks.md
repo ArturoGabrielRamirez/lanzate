@@ -334,7 +334,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Render PrivateHeader
     - Render children below header
     - Apply to routes: dashboard, stores, profile, new-sale
-  - [ ] 6.4 Delete DashboardNavigation component
+  - [x] 6.4 Delete DashboardNavigation component
     - Path: features/dashboard/components/dashboard-navigation.tsx
     - Remove file after confirming PrivateHeader is working
     - Remove any imports of DashboardNavigation from dashboard pages

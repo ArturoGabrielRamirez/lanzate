@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 
 import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
-import { DashboardNavigation } from '@/features/dashboard/components/dashboard-navigation';
 import { StoreStats } from '@/features/dashboard/components/store-stats';
 import { CreateStoreButtonGate } from '@/features/stores/components';
 import { createClient } from '@/lib/supabase/server';
@@ -48,7 +47,6 @@ export default async function DashboardPage() {
   if (result.hasError || !result.payload) {
     return (
       <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
-        <DashboardNavigation />
         <main className="mx-auto max-w-7xl px-6 py-8 md:px-12 lg:px-16">
           <div className="rounded-lg border border-destructive bg-destructive/10 p-6 text-center">
             <h2 className="text-lg font-semibold text-destructive">
@@ -66,9 +64,6 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] dark:bg-background px-2">
-      {/* Dashboard Navigation */}
-      <DashboardNavigation />
-
       {/* Main Content */}
       <main className="mx-auto container py-8">
         {/* Dashboard Header with personalized greeting */}
