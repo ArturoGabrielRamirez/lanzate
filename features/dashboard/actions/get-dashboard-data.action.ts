@@ -1,9 +1,12 @@
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatSuccess, formatError } from '@/features/global/utils/format-response';
+import { AccountType } from '@prisma/client';
+
 import { getUserDashboardData } from '@/features/dashboard/data/get-user-dashboard-data.data';
+import { actionWrapper } from '@/features/global/utils/action-wrapper';
+import { formatError, formatSuccess } from '@/features/global/utils/format-response';
+import { getUserSubscriptionData } from '@/features/subscriptions/data';
+import { createClient } from '@/lib/supabase/server';
 
 /**
  * Get Dashboard Data Server Action
@@ -44,6 +47,10 @@ export async function getDashboardDataAction() {
     // Fetch user data from database
     const userData = await getUserDashboardData(user.id);
 
+    // Fetch user subscription to get account type
+    const subscription = await getUserSubscriptionData(user.id);
+    const accountType = subscription?.accountType ?? AccountType.FREE;
+
     // Prepare response data
     const userName = user.user_metadata?.name || user.user_metadata?.full_name || null;
     const userEmail = user.email || 'User';
@@ -53,6 +60,7 @@ export async function getDashboardDataAction() {
       userName,
       userEmail,
       storesCount,
+      accountType,
       userExists: !!userData,
     });
   });

@@ -59,7 +59,7 @@ export default async function DashboardPage() {
   }
 
   // Extract data from response
-  const { userName, userEmail, storesCount } = result.payload;
+  const { userName, userEmail, storesCount, accountType } = result.payload;
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] dark:bg-background px-2">
@@ -70,7 +70,7 @@ export default async function DashboardPage() {
 
         {/* Store Statistics */}
         <div className="mt-8">
-          <StoreStats storesCount={storesCount} accountType='FREE' />
+          <StoreStats storesCount={storesCount} accountType={accountType} />
         </div>
 
         {/* Activity Feed Section - Empty State */}

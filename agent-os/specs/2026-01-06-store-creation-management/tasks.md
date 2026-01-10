@@ -388,7 +388,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Follow same styling pattern as existing StoreStats cards
     - Use framer-motion for entrance animation
     - Content: "Create Your First Store" heading, brief description
-  - [ ] 7.4 Update dashboard page to fetch subscription
+  - [x] 7.4 Update dashboard page to fetch subscription
     - Path: src/app/[locale]/(private)/dashboard/page.tsx
     - Fetch user's subscription using getUserSubscriptionData
     - Pass accountType to StoreStats component
