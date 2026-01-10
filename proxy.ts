@@ -50,7 +50,7 @@ export async function proxy(request: NextRequest) {
     // Rewrite to storefront route: /s/[subdomain]/[path]
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}/s/${subdomain}${pathWithoutLocale}`;
-
+    
     // Create rewrite response
     const rewriteResponse = NextResponse.rewrite(url);
 

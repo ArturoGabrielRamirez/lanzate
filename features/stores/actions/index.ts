@@ -5,3 +5,4 @@
  */
 
 export { createStoreAction } from './createStore.action';
+export { getStoreBySubdomainAction } from './getStoreBySubdomain.action';

@@ -66,3 +66,12 @@ export interface FirstStoreCTAProps {
   accountType: 'FREE' | 'PRO' | 'ENTERPRISE';
 }
 
+/**
+ * Props for StorefrontPage component
+ *
+ * Page props for the subdomain-based storefront route
+ */
+export interface StorefrontPageProps {
+  params: Promise<{ subdomain: string }>;
+}
+

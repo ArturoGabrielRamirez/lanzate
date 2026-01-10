@@ -420,7 +420,7 @@ This feature enables merchants to create stores with name, description, and subd
 #### Implement Subdomain Detection and Routing
 **Dependencies:** Task Group 7
 
-- [ ] 8.0 Complete subdomain routing middleware
+- [x] 8.0 Complete subdomain routing middleware
   - [x] 8.1 Write 2-8 focused tests for middleware
     - Test subdomain extraction from hostname
     - Test rewrite to /s/[subdomain] for valid subdomains
@@ -428,44 +428,44 @@ This feature enables merchants to create stores with name, description, and subd
     - Test exclusion of API routes, _next, static files
     - Test port number stripping from hostname
     - Limit to critical middleware behaviors only
-  - [ ] 8.2 Create proxy.ts file
+  - [x] 8.2 Create proxy.ts file
     - Path: proxy.ts (project root)
     - Reference: https://nextjs.org/docs/app/getting-started/proxy
     - Import: NextRequest, NextResponse from 'next/server'
     - Function: proxy(req: NextRequest): NextResponse
     - Export: config object with matcher patterns
-  - [ ] 8.3 Implement subdomain extraction logic
+  - [x] 8.3 Implement subdomain extraction logic
     - Get hostname from req.headers.get('host')
     - Strip port number (split by ':' and take first part)
     - Define base domains: ['localhost', 'lanzate.com', 'vercel.app']
     - Extract subdomain by removing base domain
     - Handle localhost pattern: subdomain.localhost
     - Return null if no subdomain or if subdomain matches base domain
-  - [ ] 8.4 Implement route rewriting
+  - [x] 8.4 Implement route rewriting
     - If subdomain exists and is valid, use NextResponse.rewrite()
     - Rewrite to: /s/[subdomain] + original pathname
     - Preserve query parameters and search params
     - Example: store1.localhost:3000/products -> rewrite to /s/store1/products
-  - [ ] 8.5 Implement exclusion patterns
+  - [x] 8.5 Implement exclusion patterns
     - Exclude paths: /api/*, /_next/*, /favicon.ico, /images/*, /styles/*
     - Check pathname before processing subdomain
     - Return NextResponse.next() for excluded paths
     - Use config.matcher to optimize middleware execution
-  - [ ] 8.6 Create placeholder storefront route
+  - [x] 8.6 Create placeholder storefront route
     - Path: src/app/s/[subdomain]/page.tsx
     - Simple page displaying: "Storefront for [subdomain]"
     - Fetch store by subdomain to verify it exists
     - Show 404 if store not found
     - Note: Full storefront implementation is OUT OF SCOPE
-  - [ ] 8.7 Create findStoreBySubdomain data function
+  - [x] 8.7 Create findStoreBySubdomain data function
     - Path: features/stores/data/findStoreBySubdomain.data.ts
     - Function: findStoreBySubdomainData(subdomain: string): Promise<Store | null>
     - Query: prisma.store.findUnique({ where: { subdomain } })
-  - [ ] 8.8 Add middleware configuration
+  - [x] 8.8 Add middleware configuration
     - Export config with matcher
     - Matcher should match all paths except excluded ones
     - Example: matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
-  - [ ] 8.9 Run middleware tests
+  - [x] 8.9 Run middleware tests
     - Execute ONLY the 2-8 tests written in 8.1
     - Verify subdomain routing works in localhost development
     - Do NOT run entire test suite
