@@ -1,14 +1,18 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Store, Plus, Calendar } from 'lucide-react';
+import { Store, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/features/shadcn/components/ui/button';
 import { Card } from '@/features/shadcn/components/ui/card';
+import { FirstStoreCTA } from '@/features/stores/components/FirstStoreCTA';
+
+import type { AccountType } from '@prisma/client';
 
 interface StoreStatsProps {
   storesCount: number;
+  accountType: AccountType;
 }
 
 /**
@@ -25,7 +29,7 @@ interface StoreStatsProps {
  * - Link to create new store
  * - Animated card entrance with framer-motion
  */
-export function StoreStats({ storesCount }: StoreStatsProps) {
+export function StoreStats({ storesCount, accountType }: StoreStatsProps) {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
@@ -83,57 +87,37 @@ export function StoreStats({ storesCount }: StoreStatsProps) {
           </motion.div>
         )}
 
-        {/* New Store Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-        >
-          <Card className="flex h-full items-center justify-center border-2 border-dashed border-border bg-card/50 p-6 transition-colors hover:border-primary/50 hover:bg-card">
-            <div className="flex flex-col items-center gap-3 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <Plus className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <h3 className="mb-1 font-semibold text-foreground">New store</h3>
-                <p className="text-xs text-muted-foreground">
-                  Create your store
-                  <br />
-                  in seconds level!
-                </p>
-              </div>
-              <Button
-                size="sm"
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                + Create Store
-              </Button>
-            </div>
-          </Card>
-        </motion.div>
-
-        {/* Empty State - Only show if no stores */}
-        {storesCount === 0 && (
+        {/* New Store Card - Only show when user has existing stores */}
+        {storesCount > 0 && (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="col-span-full"
+            transition={{ duration: 0.3, delay: 0.1 }}
           >
-            <Card className="border-border bg-card p-12 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                <Store className="h-8 w-8 text-primary" />
+            <Card className="flex h-full items-center justify-center border-2 border-dashed border-border bg-card/50 p-6 transition-colors hover:border-primary/50 hover:bg-card">
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                  <Store className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="mb-1 font-semibold text-foreground">New store</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Create your store
+                    <br />
+                    in seconds!
+                  </p>
+                </div>
               </div>
-              <h3 className="mb-2 text-lg font-medium text-foreground">No stores yet</h3>
-              <p className="mb-6 text-sm text-muted-foreground">
-                Create your first store to start selling online
-              </p>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                <Plus className="mr-2 h-4 w-4" />
-                Create Your First Store
-              </Button>
             </Card>
           </motion.div>
+        )}
+
+        {/* First Store CTA - Only show if no stores */}
+        {storesCount === 0 && (
+          <FirstStoreCTA
+            currentStoreCount={storesCount}
+            accountType={accountType}
+          />
         )}
       </div>
     </div>

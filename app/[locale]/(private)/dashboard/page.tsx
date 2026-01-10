@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
 import { StoreStats } from '@/features/dashboard/components/store-stats';
-import { CreateStoreButtonGate } from '@/features/stores/components';
 import { createClient } from '@/lib/supabase/server';
 
 /**
@@ -71,11 +70,7 @@ export default async function DashboardPage() {
 
         {/* Store Statistics */}
         <div className="mt-8">
-          <StoreStats storesCount={storesCount} />
-          <CreateStoreButtonGate
-            accountType='FREE'
-            currentStoreCount={0}
-          />
+          <StoreStats storesCount={storesCount} accountType='FREE' />
         </div>
 
         {/* Activity Feed Section - Empty State */}

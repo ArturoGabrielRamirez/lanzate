@@ -375,13 +375,13 @@ This feature enables merchants to create stores with name, description, and subd
     - Test CTA shows CreateStoreButton
     - Test CTA hidden when user has stores
     - Limit to critical dashboard behaviors only
-  - [ ] 7.2 Update StoreStats component
+  - [x] 7.2 Update StoreStats component
     - Path: features/dashboard/components/StoreStats.tsx
     - Add conditional rendering: if storesCount === 0, show FirstStoreCTA
     - Pass currentStoreCount and accountType props to CreateStoreButton
     - Position CTA alongside/below existing StoreStats cards
     - Maintain existing motion.div animation pattern (framer-motion)
-  - [ ] 7.3 Create FirstStoreCTA component
+  - [x] 7.3 Create FirstStoreCTA component
     - Path: features/stores/components/FirstStoreCTA.tsx
     - Use shadcn/ui Card component
     - Include: icon (Store icon), heading, description text, CreateStoreButton
