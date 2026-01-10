@@ -260,7 +260,7 @@ This feature enables merchants to create stores with name, description, and subd
     - On success: show confirmation message for 1.5 seconds, then redirect to /[locale]/store/[subdomain]
     - Use shadcn/ui: Form, Input, Textarea, Button, Label
     - Follow useTransition pattern from components.md
-  - [ ] 5.5 Create CreateStoreButton component
+  - [x] 5.5 Create CreateStoreButton component
     - Path: features/stores/components/CreateStoreButton.tsx
     - Directive: "use client"
     - Props: currentStoreCount (number), accountType (AccountType)
@@ -274,14 +274,14 @@ This feature enables merchants to create stores with name, description, and subd
       - ENTERPRISE: never disabled
     - Button opens dialog with CreateStoreForm
     - Use shadcn/ui: Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger
-  - [ ] 5.6 Create component props types
+  - [x] 5.6 Create component props types
     - Path: features/stores/types/store.ts
     - Add: CreateStoreFormProps, CreateStoreButtonProps
-  - [ ] 5.7 Add UI translation keys
+  - [x] 5.7 Add UI translation keys
     - Path: locales/en/common.json and locales/es/common.json
     - Add: ui.store.create, ui.store.name, ui.store.description, ui.store.subdomain
     - Add: ui.store.createButton, ui.store.upgradeTooltip.free, ui.store.upgradeTooltip.pro
-  - [ ] 5.8 Run UI component tests
+  - [x] 5.8 Run UI component tests
     - Execute ONLY the 2-8 tests written in 5.1
     - Verify form validation and AccessGate work correctly
     - Do NOT run entire test suite

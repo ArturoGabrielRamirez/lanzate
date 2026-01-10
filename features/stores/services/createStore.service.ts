@@ -3,7 +3,7 @@
  *
  * Business logic for creating a new store with account-type-based limits.
  * - Retrieves user's subscription to determine account type
- * - Enforces store creation limits: FREE=2, PRO=5, ENTERPRISE=unlimited
+ * - Enforces store creation limits using centralized ACCOUNT_LIMITS config
  * - Transforms subdomain to lowercase
  * - Creates store record if limit not reached
  *
@@ -23,6 +23,7 @@ import { AccountType } from '@prisma/client';
 
 import { createStoreData, countUserStoresData } from '@/features/stores/data';
 import type { CreateStoreInput } from '@/features/stores/schemas/schemaFactory';
+import { hasReachedStoreLimit } from '@/features/subscriptions/config';
 import { getUserSubscriptionData } from '@/features/subscriptions/data';
 
 import type { Store } from '@prisma/client';
@@ -40,32 +41,13 @@ export async function createStoreService(
   // Count user's current stores
   const currentStoreCount = await countUserStoresData(userId);
 
-  // Check store limits based on account type
-  let limitReached = false;
-  let errorMessage = '';
-
-  switch (accountType) {
-    case AccountType.FREE:
-      if (currentStoreCount >= 2) {
-        limitReached = true;
-        errorMessage = 'errors.store.limitReached.free';
-      }
-      break;
-    case AccountType.PRO:
-      if (currentStoreCount >= 5) {
-        limitReached = true;
-        errorMessage = 'errors.store.limitReached.pro';
-      }
-      break;
-    case AccountType.ENTERPRISE:
-      // No limit for ENTERPRISE users
-      limitReached = false;
-      break;
-  }
-
-  // Throw error if limit reached
-  if (limitReached) {
-    throw new Error(errorMessage);
+  // Check store limits using centralized config
+  if (hasReachedStoreLimit(accountType, currentStoreCount)) {
+    const errorKey =
+      accountType === AccountType.FREE
+        ? 'errors.store.limitReached.free'
+        : 'errors.store.limitReached.pro';
+    throw new Error(errorKey);
   }
 
   // Transform subdomain to lowercase

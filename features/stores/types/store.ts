@@ -41,3 +41,16 @@ export type CreateStoreInput = Omit<Store, 'id' | 'createdAt' | 'updatedAt'>;
 export interface CreateStoreFormProps {
   className?: string;
 }
+
+/**
+ * Props for CreateStoreButton component
+ *
+ * Simple button + dialog without access control logic
+ */
+export interface CreateStoreButtonProps {
+  /** Optional className for styling customization */
+  className?: string;
+  /** Whether the button is disabled */
+  disabled?: boolean;
+}
+

@@ -320,6 +320,15 @@
   "store": {
     "create": {
       "title": "Create Store",
+      "button": "Create Store",
+      "dialog": {
+        "title": "Create New Store",
+        "description": "Fill in the details below to create your new store."
+      },
+      "upgradeTooltip": {
+        "free": "Upgrade to PRO for more stores",
+        "pro": "Upgrade to ENTERPRISE for unlimited stores"
+      },
       "form": {
         "fields": {
           "name": {

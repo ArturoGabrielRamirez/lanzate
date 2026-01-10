@@ -5,3 +5,5 @@
  */
 
 export { CreateStoreForm } from "@/features/stores/components/CreateStoreForm";
+export { CreateStoreButton } from "@/features/stores/components/CreateStoreButton";
+export { CreateStoreButtonGate } from "@/features/stores/components/CreateStoreButtonGate";

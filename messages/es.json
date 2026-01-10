@@ -320,6 +320,15 @@
   "store": {
     "create": {
       "title": "Crear Tienda",
+      "button": "Crear Tienda",
+      "dialog": {
+        "title": "Crear Nueva Tienda",
+        "description": "Completa los detalles a continuacion para crear tu nueva tienda."
+      },
+      "upgradeTooltip": {
+        "free": "Actualiza a PRO para mas tiendas",
+        "pro": "Actualiza a ENTERPRISE para tiendas ilimitadas"
+      },
       "form": {
         "fields": {
           "name": {
