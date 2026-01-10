@@ -368,7 +368,7 @@ This feature enables merchants to create stores with name, description, and subd
 #### Create Your First Store CTA & Dashboard Integration
 **Dependencies:** Task Group 6
 
-- [ ] 7.0 Complete first-time user experience
+- [x] 7.0 Complete first-time user experience
   - [x] 7.1 Write 2-8 focused tests for dashboard integration
     - Test StoreStats displays CTA when storesCount is 0
     - Test CTA card renders with correct content
@@ -396,10 +396,10 @@ This feature enables merchants to create stores with name, description, and subd
   - [x] 7.5 Create FirstStoreCTA types
     - Path: features/stores/types/store.ts
     - Add: FirstStoreCTAProps
-  - [ ] 7.6 Add CTA translation keys
+  - [x] 7.6 Add CTA translation keys
     - Path: locales/en/common.json and locales/es/common.json
     - Add: ui.store.firstStore.heading, ui.store.firstStore.description
-  - [ ] 7.7 Run dashboard integration tests
+  - [x] 7.7 Run dashboard integration tests
     - Execute ONLY the 2-8 tests written in 7.1
     - Verify CTA displays correctly for users with no stores
     - Do NOT run entire test suite

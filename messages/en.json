@@ -362,6 +362,10 @@
           "redirecting": "Redirecting to your store..."
         }
       }
+    },
+    "firstStore": {
+      "heading": "Create Your First Store",
+      "description": "Get started by creating your first store to start selling online"
     }
   }
 }

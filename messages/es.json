@@ -362,6 +362,10 @@
           "redirecting": "Redirigiendo a tu tienda..."
         }
       }
+    },
+    "firstStore": {
+      "heading": "Crea Tu Primera Tienda",
+      "description": "Comienza creando tu primera tienda para empezar a vender en linea"
     }
   }
 }
