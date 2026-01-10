@@ -230,7 +230,7 @@ This feature enables merchants to create stores with name, description, and subd
 #### Store Creation Form & Access Gate Integration
 **Dependencies:** Task Group 4
 
-- [ ] 5.0 Complete access control and UI components
+- [x] 5.0 Complete access control and UI components
   - [x] 5.1 Write 2-8 focused tests for UI components
     - Test CreateStoreForm renders all fields
     - Test form validates input client-side
