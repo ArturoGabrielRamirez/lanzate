@@ -326,7 +326,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Update "account" link to "profile" (href="/[locale]/profile")
     - Use shadcn/ui: Button (variant="ghost" for nav links)
     - Use next-intl for Link and useTranslations
-  - [ ] 6.3 Create private layout file
+  - [x] 6.3 Create private layout file
     - Path: src/app/[locale]/(private)/layout.tsx
     - Wrap children with AccessManagerProvider
     - Get user session from Supabase Auth
