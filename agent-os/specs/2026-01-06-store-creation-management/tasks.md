@@ -369,7 +369,7 @@ This feature enables merchants to create stores with name, description, and subd
 **Dependencies:** Task Group 6
 
 - [ ] 7.0 Complete first-time user experience
-  - [ ] 7.1 Write 2-8 focused tests for dashboard integration
+  - [x] 7.1 Write 2-8 focused tests for dashboard integration
     - Test StoreStats displays CTA when storesCount is 0
     - Test CTA card renders with correct content
     - Test CTA shows CreateStoreButton
