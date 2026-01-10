@@ -28,7 +28,11 @@
   "nav": {
     "home": "Inicio",
     "access": "Acceso",
-    "moreInfo": "Mas Info"
+    "moreInfo": "Mas Info",
+    "dashboard": "Panel",
+    "newSale": "Nueva Venta",
+    "stores": "Tiendas",
+    "profile": "Perfil"
   },
   "auth": {
     "signup": {

@@ -28,7 +28,11 @@
   "nav": {
     "home": "Home",
     "access": "Access",
-    "moreInfo": "More Info"
+    "moreInfo": "More Info",
+    "dashboard": "Dashboard",
+    "newSale": "New Sale",
+    "stores": "Stores",
+    "profile": "Profile"
   },
   "auth": {
     "validation": {

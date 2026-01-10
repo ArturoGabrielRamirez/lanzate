@@ -341,7 +341,7 @@ This feature enables merchants to create stores with name, description, and subd
   - [x] 6.5 Create PrivateHeader types
     - Path: features/layout/types/layout.ts
     - Add: PrivateHeaderProps (if needed)
-  - [ ] 6.6 Add navigation translation keys
+  - [x] 6.6 Add navigation translation keys
     - Path: locales/en/common.json and locales/es/common.json
     - Add: nav.dashboard, nav.newSale, nav.stores, nav.profile
   - [ ] 6.7 Run navigation tests
