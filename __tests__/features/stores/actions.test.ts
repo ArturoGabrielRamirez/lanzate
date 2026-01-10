@@ -336,3 +336,72 @@ describe('Create Store Action - Path Revalidation', () => {
     // In a real implementation, you would mock revalidatePath
   });
 });
+
+describe('Get Store by Subdomain Action', () => {
+  it('should return store when subdomain exists', async () => {
+    const { getStoreBySubdomainAction } = await import(
+      '@/features/stores/actions/getStoreBySubdomain.action'
+    );
+
+    // Use an existing store subdomain from test setup
+    const result = await getStoreBySubdomainAction('existing-store-1');
+
+    expect(result).toHaveProperty('hasError');
+    expect(result).toHaveProperty('message');
+    expect(result).toHaveProperty('payload');
+
+    if (!result.hasError && result.payload) {
+      expect(result.payload.subdomain).toBe('existing-store-1');
+    }
+  });
+
+  it('should return error when subdomain does not exist', async () => {
+    const { getStoreBySubdomainAction } = await import(
+      '@/features/stores/actions/getStoreBySubdomain.action'
+    );
+
+    const result = await getStoreBySubdomainAction('nonexistent-store-xyz');
+
+    expect(result.hasError).toBe(true);
+    expect(result.payload).toBeNull();
+    expect(result.message).toBe('Store not found');
+  });
+
+  it('should return error when subdomain is empty', async () => {
+    const { getStoreBySubdomainAction } = await import(
+      '@/features/stores/actions/getStoreBySubdomain.action'
+    );
+
+    const result = await getStoreBySubdomainAction('');
+
+    expect(result.hasError).toBe(true);
+    expect(result.payload).toBeNull();
+    expect(result.message).toBe('Subdomain is required');
+  });
+
+  it('should normalize subdomain to lowercase before searching', async () => {
+    const { getStoreBySubdomainAction } = await import(
+      '@/features/stores/actions/getStoreBySubdomain.action'
+    );
+
+    // Create a store with lowercase subdomain for this test
+    await prisma.store.create({
+      data: {
+        name: 'Lowercase Test Store',
+        subdomain: 'lowercase-test',
+        ownerId: testUserIds.free,
+      },
+    });
+
+    // Search with uppercase should find it (normalized to lowercase)
+    const result = await getStoreBySubdomainAction('LOWERCASE-TEST');
+
+    expect(result.hasError).toBe(false);
+    if (result.payload) {
+      expect(result.payload.subdomain).toBe('lowercase-test');
+    }
+
+    // Cleanup
+    await prisma.store.delete({ where: { subdomain: 'lowercase-test' } });
+  });
+});

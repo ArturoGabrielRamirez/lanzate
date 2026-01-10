@@ -18,6 +18,7 @@ import {
   createStoreData,
   findUserStoresData,
   countUserStoresData,
+  findStoreBySubdomainData,
 } from '@/features/stores/data';
 import { createStoreService } from '@/features/stores/services';
 
@@ -327,5 +328,57 @@ describe('Service Layer - Store Limit Enforcement', () => {
       expect(error instanceof Error).toBe(true);
       expect((error as Error).message).toBe('errors.store.limitReached.free');
     }
+  });
+});
+
+describe('Data Layer - Find Store by Subdomain', () => {
+  it('should find store by subdomain when it exists', async () => {
+    // Create a store with a known subdomain
+    const testSubdomain = 'findable-store';
+    await prisma.store.create({
+      data: {
+        name: 'Findable Store',
+        subdomain: testSubdomain,
+        ownerId: testUserIds.free,
+      },
+    });
+
+    const store = await findStoreBySubdomainData(testSubdomain);
+
+    expect(store).toBeDefined();
+    expect(store?.subdomain).toBe(testSubdomain);
+    expect(store?.name).toBe('Findable Store');
+
+    // Cleanup
+    await prisma.store.delete({ where: { subdomain: testSubdomain } });
+  });
+
+  it('should return null when subdomain does not exist', async () => {
+    const store = await findStoreBySubdomainData('nonexistent-subdomain-xyz');
+
+    expect(store).toBeNull();
+  });
+
+  it('should find store with case-sensitive subdomain match', async () => {
+    const testSubdomain = 'case-sensitive-store';
+    await prisma.store.create({
+      data: {
+        name: 'Case Sensitive Store',
+        subdomain: testSubdomain,
+        ownerId: testUserIds.free,
+      },
+    });
+
+    // Exact match should work
+    const exactMatch = await findStoreBySubdomainData(testSubdomain);
+    expect(exactMatch).toBeDefined();
+    expect(exactMatch?.subdomain).toBe(testSubdomain);
+
+    // Different case should not match (subdomains are stored lowercase)
+    const upperCase = await findStoreBySubdomainData('CASE-SENSITIVE-STORE');
+    expect(upperCase).toBeNull();
+
+    // Cleanup
+    await prisma.store.delete({ where: { subdomain: testSubdomain } });
   });
 });
