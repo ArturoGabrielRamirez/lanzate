@@ -313,7 +313,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Test profile link (not account)
     - Test navigation visible across private routes
     - Limit to critical navigation behaviors only
-  - [ ] 6.2 Create PrivateHeader component
+  - [x] 6.2 Create PrivateHeader component
     - Path: features/layout/components/PrivateHeader.tsx
     - Directive: "use client"
     - Reference: features/layout/components/landing-header.tsx for composition pattern
