@@ -306,7 +306,7 @@ This feature enables merchants to create stores with name, description, and subd
 #### Create Private Layout and Refactor Navigation
 **Dependencies:** Task Group 5
 
-- [ ] 6.0 Complete private layout and navigation refactor
+- [x] 6.0 Complete private layout and navigation refactor
   - [x] 6.1 Write 2-8 focused tests for navigation
     - Test PrivateHeader renders all navigation links
     - Test PrivateHeader includes LanguageSwitcher and ThemeToggle
@@ -344,7 +344,7 @@ This feature enables merchants to create stores with name, description, and subd
   - [x] 6.6 Add navigation translation keys
     - Path: locales/en/common.json and locales/es/common.json
     - Add: nav.dashboard, nav.newSale, nav.stores, nav.profile
-  - [ ] 6.7 Run navigation tests
+  - [x] 6.7 Run navigation tests
     - Execute ONLY the 2-8 tests written in 6.1
     - Verify navigation renders correctly across private routes
     - Do NOT run entire test suite
