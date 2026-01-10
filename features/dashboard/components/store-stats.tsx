@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { Button } from '@/features/shadcn/components/ui/button';
 import { Card } from '@/features/shadcn/components/ui/card';
+import { CreateStoreButtonGate } from '@/features/stores/components/CreateStoreButtonGate';
 import { FirstStoreCTA } from '@/features/stores/components/FirstStoreCTA';
 
 import type { AccountType } from '@prisma/client';
@@ -107,6 +108,10 @@ export function StoreStats({ storesCount, accountType }: StoreStatsProps) {
                     in seconds!
                   </p>
                 </div>
+                <CreateStoreButtonGate
+                  currentStoreCount={storesCount}
+                  accountType={accountType}
+                />
               </div>
             </Card>
           </motion.div>
