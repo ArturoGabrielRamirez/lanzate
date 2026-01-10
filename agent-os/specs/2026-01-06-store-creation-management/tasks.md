@@ -338,7 +338,7 @@ This feature enables merchants to create stores with name, description, and subd
     - Path: features/dashboard/components/dashboard-navigation.tsx
     - Remove file after confirming PrivateHeader is working
     - Remove any imports of DashboardNavigation from dashboard pages
-  - [ ] 6.5 Create PrivateHeader types
+  - [x] 6.5 Create PrivateHeader types
     - Path: features/layout/types/layout.ts
     - Add: PrivateHeaderProps (if needed)
   - [ ] 6.6 Add navigation translation keys
