@@ -13,7 +13,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 **Dependencies:** None
 
 - [ ] 1.0 Complete database schema for billing feature
-  - [ ] 1.1 Write 4-6 focused tests for billing models
+  - [x] 1.1 Write 4-6 focused tests for billing models
     - Test Payment model creation with required fields
     - Test Invoice model creation and payment association
     - Test PlanChangeLog model with initiator tracking
