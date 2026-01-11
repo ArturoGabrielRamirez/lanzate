@@ -78,41 +78,41 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 2: Data Layer Functions
 **Dependencies:** Task Group 1
 
-- [ ] 2.0 Complete data layer for billing feature
+- [x] 2.0 Complete data layer for billing feature
   - [x] 2.1 Write 4-6 focused tests for data layer functions
     - Test createPaymentData creates payment record
     - Test updatePaymentStatusData updates status correctly
     - Test createInvoiceData creates invoice with sequential number
     - Test getPaymentsBySubscriptionData returns paginated results
     - Test createPlanChangeLogData records plan changes
-  - [ ] 2.2 Create payment data functions
+  - [x] 2.2 Create payment data functions
     - `createPaymentData(input: CreatePaymentInput): Promise<Payment>`
     - `updatePaymentStatusData(id: string, status: PaymentStatus): Promise<Payment>`
     - `getPaymentByMercadopagoIdData(mpId: string): Promise<Payment | null>`
     - `getPaymentsBySubscriptionData(subscriptionId: string, filters?: PaymentFilters): Promise<PaginatedPayments>`
-    - Location: `features/billing/data/payment.data.ts`
+    - Location: `features/billing/data/` (one function per file)
     - Follow pattern from existing data files
-  - [ ] 2.3 Create invoice data functions
+  - [x] 2.3 Create invoice data functions
     - `createInvoiceData(input: CreateInvoiceInput): Promise<Invoice>`
     - `getInvoiceByPaymentIdData(paymentId: string): Promise<Invoice | null>`
     - `getNextInvoiceNumberData(subscriptionId: string): Promise<string>`
-    - Location: `features/billing/data/invoice.data.ts`
-  - [ ] 2.4 Create plan change log data functions
+    - Location: `features/billing/data/` (one function per file)
+  - [x] 2.4 Create plan change log data functions
     - `createPlanChangeLogData(input: CreatePlanChangeLogInput): Promise<PlanChangeLog>`
     - `getPlanChangeLogsBySubscriptionData(subscriptionId: string): Promise<PlanChangeLog[]>`
-    - Location: `features/billing/data/plan-change-log.data.ts`
-  - [ ] 2.5 Create subscription data extensions
+    - Location: `features/billing/data/` (one function per file)
+  - [x] 2.5 Create subscription data extensions
     - `updateSubscriptionMercadopagoData(subscriptionId: string, mpData: MercadopagoSubscriptionData): Promise<Subscription>`
     - `getSubscriptionByMercadopagoIdData(mpPreapprovalId: string): Promise<Subscription | null>`
     - `getSubscriptionByUserEmailData(email: string): Promise<Subscription | null>`
-    - Location: `features/billing/data/subscription.data.ts`
-  - [ ] 2.6 Define TypeScript types for billing feature
+    - Location: `features/billing/data/` (one function per file)
+  - [x] 2.6 Define TypeScript types for billing feature
     - Create types in `features/billing/types/billing.ts`
     - Re-export Prisma types: Payment, Invoice, PlanChangeLog
     - Define input types: CreatePaymentInput, CreateInvoiceInput, CreatePlanChangeLogInput
     - Define filter types: PaymentFilters, PaginatedPayments
     - Follow pattern from `features/*/types/*.ts`
-  - [ ] 2.7 Ensure data layer tests pass
+  - [x] 2.7 Ensure data layer tests pass
     - Run ONLY the 4-6 tests written in 2.1
     - Verify all data functions work correctly
 

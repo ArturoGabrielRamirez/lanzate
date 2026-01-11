@@ -19,16 +19,12 @@ import {
   updatePaymentStatusData,
   getPaymentByMercadopagoIdData,
   getPaymentsBySubscriptionData,
-} from '@/features/billing/data/payment.data';
-import {
   createInvoiceData,
   getInvoiceByPaymentIdData,
   getNextInvoiceNumberData,
-} from '@/features/billing/data/invoice.data';
-import {
   createPlanChangeLogData,
   getPlanChangeLogsBySubscriptionData,
-} from '@/features/billing/data/plan-change-log.data';
+} from '@/features/billing/data';
 import type {
   CreatePaymentInput,
   CreateInvoiceInput,
