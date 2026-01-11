@@ -79,7 +79,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 **Dependencies:** Task Group 1
 
 - [ ] 2.0 Complete data layer for billing feature
-  - [ ] 2.1 Write 4-6 focused tests for data layer functions
+  - [x] 2.1 Write 4-6 focused tests for data layer functions
     - Test createPaymentData creates payment record
     - Test updatePaymentStatusData updates status correctly
     - Test createInvoiceData creates invoice with sequential number
