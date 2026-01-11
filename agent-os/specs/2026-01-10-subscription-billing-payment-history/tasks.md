@@ -12,53 +12,53 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 1: Prisma Models and Migrations
 **Dependencies:** None
 
-- [ ] 1.0 Complete database schema for billing feature
+- [x] 1.0 Complete database schema for billing feature
   - [x] 1.1 Write 4-6 focused tests for billing models
     - Test Payment model creation with required fields
     - Test Invoice model creation and payment association
     - Test PlanChangeLog model with initiator tracking
     - Test Subscription model extension with MercadoPago fields
     - Test enum values for PaymentStatus and InitiatorType
-  - [ ] 1.2 Add MercadoPago fields to existing Subscription model
+  - [x] 1.2 Add MercadoPago fields to existing Subscription model
     - Add `mercadopagoPreapprovalId String? @map("mercadopago_preapproval_id")`
     - Add `status SubscriptionStatus @default(PENDING)`
     - Add `nextBillingDate DateTime? @map("next_billing_date")`
     - Add index on `mercadopagoPreapprovalId`
     - Reference existing pattern: `prisma/schema.prisma` Subscription model
-  - [ ] 1.3 Create PaymentStatus and InitiatorType enums
+  - [x] 1.3 Create PaymentStatus and InitiatorType enums
     - PaymentStatus: PENDING, APPROVED, REJECTED, REFUNDED, PARTIALLY_REFUNDED, CANCELLED
     - SubscriptionStatus: PENDING, AUTHORIZED, PAUSED, CANCELLED
     - InitiatorType: OWNER, EMPLOYEE, SYSTEM
-  - [ ] 1.4 Create Payment model
+  - [x] 1.4 Create Payment model
     - Fields: id, subscriptionId, mercadopagoPaymentId, amount, currency, status, paidAt
     - AFIP-ready fields: cuit, ivaAmount, netAmount, caeCode (nullable)
     - Timestamps: createdAt, updatedAt
     - Relation: belongs_to Subscription
     - Indexes: subscriptionId, mercadopagoPaymentId
     - Map to table: "payments"
-  - [ ] 1.5 Create Invoice model
+  - [x] 1.5 Create Invoice model
     - Fields: id, paymentId, invoiceNumber, issuedAt, customerName, customerEmail
     - AFIP-ready fields: customerCuit, subtotal, ivaAmount, total, caeCode, caeExpirationDate (nullable)
     - Timestamps: createdAt, updatedAt
     - Relation: belongs_to Payment (one-to-one)
     - Index: paymentId, invoiceNumber
     - Map to table: "invoices"
-  - [ ] 1.6 Create PlanChangeLog model
+  - [x] 1.6 Create PlanChangeLog model
     - Fields: id, subscriptionId, previousPlan (AccountType), newPlan (AccountType), changedAt
     - Initiator tracking: initiatorType (InitiatorType enum), initiatorId (nullable String)
     - Timestamps: createdAt
     - Relation: belongs_to Subscription
     - Index: subscriptionId
     - Map to table: "plan_change_logs"
-  - [ ] 1.7 Add relations to Subscription model
+  - [x] 1.7 Add relations to Subscription model
     - Subscription has_many Payment
     - Subscription has_many PlanChangeLog
-  - [ ] 1.8 Generate and review Prisma migration
+  - [x] 1.8 Generate and review Prisma migration
     - Run `bunx prisma migrate dev --create-only --name add_billing_models`
     - Review generated SQL before applying
     - Apply migration after user approval
     - Run `bunx prisma generate` to update types
-  - [ ] 1.9 Ensure database layer tests pass
+  - [x] 1.9 Ensure database layer tests pass
     - Run ONLY the 4-6 tests written in 1.1
     - Verify migrations run successfully
     - Verify Prisma types are generated correctly

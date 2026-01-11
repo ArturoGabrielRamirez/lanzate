@@ -148,7 +148,7 @@ describe('Payment Model', () => {
     expect(payment).toBeDefined();
     expect(payment.subscriptionId).toBe(testSubscriptionId);
     expect(payment.mercadopagoPaymentId).toBe('mp-payment-001');
-    expect(payment.amount).toBe(10000.0);
+    expect(Number(payment.amount)).toBe(10000.0);
     expect(payment.currency).toBe('ARS');
     expect(payment.status).toBe('APPROVED');
     expect(payment.paidAt).toBeInstanceOf(Date);
@@ -223,8 +223,8 @@ describe('Payment Model', () => {
     });
 
     expect(paymentWithAfip.cuit).toBe('20-12345678-9');
-    expect(paymentWithAfip.ivaAmount).toBe(2100.0);
-    expect(paymentWithAfip.netAmount).toBe(10000.0);
+    expect(Number(paymentWithAfip.ivaAmount)).toBe(2100.0);
+    expect(Number(paymentWithAfip.netAmount)).toBe(10000.0);
     expect(paymentWithAfip.caeCode).toBeNull();
 
     // Clean up
@@ -253,9 +253,9 @@ describe('Invoice Model', () => {
     expect(invoice.invoiceNumber).toBe('INV-2026-0001');
     expect(invoice.customerName).toBe('Test Customer');
     expect(invoice.customerEmail).toBe(testUserEmail);
-    expect(invoice.subtotal).toBe(10000.0);
-    expect(invoice.ivaAmount).toBe(2100.0);
-    expect(invoice.total).toBe(12100.0);
+    expect(Number(invoice.subtotal)).toBe(10000.0);
+    expect(Number(invoice.ivaAmount)).toBe(2100.0);
+    expect(Number(invoice.total)).toBe(12100.0);
     expect(invoice.issuedAt).toBeInstanceOf(Date);
     expect(invoice.createdAt).toBeInstanceOf(Date);
 
@@ -272,9 +272,21 @@ describe('Invoice Model', () => {
   });
 
   it('should store AFIP-ready invoice fields including customerCuit, caeCode, and caeExpirationDate', async () => {
+    // Create a separate payment for this test to avoid unique constraint on paymentId
+    const afipPayment = await prisma.payment.create({
+      data: {
+        subscriptionId: testSubscriptionId,
+        mercadopagoPaymentId: 'mp-payment-afip-invoice',
+        amount: 12100.0,
+        currency: 'ARS',
+        status: 'APPROVED',
+        paidAt: new Date(),
+      },
+    });
+
     const invoiceWithAfip = await prisma.invoice.create({
       data: {
-        paymentId: testPaymentId,
+        paymentId: afipPayment.id,
         invoiceNumber: 'INV-2026-0002',
         issuedAt: new Date(),
         customerName: 'AFIP Test Customer',
@@ -295,6 +307,7 @@ describe('Invoice Model', () => {
 
     // Clean up
     await prisma.invoice.delete({ where: { id: invoiceWithAfip.id } });
+    await prisma.payment.delete({ where: { id: afipPayment.id } });
   });
 });
 
@@ -371,47 +384,52 @@ describe('Subscription Model Extensions', () => {
   });
 
   it('should validate SubscriptionStatus enum values: PENDING, AUTHORIZED, PAUSED, CANCELLED', async () => {
-    // Create a new subscription to test status values
-    const tempSubscription = await prisma.subscription.create({
-      data: {
-        userId: testUserId,
-        accountType: 'FREE',
-        status: 'PENDING',
-      },
+    // Use the existing subscription and test status transitions
+    // Store original status to restore later
+    const originalSubscription = await prisma.subscription.findUnique({
+      where: { id: testSubscriptionId },
     });
+    const originalStatus = originalSubscription?.status;
 
-    // Note: This will fail due to unique constraint on userId
-    // We need to delete the temp subscription for this test to work properly
-    // For TDD purposes, we test by updating the existing subscription
-
-    expect(tempSubscription.status).toBe('PENDING');
+    // Test PENDING status
+    await prisma.subscription.update({
+      where: { id: testSubscriptionId },
+      data: { status: 'PENDING' },
+    });
+    let updated = await prisma.subscription.findUnique({ where: { id: testSubscriptionId } });
+    expect(updated?.status).toBe('PENDING');
 
     // Test AUTHORIZED status
     await prisma.subscription.update({
-      where: { id: tempSubscription.id },
+      where: { id: testSubscriptionId },
       data: { status: 'AUTHORIZED' },
     });
-    let updated = await prisma.subscription.findUnique({ where: { id: tempSubscription.id } });
+    updated = await prisma.subscription.findUnique({ where: { id: testSubscriptionId } });
     expect(updated?.status).toBe('AUTHORIZED');
 
     // Test PAUSED status
     await prisma.subscription.update({
-      where: { id: tempSubscription.id },
+      where: { id: testSubscriptionId },
       data: { status: 'PAUSED' },
     });
-    updated = await prisma.subscription.findUnique({ where: { id: tempSubscription.id } });
+    updated = await prisma.subscription.findUnique({ where: { id: testSubscriptionId } });
     expect(updated?.status).toBe('PAUSED');
 
     // Test CANCELLED status
     await prisma.subscription.update({
-      where: { id: tempSubscription.id },
+      where: { id: testSubscriptionId },
       data: { status: 'CANCELLED' },
     });
-    updated = await prisma.subscription.findUnique({ where: { id: tempSubscription.id } });
+    updated = await prisma.subscription.findUnique({ where: { id: testSubscriptionId } });
     expect(updated?.status).toBe('CANCELLED');
 
-    // Clean up - delete temp subscription
-    await prisma.subscription.delete({ where: { id: tempSubscription.id } });
+    // Restore original status
+    if (originalStatus) {
+      await prisma.subscription.update({
+        where: { id: testSubscriptionId },
+        data: { status: originalStatus },
+      });
+    }
   });
 
   it('should establish has_many relationships with Payment and PlanChangeLog', async () => {

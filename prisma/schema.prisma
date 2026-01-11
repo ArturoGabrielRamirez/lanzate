@@ -17,6 +17,28 @@ enum AccountType {
   ENTERPRISE
 }
 
+enum SubscriptionStatus {
+  PENDING
+  AUTHORIZED
+  PAUSED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  REFUNDED
+  PARTIALLY_REFUNDED
+  CANCELLED
+}
+
+enum InitiatorType {
+  OWNER
+  EMPLOYEE
+  SYSTEM
+}
+
 model User {
   id         String   @id @default(cuid())
   supabaseId String   @unique @map("supabase_user_id")
@@ -34,16 +56,26 @@ model User {
 }
 
 model Subscription {
-  id          String      @id @default(cuid())
-  userId      String      @unique @map("user_id")
-  accountType AccountType @map("account_type")
-  createdAt   DateTime    @default(now()) @map("created_at")
-  updatedAt   DateTime    @updatedAt @map("updated_at")
+  id                       String             @id @default(cuid())
+  userId                   String             @unique @map("user_id")
+  accountType              AccountType        @map("account_type")
+  
+  // 1.2 MercadoPago fields
+  mercadopagoPreapprovalId String?            @map("mercadopago_preapproval_id")
+  status                   SubscriptionStatus @default(PENDING)
+  nextBillingDate          DateTime?          @map("next_billing_date")
+  
+  createdAt                DateTime           @default(now()) @map("created_at")
+  updatedAt                DateTime           @updatedAt @map("updated_at")
 
-  // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relations (1.7)
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments        Payment[]
+  planChangeLogs  PlanChangeLog[]
 
+  // Indexes (1.2)
   @@index([userId])
+  @@index([mercadopagoPreapprovalId])
   @@map("subscriptions")
 }
 
@@ -62,4 +94,79 @@ model Store {
   @@index([subdomain])
   @@index([ownerId])
   @@map("stores")
+}
+
+
+model Payment {
+  id                    String        @id @default(cuid())
+  subscriptionId        String        @map("subscription_id")
+  mercadopagoPaymentId  String        @unique @map("mercadopago_payment_id")
+  amount                Decimal       @db.Decimal(10, 2)
+  currency              String        @default("ARS")
+  status                PaymentStatus
+  paidAt                DateTime?     @map("paid_at")
+
+  // AFIP-ready fields
+  cuit                  String?
+  ivaAmount             Decimal?      @map("iva_amount") @db.Decimal(10, 2)
+  netAmount             Decimal?      @map("net_amount") @db.Decimal(10, 2)
+  caeCode               String?       @map("cae_code")
+
+  createdAt             DateTime      @default(now()) @map("created_at")
+  updatedAt             DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  subscription          Subscription  @relation(fields: [subscriptionId], references: [id])
+  invoice               Invoice?
+
+  @@index([subscriptionId])
+  @@index([mercadopagoPaymentId])
+  @@map("payments")
+}
+
+model Invoice {
+  id                 String    @id @default(cuid())
+  paymentId          String    @unique @map("payment_id")
+  invoiceNumber      String    @unique @map("invoice_number")
+  issuedAt           DateTime  @map("issued_at")
+  customerName       String    @map("customer_name")
+  customerEmail      String    @map("customer_email")
+
+  // AFIP-ready fields
+  customerCuit       String?   @map("customer_cuit")
+  subtotal           Decimal   @db.Decimal(10, 2)
+  ivaAmount          Decimal   @map("iva_amount") @db.Decimal(10, 2)
+  total              Decimal   @db.Decimal(10, 2)
+  caeCode            String?   @map("cae_code")
+  caeExpirationDate  DateTime? @map("cae_expiration_date")
+
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  payment            Payment   @relation(fields: [paymentId], references: [id])
+
+  @@index([paymentId])
+  @@index([invoiceNumber])
+  @@map("invoices")
+}
+
+model PlanChangeLog {
+  id             String        @id @default(cuid())
+  subscriptionId String        @map("subscription_id")
+  previousPlan   AccountType   @map("previous_plan")
+  newPlan        AccountType   @map("new_plan")
+  changedAt      DateTime      @default(now()) @map("changed_at")
+  
+  // Initiator tracking
+  initiatorType  InitiatorType @map("initiator_type")
+  initiatorId    String?       @map("initiator_id")
+
+  createdAt      DateTime      @default(now()) @map("created_at")
+
+  // Relations
+  subscription   Subscription  @relation(fields: [subscriptionId], references: [id])
+
+  @@index([subscriptionId])
+  @@map("plan_change_logs")
 }
