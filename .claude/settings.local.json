@@ -61,7 +61,8 @@
       "Bash(bun run tsc:*)",
       "Bash(./node_modules/.bin/tsc:*)",
       "Bash(npx vitest:*)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nchore: bump version to 0.8.0 - complete Store Creation & Management\n\nCompleted roadmap item 2 (Large feature):\n- Database schema: Subscription model, Store subdomain/description fields\n- Account-type store limits (FREE: 2, PRO: 5, ENTERPRISE: unlimited)\n- Server actions with validation and error handling\n- UI components: CreateStoreForm, CreateStoreButton with AccessGate\n- Private layout refactor with new PrivateHeader\n- FirstStoreCTA for new users on dashboard\n- Subdomain routing middleware (proxy.ts)\n- Full i18n support (Spanish/English)\n- Comprehensive test coverage\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
