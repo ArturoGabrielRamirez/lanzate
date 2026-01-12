@@ -178,7 +178,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 **Dependencies:** Task Groups 2, 3
 
 - [ ] 4.0 Complete server actions for billing feature
-  - [ ] 4.1 Write 3-5 focused tests for server actions
+  - [x] 4.1 Write 3-5 focused tests for server actions
     - Test getBillingHistoryAction returns paginated payments with filters
     - Test getSubscriptionStatusAction returns current subscription details
     - Test downloadInvoiceAction generates PDF for valid payment
