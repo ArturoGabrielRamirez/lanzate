@@ -186,3 +186,18 @@ export interface SubscriptionStatus {
   mercadopagoId: string | null;
   lastPayment: LastPaymentInfo | null;
 }
+
+/**
+ * Payment with its associated invoice
+ */
+export type PaymentWithInvoice = Payment & {
+  invoice: Invoice | null;
+};
+
+/**
+ * Invoice PDF generation response
+ */
+export interface InvoicePdfResult {
+  buffer: Buffer;
+  filename: string;
+}

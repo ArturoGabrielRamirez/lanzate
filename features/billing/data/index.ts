@@ -14,6 +14,7 @@ export { getPaymentsBySubscriptionData } from '@/features/billing/data/getPaymen
 export { createInvoiceData } from '@/features/billing/data/createInvoice.data';
 export { getInvoiceByPaymentIdData } from '@/features/billing/data/getInvoiceByPaymentId.data';
 export { getNextInvoiceNumberData } from '@/features/billing/data/getNextInvoiceNumber.data';
+export { getPaymentWithInvoiceData } from '@/features/billing/data/getPaymentWithInvoice.data';
 
 // Plan change log data functions
 export { createPlanChangeLogData } from '@/features/billing/data/createPlanChangeLog.data';

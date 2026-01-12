@@ -193,7 +193,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Return: planType, status, nextBillingDate, mercadopagoId
     - Include last payment info if available
     - Location: `features/billing/actions/get-subscription-status.action.ts`
-  - [ ] 4.4 Create invoice download action
+  - [x] 4.4 Create invoice download action
     - `downloadInvoiceAction(paymentId: string): Promise<ServerResponse<Buffer>>`
     - Validate user has access to the payment
     - Generate PDF using invoice data
