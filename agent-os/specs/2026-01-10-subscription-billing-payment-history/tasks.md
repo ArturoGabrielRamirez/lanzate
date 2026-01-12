@@ -177,7 +177,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 4: Server Actions
 **Dependencies:** Task Groups 2, 3
 
-- [ ] 4.0 Complete server actions for billing feature
+- [x] 4.0 Complete server actions for billing feature
   - [x] 4.1 Write 3-5 focused tests for server actions
     - Test getBillingHistoryAction returns paginated payments with filters
     - Test getSubscriptionStatusAction returns current subscription details
@@ -212,9 +212,10 @@ This feature implements MercadoPago subscription billing integration with paymen
     - paymentFiltersSchema: page, pageSize, status, dateFrom, dateTo
     - planChangeInputSchema: subscriptionId, previousPlan, newPlan, initiatorType, initiatorId
     - Follow pattern from existing schema files
-  - [ ] 4.7 Ensure server actions tests pass
+  - [x] 4.7 Ensure server actions tests pass
     - Run ONLY the 3-5 tests written in 4.1
     - Verify actions return correct ServerResponse format
+    - **Result: 8 tests passed (8/8) in 8.79s**
 
 **Acceptance Criteria:**
 - All 3-5 tests from 4.1 pass
