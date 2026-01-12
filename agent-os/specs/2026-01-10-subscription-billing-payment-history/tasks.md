@@ -188,7 +188,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Validate filters with Yup schema
     - Call data layer for paginated payments
     - Location: `features/billing/actions/get-billing-history.action.ts`
-  - [ ] 4.3 Create subscription status action
+  - [x] 4.3 Create subscription status action
     - `getSubscriptionStatusAction(): Promise<ServerResponse<SubscriptionStatus>>`
     - Return: planType, status, nextBillingDate, mercadopagoId
     - Include last payment info if available

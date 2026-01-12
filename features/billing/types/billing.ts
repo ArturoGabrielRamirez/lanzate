@@ -9,13 +9,25 @@ import type {
   Payment,
   Invoice,
   PlanChangeLog,
+  Subscription,
   PaymentStatus,
   AccountType,
   InitiatorType,
+  SubscriptionStatus as PrismaSubscriptionStatus,
 } from '@prisma/client';
 
 // Re-export Prisma types
-export type { Payment, Invoice, PlanChangeLog, PaymentStatus, AccountType, InitiatorType };
+export type { Payment, Invoice, PlanChangeLog, Subscription, PaymentStatus, AccountType, InitiatorType };
+
+// Re-export SubscriptionStatus enum from Prisma with alias to avoid name collision
+export type { PrismaSubscriptionStatus };
+
+/**
+ * Subscription with its last payment included
+ */
+export type SubscriptionWithLastPayment = Subscription & {
+  payments: Payment[];
+};
 
 /**
  * Input type for creating a new payment record
@@ -153,4 +165,24 @@ export interface WebhookNotification {
   data: {
     id: string;
   };
+}
+
+/**
+ * Last payment information for subscription status
+ */
+export interface LastPaymentInfo {
+  amount: number;
+  status: PaymentStatus;
+  paidAt: Date | null;
+}
+
+/**
+ * Subscription status response for getSubscriptionStatusAction
+ */
+export interface SubscriptionStatus {
+  planType: AccountType;
+  status: PrismaSubscriptionStatus;
+  nextBillingDate: Date | null;
+  mercadopagoId: string | null;
+  lastPayment: LastPaymentInfo | null;
 }

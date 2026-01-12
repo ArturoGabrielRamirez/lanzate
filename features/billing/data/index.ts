@@ -23,3 +23,7 @@ export { getPlanChangeLogsBySubscriptionData } from '@/features/billing/data/get
 export { updateSubscriptionMercadopagoData } from '@/features/billing/data/updateSubscriptionMercadopago.data';
 export { getSubscriptionByMercadopagoIdData } from '@/features/billing/data/getSubscriptionByMercadopagoId.data';
 export { getSubscriptionByUserEmailData } from '@/features/billing/data/getSubscriptionByUserEmail.data';
+export { getSubscriptionWithLastPaymentData } from '@/features/billing/data/getSubscriptionWithLastPayment.data';
+
+// Re-export types from types directory
+export type { SubscriptionWithLastPayment } from '@/features/billing/types/billing';
