@@ -182,7 +182,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Test getBillingHistoryAction returns paginated payments with filters
     - Test getSubscriptionStatusAction returns current subscription details
     - Test downloadInvoiceAction generates PDF for valid payment
-  - [ ] 4.2 Create billing history action
+  - [x] 4.2 Create billing history action
     - `getBillingHistoryAction(filters: PaymentFilters): Promise<ServerResponse<PaginatedPayments>>`
     - Use actionWrapper pattern from `features/global/utils/action-wrapper.ts`
     - Validate filters with Yup schema
@@ -203,7 +203,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Create `logPlanChangeAction(previousPlan: AccountType, newPlan: AccountType, initiatorType: InitiatorType, initiatorId?: string)`
     - Call from existing upgrade/downgrade actions
     - Location: `features/billing/actions/log-plan-change.action.ts`
-  - [ ] 4.6 Define Yup validation schemas for billing
+  - [x] 4.6 Define Yup validation schemas for billing
     - Create `features/billing/schemas/billing.schema.ts`
     - paymentFiltersSchema: page, pageSize, status, dateFrom, dateTo
     - Follow pattern from existing schema files

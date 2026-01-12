@@ -33,7 +33,7 @@ export async function getPaymentsBySubscriptionData(
   const where: {
     subscriptionId: string;
     status?: PaymentStatus;
-    createdAt?: {
+    paidAt?: {
       gte?: Date;
       lte?: Date;
     };
@@ -45,13 +45,14 @@ export async function getPaymentsBySubscriptionData(
     where.status = filters.status;
   }
 
+  // Filter by paidAt (payment date) for billing history date range filtering
   if (filters?.dateFrom || filters?.dateTo) {
-    where.createdAt = {};
+    where.paidAt = {};
     if (filters.dateFrom) {
-      where.createdAt.gte = filters.dateFrom;
+      where.paidAt.gte = filters.dateFrom;
     }
     if (filters.dateTo) {
-      where.createdAt.lte = filters.dateTo;
+      where.paidAt.lte = filters.dateTo;
     }
   }
 
