@@ -140,7 +140,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - `handlePaymentUpdated(paymentId: string): Promise<void>`
     - `handleSubscriptionPreapprovalUpdated(preapprovalId: string): Promise<void>`
     - Each handler fetches full data from MercadoPago API then updates DB
-  - [ ] 3.3 Extend existing webhook route
+  - [x] 3.3 Extend existing webhook route
     - Modify `app/api/mercadopago/route.ts`
     - Handle notification types: `payment`, `subscription_preapproval`
     - Extract notification action: `payment.created`, `payment.updated`, `subscription_preapproval.updated`

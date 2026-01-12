@@ -8,8 +8,6 @@
  *
  * IMPORTANT: Returns 200 immediately to avoid MercadoPago timeouts.
  * Processing happens asynchronously after the response.
- *
- * This is a stub implementation for TDD - full implementation in task 3.3.
  */
 
 import {
@@ -18,16 +16,7 @@ import {
   handleSubscriptionPreapprovalUpdated,
 } from '@/features/billing/services';
 
-/**
- * Webhook notification body structure from MercadoPago
- */
-interface WebhookNotification {
-  type: string;
-  action?: string;
-  data: {
-    id: string;
-  };
-}
+import type { WebhookNotification } from '@/features/billing/types/billing';
 
 /**
  * POST handler for MercadoPago webhooks
@@ -63,36 +52,38 @@ export async function POST(request: Request): Promise<Response> {
  * Process webhook notification asynchronously
  *
  * This function handles the actual processing after the 200 response is sent.
- * In production, this would fetch data from MercadoPago API.
  */
 async function processWebhookAsync(body: WebhookNotification): Promise<void> {
   const { type, action, data } = body;
 
-  // Determine the notification type and action
+  // Determine the notification type from action or type field
   const notificationType = action || type;
 
   switch (notificationType) {
     case 'payment.created':
-    case 'payment':
-      if (action === 'payment.created' || type === 'payment') {
-        // TODO: Fetch payment data from MercadoPago API in task 3.4
-        // For now, log and skip (tests will inject mock data)
-        console.log(`[Webhook] Processing payment.created for payment ${data.id}`);
-        // await handlePaymentCreated(data.id);
-      }
+      console.log(`[Webhook] Processing payment.created for payment ${data.id}`);
+      await handlePaymentCreated(data.id);
       break;
 
     case 'payment.updated':
       console.log(`[Webhook] Processing payment.updated for payment ${data.id}`);
-      // TODO: Fetch payment data from MercadoPago API in task 3.4
-      // await handlePaymentUpdated(data.id);
+      await handlePaymentUpdated(data.id);
+      break;
+
+    case 'subscription_preapproval.updated':
+      console.log(`[Webhook] Processing subscription_preapproval.updated for preapproval ${data.id}`);
+      await handleSubscriptionPreapprovalUpdated(data.id);
+      break;
+
+    // Handle legacy notification format (type without action)
+    case 'payment':
+      console.log(`[Webhook] Processing payment notification for payment ${data.id}`);
+      await handlePaymentCreated(data.id);
       break;
 
     case 'subscription_preapproval':
-    case 'subscription_preapproval.updated':
-      console.log(`[Webhook] Processing subscription_preapproval.updated for preapproval ${data.id}`);
-      // TODO: Fetch preapproval data from MercadoPago API in task 3.4
-      // await handleSubscriptionPreapprovalUpdated(data.id);
+      console.log(`[Webhook] Processing subscription_preapproval for preapproval ${data.id}`);
+      await handleSubscriptionPreapprovalUpdated(data.id);
       break;
 
     default:

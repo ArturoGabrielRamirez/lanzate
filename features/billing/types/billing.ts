@@ -143,3 +143,14 @@ export interface HandleSubscriptionPreapprovalUpdatedOptions {
   getPreapproval?: (id: string) => Promise<MPPreapprovalData>;
   preapprovalData?: MPPreapprovalData;
 }
+
+/**
+ * Webhook notification body structure from MercadoPago
+ */
+export interface WebhookNotification {
+  type: string;
+  action?: string;
+  data: {
+    id: string;
+  };
+}
