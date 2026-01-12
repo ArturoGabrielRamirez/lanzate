@@ -198,14 +198,19 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Validate user has access to the payment
     - Generate PDF using invoice data
     - Location: `features/billing/actions/download-invoice.action.ts`
-  - [ ] 4.5 Create plan change action extension
+  - [x] 4.5 Create plan change action extension
     - Extend existing plan change flow to log changes
     - Create `logPlanChangeAction(previousPlan: AccountType, newPlan: AccountType, initiatorType: InitiatorType, initiatorId?: string)`
     - Call from existing upgrade/downgrade actions
     - Location: `features/billing/actions/log-plan-change.action.ts`
+    - **Integration points identified (DO NOT modify yet):**
+      - `backup/features/account/actions/cancel-suscription.action.ts` - Should log plan change to FREE when subscription cancelled
+      - `backup/features/account/actions/get-plan-href.action.ts` - Should log plan change after successful preapproval creation
+      - `features/billing/services/handleSubscriptionPreapprovalUpdated.service.ts` - Should log plan changes triggered by webhook (SYSTEM initiator)
   - [x] 4.6 Define Yup validation schemas for billing
     - Create `features/billing/schemas/billing.schema.ts`
     - paymentFiltersSchema: page, pageSize, status, dateFrom, dateTo
+    - planChangeInputSchema: subscriptionId, previousPlan, newPlan, initiatorType, initiatorId
     - Follow pattern from existing schema files
   - [ ] 4.7 Ensure server actions tests pass
     - Run ONLY the 3-5 tests written in 4.1

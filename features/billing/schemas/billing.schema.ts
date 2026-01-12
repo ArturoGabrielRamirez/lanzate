@@ -8,13 +8,23 @@
  * that compose into use-case specific schemas.
  */
 
-import { PaymentStatus } from '@prisma/client';
+import { AccountType, InitiatorType, PaymentStatus } from '@prisma/client';
 import * as yup from 'yup';
 
 /**
  * Valid payment status values for filtering
  */
 const validPaymentStatuses = Object.values(PaymentStatus);
+
+/**
+ * Valid account type values for plan changes
+ */
+const validAccountTypes = Object.values(AccountType);
+
+/**
+ * Valid initiator type values for plan changes
+ */
+const validInitiatorTypes = Object.values(InitiatorType);
 
 /**
  * Payment Filters Schema
@@ -95,9 +105,43 @@ export const paymentIdSchema = yup
   .trim();
 
 /**
+ * Plan Change Input Schema
+ *
+ * Validates input for logPlanChangeAction:
+ * - subscriptionId: required string
+ * - previousPlan: required AccountType enum value
+ * - newPlan: required AccountType enum value
+ * - initiatorType: required InitiatorType enum value
+ * - initiatorId: optional string (null for SYSTEM initiator)
+ */
+export const planChangeInputSchema = yup.object({
+  subscriptionId: yup
+    .string()
+    .required('El ID de suscripcion es obligatorio')
+    .trim(),
+  previousPlan: yup
+    .mixed<AccountType>()
+    .oneOf(validAccountTypes, 'Tipo de plan anterior invalido')
+    .required('El plan anterior es obligatorio'),
+  newPlan: yup
+    .mixed<AccountType>()
+    .oneOf(validAccountTypes, 'Tipo de plan nuevo invalido')
+    .required('El plan nuevo es obligatorio'),
+  initiatorType: yup
+    .mixed<InitiatorType>()
+    .oneOf(validInitiatorTypes, 'Tipo de iniciador invalido')
+    .required('El tipo de iniciador es obligatorio'),
+  initiatorId: yup
+    .string()
+    .nullable()
+    .default(null),
+});
+
+/**
  * Inferred TypeScript types from schemas
  *
  * These types are automatically generated from the Yup schemas
  * and ensure type safety when using these schemas in server actions
  */
 export type PaymentFiltersInput = yup.InferType<typeof paymentFiltersSchema>;
+export type PlanChangeInput = yup.InferType<typeof planChangeInputSchema>;
