@@ -232,7 +232,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 **Dependencies:** None (can run parallel to backend tasks)
 
 - [ ] 5.0 Complete reusable DataTable component
-  - [ ] 5.1 Write 3-4 focused tests for DataTable component
+  - [x] 5.1 Write 3-4 focused tests for DataTable component
     - Test renders columns based on column config
     - Test sorting toggles when header clicked
     - Test custom cell renderer displays correctly
