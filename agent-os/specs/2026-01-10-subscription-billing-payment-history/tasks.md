@@ -128,7 +128,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 **Dependencies:** Task Group 2
 
 - [ ] 3.0 Complete extended webhook handler
-  - [ ] 3.1 Write 4-6 focused tests for webhook handler
+  - [x] 3.1 Write 4-6 focused tests for webhook handler
     - Test payment.created notification creates payment record
     - Test payment.updated notification updates payment status
     - Test subscription_preapproval.updated handles authorized status
