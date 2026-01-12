@@ -14,7 +14,8 @@
  * Note: These tests mock the MercadoPago API responses to avoid external calls.
  */
 
-import { describe, it, expect, beforeAll, afterAll, mock, spyOn } from 'bun:test';
+import { describe, it, expect, beforeAll, afterAll, mock } from 'bun:test';
+
 import { prisma } from '@/lib/prisma';
 
 // Test data
@@ -136,7 +137,7 @@ describe('Webhook Handler - payment.created', () => {
   it('should create payment record when payment.created notification is received', async () => {
     // Import the handler functions (will be created in task 3.2)
     const { handlePaymentCreated } = await import(
-      '@/features/billing/services/webhook-handlers.service'
+      '@/features/billing/services'
     );
 
     // Mock the MercadoPago API call
@@ -144,7 +145,7 @@ describe('Webhook Handler - payment.created', () => {
 
     // Call the handler with mocked data
     const mercadopagoPaymentId = 'mp-webhook-payment-001';
-    const result = await handlePaymentCreated(mercadopagoPaymentId, {
+    await handlePaymentCreated(mercadopagoPaymentId, {
       getPayment: mockGetPayment,
       subscriptionId: testSubscriptionId,
       paymentData: {
@@ -185,7 +186,7 @@ describe('Webhook Handler - payment.updated', () => {
     });
 
     const { handlePaymentUpdated } = await import(
-      '@/features/billing/services/webhook-handlers.service'
+      '@/features/billing/services'
     );
 
     // Mock updated payment data with refunded status
@@ -226,7 +227,7 @@ describe('Webhook Handler - payment.updated', () => {
     });
 
     const { handlePaymentUpdated } = await import(
-      '@/features/billing/services/webhook-handlers.service'
+      '@/features/billing/services'
     );
 
     // Mock partially refunded payment data
@@ -261,7 +262,7 @@ describe('Webhook Handler - subscription_preapproval.updated', () => {
     });
 
     const { handleSubscriptionPreapprovalUpdated } = await import(
-      '@/features/billing/services/webhook-handlers.service'
+      '@/features/billing/services'
     );
 
     // Mock preapproval data with authorized status
@@ -296,7 +297,7 @@ describe('Webhook Handler - subscription_preapproval.updated', () => {
     });
 
     const { handleSubscriptionPreapprovalUpdated } = await import(
-      '@/features/billing/services/webhook-handlers.service'
+      '@/features/billing/services'
     );
 
     // Mock preapproval data with cancelled status
@@ -325,7 +326,7 @@ describe('Webhook Handler - subscription_preapproval.updated', () => {
 
   it('should handle paused status and update subscription', async () => {
     const { handleSubscriptionPreapprovalUpdated } = await import(
-      '@/features/billing/services/webhook-handlers.service'
+      '@/features/billing/services'
     );
 
     // Mock preapproval data with paused status

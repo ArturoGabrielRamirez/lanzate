@@ -134,7 +134,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Test subscription_preapproval.updated handles authorized status
     - Test subscription_preapproval.updated handles cancelled status
     - Test webhook returns 200 immediately for all notification types
-  - [ ] 3.2 Create webhook notification type handlers
+  - [x] 3.2 Create webhook notification type handlers
     - Create `features/billing/services/webhook-handlers.service.ts`
     - `handlePaymentCreated(paymentId: string): Promise<void>`
     - `handlePaymentUpdated(paymentId: string): Promise<void>`

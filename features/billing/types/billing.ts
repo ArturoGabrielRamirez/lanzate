@@ -91,3 +91,55 @@ export interface MercadopagoSubscriptionData {
   status: 'PENDING' | 'AUTHORIZED' | 'PAUSED' | 'CANCELLED';
   nextBillingDate?: Date;
 }
+
+/**
+ * MercadoPago Payment data structure (subset of fields we use)
+ */
+export interface MPPaymentData {
+  id: string | number;
+  status: string;
+  transaction_amount: number;
+  currency_id: string;
+  date_approved?: string;
+  payer?: {
+    email?: string;
+  };
+  metadata?: {
+    preapproval_id?: string;
+  };
+}
+
+/**
+ * MercadoPago Preapproval data structure (subset of fields we use)
+ */
+export interface MPPreapprovalData {
+  id: string;
+  status: string;
+  external_reference?: string;
+  next_payment_date?: string;
+}
+
+/**
+ * Options for handlePaymentCreated to allow dependency injection for testing
+ */
+export interface HandlePaymentCreatedOptions {
+  getPayment?: (id: string) => Promise<MPPaymentData>;
+  subscriptionId?: string;
+  paymentData?: MPPaymentData;
+}
+
+/**
+ * Options for handlePaymentUpdated to allow dependency injection for testing
+ */
+export interface HandlePaymentUpdatedOptions {
+  getPayment?: (id: string) => Promise<MPPaymentData>;
+  paymentData?: MPPaymentData;
+}
+
+/**
+ * Options for handleSubscriptionPreapprovalUpdated to allow dependency injection for testing
+ */
+export interface HandleSubscriptionPreapprovalUpdatedOptions {
+  getPreapproval?: (id: string) => Promise<MPPreapprovalData>;
+  preapprovalData?: MPPreapprovalData;
+}

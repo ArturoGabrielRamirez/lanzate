@@ -16,7 +16,7 @@ import {
   handlePaymentCreated,
   handlePaymentUpdated,
   handleSubscriptionPreapprovalUpdated,
-} from '@/features/billing/services/webhook-handlers.service';
+} from '@/features/billing/services';
 
 /**
  * Webhook notification body structure from MercadoPago
