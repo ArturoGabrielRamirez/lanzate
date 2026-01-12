@@ -127,7 +127,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 3: MercadoPago Webhook Handler
 **Dependencies:** Task Group 2
 
-- [ ] 3.0 Complete extended webhook handler
+- [x] 3.0 Complete extended webhook handler
   - [x] 3.1 Write 4-6 focused tests for webhook handler
     - Test payment.created notification creates payment record
     - Test payment.updated notification updates payment status
@@ -147,21 +147,21 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Return 200 immediately, process async (prevent MercadoPago timeouts)
     - Log all webhook events for debugging
     - Reference pattern: `backup/app/api/mercadopago/route.ts`
-  - [ ] 3.4 Create MercadoPago API utility functions
+  - [x] 3.4 Create MercadoPago API utility functions
     - Create `features/billing/utils/mercadopago.ts`
     - `getMercadoPagoPayment(paymentId: string): Promise<MPPayment>`
     - `getMercadoPagoPreapproval(preapprovalId: string): Promise<MPPreapproval>`
     - Reuse MercadoPagoConfig pattern from existing code
-  - [ ] 3.5 Implement payment status mapping
+  - [x] 3.5 Implement payment status mapping
     - Map MercadoPago statuses to PaymentStatus enum
     - Handle: approved, pending, rejected, refunded, partially_refunded, cancelled
     - Create utility: `mapMercadoPagoStatus(mpStatus: string): PaymentStatus`
-  - [ ] 3.6 Implement subscription status handling
+  - [x] 3.6 Implement subscription status handling
     - Update subscription status on preapproval changes
     - Handle: authorized, cancelled, paused
     - Trigger plan change log on plan modifications
     - Reference: `backup/features/account/actions/cancel-suscription.action.ts`
-  - [ ] 3.7 Ensure webhook tests pass
+  - [x] 3.7 Ensure webhook tests pass
     - Run ONLY the 4-6 tests written in 3.1
     - Verify webhook handles all notification types
 

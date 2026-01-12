@@ -2,11 +2,16 @@
  * Handle Payment Created Service
  *
  * Creates a new payment record in the database when a payment is created in MercadoPago.
+ * Fetches payment data from MercadoPago API if not provided via options.
  *
  * @param paymentId - The MercadoPago payment ID
- * @param options - Optional dependencies for testing
+ * @param options - Optional dependencies for testing (allows injecting mock data)
  *
  * @example
+ * // Production usage (fetches from API):
+ * await handlePaymentCreated('mp-payment-123');
+ *
+ * // Testing usage (uses injected data):
  * await handlePaymentCreated('mp-payment-123', {
  *   subscriptionId: 'sub-456',
  *   paymentData: { id: 'mp-payment-123', status: 'approved', ... }
@@ -16,23 +21,32 @@
 import {
   createPaymentData,
   getPaymentByMercadopagoIdData,
+  getSubscriptionByMercadopagoIdData,
 } from '@/features/billing/data';
 import type { HandlePaymentCreatedOptions } from '@/features/billing/types/billing';
-import { mapMercadoPagoPaymentStatus } from '@/features/billing/utils';
+import { getMercadoPagoPayment, mapMercadoPagoPaymentStatus } from '@/features/billing/utils';
 
 export async function handlePaymentCreated(
   paymentId: string,
   options: HandlePaymentCreatedOptions = {}
 ): Promise<void> {
-  const { subscriptionId, paymentData } = options;
+  // Use injected data for testing, or fetch from MercadoPago API
+  const paymentData = options.paymentData ?? (await getMercadoPagoPayment(paymentId));
 
-  if (!paymentData) {
-    console.log(`[Webhook] payment.created: No payment data provided for ${paymentId}`);
-    return;
+  // Get subscriptionId from options, metadata, or lookup by preapproval_id
+  let subscriptionId = options.subscriptionId;
+
+  if (!subscriptionId && paymentData.metadata?.preapproval_id) {
+    const subscription = await getSubscriptionByMercadopagoIdData(
+      paymentData.metadata.preapproval_id
+    );
+    subscriptionId = subscription?.id;
   }
 
   if (!subscriptionId) {
-    console.log(`[Webhook] payment.created: No subscriptionId provided for ${paymentId}`);
+    console.log(
+      `[Webhook] payment.created: Could not determine subscriptionId for payment ${paymentId}`
+    );
     return;
   }
 
