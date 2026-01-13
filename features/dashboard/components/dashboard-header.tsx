@@ -1,9 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Search } from 'lucide-react';
-
-import { Card } from '@/features/shadcn/components/ui/card';
 
 interface DashboardHeaderProps {
   userName: string | null;
@@ -38,23 +35,6 @@ export function DashboardHeader({ userName, userEmail }: DashboardHeaderProps) {
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">Welcome back to Lanzate</p>
       </div>
-
-      {/* Global Search Bar */}
-      <Card className="overflow-hidden border-border bg-card shadow-sm">
-        <div className="p-4">
-          <h3 className="mb-3 text-sm font-medium text-muted-foreground">
-            Looking for something?
-          </h3>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Products, orders, customers..."
-              className="w-full rounded-md border border-input bg-background px-10 py-2.5 text-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
-        </div>
-      </Card>
     </motion.div>
   );
 }

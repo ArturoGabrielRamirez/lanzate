@@ -95,7 +95,7 @@ export function StoreStats({ storesCount, accountType }: StoreStatsProps) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            <Card className="flex h-full items-center justify-center border-2 border-dashed border-border bg-card/50 p-6 transition-colors hover:border-primary/50 hover:bg-card">
+            <Card className="flex h-full items-center justify-center border-2 border-dashed border-border bg-card/50 transition-colors hover:border-primary/50 hover:bg-card">
               <div className="flex flex-col items-center gap-3 text-center">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                   <Store className="h-6 w-6 text-primary" />

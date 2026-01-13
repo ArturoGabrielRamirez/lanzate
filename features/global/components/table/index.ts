@@ -1,0 +1,1 @@
+export { DataTable } from '@/features/global/components/table/data-table'

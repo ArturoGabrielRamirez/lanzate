@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
 import { StoreStats } from '@/features/dashboard/components/store-stats';
+import { DataTable } from '@/features/global/components/table';
 import { createClient } from '@/lib/supabase/server';
 
 /**
@@ -68,6 +69,18 @@ export default async function DashboardPage() {
         {/* Dashboard Header with personalized greeting */}
         <DashboardHeader userName={userName} userEmail={userEmail} />
 
+        <DataTable<{ id: string; name: string; price: number }>
+          data={[{ id: "1", name: 'Sample Product', price: 100 }, { id: "2", name: 'Another Product', price: 150 }]}
+          columns={[
+            {
+              accessorKey: "id",
+            },
+            {
+              accessorKey: 'name',
+            }
+          ]}
+        />
+
         {/* Store Statistics */}
         <div className="mt-8">
           <StoreStats storesCount={storesCount} accountType={accountType} />
@@ -96,39 +109,6 @@ export default async function DashboardPage() {
             <p className="text-sm text-muted-foreground">
               Aquí podrás ver todos los likes, comentarios y pedidos de tus tiendas.
             </p>
-          </div>
-        </div>
-
-        {/* Help Section */}
-        <div className="mt-8">
-          <h2 className="mb-4 text-xl font-semibold text-foreground">Need help?</h2>
-          <div className="rounded-lg border border-border bg-card p-6">
-            <div className="flex items-start gap-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-                <svg
-                  className="h-5 w-5 text-muted-foreground"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                  />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h3 className="mb-1 text-base font-medium text-foreground">Contact us</h3>
-                <p className="mb-4 text-sm text-muted-foreground">
-                  Our experts are here to help you
-                </p>
-                <button className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-                  Send message
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </main>
