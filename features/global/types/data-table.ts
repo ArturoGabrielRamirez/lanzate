@@ -89,9 +89,23 @@ export type TableQueryParams = {
 };
 
 /**
- * Props for the DataTable component
+ * Props for ExpandIcon component
  *
- * @template T - The type of the row data
+ * @template TData - The type of row data
+ * @property row - TanStack Table row instance
+ * @property className - Additional CSS classes
+ * @property hideWhenSingle - Hide icon when row has only one subrow
+ */
+export type ExpandIconProps<TData> = {
+  row: Row<TData>;
+  className?: string;
+  hideWhenSingle?: boolean;
+};
+
+/**
+ * Props for DataTable component
+ *
+ * @template T - The type of row data
  * @property data - Array of row data to display
  * @property columns - Array of column definitions
  * @property totalItems - Total number of items (for pagination)
@@ -102,7 +116,7 @@ export type TableQueryParams = {
  * @property onRowExpand - Callback when a row is expanded/collapsed
  * @property isLoading - Whether to show loading skeleton state
  * @property emptyMessage - Custom message to show when data is empty
- * @property className - Additional CSS classes for the table container
+ * @property className - Additional CSS classes for table container
  */
 export type DataTableProps<T> = {
   data: T[];

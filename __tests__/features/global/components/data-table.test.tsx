@@ -21,7 +21,7 @@
 
 import { describe, it, expect, mock } from 'bun:test';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { DataTable } from '@/features/global/components/data-table';
+import { DataTable } from '@/features/global/components/table/data-table';
 import type { ColumnDef, SortConfig } from '@/features/global/types/data-table';
 
 // Sample data type for testing
