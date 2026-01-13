@@ -6,7 +6,6 @@
  * filtering, and loading/empty states.
  */
 
-import { Row } from "@tanstack/react-table";
 import { ReactNode } from "react";
 
 /**
@@ -65,7 +64,7 @@ export type SubRowsConfig<T> = {
   mode: 'same-columns' | 'custom-columns' | 'custom-component';
   subRowsField?: string;
   subRowColumns?: ColumnDef<T>[];
-  customComponent?: React.ComponentType<{ row: Row<T>; data: T }>;
+  customComponent?: React.ComponentType<{ row: T; data: T }>;
   indentSize?: number;
   autoExpandSingle?: boolean;
   hideExpandIconWhenSingle?: boolean;
@@ -88,19 +87,7 @@ export type TableQueryParams = {
   filters?: Record<string, string | number | boolean | string[] | undefined>;
 };
 
-/**
- * Props for ExpandIcon component
- *
- * @template TData - The type of row data
- * @property row - TanStack Table row instance
- * @property className - Additional CSS classes
- * @property hideWhenSingle - Hide icon when row has only one subrow
- */
-export type ExpandIconProps<TData> = {
-  row: Row<TData>;
-  className?: string;
-  hideWhenSingle?: boolean;
-};
+
 
 /**
  * Props for DataTable component

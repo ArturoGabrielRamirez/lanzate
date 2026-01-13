@@ -1,12 +1,10 @@
 "use client";
 
-// ** import types
-
 // ** import core packages
 import { ChevronRight } from "lucide-react";
 
 // ** import types
-import type { ExpandIconProps } from "@/features/global/types/data-table";
+import type { ExpandIconProps } from "@/features/global/types/expand-icon";
 // ** import ui components
 import { Button } from "@/features/shadcn/components/ui/button";
 import { cn } from "@/features/shadcn/utils/cn";

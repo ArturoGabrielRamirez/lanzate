@@ -1,2 +1,8 @@
 export { DataTable } from '@/features/global/components/table/data-table'
 export { ExpandIcon } from '@/features/global/components/table/expand-icon'
+export { DataTableHeader } from '@/features/global/components/table/data-table-header'
+export { DataTableRow } from '@/features/global/components/table/data-table-row'
+export { DataTableLoading } from '@/features/global/components/table/data-table-loading'
+export { DataTableEmpty } from '@/features/global/components/table/data-table-empty'
+export { SortIcon } from '@/features/global/components/table/sort-icon'
+export { DataTableExpandedContent } from '@/features/global/components/table/data-table-expanded-content'
