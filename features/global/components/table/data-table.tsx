@@ -5,7 +5,6 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   getExpandedRowModel,
-  flexRender,
   type ColumnDef as TanStackColumnDef,
 } from "@tanstack/react-table";
 
@@ -20,7 +19,6 @@ import type { DataTableProps } from "@/features/global/types/data-table";
 import {
   Table,
   TableBody,
-  TableHead,
   TableRow,
   TableHeader,
 } from "@/features/shadcn/components/ui/table";
@@ -63,6 +61,11 @@ export function DataTable<T>({
     getExpandedRowModel: getExpandedRowModel(),
     manualSorting: true,
     manualExpanding: true,
+    state: {
+      sorting: sortConfig?.column && sortConfig?.direction
+        ? [{ id: sortConfig.column, desc: sortConfig.direction === 'desc' }]
+        : [],
+    },
     getRowCanExpand: subRowsConfig?.enabled
       ? (row) => {
           const subRows = row.original[
@@ -80,11 +83,17 @@ export function DataTable<T>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} style={{ width: header.getSize() }}>
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                </TableHead>
-              ))}
+              {headerGroup.headers.map((header) => {
+                const columnDef = columns.find((col) => col.id === header.id);
+                return (
+                  <DataTableHeader
+                    key={header.id}
+                    column={columnDef!}
+                    onSort={onSort}
+                    sortConfig={sortConfig}
+                  />
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>
@@ -100,11 +109,17 @@ export function DataTable<T>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} style={{ width: header.getSize() }}>
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                </TableHead>
-              ))}
+              {headerGroup.headers.map((header) => {
+                const columnDef = columns.find((col) => col.id === header.id);
+                return (
+                  <DataTableHeader
+                    key={header.id}
+                    column={columnDef!}
+                    onSort={onSort}
+                    sortConfig={sortConfig}
+                  />
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>
