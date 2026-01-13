@@ -10,3 +10,9 @@ export type {
   FormProps,
   LoadingSubmitButtonProps,
 } from "@/features/global/types/form";
+
+export type {
+  ColumnDef,
+  SortConfig,
+  DataTableProps,
+} from "@/features/global/types/data-table";

@@ -237,7 +237,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Test sorting toggles when header clicked
     - Test custom cell renderer displays correctly
     - Test empty state displays when no data
-  - [ ] 5.2 Define DataTable types
+  - [x] 5.2 Define DataTable types
     - Create `features/global/types/data-table.ts`
     - `ColumnDef<T>`: id, header, accessor, cell (custom renderer), sortable
     - `DataTableProps<T>`: data, columns, onSort, sortConfig, isLoading
