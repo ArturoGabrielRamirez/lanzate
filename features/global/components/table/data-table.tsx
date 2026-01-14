@@ -26,8 +26,6 @@ import {
 export function DataTable<T>({
   data,
   columns,
-  /* totalItems,
-  queryParams, */
   subRowsConfig,
   onSort,
   sortConfig,

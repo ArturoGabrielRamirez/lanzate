@@ -10,32 +10,24 @@ import { TableRow, TableCell } from "@/features/shadcn/components/ui/table";
 // ** import utils
 import { cn } from "@/features/shadcn/utils/cn";
 
-export function DataTableRow<T>({ 
-  row, 
-  columns, 
+export function DataTableRow<T>({
+  row,
+  columns,
   subRowsField = "subRows",
-  /* onRowExpand, */
   subRowsConfig
 }: DataTableRowProps<T>) {
-  
-  /* const handleRowExpand = (expanded: boolean) => {
-    if (onRowExpand) {
-      onRowExpand(row.original, expanded);
-    }
-  }; */
-
   return (
     <>
       <TableRow>
         {columns.map((column) => {
           const value = column.accessor(row.original);
-          
+
           // Check if this is the first column and row can be expanded
           const isFirstColumn = columns[0].id === column.id;
           const canExpand = row.getCanExpand();
-          
+
           return (
-            <TableCell 
+            <TableCell
               key={column.id}
               className={cn(column.className)}
               style={{ width: column.width }}
@@ -43,11 +35,11 @@ export function DataTableRow<T>({
               <div className="flex items-center gap-2">
                 {/* Expand icon for first column if row can be expanded */}
                 {isFirstColumn && canExpand && (
-                  <ExpandIcon 
-                    row={row} 
+                  <ExpandIcon
+                    row={row}
                   />
                 )}
-                
+
                 {/* Cell content */}
                 {column.cell ? (
                   column.cell(value, row.original)
@@ -59,7 +51,7 @@ export function DataTableRow<T>({
           );
         })}
       </TableRow>
-      
+
       {/* Expanded content */}
       {row.getIsExpanded() && (
         <DataTableExpandedContent

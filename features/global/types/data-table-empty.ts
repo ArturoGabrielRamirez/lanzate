@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 /**
  * Props for DataTableEmpty component
  *
@@ -10,5 +12,5 @@ export type DataTableEmptyProps = {
   message?: string;
   columns: number;
   showIcon?: boolean;
-  action?: React.ReactNode;
+  action?: ReactNode;
 };

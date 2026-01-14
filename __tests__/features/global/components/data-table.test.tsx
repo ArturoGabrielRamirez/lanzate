@@ -1,29 +1,25 @@
 /**
  * DataTable Component Tests
  *
- * Test-first approach: These tests define the expected interface for the DataTable
- * component that will be implemented in `features/global/components/data-table.tsx`.
- *
- * The DataTable component should:
- * - Be a generic, reusable table component
- * - Use shadcn/ui Table components as base
- * - Support sortable columns with visual indicators
- * - Support custom cell renderers via column config
- * - Include loading skeleton state
- * - Include empty state with customizable message
- *
- * Coverage:
+ * Tests the DataTable component and its sub-components for:
  * - Column rendering based on column config
  * - Sorting toggle when header clicked
  * - Custom cell renderer display
  * - Empty state display when no data
+ * - Loading state display
+ *
+ * Priority: HIGH - Core reusable component for billing feature
  */
 
-import { describe, it, expect } from 'bun:test';
+import { describe, it, expect, mock, beforeEach, afterEach } from 'bun:test';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 import { DataTable } from '@/features/global/components/table/data-table';
-import type { ColumnDef, SortConfig } from '@/features/global/types/data-table';
+import type { ColumnDef } from '@/features/global/types/data-table';
 
-// Simple test without rendering for now
+// Cleanup after each test to prevent element leakage
+afterEach(() => {
+  cleanup();
+});
 
 // Sample data type for testing
 interface TestUser {
@@ -63,49 +59,166 @@ const testColumns: ColumnDef<TestUser>[] = [
 ];
 
 describe('DataTable Component', () => {
-  describe('Type Safety', () => {
-    it('should accept generic data type', () => {
-      // Test that the component is properly typed
-      const columns: ColumnDef<TestUser>[] = testColumns;
-      expect(columns).toBeDefined();
-      expect(columns.length).toBe(3);
+  describe('Column Rendering', () => {
+    it('should render column headers based on column config', () => {
+      const { getByText } = render(
+        <DataTable<TestUser>
+          data={testUsers}
+          columns={testColumns}
+        />
+      );
+
+      // Verify all column headers are rendered
+      expect(getByText('Name')).toBeDefined();
+      expect(getByText('Email')).toBeDefined();
+      expect(getByText('Status')).toBeDefined();
     });
 
-    it('should have proper column definition structure', () => {
-      const column: ColumnDef<TestUser> = testColumns[0];
-      expect(column.id).toBe('name');
-      expect(column.header).toBe('Name');
-      expect(column.sortable).toBe(true);
-      expect(typeof column.accessor).toBe('function');
-    });
+    it('should render data rows with correct cell values', () => {
+      const { getAllByText } = render(
+        <DataTable<TestUser>
+          data={testUsers}
+          columns={testColumns}
+        />
+      );
 
-    it('should have proper sort config structure', () => {
-      const sortConfig: SortConfig = { column: 'name', direction: 'asc' };
-      expect(sortConfig.column).toBe('name');
-      expect(sortConfig.direction).toBe('asc');
+      // Verify data is rendered (use getAllByText as there may be multiple matches)
+      expect(getAllByText('John Doe').length).toBeGreaterThan(0);
+      expect(getAllByText('john@example.com').length).toBeGreaterThan(0);
+      expect(getAllByText('Jane Smith').length).toBeGreaterThan(0);
+      expect(getAllByText('Bob Johnson').length).toBeGreaterThan(0);
     });
   });
 
-  describe('Column Functions', () => {
-    it('should execute accessor functions correctly', () => {
-      const testUser = testUsers[0];
-      const nameColumn = testColumns[0];
-      
-      const result = nameColumn.accessor(testUser);
-      expect(result).toBe('John Doe');
+  describe('Sorting', () => {
+    it('should call onSort when sortable column header is clicked', () => {
+      const mockOnSort = mock(() => {});
+
+      const { getByText } = render(
+        <DataTable<TestUser>
+          data={testUsers}
+          columns={testColumns}
+          onSort={mockOnSort}
+        />
+      );
+
+      // Click on the "Name" header (which is sortable)
+      const nameHeader = getByText('Name');
+      fireEvent.click(nameHeader);
+
+      // Verify onSort was called
+      expect(mockOnSort).toHaveBeenCalled();
     });
 
-    it('should handle cell renderers', () => {
-      const statusColumn: ColumnDef<TestUser> = {
-        id: 'status',
-        header: 'Status',
-        accessor: (row) => row.status,
-        cell: (value) => value === 'active' ? 'Active' : 'Inactive'
-      };
-      
-      const testUser = testUsers[0];
-      const result = statusColumn.cell!(statusColumn.accessor(testUser), testUser);
-      expect(result).toBe('Active');
+    it('should not call onSort when non-sortable column header is clicked', () => {
+      const mockOnSort = mock(() => {});
+
+      const { getByText } = render(
+        <DataTable<TestUser>
+          data={testUsers}
+          columns={testColumns}
+          onSort={mockOnSort}
+        />
+      );
+
+      // Click on the "Status" header (which is NOT sortable)
+      const statusHeader = getByText('Status');
+      fireEvent.click(statusHeader);
+
+      // Verify onSort was NOT called
+      expect(mockOnSort).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Custom Cell Renderer', () => {
+    it('should render custom cell content when cell renderer is provided', () => {
+      const columnsWithRenderer: ColumnDef<TestUser>[] = [
+        {
+          id: 'name',
+          header: 'Name',
+          accessor: (row) => row.name,
+        },
+        {
+          id: 'status',
+          header: 'Status',
+          accessor: (row) => row.status,
+          cell: (value) => (
+            <span data-testid="status-badge">
+              {value === 'active' ? 'ACTIVE' : 'INACTIVE'}
+            </span>
+          ),
+        },
+      ];
+
+      const { getAllByTestId, getAllByText } = render(
+        <DataTable<TestUser>
+          data={testUsers}
+          columns={columnsWithRenderer}
+        />
+      );
+
+      // Verify custom renderer output
+      const badges = getAllByTestId('status-badge');
+      expect(badges.length).toBe(3); // One for each row
+      expect(getAllByText('ACTIVE').length).toBeGreaterThan(0);
+      expect(getAllByText('INACTIVE').length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Empty State', () => {
+    it('should display empty state when data array is empty', () => {
+      const { getByText } = render(
+        <DataTable<TestUser>
+          data={[]}
+          columns={testColumns}
+          emptyMessage="No users found"
+        />
+      );
+
+      // Verify empty message is displayed
+      expect(getByText('No users found')).toBeDefined();
+    });
+
+    it('should display default empty message when no custom message provided', () => {
+      const { getByText } = render(
+        <DataTable<TestUser>
+          data={[]}
+          columns={testColumns}
+        />
+      );
+
+      // Verify default empty message
+      expect(getByText('No results.')).toBeDefined();
+    });
+  });
+
+  describe('Loading State', () => {
+    it('should display loading skeleton when isLoading is true', () => {
+      const { container } = render(
+        <DataTable<TestUser>
+          data={[]}
+          columns={testColumns}
+          isLoading={true}
+        />
+      );
+
+      // Verify skeleton elements are present (Skeleton component from shadcn)
+      // The Skeleton component uses animate-pulse class
+      const skeletons = container.querySelectorAll('[class*="animate-pulse"]');
+      expect(skeletons.length).toBeGreaterThan(0);
+    });
+
+    it('should not display user data when isLoading is true', () => {
+      const { queryByText } = render(
+        <DataTable<TestUser>
+          data={testUsers}
+          columns={testColumns}
+          isLoading={true}
+        />
+      );
+
+      // User data should not be visible during loading
+      expect(queryByText('John Doe')).toBeNull();
     });
   });
 });

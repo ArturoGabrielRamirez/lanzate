@@ -242,7 +242,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - `ColumnDef<T>`: id, header, accessor, cell (custom renderer), sortable
     - `DataTableProps<T>`: data, columns, onSort, sortConfig, isLoading
     - `SortConfig`: column, direction (asc/desc)
-  - [ ] 5.3 Create DataTable component
+  - [x] 5.3 Create DataTable component
     - Location: `features/global/components/data-table.tsx`
     - Accept typed data array and column definitions
     - Support sortable columns with visual indicators
@@ -250,15 +250,15 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Use shadcn/ui Table component as base
     - Include loading skeleton state
     - Include empty state with customizable message
-  - [ ] 5.4 Create DataTableHeader sub-component
+  - [x] 5.4 Create DataTableHeader sub-component
     - Render column headers with sort icons
     - Handle sort click events
     - Use shadcn/ui TableHead
-  - [ ] 5.5 Create DataTableRow sub-component
+  - [x] 5.5 Create DataTableRow sub-component
     - Render row cells using column accessors
     - Support custom cell renderers
     - Use shadcn/ui TableRow, TableCell
-  - [ ] 5.6 Ensure DataTable tests pass
+  - [x] 5.6 Ensure DataTable tests pass
     - Run ONLY the 3-4 tests written in 5.1
     - Verify component renders correctly
 
@@ -280,7 +280,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Test page size selector updates URL state
     - Test navigation buttons work correctly
     - Test disabled state at boundaries
-  - [ ] 6.2 Define Pagination types
+  - [x] 6.2 Define Pagination types
     - Create or extend `features/global/types/pagination.ts`
     - `PaginationProps`: currentPage, pageSize, totalItems, pageSizeOptions
     - `PaginationState`: page, pageSize (for nuqs integration)
