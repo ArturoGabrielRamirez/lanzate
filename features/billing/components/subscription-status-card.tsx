@@ -71,7 +71,7 @@ export function SubscriptionStatusCard({
           {/* Billing History Link */}
           <div className="pt-3 border-t">
             <Link 
-              href="/account/billing"
+              href="/profile/billing"
               className="text-sm text-primary hover:underline"
             >
               Ver historial de pagos →

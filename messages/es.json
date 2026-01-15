@@ -373,6 +373,20 @@
       "title": "Membresía",
       "loading": "Cargando información de membresía...",
       "error": "Error al cargar información de membresía"
+    },
+    "history": {
+      "title": "Historial de Pagos - Lanzate",
+      "description": "Ver tu historial de pagos y descargar facturas",
+      "pageTitle": "Historial de Pagos",
+      "pageDescription": "Ver los pagos de tu suscripción y descargar facturas",
+      "noSubscription": "Sin suscripción activa",
+      "noSubscriptionDescription": "No tienes una suscripción activa. Suscríbete a un plan para ver tu historial de pagos.",
+      "noPayments": "Aún no hay pagos",
+      "noPaymentsDescription": "Tu historial de pagos aparecerá aquí una vez que realices tu primer pago.",
+      "error": "Error al cargar el historial de pagos",
+      "errorDescription": "No pudimos cargar tu historial de pagos. Por favor, intenta de nuevo más tarde.",
+      "showingPayments": "Mostrando {count} de {total} pagos",
+      "pagination": "Página {page} de {totalPages}"
     }
   }
 }

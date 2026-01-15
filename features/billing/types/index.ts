@@ -33,3 +33,4 @@ export type {
 } from '@/features/billing/types/billing';
 
 export type { SubscriptionStatusCardProps } from '@/features/billing/types/subscription-status-card';
+export type { BillingHistoryTableProps, PaymentRowData } from '@/features/billing/types/billing-history-table';

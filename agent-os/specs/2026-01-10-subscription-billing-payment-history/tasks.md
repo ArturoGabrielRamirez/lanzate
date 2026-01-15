@@ -402,18 +402,19 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Test status filter updates displayed payments
     - Test pagination navigates between pages
     - Test download button triggers invoice download
-  - [ ] 9.2 Create billing page route
-    - Create `app/account/billing/page.tsx`
+  - [x] 9.2 Create billing page route
+    - Create `app/[locale]/(private)/billing/page.tsx`
     - Server Component for initial data fetch
-    - Wrap with AccessGate for `billing:view` permission
+    - Authentication handled by (private) layout which wraps with AccessManagerProvider
     - Reference: `features/access/components/gate.tsx`
-  - [ ] 9.3 Create BillingHistoryTable component
+    - **Note: Route adjusted to follow project's locale-based routing pattern**
+  - [x] 9.3 Create BillingHistoryTable component
     - Location: `features/billing/components/billing-history-table.tsx`
     - Client Component for filters and interactions
     - Use DataTable with payment-specific columns
-    - Columns: date, invoice number, amount (formatted ARS), status badge, plan type, actions
+    - Columns: date, payment ID, amount (formatted ARS), status badge, actions
     - Include download invoice button in actions column
-  - [ ] 9.4 Create PaymentStatusBadge component
+  - [x] 9.4 Create PaymentStatusBadge component
     - Location: `features/billing/components/payment-status-badge.tsx`
     - Color-coded badge based on payment status
     - APPROVED: green, PENDING: yellow, REJECTED: red, REFUNDED: blue

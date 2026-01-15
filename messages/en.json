@@ -373,6 +373,20 @@
       "title": "Membership",
       "loading": "Loading membership information...",
       "error": "Error loading membership information"
+    },
+    "history": {
+      "title": "Payment History - Lanzate",
+      "description": "View your payment history and download invoices",
+      "pageTitle": "Payment History",
+      "pageDescription": "View your subscription payments and download invoices",
+      "noSubscription": "No active subscription",
+      "noSubscriptionDescription": "You don't have an active subscription. Subscribe to a plan to see your payment history.",
+      "noPayments": "No payments yet",
+      "noPaymentsDescription": "Your payment history will appear here once you make your first payment.",
+      "error": "Error loading payment history",
+      "errorDescription": "We couldn't load your payment history. Please try again later.",
+      "showingPayments": "Showing {count} of {total} payments",
+      "pagination": "Page {page} of {totalPages}"
     }
   }
 }
