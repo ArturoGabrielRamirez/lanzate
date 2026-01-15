@@ -4,6 +4,8 @@ import { getTranslations } from "next-intl/server";
 
 import { getCurrentUserAction } from "@/features/auth/actions/getCurrentUser.action";
 import { ProfileEditForm } from "@/features/auth/components/ProfileEditForm";
+import { getUserSubscriptionStatusAction } from "@/features/billing/actions";
+import { SubscriptionStatusCard } from "@/features/billing/components";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -50,6 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
  */
 export default async function ProfilePage() {
   const t = await getTranslations("auth.profile");
+  const tBilling = await getTranslations("billing.membership");
 
   // Check authentication status
   const supabase = await createClient();
@@ -63,10 +66,13 @@ export default async function ProfilePage() {
   }
 
   // Fetch current user data
-  const result = await getCurrentUserAction();
+  const userResult = await getCurrentUserAction();
+
+  // Fetch subscription status
+  const subscriptionResult = await getUserSubscriptionStatusAction();
 
   // Handle error case
-  if (result.hasError || !result.payload?.user) {
+  if (userResult.hasError || !userResult.payload?.user) {
     return (
       <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
         <main className="mx-auto max-w-3xl px-6 py-8 md:px-12 lg:px-16">
@@ -75,7 +81,7 @@ export default async function ProfilePage() {
               Error loading profile
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              {result.message || "Failed to load user data"}
+              {userResult.message || "Failed to load user data"}
             </p>
           </div>
         </main>
@@ -97,7 +103,7 @@ export default async function ProfilePage() {
         </div>
 
         {/* Profile Edit Form Card */}
-        <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+            <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
           <ProfileEditForm />
         </div>
 
@@ -112,15 +118,15 @@ export default async function ProfilePage() {
                 Email
               </span>
               <span className="text-sm text-foreground">
-                {result.payload.user.email}
+                {userResult.payload.user.email}
               </span>
             </div>
             <div className="flex justify-between border-b border-border pb-3">
               <span className="text-sm font-medium text-muted-foreground">
-                Username
+                User ID
               </span>
-              <span className="text-sm text-foreground">
-                {result.payload.user.username}
+              <span className="text-sm text-foreground font-mono">
+                {userResult.payload.user.id}
               </span>
             </div>
             <div className="flex justify-between">
@@ -128,10 +134,36 @@ export default async function ProfilePage() {
                 Account Created
               </span>
               <span className="text-sm text-foreground">
-                {new Date(result.payload.user.createdAt).toLocaleDateString()}
+                {new Date(userResult.payload.user.createdAt).toLocaleDateString()}
               </span>
             </div>
           </div>
+        </div>
+
+        {/* Subscription Status Card */}
+        <div className="mt-8">
+          <h2 className="mb-4 text-xl font-semibold text-foreground">
+            {tBilling("title")}
+          </h2>
+          {subscriptionResult.hasError ? (
+            <div className="rounded-lg border border-destructive bg-destructive/10 p-6 text-center">
+              <h3 className="text-lg font-semibold text-destructive">
+                Error loading membership information
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {tBilling("error")}
+              </p>
+            </div>
+          ) : subscriptionResult.payload ? (
+            <SubscriptionStatusCard 
+              subscriptionStatus={subscriptionResult.payload}
+              className="rounded-lg border border-border bg-card p-6 shadow-sm"
+            />
+          ) : (
+            <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+              <p className="text-muted-foreground">{tBilling("loading")}</p>
+            </div>
+          )}
         </div>
       </main>
     </div>

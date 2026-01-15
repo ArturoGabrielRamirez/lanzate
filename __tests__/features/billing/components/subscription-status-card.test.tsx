@@ -9,10 +9,19 @@
  * Priority: HIGH - Core billing feature component
  */
 
-import { describe, it, expect, afterEach } from 'bun:test';
+import { describe, it, expect, afterEach, mock } from 'bun:test';
 import { render, cleanup } from '@testing-library/react';
-import { SubscriptionStatusCard } from '@/features/billing/components/subscription-status-card';
 import type { SubscriptionStatus } from '@/features/billing/types/billing';
+
+// Mock the next-intl navigation Link component
+mock.module('@/i18n/navigation', () => ({
+  Link: ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => (
+    <a href={href} className={className}>{children}</a>
+  ),
+}));
+
+// Import after mocking
+import { SubscriptionStatusCard } from '@/features/billing/components/subscription-status-card';
 
 // Cleanup after each test to prevent element leakage
 afterEach(() => {

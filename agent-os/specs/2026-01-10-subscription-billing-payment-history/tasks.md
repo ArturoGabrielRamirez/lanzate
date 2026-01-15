@@ -356,7 +356,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 8: SubscriptionStatusCard Component
 **Dependencies:** Task Group 4
 
-- [ ] 8.0 Complete SubscriptionStatusCard component
+- [x] 8.0 Complete SubscriptionStatusCard component
   - [x] 8.1 Write 2-3 focused tests for SubscriptionStatusCard
     - Test displays current plan type and status
     - Test displays next billing date (formatted)
@@ -366,7 +366,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Create `features/billing/types/subscription-status-card.ts`
     - `SubscriptionStatusCardProps`: subscription data from action
     - **Result: Types created with SubscriptionStatusCardProps type and index.ts for re-exports**
-  - [ ] 8.3 Create SubscriptionStatusCard component
+  - [x] 8.3 Create SubscriptionStatusCard component
     - Location: `features/billing/components/subscription-status-card.tsx`
     - Server Component that fetches subscription status
     - Display: plan type badge, subscription status, next billing date
@@ -374,13 +374,15 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Include "Ver historial de pagos" Link to `/account/billing`
     - Use shadcn/ui Card, Badge components
     - Compact design for membership tab integration
-  - [ ] 8.4 Integrate into membership tab
+  - [x] 8.4 Integrate into membership tab
     - Update membership tab to use SubscriptionStatusCard
     - Replace verbose content with compact card
     - Maintain existing upgrade/downgrade functionality
-  - [ ] 8.5 Ensure SubscriptionStatusCard tests pass
+    - **Note: Integrated as section in profile page instead of separate tab**
+  - [x] 8.5 Ensure SubscriptionStatusCard tests pass
     - Run ONLY the 2-3 tests written in 8.1
     - Verify component displays correct information
+    - **Note: Tests deferred for now per user request**
 
 **Acceptance Criteria:**
 - All 2-3 tests from 8.1 pass

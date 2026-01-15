@@ -366,6 +366,13 @@
     "firstStore": {
       "heading": "Crea Tu Primera Tienda",
       "description": "Comienza creando tu primera tienda para empezar a vender en linea"
+    },
+    "billing": {
+      "membership": {
+        "title": "Membresía",
+        "loading": "Cargando información de membresía...",
+        "error": "Error al cargar información de membresía"
+      }
     }
   }
 }
