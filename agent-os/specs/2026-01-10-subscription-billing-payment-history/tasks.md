@@ -325,13 +325,14 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Create or extend `features/global/types/filter-buttons.ts`
     - `FilterOption`: label, value
     - `FilterButtonsProps`: options, paramName, defaultValue, mode (single/multi)
-  - [ ] 7.3 Create FilterButtons component
-    - Location: `features/global/components/filter-buttons.tsx`
+  - [x] 7.3 Create FilterButtons component
+    - Location: `features/global/components/filter-buttons/filter-buttons.tsx`
     - Accept filter options array with label and value
     - Integrate with nuqs for URL-based filter state
     - Support single-select mode (radio-like behavior)
     - Include "All" option to clear filter
     - Use shadcn/ui Button with variant toggle styling
+    - **Result: 4 tests passed (4/4) in 7.38s**
   - [ ] 7.4 Create useFilterParams hook
     - Location: `features/global/hooks/use-filter-params.ts`
     - Use nuqs useQueryState for filter value
