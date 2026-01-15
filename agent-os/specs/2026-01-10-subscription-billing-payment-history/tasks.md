@@ -231,7 +231,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 5: DataTable Component
 **Dependencies:** None (can run parallel to backend tasks)
 
-- [ ] 5.0 Complete reusable DataTable component
+- [x] 5.0 Complete reusable DataTable component
   - [x] 5.1 Write 3-4 focused tests for DataTable component
     - Test renders columns based on column config
     - Test sorting toggles when header clicked
@@ -314,7 +314,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 7: FilterButtons Component
 **Dependencies:** None (can run parallel)
 
-- [ ] 7.0 Complete reusable FilterButtons component
+- [x] 7.0 Complete reusable FilterButtons component
   - [x] 7.1 Write 2-4 focused tests for FilterButtons component
     - Test renders all filter options
     - Test clicking option updates URL state
@@ -338,7 +338,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Use nuqs useQueryState for filter value
     - Return current value and setter
     - Support type-safe filter values
-  - [ ] 7.5 Ensure FilterButtons tests pass
+  - [x] 7.5 Ensure FilterButtons tests pass
     - Run ONLY the 2-4 tests written in 7.1
     - Verify component updates URL state correctly
 
@@ -357,7 +357,11 @@ This feature implements MercadoPago subscription billing integration with paymen
 **Dependencies:** Task Group 4
 
 - [ ] 8.0 Complete SubscriptionStatusCard component
-  - [ ] 8.1 Write 2-3 focused tests for SubscriptionStatusCard
+  - [x] 8.1 Write 2-3 focused tests for SubscriptionStatusCard
+    - Test displays current plan type and status
+    - Test displays next billing date (formatted)
+    - Test "Ver historial de pagos" link navigates to /account/billing
+    - **Result: 3 tests written, failing as expected (component not yet implemented)**
     - Test displays current plan type and status
     - Test displays next billing date (formatted)
     - Test "Ver historial de pagos" link navigates to /account/billing
