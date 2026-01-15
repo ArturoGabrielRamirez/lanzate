@@ -1,107 +1,137 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Store, Calendar } from 'lucide-react';
-import Link from 'next/link';
-
-import { Button } from '@/features/shadcn/components/ui/button';
-import { Card } from '@/features/shadcn/components/ui/card';
-import { CreateStoreButtonGate } from '@/features/stores/components/CreateStoreButtonGate';
-import { FirstStoreCTA } from '@/features/stores/components/FirstStoreCTA';
-
-import type { AccountType } from '@prisma/client';
-
-interface StoreStatsProps {
-  storesCount: number;
-  accountType: AccountType;
-}
-
 /**
  * Store Stats Component
  *
- * Displays the user's store statistics in a card layout.
- * Matches the design from general-dashboard-after-login.png.
+ * Displays the user's store cards in a compact layout.
+ * Shows real store data and a "New store" card for creating more.
  *
  * Features:
- * - Shows stores count with icon
- * - Warm beige/pink background in light theme
- * - Orange accent color for CTAs
- * - Empty state when no stores exist
- * - Link to create new store
+ * - Compact card design using shadcn Card subcomponents
+ * - Real store data (name, description, date)
  * - Animated card entrance with framer-motion
+ * - "New store" card with dashed border
+ * - Link to see all stores
  */
-export function StoreStats({ storesCount, accountType }: StoreStatsProps) {
+
+import { motion } from 'framer-motion';
+import { Calendar, MoreVertical, Store } from 'lucide-react';
+import Link from 'next/link';
+
+import type { StoreStatsProps } from '@/features/dashboard/types';
+import { Button } from '@/features/shadcn/components/ui/button';
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/features/shadcn/components/ui/card';
+import { CreateStoreButtonGate } from '@/features/stores/components/CreateStoreButtonGate';
+import { FirstStoreCTA } from '@/features/stores/components/FirstStoreCTA';
+
+/**
+ * Format date to localized string
+ */
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat('es-AR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(new Date(date));
+}
+
+/**
+ * Truncate text to specified length
+ */
+function truncateText(text: string | null, maxLength: number): string {
+  if (!text) return 'Sin descripción';
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength)}...`;
+}
+
+export function StoreStats({ stores, accountType, totalCount }: StoreStatsProps) {
+  const hasStores = stores.length > 0;
+
   return (
     <div>
+      {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-semibold text-foreground">
-          Your Stores ({storesCount})
+          Your Stores ({totalCount})
         </h2>
-        <Link href="/stores">
-          <Button variant="link" className="text-primary hover:text-primary/80">
-            Ver más →
-          </Button>
-        </Link>
+        {hasStores && (
+          <Link href="/stores">
+            <Button variant="link" className="text-primary hover:text-primary/80">
+              Ver más →
+            </Button>
+          </Link>
+        )}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* Store Card Example - Only show if user has stores */}
-        {storesCount > 0 && (
+      {/* Cards Grid */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Store Cards - Real Data */}
+        {stores.map((store, index) => (
           <motion.div
+            key={store.id}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+            className='flex'
           >
-            <Card className="overflow-hidden border-border bg-card shadow-sm transition-shadow hover:shadow-md">
-              <div className="p-6">
-                <div className="mb-4 flex items-start justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                    <Store className="h-6 w-6 text-primary" />
+            <Link href={`/stores/${store.id}`} className='grow flex'>
+              <Card className="gap-2 py-3 transition-shadow hover:shadow-md grow">
+                <CardHeader className="gap-1 py-0">
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                      <Store className="h-4 w-4 text-primary" />
+                    </div>
+                    <CardTitle className="text-base">
+                      {truncateText(store.name, 20)}
+                    </CardTitle>
                   </div>
-                  <button className="text-muted-foreground hover:text-foreground">
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                  <CardAction>
+                    <button
+                      className="text-muted-foreground hover:text-foreground"
+                      onClick={(e) => e.preventDefault()}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <h3 className="mb-1 text-lg font-semibold text-foreground">Lo de M...</h3>
-                <p className="mb-4 text-sm text-muted-foreground">No description</p>
-                <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>10/16/2025</span>
+                      <MoreVertical className="h-4 w-4" />
+                    </button>
+                  </CardAction>
+                </CardHeader>
+                <CardContent className="py-0">
+                  <CardDescription className="text-xs">
+                    {truncateText(store.description, 40)}
+                  </CardDescription>
+                </CardContent>
+                <CardFooter className="py-0">
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Calendar className="h-3 w-3" />
+                    <span>{formatDate(store.createdAt)}</span>
                   </div>
-                  <div>1 products</div>
-                </div>
-              </div>
-            </Card>
+                </CardFooter>
+              </Card>
+            </Link>
           </motion.div>
-        )}
+        ))}
 
-        {/* New Store Card - Only show when user has existing stores */}
-        {storesCount > 0 && (
+        {/* New Store Card - Only show if user has existing stores */}
+        {hasStores && (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
+            transition={{ duration: 0.3, delay: stores.length * 0.1 }}
           >
-            <Card className="flex h-full items-center justify-center border-2 border-dashed border-border bg-card/50 transition-colors hover:border-primary/50 hover:bg-card">
-              <div className="flex flex-col items-center gap-3 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                  <Store className="h-6 w-6 text-primary" />
+            <Card className="flex h-full min-h-[120px] items-center justify-center border-2 border-dashed border-border bg-card/50 py-3 transition-colors hover:border-primary/50 hover:bg-card">
+              <div className="flex flex-col items-center gap-2 text-center">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                  <Store className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <h3 className="mb-1 font-semibold text-foreground">New store</h3>
+                  <h3 className="text-sm font-semibold text-foreground">New store</h3>
                   <p className="text-xs text-muted-foreground">
                     Create your store
                     <br />
@@ -109,7 +139,7 @@ export function StoreStats({ storesCount, accountType }: StoreStatsProps) {
                   </p>
                 </div>
                 <CreateStoreButtonGate
-                  currentStoreCount={storesCount}
+                  currentStoreCount={totalCount}
                   accountType={accountType}
                 />
               </div>
@@ -118,11 +148,8 @@ export function StoreStats({ storesCount, accountType }: StoreStatsProps) {
         )}
 
         {/* First Store CTA - Only show if no stores */}
-        {storesCount === 0 && (
-          <FirstStoreCTA
-            currentStoreCount={storesCount}
-            accountType={accountType}
-          />
+        {!hasStores && (
+          <FirstStoreCTA currentStoreCount={0} accountType={accountType} />
         )}
       </div>
     </div>

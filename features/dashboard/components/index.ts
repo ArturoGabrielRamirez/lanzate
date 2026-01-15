@@ -4,6 +4,8 @@
  * Exports all components for the dashboard feature
  */
 
-export { DashboardHeader } from './dashboard-header';
-export { StoreStats } from './store-stats';
-export { LogoutButton } from './logout-button';
+export { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
+export { LogoutButton } from '@/features/dashboard/components/logout-button';
+export { StoreStats } from '@/features/dashboard/components/store-stats';
+export { StoreStatsContainer } from '@/features/dashboard/components/store-stats-container';
+export { StoreStatsSkeleton } from '@/features/dashboard/components/store-stats-skeleton';

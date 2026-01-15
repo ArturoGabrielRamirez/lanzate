@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
-import { StoreStats } from '@/features/dashboard/components/store-stats';
+import { StoreStatsContainer } from '@/features/dashboard/components/store-stats-container';
+import { StoreStatsSkeleton } from '@/features/dashboard/components/store-stats-skeleton';
 import { createClient } from '@/lib/supabase/server';
 
 /**
@@ -59,7 +61,7 @@ export default async function DashboardPage() {
   }
 
   // Extract data from response
-  const { userName, userEmail, storesCount, accountType } = result.payload;
+  const { userName, userEmail } = result.payload;
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] dark:bg-background px-2">
@@ -68,9 +70,11 @@ export default async function DashboardPage() {
         {/* Dashboard Header with personalized greeting */}
         <DashboardHeader userName={userName} userEmail={userEmail} />
 
-        {/* Store Statistics */}
+        {/* Store Statistics - Autonomous with Suspense */}
         <div className="mt-8">
-          <StoreStats storesCount={storesCount} accountType={accountType} />
+          <Suspense fallback={<StoreStatsSkeleton />}>
+            <StoreStatsContainer />
+          </Suspense>
         </div>
 
         {/* Activity Feed Section - Empty State */}
