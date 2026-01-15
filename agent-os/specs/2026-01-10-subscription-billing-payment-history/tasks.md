@@ -315,11 +315,12 @@ This feature implements MercadoPago subscription billing integration with paymen
 **Dependencies:** None (can run parallel)
 
 - [ ] 7.0 Complete reusable FilterButtons component
-  - [ ] 7.1 Write 2-4 focused tests for FilterButtons component
+  - [x] 7.1 Write 2-4 focused tests for FilterButtons component
     - Test renders all filter options
     - Test clicking option updates URL state
     - Test "All" option clears filter
     - Test active state styling
+    - **Result: 4 tests written, failing as expected (component not yet implemented)**
   - [ ] 7.2 Define FilterButtons types
     - Create or extend `features/global/types/filter-buttons.ts`
     - `FilterOption`: label, value
