@@ -33,3 +33,9 @@ export type {
 } from "@/features/global/types/pagination";
 
 export type { TableSortState } from "@/features/global/types/table-params";
+
+export type {
+  FilterOption,
+  FilterMode,
+  FilterButtonsProps,
+} from "@/features/global/types/filter-buttons";

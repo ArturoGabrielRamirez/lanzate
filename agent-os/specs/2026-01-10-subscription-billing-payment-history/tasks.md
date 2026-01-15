@@ -321,7 +321,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Test "All" option clears filter
     - Test active state styling
     - **Result: 4 tests written, failing as expected (component not yet implemented)**
-  - [ ] 7.2 Define FilterButtons types
+  - [x] 7.2 Define FilterButtons types
     - Create or extend `features/global/types/filter-buttons.ts`
     - `FilterOption`: label, value
     - `FilterButtonsProps`: options, paramName, defaultValue, mode (single/multi)
