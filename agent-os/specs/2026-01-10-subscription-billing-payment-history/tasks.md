@@ -274,7 +274,7 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 6: Pagination Component
 **Dependencies:** None (can run parallel)
 
-- [ ] 6.0 Complete reusable Pagination component
+- [x] 6.0 Complete reusable Pagination component
   - [ ] 6.1 Write 2-4 focused tests for Pagination component
     - Test displays correct page range and total
     - Test page size selector updates URL state
@@ -284,14 +284,14 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Create or extend `features/global/types/pagination.ts`
     - `PaginationProps`: currentPage, pageSize, totalItems, pageSizeOptions
     - `PaginationState`: page, pageSize (for nuqs integration)
-  - [ ] 6.3 Create Pagination component
+  - [x] 6.3 Create Pagination component
     - Location: `features/global/components/pagination.tsx`
     - Integrate with nuqs for URL-based page state
     - Include page size selector (10, 25, 50, 100)
     - Show current range: "Showing 1-10 of 100"
     - Previous/Next navigation buttons
     - Use shadcn/ui Button and Select components
-  - [ ] 6.4 Create usePaginationParams hook
+  - [x] 6.4 Create usePaginationParams hook
     - Location: `features/global/hooks/use-pagination-params.ts`
     - Use nuqs useQueryState for page and pageSize
     - Return current values and setters
