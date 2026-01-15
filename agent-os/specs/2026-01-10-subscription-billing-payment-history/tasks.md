@@ -362,12 +362,10 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Test displays next billing date (formatted)
     - Test "Ver historial de pagos" link navigates to /account/billing
     - **Result: 3 tests written, failing as expected (component not yet implemented)**
-    - Test displays current plan type and status
-    - Test displays next billing date (formatted)
-    - Test "Ver historial de pagos" link navigates to /account/billing
-  - [ ] 8.2 Define SubscriptionStatusCard types
+  - [x] 8.2 Define SubscriptionStatusCard types
     - Create `features/billing/types/subscription-status-card.ts`
     - `SubscriptionStatusCardProps`: subscription data from action
+    - **Result: Types created with SubscriptionStatusCardProps type and index.ts for re-exports**
   - [ ] 8.3 Create SubscriptionStatusCard component
     - Location: `features/billing/components/subscription-status-card.tsx`
     - Server Component that fetches subscription status
