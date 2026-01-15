@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
 import { StoreStats } from '@/features/dashboard/components/store-stats';
-import { DataTable } from '@/features/global/components/table';
 import { createClient } from '@/lib/supabase/server';
 
 /**
@@ -68,18 +67,6 @@ export default async function DashboardPage() {
       <main className="mx-auto container py-8">
         {/* Dashboard Header with personalized greeting */}
         <DashboardHeader userName={userName} userEmail={userEmail} />
-
-        <DataTable<{ id: string; name: string; price: number }>
-          data={[{ id: "1", name: 'Sample Product', price: 100 }, { id: "2", name: 'Another Product', price: 150 }]}
-          columns={[
-            {
-              accessorKey: "id",
-            },
-            {
-              accessorKey: 'name',
-            }
-          ]}
-        />
 
         {/* Store Statistics */}
         <div className="mt-8">

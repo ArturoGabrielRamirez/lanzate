@@ -366,13 +366,13 @@
     "firstStore": {
       "heading": "Create Your First Store",
       "description": "Get started by creating your first store to start selling online"
-    },
-    "billing": {
-      "membership": {
-        "title": "Membership",
-        "loading": "Loading membership information...",
-        "error": "Error loading membership information"
-      }
+    }
+  },
+  "billing": {
+    "membership": {
+      "title": "Membership",
+      "loading": "Loading membership information...",
+      "error": "Error loading membership information"
     }
   }
 }
