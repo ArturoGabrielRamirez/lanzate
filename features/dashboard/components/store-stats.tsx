@@ -18,8 +18,8 @@ import { motion } from 'framer-motion';
 import { Calendar, MoreVertical, Store } from 'lucide-react';
 import Link from 'next/link';
 
+import { SectionHeader } from '@/features/dashboard/components/section-header';
 import type { StoreStatsProps } from '@/features/dashboard/types';
-import { Button } from '@/features/shadcn/components/ui/button';
 import {
   Card,
   CardAction,
@@ -57,19 +57,11 @@ export function StoreStats({ stores, accountType, totalCount }: StoreStatsProps)
 
   return (
     <div>
-      {/* Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-foreground">
-          Your Stores ({totalCount})
-        </h2>
-        {hasStores && (
-          <Link href="/stores">
-            <Button variant="link" className="text-primary hover:text-primary/80">
-              Ver más →
-            </Button>
-          </Link>
-        )}
-      </div>
+      <SectionHeader
+        title="Your Stores"
+        count={totalCount}
+        href={hasStores ? '/stores' : undefined}
+      />
 
       {/* Cards Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 
 import { getDashboardDataAction } from '@/features/dashboard/actions';
 import { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
+import { SectionHeader } from '@/features/dashboard/components/section-header';
 import { StoreStatsContainer } from '@/features/dashboard/components/store-stats-container';
 import { StoreStatsSkeleton } from '@/features/dashboard/components/store-stats-skeleton';
 import { createClient } from '@/lib/supabase/server';
@@ -79,7 +80,7 @@ export default async function DashboardPage() {
 
         {/* Activity Feed Section - Empty State */}
         <div className="mt-8">
-          <h2 className="mb-4 text-xl font-semibold text-foreground">Tu feed</h2>
+          <SectionHeader title="Tu feed" />
           <div className="rounded-lg border border-border bg-card p-12 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
               <svg

@@ -6,6 +6,7 @@
 
 export { DashboardHeader } from '@/features/dashboard/components/dashboard-header';
 export { LogoutButton } from '@/features/dashboard/components/logout-button';
+export { SectionHeader } from '@/features/dashboard/components/section-header';
 export { StoreStats } from '@/features/dashboard/components/store-stats';
 export { StoreStatsContainer } from '@/features/dashboard/components/store-stats-container';
 export { StoreStatsSkeleton } from '@/features/dashboard/components/store-stats-skeleton';

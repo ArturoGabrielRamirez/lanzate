@@ -9,3 +9,5 @@ export type {
   UserStoresData,
   StoreStatsSkeletonProps,
 } from '@/features/dashboard/types/store-stats';
+
+export type { SectionHeaderProps } from '@/features/dashboard/components/section-header';
