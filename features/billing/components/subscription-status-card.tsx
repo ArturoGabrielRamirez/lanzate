@@ -9,11 +9,13 @@
  * - Subscription status (PENDING, AUTHORIZED, PAUSED, CANCELLED)
  * - Next billing date (formatted for Argentine locale)
  * - MercadoPago subscription ID (for reference)
+ * - Upgrade buttons (when applicable)
  * - Link to billing history page
  */
 
 import { CreditCard } from 'lucide-react';
 
+import { SubscriptionUpgradeButton } from '@/features/billing/components/subscription-upgrade-button';
 import type { SubscriptionStatusCardProps } from '@/features/billing/types/subscription-status-card';
 import { formatDateForArgentina, getStatusBadgeVariant, getStatusDisplayText } from '@/features/billing/utils/subscription-status-card.utils';
 import { Badge } from '@/features/shadcn/components/ui/badge';
@@ -68,9 +70,34 @@ export function SubscriptionStatusCard({
             </div>
           )}
 
+          {/* Upgrade Buttons */}
+          {planType !== 'ENTERPRISE' && (
+            <div className="pt-3 border-t space-y-2">
+              <p className="text-sm font-medium text-foreground">Mejorar plan</p>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                {planType === 'FREE' && (
+                  <SubscriptionUpgradeButton
+                    currentPlan={planType}
+                    targetPlan="PRO"
+                    variant="default"
+                    size="sm"
+                    fullWidth
+                  />
+                )}
+                <SubscriptionUpgradeButton
+                  currentPlan={planType}
+                  targetPlan="ENTERPRISE"
+                  variant={planType === 'FREE' ? 'outline' : 'default'}
+                  size="sm"
+                  fullWidth
+                />
+              </div>
+            </div>
+          )}
+
           {/* Billing History Link */}
           <div className="pt-3 border-t">
-            <Link 
+            <Link
               href="/profile/billing"
               className="text-sm text-primary hover:underline"
             >

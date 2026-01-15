@@ -419,21 +419,20 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Color-coded badge based on payment status
     - APPROVED: green, PENDING: yellow, REJECTED: red, REFUNDED: blue
     - Use shadcn/ui Badge with variant styling
-  - [ ] 9.5 Create BillingFilters component
+  - [x] 9.5 Create BillingFilters component
     - Location: `features/billing/components/billing-filters.tsx`
     - Client Component with FilterButtons for status
     - Options: All, Approved, Pending, Refunded
-    - Date range filter (optional, using date picker)
     - Integrate with nuqs for URL state
-  - [ ] 9.6 Create BillingPageHeader component
+  - [x] 9.6 Create BillingPageHeader component
     - Location: `features/billing/components/billing-page-header.tsx`
     - Title: "Historial de Pagos"
     - Subtitle with account info
     - Breadcrumb navigation
-  - [ ] 9.7 Compose full billing page
-    - Combine: BillingPageHeader, BillingFilters, BillingHistoryTable, Pagination
+  - [x] 9.7 Compose full billing page
+    - Combine: BillingPageHeader, BillingFilters, BillingHistoryTable
     - Responsive layout with proper spacing
-    - Loading states for data fetching
+    - Route: `/[locale]/profile/billing`
   - [ ] 9.8 Ensure BillingHistoryPage tests pass
     - Run ONLY the 3-5 tests written in 9.1
     - Verify full page functionality

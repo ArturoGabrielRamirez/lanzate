@@ -5,7 +5,7 @@
  * which displays paginated payment records with filtering and actions.
  */
 
-import type { Payment, PaginatedPayments } from '@/features/billing/types/billing';
+import type { Payment } from '@/features/billing/types/billing';
 
 /**
  * Props for the BillingHistoryTable component
@@ -17,8 +17,8 @@ import type { Payment, PaginatedPayments } from '@/features/billing/types/billin
  */
 export interface BillingHistoryTableProps {
   payments: Payment[];
-  subscriptionId: string;
-  initialPagination: {
+  subscriptionId?: string;
+  initialPagination?: {
     total: number;
     page: number;
     pageSize: number;

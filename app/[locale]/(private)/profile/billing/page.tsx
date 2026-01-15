@@ -3,7 +3,11 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { getBillingHistoryAction } from '@/features/billing/actions';
-import { BillingHistoryTable } from '@/features/billing/components';
+import {
+  BillingFilters,
+  BillingHistoryTable,
+  BillingPageHeader,
+} from '@/features/billing/components';
 import { getSubscriptionByUserEmailData } from '@/features/billing/data';
 import { createClient } from '@/lib/supabase/server';
 
@@ -33,13 +37,13 @@ export async function generateMetadata(): Promise<Metadata> {
  * - Paginated payment list with filters
  * - Invoice download functionality
  *
- * Route: /[locale]/billing
+ * Route: /[locale]/profile/billing
  * Protection: Private route (authenticated users only via layout)
  *
  * Architecture:
  * - Uses Server Components for initial data fetch
  * - Fetches billing data via getBillingHistoryAction
- * - Components for filters and table will be added in subsequent tasks
+ * - Composes: BillingPageHeader, BillingFilters, BillingHistoryTable
  */
 export default async function BillingPage() {
   const t = await getTranslations('billing.history');
@@ -63,15 +67,10 @@ export default async function BillingPage() {
     return (
       <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
         <main className="mx-auto max-w-5xl px-6 py-8 md:px-12 lg:px-16">
-          {/* Page Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">
-              {t('pageTitle')}
-            </h1>
-            <p className="mt-2 text-muted-foreground">
-              {t('pageDescription')}
-            </p>
-          </div>
+          <BillingPageHeader
+            title={t('pageTitle')}
+            subtitle={t('pageDescription')}
+          />
 
           {/* Empty State - No Subscription */}
           <div className="rounded-lg border border-border bg-card p-12 text-center">
@@ -113,15 +112,10 @@ export default async function BillingPage() {
     return (
       <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
         <main className="mx-auto max-w-5xl px-6 py-8 md:px-12 lg:px-16">
-          {/* Page Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">
-              {t('pageTitle')}
-            </h1>
-            <p className="mt-2 text-muted-foreground">
-              {t('pageDescription')}
-            </p>
-          </div>
+          <BillingPageHeader
+            title={t('pageTitle')}
+            subtitle={t('pageDescription')}
+          />
 
           {/* Error State */}
           <div className="rounded-lg border border-destructive bg-destructive/10 p-6 text-center">
@@ -137,30 +131,36 @@ export default async function BillingPage() {
     );
   }
 
-  const { data: payments, total, page, pageSize, totalPages } = billingResult.payload;
+  const { data: payments, page, totalPages } = billingResult.payload;
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
       <main className="mx-auto max-w-5xl px-6 py-8 md:px-12 lg:px-16">
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">
-            {t('pageTitle')}
-          </h1>
-          <p className="mt-2 text-muted-foreground">
-            {t('pageDescription')}
-          </p>
+        {/* Page Header with Breadcrumb */}
+        <BillingPageHeader
+          title={t('pageTitle')}
+          subtitle={t('pageDescription')}
+        />
+
+        {/* Filters */}
+        <div className="mb-6">
+          <BillingFilters />
         </div>
 
         {/* Billing History Table */}
         <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
           <BillingHistoryTable
             payments={payments}
-            subscriptionId={subscription.id}
-            initialPagination={{ total, page, pageSize, totalPages }}
             emptyMessage={t('noPayments')}
           />
         </div>
+
+        {/* Pagination Info */}
+        {totalPages > 1 && (
+          <div className="mt-4 text-center text-sm text-muted-foreground">
+            {t('pagination', { page, totalPages })}
+          </div>
+        )}
       </main>
     </div>
   );
