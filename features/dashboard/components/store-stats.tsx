@@ -74,7 +74,7 @@ export function StoreStats({ stores, accountType, totalCount }: StoreStatsProps)
             transition={{ duration: 0.3, delay: index * 0.1 }}
             className='flex'
           >
-            <Link href={`/stores/${store.id}`} className='grow flex'>
+            <Link href={`/stores/${store.subdomain}`} className='grow flex'>
               <Card className="gap-2 py-3 transition-shadow hover:shadow-md grow">
                 <CardHeader className="gap-1 py-0">
                   <div className="flex items-center gap-2">
