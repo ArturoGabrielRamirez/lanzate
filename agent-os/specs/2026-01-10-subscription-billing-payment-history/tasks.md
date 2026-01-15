@@ -333,7 +333,7 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Include "All" option to clear filter
     - Use shadcn/ui Button with variant toggle styling
     - **Result: 4 tests passed (4/4) in 7.38s**
-  - [ ] 7.4 Create useFilterParams hook
+  - [x] 7.4 Create useFilterParams hook
     - Location: `features/global/hooks/use-filter-params.ts`
     - Use nuqs useQueryState for filter value
     - Return current value and setter

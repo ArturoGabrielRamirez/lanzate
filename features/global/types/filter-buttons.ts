@@ -47,3 +47,19 @@ export type FilterButtonsProps = {
   /** Additional CSS classes */
   className?: string;
 };
+
+/**
+ * Return type for single-select filter mode
+ */
+export type SingleFilterState = {
+  value: string;
+  setValue: (value: string | null) => void;
+};
+
+/**
+ * Return type for multi-select filter mode
+ */
+export type MultiFilterState = {
+  value: string[];
+  setValue: (value: string[] | null) => void;
+};
