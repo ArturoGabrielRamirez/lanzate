@@ -12,18 +12,6 @@
  * - Footer: AFIP CAE placeholder
  */
 
-import type { Invoice, Payment, Subscription } from '@prisma/client';
-
-/**
- * Invoice data structure for PDF generation
- */
-export interface InvoicePdfData {
-  invoice: Invoice;
-  payment: Payment;
-  subscription: Subscription;
-  planName: string;
-}
-
 /**
  * Company information for invoice header
  */

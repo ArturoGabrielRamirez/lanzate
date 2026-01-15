@@ -457,23 +457,24 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Test generates valid PDF buffer
     - Test PDF contains correct invoice data (number, date, amount)
     - Test AFIP placeholder section is included
-  - [ ] 10.2 Install PDF generation library
+  - [x] 10.2 Install PDF generation library
     - Research and select library compatible with Next.js server
     - Options: @react-pdf/renderer, pdfkit, jspdf
     - Install with bun: `bun add [library]`
-  - [ ] 10.3 Create invoice PDF template
+    - **Result: Installed pdfkit@0.17.2 with @types/pdfkit@0.17.4**
+  - [x] 10.3 Create invoice PDF template
     - Location: `features/billing/utils/invoice-pdf-template.ts`
     - Header: Company logo placeholder, invoice number, date
     - Customer section: name, email, CUIT placeholder
     - Line items: plan name, period, amount
     - Totals: subtotal, IVA (21%), total
     - Footer: AFIP CAE placeholder section (for future compliance)
-  - [ ] 10.4 Create PDF generation service
+  - [x] 10.4 Create PDF generation service
     - Location: `features/billing/services/generate-invoice-pdf.service.ts`
     - `generateInvoicePdf(invoice: Invoice, payment: Payment): Promise<Buffer>`
     - Format currency as ARS with proper locale
     - Format dates in Argentine format (DD/MM/YYYY)
-  - [ ] 10.5 Create invoice download API route
+  - [x] 10.5 Create invoice download API route
     - Location: `app/api/billing/invoice/[paymentId]/route.ts`
     - GET handler that generates and returns PDF
     - Set proper headers: Content-Type, Content-Disposition
