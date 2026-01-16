@@ -19,3 +19,7 @@ export interface StoresListProps {
 export interface StoresListSkeletonProps {
   cardCount?: number;
 }
+
+export interface DeleteStoreButtonProps {
+  store: Store;
+}

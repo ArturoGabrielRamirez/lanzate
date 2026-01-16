@@ -18,6 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/features/shadcn/components/ui/card';
+import { DeleteStoreButton } from '@/features/stores/components/delete-store-button';
 import type { StoreDetailProps } from '@/features/stores/types';
 import { formatDate } from '@/features/stores/utils';
 
@@ -54,10 +55,13 @@ export function StoreDetail({ store }: StoreDetailProps) {
                 </CardDescription>
               </div>
             </div>
-            <Button variant="outline" size="sm" disabled>
-              <Pencil className="mr-2 h-4 w-4" />
-              Editar
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" disabled>
+                <Pencil className="mr-2 h-4 w-4" />
+                Editar
+              </Button>
+              <DeleteStoreButton store={store} />
+            </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">

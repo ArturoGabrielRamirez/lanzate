@@ -12,3 +12,4 @@ export { StoresList } from "@/features/stores/components/stores-list";
 export { StoresListContainer } from "@/features/stores/components/stores-list-container";
 export { StoresListSkeleton } from "@/features/stores/components/stores-list-skeleton";
 export { StoreDetail } from "@/features/stores/components/store-detail";
+export { DeleteStoreButton } from "@/features/stores/components/delete-store-button";

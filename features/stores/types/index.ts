@@ -6,6 +6,7 @@ export type {
   StoreDetailProps,
   StoresListProps,
   StoresListSkeletonProps,
+  DeleteStoreButtonProps,
 } from '@/features/stores/types/components';
 
 export type { CreateStoreButtonGateProps } from '@/features/stores/types/gate';
