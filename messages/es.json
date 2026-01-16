@@ -366,6 +366,21 @@
     "firstStore": {
       "heading": "Crea Tu Primera Tienda",
       "description": "Comienza creando tu primera tienda para empezar a vender en linea"
+    },
+    "delete": {
+      "button": "Eliminar",
+      "dialog": {
+        "title": "Eliminar tienda",
+        "description": "¿Estás seguro que deseas eliminar la tienda \"{storeName}\"?",
+        "warning": "Esta acción no se puede deshacer. Se eliminarán todos los datos asociados a esta tienda.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar tienda"
+      },
+      "messages": {
+        "success": "Tienda eliminada exitosamente",
+        "error": "Error al eliminar la tienda",
+        "loading": "Eliminando tienda..."
+      }
     }
   },
   "billing": {

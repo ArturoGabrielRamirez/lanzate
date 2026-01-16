@@ -6,3 +6,4 @@
  */
 
 export { createStoreService } from '@/features/stores/services/create-store.service';
+export { deleteStoreService } from '@/features/stores/services/delete-store.service';

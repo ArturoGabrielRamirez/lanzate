@@ -366,6 +366,21 @@
     "firstStore": {
       "heading": "Create Your First Store",
       "description": "Get started by creating your first store to start selling online"
+    },
+    "delete": {
+      "button": "Delete",
+      "dialog": {
+        "title": "Delete store",
+        "description": "Are you sure you want to delete the store \"{storeName}\"?",
+        "warning": "This action cannot be undone. All data associated with this store will be deleted.",
+        "cancel": "Cancel",
+        "confirm": "Delete store"
+      },
+      "messages": {
+        "success": "Store deleted successfully",
+        "error": "Error deleting store",
+        "loading": "Deleting store..."
+      }
     }
   },
   "billing": {

@@ -10,3 +10,5 @@ export { findUserStoresData } from '@/features/stores/data/find-user-stores.data
 export { countUserStoresData } from '@/features/stores/data/count-user-stores.data';
 export { findStoreBySubdomainData } from '@/features/stores/data/find-store-by-subdomain.data';
 export { getOwnedStoreBySubdomainData } from '@/features/stores/data/get-owned-store-by-subdomain.data';
+export { getOwnedStoreByIdData } from '@/features/stores/data/get-owned-store-by-id.data';
+export { deleteStoreData } from '@/features/stores/data/delete-store.data';
