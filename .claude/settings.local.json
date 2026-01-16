@@ -67,7 +67,8 @@
       "Bash(python -c:*)",
       "Bash(node -e:*)",
       "Bash(bun run type-check:*)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(node_modules/.bin/tsc:*)"
     ],
     "deny": [],
     "ask": []

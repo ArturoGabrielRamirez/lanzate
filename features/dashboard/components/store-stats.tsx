@@ -14,24 +14,9 @@
  * - Link to see all stores
  */
 
-import { motion } from 'framer-motion';
-import { Calendar, MoreVertical, Store } from 'lucide-react';
-import Link from 'next/link';
-
 import { SectionHeader } from '@/features/dashboard/components/section-header';
 import type { StoreStatsProps } from '@/features/dashboard/types';
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/features/shadcn/components/ui/card';
-import { CreateStoreButtonGate } from '@/features/stores/components/create-store-button-gate';
-import { FirstStoreCTA } from '@/features/stores/components/first-store-cta';
-import { formatDate, truncateText } from '@/features/stores/utils';
+import { StoresGrid } from '@/features/stores/components';
 
 export function StoreStats({ stores, accountType, totalCount }: StoreStatsProps) {
   const hasStores = stores.length > 0;
@@ -43,88 +28,11 @@ export function StoreStats({ stores, accountType, totalCount }: StoreStatsProps)
         count={totalCount}
         href={hasStores ? '/stores' : undefined}
       />
-
-      {/* Cards Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {/* Store Cards - Real Data */}
-        {stores.map((store, index) => (
-          <motion.div
-            key={store.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            className='flex'
-          >
-            <Link href={`/stores/${store.subdomain}`} className='grow flex'>
-              <Card className="gap-2 py-3 transition-shadow hover:shadow-md grow">
-                <CardHeader className="gap-1 py-0">
-                  <div className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                      <Store className="h-4 w-4 text-primary" />
-                    </div>
-                    <CardTitle className="text-base">
-                      {truncateText(store.name, 20)}
-                    </CardTitle>
-                  </div>
-                  <CardAction>
-                    <button
-                      className="text-muted-foreground hover:text-foreground"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <MoreVertical className="h-4 w-4" />
-                    </button>
-                  </CardAction>
-                </CardHeader>
-                <CardContent className="py-0">
-                  <CardDescription className="text-xs">
-                    {truncateText(store.description, 40)}
-                  </CardDescription>
-                </CardContent>
-                <CardFooter className="py-0">
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Calendar className="h-3 w-3" />
-                    <span>{formatDate(store.createdAt)}</span>
-                  </div>
-                </CardFooter>
-              </Card>
-            </Link>
-          </motion.div>
-        ))}
-
-        {/* New Store Card - Only show if user has existing stores */}
-        {hasStores && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: stores.length * 0.1 }}
-          >
-            <Card className="flex h-full min-h-[120px] items-center justify-center border-2 border-dashed border-border bg-card/50 py-3 transition-colors hover:border-primary/50 hover:bg-card">
-              <div className="flex flex-col items-center gap-2 text-center">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                  <Store className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-foreground">New store</h3>
-                  <p className="text-xs text-muted-foreground">
-                    Create your store
-                    <br />
-                    in seconds!
-                  </p>
-                </div>
-                <CreateStoreButtonGate
-                  currentStoreCount={totalCount}
-                  accountType={accountType}
-                />
-              </div>
-            </Card>
-          </motion.div>
-        )}
-
-        {/* First Store CTA - Only show if no stores */}
-        {!hasStores && (
-          <FirstStoreCTA currentStoreCount={0} accountType={accountType} />
-        )}
-      </div>
+      <StoresGrid
+        stores={stores}
+        accountType={accountType}
+        totalCount={totalCount}
+      />
     </div>
   );
 }

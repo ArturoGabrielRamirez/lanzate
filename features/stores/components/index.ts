@@ -13,3 +13,6 @@ export { StoresListContainer } from "@/features/stores/components/stores-list-co
 export { StoresListSkeleton } from "@/features/stores/components/stores-list-skeleton";
 export { StoreDetail } from "@/features/stores/components/store-detail";
 export { DeleteStoreButton } from "@/features/stores/components/delete-store-button";
+export { StoreCard } from "@/features/stores/components/store-card";
+export { NewStoreCard } from "@/features/stores/components/new-store-card";
+export { StoresGrid } from "@/features/stores/components/stores-grid";

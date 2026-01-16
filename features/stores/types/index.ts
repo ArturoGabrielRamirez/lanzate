@@ -9,6 +9,12 @@ export type {
   DeleteStoreButtonProps,
 } from '@/features/stores/types/components';
 
+export type {
+  StoreCardProps,
+  NewStoreCardProps,
+  StoresGridProps,
+} from '@/features/stores/types/card';
+
 export type { CreateStoreButtonGateProps } from '@/features/stores/types/gate';
 
 export type {
