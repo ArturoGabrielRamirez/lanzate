@@ -5,13 +5,13 @@
  * Returns limited stores (for display) plus total count.
  *
  * @param supabaseId - The Supabase user ID
- * @param limit - Maximum number of stores to return (default: 2)
+ * @param limit - Maximum number of stores to return. If undefined, returns all stores.
  * @returns User with stores and account type, or null if not found
  */
 
 import { prisma } from '@/lib/prisma';
 
-export async function getUserStoresData(supabaseId: string, limit: number = 2) {
+export async function getUserStoresData(supabaseId: string, limit?: number) {
   try {
     const userData = await prisma.user.findUnique({
       where: {
@@ -19,7 +19,7 @@ export async function getUserStoresData(supabaseId: string, limit: number = 2) {
       },
       include: {
         stores: {
-          take: limit,
+          ...(limit !== undefined && { take: limit }),
           orderBy: {
             createdAt: 'desc',
           },

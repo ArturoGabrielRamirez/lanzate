@@ -18,7 +18,15 @@ import { createClient } from '@/lib/supabase/server';
 
 const DASHBOARD_STORE_LIMIT = 2;
 
-export async function getUserStoresAction(): Promise<ServerResponse<UserStoresData>> {
+/**
+ * Get User Stores Server Action
+ *
+ * @param limit - Optional limit for number of stores. Defaults to DASHBOARD_STORE_LIMIT (2).
+ *                Pass undefined to fetch all stores.
+ */
+export async function getUserStoresAction(
+  limit: number | undefined = DASHBOARD_STORE_LIMIT
+): Promise<ServerResponse<UserStoresData>> {
   return actionWrapper(async () => {
     // Check authentication
     const supabase = await createClient();
@@ -31,7 +39,7 @@ export async function getUserStoresAction(): Promise<ServerResponse<UserStoresDa
     }
 
     // Fetch user stores from database
-    const data = await getUserStoresData(user.id, DASHBOARD_STORE_LIMIT);
+    const data = await getUserStoresData(user.id, limit);
 
     if (!data) {
       return formatSuccess('No stores found', {
