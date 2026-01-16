@@ -27,36 +27,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/features/shadcn/components/ui/card';
-import { CreateStoreButtonGate } from '@/features/stores/components/CreateStoreButtonGate';
-import { FirstStoreCTA } from '@/features/stores/components/FirstStoreCTA';
-
-import type { AccountType, Store as StoreType } from '@prisma/client';
-
-interface StoresListProps {
-  stores: StoreType[];
-  accountType: AccountType;
-  totalCount: number;
-}
-
-/**
- * Format date to localized string
- */
-function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('es-AR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  }).format(new Date(date));
-}
-
-/**
- * Truncate text to specified length
- */
-function truncateText(text: string | null, maxLength: number): string {
-  if (!text) return 'Sin descripción';
-  if (text.length <= maxLength) return text;
-  return `${text.slice(0, maxLength)}...`;
-}
+import { CreateStoreButtonGate } from '@/features/stores/components/create-store-button-gate';
+import { FirstStoreCTA } from '@/features/stores/components/first-store-cta';
+import type { StoresListProps } from '@/features/stores/types';
+import { formatDate, truncateText } from '@/features/stores/utils';
 
 export function StoresList({ stores, accountType, totalCount }: StoresListProps) {
   const hasStores = stores.length > 0;

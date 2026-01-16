@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Stores List Skeleton Component
  *
@@ -12,10 +14,7 @@ import {
   CardHeader,
 } from '@/features/shadcn/components/ui/card';
 import { Skeleton } from '@/features/shadcn/components/ui/skeleton';
-
-interface StoresListSkeletonProps {
-  cardCount?: number;
-}
+import type { StoresListSkeletonProps } from '@/features/stores/types';
 
 export function StoresListSkeleton({ cardCount = 6 }: StoresListSkeletonProps) {
   return (

@@ -18,23 +18,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/features/shadcn/components/ui/card';
-
-import type { Store } from '@prisma/client';
-
-interface StoreDetailProps {
-  store: Store;
-}
-
-/**
- * Format date to localized string
- */
-function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('es-AR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date(date));
-}
+import type { StoreDetailProps } from '@/features/stores/types';
+import { formatDate } from '@/features/stores/utils';
 
 export function StoreDetail({ store }: StoreDetailProps) {
   const publicUrl = `/store/${store.subdomain}`;
@@ -94,7 +79,7 @@ export function StoreDetail({ store }: StoreDetailProps) {
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-muted-foreground" />
             <span className="text-sm text-muted-foreground">Creada el:</span>
-            <span className="text-sm">{formatDate(store.createdAt)}</span>
+            <span className="text-sm">{formatDate(store.createdAt, 'long')}</span>
           </div>
         </CardContent>
       </Card>

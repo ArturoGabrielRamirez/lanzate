@@ -5,7 +5,7 @@ import { StoreIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Form, InputField } from "@/features/global/components/form";
-import { createStoreAction } from "@/features/stores/actions/createStore.action";
+import { createStoreAction } from "@/features/stores/actions/create-store.action";
 import { createStoreSchema, type CreateStoreInput } from "@/features/stores/schemas/schemaFactory";
 import type { CreateStoreFormProps } from "@/features/stores/types/store";
 

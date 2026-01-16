@@ -5,7 +5,7 @@ import { Store } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Card } from '@/features/shadcn/components/ui/card';
-import { CreateStoreButtonGate } from '@/features/stores/components/CreateStoreButtonGate';
+import { CreateStoreButtonGate } from '@/features/stores/components/create-store-button-gate';
 import type { FirstStoreCTAProps } from '@/features/stores/types/store';
 
 /**

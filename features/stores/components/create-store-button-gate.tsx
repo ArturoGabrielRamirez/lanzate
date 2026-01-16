@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/features/shadcn/components/ui/tooltip";
-import { CreateStoreButton } from "@/features/stores/components/CreateStoreButton";
+import { CreateStoreButton } from "@/features/stores/components/create-store-button";
 import type { CreateStoreButtonGateProps } from "@/features/stores/types/gate";
 import { hasReachedStoreLimit } from "@/features/subscriptions/config";
 

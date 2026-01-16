@@ -1,14 +1,9 @@
 import { notFound, redirect } from 'next/navigation';
 
-import { getStoreDetailAction } from '@/features/stores/actions/getStoreDetail.action';
+import { getAuthUser } from '@/features/auth/utils';
+import { getStoreDetailAction } from '@/features/stores/actions/get-store-detail.action';
 import { StoreDetail } from '@/features/stores/components/store-detail';
-import { createClient } from '@/lib/supabase/server';
-
-interface StoreDetailPageProps {
-  params: Promise<{
-    subdomain: string;
-  }>;
-}
+import type { StorefrontPageProps } from '@/features/stores/types';
 
 /**
  * Store Detail Page
@@ -16,14 +11,11 @@ interface StoreDetailPageProps {
  * Displays detailed information about a store owned by the user.
  * Verifies ownership before showing store data.
  */
-export default async function StoreDetailPage({ params }: StoreDetailPageProps) {
+export default async function StoreDetailPage({ params }: StorefrontPageProps) {
   const { subdomain } = await params;
 
   // Check authentication status
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   // Redirect to login if not authenticated
   if (!user) {

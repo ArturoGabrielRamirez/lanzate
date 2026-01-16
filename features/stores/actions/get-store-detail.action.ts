@@ -1,10 +1,10 @@
 'use server';
 
 import { getUserBySupabaseId } from '@/features/auth/data';
+import { getAuthUser } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatError, formatSuccess } from '@/features/global/utils/format-response';
-import { getOwnedStoreBySubdomainData } from '@/features/stores/data/getOwnedStoreBySubdomain.data';
-import { createClient } from '@/lib/supabase/server';
+import { getOwnedStoreBySubdomainData } from '@/features/stores/data/get-owned-store-by-subdomain.data';
 
 import type { Store } from '@prisma/client';
 
@@ -25,10 +25,7 @@ export async function getStoreDetailAction(subdomain: string) {
     }
 
     // Get authenticated user
-    const supabase = await createClient();
-    const {
-      data: { user: authUser },
-    } = await supabase.auth.getUser();
+    const authUser = await getAuthUser();
 
     if (!authUser) {
       return formatError('User not authenticated');

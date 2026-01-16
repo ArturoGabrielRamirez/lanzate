@@ -141,7 +141,7 @@ describe('Create Store Action - Input Validation', () => {
   it('should validate and reject missing store name', async () => {
     // Import action dynamically to avoid module-level issues
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // Create FormData with missing name
@@ -157,7 +157,7 @@ describe('Create Store Action - Input Validation', () => {
 
   it('should validate and reject missing subdomain', async () => {
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // Create FormData with missing subdomain
@@ -173,7 +173,7 @@ describe('Create Store Action - Input Validation', () => {
 
   it('should validate and reject invalid subdomain format', async () => {
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // Create FormData with invalid subdomain (contains spaces)
@@ -190,7 +190,7 @@ describe('Create Store Action - Input Validation', () => {
 
   it('should validate and reject subdomain that is too short', async () => {
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // Create FormData with subdomain shorter than 3 characters
@@ -209,7 +209,7 @@ describe('Create Store Action - Input Validation', () => {
 describe('Create Store Action - Store Creation', () => {
   it('should create store successfully with valid input', async () => {
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // Mock the getCurrentUser to return our test user
@@ -242,7 +242,7 @@ describe('Create Store Action - Store Creation', () => {
 
   it('should transform subdomain to lowercase', async () => {
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // Create FormData with uppercase subdomain
@@ -262,7 +262,7 @@ describe('Create Store Action - Store Creation', () => {
 describe('Create Store Action - Store Limit Enforcement', () => {
   it('should return error when FREE user has reached limit of 2 stores', async () => {
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // Create FormData for a user who already has 2 stores
@@ -287,7 +287,7 @@ describe('Create Store Action - Store Limit Enforcement', () => {
 describe('Create Store Action - Unique Constraint Handling', () => {
   it('should handle subdomain uniqueness violation gracefully', async () => {
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // First, create a store
@@ -316,7 +316,7 @@ describe('Create Store Action - Unique Constraint Handling', () => {
 describe('Create Store Action - Path Revalidation', () => {
   it('should include proper response structure for successful creation', async () => {
     const { createStoreAction } = await import(
-      '@/features/stores/actions/createStore.action'
+      '@/features/stores/actions/create-store.action'
     );
 
     // Create FormData
@@ -340,7 +340,7 @@ describe('Create Store Action - Path Revalidation', () => {
 describe('Get Store by Subdomain Action', () => {
   it('should return store when subdomain exists', async () => {
     const { getStoreBySubdomainAction } = await import(
-      '@/features/stores/actions/getStoreBySubdomain.action'
+      '@/features/stores/actions/get-store-by-subdomain.action'
     );
 
     // Use an existing store subdomain from test setup
@@ -357,7 +357,7 @@ describe('Get Store by Subdomain Action', () => {
 
   it('should return error when subdomain does not exist', async () => {
     const { getStoreBySubdomainAction } = await import(
-      '@/features/stores/actions/getStoreBySubdomain.action'
+      '@/features/stores/actions/get-store-by-subdomain.action'
     );
 
     const result = await getStoreBySubdomainAction('nonexistent-store-xyz');
@@ -369,7 +369,7 @@ describe('Get Store by Subdomain Action', () => {
 
   it('should return error when subdomain is empty', async () => {
     const { getStoreBySubdomainAction } = await import(
-      '@/features/stores/actions/getStoreBySubdomain.action'
+      '@/features/stores/actions/get-store-by-subdomain.action'
     );
 
     const result = await getStoreBySubdomainAction('');
@@ -381,7 +381,7 @@ describe('Get Store by Subdomain Action', () => {
 
   it('should normalize subdomain to lowercase before searching', async () => {
     const { getStoreBySubdomainAction } = await import(
-      '@/features/stores/actions/getStoreBySubdomain.action'
+      '@/features/stores/actions/get-store-by-subdomain.action'
     );
 
     // Create a store with lowercase subdomain for this test

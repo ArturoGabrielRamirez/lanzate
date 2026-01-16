@@ -13,12 +13,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/features/shadcn/components/ui/dialog";
-import { CreateStoreForm } from "@/features/stores/components/CreateStoreForm";
-
-interface CreateStoreButtonProps {
-  className?: string;
-  disabled?: boolean;
-}
+import { CreateStoreForm } from "@/features/stores/components/create-store-form";
+import type { CreateStoreButtonProps } from "@/features/stores/types";
 
 /**
  * CreateStoreButton Component
