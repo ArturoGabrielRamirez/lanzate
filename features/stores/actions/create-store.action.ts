@@ -1,12 +1,13 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
 
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { createStoreSchema } from '@/features/stores/schemas/schemaFactory';
 import { createStoreService } from '@/features/stores/services';
+import { redirect } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/server';
 
 import type { Store } from '@prisma/client';
@@ -46,6 +47,8 @@ import type { Store } from '@prisma/client';
  */
 export async function createStoreAction(formData: FormData) {
   return actionWrapper<Store>(async () => {
+
+    const locale = await getLocale()
     // Create Supabase client
     const supabase = await createClient();
 
@@ -125,6 +128,12 @@ export async function createStoreAction(formData: FormData) {
 
     // Redirect to the new store page
     // Note: redirect() throws a special error, so this must be outside try-catch
-    redirect(`/store/${store.subdomain}`);
+    redirect({ href: `/stores/${store.subdomain}`, locale: locale });
+
+    return {
+      hasError: false,
+      message: 'Store created successfully',
+      payload: store,
+    };
   });
 }
