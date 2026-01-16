@@ -9,6 +9,7 @@
  * @returns User with stores and account type, or null if not found
  */
 
+import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
 import { prisma } from '@/lib/prisma';
 
 export async function getUserStoresData(supabaseId: string, limit?: number) {
@@ -43,7 +44,7 @@ export async function getUserStoresData(supabaseId: string, limit?: number) {
 
     return {
       stores: userData.stores,
-      accountType: userData.subscription?.accountType ?? 'FREE',
+      accountType: userData.subscription?.accountType ?? DEFAULT_ACCOUNT_TYPE,
       totalCount: userData._count.stores,
     };
   } catch (error) {

@@ -20,6 +20,7 @@
 import { getSubscriptionByUserEmailData } from '@/features/billing/data';
 import { getSubscriptionStatus } from '@/features/billing/services';
 import type { SubscriptionStatus } from '@/features/billing/types/billing';
+import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
 
 export async function getUserSubscriptionStatus(userEmail: string): Promise<SubscriptionStatus> {
   // Search for user's subscription by email
@@ -28,7 +29,7 @@ export async function getUserSubscriptionStatus(userEmail: string): Promise<Subs
   // Case 1: User has no subscription (FREE user)
   if (!subscription) {
     return {
-      planType: 'FREE',
+      planType: DEFAULT_ACCOUNT_TYPE,
       status: 'AUTHORIZED', // FREE users are considered authorized
       nextBillingDate: null,
       mercadopagoId: null,
@@ -44,7 +45,7 @@ export async function getUserSubscriptionStatus(userEmail: string): Promise<Subs
   if (!subscriptionStatus) {
     // Fallback to FREE status if something goes wrong
     return {
-      planType: 'FREE',
+      planType: DEFAULT_ACCOUNT_TYPE,
       status: 'AUTHORIZED',
       nextBillingDate: null,
       mercadopagoId: null,

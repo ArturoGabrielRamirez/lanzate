@@ -7,6 +7,7 @@
 
 import { getUserStoresAction } from '@/features/dashboard/actions';
 import { StoresList } from '@/features/stores/components/stores-list';
+import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
 
 export async function StoresListContainer() {
   // Pass undefined to get all stores (no limit)
@@ -17,7 +18,7 @@ export async function StoresListContainer() {
     return (
       <StoresList
         stores={[]}
-        accountType="FREE"
+        accountType={DEFAULT_ACCOUNT_TYPE}
         totalCount={0}
       />
     );

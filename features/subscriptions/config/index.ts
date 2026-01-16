@@ -13,6 +13,9 @@ export {
 export {
   PLAN_CONFIG,
   PAID_PLANS,
+  ACCOUNT_TYPES,
+  DEFAULT_ACCOUNT_TYPE,
+  PLAN_HIERARCHY,
 } from '@/features/subscriptions/config/planPricing.constants';
 
 export type {
@@ -29,4 +32,10 @@ export {
   getPlanConfig,
   isPaidPlan,
   getPaidPlans,
+  isFreePlan,
+  isProPlan,
+  isEnterprisePlan,
+  getDefaultAccountType,
+  getPlanHierarchyLevel,
+  canUpgradeTo,
 } from '@/features/subscriptions/config/planPricing.utils';

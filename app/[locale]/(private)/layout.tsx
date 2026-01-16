@@ -5,6 +5,7 @@ import type { UserSession } from '@/features/access/types/access';
 import { getAuthUser } from '@/features/auth/utils/getAuthUser';
 import { PrivateHeader } from '@/features/layout/components';
 import { TooltipProvider } from '@/features/shadcn/components/ui/tooltip';
+import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
 import { getUserSubscriptionData } from '@/features/subscriptions/data';
 
 interface PrivateLayoutProps {
@@ -35,7 +36,7 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
 
   // Get user's subscription to determine account type
   const subscription = await getUserSubscriptionData(authUser.id);
-  const accountType = subscription?.accountType ?? 'FREE';
+  const accountType = subscription?.accountType ?? DEFAULT_ACCOUNT_TYPE;
 
   // Build user session for AccessManagerProvider
   const userSession: UserSession = {

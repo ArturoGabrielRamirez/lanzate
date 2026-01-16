@@ -5,7 +5,7 @@
  * following models.md pattern for Prisma type reuse
  */
 
-import type { Store as PrismaStore, User } from '@prisma/client';
+import type { AccountType, Store as PrismaStore, User } from '@prisma/client';
 
 /**
  * Base Store type from Prisma
@@ -63,7 +63,7 @@ export interface FirstStoreCTAProps {
   /** Current number of stores the user has */
   currentStoreCount: number;
   /** User's account type (FREE, PRO, ENTERPRISE) */
-  accountType: 'FREE' | 'PRO' | 'ENTERPRISE';
+  accountType: AccountType;
 }
 
 /**

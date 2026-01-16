@@ -31,18 +31,7 @@ import { createSubscriptionCheckoutAction } from '@/features/billing/actions/cre
 import type { SubscriptionUpgradeButtonProps } from '@/features/billing/types/subscription-upgrade-button';
 import { Button } from '@/features/shadcn/components/ui/button';
 import { cn } from '@/features/shadcn/utils/cn';
-import { getPlanDisplayName, type PaidPlan } from '@/features/subscriptions/config';
-
-import type { AccountType } from '@prisma/client';
-
-/**
- * Plan hierarchy for comparison
- */
-const PLAN_HIERARCHY: Record<AccountType, number> = {
-  FREE: 0,
-  PRO: 1,
-  ENTERPRISE: 2,
-};
+import { getPlanDisplayName, canUpgradeTo, type PaidPlan } from '@/features/subscriptions/config';
 
 /**
  * Get button label for target plan using centralized config
@@ -63,7 +52,7 @@ export function SubscriptionUpgradeButton({
   const [isLoading, setIsLoading] = useState(false);
 
   // Disable if current plan is equal or higher than target
-  const isDisabled = PLAN_HIERARCHY[currentPlan] >= PLAN_HIERARCHY[targetPlan];
+  const isDisabled = !canUpgradeTo(currentPlan, targetPlan);
 
   const handleUpgrade = async () => {
     if (isDisabled || isLoading) return;

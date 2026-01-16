@@ -14,6 +14,7 @@ import type { UserStoresData } from '@/features/dashboard/types';
 import type { ServerResponse } from '@/features/global/types';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatError, formatSuccess } from '@/features/global/utils/format-response';
+import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
 import { createClient } from '@/lib/supabase/server';
 
 const DASHBOARD_STORE_LIMIT = 2;
@@ -44,7 +45,7 @@ export async function getUserStoresAction(
     if (!data) {
       return formatSuccess('No stores found', {
         stores: [],
-        accountType: 'FREE' as const,
+        accountType: DEFAULT_ACCOUNT_TYPE,
         totalCount: 0,
       });
     }

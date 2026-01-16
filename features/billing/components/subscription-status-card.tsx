@@ -20,6 +20,7 @@ import type { SubscriptionStatusCardProps } from '@/features/billing/types/subsc
 import { formatDateForArgentina, getStatusBadgeVariant, getStatusDisplayText } from '@/features/billing/utils/subscription-status-card.utils';
 import { Badge } from '@/features/shadcn/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/features/shadcn/components/ui/card';
+import { isFreePlan, isEnterprisePlan } from '@/features/subscriptions/config';
 import { Link } from '@/i18n/navigation';
 
 export function SubscriptionStatusCard({ 
@@ -71,11 +72,11 @@ export function SubscriptionStatusCard({
           )}
 
           {/* Upgrade Buttons */}
-          {planType !== 'ENTERPRISE' && (
+          {!isEnterprisePlan(planType) && (
             <div className="pt-3 border-t space-y-2">
               <p className="text-sm font-medium text-foreground">Mejorar plan</p>
               <div className="flex flex-col gap-2 sm:flex-row">
-                {planType === 'FREE' && (
+                {isFreePlan(planType) && (
                   <SubscriptionUpgradeButton
                     currentPlan={planType}
                     targetPlan="PRO"
@@ -87,7 +88,7 @@ export function SubscriptionStatusCard({
                 <SubscriptionUpgradeButton
                   currentPlan={planType}
                   targetPlan="ENTERPRISE"
-                  variant={planType === 'FREE' ? 'outline' : 'default'}
+                  variant={isFreePlan(planType) ? 'outline' : 'default'}
                   size="sm"
                   fullWidth
                 />

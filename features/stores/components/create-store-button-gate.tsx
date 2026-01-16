@@ -9,7 +9,7 @@ import {
 } from "@/features/shadcn/components/ui/tooltip";
 import { CreateStoreButton } from "@/features/stores/components/create-store-button";
 import type { CreateStoreButtonGateProps } from "@/features/stores/types/gate";
-import { hasReachedStoreLimit } from "@/features/subscriptions/config";
+import { hasReachedStoreLimit, ACCOUNT_TYPES } from "@/features/subscriptions/config";
 
 /**
  * CreateStoreButtonGate Component
@@ -43,9 +43,9 @@ export function CreateStoreButtonGate({
   // Get upgrade tooltip message based on account type
   const getUpgradeTooltip = () => {
     switch (accountType) {
-      case "FREE":
+      case ACCOUNT_TYPES.FREE:
         return t("upgradeTooltip.free");
-      case "PRO":
+      case ACCOUNT_TYPES.PRO:
         return t("upgradeTooltip.pro");
       default:
         return "";

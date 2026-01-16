@@ -2,6 +2,9 @@
 import {
   PLAN_CONFIG,
   PAID_PLANS,
+  DEFAULT_ACCOUNT_TYPE,
+  PLAN_HIERARCHY,
+  ACCOUNT_TYPES,
   type PlanConfig,
   type PaidPlan,
 } from '@/features/subscriptions/config/planPricing.constants';
@@ -60,7 +63,7 @@ export function getPlanConfig(plan: AccountType): PlanConfig {
  * Check if a plan is paid (not FREE)
  */
 export function isPaidPlan(plan: AccountType): plan is PaidPlan {
-  return plan !== 'FREE';
+  return plan !== ACCOUNT_TYPES.FREE;
 }
 
 /**
@@ -68,4 +71,49 @@ export function isPaidPlan(plan: AccountType): plan is PaidPlan {
  */
 export function getPaidPlans(): PaidPlan[] {
   return [...PAID_PLANS];
+}
+
+/**
+ * Check if plan is FREE
+ */
+export function isFreePlan(plan: AccountType): boolean {
+  return plan === ACCOUNT_TYPES.FREE;
+}
+
+/**
+ * Check if plan is PRO
+ */
+export function isProPlan(plan: AccountType): boolean {
+  return plan === ACCOUNT_TYPES.PRO;
+}
+
+/**
+ * Check if plan is ENTERPRISE
+ */
+export function isEnterprisePlan(plan: AccountType): boolean {
+  return plan === ACCOUNT_TYPES.ENTERPRISE;
+}
+
+/**
+ * Get default account type for fallbacks
+ */
+export function getDefaultAccountType(): AccountType {
+  return DEFAULT_ACCOUNT_TYPE;
+}
+
+/**
+ * Get plan hierarchy level (useful for comparisons)
+ */
+export function getPlanHierarchyLevel(plan: AccountType): number {
+  return PLAN_HIERARCHY[plan];
+}
+
+/**
+ * Check if source plan can upgrade to target plan
+ */
+export function canUpgradeTo(
+  currentPlan: AccountType,
+  targetPlan: AccountType
+): boolean {
+  return PLAN_HIERARCHY[currentPlan] < PLAN_HIERARCHY[targetPlan];
 }

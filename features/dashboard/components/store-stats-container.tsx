@@ -7,6 +7,7 @@
 
 import { getUserStoresAction } from '@/features/dashboard/actions';
 import { StoreStats } from '@/features/dashboard/components/store-stats';
+import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
 
 export async function StoreStatsContainer() {
   const result = await getUserStoresAction();
@@ -16,7 +17,7 @@ export async function StoreStatsContainer() {
     return (
       <StoreStats
         stores={[]}
-        accountType="FREE"
+        accountType={DEFAULT_ACCOUNT_TYPE}
         totalCount={0}
       />
     );
