@@ -23,7 +23,7 @@ import type { StoreDetailProps } from '@/features/stores/types';
 import { formatDate } from '@/features/stores/utils';
 
 export function StoreDetail({ store }: StoreDetailProps) {
-  const publicUrl = `/store/${store.subdomain}`;
+  const publicUrl = `http://${store.subdomain}.localhost:3000`;
 
   return (
     <div className="space-y-6">
