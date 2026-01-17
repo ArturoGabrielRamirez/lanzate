@@ -68,7 +68,9 @@
       "Bash(node -e:*)",
       "Bash(bun run type-check:*)",
       "Bash(git mv:*)",
-      "Bash(node_modules/.bin/tsc:*)"
+      "Bash(node_modules/.bin/tsc:*)",
+      "Bash(timeout 120 bun test:*)",
+      "Bash(timeout 240 bun test:*)"
     ],
     "deny": [],
     "ask": []
