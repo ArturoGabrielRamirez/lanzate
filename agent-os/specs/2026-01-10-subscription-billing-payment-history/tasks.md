@@ -456,10 +456,12 @@ This feature implements MercadoPago subscription billing integration with paymen
 **Dependencies:** Task Group 4
 
 - [ ] 10.0 Complete PDF invoice generation
-  - [ ] 10.1 Write 2-3 focused tests for PDF generation
+  - [x] 10.1 Write 2-3 focused tests for PDF generation
     - Test generates valid PDF buffer
     - Test PDF contains correct invoice data (number, date, amount)
     - Test AFIP placeholder section is included
+    - **Result: 3 tests passed (3/3) in 560ms**
+    - **Location: `__tests__/features/billing/pdf-generation.test.ts`**
   - [x] 10.2 Install PDF generation library
     - Research and select library compatible with Next.js server
     - Options: @react-pdf/renderer, pdfkit, jspdf
@@ -482,9 +484,10 @@ This feature implements MercadoPago subscription billing integration with paymen
     - GET handler that generates and returns PDF
     - Set proper headers: Content-Type, Content-Disposition
     - Validate user access to the invoice
-  - [ ] 10.6 Ensure PDF generation tests pass
+  - [x] 10.6 Ensure PDF generation tests pass
     - Run ONLY the 2-3 tests written in 10.1
     - Verify PDF generates correctly
+    - **Result: 3 tests passed (3/3) in 560ms**
 
 **Acceptance Criteria:**
 - All 2-3 tests from 10.1 pass
