@@ -396,12 +396,14 @@ This feature implements MercadoPago subscription billing integration with paymen
 #### Task Group 9: Billing History Page
 **Dependencies:** Task Groups 4, 5, 6, 7
 
-- [ ] 9.0 Complete Billing History Page
-  - [ ] 9.1 Write 3-5 focused tests for BillingHistoryPage
+- [x] 9.0 Complete Billing History Page
+  - [x] 9.1 Write 3-5 focused tests for BillingHistoryPage
     - Test page renders with payment data in table
     - Test status filter updates displayed payments
     - Test pagination navigates between pages
     - Test download button triggers invoice download
+    - **Result: 9 tests passed (9/9) in 8.01s**
+    - **Location: `__tests__/features/billing/pages/billing-history-page.test.tsx`**
   - [x] 9.2 Create billing page route
     - Create `app/[locale]/(private)/billing/page.tsx`
     - Server Component for initial data fetch
@@ -433,9 +435,10 @@ This feature implements MercadoPago subscription billing integration with paymen
     - Combine: BillingPageHeader, BillingFilters, BillingHistoryTable
     - Responsive layout with proper spacing
     - Route: `/[locale]/profile/billing`
-  - [ ] 9.8 Ensure BillingHistoryPage tests pass
+  - [x] 9.8 Ensure BillingHistoryPage tests pass
     - Run ONLY the 3-5 tests written in 9.1
     - Verify full page functionality
+    - **Result: 9 tests passed (9/9) in 8.01s**
 
 **Acceptance Criteria:**
 - All 3-5 tests from 9.1 pass
