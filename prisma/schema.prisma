@@ -39,6 +39,12 @@ enum InitiatorType {
   SYSTEM
 }
 
+enum ProductStatus {
+  ACTIVE
+  DRAFT
+  ARCHIVED
+}
+
 model User {
   id         String   @id @default(cuid())
   supabaseId String   @unique @map("supabase_user_id")
@@ -59,12 +65,12 @@ model Subscription {
   id                       String             @id @default(cuid())
   userId                   String             @unique @map("user_id")
   accountType              AccountType        @map("account_type")
-  
+
   // 1.2 MercadoPago fields
   mercadopagoPreapprovalId String?            @map("mercadopago_preapproval_id")
   status                   SubscriptionStatus @default(PENDING)
   nextBillingDate          DateTime?          @map("next_billing_date")
-  
+
   createdAt                DateTime           @default(now()) @map("created_at")
   updatedAt                DateTime           @updatedAt @map("updated_at")
 
@@ -89,13 +95,49 @@ model Store {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  products Product[]
 
   @@index([subdomain])
   @@index([ownerId])
   @@map("stores")
 }
 
+model Product {
+  id              String        @id @default(cuid())
+  name            String
+  description     String?       @db.Text
+  slug            String
+  brand           String?
+  status          ProductStatus @default(DRAFT)
+  isDigital       Boolean       @default(false) @map("is_digital")
+  isFeatured      Boolean       @default(false) @map("is_featured")
+  isNew           Boolean       @default(false) @map("is_new")
+  isOnSale        Boolean       @default(false) @map("is_on_sale")
+  allowPromotions Boolean       @default(true) @map("allow_promotions")
+  trackInventory  Boolean       @default(true) @map("track_inventory")
+
+  // SEO fields
+  seoTitle        String?       @map("seo_title") @db.VarChar(60)
+  seoDescription  String?       @map("seo_description") @db.VarChar(160)
+  urlSlug         String?       @map("url_slug")
+  ogImageUrl      String?       @map("og_image_url")
+
+  // Foreign keys
+  storeId         String        @map("store_id")
+
+  // Timestamps
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  store           Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([storeId])
+  @@index([slug])
+  @@index([status])
+  @@map("products")
+}
 
 model Payment {
   id                    String        @id @default(cuid())
@@ -157,7 +199,7 @@ model PlanChangeLog {
   previousPlan   AccountType   @map("previous_plan")
   newPlan        AccountType   @map("new_plan")
   changedAt      DateTime      @default(now()) @map("changed_at")
-  
+
   // Initiator tracking
   initiatorType  InitiatorType @map("initiator_type")
   initiatorId    String?       @map("initiator_id")

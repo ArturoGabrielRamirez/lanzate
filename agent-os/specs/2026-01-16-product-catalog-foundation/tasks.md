@@ -25,14 +25,14 @@ This spec implements a complete product management system including:
     - Test ProductAttribute model with AttributeType enum (TEXT, NUMBER, COLOR, IMAGE)
     - Test ProductAttributeValue model association with ProductAttribute
     - Test unique slug constraint per store
-  - [ ] 1.2 Create Product model in Prisma schema
+  - [x] 1.2 Create Product model in Prisma schema
     - Fields: id (cuid), name, description, slug, brand, status (enum), is_digital, is_featured, is_new, is_on_sale, allow_promotions, track_inventory
     - SEO fields: seo_title (max 60 chars), seo_description (max 160 chars), url_slug, og_image_url
     - Timestamps: createdAt, updatedAt
     - Foreign key: store_id
     - Indexes on: store_id, slug, status
     - @@map("products")
-  - [ ] 1.3 Create ProductStatus enum
+  - [x] 1.3 Create ProductStatus enum
     - Values: ACTIVE, DRAFT, ARCHIVED
   - [ ] 1.4 Create ProductAttribute model
     - Fields: id, name, type (AttributeType enum), product_id
