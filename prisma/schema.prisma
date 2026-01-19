@@ -158,10 +158,27 @@ model ProductAttribute {
   updatedAt DateTime      @updatedAt @map("updated_at")
 
   // Relations
-  product   Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
+  values    ProductAttributeValue[]
 
   @@index([productId])
   @@map("product_attributes")
+}
+
+model ProductAttributeValue {
+  id          String @id @default(cuid())
+  value       String
+  attributeId String @map("attribute_id")
+
+  // Timestamps
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  attribute   ProductAttribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+
+  @@index([attributeId])
+  @@map("product_attribute_values")
 }
 
 model Payment {

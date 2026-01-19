@@ -38,11 +38,11 @@ This spec implements a complete product management system including:
     - Fields: id, name, type (AttributeType enum), product_id
     - AttributeType enum: TEXT, NUMBER, COLOR, IMAGE
     - @@map("product_attributes")
-  - [ ] 1.5 Create ProductAttributeValue model
+  - [x] 1.5 Create ProductAttributeValue model
     - Fields: id, value, attribute_id
     - Association: belongs_to ProductAttribute
     - @@map("product_attribute_values")
-  - [ ] 1.6 Set up associations
+  - [x] 1.6 Set up associations
     - Product belongs_to Store
     - Product has_many ProductAttribute
     - ProductAttribute has_many ProductAttributeValue
