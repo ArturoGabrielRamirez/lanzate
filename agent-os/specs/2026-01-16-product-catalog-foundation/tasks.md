@@ -46,7 +46,7 @@ This spec implements a complete product management system including:
     - Product belongs_to Store
     - Product has_many ProductAttribute
     - ProductAttribute has_many ProductAttributeValue
-  - [ ] 1.7 Run migration for core product models
+  - [x] 1.7 Run migration for core product models
   - [ ] 1.8 Ensure core product model tests pass
     - Run ONLY the 2-8 tests written in 1.1
     - Verify migrations run successfully
