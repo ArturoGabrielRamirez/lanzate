@@ -71,7 +71,8 @@
       "Bash(node_modules/.bin/tsc:*)",
       "Bash(timeout 120 bun test:*)",
       "Bash(timeout 240 bun test:*)",
-      "Bash(npx prisma validate:*)"
+      "Bash(npx prisma validate:*)",
+      "Bash(bunx prisma migrate:*)"
     ],
     "deny": [],
     "ask": []

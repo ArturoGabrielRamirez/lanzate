@@ -18,8 +18,8 @@ This spec implements a complete product management system including:
 #### Task Group 1: Core Product Models and Migrations
 **Dependencies:** None
 
-- [ ] 1.0 Complete core product database layer
-  - [ ] 1.1 Write 2-8 focused tests for Product and ProductAttribute models
+- [x] 1.0 Complete core product database layer
+  - [x] 1.1 Write 2-8 focused tests for Product and ProductAttribute models
     - Test Product model creation with required fields (name, slug, store_id)
     - Test ProductStatus enum values (ACTIVE, DRAFT, ARCHIVED)
     - Test ProductAttribute model with AttributeType enum (TEXT, NUMBER, COLOR, IMAGE)
@@ -47,7 +47,7 @@ This spec implements a complete product management system including:
     - Product has_many ProductAttribute
     - ProductAttribute has_many ProductAttributeValue
   - [x] 1.7 Run migration for core product models
-  - [ ] 1.8 Ensure core product model tests pass
+  - [x] 1.8 Ensure core product model tests pass
     - Run ONLY the 2-8 tests written in 1.1
     - Verify migrations run successfully
 
