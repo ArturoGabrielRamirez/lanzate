@@ -45,6 +45,13 @@ enum ProductStatus {
   ARCHIVED
 }
 
+enum AttributeType {
+  TEXT
+  NUMBER
+  COLOR
+  IMAGE
+}
+
 model User {
   id         String   @id @default(cuid())
   supabaseId String   @unique @map("supabase_user_id")
@@ -131,12 +138,30 @@ model Product {
   updatedAt       DateTime      @updatedAt @map("updated_at")
 
   // Relations
-  store           Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  store           Store              @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  attributes      ProductAttribute[]
 
   @@index([storeId])
   @@index([slug])
   @@index([status])
   @@map("products")
+}
+
+model ProductAttribute {
+  id        String        @id @default(cuid())
+  name      String
+  type      AttributeType
+  productId String        @map("product_id")
+
+  // Timestamps
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  product   Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("product_attributes")
 }
 
 model Payment {

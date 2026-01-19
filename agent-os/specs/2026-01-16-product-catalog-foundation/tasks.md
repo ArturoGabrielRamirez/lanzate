@@ -34,7 +34,7 @@ This spec implements a complete product management system including:
     - @@map("products")
   - [x] 1.3 Create ProductStatus enum
     - Values: ACTIVE, DRAFT, ARCHIVED
-  - [ ] 1.4 Create ProductAttribute model
+  - [x] 1.4 Create ProductAttribute model
     - Fields: id, name, type (AttributeType enum), product_id
     - AttributeType enum: TEXT, NUMBER, COLOR, IMAGE
     - @@map("product_attributes")
