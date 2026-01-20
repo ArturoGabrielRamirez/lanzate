@@ -140,6 +140,7 @@ model Product {
   // Relations
   store           Store              @relation(fields: [storeId], references: [id], onDelete: Cascade)
   attributes      ProductAttribute[]
+  variants        ProductVariant[]
 
   @@index([storeId])
   @@index([slug])
@@ -175,10 +176,46 @@ model ProductAttributeValue {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  attribute   ProductAttribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  attribute   ProductAttribute        @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  variantAttributeValues VariantAttributeValue[]
 
   @@index([attributeId])
   @@map("product_attribute_values")
+}
+
+model ProductVariant {
+  id               String   @id @default(cuid())
+  sku              String   @unique
+  price            Decimal  @db.Decimal(10, 2)
+  promotionalPrice Decimal? @map("promotional_price") @db.Decimal(10, 2)
+  cost             Decimal? @db.Decimal(10, 2)
+  productId        String   @map("product_id")
+
+  // Timestamps
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  product          Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
+  attributeValues  VariantAttributeValue[]
+
+  @@index([productId])
+  @@index([sku])
+  @@map("product_variants")
+}
+
+model VariantAttributeValue {
+  variantId        String @map("variant_id")
+  attributeValueId String @map("attribute_value_id")
+
+  // Relations
+  variant          ProductVariant        @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  attributeValue   ProductAttributeValue @relation(fields: [attributeValueId], references: [id], onDelete: Cascade)
+
+  @@id([variantId, attributeValueId])
+  @@index([variantId])
+  @@index([attributeValueId])
+  @@map("variant_attribute_values")
 }
 
 model Payment {

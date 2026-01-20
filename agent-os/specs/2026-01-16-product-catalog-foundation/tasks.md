@@ -70,15 +70,15 @@ This spec implements a complete product management system including:
     - Test variant association with attribute values
     - Test price is required, promotional_price and cost are optional
     - Test unique sku constraint
-  - [ ] 2.2 Create ProductVariant model in Prisma schema
+  - [x] 2.2 Create ProductVariant model in Prisma schema
     - Fields: id, sku (unique), price (Decimal), promotional_price (Decimal, optional), cost (Decimal, optional), product_id
     - Timestamps: createdAt, updatedAt
     - @@map("product_variants")
-  - [ ] 2.3 Create VariantAttributeValue junction model
+  - [x] 2.3 Create VariantAttributeValue junction model
     - Fields: variant_id, attribute_value_id
     - Many-to-many relationship between ProductVariant and ProductAttributeValue
     - @@map("variant_attribute_values")
-  - [ ] 2.4 Set up associations
+  - [x] 2.4 Set up associations
     - ProductVariant belongs_to Product
     - ProductVariant many-to-many ProductAttributeValue
     - Product has_many ProductVariant
