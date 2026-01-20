@@ -160,6 +160,7 @@ model Product {
   attributes      ProductAttribute[]
   variants        ProductVariant[]
   images          ProductImage[]
+  digitalProduct  DigitalProduct?
 
   @@index([storeId])
   @@index([slug])
@@ -276,6 +277,28 @@ model ProductImage {
 
   @@index([productId])
   @@map("product_images")
+}
+
+model DigitalProduct {
+  id             String    @id @default(cuid())
+  productId      String    @unique @map("product_id")
+  downloadUrl    String    @map("download_url")
+  fileName       String    @map("file_name")
+  fileType       String    @map("file_type")
+  fileSize       Int       @map("file_size")
+  expirationDate DateTime? @map("expiration_date")
+  downloadCount  Int       @default(0) @map("download_count")
+  downloadLimit  Int?      @map("download_limit")
+
+  // Timestamps
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  product        Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("digital_products")
 }
 
 model Payment {

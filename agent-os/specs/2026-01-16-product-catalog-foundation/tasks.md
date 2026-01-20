@@ -110,11 +110,11 @@ This spec implements a complete product management system including:
   - [x] 3.3 Create ProductImage model
     - Fields: id, product_id, url, alt_text, position (Int), is_primary (Boolean)
     - @@map("product_images")
-  - [ ] 3.4 Create DigitalProduct model
+  - [x] 3.4 Create DigitalProduct model
     - Fields: id, product_id (unique), download_url, file_name, file_type, file_size (Int), expiration_date (DateTime, optional), download_count (Int, default 0), download_limit (Int, optional)
     - One-to-one with Product (only for digital products)
     - @@map("digital_products")
-  - [ ] 3.5 Set up associations
+  - [x] 3.5 Set up associations
     - VariantInventory belongs_to ProductVariant and Branch
     - ProductImage belongs_to Product
     - DigitalProduct belongs_to Product (one-to-one)
