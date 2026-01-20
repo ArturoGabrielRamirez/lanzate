@@ -177,7 +177,7 @@ This spec implements a complete product management system including:
     - Test updateProduct action
     - Test deleteProduct action with authorization
     - Test attribute limit enforcement per subscription tier
-  - [ ] 5.2 Create Yup validation schemas
+  - [x] 5.2 Create Yup validation schemas
     - productBasicInfoSchema (name, description, slug, brand, status, SEO fields)
     - productMediaSchema (images array validation)
     - productVariantSchema (sku, price, attribute values)
