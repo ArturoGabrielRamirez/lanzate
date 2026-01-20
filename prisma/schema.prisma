@@ -52,6 +52,22 @@ enum AttributeType {
   IMAGE
 }
 
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
 model User {
   id         String   @id @default(cuid())
   supabaseId String   @unique @map("supabase_user_id")
@@ -63,6 +79,8 @@ model User {
   // Relations
   stores       Store[]
   subscription Subscription?
+  orders       Order[]
+  reviews      ProductReview[]
 
   @@index([email])
   @@map("users")
@@ -106,6 +124,7 @@ model Store {
   products Product[]
   branches Branch[]
   bundles  ProductBundle[]
+  orders   Order[]
 
   @@index([subdomain])
   @@index([ownerId])
@@ -163,6 +182,8 @@ model Product {
   images         ProductImage[]
   digitalProduct DigitalProduct?
   bundleItems    BundleItem[]
+  orderItems     OrderItem[]
+  reviews        ProductReview[]
 
   @@index([storeId])
   @@index([slug])
@@ -222,6 +243,7 @@ model ProductVariant {
   attributeValues VariantAttributeValue[]
   inventory       VariantInventory[]
   bundleItems     BundleItem[]
+  orderItems      OrderItem[]
 
   @@index([productId])
   @@index([sku])
@@ -418,4 +440,80 @@ model PlanChangeLog {
 
   @@index([subscriptionId])
   @@map("plan_change_logs")
+}
+
+model Order {
+  id      String      @id @default(cuid())
+  userId  String      @map("user_id")
+  storeId String      @map("store_id")
+  total   Decimal     @db.Decimal(10, 2)
+  status  OrderStatus @default(PENDING)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store   Store           @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  items   OrderItem[]
+  reviews ProductReview[]
+
+  @@index([userId])
+  @@index([storeId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String   @map("order_id")
+  productId String   @map("product_id")
+  variantId String?  @map("variant_id")
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 2)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  order   Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant ProductVariant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  reviews ProductReview[]
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([variantId])
+  @@map("order_items")
+}
+
+model ProductReview {
+  id          String       @id @default(cuid())
+  productId   String       @map("product_id")
+  orderId     String       @map("order_id")
+  orderItemId String       @map("order_item_id")
+  userId      String       @map("user_id")
+  rating      Int
+  title       String
+  body        String?      @db.Text
+  status      ReviewStatus @default(PENDING)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  order     Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderItem OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Constraints
+  @@unique([userId, orderItemId])
+  @@index([productId])
+  @@index([userId])
+  @@index([status])
+  @@map("product_reviews")
 }
