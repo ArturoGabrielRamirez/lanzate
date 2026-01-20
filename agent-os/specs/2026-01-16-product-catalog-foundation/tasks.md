@@ -145,15 +145,15 @@ This spec implements a complete product management system including:
   - [x] 4.3 Create BundleItem model
     - Fields: id, bundle_id, product_id, variant_id (optional), quantity (Int)
     - @@map("bundle_items")
-  - [ ] 4.4 Create ProductReview model
+  - [x] 4.4 Create ProductReview model
     - Fields: id, product_id, order_id, order_item_id, user_id, rating (Int 1-5), title, body, createdAt
     - Unique constraint on [user_id, order_item_id] (one review per purchase)
     - @@map("product_reviews")
-  - [ ] 4.5 Set up associations
+  - [x] 4.5 Set up associations
     - ProductBundle has_many BundleItem
     - BundleItem belongs_to ProductBundle, Product, and optionally ProductVariant
     - ProductReview belongs_to Product, Order, OrderItem, and User
-  - [ ] 4.6 Run migration for bundle and review models
+  - [x] 4.6 Run migration for bundle and review models
   - [ ] 4.7 Ensure bundle and review model tests pass
     - Run ONLY the 2-8 tests written in 4.1
 
