@@ -118,7 +118,7 @@ This spec implements a complete product management system including:
     - VariantInventory belongs_to ProductVariant and Branch
     - ProductImage belongs_to Product
     - DigitalProduct belongs_to Product (one-to-one)
-  - [ ] 3.6 Run migration for inventory, images, and digital products
+  - [x] 3.6 Run migration for inventory, images, and digital products
   - [ ] 3.7 Ensure inventory and media model tests pass
     - Run ONLY the 2-8 tests written in 3.1
 
