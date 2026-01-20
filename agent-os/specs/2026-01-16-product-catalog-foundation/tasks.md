@@ -82,7 +82,7 @@ This spec implements a complete product management system including:
     - ProductVariant belongs_to Product
     - ProductVariant many-to-many ProductAttributeValue
     - Product has_many ProductVariant
-  - [ ] 2.5 Run migration for variant models
+  - [x] 2.5 Run migration for variant models
   - [ ] 2.6 Ensure variant model tests pass
     - Run ONLY the 2-8 tests written in 2.1
 
@@ -103,7 +103,7 @@ This spec implements a complete product management system including:
     - Test inventory association with variant and branch
     - Test ProductImage ordering via position field
     - Test DigitalProduct download tracking fields
-  - [ ] 3.2 Create VariantInventory model
+  - [x] 3.2 Create VariantInventory model
     - Fields: id, variant_id, branch_id, quantity (Int), low_stock_threshold (Int, default 10)
     - Unique constraint on [variant_id, branch_id]
     - @@map("variant_inventory")

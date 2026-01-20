@@ -104,10 +104,28 @@ model Store {
   // Relations
   owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   products Product[]
+  branches Branch[]
 
   @@index([subdomain])
   @@index([ownerId])
   @@map("stores")
+}
+
+model Branch {
+  id        String   @id @default(cuid())
+  name      String
+  storeId   String   @map("store_id")
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  store     Store              @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  inventory VariantInventory[]
+
+  @@index([storeId])
+  @@map("branches")
 }
 
 model Product {
@@ -198,10 +216,32 @@ model ProductVariant {
   // Relations
   product          Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
   attributeValues  VariantAttributeValue[]
+  inventory        VariantInventory[]
 
   @@index([productId])
   @@index([sku])
   @@map("product_variants")
+}
+
+model VariantInventory {
+  id                String   @id @default(cuid())
+  variantId         String   @map("variant_id")
+  branchId          String   @map("branch_id")
+  quantity          Int
+  lowStockThreshold Int      @default(10) @map("low_stock_threshold")
+
+  // Timestamps
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  variant           ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  branch            Branch         @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@unique([variantId, branchId])
+  @@index([variantId])
+  @@index([branchId])
+  @@map("variant_inventory")
 }
 
 model VariantAttributeValue {
