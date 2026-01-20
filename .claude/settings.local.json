@@ -72,7 +72,8 @@
       "Bash(timeout 120 bun test:*)",
       "Bash(timeout 240 bun test:*)",
       "Bash(npx prisma validate:*)",
-      "Bash(bunx prisma migrate:*)"
+      "Bash(bunx prisma migrate:*)",
+      "Bash(npx prisma format:*)"
     ],
     "deny": [],
     "ask": []

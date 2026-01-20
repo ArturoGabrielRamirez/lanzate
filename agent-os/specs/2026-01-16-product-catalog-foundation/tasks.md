@@ -139,10 +139,10 @@ This spec implements a complete product management system including:
     - Test BundleItem association with products and optional variants
     - Test ProductReview with rating validation (1-5)
     - Test review unique constraint on [user_id, order_item_id]
-  - [ ] 4.2 Create ProductBundle model
+  - [x] 4.2 Create ProductBundle model
     - Fields: id, name, description, price (Decimal), is_active (Boolean), store_id
     - @@map("product_bundles")
-  - [ ] 4.3 Create BundleItem model
+  - [x] 4.3 Create BundleItem model
     - Fields: id, bundle_id, product_id, variant_id (optional), quantity (Int)
     - @@map("bundle_items")
   - [ ] 4.4 Create ProductReview model

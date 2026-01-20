@@ -69,22 +69,22 @@ model User {
 }
 
 model Subscription {
-  id                       String             @id @default(cuid())
-  userId                   String             @unique @map("user_id")
-  accountType              AccountType        @map("account_type")
+  id          String      @id @default(cuid())
+  userId      String      @unique @map("user_id")
+  accountType AccountType @map("account_type")
 
   // 1.2 MercadoPago fields
   mercadopagoPreapprovalId String?            @map("mercadopago_preapproval_id")
   status                   SubscriptionStatus @default(PENDING)
   nextBillingDate          DateTime?          @map("next_billing_date")
 
-  createdAt                DateTime           @default(now()) @map("created_at")
-  updatedAt                DateTime           @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations (1.7)
-  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  payments        Payment[]
-  planChangeLogs  PlanChangeLog[]
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments       Payment[]
+  planChangeLogs PlanChangeLog[]
 
   // Indexes (1.2)
   @@index([userId])
@@ -102,9 +102,10 @@ model Store {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  owner    User            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   products Product[]
   branches Branch[]
+  bundles  ProductBundle[]
 
   @@index([subdomain])
   @@index([ownerId])
@@ -112,9 +113,9 @@ model Store {
 }
 
 model Branch {
-  id        String   @id @default(cuid())
-  name      String
-  storeId   String   @map("store_id")
+  id      String @id @default(cuid())
+  name    String
+  storeId String @map("store_id")
 
   // Timestamps
   createdAt DateTime @default(now()) @map("created_at")
@@ -143,24 +144,25 @@ model Product {
   trackInventory  Boolean       @default(true) @map("track_inventory")
 
   // SEO fields
-  seoTitle        String?       @map("seo_title") @db.VarChar(60)
-  seoDescription  String?       @map("seo_description") @db.VarChar(160)
-  urlSlug         String?       @map("url_slug")
-  ogImageUrl      String?       @map("og_image_url")
+  seoTitle       String? @map("seo_title") @db.VarChar(60)
+  seoDescription String? @map("seo_description") @db.VarChar(160)
+  urlSlug        String? @map("url_slug")
+  ogImageUrl     String? @map("og_image_url")
 
   // Foreign keys
-  storeId         String        @map("store_id")
+  storeId String @map("store_id")
 
   // Timestamps
-  createdAt       DateTime      @default(now()) @map("created_at")
-  updatedAt       DateTime      @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  store           Store              @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  attributes      ProductAttribute[]
-  variants        ProductVariant[]
-  images          ProductImage[]
-  digitalProduct  DigitalProduct?
+  store          Store              @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  attributes     ProductAttribute[]
+  variants       ProductVariant[]
+  images         ProductImage[]
+  digitalProduct DigitalProduct?
+  bundleItems    BundleItem[]
 
   @@index([storeId])
   @@index([slug])
@@ -175,12 +177,12 @@ model ProductAttribute {
   productId String        @map("product_id")
 
   // Timestamps
-  createdAt DateTime      @default(now()) @map("created_at")
-  updatedAt DateTime      @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  product   Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
-  values    ProductAttributeValue[]
+  product Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
+  values  ProductAttributeValue[]
 
   @@index([productId])
   @@map("product_attributes")
@@ -192,11 +194,11 @@ model ProductAttributeValue {
   attributeId String @map("attribute_id")
 
   // Timestamps
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  attribute   ProductAttribute        @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  attribute              ProductAttribute        @relation(fields: [attributeId], references: [id], onDelete: Cascade)
   variantAttributeValues VariantAttributeValue[]
 
   @@index([attributeId])
@@ -212,13 +214,14 @@ model ProductVariant {
   productId        String   @map("product_id")
 
   // Timestamps
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  product          Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
-  attributeValues  VariantAttributeValue[]
-  inventory        VariantInventory[]
+  product         Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
+  attributeValues VariantAttributeValue[]
+  inventory       VariantInventory[]
+  bundleItems     BundleItem[]
 
   @@index([productId])
   @@index([sku])
@@ -226,19 +229,19 @@ model ProductVariant {
 }
 
 model VariantInventory {
-  id                String   @id @default(cuid())
-  variantId         String   @map("variant_id")
-  branchId          String   @map("branch_id")
+  id                String @id @default(cuid())
+  variantId         String @map("variant_id")
+  branchId          String @map("branch_id")
   quantity          Int
-  lowStockThreshold Int      @default(10) @map("low_stock_threshold")
+  lowStockThreshold Int    @default(10) @map("low_stock_threshold")
 
   // Timestamps
-  createdAt         DateTime @default(now()) @map("created_at")
-  updatedAt         DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  variant           ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
-  branch            Branch         @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  variant ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  branch  Branch         @relation(fields: [branchId], references: [id], onDelete: Cascade)
 
   @@unique([variantId, branchId])
   @@index([variantId])
@@ -251,8 +254,8 @@ model VariantAttributeValue {
   attributeValueId String @map("attribute_value_id")
 
   // Relations
-  variant          ProductVariant        @relation(fields: [variantId], references: [id], onDelete: Cascade)
-  attributeValue   ProductAttributeValue @relation(fields: [attributeValueId], references: [id], onDelete: Cascade)
+  variant        ProductVariant        @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  attributeValue ProductAttributeValue @relation(fields: [attributeValueId], references: [id], onDelete: Cascade)
 
   @@id([variantId, attributeValueId])
   @@index([variantId])
@@ -261,19 +264,19 @@ model VariantAttributeValue {
 }
 
 model ProductImage {
-  id        String   @id @default(cuid())
-  productId String   @map("product_id")
+  id        String  @id @default(cuid())
+  productId String  @map("product_id")
   url       String
-  altText   String?  @map("alt_text")
+  altText   String? @map("alt_text")
   position  Int
-  isPrimary Boolean  @default(false) @map("is_primary")
+  isPrimary Boolean @default(false) @map("is_primary")
 
   // Timestamps
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([productId])
   @@map("product_images")
@@ -291,37 +294,79 @@ model DigitalProduct {
   downloadLimit  Int?      @map("download_limit")
 
   // Timestamps
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  product        Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([productId])
   @@map("digital_products")
 }
 
-model Payment {
-  id                    String        @id @default(cuid())
-  subscriptionId        String        @map("subscription_id")
-  mercadopagoPaymentId  String        @unique @map("mercadopago_payment_id")
-  amount                Decimal       @db.Decimal(10, 2)
-  currency              String        @default("ARS")
-  status                PaymentStatus
-  paidAt                DateTime?     @map("paid_at")
+model ProductBundle {
+  id          String  @id @default(cuid())
+  name        String
+  description String? @db.Text
+  price       Decimal @db.Decimal(10, 2)
+  isActive    Boolean @default(true) @map("is_active")
+  storeId     String  @map("store_id")
 
-  // AFIP-ready fields
-  cuit                  String?
-  ivaAmount             Decimal?      @map("iva_amount") @db.Decimal(10, 2)
-  netAmount             Decimal?      @map("net_amount") @db.Decimal(10, 2)
-  caeCode               String?       @map("cae_code")
-
-  createdAt             DateTime      @default(now()) @map("created_at")
-  updatedAt             DateTime      @updatedAt @map("updated_at")
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  subscription          Subscription  @relation(fields: [subscriptionId], references: [id])
-  invoice               Invoice?
+  store Store        @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  items BundleItem[]
+
+  @@index([storeId])
+  @@map("product_bundles")
+}
+
+model BundleItem {
+  id        String  @id @default(cuid())
+  bundleId  String  @map("bundle_id")
+  productId String  @map("product_id")
+  variantId String? @map("variant_id")
+  quantity  Int     @default(1)
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  bundle  ProductBundle   @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  product Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant ProductVariant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@index([bundleId])
+  @@index([productId])
+  @@index([variantId])
+  @@map("bundle_items")
+}
+
+model Payment {
+  id                   String        @id @default(cuid())
+  subscriptionId       String        @map("subscription_id")
+  mercadopagoPaymentId String        @unique @map("mercadopago_payment_id")
+  amount               Decimal       @db.Decimal(10, 2)
+  currency             String        @default("ARS")
+  status               PaymentStatus
+  paidAt               DateTime?     @map("paid_at")
+
+  // AFIP-ready fields
+  cuit      String?
+  ivaAmount Decimal? @map("iva_amount") @db.Decimal(10, 2)
+  netAmount Decimal? @map("net_amount") @db.Decimal(10, 2)
+  caeCode   String?  @map("cae_code")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+  invoice      Invoice?
 
   @@index([subscriptionId])
   @@index([mercadopagoPaymentId])
@@ -329,26 +374,26 @@ model Payment {
 }
 
 model Invoice {
-  id                 String    @id @default(cuid())
-  paymentId          String    @unique @map("payment_id")
-  invoiceNumber      String    @unique @map("invoice_number")
-  issuedAt           DateTime  @map("issued_at")
-  customerName       String    @map("customer_name")
-  customerEmail      String    @map("customer_email")
+  id            String   @id @default(cuid())
+  paymentId     String   @unique @map("payment_id")
+  invoiceNumber String   @unique @map("invoice_number")
+  issuedAt      DateTime @map("issued_at")
+  customerName  String   @map("customer_name")
+  customerEmail String   @map("customer_email")
 
   // AFIP-ready fields
-  customerCuit       String?   @map("customer_cuit")
-  subtotal           Decimal   @db.Decimal(10, 2)
-  ivaAmount          Decimal   @map("iva_amount") @db.Decimal(10, 2)
-  total              Decimal   @db.Decimal(10, 2)
-  caeCode            String?   @map("cae_code")
-  caeExpirationDate  DateTime? @map("cae_expiration_date")
+  customerCuit      String?   @map("customer_cuit")
+  subtotal          Decimal   @db.Decimal(10, 2)
+  ivaAmount         Decimal   @map("iva_amount") @db.Decimal(10, 2)
+  total             Decimal   @db.Decimal(10, 2)
+  caeCode           String?   @map("cae_code")
+  caeExpirationDate DateTime? @map("cae_expiration_date")
 
-  createdAt          DateTime  @default(now()) @map("created_at")
-  updatedAt          DateTime  @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  payment            Payment   @relation(fields: [paymentId], references: [id])
+  payment Payment @relation(fields: [paymentId], references: [id])
 
   @@index([paymentId])
   @@index([invoiceNumber])
@@ -356,20 +401,20 @@ model Invoice {
 }
 
 model PlanChangeLog {
-  id             String        @id @default(cuid())
-  subscriptionId String        @map("subscription_id")
-  previousPlan   AccountType   @map("previous_plan")
-  newPlan        AccountType   @map("new_plan")
-  changedAt      DateTime      @default(now()) @map("changed_at")
+  id             String      @id @default(cuid())
+  subscriptionId String      @map("subscription_id")
+  previousPlan   AccountType @map("previous_plan")
+  newPlan        AccountType @map("new_plan")
+  changedAt      DateTime    @default(now()) @map("changed_at")
 
   // Initiator tracking
-  initiatorType  InitiatorType @map("initiator_type")
-  initiatorId    String?       @map("initiator_id")
+  initiatorType InitiatorType @map("initiator_type")
+  initiatorId   String?       @map("initiator_id")
 
-  createdAt      DateTime      @default(now()) @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   // Relations
-  subscription   Subscription  @relation(fields: [subscriptionId], references: [id])
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
 
   @@index([subscriptionId])
   @@map("plan_change_logs")
