@@ -159,6 +159,7 @@ model Product {
   store           Store              @relation(fields: [storeId], references: [id], onDelete: Cascade)
   attributes      ProductAttribute[]
   variants        ProductVariant[]
+  images          ProductImage[]
 
   @@index([storeId])
   @@index([slug])
@@ -256,6 +257,25 @@ model VariantAttributeValue {
   @@index([variantId])
   @@index([attributeValueId])
   @@map("variant_attribute_values")
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String   @map("product_id")
+  url       String
+  altText   String?  @map("alt_text")
+  position  Int
+  isPrimary Boolean  @default(false) @map("is_primary")
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("product_images")
 }
 
 model Payment {

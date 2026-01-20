@@ -107,7 +107,7 @@ This spec implements a complete product management system including:
     - Fields: id, variant_id, branch_id, quantity (Int), low_stock_threshold (Int, default 10)
     - Unique constraint on [variant_id, branch_id]
     - @@map("variant_inventory")
-  - [ ] 3.3 Create ProductImage model
+  - [x] 3.3 Create ProductImage model
     - Fields: id, product_id, url, alt_text, position (Int), is_primary (Boolean)
     - @@map("product_images")
   - [ ] 3.4 Create DigitalProduct model
