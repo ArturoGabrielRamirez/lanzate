@@ -9,7 +9,7 @@
  * These fields are composed into complete schemas in product.schema.ts
  */
 
-import { ProductStatus } from '@prisma/client';
+import { AttributeType, ProductStatus } from '@prisma/client';
 import * as yup from 'yup';
 
 /**
@@ -87,13 +87,61 @@ export const promotionalPriceField = yup
 
 export const skuField = yup
   .string()
+  .uppercase()
+  .trim()
   .matches(/^[A-Z0-9-]+$/, 'El SKU solo puede contener mayúsculas, números y guiones')
   .min(1, 'El SKU es obligatorio')
-  .max(50, 'El SKU no puede exceder 50 caracteres')
+  .max(50, 'El SKU no puede exceder 50 caracteres');
+
+/**
+ * Quantity and inventory fields
+ */
+
+export const quantityField = yup
+  .number()
+  .typeError('La cantidad debe ser un número')
+  .integer('La cantidad debe ser un número entero')
+  .min(0, 'La cantidad no puede ser negativa');
+
+export const lowStockThresholdField = yup
+  .number()
+  .typeError('El umbral debe ser un número')
+  .integer('El umbral debe ser un número entero')
+  .min(0, 'El umbral no puede ser negativo')
+  .default(10);
+
+/**
+ * Review fields
+ */
+
+export const ratingField = yup
+  .number()
+  .typeError('La calificación debe ser un número')
+  .integer('La calificación debe ser un número entero')
+  .min(1, 'La calificación mínima es 1')
+  .max(5, 'La calificación máxima es 5');
+
+export const reviewTitleField = yup
+  .string()
+  .min(1, 'El título es obligatorio')
+  .max(100, 'El título no puede exceder 100 caracteres')
+  .trim();
+
+export const reviewBodyField = yup
+  .string()
+  .max(2000, 'El comentario no puede exceder 2000 caracteres')
   .trim();
 
 /**
- * Enum field
+ * Attribute fields
+ */
+
+export const attributeTypeField = yup
+  .mixed<AttributeType>()
+  .oneOf(Object.values(AttributeType), 'Tipo de atributo inválido');
+
+/**
+ * Enum fields
  */
 
 export const productStatusField = yup

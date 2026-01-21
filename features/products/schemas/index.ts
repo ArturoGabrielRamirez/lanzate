@@ -17,6 +17,10 @@ export {
   productMediaSchema,
   productVariantSchema,
   productConfigSchema,
+  productAttributeSchema,
+  inventoryUpdateSchema,
+  reviewSchema,
+  bundleSchema,
 } from './product.schema';
 
 // Re-export field validators for reuse
@@ -32,6 +36,12 @@ export {
   promotionalPriceField,
   skuField,
   productStatusField,
+  quantityField,
+  lowStockThresholdField,
+  ratingField,
+  reviewTitleField,
+  reviewBodyField,
+  attributeTypeField,
 } from './productFields';
 
 // Export inferred types
@@ -40,4 +50,9 @@ export type {
   ProductMediaInput,
   ProductVariantInput,
   ProductConfigInput,
+  ProductAttributeInput,
+  InventoryUpdateInput,
+  ReviewInput,
+  BundleItemInput,
+  BundleInput,
 } from './product.schema';

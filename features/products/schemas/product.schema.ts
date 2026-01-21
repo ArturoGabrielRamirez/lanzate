@@ -9,6 +9,10 @@
  * - productMediaSchema: Product images validation with ordering
  * - productVariantSchema: Variant pricing and attribute validation
  * - productConfigSchema: Digital products and inventory configuration
+ * - productAttributeSchema: Product attribute creation
+ * - inventoryUpdateSchema: Inventory update operations
+ * - reviewSchema: Product review validation
+ * - bundleSchema: Product bundle creation
  *
  * Types are automatically inferred from schemas using yup.InferType
  * to ensure type safety across the application.
@@ -28,16 +32,16 @@ import {
   promotionalPriceField,
   skuField,
   productStatusField,
+  quantityField,
+  lowStockThresholdField,
+  ratingField,
+  reviewTitleField,
+  reviewBodyField,
+  attributeTypeField,
 } from '@/features/products/schemas/productFields';
 
 /**
  * Product Basic Info Schema
- *
- * Validates basic product information including:
- * - Name, description, slug, brand (main product fields)
- * - Status and boolean flags (product state and features)
- * - SEO fields (title and description for search optimization)
- * - Additional URLs (custom slug and Open Graph image)
  */
 export const productBasicInfoSchema = yup.object({
   name: nameField.required('El nombre del producto es obligatorio'),
@@ -51,7 +55,6 @@ export const productBasicInfoSchema = yup.object({
   isOnSale: yup.boolean().default(false),
   allowPromotions: yup.boolean().default(true),
   trackInventory: yup.boolean().default(true),
-  // SEO fields
   seoTitle: seoTitleField.optional(),
   seoDescription: seoDescriptionField.optional(),
   urlSlug: urlField.optional(),
@@ -60,13 +63,6 @@ export const productBasicInfoSchema = yup.object({
 
 /**
  * Product Media Schema
- *
- * Validates product images with:
- * - URL validation for each image
- * - Alt text with character limit for accessibility
- * - Position field for image ordering
- * - Single primary image validation
- * - Minimum one image requirement
  */
 export const productMediaSchema = yup.object({
   images: yup.array().of(
@@ -86,72 +82,98 @@ export const productMediaSchema = yup.object({
 
 /**
  * Product Variant Schema
- *
- * Validates product variants with:
- * - SKU with format validation (uppercase, numbers, hyphens)
- * - Required price, optional promotional price and cost
- * - Promotional price must be less than regular price
- * - Attribute values linking (at least one attribute required)
  */
 export const productVariantSchema = yup.object({
   sku: skuField.required('El SKU es obligatorio'),
   price: priceField.required('El precio es obligatorio'),
   promotionalPrice: promotionalPriceField.optional(),
   cost: priceField.optional(),
-  attributeValues: yup.array().of(
-    yup.object({
-      attributeId: yup.string().required('El ID del atributo es obligatorio'),
-      valueId: yup.string().required('El ID del valor es obligatorio'),
-    })
-  ).min(1, 'La variante debe tener al menos un atributo'),
+  attributeValueIds: yup.array()
+    .of(yup.string().required('El ID del valor de atributo es obligatorio'))
+    .min(1, 'La variante debe tener al menos un valor de atributo'),
 });
 
 /**
  * Product Config Schema
- *
- * Validates product-specific configurations:
- * - isDigital flag for digital vs physical products
- * - trackInventory for stock management preference
- * - Digital product-specific fields (conditional validation)
- * - File information for digital downloads
- * - Download limits and expiration for security
  */
 export const productConfigSchema = yup.object({
   isDigital: yup.boolean().default(false),
   trackInventory: yup.boolean().default(true),
-  // Digital product specific - conditional validation
   digitalProduct: yup.object().when('isDigital', {
     is: true,
     then: (schema) => schema.shape({
       downloadUrl: urlField.required('La URL de descarga es obligatoria'),
-      fileName: yup.string()
-        .min(1, 'El nombre del archivo es obligatorio')
-        .max(255, 'El nombre del archivo no puede exceder 255 caracteres')
-        .required(),
-      fileType: yup.string()
-        .matches(/^[a-z0-9\/]+$/, 'Tipo de archivo inválido')
-        .required(),
-      fileSize: yup.number()
-        .positive('El tamaño del archivo debe ser positivo')
-        .required('El tamaño del archivo es obligatorio'),
+      fileName: yup.string().min(1).max(255).required(),
+      fileType: yup.string().matches(/^[a-z0-9\/]+$/, 'Tipo de archivo invalido').required(),
+      fileSize: yup.number().positive().required('El tamano del archivo es obligatorio'),
       expirationDate: yup.date().nullable().optional(),
-      downloadLimit: yup.number()
-        .integer('El límite de descarga debe ser un número entero')
-        .min(1, 'El límite de descarga debe ser al menos 1')
-        .optional(),
+      downloadLimit: yup.number().integer().min(1).optional(),
     }).required('Los campos del producto digital son obligatorios'),
     otherwise: (schema) => schema.optional().strip(),
   }),
 });
 
 /**
+ * Product Attribute Schema
+ */
+export const productAttributeSchema = yup.object({
+  name: nameField.required('El nombre del atributo es obligatorio'),
+  type: attributeTypeField.required('El tipo de atributo es obligatorio'),
+  values: yup.array()
+    .of(yup.string().trim().min(1, 'El valor no puede estar vacio'))
+    .min(1, 'El atributo debe tener al menos un valor'),
+});
+
+/**
+ * Inventory Update Schema
+ */
+export const inventoryUpdateSchema = yup.object({
+  variantId: yup.string().required('El ID de la variante es obligatorio'),
+  branchId: yup.string().required('El ID de la sucursal es obligatorio'),
+  quantity: quantityField.required('La cantidad es obligatoria'),
+  lowStockThreshold: lowStockThresholdField.optional(),
+});
+
+/**
+ * Review Schema
+ */
+export const reviewSchema = yup.object({
+  productId: yup.string().required('El ID del producto es obligatorio'),
+  orderItemId: yup.string().required('El ID del item de orden es obligatorio'),
+  rating: ratingField.required('La calificacion es obligatoria'),
+  title: reviewTitleField.required('El titulo es obligatorio'),
+  body: reviewBodyField.optional(),
+});
+
+/**
+ * Bundle Item Schema
+ */
+const bundleItemSchema = yup.object({
+  productId: yup.string().required('El ID del producto es obligatorio'),
+  variantId: yup.string().optional(),
+  quantity: yup.number().integer().min(1).default(1),
+});
+
+/**
+ * Bundle Schema
+ */
+export const bundleSchema = yup.object({
+  name: nameField.required('El nombre del bundle es obligatorio'),
+  description: descriptionField.optional(),
+  price: priceField.required('El precio del bundle es obligatorio'),
+  isActive: yup.boolean().default(true),
+  items: yup.array().of(bundleItemSchema).min(2, 'El bundle debe tener al menos 2 productos'),
+});
+
+/**
  * Inferred TypeScript types from schemas
- *
- * These types are automatically generated from Yup schemas
- * and ensure type safety when using these schemas in forms
- * and server actions
  */
 export type ProductBasicInfoInput = yup.InferType<typeof productBasicInfoSchema>;
 export type ProductMediaInput = yup.InferType<typeof productMediaSchema>;
 export type ProductVariantInput = yup.InferType<typeof productVariantSchema>;
 export type ProductConfigInput = yup.InferType<typeof productConfigSchema>;
+export type ProductAttributeInput = yup.InferType<typeof productAttributeSchema>;
+export type InventoryUpdateInput = yup.InferType<typeof inventoryUpdateSchema>;
+export type ReviewInput = yup.InferType<typeof reviewSchema>;
+export type BundleItemInput = yup.InferType<typeof bundleItemSchema>;
+export type BundleInput = yup.InferType<typeof bundleSchema>;
