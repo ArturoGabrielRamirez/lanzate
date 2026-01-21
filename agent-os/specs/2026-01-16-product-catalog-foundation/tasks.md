@@ -191,13 +191,13 @@ This spec implements a complete product management system including:
     - Calculate "starting at" price from lowest variant price
     - Handle digital product creation when is_digital flag is set
     - Orchestrate product with variants, images, and inventory
-  - [ ] 5.5 Create product server actions
+  - [x] 5.5 Create product server actions
     - createProductAction: use actionWrapper, validate with Yup, call service, revalidatePath
     - getProductsAction: support search, filter by status, sorting, pagination
     - updateProductAction: validate ownership, update product and related models
     - deleteProductAction: cascade delete variants, images, inventory
     - bulkUpdateProductsAction: handle bulk status changes, bulk archive, bulk delete
-  - [ ] 5.6 Create messages constants file
+  - [x] 5.6 Create messages constants file
     - PRODUCT_MESSAGES for all user-facing strings (Spanish)
   - [ ] 5.7 Ensure product CRUD tests pass
     - Run ONLY the 2-8 tests written in 5.1
