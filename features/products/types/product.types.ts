@@ -5,7 +5,9 @@
  * Uses Prisma types directly for consistency and type safety.
  */
 
-import type { ProductBasicInfoInput } from '@/features/products/schemas/index';
+import type {
+  ProductBasicInfoInput,
+} from '@/features/products/schemas/index';
 
 import type {
   Product,
@@ -15,6 +17,7 @@ import type {
   ProductAttribute,
   ProductAttributeValue,
   ProductStatus,
+  AttributeType,
 } from '@prisma/client';
 
 /**
@@ -53,6 +56,67 @@ export interface PaginatedProducts {
   page: number;
   pageSize: number;
   totalPages: number;
+}
+
+/**
+ * Service layer input types
+ * These are used by service functions to create complete products
+ */
+
+export interface AttributeInput {
+  name: string;
+  type: AttributeType;
+  values: string[];
+}
+
+export interface VariantInput {
+  sku: string;
+  price: number;
+  promotionalPrice?: number;
+  cost?: number;
+  attributeValueIds?: string[];
+}
+
+export interface ImageInput {
+  url: string;
+  altText?: string;
+  position: number;
+  isPrimary: boolean;
+}
+
+export interface DigitalProductInput {
+  downloadUrl: string;
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  expirationDate?: Date;
+  downloadLimit?: number;
+}
+
+export interface InventoryInput {
+  variantSku: string;
+  branchId: string;
+  quantity: number;
+  lowStockThreshold?: number;
+}
+
+export interface CreateFullProductInput {
+  basicInfo: ProductBasicInfoInput;
+  storeId: string;
+  attributes?: AttributeInput[];
+  variants?: VariantInput[];
+  images?: ImageInput[];
+  digitalProduct?: DigitalProductInput;
+  inventory?: InventoryInput[];
+}
+
+export interface UpdateFullProductInput {
+  basicInfo?: Partial<ProductBasicInfoInput>;
+  attributes?: AttributeInput[];
+  variants?: VariantInput[];
+  images?: ImageInput[];
+  digitalProduct?: DigitalProductInput;
+  inventory?: InventoryInput[];
 }
 
 /**
@@ -97,4 +161,5 @@ export type {
   ProductAttribute,
   ProductAttributeValue,
   ProductStatus,
+  AttributeType,
 };

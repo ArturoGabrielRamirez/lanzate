@@ -31,3 +31,21 @@ export function hasReachedStoreLimit(
   const limit = getStoreLimit(accountType);
   return currentStoreCount >= limit;
 }
+
+/**
+ * Get the product attribute limit for an account type
+ */
+export function getProductAttributeLimit(accountType: AccountType): number {
+  return ACCOUNT_LIMITS[accountType].productAttributes;
+}
+
+/**
+ * Check if a product would exceed the attribute limit
+ */
+export function hasExceededAttributeLimit(
+  accountType: AccountType,
+  attributeCount: number
+): boolean {
+  const limit = getProductAttributeLimit(accountType);
+  return attributeCount > limit;
+}

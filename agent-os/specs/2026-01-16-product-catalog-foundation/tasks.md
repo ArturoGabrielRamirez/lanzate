@@ -182,7 +182,7 @@ This spec implements a complete product management system including:
     - productMediaSchema (images array validation)
     - productVariantSchema (sku, price, attribute values)
     - productConfigSchema (is_digital, track_inventory, etc.)
-  - [ ] 5.3 Create product data layer functions
+  - [x] 5.3 Create product data layer functions
     - createProductData, getProductsData, getProductByIdData, updateProductData, deleteProductData
     - Follow pattern: pure Prisma queries, no business logic
     - Import prisma from @/features/core

@@ -7,6 +7,8 @@ export type { AccountLimits } from '@/features/subscriptions/config/accountLimit
 export {
   getStoreLimit,
   hasReachedStoreLimit,
+  getProductAttributeLimit,
+  hasExceededAttributeLimit,
 } from '@/features/subscriptions/config/accountLimits.utils';
 
 // Plan pricing constants
