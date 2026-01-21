@@ -151,6 +151,41 @@ export type ProductWithAllRelations = Product & {
 };
 
 /**
+ * Page Props Types
+ * Props for product page components
+ */
+
+/**
+ * Props for ProductListPage component
+ *
+ * Page props for the store products listing route
+ * Route: /app/[locale]/(private)/stores/[subdomain]/products
+ */
+export interface ProductListPageProps {
+  params: Promise<{ subdomain: string; locale: string }>;
+}
+
+/**
+ * Component Props Types
+ * Props for product-related components
+ */
+
+/**
+ * Props for ProductDataTable component
+ *
+ * Client component that displays products in a data table format
+ * with sorting, filtering, and pagination support.
+ */
+export interface ProductDataTableProps {
+  /** Initial product data loaded from server */
+  initialData: Product[];
+  /** Total number of products for pagination */
+  totalItems: number;
+  /** Store ID for fetching more products */
+  storeId: string;
+}
+
+/**
  * Re-export Prisma types for convenience
  */
 export type {

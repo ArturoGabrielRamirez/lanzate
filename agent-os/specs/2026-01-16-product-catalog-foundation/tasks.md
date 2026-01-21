@@ -256,10 +256,10 @@ This spec implements a complete product management system including:
     - Test search by name/SKU functionality
     - Test filter by status (active/draft/archived)
     - Test bulk selection actions
-  - [ ] 7.2 Create ProductListPage server component
+  - [x] 7.2 Create ProductListPage server component
     - Fetch products using getProductsAction
     - Pass data to DataTable component
-    - Route: /dashboard/[storeSlug]/products
+    - Route: /app/[locale]/(private)/stores/[subdomain]/products
   - [ ] 7.3 Adapt DataTable for products
     - Reuse from backup/components/data-table/
     - Configure columns: image, name, SKU, status, price, stock, actions
