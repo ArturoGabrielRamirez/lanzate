@@ -186,7 +186,7 @@ This spec implements a complete product management system including:
     - createProductData, getProductsData, getProductByIdData, updateProductData, deleteProductData
     - Follow pattern: pure Prisma queries, no business logic
     - Import prisma from @/features/core
-  - [ ] 5.4 Create product service layer
+  - [x] 5.4 Create product service layer
     - createProductService: validate attribute limits per subscription tier (FREE: 5, PRO: 50, ENTERPRISE: unlimited)
     - Calculate "starting at" price from lowest variant price
     - Handle digital product creation when is_digital flag is set
