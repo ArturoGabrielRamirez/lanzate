@@ -4,7 +4,6 @@ import { getAuthUser } from '@/features/auth/utils';
 import { getStoreDetailAction } from '@/features/stores/actions/get-store-detail.action';
 import { StoreDetail } from '@/features/stores/components/store-detail';
 import type { StorefrontPageProps } from '@/features/stores/types';
-import { prisma } from '@/lib/prisma';
 
 /**
  * Store Detail Page
@@ -23,7 +22,7 @@ export default async function StoreDetailPage({ params }: StorefrontPageProps) {
     redirect('/login');
   }
 
-  // Fetch store detail with ownership verification
+  // Fetch all store detail page data
   const result = await getStoreDetailAction(subdomain);
 
   // Handle not found
@@ -31,47 +30,16 @@ export default async function StoreDetailPage({ params }: StorefrontPageProps) {
     notFound();
   }
 
-  const store = result.payload;
-
-  // Fetch additional data in parallel
-  const [productsWithRelations, branchCount] = await Promise.all([
-    // Fetch products with images and variants for display
-    prisma.product.findMany({
-      where: {
-        storeId: store.id,
-        status: 'ACTIVE',
-      },
-      include: {
-        images: true,
-        variants: true,
-      },
-      orderBy: { createdAt: 'desc' },
-      take: 10, // Limit for initial display
-    }),
-    // Count branches
-    prisma.branch.count({
-      where: { storeId: store.id },
-    }),
-  ]);
-
-  // Count total active products
-  const productCount = await prisma.product.count({
-    where: {
-      storeId: store.id,
-      status: 'ACTIVE',
-    },
-  });
+  const { store, products, productCount, branchCount } = result.payload;
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] dark:bg-background">
-      <main className="container mx-auto px-4 py-6">
-        <StoreDetail
-          store={store}
-          products={productsWithRelations}
-          productCount={productCount}
-          branchCount={branchCount}
-        />
-      </main>
+      <StoreDetail
+        store={store}
+        products={products}
+        productCount={productCount}
+        branchCount={branchCount}
+      />
     </div>
   );
 }

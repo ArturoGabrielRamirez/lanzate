@@ -17,9 +17,11 @@ export { StoreCard } from "@/features/stores/components/store-card";
 export { NewStoreCard } from "@/features/stores/components/new-store-card";
 export { StoresGrid } from "@/features/stores/components/stores-grid";
 
-// New store detail components
+// Store detail components
 export { AdminCard } from "@/features/stores/components/admin-card";
 export { AdminPanelSection } from "@/features/stores/components/admin-panel-section";
 export { StoreConfigLink } from "@/features/stores/components/store-config-link";
-export { StoreHeader } from "@/features/stores/components/store-header";
+export { StoreHeaderVisual } from "@/features/stores/components/store-header-visual";
+export { StoreHeaderBar } from "@/features/stores/components/store-header-bar";
+export { StoreHeaderSkeleton } from "@/features/stores/components/store-header-skeleton";
 export { StoreTabs } from "@/features/stores/components/store-tabs";

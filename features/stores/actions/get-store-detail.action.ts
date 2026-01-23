@@ -1,24 +1,50 @@
 'use server';
 
+import type { Product, ProductImage, ProductVariant, Store } from '@prisma/client';
+
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { getAuthUser } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatError, formatSuccess } from '@/features/global/utils/format-response';
-import { getOwnedStoreBySubdomainData } from '@/features/stores/data/get-owned-store-by-subdomain.data';
-
-import type { Store } from '@prisma/client';
+import {
+  countStoreBranchesData,
+  getOwnedStoreBySubdomainData,
+  getStoreProductsPreviewData,
+} from '@/features/stores/data';
+import { prisma } from '@/lib/prisma';
 
 /**
- * Get Store Detail Server Action
+ * Product with images and variants for store detail page
+ */
+export type ProductWithRelations = Product & {
+  images: ProductImage[];
+  variants: ProductVariant[];
+};
+
+/**
+ * Complete data for the store detail page
+ */
+export interface StoreDetailPageData {
+  store: Store;
+  products: ProductWithRelations[];
+  productCount: number;
+  branchCount: number;
+}
+
+/**
+ * Get Store Detail Page Server Action
  *
- * Fetches a store by subdomain, verifying the authenticated user is the owner.
- * Used on the store detail page in the private area.
+ * Fetches all data needed for the store detail page:
+ * - Store with ownership verification
+ * - Products preview with images and variants
+ * - Product count
+ * - Branch count
  *
  * @param subdomain - The subdomain of the store to fetch
- * @returns ServerResponse with store data or error
+ * @returns ServerResponse with complete store detail page data
  */
 export async function getStoreDetailAction(subdomain: string) {
-  return actionWrapper<Store | null>(async () => {
+  return actionWrapper<StoreDetailPageData | null>(async () => {
     // Validate subdomain is provided
     if (!subdomain || subdomain.trim() === '') {
       return formatError('Subdomain is required');
@@ -44,6 +70,20 @@ export async function getStoreDetailAction(subdomain: string) {
       return formatError('Store not found');
     }
 
-    return formatSuccess('Store found', store);
+    // Fetch all additional data in parallel
+    const [products, productCount, branchCount] = await Promise.all([
+      getStoreProductsPreviewData(store.id, 10),
+      prisma.product.count({
+        where: { storeId: store.id, status: 'ACTIVE' },
+      }),
+      countStoreBranchesData(store.id),
+    ]);
+
+    return formatSuccess('Store detail loaded', {
+      store,
+      products,
+      productCount,
+      branchCount,
+    });
   });
 }

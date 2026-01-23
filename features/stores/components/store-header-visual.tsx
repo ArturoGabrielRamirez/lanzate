@@ -1,5 +1,9 @@
 /**
- * Store Header Component
+ * Store Header Visual Component
+ *
+ * Pure visual component for the store header.
+ * Receives store data via props (no data fetching).
+ * Used by StoreHeaderBar which handles the data fetching.
  *
  * Header section with cover image, avatar, store name,
  * owner badge, description, and action buttons.
@@ -8,18 +12,19 @@
 import { ArrowLeft, Heart, MoreHorizontal, Share2, Store as StoreIcon, UserPlus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Store } from '@prisma/client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar';
 import { Badge } from '@/features/shadcn/components/ui/badge';
 import { Button } from '@/features/shadcn/components/ui/button';
 
-export interface StoreHeaderProps {
+import type { Store } from '@prisma/client';
+
+export interface StoreHeaderVisualProps {
   store: Store;
   isOwner?: boolean;
 }
 
-export function StoreHeader({ store, isOwner = true }: StoreHeaderProps) {
+export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualProps) {
   const initials = store.name
     .split(' ')
     .map((word) => word[0])
@@ -30,7 +35,7 @@ export function StoreHeader({ store, isOwner = true }: StoreHeaderProps) {
   return (
     <div className="relative">
       {/* Cover Image */}
-      <div className="relative h-48 w-full overflow-hidden rounded-t-3xl bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500">
+      <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500">
         {store.coverImage ? (
           <Image
             src={store.coverImage}
@@ -43,7 +48,7 @@ export function StoreHeader({ store, isOwner = true }: StoreHeaderProps) {
         )}
 
         {/* Top Actions */}
-        <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
+        <div className="absolute left-4 right-4 top-4 flex items-center justify-between container mx-auto">
           <Link
             href="/stores"
             className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
@@ -68,7 +73,7 @@ export function StoreHeader({ store, isOwner = true }: StoreHeaderProps) {
       </div>
 
       {/* Avatar - Overlapping */}
-      <div className="relative -mt-12 px-6">
+      <div className="relative -mt-12 container mx-auto">
         <Avatar className="h-24 w-24 border-4 border-background shadow-lg">
           {store.logoUrl ? (
             <AvatarImage src={store.logoUrl} alt={store.name} />
@@ -80,7 +85,7 @@ export function StoreHeader({ store, isOwner = true }: StoreHeaderProps) {
       </div>
 
       {/* Store Info */}
-      <div className="space-y-4 px-6 pt-4">
+      <div className="space-y-4 pt-4 pb-6 container mx-auto">
         {/* Name and Badge */}
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="text-2xl font-bold text-foreground">{store.name}</h1>
@@ -100,7 +105,7 @@ export function StoreHeader({ store, isOwner = true }: StoreHeaderProps) {
         <div className="flex gap-3">
           <Button
             disabled
-            className="flex-1 gap-2 rounded-full bg-primary"
+            className="flex-1 gap-2 rounded-full bg-primary sm:flex-none sm:px-8"
           >
             <UserPlus className="h-4 w-4" />
             Seguir
@@ -108,7 +113,7 @@ export function StoreHeader({ store, isOwner = true }: StoreHeaderProps) {
           <Button
             disabled
             variant="outline"
-            className="flex-1 gap-2 rounded-full"
+            className="flex-1 gap-2 rounded-full sm:flex-none sm:px-8"
           >
             <Heart className="h-4 w-4" />
             Me gusta

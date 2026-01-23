@@ -12,3 +12,5 @@ export { findStoreBySubdomainData } from '@/features/stores/data/find-store-by-s
 export { getOwnedStoreBySubdomainData } from '@/features/stores/data/get-owned-store-by-subdomain.data';
 export { getOwnedStoreByIdData } from '@/features/stores/data/get-owned-store-by-id.data';
 export { deleteStoreData } from '@/features/stores/data/delete-store.data';
+export { getStoreProductsPreviewData } from '@/features/stores/data/get-store-products-preview.data';
+export { countStoreBranchesData } from '@/features/stores/data/count-store-branches.data';

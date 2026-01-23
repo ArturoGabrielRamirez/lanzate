@@ -34,7 +34,7 @@ export function AdminPanelSection({
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-1 xl:grid-cols-2">
         <AdminCard
           icon={Box}
           iconClassName="bg-violet-500"

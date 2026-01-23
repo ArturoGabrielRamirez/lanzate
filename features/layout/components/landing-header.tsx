@@ -1,4 +1,3 @@
-'use client';
 
 import { LanguageSwitcher } from '@/features/layout/components/language-switcher';
 import { ThemeToggle } from '@/features/layout/components/theme-toggle';

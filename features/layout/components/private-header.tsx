@@ -2,11 +2,13 @@
 
 import { Store } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { Suspense } from 'react';
 
 import { LogoutButton } from '@/features/dashboard/components/logout-button';
 import { LanguageSwitcher } from '@/features/layout/components/language-switcher';
 import { ThemeToggle } from '@/features/layout/components/theme-toggle';
 import { Button } from '@/features/shadcn/components/ui/button';
+import { StoreHeaderBar, StoreHeaderSkeleton } from '@/features/stores/components';
 import { Link, usePathname } from '@/i18n/navigation';
 
 /**
@@ -80,6 +82,9 @@ export function PrivateHeader() {
           <LogoutButton />
         </div>
       </nav>
+      <Suspense fallback={<StoreHeaderSkeleton />}>
+        <StoreHeaderBar subdomain={"lodemauri"} />
+      </Suspense>
     </header>
   );
 }
