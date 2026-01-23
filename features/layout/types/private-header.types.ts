@@ -2,6 +2,8 @@
  * PrivateHeader component type definitions
  */
 
+import type { ReactNode } from 'react';
+
 /**
  * Navigation link structure used in PrivateHeader
  */
@@ -23,4 +25,14 @@ export interface NavLink {
 export interface PrivateHeaderProps {
   /** Optional CSS class for styling customization */
   className?: string;
+}
+
+/**
+ * Props for StoreHeaderWrapper component
+ *
+ * Client component that conditionally renders the store header
+ * based on the current route.
+ */
+export interface StoreHeaderWrapperProps {
+  children: ReactNode;
 }

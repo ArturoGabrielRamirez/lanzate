@@ -8,21 +8,10 @@
  * Note: StoreHeader is now rendered in the store layout.
  */
 
-import type { Product, ProductImage, ProductVariant, Store } from '@prisma/client';
-
 import { AdminPanelSection } from '@/features/stores/components/admin-panel-section';
 import { StoreConfigLink } from '@/features/stores/components/store-config-link';
 import { StoreTabs } from '@/features/stores/components/store-tabs';
-
-export interface StoreDetailProps {
-  store: Store;
-  products?: (Product & {
-    images?: ProductImage[];
-    variants?: ProductVariant[];
-  })[];
-  productCount?: number;
-  branchCount?: number;
-}
+import type { StoreDetailProps } from '@/features/stores/types';
 
 export function StoreDetail({
   store,

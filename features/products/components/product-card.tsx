@@ -8,18 +8,10 @@
 import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Product, ProductImage, ProductVariant } from '@prisma/client';
 
+import type { ProductCardProps } from '@/features/products/types';
 import { Button } from '@/features/shadcn/components/ui/button';
 import { cn } from '@/features/shadcn/utils/cn';
-
-export interface ProductCardProps {
-  product: Product & {
-    images?: ProductImage[];
-    variants?: ProductVariant[];
-  };
-  storeSubdomain: string;
-}
 
 export function ProductCard({ product, storeSubdomain }: ProductCardProps) {
   // Get primary image or first image

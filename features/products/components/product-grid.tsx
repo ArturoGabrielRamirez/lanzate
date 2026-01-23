@@ -4,18 +4,8 @@
  * Responsive grid layout for displaying product cards.
  */
 
-import type { Product, ProductImage, ProductVariant } from '@prisma/client';
-
 import { ProductCard } from '@/features/products/components/product-card';
-
-export interface ProductGridProps {
-  products: (Product & {
-    images?: ProductImage[];
-    variants?: ProductVariant[];
-  })[];
-  storeSubdomain: string;
-  emptyMessage?: string;
-}
+import type { ProductGridProps } from '@/features/products/types';
 
 export function ProductGrid({
   products,

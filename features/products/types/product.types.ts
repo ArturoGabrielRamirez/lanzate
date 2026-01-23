@@ -186,6 +186,33 @@ export interface ProductDataTableProps {
 }
 
 /**
+ * Props for ProductCard component
+ *
+ * Card displaying a product with image, name, price, and cart button.
+ */
+export interface ProductCardProps {
+  product: Product & {
+    images?: ProductImage[];
+    variants?: ProductVariant[];
+  };
+  storeSubdomain: string;
+}
+
+/**
+ * Props for ProductGrid component
+ *
+ * Responsive grid layout for displaying product cards.
+ */
+export interface ProductGridProps {
+  products: (Product & {
+    images?: ProductImage[];
+    variants?: ProductVariant[];
+  })[];
+  storeSubdomain: string;
+  emptyMessage?: string;
+}
+
+/**
  * Re-export Prisma types for convenience
  */
 export type {

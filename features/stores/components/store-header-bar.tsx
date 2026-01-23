@@ -8,14 +8,10 @@
 
 import { getStoreHeaderAction } from '@/features/stores/actions/get-store-header.action';
 import { StoreHeaderVisual } from '@/features/stores/components/store-header-visual';
-
-export interface StoreHeaderBarProps {
-  subdomain: string;
-}
+import type { StoreHeaderBarProps } from '@/features/stores/types';
 
 export async function StoreHeaderBar({ subdomain }: StoreHeaderBarProps) {
   const result = await getStoreHeaderAction(subdomain);
-  console.log("🚀 ~ StoreHeaderBar ~ result:", result)
 
   // Don't render anything if there's an error or no store found
   if (result.hasError || !result.payload) {
@@ -23,8 +19,6 @@ export async function StoreHeaderBar({ subdomain }: StoreHeaderBarProps) {
   }
 
   return (
-    <div className="bg-card shadow-sm">
-      <StoreHeaderVisual store={result.payload} isOwner />
-    </div>
+    <StoreHeaderVisual store={result.payload} isOwner />
   );
 }

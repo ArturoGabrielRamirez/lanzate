@@ -7,9 +7,7 @@
 import { ChevronRight, Settings } from 'lucide-react';
 import Link from 'next/link';
 
-export interface StoreConfigLinkProps {
-  subdomain: string;
-}
+import type { StoreConfigLinkProps } from '@/features/stores/types';
 
 export function StoreConfigLink({ subdomain }: StoreConfigLinkProps) {
   return (

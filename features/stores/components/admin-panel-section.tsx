@@ -8,12 +8,7 @@ import { BarChart3, Box, MapPin, Users } from 'lucide-react';
 import Link from 'next/link';
 
 import { AdminCard } from '@/features/stores/components/admin-card';
-
-export interface AdminPanelSectionProps {
-  subdomain: string;
-  productCount: number;
-  branchCount: number;
-}
+import type { AdminPanelSectionProps } from '@/features/stores/types';
 
 export function AdminPanelSection({
   subdomain,

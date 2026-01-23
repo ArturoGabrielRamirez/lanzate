@@ -9,20 +9,13 @@
  * owner badge, description, and action buttons.
  */
 
-import { ArrowLeft, Heart, MoreHorizontal, Share2, Store as StoreIcon, UserPlus } from 'lucide-react';
+import { ArrowLeft, MoreHorizontal, Share2, Store as StoreIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar';
 import { Badge } from '@/features/shadcn/components/ui/badge';
-import { Button } from '@/features/shadcn/components/ui/button';
-
-import type { Store } from '@prisma/client';
-
-export interface StoreHeaderVisualProps {
-  store: Store;
-  isOwner?: boolean;
-}
+import type { StoreHeaderVisualProps } from '@/features/stores/types';
 
 export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualProps) {
   const initials = store.name
@@ -33,20 +26,19 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
     .slice(0, 2);
 
   return (
-    <div className="relative">
+    <>
+      {store.coverImage ? (
+        <Image
+          src={store.coverImage}
+          alt={`${store.name} cover`}
+          fill
+          className="object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-linear-to-br from-violet-500 via-purple-500 to-fuchsia-500 max-h-48" />
+      )}
       {/* Cover Image */}
-      <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500">
-        {store.coverImage ? (
-          <Image
-            src={store.coverImage}
-            alt={`${store.name} cover`}
-            fill
-            className="object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500" />
-        )}
-
+      <div className="relative h-48 w-full overflow-hidden">
         {/* Top Actions */}
         <div className="absolute left-4 right-4 top-4 flex items-center justify-between container mx-auto">
           <Link
@@ -73,12 +65,12 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
       </div>
 
       {/* Avatar - Overlapping */}
-      <div className="relative -mt-12 container mx-auto">
+      <div className="relative -mt-26 container mx-auto">
         <Avatar className="h-24 w-24 border-4 border-background shadow-lg">
           {store.logoUrl ? (
             <AvatarImage src={store.logoUrl} alt={store.name} />
           ) : null}
-          <AvatarFallback className="bg-primary/10 text-2xl font-semibold text-primary">
+          <AvatarFallback className="bg-primary/80 backdrop-blur-lg text-2xl font-semibold text-primary-foreground">
             {initials || <StoreIcon className="h-10 w-10" />}
           </AvatarFallback>
         </Avatar>
@@ -102,7 +94,7 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
         </p>
 
         {/* Action Buttons */}
-        <div className="flex gap-3">
+        {/* <div className="flex gap-3">
           <Button
             disabled
             className="flex-1 gap-2 rounded-full bg-primary sm:flex-none sm:px-8"
@@ -118,8 +110,8 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
             <Heart className="h-4 w-4" />
             Me gusta
           </Button>
-        </div>
+        </div> */}
       </div>
-    </div>
+    </>
   );
 }

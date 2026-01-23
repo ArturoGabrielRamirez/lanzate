@@ -30,6 +30,8 @@ export type {
 
   // Component props types
   ProductDataTableProps,
+  ProductCardProps,
+  ProductGridProps,
 
   // Prisma types re-exports
   Product,

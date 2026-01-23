@@ -7,6 +7,13 @@ export type {
   StoresListProps,
   StoresListSkeletonProps,
   DeleteStoreButtonProps,
+  StoreHeaderBarProps,
+  StoreHeaderVisualProps,
+  AdminPanelSectionProps,
+  AdminCardProps,
+  StoreConfigLinkProps,
+  StoreTabsProps,
+  ReviewCardProps,
 } from '@/features/stores/types/components';
 
 export type {

@@ -5,18 +5,9 @@
  */
 
 import Link from 'next/link';
-import type { LucideIcon } from 'lucide-react';
 
 import { cn } from '@/features/shadcn/utils/cn';
-
-export interface AdminCardProps {
-  icon: LucideIcon;
-  iconClassName?: string;
-  title: string;
-  subtitle: string;
-  href?: string;
-  disabled?: boolean;
-}
+import type { AdminCardProps } from '@/features/stores/types';
 
 export function AdminCard({
   icon: Icon,

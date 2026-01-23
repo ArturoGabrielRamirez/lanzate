@@ -4,3 +4,4 @@ export { LanguageSwitcher } from '@/features/layout/components/language-switcher
 export { LandingHeader } from '@/features/layout/components/landing-header';
 export { LandingFooter } from '@/features/layout/components/landing-footer';
 export { PrivateHeader } from '@/features/layout/components/private-header';
+export { StoreHeaderWrapper } from '@/features/layout/components/store-header-wrapper';

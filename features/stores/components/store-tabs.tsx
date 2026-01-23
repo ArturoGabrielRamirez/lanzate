@@ -6,31 +6,17 @@
  * Tabbed navigation for store content: Products, Posts, Reviews.
  */
 
-import type { Product, ProductImage, ProductVariant, ProductReview } from '@prisma/client';
+import { Star } from 'lucide-react';
 
 import { ProductGrid } from '@/features/products/components/product-grid';
+import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '@/features/shadcn/components/ui/tabs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar';
-import { Star } from 'lucide-react';
-
-export interface StoreTabsProps {
-  storeSubdomain: string;
-  products: (Product & {
-    images?: ProductImage[];
-    variants?: ProductVariant[];
-  })[];
-  reviews?: (ProductReview & {
-    user?: {
-      name: string | null;
-      image: string | null;
-    };
-  })[];
-}
+import type { ReviewCardProps, StoreTabsProps } from '@/features/stores/types';
 
 export function StoreTabs({
   storeSubdomain,
@@ -94,15 +80,6 @@ export function StoreTabs({
   );
 }
 
-interface ReviewCardProps {
-  review: ProductReview & {
-    user?: {
-      name: string | null;
-      image: string | null;
-    };
-  };
-}
-
 function ReviewCard({ review }: ReviewCardProps) {
   const userName = review.user?.name || 'Usuario';
   const userInitial = userName.charAt(0).toUpperCase();
@@ -148,7 +125,7 @@ function ReviewCard({ review }: ReviewCardProps) {
           {/* Review Text */}
           {review.body && (
             <p className="mt-2 text-sm italic text-muted-foreground">
-              "{review.body}"
+              &quot;{review.body}&quot;
             </p>
           )}
         </div>
