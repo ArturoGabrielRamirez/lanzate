@@ -17,7 +17,7 @@ import { StoreHeaderBar, StoreHeaderSkeleton } from '@/features/stores/component
 
 export function PrivateHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border">
+    <header className="sticky top-0 z-50">
       <PrivateHeaderNav />
       <StoreHeaderWrapper>
         <Suspense fallback={<StoreHeaderSkeleton />}>

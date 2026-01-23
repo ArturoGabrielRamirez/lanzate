@@ -24,7 +24,7 @@ export default async function StoresPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f5f2] px-2 dark:bg-background">
+    <div className="bg-[#f8f5f2] px-2 dark:bg-background">
       <main className="container mx-auto py-8">
         <Suspense fallback={<StoresListSkeleton />}>
           <StoresListContainer />

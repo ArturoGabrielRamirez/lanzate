@@ -65,7 +65,7 @@ export default async function DashboardPage() {
   const { userName, userEmail } = result.payload;
 
   return (
-    <div className="min-h-screen bg-[#f8f5f2] dark:bg-background px-2">
+    <div className="bg-[#f8f5f2] dark:bg-background px-2">
       {/* Main Content */}
       <main className="mx-auto container py-8">
         {/* Dashboard Header with personalized greeting */}
