@@ -3,8 +3,8 @@
 import { useState } from 'react';
 
 import { DataTable } from '@/features/global/components/table';
-import { PRODUCT_STATUS_MESSAGES, PRODUCT_UI_MESSAGES } from '@/features/products/constants';
 import type { ColumnDef, SortConfig } from '@/features/global/types/data-table';
+import { PRODUCT_STATUS_MESSAGES, PRODUCT_UI_MESSAGES } from '@/features/products/constants';
 import type { Product, ProductDataTableProps } from '@/features/products/types/product.types';
 
 /**

@@ -115,6 +115,8 @@ model Store {
   name        String
   description String?  @db.Text
   subdomain   String   @unique
+  coverImage  String?  @map("cover_image")
+  logoUrl     String?  @map("logo_url")
   ownerId     String   @map("owner_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")

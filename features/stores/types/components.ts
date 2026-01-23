@@ -4,10 +4,16 @@
  * Props interfaces for store-related components.
  */
 
-import type { AccountType, Store } from '@prisma/client';
+import type { AccountType, Product, ProductImage, ProductVariant, Store } from '@prisma/client';
 
 export interface StoreDetailProps {
   store: Store;
+  products?: (Product & {
+    images?: ProductImage[];
+    variants?: ProductVariant[];
+  })[];
+  productCount?: number;
+  branchCount?: number;
 }
 
 export interface StoresListProps {

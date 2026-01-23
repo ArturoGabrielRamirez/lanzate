@@ -16,3 +16,10 @@ export { DeleteStoreButton } from "@/features/stores/components/delete-store-but
 export { StoreCard } from "@/features/stores/components/store-card";
 export { NewStoreCard } from "@/features/stores/components/new-store-card";
 export { StoresGrid } from "@/features/stores/components/stores-grid";
+
+// New store detail components
+export { AdminCard } from "@/features/stores/components/admin-card";
+export { AdminPanelSection } from "@/features/stores/components/admin-panel-section";
+export { StoreConfigLink } from "@/features/stores/components/store-config-link";
+export { StoreHeader } from "@/features/stores/components/store-header";
+export { StoreTabs } from "@/features/stores/components/store-tabs";
