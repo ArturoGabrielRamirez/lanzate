@@ -25,15 +25,25 @@ export function DashboardHeader({ userName, userEmail }: DashboardHeaderProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
     >
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-foreground md:text-4xl">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className='text-3xl font-bold text-foreground md:text-4xl'
+        >
           Hola, {displayName}!
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Welcome back to Lanzate</p>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mt-2 text-sm text-muted-foreground"
+        >
+          Welcome back to Lanzate
+        </motion.p>
       </div>
     </motion.div>
   );
