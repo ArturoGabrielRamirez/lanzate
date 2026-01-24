@@ -7,3 +7,9 @@ export type {
     PrivateHeaderProps,
     StoreHeaderWrapperProps,
 } from '@/features/layout/types/private-header.types';
+
+export type {
+    UserAvatarData,
+    UserAvatarMenuProps,
+    DesktopNavLinksProps,
+} from '@/features/layout/types/user-avatar.types';

@@ -20,9 +20,9 @@ export function StoreDetail({
   branchCount = 0,
 }: StoreDetailProps) {
   return (
-    <div className="pb-8">
+    <div className="py-4">
       {/* Constrained content */}
-      <div className="mx-auto container space-y-6 pt-6">
+      <div className="mx-auto container space-y-6 pt-6 px-2">
         {/* Desktop: 3-column grid (Admin 1/3 left, Tabs 2/3 right) / Mobile: Stacked */}
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Admin Panel - 1 column on desktop (left) */}

@@ -52,7 +52,7 @@ export default async function ProductListPage({ params }: ProductListPageProps) 
   // Handle fetch error
   if (productsResult.hasError || !productsResult.payload) {
     return (
-      <div className="min-h-screen bg-[#f8f5f2] px-2 dark:bg-background">
+      <div className="bg-[#f8f5f2] px-2 dark:bg-background">
         <main className="container mx-auto py-8">
           <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
             <p className="text-destructive">
@@ -65,7 +65,7 @@ export default async function ProductListPage({ params }: ProductListPageProps) 
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f5f2] px-2 dark:bg-background">
+    <div className="bg-[#f8f5f2] px-2 dark:bg-background">
       <main className="container mx-auto py-8">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-foreground">Productos</h1>

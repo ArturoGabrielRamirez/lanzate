@@ -1,43 +1,28 @@
-'use client';
-
 /**
- * Private Header Navigation (Client Component)
+ * Private Header Navigation (Server Component)
  *
- * Contains all the interactive/client-side parts of the header:
- * - Navigation links with active state
- * - Language switcher
- * - Theme toggle
- * - User avatar
- * - Logout button
+ * Main navigation bar for authenticated users.
+ * Composes client components for interactive elements:
+ * - DesktopNavLinks: Navigation with active state
+ * - LanguageSwitcher: Language selection
+ * - ThemeToggle: Theme switching
+ * - UserAvatarContainer: User menu with Suspense
  */
 
 import { Store } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { Suspense } from 'react';
 
-import { LogoutButton } from '@/features/dashboard/components/logout-button';
+import { DesktopNavLinks } from '@/features/layout/components/desktop-nav-links';
 import { LanguageSwitcher } from '@/features/layout/components/language-switcher';
 import { ThemeToggle } from '@/features/layout/components/theme-toggle';
-import { Button } from '@/features/shadcn/components/ui/button';
-import { Link, usePathname } from '@/i18n/navigation';
+import { UserAvatarContainer } from '@/features/layout/components/user-avatar-container';
+import { UserAvatarSkeleton } from '@/features/layout/components/user-avatar-skeleton';
+import { Link } from '@/i18n/navigation';
 
 export function PrivateHeaderNav() {
-  const t = useTranslations('nav');
-  const pathname = usePathname();
-
-  const isActive = (path: string) => {
-    return pathname.includes(path);
-  };
-
-  const navLinks = [
-    { href: '/dashboard', label: t('dashboard'), key: 'dashboard' },
-    { href: '/new-sale', label: t('newSale'), key: 'new-sale' },
-    { href: '/stores', label: t('stores'), key: 'stores' },
-    { href: '/profile', label: t('profile'), key: 'profile' },
-  ];
-
   return (
-    <nav className="h-16 z-10 relative bg-background/80 backdrop-blur-sm ">
-      <div className="flex w-full items-center justify-between container mx-auto h-16 ">
+    <nav className="h-16 z-10 relative bg-background/80 backdrop-blur-sm px-2">
+      <div className="flex w-full items-center justify-between container mx-auto h-16">
         {/* Logo/Brand */}
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
@@ -47,34 +32,15 @@ export function PrivateHeaderNav() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <Button
-              key={link.key}
-              variant="ghost"
-              asChild
-              className={
-                isActive(link.href)
-                  ? 'text-primary'
-                  : 'text-muted-foreground'
-              }
-            >
-              <Link href={link.href}>
-                {link.label}
-              </Link>
-            </Button>
-          ))}
-        </div>
+        <DesktopNavLinks />
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
           <ThemeToggle />
-          {/* UserAvatar placeholder */}
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
-            <span className="text-xs font-semibold text-foreground">U</span>
-          </div>
-          <LogoutButton />
+          <Suspense fallback={<UserAvatarSkeleton />}>
+            <UserAvatarContainer />
+          </Suspense>
         </div>
       </div>
     </nav>

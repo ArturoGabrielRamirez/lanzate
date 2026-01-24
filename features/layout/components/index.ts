@@ -4,4 +4,9 @@ export { LanguageSwitcher } from '@/features/layout/components/language-switcher
 export { LandingHeader } from '@/features/layout/components/landing-header';
 export { LandingFooter } from '@/features/layout/components/landing-footer';
 export { PrivateHeader } from '@/features/layout/components/private-header';
+export { PrivateHeaderNav } from '@/features/layout/components/private-header-nav';
 export { StoreHeaderWrapper } from '@/features/layout/components/store-header-wrapper';
+export { DesktopNavLinks } from '@/features/layout/components/desktop-nav-links';
+export { UserAvatarSkeleton } from '@/features/layout/components/user-avatar-skeleton';
+export { UserAvatarMenu } from '@/features/layout/components/user-avatar-menu';
+export { UserAvatarContainer } from '@/features/layout/components/user-avatar-container';
