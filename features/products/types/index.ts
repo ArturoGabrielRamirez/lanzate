@@ -43,3 +43,21 @@ export type {
   ProductStatus,
   AttributeType,
 } from '@/features/products/types/product.types';
+
+// Create Product Form types
+export type {
+  CreateProductBasicInfo,
+  CreateProductMediaItem,
+  CreateProductMedia,
+  CreateProductOption,
+  CreateProductOptionValue,
+  CreateProductVariantForm,
+  CreateProductVariants,
+  CreateProductDigitalConfig,
+  CreateProductPhysicalConfig,
+  CreateProductConfigurations,
+  CreateProductFormState,
+  CreateProductStepValidation,
+  CreateProductContextType,
+  CreateProductProviderProps,
+} from '@/features/products/types/create-product-form.types';

@@ -39,3 +39,8 @@ export type {
   FilterMode,
   FilterButtonsProps,
 } from "@/features/global/types/filter-buttons";
+
+export type {
+  UseStepActions,
+  SetStepCallbackType,
+} from "@/features/global/types/use-step.types";
