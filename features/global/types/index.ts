@@ -44,3 +44,33 @@ export type {
   UseStepActions,
   SetStepCallbackType,
 } from "@/features/global/types/use-step.types";
+
+// Stepper types
+export type {
+  StepStatus,
+  StepperOrientation,
+  StepConfig,
+  RenderStepIndicatorProps,
+  StepperClassNames,
+  StepperNavigationConfig,
+  StepperProps,
+  StepProps,
+  StepIndicatorProps,
+  StepConnectorProps,
+  StepContentWrapperProps,
+  StepNavigationProps,
+  SlideTransitionProps,
+} from "@/features/global/types/stepper";
+
+// Multi-step form types
+export type {
+  BaseMultiStepFormContext,
+  DialogState,
+  SubmissionState,
+  MultiStepFormContext,
+  CreateMultiStepFormProviderConfig,
+  MultiStepFormProviderProps,
+  MultiStepFormProviderResult,
+  StepSetter,
+  UseMultiStepFormOptions,
+} from "@/features/global/types/multi-step-form";

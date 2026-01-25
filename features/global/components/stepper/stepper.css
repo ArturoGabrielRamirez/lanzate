@@ -1,0 +1,110 @@
+.stepper-root {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.step-circle-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  max-width: 28rem;
+  border-radius: 2rem;
+}
+
+.step-indicator-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 1rem 2rem;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.step-indicator-row.vertical {
+  flex-direction: column;
+}
+
+.step-content-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.step-content {
+  padding: 0.25rem;
+}
+
+.step-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.step-indicator {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.step-indicator.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.step-indicator-inner {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.active-dot {
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--primary-foreground);
+}
+
+.step-number {
+  font-size: 0.875rem;
+}
+
+.step-connector {
+  position: relative;
+  height: 0.125rem;
+  min-width: 1.5rem;
+  flex: 1;
+  max-width: 3rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background-color: hsl(var(--muted));
+}
+
+.step-connector.vertical {
+  width: 0.125rem;
+  min-height: 1.5rem;
+  height: auto;
+  min-width: 0;
+  max-width: none;
+}
+
+.step-connector-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+.check-icon {
+  height: 1rem;
+  width: 1rem;
+  color: var(--primary-foreground);
+}
