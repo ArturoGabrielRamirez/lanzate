@@ -2,7 +2,6 @@
 
 import { Children, useState, useCallback, Fragment } from "react";
 
-import { ScrollArea } from "@/features/shadcn/components/scroll-area";
 import { Separator } from "@/features/shadcn/components/ui/separator";
 import type { StepperProps, StepStatus } from "@/features/global/types";
 import { cn } from "@/features/shadcn/utils/cn";
@@ -176,9 +175,9 @@ export function Stepper({
 
   return (
     <div className={cn("stepper-root", classNames.root, className)} {...rest}>
-      {/* Step indicators - mobile (top) */}
+      {/* Step indicators - always at top */}
       {showIndicators && (
-        <div className="step-circle-container md:hidden">
+        <div className="step-circle-container">
           {renderIndicators()}
         </div>
       )}
@@ -191,40 +190,27 @@ export function Stepper({
         className={classNames.content}
         disableAnimations={disableAnimations}
       >
-        <ScrollArea className="h-full max-h-[calc(100dvh-16rem)] md:max-h-[500px] w-full">
+        <div className="w-full overflow-y-auto max-h-[calc(100dvh-15rem)] md:max-h-[400px]">
           {stepsArray[currentStep - 1]}
-        </ScrollArea>
+        </div>
       </StepContentWrapper>
 
       {/* Navigation section */}
       {!isCompleted && showNavigation && (
         <>
           <Separator />
-          <div className="flex items-center justify-between gap-4 px-1">
-            {/* Back button (left) */}
-            <StepNavigation
-              currentStep={currentStep}
-              totalSteps={totalSteps}
-              onBack={handleBack}
-              onNext={handleNext}
-              onComplete={handleComplete}
-              canGoBack={currentStep > 1 || !!onExitFlow}
-              canGoNext={stepValidation[currentStep] !== false}
-              isLastStep={isLastStep}
-              config={navigationConfig}
-              className={cn("flex-1", classNames.navigation)}
-            />
-
-            {/* Step indicators - desktop (center) */}
-            {showIndicators && (
-              <div className="step-circle-container hidden md:block flex-shrink-0">
-                {renderIndicators()}
-              </div>
-            )}
-
-            {/* Spacer for balance on desktop */}
-            <div className="hidden md:block flex-1" />
-          </div>
+          <StepNavigation
+            currentStep={currentStep}
+            totalSteps={totalSteps}
+            onBack={handleBack}
+            onNext={handleNext}
+            onComplete={handleComplete}
+            canGoBack={currentStep > 1 || !!onExitFlow}
+            canGoNext={stepValidation[currentStep] !== false}
+            isLastStep={isLastStep}
+            config={navigationConfig}
+            className={classNames.navigation}
+          />
         </>
       )}
     </div>

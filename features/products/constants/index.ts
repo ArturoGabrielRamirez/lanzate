@@ -15,3 +15,8 @@ export {
   getProductMessage,
   formatBulkMessage,
 } from './messages';
+
+export {
+  CREATE_PRODUCT_TOTAL_STEPS,
+  CREATE_PRODUCT_INITIAL_VALUES,
+} from './create-product-form';

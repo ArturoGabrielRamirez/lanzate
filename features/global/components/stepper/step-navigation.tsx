@@ -2,13 +2,13 @@
 
 import { ArrowLeft, ArrowRight, Check, Loader2 } from "lucide-react";
 
-import { Button } from "@/features/shadcn/components/button";
+import type { StepNavigationProps } from "@/features/global/types";
+import { Button } from "@/features/shadcn/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/features/shadcn/components/ui/tooltip";
-import type { StepNavigationProps } from "@/features/global/types";
 import { cn } from "@/features/shadcn/utils/cn";
 
 /**
@@ -18,7 +18,6 @@ import { cn } from "@/features/shadcn/utils/cn";
  */
 export function StepNavigation({
   currentStep,
-  totalSteps,
   onBack,
   onNext,
   onComplete,
@@ -43,7 +42,7 @@ export function StepNavigation({
   const showBackButton = showBackOnFirstStep || !isFirstStep;
 
   return (
-    <div className={cn("step-navigation", className)}>
+    <div className={cn("step-navigation pb-2", className)}>
       {/* Back button */}
       {showBackButton && (
         <Tooltip>

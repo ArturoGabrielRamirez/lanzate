@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { ChevronDown } from "lucide-react";
 
 import { InputField } from "@/features/global/components/form";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/features/shadcn/components/ui/collapsible";
 import { useCreateProductContext } from "../create-product-provider";
 import type { CreateProductBasicInfo } from "@/features/products/types";
 
@@ -100,9 +106,11 @@ export function BasicInfoStep() {
     setStepValid(1, isValid);
   }, [isValid, setStepValid]);
 
+  const [seoOpen, setSeoOpen] = useState(false);
+
   return (
     <FormProvider {...methods}>
-      <div className="space-y-6 p-4">
+      <div className="space-y-6">
         <div className="space-y-2">
           <h2 className="text-xl font-semibold">Información Básica</h2>
           <p className="text-sm text-muted-foreground">
@@ -111,86 +119,99 @@ export function BasicInfoStep() {
         </div>
 
         <div className="grid gap-4">
-          {/* Product Name */}
-          <InputField
-            name="name"
-            label="Nombre del producto"
-            placeholder="Ej: Camiseta de algodón"
-            isRequired
-          />
+          {/* Row 1: Name + Slug */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <InputField
+              name="name"
+              label="Nombre del producto"
+              placeholder="Ej: Camiseta de algodón"
+              isRequired
+            />
+            <InputField
+              name="slug"
+              label="URL amigable (slug)"
+              placeholder="camiseta-algodon"
+              isRequired
+              tooltip="Se genera automáticamente a partir del nombre. Puedes editarlo manualmente."
+            />
+          </div>
 
-          {/* Description */}
+          {/* Row 2: Brand + Status */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <InputField
+              name="brand"
+              label="Marca"
+              placeholder="Ej: Mi Marca"
+            />
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Estado</label>
+              <select
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm h-10"
+                value={basicInfo.status}
+                onChange={(e) =>
+                  setValues({
+                    basicInfo: {
+                      ...basicInfo,
+                      status: e.target.value as "DRAFT" | "ACTIVE" | "ARCHIVED",
+                    },
+                  })
+                }
+              >
+                <option value="DRAFT">Borrador</option>
+                <option value="ACTIVE">Activo</option>
+                <option value="ARCHIVED">Archivado</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Row 3: Description */}
           <InputField
             name="description"
             label="Descripción"
             placeholder="Describe tu producto..."
             as="textarea"
           />
-
-          {/* URL Slug */}
-          <InputField
-            name="slug"
-            label="URL amigable (slug)"
-            placeholder="camiseta-algodon"
-            isRequired
-            tooltip="Se genera automáticamente a partir del nombre. Puedes editarlo manualmente."
-          />
-
-          {/* Brand */}
-          <InputField
-            name="brand"
-            label="Marca"
-            placeholder="Ej: Mi Marca"
-          />
-
-          {/* Status - TODO: Replace with Select field when available */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Estado</label>
-            <select
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-              value={basicInfo.status}
-              onChange={(e) =>
-                setValues({
-                  basicInfo: {
-                    ...basicInfo,
-                    status: e.target.value as "DRAFT" | "ACTIVE" | "ARCHIVED",
-                  },
-                })
-              }
-            >
-              <option value="DRAFT">Borrador</option>
-              <option value="ACTIVE">Activo</option>
-              <option value="ARCHIVED">Archivado</option>
-            </select>
-          </div>
         </div>
 
-        {/* SEO Section */}
-        <div className="space-y-4 pt-4 border-t">
-          <h3 className="text-lg font-medium">SEO (Opcional)</h3>
-
-          <InputField
-            name="seoTitle"
-            label="Título SEO"
-            placeholder="Título para buscadores (máx. 60 caracteres)"
-            tooltip="El título que aparecerá en los resultados de búsqueda"
-          />
-
-          <InputField
-            name="seoDescription"
-            label="Descripción SEO"
-            placeholder="Descripción para buscadores (máx. 160 caracteres)"
-            as="textarea"
-            tooltip="La descripción que aparecerá en los resultados de búsqueda"
-          />
-
-          <InputField
-            name="ogImageUrl"
-            label="Imagen para redes sociales"
-            placeholder="https://ejemplo.com/imagen.jpg"
-            tooltip="URL de la imagen que se mostrará al compartir en redes sociales"
-          />
-        </div>
+        {/* SEO Section - Collapsible */}
+        <Collapsible open={seoOpen} onOpenChange={setSeoOpen}>
+          <CollapsibleTrigger className="flex items-center gap-2 w-full text-left group">
+            <div className="space-y-1">
+              <h3 className="text-xl font-semibold">SEO</h3>
+              <p className="text-sm text-muted-foreground">
+                Optimiza tu producto para buscadores (opcional)
+              </p>
+            </div>
+            <ChevronDown
+              className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ml-auto ${
+                seoOpen ? "rotate-180" : ""
+              }`}
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="pt-4 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <InputField
+                name="seoTitle"
+                label="Título SEO"
+                placeholder="Título para buscadores (máx. 60 caracteres)"
+                tooltip="El título que aparecerá en los resultados de búsqueda"
+              />
+              <InputField
+                name="ogImageUrl"
+                label="Imagen para redes sociales"
+                placeholder="https://ejemplo.com/imagen.jpg"
+                tooltip="URL de la imagen que se mostrará al compartir en redes sociales"
+              />
+            </div>
+            <InputField
+              name="seoDescription"
+              label="Descripción SEO"
+              placeholder="Descripción para buscadores (máx. 160 caracteres)"
+              as="textarea"
+              tooltip="La descripción que aparecerá en los resultados de búsqueda"
+            />
+          </CollapsibleContent>
+        </Collapsible>
       </div>
     </FormProvider>
   );

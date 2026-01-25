@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { ImagePlus, X, GripVertical } from "lucide-react";
 
-import { Button } from "@/features/shadcn/components/button";
 import { useCreateProductContext } from "../create-product-provider";
 import type { CreateProductMediaItem } from "@/features/products/types";
+import { Button } from "@/features/shadcn/components/ui/button";
 
 /**
  * MediaStep - Step 2 of product creation

@@ -6,3 +6,4 @@
 
 export { actionWrapper } from "./action-wrapper";
 export { formatResponse, formatError, formatSuccess } from "./format-response";
+export { deepMerge } from "./deep-merge";

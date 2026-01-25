@@ -93,13 +93,13 @@ function useCreateProductContext(): CreateProductContextType {
 /**
  * Deep merge helper for nested objects
  */
-function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial<T>): T {
-  const result = { ...target };
+function deepMerge<T extends object>(target: T, source: Partial<T>): T {
+  const result = { ...target } as T;
 
   for (const key in source) {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
-      const sourceValue = source[key];
-      const targetValue = target[key];
+      const sourceValue = source[key as keyof T];
+      const targetValue = target[key as keyof T];
 
       if (
         sourceValue !== null &&
@@ -109,12 +109,12 @@ function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial
         typeof targetValue === "object" &&
         !Array.isArray(targetValue)
       ) {
-        result[key] = deepMerge(
-          targetValue as Record<string, unknown>,
-          sourceValue as Record<string, unknown>
-        ) as T[Extract<keyof T, string>];
+        (result as Record<string, unknown>)[key] = deepMerge(
+          targetValue as object,
+          sourceValue as Partial<typeof targetValue>
+        );
       } else {
-        result[key] = sourceValue as T[Extract<keyof T, string>];
+        (result as Record<string, unknown>)[key] = sourceValue;
       }
     }
   }
@@ -142,7 +142,7 @@ function CreateProductProvider({
 }: CreateProductProviderProps) {
   // Merge initial values with prop overrides
   const [values, setValuesState] = useState<CreateProductFormState>(() =>
-    deepMerge(initialFormValues, propInitialValues || {})
+    deepMerge<CreateProductFormState>(initialFormValues, propInitialValues || {})
   );
 
   // Step validation tracking
@@ -232,7 +232,7 @@ function CreateProductProvider({
    * Reset form to initial values
    */
   const resetForm = useCallback(() => {
-    setValuesState(deepMerge(initialFormValues, propInitialValues || {}));
+    setValuesState(deepMerge<CreateProductFormState>(initialFormValues, propInitialValues || {}));
     setIsStepValid({});
     resetStep();
     setIsSubmitting(false);

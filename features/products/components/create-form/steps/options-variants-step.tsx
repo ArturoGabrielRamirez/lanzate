@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
 import { Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
+import { useEffect, useState, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { Button } from "@/features/shadcn/components/button";
+import { Button } from "@/features/shadcn/components/ui/button";
 import { Input } from "@/features/shadcn/components/ui/input";
 import { Label } from "@/features/shadcn/components/ui/label";
 import { Switch } from "@/features/shadcn/components/ui/switch";

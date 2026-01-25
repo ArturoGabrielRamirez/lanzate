@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { getAuthUser } from '@/features/auth/utils';
 import { getProductsAction } from '@/features/products/actions';
+import { CreateProductForm } from '@/features/products/components/create-form';
 import { ProductDataTable } from '@/features/products/components/product-data-table';
 import type { ProductListPageProps } from '@/features/products/types/product.types';
 import { getOwnedStoreBySubdomainData } from '@/features/stores/data';
@@ -67,11 +68,14 @@ export default async function ProductListPage({ params }: ProductListPageProps) 
   return (
     <div className="bg-[#f8f5f2] px-2 dark:bg-background">
       <main className="container mx-auto py-8">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground">Productos</h1>
-          <p className="text-muted-foreground">
-            Gestiona los productos de tu tienda
-          </p>
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Productos</h1>
+            <p className="text-muted-foreground">
+              Gestiona los productos de tu tienda
+            </p>
+          </div>
+          <CreateProductForm />
         </div>
 
         <ProductDataTable

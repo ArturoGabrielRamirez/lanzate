@@ -207,3 +207,19 @@ export interface CreateProductProviderProps {
   children: React.ReactNode;
   initialValues?: Partial<CreateProductFormState>;
 }
+
+/**
+ * Props for CreateProductForm component
+ */
+export interface CreateProductFormProps {
+  /** Custom trigger button */
+  trigger?: React.ReactNode;
+}
+
+/**
+ * Props for CreateProductFormDialog component
+ */
+export interface CreateProductFormDialogProps {
+  /** Custom trigger button */
+  trigger?: React.ReactNode;
+}

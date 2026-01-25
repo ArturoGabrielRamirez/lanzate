@@ -60,4 +60,6 @@ export type {
   CreateProductStepValidation,
   CreateProductContextType,
   CreateProductProviderProps,
+  CreateProductFormProps,
+  CreateProductFormDialogProps,
 } from '@/features/products/types/create-product-form.types';
