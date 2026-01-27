@@ -1,0 +1,308 @@
+{
+  "version": "2.6",
+  "children": [
+    {
+      "type": "frame",
+      "id": "BBlZu",
+      "x": -720,
+      "y": -432.5,
+      "name": "Store Details Page",
+      "clip": true,
+      "width": 1440,
+      "height": 865,
+      "fill": "#18181B",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "KOqRG",
+          "name": "AppBar",
+          "width": "fill_container",
+          "height": 64,
+          "fill": "#18181B",
+          "padding": [
+            0,
+            48
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "t0mN2",
+              "name": "Logo",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "SrPL1",
+                  "name": "logoIcon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "rocket",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FF6B4A"
+                },
+                {
+                  "type": "text",
+                  "id": "xaRuN",
+                  "name": "logoText",
+                  "fill": "#FAFAFA",
+                  "content": "Lanzate",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wRnKw",
+              "name": "Navbar",
+              "gap": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZWXG2",
+                  "name": "nav1",
+                  "fill": "#FAFAFA",
+                  "content": "Inicio",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "ypCpG",
+                  "name": "nav2",
+                  "fill": "#71717A",
+                  "content": "Tiendas",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "FN6D9",
+                  "name": "nav3",
+                  "fill": "#71717A",
+                  "content": "Nueva venta",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "V355s",
+                  "name": "nav4",
+                  "fill": "#71717A",
+                  "content": "Cuenta",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "E2D2w",
+              "name": "Actions",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "fTUV7",
+                  "name": "themeBtn",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "#27272A",
+                  "cornerRadius": 6,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "VV1Vs",
+                      "name": "themeIcon",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "search",
+                      "iconFontFamily": "lucide",
+                      "fill": "#FAFAFA"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "fVwBm",
+                  "name": "themeBtn",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "#27272A",
+                  "cornerRadius": 6,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "1aAqm",
+                      "name": "themeIcon",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "moon",
+                      "iconFontFamily": "lucide",
+                      "fill": "#FAFAFA"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Ifvwg",
+                  "name": "notifBtn",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "#27272A",
+                  "cornerRadius": 6,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "vJSs8",
+                      "name": "notifIcon",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "bell",
+                      "iconFontFamily": "lucide",
+                      "fill": "#FAFAFA"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "wNWOz",
+                  "name": "Avatar",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "#FF6B4A",
+                  "cornerRadius": 18,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "9v0Gt",
+                      "name": "avatarText",
+                      "fill": "#FFFFFF",
+                      "content": "JD",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "3kYOw",
+          "name": "Footer",
+          "width": "fill_container",
+          "height": 80,
+          "fill": "#0F0F10",
+          "padding": [
+            0,
+            48
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "jEDlM",
+              "name": "footerLeft",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "ZM40y",
+                  "name": "footerLogo",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "rocket",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FF6B4A"
+                },
+                {
+                  "type": "text",
+                  "id": "yDOOe",
+                  "name": "footerBrand",
+                  "fill": "#FAFAFA",
+                  "content": "Lanzate",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "NOOQp",
+              "name": "footerCenter",
+              "fill": "#71717A",
+              "content": "© 2025 Lanzate. Todos los derechos reservados.",
+              "fontFamily": "Inter",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "orJMF",
+              "name": "footerRight",
+              "gap": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "thfJT",
+                  "name": "footerLink1",
+                  "fill": "#71717A",
+                  "content": "Términos",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "wD2hc",
+                  "name": "footerLink2",
+                  "fill": "#71717A",
+                  "content": "Privacidad",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "Qi6wH",
+                  "name": "footerLink3",
+                  "fill": "#71717A",
+                  "content": "Contacto",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
