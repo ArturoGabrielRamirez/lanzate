@@ -1,8 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback } from "react";
 
 import { useStep } from "@/features/global/hooks/use-step";
+import { deepMerge } from "@/features/global/utils";
+import {
+  CREATE_PRODUCT_TOTAL_STEPS,
+  CREATE_PRODUCT_INITIAL_VALUES,
+} from "@/features/products/constants";
 import type {
   CreateProductFormState,
   CreateProductContextType,
@@ -15,112 +20,9 @@ import type {
 } from "@/features/products/types";
 
 /**
- * Total number of steps in the create product form
- *
- * Steps:
- * 1. Basic Info - name, description, slug, brand, status, SEO
- * 2. Media - product images
- * 3. Options/Variants - attributes and variant combinations
- * 4. Type Specific - physical vs digital product settings
- * 5. Configurations - inventory, pricing, promotions
- */
-const TOTAL_STEPS = 5;
-
-/**
- * Initial form values for product creation
- */
-const initialFormValues: CreateProductFormState = {
-  basicInfo: {
-    name: "",
-    description: "",
-    slug: "",
-    brand: "",
-    status: "DRAFT",
-    seoTitle: "",
-    seoDescription: "",
-    urlSlug: "",
-    ogImageUrl: "",
-  },
-  media: {
-    images: [],
-  },
-  variants: {
-    hasVariants: false,
-    options: [],
-    variants: [],
-  },
-  configurations: {
-    isDigital: false,
-    trackInventory: true,
-    isFeatured: false,
-    isNew: true,
-    isOnSale: false,
-    allowPromotions: true,
-    digital: null,
-    physical: {
-      weight: null,
-      weightUnit: "kg",
-      width: null,
-      height: null,
-      depth: null,
-      dimensionUnit: "cm",
-    },
-  },
-};
-
-/**
  * Context for the create product form
  */
-const CreateProductContext = createContext<CreateProductContextType | null>(null);
-
-/**
- * Hook to access the create product form context
- *
- * @throws Error if used outside of CreateProductProvider
- * @returns The create product context value
- *
- * @example
- * const { values, setBasicInfo, goToNextStep } = useCreateProductContext();
- */
-function useCreateProductContext(): CreateProductContextType {
-  const ctx = useContext(CreateProductContext);
-  if (!ctx) {
-    throw new Error("useCreateProductContext must be used within CreateProductProvider");
-  }
-  return ctx;
-}
-
-/**
- * Deep merge helper for nested objects
- */
-function deepMerge<T extends object>(target: T, source: Partial<T>): T {
-  const result = { ...target } as T;
-
-  for (const key in source) {
-    if (Object.prototype.hasOwnProperty.call(source, key)) {
-      const sourceValue = source[key as keyof T];
-      const targetValue = target[key as keyof T];
-
-      if (
-        sourceValue !== null &&
-        typeof sourceValue === "object" &&
-        !Array.isArray(sourceValue) &&
-        targetValue !== null &&
-        typeof targetValue === "object" &&
-        !Array.isArray(targetValue)
-      ) {
-        (result as Record<string, unknown>)[key] = deepMerge(
-          targetValue as object,
-          sourceValue as Partial<typeof targetValue>
-        );
-      } else {
-        (result as Record<string, unknown>)[key] = sourceValue;
-      }
-    }
-  }
-
-  return result;
-}
+export const CreateProductContext = createContext<CreateProductContextType | null>(null);
 
 /**
  * Provider component for the create product multi-step form
@@ -136,13 +38,13 @@ function deepMerge<T extends object>(target: T, source: Partial<T>): T {
  *   <CreateProductForm />
  * </CreateProductProvider>
  */
-function CreateProductProvider({
+export function CreateProductProvider({
   children,
   initialValues: propInitialValues,
 }: CreateProductProviderProps) {
   // Merge initial values with prop overrides
   const [values, setValuesState] = useState<CreateProductFormState>(() =>
-    deepMerge<CreateProductFormState>(initialFormValues, propInitialValues || {})
+    deepMerge<CreateProductFormState>(CREATE_PRODUCT_INITIAL_VALUES, propInitialValues || {})
   );
 
   // Step validation tracking
@@ -152,7 +54,7 @@ function CreateProductProvider({
   const [
     step,
     { setStep, goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, reset: resetStep },
-  ] = useStep(TOTAL_STEPS);
+  ] = useStep(CREATE_PRODUCT_TOTAL_STEPS);
 
   // Dialog state
   const [isOpen, setIsOpen] = useState(false);
@@ -232,7 +134,7 @@ function CreateProductProvider({
    * Reset form to initial values
    */
   const resetForm = useCallback(() => {
-    setValuesState(deepMerge<CreateProductFormState>(initialFormValues, propInitialValues || {}));
+    setValuesState(deepMerge<CreateProductFormState>(CREATE_PRODUCT_INITIAL_VALUES, propInitialValues || {}));
     setIsStepValid({});
     resetStep();
     setIsSubmitting(false);
@@ -267,5 +169,3 @@ function CreateProductProvider({
     </CreateProductContext.Provider>
   );
 }
-
-export { CreateProductProvider, useCreateProductContext };

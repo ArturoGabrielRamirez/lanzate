@@ -6,8 +6,10 @@
 
 export {
   CreateProductProvider,
-  useCreateProductContext,
+  CreateProductContext,
 } from '@/features/products/components/create-form/create-product-provider';
+
+export { useCreateProductContext } from '@/features/products/hooks';
 
 export { CreateProductForm } from '@/features/products/components/create-form/create-product-form';
 export { CreateProductFormDialog } from '@/features/products/components/create-form/create-product-form-dialog';

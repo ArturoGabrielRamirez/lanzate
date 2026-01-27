@@ -24,4 +24,6 @@ export { StoreConfigLink } from "@/features/stores/components/store-config-link"
 export { StoreHeaderVisual } from "@/features/stores/components/store-header-visual";
 export { StoreHeaderBar } from "@/features/stores/components/store-header-bar";
 export { StoreHeaderSkeleton } from "@/features/stores/components/store-header-skeleton";
+export { StoreHeaderToolbar } from "@/features/stores/components/store-header-toolbar";
+export { ShareStoreDialog } from "@/features/stores/components/share-store-dialog";
 export { StoreTabs } from "@/features/stores/components/store-tabs";

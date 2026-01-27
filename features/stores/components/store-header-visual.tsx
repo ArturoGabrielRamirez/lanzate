@@ -9,14 +9,15 @@
  * owner badge, description, and action buttons.
  */
 
-import { ArrowLeft, MoreHorizontal, Share2, Store as StoreIcon } from 'lucide-react';
+import { Store as StoreIcon } from 'lucide-react';
 import * as motion from "motion/react-client"
 import Image from 'next/image';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar';
 import { Badge } from '@/features/shadcn/components/ui/badge';
+import { StoreHeaderToolbar } from '@/features/stores/components/store-header-toolbar';
 import type { StoreHeaderVisualProps } from '@/features/stores/types';
-import { Link } from '@/i18n/navigation';
+
 
 export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualProps) {
   const initials = store.name
@@ -104,26 +105,7 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
           
         </div>
 
-        <div className="flex items-center gap-2 justify-end container mx-auto mt-auto opacity-50 group-hover/header:opacity-100 transition-opacity">
-          <Link
-            href="/stores"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Link>
-          <button
-            type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
-          >
-            <Share2 className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
-          >
-            <MoreHorizontal className="h-5 w-5" />
-          </button>
-        </div>
+        <StoreHeaderToolbar store={store} isOwner={isOwner} />
 
       </div>
     </>

@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 
 import { Stepper, Step } from "@/features/global/components/stepper";
-import { useCreateProductContext } from "@/features/products/components/create-form/create-product-provider";
+import { useCreateProductContext } from "@/features/products/hooks";
 import { CustomStepIndicator, STEP_CONFIGS } from "@/features/products/components/create-form/custom-step-indicator";
 import {
   BasicInfoStep,
@@ -68,7 +68,7 @@ export function CreateProductFormContent() {
   }, [closeDialog]);
 
   return (
-    <DialogContent className="w-dvw h-dvh max-w-none max-h-none sm:max-w-5xl sm:max-h-[90vh] sm:h-auto sm:rounded-lg rounded-none overflow-hidden flex flex-col p-0 top-0 left-0 translate-0">
+    <DialogContent className="w-dvw h-dvh max-w-none max-h-none sm:max-h-[90vh] sm:h-auto sm:rounded-lg rounded-none overflow-hidden flex flex-col p-0 inset-0 max-sm:transform-none max-sm:top-0 max-sm:left-0 max-sm:translate-none sm:top-1/2 sm:left-1/2">
       <DialogHeader className="px-6 pt-6 pb-2">
         <DialogTitle>Crear Nuevo Producto</DialogTitle>
       </DialogHeader>

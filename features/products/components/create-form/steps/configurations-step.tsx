@@ -5,7 +5,7 @@ import { Package, Sparkles, Tag, Star, Megaphone } from "lucide-react";
 
 import { Label } from "@/features/shadcn/components/ui/label";
 import { Switch } from "@/features/shadcn/components/ui/switch";
-import { useCreateProductContext } from "../create-product-provider";
+import { useCreateProductContext } from "@/features/products/hooks";
 
 /**
  * ConfigurationsStep - Step 5 of product creation

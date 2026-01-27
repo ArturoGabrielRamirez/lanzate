@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { ImagePlus, X, GripVertical } from "lucide-react";
 
-import { useCreateProductContext } from "../create-product-provider";
+import { useCreateProductContext } from "@/features/products/hooks";
 import type { CreateProductMediaItem } from "@/features/products/types";
 import { Button } from "@/features/shadcn/components/ui/button";
 

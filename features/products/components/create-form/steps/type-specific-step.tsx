@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/features/shadcn/components/ui/select";
-import { useCreateProductContext } from "../create-product-provider";
+import { useCreateProductContext } from "@/features/products/hooks";
 
 /**
  * TypeSpecificStep - Step 4 of product creation

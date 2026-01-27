@@ -13,7 +13,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/features/shadcn/components/ui/collapsible";
-import { useCreateProductContext } from "../create-product-provider";
+import { useCreateProductContext } from "@/features/products/hooks";
 import type {
   CreateProductOption,
   CreateProductOptionValue,

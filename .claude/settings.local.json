@@ -78,7 +78,8 @@
       "Bash(xargs cat:*)",
       "Bash(npm run lint)",
       "Bash(bun typecheck:*)",
-      "Bash(bun lint:*)"
+      "Bash(bun lint:*)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []
