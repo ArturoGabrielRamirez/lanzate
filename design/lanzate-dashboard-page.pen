@@ -6067,18 +6067,62 @@
         },
         {
           "type": "frame",
+          "id": "Fr828",
+          "name": "Frame 10",
+          "width": "fill_container",
+          "padding": [
+            0,
+            16
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "1bMfo",
+              "name": "SearchBar",
+              "width": "fill_container",
+              "height": 48,
+              "fill": "#27272A",
+              "cornerRadius": 12,
+              "gap": 12,
+              "padding": [
+                12,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "jKncK",
+                  "name": "searchIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "search",
+                  "iconFontFamily": "lucide",
+                  "fill": "#71717A"
+                },
+                {
+                  "type": "text",
+                  "id": "d1yc4",
+                  "name": "searchPlaceholder",
+                  "fill": "#71717A",
+                  "content": "Buscar productos, tiendas, órdenes...",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
           "id": "C1S6O",
           "name": "Content",
           "width": "fill_container",
           "height": "fill_container",
           "layout": "vertical",
           "gap": 16,
-          "padding": [
-            8,
-            16,
-            16,
-            16
-          ],
+          "padding": 16,
           "children": [
             {
               "type": "frame",
@@ -7245,18 +7289,62 @@
         },
         {
           "type": "frame",
+          "id": "lSgIr",
+          "name": "Frame 11",
+          "width": "fill_container",
+          "padding": [
+            0,
+            16
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "gXZJC",
+              "name": "SearchBar",
+              "width": "fill_container",
+              "height": 48,
+              "fill": "#F4F4F5",
+              "cornerRadius": 12,
+              "gap": 12,
+              "padding": [
+                12,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "q4kGM",
+                  "name": "searchIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "search",
+                  "iconFontFamily": "lucide",
+                  "fill": "#71717A"
+                },
+                {
+                  "type": "text",
+                  "id": "g5dsY",
+                  "name": "searchPlaceholder",
+                  "fill": "#71717A",
+                  "content": "Buscar productos, tiendas, órdenes...",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
           "id": "G81Zt",
           "name": "Content",
           "width": "fill_container",
           "height": "fill_container",
           "layout": "vertical",
           "gap": 16,
-          "padding": [
-            8,
-            16,
-            16,
-            16
-          ],
+          "padding": 16,
           "children": [
             {
               "type": "frame",
