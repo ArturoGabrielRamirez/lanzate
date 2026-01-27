@@ -6119,7 +6119,6 @@
           "id": "C1S6O",
           "name": "Content",
           "width": "fill_container",
-          "height": "fill_container",
           "layout": "vertical",
           "gap": 16,
           "padding": 16,
@@ -6985,94 +6984,137 @@
         },
         {
           "type": "frame",
-          "id": "a7kNT",
-          "name": "Footer",
+          "id": "8gOpo",
+          "name": "FloatingToolbar",
           "width": "fill_container",
-          "fill": "#0F0F10",
-          "layout": "vertical",
-          "gap": 16,
-          "padding": [
+          "height": 80,
+          "fill": "#18181B",
+          "cornerRadius": [
             24,
-            16
+            24,
+            0,
+            0
           ],
+          "gap": 8,
+          "padding": [
+            8,
+            24
+          ],
+          "justifyContent": "space_between",
           "alignItems": "center",
           "children": [
             {
               "type": "frame",
-              "id": "KsQ5M",
-              "name": "sfLogoRow",
-              "gap": 8,
+              "id": "BZgGP",
+              "name": "homeBtn",
+              "width": 48,
+              "height": 48,
+              "fill": "#27272A",
+              "cornerRadius": 24,
+              "justifyContent": "center",
               "alignItems": "center",
               "children": [
                 {
                   "type": "icon_font",
-                  "id": "O9Jfr",
-                  "name": "sfLogo",
-                  "width": 16,
-                  "height": 16,
-                  "iconFontName": "rocket",
+                  "id": "6XK17",
+                  "name": "homeIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "layout-dashboard",
                   "iconFontFamily": "lucide",
-                  "fill": "#FF6B4A"
-                },
-                {
-                  "type": "text",
-                  "id": "SmtLy",
-                  "name": "sfBrand",
-                  "fill": "#FAFAFA",
-                  "content": "Lanzate",
-                  "fontFamily": "Inter",
-                  "fontSize": 14,
-                  "fontWeight": "600"
+                  "fill": "#71717A"
                 }
               ]
             },
             {
-              "type": "text",
-              "id": "TdGzW",
-              "name": "sfCopy",
-              "fill": "#71717A",
-              "content": "© 2025 Lanzate. Todos los derechos reservados.",
-              "textAlign": "center",
-              "fontFamily": "Inter",
-              "fontSize": 11,
-              "fontWeight": "normal"
-            },
-            {
               "type": "frame",
-              "id": "1RvDD",
-              "name": "sfLinks",
-              "gap": 16,
+              "id": "sk4y3",
+              "name": "storesBtn",
+              "width": 48,
+              "height": 48,
+              "fill": "#27272A",
+              "cornerRadius": 24,
+              "justifyContent": "center",
               "alignItems": "center",
               "children": [
                 {
-                  "type": "text",
-                  "id": "RaSxE",
-                  "name": "sfLink1",
-                  "fill": "#71717A",
-                  "content": "Términos",
-                  "fontFamily": "Inter",
-                  "fontSize": 11,
-                  "fontWeight": "normal"
-                },
+                  "type": "icon_font",
+                  "id": "zlRBM",
+                  "name": "storesIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "store",
+                  "iconFontFamily": "lucide",
+                  "fill": "#71717A"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "4atVA",
+              "name": "addBtn",
+              "width": 56,
+              "height": 56,
+              "fill": "#FF6B4A",
+              "cornerRadius": 28,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
                 {
-                  "type": "text",
-                  "id": "WQ8OW",
-                  "name": "sfLink2",
-                  "fill": "#71717A",
-                  "content": "Privacidad",
-                  "fontFamily": "Inter",
-                  "fontSize": 11,
-                  "fontWeight": "normal"
-                },
+                  "type": "icon_font",
+                  "id": "CenSQ",
+                  "name": "addIcon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "plus",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "DcViF",
+              "name": "salesBtn",
+              "width": 48,
+              "height": 48,
+              "fill": "#27272A",
+              "cornerRadius": 24,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
                 {
-                  "type": "text",
-                  "id": "w5YQx",
-                  "name": "sfLink3",
-                  "fill": "#71717A",
-                  "content": "Contacto",
-                  "fontFamily": "Inter",
-                  "fontSize": 11,
-                  "fontWeight": "normal"
+                  "type": "icon_font",
+                  "id": "z3XBn",
+                  "name": "salesIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "receipt",
+                  "iconFontFamily": "lucide",
+                  "fill": "#71717A"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "B31ZZ",
+              "name": "profileBtn",
+              "width": 48,
+              "height": 48,
+              "fill": "#27272A",
+              "cornerRadius": 24,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "fwdf2",
+                  "name": "profileIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "search",
+                  "iconFontFamily": "lucide",
+                  "fill": "#71717A"
                 }
               ]
             }
@@ -7341,7 +7383,6 @@
           "id": "G81Zt",
           "name": "Content",
           "width": "fill_container",
-          "height": "fill_container",
           "layout": "vertical",
           "gap": 16,
           "padding": 16,
@@ -8207,94 +8248,137 @@
         },
         {
           "type": "frame",
-          "id": "S6q7k",
-          "name": "Footer",
+          "id": "rWTxt",
+          "name": "FloatingToolbar",
           "width": "fill_container",
-          "fill": "#F4F4F5",
-          "layout": "vertical",
-          "gap": 16,
-          "padding": [
+          "height": 80,
+          "fill": "#FFFFFF",
+          "cornerRadius": [
             24,
-            16
+            24,
+            0,
+            0
           ],
+          "gap": 8,
+          "padding": [
+            8,
+            24
+          ],
+          "justifyContent": "space_between",
           "alignItems": "center",
           "children": [
             {
               "type": "frame",
-              "id": "LTJYC",
-              "name": "sfLogoRow",
-              "gap": 8,
+              "id": "eT1V1",
+              "name": "homeBtn",
+              "width": 48,
+              "height": 48,
+              "fill": "#F4F4F5",
+              "cornerRadius": 24,
+              "justifyContent": "center",
               "alignItems": "center",
               "children": [
                 {
                   "type": "icon_font",
-                  "id": "uoL4B",
-                  "name": "sfLogo",
-                  "width": 16,
-                  "height": 16,
-                  "iconFontName": "rocket",
+                  "id": "uhdLC",
+                  "name": "homeIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "layout-dashboard",
                   "iconFontFamily": "lucide",
-                  "fill": "#FF6B4A"
-                },
-                {
-                  "type": "text",
-                  "id": "WyiOv",
-                  "name": "sfBrand",
-                  "fill": "#18181B",
-                  "content": "Lanzate",
-                  "fontFamily": "Inter",
-                  "fontSize": 14,
-                  "fontWeight": "600"
+                  "fill": "#71717A"
                 }
               ]
             },
             {
-              "type": "text",
-              "id": "s0tFf",
-              "name": "sfCopy",
-              "fill": "#71717A",
-              "content": "© 2025 Lanzate. Todos los derechos reservados.",
-              "textAlign": "center",
-              "fontFamily": "Inter",
-              "fontSize": 11,
-              "fontWeight": "normal"
-            },
-            {
               "type": "frame",
-              "id": "Llc9q",
-              "name": "sfLinks",
-              "gap": 16,
+              "id": "tq3TK",
+              "name": "storesBtn",
+              "width": 48,
+              "height": 48,
+              "fill": "#F4F4F5",
+              "cornerRadius": 24,
+              "justifyContent": "center",
               "alignItems": "center",
               "children": [
                 {
-                  "type": "text",
-                  "id": "ZOiqp",
-                  "name": "sfLink1",
-                  "fill": "#71717A",
-                  "content": "Términos",
-                  "fontFamily": "Inter",
-                  "fontSize": 11,
-                  "fontWeight": "normal"
-                },
+                  "type": "icon_font",
+                  "id": "OSLXK",
+                  "name": "storesIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "store",
+                  "iconFontFamily": "lucide",
+                  "fill": "#71717A"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "KBbhR",
+              "name": "addBtn",
+              "width": 56,
+              "height": 56,
+              "fill": "#FF6B4A",
+              "cornerRadius": 28,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
                 {
-                  "type": "text",
-                  "id": "K57jh",
-                  "name": "sfLink2",
-                  "fill": "#71717A",
-                  "content": "Privacidad",
-                  "fontFamily": "Inter",
-                  "fontSize": 11,
-                  "fontWeight": "normal"
-                },
+                  "type": "icon_font",
+                  "id": "AFFuY",
+                  "name": "addIcon",
+                  "width": 24,
+                  "height": 24,
+                  "iconFontName": "plus",
+                  "iconFontFamily": "lucide",
+                  "fill": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "1ajRp",
+              "name": "salesBtn",
+              "width": 48,
+              "height": 48,
+              "fill": "#F4F4F5",
+              "cornerRadius": 24,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
                 {
-                  "type": "text",
-                  "id": "sXud8",
-                  "name": "sfLink3",
-                  "fill": "#71717A",
-                  "content": "Contacto",
-                  "fontFamily": "Inter",
-                  "fontSize": 11,
-                  "fontWeight": "normal"
+                  "type": "icon_font",
+                  "id": "C8Sbz",
+                  "name": "salesIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "receipt",
+                  "iconFontFamily": "lucide",
+                  "fill": "#71717A"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kykdg",
+              "name": "profileBtn",
+              "width": 48,
+              "height": 48,
+              "fill": "#F4F4F5",
+              "cornerRadius": 24,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "sbSS1",
+                  "name": "profileIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "search",
+                  "iconFontFamily": "lucide",
+                  "fill": "#71717A"
                 }
               ]
             }
