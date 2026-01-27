@@ -237,7 +237,7 @@
                   "fill": "#FAFAFA",
                   "content": "¡Hola, Juan!",
                   "fontFamily": "Inter",
-                  "fontSize": 24,
+                  "fontSize": 32,
                   "fontWeight": "600"
                 },
                 {
@@ -247,7 +247,7 @@
                   "fill": "#71717A",
                   "content": "Bienvenido de vuelta a tu panel de control",
                   "fontFamily": "Inter",
-                  "fontSize": 14,
+                  "fontSize": 16,
                   "fontWeight": "normal"
                 }
               ]
@@ -528,112 +528,6 @@
                               "name": "newStoreText",
                               "fill": "#FFFFFF",
                               "content": "Nueva tienda",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "500"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "PFKMF",
-                  "name": "Frame 3",
-                  "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": 12,
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "EeRcl",
-                      "name": "Frame 5",
-                      "height": "fill_container",
-                      "alignItems": "end",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "Y7Jqx",
-                          "name": "qaTitle",
-                          "fill": "#FAFAFA",
-                          "content": "Acciones rápidas",
-                          "fontFamily": "Inter",
-                          "fontSize": 14,
-                          "fontWeight": "600"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "WHp30",
-                      "name": "qaGrid",
-                      "width": "fill_container",
-                      "gap": 8,
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "Q7SU2",
-                          "name": "qaBtn1",
-                          "width": "fill_container",
-                          "height": 40,
-                          "fill": "#FF6B4A",
-                          "cornerRadius": 8,
-                          "gap": 8,
-                          "justifyContent": "center",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "icon_font",
-                              "id": "5P6KK",
-                              "name": "qaBtn1Icon",
-                              "width": 16,
-                              "height": 16,
-                              "iconFontName": "plus",
-                              "iconFontFamily": "lucide",
-                              "fill": "#FFFFFF"
-                            },
-                            {
-                              "type": "text",
-                              "id": "lbpDm",
-                              "name": "qaBtn1Text",
-                              "fill": "#FFFFFF",
-                              "content": "Nuevo producto",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "500"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "5MLA1",
-                          "name": "qaBtn2",
-                          "width": "fill_container",
-                          "height": 40,
-                          "fill": "#3F3F46",
-                          "cornerRadius": 8,
-                          "gap": 8,
-                          "justifyContent": "center",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "icon_font",
-                              "id": "AyA80",
-                              "name": "qaBtn2Icon",
-                              "width": 16,
-                              "height": 16,
-                              "iconFontName": "receipt",
-                              "iconFontFamily": "lucide",
-                              "fill": "#FAFAFA"
-                            },
-                            {
-                              "type": "text",
-                              "id": "iIPd5",
-                              "name": "qaBtn2Text",
-                              "fill": "#FAFAFA",
-                              "content": "Nueva venta",
                               "fontFamily": "Inter",
                               "fontSize": 12,
                               "fontWeight": "500"
@@ -957,6 +851,112 @@
                                   "fontWeight": "normal"
                                 }
                               ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "PFKMF",
+                  "name": "Frame 3",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "EeRcl",
+                      "name": "Frame 5",
+                      "height": "fill_container",
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Y7Jqx",
+                          "name": "qaTitle",
+                          "fill": "#FAFAFA",
+                          "content": "Acciones rápidas",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "WHp30",
+                      "name": "qaGrid",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Q7SU2",
+                          "name": "qaBtn1",
+                          "width": "fill_container",
+                          "height": 40,
+                          "fill": "#FF6B4A",
+                          "cornerRadius": 8,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "5P6KK",
+                              "name": "qaBtn1Icon",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "plus",
+                              "iconFontFamily": "lucide",
+                              "fill": "#FFFFFF"
+                            },
+                            {
+                              "type": "text",
+                              "id": "lbpDm",
+                              "name": "qaBtn1Text",
+                              "fill": "#FFFFFF",
+                              "content": "Nuevo producto",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "5MLA1",
+                          "name": "qaBtn2",
+                          "width": "fill_container",
+                          "height": 40,
+                          "fill": "#3F3F46",
+                          "cornerRadius": 8,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "AyA80",
+                              "name": "qaBtn2Icon",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "receipt",
+                              "iconFontFamily": "lucide",
+                              "fill": "#FAFAFA"
+                            },
+                            {
+                              "type": "text",
+                              "id": "iIPd5",
+                              "name": "qaBtn2Text",
+                              "fill": "#FAFAFA",
+                              "content": "Nueva venta",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "500"
                             }
                           ]
                         }
@@ -4164,12 +4164,12 @@
               "children": [
                 {
                   "type": "text",
-                  "id": "zOa52",
+                  "id": "QTZPH",
                   "name": "welcomeTitle",
                   "fill": "#FAFAFA",
                   "content": "¡Hola, Juan!",
                   "fontFamily": "Inter",
-                  "fontSize": 24,
+                  "fontSize": 32,
                   "fontWeight": "600"
                 },
                 {
@@ -4179,7 +4179,7 @@
                   "fill": "#71717A",
                   "content": "Bienvenido de vuelta a tu panel de control",
                   "fontFamily": "Inter",
-                  "fontSize": 14,
+                  "fontSize": 16,
                   "fontWeight": "normal"
                 }
               ]
@@ -4414,112 +4414,6 @@
                               "name": "newStoreText",
                               "fill": "#FFFFFF",
                               "content": "Nueva tienda",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "500"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "ga3OQ",
-                  "name": "Frame 3",
-                  "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": 12,
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "pBUQS",
-                      "name": "Frame 5",
-                      "height": "fill_container",
-                      "alignItems": "end",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "d0F75",
-                          "name": "qaTitle",
-                          "fill": "#FAFAFA",
-                          "content": "Acciones rápidas",
-                          "fontFamily": "Inter",
-                          "fontSize": 14,
-                          "fontWeight": "600"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "cIi9P",
-                      "name": "qaGrid",
-                      "width": "fill_container",
-                      "gap": 8,
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "MpP5K",
-                          "name": "qaBtn1",
-                          "width": "fill_container",
-                          "height": 40,
-                          "fill": "#FF6B4A",
-                          "cornerRadius": 8,
-                          "gap": 8,
-                          "justifyContent": "center",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "icon_font",
-                              "id": "8qMMw",
-                              "name": "qaBtn1Icon",
-                              "width": 16,
-                              "height": 16,
-                              "iconFontName": "plus",
-                              "iconFontFamily": "lucide",
-                              "fill": "#FFFFFF"
-                            },
-                            {
-                              "type": "text",
-                              "id": "GDIi3",
-                              "name": "qaBtn1Text",
-                              "fill": "#FFFFFF",
-                              "content": "Nuevo producto",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "500"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "jtWS5",
-                          "name": "qaBtn2",
-                          "width": "fill_container",
-                          "height": 40,
-                          "fill": "#3F3F46",
-                          "cornerRadius": 8,
-                          "gap": 8,
-                          "justifyContent": "center",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "icon_font",
-                              "id": "FoNMx",
-                              "name": "qaBtn2Icon",
-                              "width": 16,
-                              "height": 16,
-                              "iconFontName": "receipt",
-                              "iconFontFamily": "lucide",
-                              "fill": "#FAFAFA"
-                            },
-                            {
-                              "type": "text",
-                              "id": "hNbbr",
-                              "name": "qaBtn2Text",
-                              "fill": "#FAFAFA",
-                              "content": "Nueva venta",
                               "fontFamily": "Inter",
                               "fontSize": 12,
                               "fontWeight": "500"
@@ -4843,6 +4737,112 @@
                                   "fontWeight": "normal"
                                 }
                               ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ga3OQ",
+                  "name": "Frame 3",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "pBUQS",
+                      "name": "Frame 5",
+                      "height": "fill_container",
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "d0F75",
+                          "name": "qaTitle",
+                          "fill": "#FAFAFA",
+                          "content": "Acciones rápidas",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "cIi9P",
+                      "name": "qaGrid",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "MpP5K",
+                          "name": "qaBtn1",
+                          "width": "fill_container",
+                          "height": 40,
+                          "fill": "#FF6B4A",
+                          "cornerRadius": 8,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "8qMMw",
+                              "name": "qaBtn1Icon",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "plus",
+                              "iconFontFamily": "lucide",
+                              "fill": "#FFFFFF"
+                            },
+                            {
+                              "type": "text",
+                              "id": "GDIi3",
+                              "name": "qaBtn1Text",
+                              "fill": "#FFFFFF",
+                              "content": "Nuevo producto",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "jtWS5",
+                          "name": "qaBtn2",
+                          "width": "fill_container",
+                          "height": 40,
+                          "fill": "#3F3F46",
+                          "cornerRadius": 8,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "FoNMx",
+                              "name": "qaBtn2Icon",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "receipt",
+                              "iconFontFamily": "lucide",
+                              "fill": "#FAFAFA"
+                            },
+                            {
+                              "type": "text",
+                              "id": "hNbbr",
+                              "name": "qaBtn2Text",
+                              "fill": "#FAFAFA",
+                              "content": "Nueva venta",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "500"
                             }
                           ]
                         }
