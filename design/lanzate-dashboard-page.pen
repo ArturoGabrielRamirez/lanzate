@@ -4428,6 +4428,7 @@
                   "type": "frame",
                   "id": "JJath",
                   "name": "Frame 6",
+                  "width": "fill_container",
                   "layout": "vertical",
                   "gap": 12,
                   "children": [
@@ -4854,6 +4855,7 @@
                   "type": "frame",
                   "id": "GwXYE",
                   "name": "Frame 9",
+                  "width": "fill_container",
                   "layout": "vertical",
                   "gap": 12,
                   "children": [
@@ -4862,7 +4864,6 @@
                       "id": "ZQwgZ",
                       "name": "EventsHeader",
                       "width": "fill_container",
-                      "height": "fill_container",
                       "justifyContent": "space_between",
                       "alignItems": "end",
                       "children": [
@@ -5407,6 +5408,7 @@
                   "type": "frame",
                   "id": "BjH0e",
                   "name": "Frame 7",
+                  "width": "fill_container",
                   "layout": "vertical",
                   "gap": 12,
                   "children": [
