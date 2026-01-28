@@ -542,6 +542,7 @@
                   "type": "frame",
                   "id": "4LkSi",
                   "name": "Frame 6",
+                  "width": "fill_container",
                   "layout": "vertical",
                   "gap": 12,
                   "children": [
@@ -968,6 +969,7 @@
                   "type": "frame",
                   "id": "JpWNZ",
                   "name": "Frame 9",
+                  "width": "fill_container",
                   "layout": "vertical",
                   "gap": 12,
                   "children": [
@@ -3484,6 +3486,7 @@
                   "type": "frame",
                   "id": "0qTqK",
                   "name": "Frame 7",
+                  "width": "fill_container",
                   "layout": "vertical",
                   "gap": 12,
                   "children": [
@@ -6121,6 +6124,7 @@
           "id": "C1S6O",
           "name": "Content",
           "width": "fill_container",
+          "height": "fill_container",
           "layout": "vertical",
           "gap": 16,
           "padding": 16,
@@ -7385,6 +7389,7 @@
           "id": "G81Zt",
           "name": "Content",
           "width": "fill_container",
+          "height": "fill_container",
           "layout": "vertical",
           "gap": 16,
           "padding": 16,
