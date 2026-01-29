@@ -19706,6 +19706,7 @@
                   "type": "frame",
                   "id": "klW74",
                   "name": "Frame 10",
+                  "width": "fill_container",
                   "layout": "vertical",
                   "gap": 13,
                   "children": [
@@ -19734,6 +19735,7 @@
                       "type": "frame",
                       "id": "wLAat",
                       "name": "NavGrid",
+                      "width": "fill_container",
                       "layout": "vertical",
                       "gap": 12,
                       "children": [
@@ -21481,6 +21483,7 @@
           "type": "frame",
           "id": "j6jZl",
           "name": "Frame 14",
+          "width": "fill_container",
           "fill": "#271333",
           "cornerRadius": [
             0,
@@ -21877,6 +21880,7 @@
                   "type": "frame",
                   "id": "ZOpgP",
                   "name": "Frame 10",
+                  "width": "fill_container",
                   "layout": "vertical",
                   "gap": 16,
                   "children": [
@@ -21905,6 +21909,7 @@
                       "type": "frame",
                       "id": "gWmyy",
                       "name": "NavGrid",
+                      "width": "fill_container",
                       "layout": "vertical",
                       "gap": 12,
                       "children": [
