@@ -36,6 +36,7 @@ export const signupSchema = yup.object({
     .required('Debes confirmar la contraseña'),
 });
 
+
 /**
  * Login Schema
  *

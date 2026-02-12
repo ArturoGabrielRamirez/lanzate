@@ -14,51 +14,12 @@ import {
   CollapsibleTrigger,
 } from "@/features/shadcn/components/ui/collapsible";
 import { useCreateProductContext } from "@/features/products/hooks";
+import { generateVariantCombinations } from "@/features/products/utils";
 import type {
   CreateProductOption,
   CreateProductOptionValue,
   CreateProductVariantForm,
 } from "@/features/products/types";
-
-/**
- * Generate all possible variant combinations from options
- */
-function generateVariantCombinations(
-  options: CreateProductOption[]
-): CreateProductVariantForm[] {
-  if (options.length === 0 || options.some((opt) => opt.values.length === 0)) {
-    return [];
-  }
-
-  // Get all value combinations using cartesian product
-  const valueCombinations = options.reduce<CreateProductOptionValue[][]>(
-    (acc, option) => {
-      if (acc.length === 0) {
-        return option.values.map((v) => [v]);
-      }
-      const newCombinations: CreateProductOptionValue[][] = [];
-      for (const combo of acc) {
-        for (const value of option.values) {
-          newCombinations.push([...combo, value]);
-        }
-      }
-      return newCombinations;
-    },
-    []
-  );
-
-  // Create variants from combinations
-  return valueCombinations.map((combo) => ({
-    id: uuidv4(),
-    sku: "",
-    price: 0,
-    promotionalPrice: null,
-    cost: null,
-    attributeValueIds: combo.map((v) => v.id),
-    attributeCombination: combo.map((v) => v.value).join(" / "),
-    isEnabled: true,
-  }));
-}
 
 /**
  * OptionsVariantsStep - Step 3 of product creation
@@ -68,7 +29,7 @@ function generateVariantCombinations(
  * - Add/remove options (e.g., Size, Color)
  * - Add/remove values for each option
  * - Auto-generate variant combinations
- * - Set pricing per variant
+ * - Set price, promotional_price, cost, sku per variant
  */
 export function OptionsVariantsStep() {
   const { values, setValues, setStepValid } = useCreateProductContext();
@@ -101,7 +62,6 @@ export function OptionsVariantsStep() {
       variants: {
         ...variants,
         hasVariants: enabled,
-        // Reset options and variants when disabling
         options: enabled ? options : [],
         variants: enabled ? variantsList : [],
       },
@@ -285,7 +245,7 @@ export function OptionsVariantsStep() {
         <div className="space-y-0.5">
           <Label htmlFor="has-variants">Este producto tiene variantes</Label>
           <p className="text-sm text-muted-foreground">
-            Activa esta opción si tu producto tiene diferentes opciones como
+            Activa esta opcion si tu producto tiene diferentes opciones como
             talla o color.
           </p>
         </div>
@@ -309,13 +269,13 @@ export function OptionsVariantsStep() {
                 onClick={handleAddOption}
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Agregar opción
+                Agregar opcion
               </Button>
             </div>
 
             {options.length === 0 && (
               <p className="text-center text-sm text-muted-foreground py-4 border rounded-lg">
-                No hay opciones. Agrega una opción como "Talla" o "Color".
+                No hay opciones. Agrega una opcion como &quot;Talla&quot; o &quot;Color&quot;.
               </p>
             )}
 
@@ -335,7 +295,7 @@ export function OptionsVariantsStep() {
                           <ChevronDown className="h-4 w-4" />
                         )}
                         <span className="font-medium">
-                          {option.name || "Nueva opción"}
+                          {option.name || "Nueva opcion"}
                         </span>
                         <span className="text-sm text-muted-foreground">
                           ({option.values.length} valores)
@@ -359,7 +319,7 @@ export function OptionsVariantsStep() {
                     <div className="p-4 pt-0 space-y-4 border-t">
                       {/* Option Name */}
                       <div className="space-y-2">
-                        <Label>Nombre de la opción</Label>
+                        <Label>Nombre de la opcion</Label>
                         <Input
                           placeholder="Ej: Talla, Color, Material"
                           value={option.name}
@@ -423,7 +383,7 @@ export function OptionsVariantsStep() {
 
           {/* Generate Variants Button */}
           {options.length > 0 &&
-            options.every((opt) => opt.values.length > 0) && (
+            options.every((opt) => opt.name && opt.values.length > 0) && (
               <Button
                 type="button"
                 variant="secondary"
@@ -443,7 +403,7 @@ export function OptionsVariantsStep() {
               <h3 className="text-lg font-medium">
                 Variantes ({variantsList.length})
               </h3>
-              <div className="border rounded-lg overflow-hidden">
+              <div className="border rounded-lg overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead className="bg-muted">
                     <tr>
@@ -451,6 +411,7 @@ export function OptionsVariantsStep() {
                       <th className="text-left p-3">SKU</th>
                       <th className="text-left p-3">Precio</th>
                       <th className="text-left p-3">Precio Promo</th>
+                      <th className="text-left p-3">Costo</th>
                       <th className="text-center p-3">Activo</th>
                     </tr>
                   </thead>
@@ -499,6 +460,23 @@ export function OptionsVariantsStep() {
                               handleUpdateVariant(
                                 variant.id,
                                 "promotionalPrice",
+                                e.target.value
+                                  ? parseFloat(e.target.value)
+                                  : null
+                              )
+                            }
+                          />
+                        </td>
+                        <td className="p-3">
+                          <Input
+                            className="h-8 w-24"
+                            type="number"
+                            placeholder="0"
+                            value={variant.cost || ""}
+                            onChange={(e) =>
+                              handleUpdateVariant(
+                                variant.id,
+                                "cost",
                                 e.target.value
                                   ? parseFloat(e.target.value)
                                   : null

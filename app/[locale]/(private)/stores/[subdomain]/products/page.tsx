@@ -75,7 +75,7 @@ export default async function ProductListPage({ params }: ProductListPageProps) 
               Gestiona los productos de tu tienda
             </p>
           </div>
-          <CreateProductForm />
+          <CreateProductForm storeId={store.id} />
         </div>
 
         <ProductDataTable

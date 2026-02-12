@@ -1,4 +1,620 @@
 {
   "version": "2.6",
-  "children": []
+  "children": [
+    {
+      "type": "frame",
+      "id": "kofYt",
+      "x": 32,
+      "y": -10,
+      "name": "Typography Components",
+      "width": 1200,
+      "fill": "#f5f5f5",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 32,
+      "children": [
+        {
+          "type": "frame",
+          "id": "jFMLH",
+          "name": "Default (Oscuro)",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "HXXcH",
+              "name": "Section Title",
+              "fill": "$--color-text-default",
+              "content": "Light Mode (Oscuro - para fondos claros)",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "LmJ7j",
+              "name": "Typography/H1/LightMode",
+              "reusable": true,
+              "fill": "$--color-text-light-mode",
+              "content": "Heading 1 - Light Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-4xl",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "6iwKk",
+              "name": "Typography/H2/LightMode",
+              "reusable": true,
+              "fill": "$--color-text-light-mode",
+              "content": "Heading 2 - Light Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-3xl",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "oe6Py",
+              "name": "Typography/H3/LightMode",
+              "reusable": true,
+              "fill": "$--color-text-light-mode",
+              "content": "Heading 3 - Light Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-2xl",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "F7IxH",
+              "name": "Typography/Body/LightMode",
+              "reusable": true,
+              "fill": "$--color-text-light-mode",
+              "content": "Body text - Light Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-base"
+            },
+            {
+              "type": "text",
+              "id": "E6M13",
+              "name": "Typography/BodySmall/LightMode",
+              "reusable": true,
+              "fill": "$--color-text-light-mode",
+              "content": "Body Small - Light Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-sm"
+            },
+            {
+              "type": "text",
+              "id": "EY35W",
+              "name": "Typography/Caption/LightMode",
+              "reusable": true,
+              "fill": "$--color-text-light-mode",
+              "content": "Caption - Light Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-xs"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "zH5wL",
+          "name": "Dark (Gris Oscuro)",
+          "width": "fill_container",
+          "fill": "#1a1a1a",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "DZ9pB",
+              "name": "Section Title",
+              "fill": "#f5f5f5",
+              "content": "Dark Mode (Claro - para fondos oscuros)",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "S5z6d",
+              "name": "Typography/H1/DarkMode",
+              "reusable": true,
+              "fill": "$--color-text-dark-mode",
+              "content": "Heading 1 - Dark Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-4xl",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "6K1yj",
+              "name": "Typography/H2/DarkMode",
+              "reusable": true,
+              "fill": "$--color-text-dark-mode",
+              "content": "Heading 2 - Dark Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-3xl",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "M0qAI",
+              "name": "Typography/H3/DarkMode",
+              "reusable": true,
+              "fill": "$--color-text-dark-mode",
+              "content": "Heading 3 - Dark Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-2xl",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "AvAWM",
+              "name": "Typography/Body/DarkMode",
+              "reusable": true,
+              "fill": "$--color-text-dark-mode",
+              "content": "Body text - Dark Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-base"
+            },
+            {
+              "type": "text",
+              "id": "qwd2l",
+              "name": "Typography/BodySmall/DarkMode",
+              "reusable": true,
+              "fill": "$--color-text-dark-mode",
+              "content": "Body Small - Dark Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-sm"
+            },
+            {
+              "type": "text",
+              "id": "DRI6h",
+              "name": "Typography/Caption/DarkMode",
+              "reusable": true,
+              "fill": "$--color-text-dark-mode",
+              "content": "Caption - Dark Mode",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-xs"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "3Jqp1",
+          "name": "Primary (Naranja Lanzate)",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "OHh2T",
+              "name": "Section Title",
+              "fill": "$--color-text-default",
+              "content": "Primary (Naranja Lanzate)",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "r7Q2x",
+              "name": "Typography/H1/Primary",
+              "reusable": true,
+              "fill": "$--color-text-primary",
+              "content": "Heading 1 - Primary",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-4xl",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "Nbr98",
+              "name": "Typography/H2/Primary",
+              "reusable": true,
+              "fill": "$--color-text-primary",
+              "content": "Heading 2 - Primary",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-3xl",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "KD5Og",
+              "name": "Typography/H3/Primary",
+              "reusable": true,
+              "fill": "$--color-text-primary",
+              "content": "Heading 3 - Primary",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-2xl",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "ivsv1",
+              "name": "Typography/Body/Primary",
+              "reusable": true,
+              "fill": "$--color-text-primary",
+              "content": "Body text - Primary",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-base"
+            },
+            {
+              "type": "text",
+              "id": "UsnhC",
+              "name": "Typography/BodySmall/Primary",
+              "reusable": true,
+              "fill": "$--color-text-primary",
+              "content": "Body Small - Primary",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-sm"
+            },
+            {
+              "type": "text",
+              "id": "i8HXc",
+              "name": "Typography/Caption/Primary",
+              "reusable": true,
+              "fill": "$--color-text-primary",
+              "content": "Caption - Primary",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-xs"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "hVkSJ",
+          "name": "Muted (Gris Medio)",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "faetD",
+              "name": "Section Title",
+              "fill": "#1a1a1a",
+              "content": "Muted (Gris Medio - texto secundario)",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "wrtjK",
+              "name": "Typography/H1/Muted",
+              "reusable": true,
+              "fill": "$--color-text-muted",
+              "content": "Heading 1 - Muted",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-4xl",
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "F05hN",
+              "name": "Typography/H2/Muted",
+              "reusable": true,
+              "fill": "$--color-text-muted",
+              "content": "Heading 2 - Muted",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-3xl",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "eV7xF",
+              "name": "Typography/H3/Muted",
+              "reusable": true,
+              "fill": "$--color-text-muted",
+              "content": "Heading 3 - Muted",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-2xl",
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "DWf8M",
+              "name": "Typography/Body/Muted",
+              "reusable": true,
+              "fill": "$--color-text-muted",
+              "content": "Body text - Muted",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-base"
+            },
+            {
+              "type": "text",
+              "id": "mXYQ0",
+              "name": "Typography/BodySmall/Muted",
+              "reusable": true,
+              "fill": "$--color-text-muted",
+              "content": "Body Small - Muted",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-sm"
+            },
+            {
+              "type": "text",
+              "id": "LSZre",
+              "name": "Typography/Caption/Muted",
+              "reusable": true,
+              "fill": "$--color-text-muted",
+              "content": "Caption - Muted",
+              "fontFamily": "Inter",
+              "fontSize": "$--font-size-xs"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "themes": {
+    "Theme": [
+      "Default",
+      "Variant-1"
+    ]
+  },
+  "variables": {
+    "--color-text-dark": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#333333",
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": "#333333",
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        }
+      ]
+    },
+    "--color-text-default": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#1a1a1a",
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": "#1a1a1a",
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        }
+      ]
+    },
+    "--color-text-primary": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#FF6B35",
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": "#FF6B35",
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": "#FF6B35"
+        }
+      ]
+    },
+    "--font-family-primary": {
+      "type": "string",
+      "value": [
+        {
+          "value": "Inter",
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": "Inter",
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        }
+      ]
+    },
+    "--font-family-secondary": {
+      "type": "string",
+      "value": [
+        {
+          "value": "Inter",
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": "Inter",
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        }
+      ]
+    },
+    "--font-size-2xl": {
+      "type": "number",
+      "value": [
+        {
+          "value": 24,
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": 24,
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": 24
+        }
+      ]
+    },
+    "--font-size-3xl": {
+      "type": "number",
+      "value": [
+        {
+          "value": 30,
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": 30,
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": 30
+        }
+      ]
+    },
+    "--font-size-4xl": {
+      "type": "number",
+      "value": [
+        {
+          "value": 36,
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": 36,
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": 36
+        }
+      ]
+    },
+    "--font-size-base": {
+      "type": "number",
+      "value": [
+        {
+          "value": 16,
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": 16,
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": 16
+        }
+      ]
+    },
+    "--font-size-lg": {
+      "type": "number",
+      "value": [
+        {
+          "value": 18,
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": 18,
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": 18
+        }
+      ]
+    },
+    "--font-size-sm": {
+      "type": "number",
+      "value": [
+        {
+          "value": 14,
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": 14,
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": 14
+        }
+      ]
+    },
+    "--font-size-xl": {
+      "type": "number",
+      "value": [
+        {
+          "value": 20,
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": 20,
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": 20
+        }
+      ]
+    },
+    "--font-size-xs": {
+      "type": "number",
+      "value": [
+        {
+          "value": 12,
+          "theme": {
+            "Theme": "Default"
+          }
+        },
+        {
+          "value": 12,
+          "theme": {
+            "Theme": "Variant-1"
+          }
+        },
+        {
+          "value": 12
+        }
+      ]
+    },
+    "--color-text-dark-mode": {
+      "type": "color",
+      "value": "#f5f5f5"
+    },
+    "--color-text-light-mode": {
+      "type": "color",
+      "value": "#1a1a1a"
+    },
+    "--color-text-muted": {
+      "type": "color",
+      "value": "#6b7280"
+    }
+  }
 }

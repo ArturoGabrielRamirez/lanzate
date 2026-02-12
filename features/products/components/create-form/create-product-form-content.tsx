@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 
 import { Stepper, Step } from "@/features/global/components/stepper";
-import { useCreateProductContext } from "@/features/products/hooks";
+import { createProductAction } from "@/features/products/actions";
 import { CustomStepIndicator, STEP_CONFIGS } from "@/features/products/components/create-form/custom-step-indicator";
 import {
   BasicInfoStep,
@@ -13,6 +13,10 @@ import {
   TypeSpecificStep,
   ConfigurationsStep,
 } from "@/features/products/components/create-form/steps/index";
+import { PRODUCT_SUCCESS_MESSAGES, PRODUCT_ERROR_MESSAGES } from "@/features/products/constants";
+import { useCreateProductContext } from "@/features/products/hooks";
+import type { CreateProductFormContentProps } from "@/features/products/types";
+import { mapFormStateToActionInput } from "@/features/products/utils";
 import {
   DialogContent,
   DialogHeader,
@@ -24,8 +28,9 @@ import {
  *
  * Contains the multi-step form with all product creation steps.
  * Uses the CreateProductContext for state management.
+ * Integrates with createProductAction for real product creation.
  */
-export function CreateProductFormContent() {
+export function CreateProductFormContent({ storeId }: CreateProductFormContentProps) {
   const {
     step,
     setStep,
@@ -33,32 +38,62 @@ export function CreateProductFormContent() {
     closeDialog,
     resetForm,
     setIsSubmitting,
+    isSubmitting,
     values,
   } = useCreateProductContext();
 
   /**
-   * Handle form completion
+   * Validate all steps before submission
+   */
+  const validateAllSteps = useCallback((): boolean => {
+    // Step 1 (Basic Info) must be valid
+    if (!isStepValid[1]) {
+      toast.error("Completa la informacion basica del producto");
+      setStep(1);
+      return false;
+    }
+    // Step 2 (Media) is optional, always valid
+    // Step 3 (Variants) - if has variants, must have at least one valid
+    if (!isStepValid[3]) {
+      toast.error("Revisa las opciones y variantes del producto");
+      setStep(3);
+      return false;
+    }
+    // Step 4 (Type Specific) is optional
+    // Step 5 (Configurations) is optional, always valid
+    return true;
+  }, [isStepValid, setStep]);
+
+  /**
+   * Handle form completion - calls createProductAction
    */
   const handleComplete = useCallback(async () => {
+    if (!validateAllSteps()) return;
+    if (!storeId) {
+      toast.error("No se encontro la tienda");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // TODO: Call createProductAction with values
-      console.log("Creating product with values:", values);
+      const actionInput = mapFormStateToActionInput(values, storeId);
+      const result = await createProductAction(actionInput);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      if (result.hasError) {
+        toast.error(result.message || PRODUCT_ERROR_MESSAGES.CREATE_FAILED.es);
+        return;
+      }
 
-      toast.success("Producto creado exitosamente");
+      toast.success(PRODUCT_SUCCESS_MESSAGES.CREATE.es);
       closeDialog();
       resetForm();
-    } catch (error) {
-      console.error("Error creating product:", error);
-      toast.error("Error al crear el producto");
+    } catch {
+      toast.error(PRODUCT_ERROR_MESSAGES.CREATE_FAILED.es);
     } finally {
       setIsSubmitting(false);
     }
-  }, [values, setIsSubmitting, closeDialog, resetForm]);
+  }, [values, storeId, setIsSubmitting, closeDialog, resetForm, validateAllSteps]);
 
   /**
    * Handle exit flow (back on first step)
@@ -86,7 +121,7 @@ export function CreateProductFormContent() {
           navigationConfig={{
             backButtonText: "Anterior",
             nextButtonText: "Siguiente",
-            completeButtonText: "Crear Producto",
+            completeButtonText: isSubmitting ? "Creando..." : "Crear Producto",
             showBackOnFirstStep: true,
             exitFlowTooltip: "Cancelar y cerrar",
           }}

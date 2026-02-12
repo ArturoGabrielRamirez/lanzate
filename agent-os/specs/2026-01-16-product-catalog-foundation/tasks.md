@@ -289,8 +289,8 @@ This spec implements a complete product management system including:
 #### Task Group 8: Product Creation Multi-Step Form
 **Dependencies:** Task Group 7
 
-- [ ] 8.0 Complete product creation form
-  - [ ] 8.1 Write 2-8 focused tests for product creation form
+- [x] 8.0 Complete product creation form
+  - [x] 8.1 Write 2-8 focused tests for product creation form
     - Test multi-step form navigation
     - Test step validation before proceeding
     - Test form submission creates product with variants
@@ -299,31 +299,31 @@ This spec implements a complete product management system including:
     - Manage form state across all steps
     - Follow pattern from backup/features/products/components/create-form/
     - Store: basicInfo, media, variants, configurations
-  - [ ] 8.3 Create step components using Stepper pattern
+  - [x] 8.3 Create step components using Stepper pattern
     - Follow Stepper component pattern from backup/features/shadcn/components/Stepper.tsx
     - Step 1: BasicInfoStep (name, description, slug, brand, status, SEO fields)
     - Step 2: MediaStep (image uploads using MediaSelector)
     - Step 3: OptionsVariantsStep (attributes, attribute values, variant generation)
     - Step 4: TypeSpecificStep (physical vs digital product settings)
     - Step 5: ConfigurationsStep (inventory settings, pricing, promotions)
-  - [ ] 8.4 Integrate MediaSelector for image uploads
+  - [x] 8.4 Integrate MediaSelector for image uploads
     - Reuse from backup/features/global/components/media-selector/
     - Support multiple images with drag-to-reorder
     - Set primary image
-  - [ ] 8.5 Implement variant generation UI
+  - [x] 8.5 Implement variant generation UI
     - Add custom attributes (Size, Color, etc.)
     - Add values for each attribute
     - Auto-generate variant combinations
     - Set price, promotional_price, cost, sku per variant
-  - [ ] 8.6 Implement digital product configuration
+  - [x] 8.6 Implement digital product configuration
     - Show digital product fields when is_digital is true
     - Upload download file, set expiration, download limit
-  - [ ] 8.7 Create form submission handler
+  - [x] 8.7 Create form submission handler
     - Validate all steps before submission
     - Call createProductAction with complete product data
     - Show success/error toast feedback
     - Redirect to product list on success
-  - [ ] 8.8 Ensure product creation form tests pass
+  - [x] 8.8 Ensure product creation form tests pass
     - Run ONLY the 2-8 tests written in 8.1
 
 **Acceptance Criteria:**

@@ -23,7 +23,9 @@ import { useCreateProductContext } from "@/features/products/hooks";
  *
  * Handles product type configuration:
  * - Physical product: weight, dimensions
- * - Digital product: download URL, file info, expiration, limits
+ * - Digital product: download URL, file info, expiration, download limit
+ *
+ * Digital product fields appear conditionally when is_digital is true.
  */
 export function TypeSpecificStep() {
   const { values, setValues, setStepValid } = useCreateProductContext();
@@ -44,7 +46,6 @@ export function TypeSpecificStep() {
       configurations: {
         ...configurations,
         isDigital: isDigitalProduct,
-        // Initialize default configs
         physical: isDigitalProduct
           ? null
           : physical || {
@@ -112,8 +113,8 @@ export function TypeSpecificStep() {
       <div className="space-y-2">
         <h2 className="text-xl font-semibold">Tipo de Producto</h2>
         <p className="text-sm text-muted-foreground">
-          Selecciona si tu producto es físico o digital y configura los detalles
-          específicos.
+          Selecciona si tu producto es fisico o digital y configura los detalles
+          especificos.
         </p>
       </div>
 
@@ -132,9 +133,9 @@ export function TypeSpecificStep() {
           <RadioGroupItem value="physical" id="physical" />
           <Package className="h-8 w-8 text-muted-foreground" />
           <div className="space-y-1">
-            <span className="font-medium">Producto Físico</span>
+            <span className="font-medium">Producto Fisico</span>
             <p className="text-sm text-muted-foreground">
-              Requiere envío y tiene dimensiones físicas.
+              Requiere envio y tiene dimensiones fisicas.
             </p>
           </div>
         </Label>
@@ -150,7 +151,7 @@ export function TypeSpecificStep() {
           <div className="space-y-1">
             <span className="font-medium">Producto Digital</span>
             <p className="text-sm text-muted-foreground">
-              Descarga instantánea, sin envío físico.
+              Descarga instantanea, sin envio fisico.
             </p>
           </div>
         </Label>
@@ -159,7 +160,7 @@ export function TypeSpecificStep() {
       {/* Physical Product Settings */}
       {!isDigital && physical && (
         <div className="space-y-4 p-4 border rounded-lg">
-          <h3 className="font-medium">Configuración de Envío</h3>
+          <h3 className="font-medium">Configuracion de Envio</h3>
 
           {/* Weight */}
           <div className="grid grid-cols-2 gap-4">
@@ -264,7 +265,7 @@ export function TypeSpecificStep() {
       {/* Digital Product Settings */}
       {isDigital && digital && (
         <div className="space-y-4 p-4 border rounded-lg">
-          <h3 className="font-medium">Configuración de Descarga</h3>
+          <h3 className="font-medium">Configuracion de Descarga</h3>
 
           {/* Download URL */}
           <div className="space-y-2">
@@ -278,7 +279,7 @@ export function TypeSpecificStep() {
               }
             />
             <p className="text-xs text-muted-foreground">
-              URL del archivo que se enviará al comprador.
+              URL del archivo que se enviara al comprador.
             </p>
           </div>
 
@@ -308,7 +309,7 @@ export function TypeSpecificStep() {
 
           {/* File Size */}
           <div className="space-y-2">
-            <Label>Tamaño del archivo (MB)</Label>
+            <Label>Tamano del archivo (MB)</Label>
             <Input
               type="number"
               placeholder="0"
@@ -322,12 +323,34 @@ export function TypeSpecificStep() {
             />
           </div>
 
+          {/* Expiration Date */}
+          <div className="space-y-2">
+            <Label>Fecha de expiracion (opcional)</Label>
+            <Input
+              type="date"
+              value={
+                digital.expirationDate
+                  ? new Date(digital.expirationDate).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={(e) =>
+                handleDigitalChange(
+                  "expirationDate",
+                  e.target.value ? new Date(e.target.value) : null
+                )
+              }
+            />
+            <p className="text-xs text-muted-foreground">
+              Despues de esta fecha, el enlace de descarga dejara de funcionar.
+            </p>
+          </div>
+
           {/* Download Limit */}
           <div className="space-y-2">
-            <Label>Límite de descargas (opcional)</Label>
+            <Label>Limite de descargas (opcional)</Label>
             <Input
               type="number"
-              placeholder="Sin límite"
+              placeholder="Sin limite"
               value={digital.downloadLimit ?? ""}
               onChange={(e) =>
                 handleDigitalChange(
@@ -337,7 +360,7 @@ export function TypeSpecificStep() {
               }
             />
             <p className="text-xs text-muted-foreground">
-              Número máximo de veces que el comprador puede descargar el
+              Numero maximo de veces que el comprador puede descargar el
               archivo.
             </p>
           </div>

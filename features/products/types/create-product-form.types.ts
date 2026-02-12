@@ -214,6 +214,8 @@ export interface CreateProductProviderProps {
 export interface CreateProductFormProps {
   /** Custom trigger button */
   trigger?: React.ReactNode;
+  /** Store ID to create product in */
+  storeId: string;
 }
 
 /**
@@ -222,4 +224,14 @@ export interface CreateProductFormProps {
 export interface CreateProductFormDialogProps {
   /** Custom trigger button */
   trigger?: React.ReactNode;
+  /** Store ID to create product in */
+  storeId: string;
+}
+
+/**
+ * Props for CreateProductFormContent component
+ */
+export interface CreateProductFormContentProps {
+  /** Store ID to create product in */
+  storeId: string;
 }

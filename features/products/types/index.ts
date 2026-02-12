@@ -62,4 +62,5 @@ export type {
   CreateProductProviderProps,
   CreateProductFormProps,
   CreateProductFormDialogProps,
+  CreateProductFormContentProps,
 } from '@/features/products/types/create-product-form.types';

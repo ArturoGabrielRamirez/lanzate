@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ImagePlus, X, GripVertical } from "lucide-react";
+import { ImagePlus, X, ArrowUp, ArrowDown, Star } from "lucide-react";
 
 import { useCreateProductContext } from "@/features/products/hooks";
 import type { CreateProductMediaItem } from "@/features/products/types";
@@ -11,13 +11,10 @@ import { Button } from "@/features/shadcn/components/ui/button";
  * MediaStep - Step 2 of product creation
  *
  * Handles product image management:
- * - Upload multiple images
+ * - Upload multiple images via file input
  * - Set primary image
- * - Reorder images (drag and drop)
+ * - Reorder images via up/down buttons
  * - Delete images
- *
- * Note: This is a basic implementation. For full functionality,
- * integrate with your media upload system (e.g., MediaSelector component).
  */
 export function MediaStep() {
   const { values, setValues, setStepValid } = useCreateProductContext();
@@ -30,8 +27,7 @@ export function MediaStep() {
   }, [setStepValid]);
 
   /**
-   * Handle image upload (placeholder)
-   * TODO: Integrate with actual file upload service
+   * Handle image upload from file input
    */
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -53,6 +49,9 @@ export function MediaStep() {
         images: [...images, ...newImages],
       },
     });
+
+    // Reset the input so the same file can be selected again
+    event.target.value = "";
   };
 
   /**
@@ -70,19 +69,19 @@ export function MediaStep() {
    * Remove an image
    */
   const handleRemoveImage = (imageId: string) => {
-    const updatedImages = images
-      .filter((img) => img.id !== imageId)
-      .map((img, index) => ({
-        ...img,
-        position: index,
-        // If we removed the primary, make the first one primary
-        isPrimary: img.isPrimary || index === 0,
-      }));
+    const filteredImages = images.filter((img) => img.id !== imageId);
+    // Recalculate positions and ensure a primary exists
+    const hasPrimary = filteredImages.some((img) => img.isPrimary);
+    const updatedImages = filteredImages.map((img, index) => ({
+      ...img,
+      position: index,
+      isPrimary: hasPrimary ? img.isPrimary : index === 0,
+    }));
     setValues({ media: { images: updatedImages } });
   };
 
   /**
-   * Move image position
+   * Move image position up or down for reordering
    */
   const handleMoveImage = (imageId: string, direction: "up" | "down") => {
     const currentIndex = images.findIndex((img) => img.id === imageId);
@@ -95,7 +94,7 @@ export function MediaStep() {
     const [movedImage] = updatedImages.splice(currentIndex, 1);
     updatedImages.splice(newIndex, 0, movedImage);
 
-    // Update positions
+    // Update positions after reorder
     const reorderedImages = updatedImages.map((img, index) => ({
       ...img,
       position: index,
@@ -107,9 +106,9 @@ export function MediaStep() {
   return (
     <div className="space-y-6 p-4">
       <div className="space-y-2">
-        <h2 className="text-xl font-semibold">Imágenes del Producto</h2>
+        <h2 className="text-xl font-semibold">Imagenes del Producto</h2>
         <p className="text-sm text-muted-foreground">
-          Sube las imágenes de tu producto. La primera imagen será la principal.
+          Sube las imagenes de tu producto. La primera imagen sera la principal.
         </p>
       </div>
 
@@ -129,7 +128,7 @@ export function MediaStep() {
         >
           <ImagePlus className="h-10 w-10 text-muted-foreground" />
           <span className="text-sm text-muted-foreground">
-            Haz clic o arrastra imágenes aquí
+            Haz clic para seleccionar imagenes
           </span>
           <span className="text-xs text-muted-foreground">
             PNG, JPG, WebP hasta 5MB
@@ -156,25 +155,37 @@ export function MediaStep() {
 
               {/* Primary Badge */}
               {image.isPrimary && (
-                <span className="absolute top-2 left-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded">
+                <span className="absolute top-2 left-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded flex items-center gap-1">
+                  <Star className="h-3 w-3" />
                   Principal
                 </span>
               )}
 
               {/* Actions Overlay */}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                {/* Reorder buttons */}
-                <div className="flex flex-col gap-1">
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-8 w-8"
-                    onClick={() => handleMoveImage(image.id!, "up")}
-                    disabled={index === 0}
-                  >
-                    <GripVertical className="h-4 w-4 rotate-90" />
-                  </Button>
-                </div>
+              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                {/* Reorder up button */}
+                <Button
+                  size="icon"
+                  variant="secondary"
+                  className="h-8 w-8"
+                  onClick={() => handleMoveImage(image.id!, "up")}
+                  disabled={index === 0}
+                  aria-label="Mover arriba"
+                >
+                  <ArrowUp className="h-4 w-4" />
+                </Button>
+
+                {/* Reorder down button */}
+                <Button
+                  size="icon"
+                  variant="secondary"
+                  className="h-8 w-8"
+                  onClick={() => handleMoveImage(image.id!, "down")}
+                  disabled={index === images.length - 1}
+                  aria-label="Mover abajo"
+                >
+                  <ArrowDown className="h-4 w-4" />
+                </Button>
 
                 {/* Set as primary */}
                 {!image.isPrimary && (
@@ -183,6 +194,7 @@ export function MediaStep() {
                     variant="secondary"
                     onClick={() => handleSetPrimary(image.id!)}
                   >
+                    <Star className="h-3 w-3 mr-1" />
                     Principal
                   </Button>
                 )}
@@ -193,6 +205,7 @@ export function MediaStep() {
                   variant="destructive"
                   className="h-8 w-8"
                   onClick={() => handleRemoveImage(image.id!)}
+                  aria-label="Eliminar imagen"
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -205,7 +218,7 @@ export function MediaStep() {
       {/* Empty state */}
       {images.length === 0 && (
         <p className="text-center text-sm text-muted-foreground py-4">
-          No hay imágenes. Sube al menos una imagen para tu producto.
+          No hay imagenes. Sube al menos una imagen para tu producto.
         </p>
       )}
     </div>

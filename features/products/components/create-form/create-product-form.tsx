@@ -11,16 +11,15 @@ import type { CreateProductFormProps } from "@/features/products/types";
  * Can be triggered by a custom button or uses a default one.
  *
  * @example
- * // With default trigger
- * <CreateProductForm />
+ * <CreateProductForm storeId={store.id} />
  *
- * // With custom trigger
- * <CreateProductForm trigger={<Button>Crear</Button>} />
+ * @example
+ * <CreateProductForm storeId={store.id} trigger={<Button>Crear</Button>} />
  */
-export function CreateProductForm({ trigger }: CreateProductFormProps) {
+export function CreateProductForm({ trigger, storeId }: CreateProductFormProps) {
   return (
     <CreateProductProvider>
-      <CreateProductFormDialog trigger={trigger} />
+      <CreateProductFormDialog trigger={trigger} storeId={storeId} />
     </CreateProductProvider>
   );
 }

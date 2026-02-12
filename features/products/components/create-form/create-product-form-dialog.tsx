@@ -19,6 +19,7 @@ import {
  */
 export function CreateProductFormDialog({
   trigger,
+  storeId,
 }: CreateProductFormDialogProps) {
   const { isOpen, openDialog, closeDialog } = useCreateProductContext();
 
@@ -32,7 +33,7 @@ export function CreateProductFormDialog({
           </Button>
         )}
       </DialogTrigger>
-      <CreateProductFormContent />
+      <CreateProductFormContent storeId={storeId} />
     </Dialog>
   );
 }
