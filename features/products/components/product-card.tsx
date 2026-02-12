@@ -32,7 +32,7 @@ export function ProductCard({ product, storeSubdomain }: ProductCardProps) {
 
   return (
     <Link
-      href={`/stores/${storeSubdomain}/products/${product.slug}`}
+      href={`/s/${storeSubdomain}/products/${product.slug}`}
       className="group block"
     >
       <div className="overflow-hidden rounded-2xl bg-card transition-all hover:shadow-md">

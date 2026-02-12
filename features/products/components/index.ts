@@ -10,6 +10,8 @@ export { ProductGrid } from '@/features/products/components/product-grid';
 export { ProductImageGallery } from '@/features/products/components/product-image-gallery';
 export { VariantSelector } from '@/features/products/components/variant-selector';
 export { ProductReviews } from '@/features/products/components/product-reviews';
+export { ProductFilters } from '@/features/products/components/product-filters';
+export { StorefrontHome } from '@/features/products/components/storefront-home';
 
 // Create Product Form components
 export {

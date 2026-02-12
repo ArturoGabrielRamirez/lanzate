@@ -14,6 +14,7 @@
 import { notFound } from 'next/navigation';
 
 import { getStoreBySubdomainAction } from '@/features/stores/actions';
+import { StorefrontHome } from '@/features/products/components';
 import type { StorefrontPageProps } from '@/features/stores/types/store';
 
 export default async function StorefrontPage({ params }: StorefrontPageProps) {
@@ -30,14 +31,6 @@ export default async function StorefrontPage({ params }: StorefrontPageProps) {
   const store = result.payload;
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="mb-4 text-3xl font-bold">Storefront for {store.name}</h1>
-      <p className="text-muted-foreground">Subdomain: {subdomain}</p>
-      {store.description && (
-        <p className="mt-4 max-w-md text-center text-muted-foreground">
-          {store.description}
-        </p>
-      )}
-    </div>
+    <StorefrontHome store={store} />
   );
 }
