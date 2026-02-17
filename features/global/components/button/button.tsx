@@ -20,12 +20,43 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         rounded,
         tooltip,
         noTooltip,
+        canGlow,
         children,
         ...props
     }, ref) => {
+        const getVariantClasses = () => {
+            const classes: string[] = []
+
+            if (variant === "secondary") {
+                classes.push("bg-primary/20 text-primary hover:bg-primary/30 dark:bg-primary/30 dark:hover:bg-primary/40")
+            }
+
+            if (variant === "ghost") {
+                classes.push("text-foreground")
+            }
+
+            if (variant === "outline") {
+                classes.push("border border-primary text-primary bg-transparent dark:border-primary dark:text-primary")
+            }
+
+            if (canGlow) {
+                if (variant === "default" || variant === "secondary") {
+                    classes.push("shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] dark:shadow-[0_0_15px_rgba(255,107,74,0.5)] dark:hover:shadow-[0_0_25px_rgba(255,107,74,0.6)]")
+                } else if (variant === "outline") {
+                    classes.push("shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_0_15px_rgba(255,107,74,0.3)] dark:hover:shadow-[0_0_25px_rgba(255,107,74,0.5)]")
+                } else if (variant === "ghost") {
+                    classes.push("hover:shadow-[0_0_15px_rgba(255,107,74,0.3)] dark:hover:shadow-[0_0_20px_rgba(255,107,74,0.4)]")
+                } else if (variant === "destructive") {
+                    classes.push("shadow-[0_4px_14px_0_rgba(220,38,38,0.15)] hover:shadow-[0_6px_20px_rgba(220,38,38,0.2)] dark:shadow-[0_0_15px_rgba(220,38,38,0.4)] dark:hover:shadow-[0_0_25px_rgba(220,38,38,0.5)]")
+                }
+            }
+
+            return classes.join(" ")
+        }
+
         const button = (
             <ShadcnButton
-                className={cn("cursor-pointer", className, rounded && "rounded-full", variant === "outline" && "border border-primary text-primary bg-transparent dark:border-primary dark:text-primary")}
+                className={cn("cursor-pointer", className, rounded && "rounded-full", getVariantClasses())}
                 variant={variant}
                 size={size}
                 asChild={asChild}

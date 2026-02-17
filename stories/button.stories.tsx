@@ -22,7 +22,6 @@ const meta = {
                 "outline",
                 "ghost",
                 "link",
-                "glow",
             ],
         },
         size: {
@@ -39,6 +38,9 @@ const meta = {
             control: "boolean",
         },
         rounded: {
+            control: "boolean",
+        },
+        canGlow: {
             control: "boolean",
         },
     },
@@ -58,7 +60,7 @@ export const Default: Story = {
 
 export const Playground: Story = {
     parameters: {
-        controls: { include: ["variant", "size", "isLoading", "disabled", "rounded", "children", "startIcon", "endIcon", "tooltip"] },
+        controls: { include: ["variant", "size", "isLoading", "disabled", "rounded", "canGlow", "children", "startIcon", "endIcon", "tooltip"] },
     },
     args: {
         children: "Playground Button",
@@ -67,6 +69,7 @@ export const Playground: Story = {
         rounded: false,
         isLoading: false,
         disabled: false,
+        canGlow: false,
     },
     render: (args) => {
         return (
@@ -203,12 +206,5 @@ export const WithTooltip: Story = {
     args: {
         children: "Hover me",
         tooltip: "This is a helpful tooltip",
-    },
-}
-
-export const Glow: Story = {
-    args: {
-        children: "Glow Button",
-        variant: "glow",
     },
 }

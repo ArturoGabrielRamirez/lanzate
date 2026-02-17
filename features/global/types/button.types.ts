@@ -11,4 +11,5 @@ export interface ButtonProps
     rounded?: boolean
     tooltip?: string
     noTooltip?: boolean
+    canGlow?: boolean
 }
