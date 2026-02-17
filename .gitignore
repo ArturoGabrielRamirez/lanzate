@@ -67,3 +67,5 @@ CLAUDE.md
 .claude/
 *.claude-backup
 settings.local.json
+*storybook.log
+storybook-static

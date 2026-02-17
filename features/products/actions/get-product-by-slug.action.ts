@@ -1,3 +1,4 @@
+"use server";
 /**
  * Get Product By Slug Action
  *
