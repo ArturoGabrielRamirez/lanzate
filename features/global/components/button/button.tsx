@@ -25,7 +25,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     }, ref) => {
         const button = (
             <ShadcnButton
-                className={cn("cursor-pointer", className, rounded && "rounded-full", variant === "outline" && "border-primary")}
+                className={cn("cursor-pointer", className, rounded && "rounded-full", variant === "outline" && "border-primary text-primary bg-transparent")}
                 variant={variant}
                 size={size}
                 asChild={asChild}

@@ -55,6 +55,27 @@ export const Default: Story = {
     },
 }
 
+export const Playground: Story = {
+    parameters: {
+        controls: { include: ["variant", "size", "isLoading", "disabled", "rounded", "children", "startIcon", "endIcon", "tooltip"] },
+    },
+    args: {
+        children: "Playground Button",
+        variant: "default",
+        size: "default",
+        rounded: false,
+        isLoading: false,
+        disabled: false,
+    },
+    render: (args) => {
+        return (
+            <div className="flex flex-col gap-4 items-start">
+                <Button {...args} />
+            </div>
+        )
+    },
+}
+
 export const Secondary: Story = {
     args: {
         children: "Secondary",
