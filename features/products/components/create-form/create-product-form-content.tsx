@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { startTransition, useCallback } from "react";
 import { toast } from "sonner";
 
 import { Stepper, Step } from "@/features/global/components/stepper";
@@ -76,23 +76,26 @@ export function CreateProductFormContent({ storeId }: CreateProductFormContentPr
 
     setIsSubmitting(true);
 
-    try {
-      const actionInput = mapFormStateToActionInput(values, storeId);
-      const result = await createProductAction(actionInput);
+    startTransition(async () => {
 
-      if (result.hasError) {
-        toast.error(result.message || PRODUCT_ERROR_MESSAGES.CREATE_FAILED.es);
-        return;
+      try {
+        const actionInput = mapFormStateToActionInput(values, storeId);
+        const result = await createProductAction(actionInput);
+
+        if (result.hasError) {
+          toast.error(result.message || PRODUCT_ERROR_MESSAGES.CREATE_FAILED.es);
+          return;
+        }
+
+        toast.success(PRODUCT_SUCCESS_MESSAGES.CREATE.es);
+        closeDialog();
+        resetForm();
+      } catch {
+        toast.error(PRODUCT_ERROR_MESSAGES.CREATE_FAILED.es);
+      } finally {
+        setIsSubmitting(false);
       }
-
-      toast.success(PRODUCT_SUCCESS_MESSAGES.CREATE.es);
-      closeDialog();
-      resetForm();
-    } catch {
-      toast.error(PRODUCT_ERROR_MESSAGES.CREATE_FAILED.es);
-    } finally {
-      setIsSubmitting(false);
-    }
+    })
   }, [values, storeId, setIsSubmitting, closeDialog, resetForm, validateAllSteps]);
 
   /**

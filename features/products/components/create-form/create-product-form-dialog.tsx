@@ -33,7 +33,7 @@ export function CreateProductFormDialog({
           </Button>
         )}
       </DialogTrigger>
-      <CreateProductFormContent storeId={storeId} />
+      {/* <CreateProductFormContent storeId={storeId} /> */}
     </Dialog>
   );
 }
