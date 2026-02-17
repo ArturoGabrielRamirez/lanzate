@@ -5,6 +5,8 @@ import { getTranslations } from "next-intl/server";
 
 import HeroImage from '@/features/landing/assets/hero-section.svg';
 import { Button } from "@/features/global/components/button/button";
+import { HeroText } from "@/features/global/components/typography/hero-text/hero-text";
+import { Typography } from "@/features/global/components/typography/typography/typography";
 
 async function HeroSection() {
   const t = await getTranslations();
@@ -16,15 +18,15 @@ async function HeroSection() {
         {/* Left side - Text content */}
         <div className="flex flex-1 flex-col gap-8 text-center md:text-left">
           <div className="flex flex-col gap-4 max-w-lg">
-            <h2 className="text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-7xl">
+            <HeroText size="lg" as="h2" className="leading-tight text-foreground md:text-5xl lg:text-7xl">
               {t('hero.titleBefore')}{' '}
               <span className="text-primary">{t('hero.titleHighlight')}</span>{' '}
               {t('hero.titleAfter')}
-            </h2>
+            </HeroText>
 
-            <p className="max-w-2xl text-lg text-muted-foreground md:text-xl">
+            <Typography variant="lead">
               {t('hero.subtitle')}
-            </p>
+            </Typography>
           </div>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
