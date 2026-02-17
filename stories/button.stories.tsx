@@ -22,6 +22,7 @@ const meta = {
                 "outline",
                 "ghost",
                 "link",
+                "glow",
             ],
         },
         size: {
@@ -202,5 +203,12 @@ export const WithTooltip: Story = {
     args: {
         children: "Hover me",
         tooltip: "This is a helpful tooltip",
+    },
+}
+
+export const Glow: Story = {
+    args: {
+        children: "Glow Button",
+        variant: "glow",
     },
 }
