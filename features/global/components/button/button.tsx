@@ -41,9 +41,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
             if (canGlow) {
                 if (variant === "default" || variant === "secondary") {
-                    classes.push("shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] dark:shadow-[0_0_15px_rgba(255,107,74,0.5)] dark:hover:shadow-[0_0_25px_rgba(255,107,74,0.6)]")
+                    if (rounded) {
+                        classes.push("shadow-[0_4px_20px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.25)] dark:shadow-[0_0_20px_rgba(255,107,74,0.6)] dark:hover:shadow-[0_0_35px_rgba(255,107,74,0.7)]")
+                    } else {
+                        classes.push("shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] dark:shadow-[0_0_15px_rgba(255,107,74,0.5)] dark:hover:shadow-[0_0_25px_rgba(255,107,74,0.6)]")
+                    }
                 } else if (variant === "outline") {
-                    classes.push("shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_0_15px_rgba(255,107,74,0.3)] dark:hover:shadow-[0_0_25px_rgba(255,107,74,0.5)]")
+                    if (rounded) {
+                        classes.push("shadow-[0_4px_20px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_0_20px_rgba(255,107,74,0.4)] dark:hover:shadow-[0_0_35px_rgba(255,107,74,0.6)]")
+                    } else {
+                        classes.push("shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_0_15px_rgba(255,107,74,0.3)] dark:hover:shadow-[0_0_25px_rgba(255,107,74,0.5)]")
+                    }
                 } else if (variant === "ghost") {
                     classes.push("hover:shadow-[0_0_15px_rgba(255,107,74,0.3)] dark:hover:shadow-[0_0_20px_rgba(255,107,74,0.4)]")
                 } else if (variant === "destructive") {
@@ -56,7 +64,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
         const button = (
             <ShadcnButton
-                className={cn("cursor-pointer", className, rounded && "rounded-full", getVariantClasses())}
+                className={cn("cursor-pointer", className, getVariantClasses(), rounded && "rounded-full")}
                 variant={variant}
                 size={size}
                 asChild={asChild}
