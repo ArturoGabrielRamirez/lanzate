@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 import resetPasswordImage from "@/features/auth/assets/reset-password-pana.svg";
 import { AuthCard, PasswordResetForm } from "@/features/auth/components";
+import { Text } from "@/features/global/components/typography/text/text";
 import { Link } from "@/i18n/navigation";
 
 /**
@@ -74,9 +75,9 @@ export default async function ResetPasswordUpdatePage() {
                 {/* Links Section */}
                 <div className="pt-4 space-y-2">
                   <div className="flex gap-2 items-center justify-center">
-                    <span className="text-sm text-muted-foreground">
+                    <Text size="xs" as="span">
                       {t("page.links.rememberedPassword")}
-                    </span>
+                    </Text>
                     <Link
                       href="/login"
                       className="text-sm font-medium text-primary hover:underline"
@@ -85,9 +86,9 @@ export default async function ResetPasswordUpdatePage() {
                     </Link>
                   </div>
                   <div className="flex gap-2 items-center justify-center">
-                    <span className="text-sm text-muted-foreground">
+                    <Text size="xs" as="span">
                       {t("page.links.needHelp")}
-                    </span>
+                    </Text>
                     <Link
                       href="/help"
                       className="text-sm font-medium text-primary hover:underline"

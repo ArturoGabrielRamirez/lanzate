@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 import loginImage from "@/features/auth/assets/login-pana.svg";
 import { AuthCard, GoogleAuthButton, LoginForm } from "@/features/auth/components";
+import { Text } from "@/features/global/components/typography/text/text";
 import { Link } from "@/i18n/navigation";
 
 /**
@@ -79,9 +80,9 @@ export default async function LoginPage({
                 {/* Links Section */}
                 <div className="pt-4 space-y-2">
                   <div className="flex gap-2 items-center justify-center">
-                    <span className="text-sm text-muted-foreground">
+                    <Text size="xs" as="span">
                       {t("page.links.noAccount")}
-                    </span>
+                    </Text>
                     <Link
                       href="/signup"
                       className="text-sm font-medium text-primary hover:underline"
@@ -98,9 +99,9 @@ export default async function LoginPage({
                     </Link>
                   </div>
                   <div className="flex gap-2 items-center justify-center">
-                    <span className="text-sm text-muted-foreground">
+                    <Text size="xs" as="span">
                       {t("page.links.needHelp")}
-                    </span>
+                    </Text>
                     <Link
                       href="/help"
                       className="text-sm font-medium text-primary hover:underline"

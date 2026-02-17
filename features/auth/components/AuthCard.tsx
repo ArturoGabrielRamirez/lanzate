@@ -3,11 +3,11 @@ import type { ReactNode } from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/features/shadcn/components/ui/card";
+import { Title } from "@/features/global/components/typography/title/title";
+import { Typography } from "@/features/global/components/typography/typography/typography";
 
 import type { AuthCardProps } from "../types/components";
 
@@ -63,8 +63,8 @@ export function AuthCard({
     <Card className={className}>
       {(heading || description) && (
         <CardHeader>
-          {heading && <CardTitle>{heading}</CardTitle>}
-          {description && <CardDescription>{description}</CardDescription>}
+          {heading && <Title size="sm">{heading}</Title>}
+          {description && <Typography variant="muted">{description}</Typography>}
         </CardHeader>
       )}
       <CardContent>{children}</CardContent>
