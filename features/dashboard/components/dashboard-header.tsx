@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Title } from "@/features/global/components/typography/title/title";
+import { Text } from "@/features/global/components/typography/text/text";
 
 interface DashboardHeaderProps {
   userName: string | null;
@@ -29,21 +31,23 @@ export function DashboardHeader({ userName, userEmail }: DashboardHeaderProps) {
       animate={{ opacity: 1 }}
     >
       <div className="mb-6">
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className='text-3xl font-bold text-foreground md:text-4xl'
         >
-          Hola, {displayName}!
-        </motion.h1>
-        <motion.p
+          <Title size="lg">
+            Hola, {displayName}!
+          </Title>
+        </motion.div>
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="mt-2 text-sm text-muted-foreground"
         >
-          Welcome back to Lanzate
-        </motion.p>
+          <Text size="xs">
+            Welcome back to Lanzate
+          </Text>
+        </motion.div>
       </div>
     </motion.div>
   );

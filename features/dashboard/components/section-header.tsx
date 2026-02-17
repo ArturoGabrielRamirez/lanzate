@@ -18,6 +18,7 @@
 import Link from 'next/link';
 
 import { Button } from "@/features/global/components/button/button";
+import { Title } from "@/features/global/components/typography/title/title";
 
 export interface SectionHeaderProps {
   /** Section title */
@@ -41,10 +42,10 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className={`mb-4 flex items-center justify-between ${className ?? ''}`}>
-      <h2 className="text-xl font-semibold text-foreground">
+      <Title size="sm">
         {title}
         {count !== undefined && ` (${count})`}
-      </h2>
+      </Title>
       {href && (
         <Link href={href}>
           <Button variant="link" className="text-primary hover:text-primary/80">
