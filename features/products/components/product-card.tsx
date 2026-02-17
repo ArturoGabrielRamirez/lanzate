@@ -10,7 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { ProductCardProps } from '@/features/products/types';
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 import { cn } from '@/features/shadcn/utils/cn';
 
 export function ProductCard({ product, storeSubdomain }: ProductCardProps) {

@@ -4,7 +4,7 @@ import { LogOut } from 'lucide-react';
 import { useState, useTransition } from 'react';
 
 import { logoutAction } from '@/features/auth/actions/logout.action';
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 
 /**
  * Logout Button Component

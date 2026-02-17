@@ -1,8 +1,11 @@
 import * as React from "react"
 
 import { Loader2 } from "lucide-react"
+import { type HTMLMotionProps } from "framer-motion"
 
-import { Button as ShadcnButton, buttonVariants } from "@/features/shadcn/components/ui/button"
+import * as motion from "motion/react-client"
+
+import { buttonVariants } from "@/features/shadcn/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 
 import { cn } from "@/features/shadcn/utils/cn"
@@ -62,27 +65,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             return classes.join(" ")
         }
 
+        const baseClasses = buttonVariants({ variant, size, className: undefined })
+        const variantClasses = getVariantClasses()
+
         const button = (
-            <ShadcnButton
-                className={cn("cursor-pointer", className, getVariantClasses(), rounded && "rounded-full")}
-                variant={variant}
-                size={size}
-                asChild={asChild}
-                ref={ref}
+            <motion.button
+                whileTap={{ scale: 0.95 }}
+                className={cn(baseClasses, "cursor-pointer", className, variantClasses, rounded && "rounded-full")}
                 disabled={isLoading || props.disabled}
-                {...props}
+                {...(props as HTMLMotionProps<"button">)}
             >
-                {asChild ? (
-                    children
-                ) : (
-                    <>
-                        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        {!isLoading && startIcon && <span className="mr-2">{startIcon}</span>}
-                        {children}
-                        {!isLoading && endIcon && <span className="ml-2">{endIcon}</span>}
-                    </>
-                )}
-            </ShadcnButton>
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {!isLoading && startIcon && <span className="mr-2">{startIcon}</span>}
+                {children}
+                {!isLoading && endIcon && <span className="ml-2">{endIcon}</span>}
+            </motion.button>
         )
 
         if (tooltip && !noTooltip) {

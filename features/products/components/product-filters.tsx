@@ -16,7 +16,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
 import { Input } from '@/features/shadcn/components/ui/input';
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,

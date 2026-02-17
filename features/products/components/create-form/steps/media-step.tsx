@@ -5,7 +5,7 @@ import { ImagePlus, X, ArrowUp, ArrowDown, Star } from "lucide-react";
 
 import { useCreateProductContext } from "@/features/products/hooks";
 import type { CreateProductMediaItem } from "@/features/products/types";
-import { Button } from "@/features/shadcn/components/ui/button";
+import { Button } from "@/features/global/components/button/button";
 
 /**
  * MediaStep - Step 2 of product creation

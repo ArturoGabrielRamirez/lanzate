@@ -15,7 +15,7 @@
 
 import { useState, useCallback } from 'react';
 import { Star, StarHalf } from 'lucide-react';
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 import { cn } from '@/features/shadcn/utils/cn';
 import type { 
   ProductReviewsProps, 

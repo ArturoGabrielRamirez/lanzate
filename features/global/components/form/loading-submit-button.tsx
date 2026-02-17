@@ -4,7 +4,7 @@ import { Loader } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
 import { LoadingSubmitButtonProps } from "@/features/global/types/form";
-import { Button } from "@/features/shadcn/components/ui/button";
+import { Button } from "@/features/global/components/button/button";
 import { cn } from "@/features/shadcn/utils/cn";
 
 /**
@@ -37,6 +37,8 @@ export function LoadingSubmitButton({
   return (
     <Button
       type="submit"
+      variant="default"
+      canGlow
       disabled={isSubmitting || disabled}
       className={cn(
         className

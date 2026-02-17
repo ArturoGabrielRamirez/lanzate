@@ -6,7 +6,7 @@ import * as motion from 'motion/react-client';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 
 function ThemeToggle() {
   const { theme, setTheme } = useTheme();

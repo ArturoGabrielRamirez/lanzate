@@ -19,7 +19,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // ** import components
-import { Button } from "@/features/shadcn/components/ui/button";
+import { Button } from "@/features/global/components/button/button";
 // ** import types
 import type { PaginationProps } from "@/features/global/types/pagination";
 // ** import utils

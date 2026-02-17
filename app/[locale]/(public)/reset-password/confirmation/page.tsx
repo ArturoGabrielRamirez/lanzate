@@ -1,7 +1,7 @@
 import { CheckCircle2Icon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { Button } from "@/features/shadcn/components/ui/button";
+import { Button } from "@/features/global/components/button/button";
 import {
   Card,
   CardContent,

@@ -17,7 +17,7 @@
 
 import Link from 'next/link';
 
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 
 export interface SectionHeaderProps {
   /** Section title */

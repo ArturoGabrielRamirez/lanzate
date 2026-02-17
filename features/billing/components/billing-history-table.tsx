@@ -26,7 +26,7 @@ import type { Payment, PaymentStatus } from '@/features/billing/types/billing';
 import type { BillingHistoryTableProps } from '@/features/billing/types/billing-history-table';
 import { DataTable } from '@/features/global/components/table';
 import type { ColumnDef } from '@/features/global/types/data-table';
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 
 /**
  * Formats a date for Argentine locale display

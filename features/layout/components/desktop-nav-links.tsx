@@ -10,7 +10,7 @@
 
 import { useTranslations } from 'next-intl';
 
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 import { cn } from '@/features/shadcn/utils/cn';
 import { Link, usePathname } from '@/i18n/navigation';
 

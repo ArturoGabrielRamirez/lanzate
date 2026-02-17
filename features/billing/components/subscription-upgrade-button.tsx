@@ -29,7 +29,7 @@ import { toast } from 'sonner';
 
 import { createSubscriptionCheckoutAction } from '@/features/billing/actions/create-subscription-checkout.action';
 import type { SubscriptionUpgradeButtonProps } from '@/features/billing/types/subscription-upgrade-button';
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 import { cn } from '@/features/shadcn/utils/cn';
 import { getPlanDisplayName, canUpgradeTo, type PaidPlan } from '@/features/subscriptions/config';
 

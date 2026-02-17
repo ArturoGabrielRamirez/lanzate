@@ -4,7 +4,7 @@ import { Copy, Check, Link } from "lucide-react";
 import { toast } from "sonner";
 
 import { useCopyToClipboard } from "@/features/global/hooks/use-copy-to-clipboard";
-import { Button } from "@/features/shadcn/components/ui/button";
+import { Button } from "@/features/global/components/button/button";
 import {
   Dialog,
   DialogContent,

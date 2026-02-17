@@ -5,7 +5,7 @@ import { Box } from "lucide-react";
 import { useCreateProductContext } from "@/features/products/components";
 import { CreateProductFormContent } from "@/features/products/components/create-form/create-product-form-content";
 import type { CreateProductFormDialogProps } from "@/features/products/types";
-import { Button } from "@/features/shadcn/components/ui/button";
+import { Button } from "@/features/global/components/button/button";
 import {
   Dialog,
   DialogTrigger,

@@ -4,7 +4,7 @@ import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-import { Button } from "@/features/shadcn/components/ui/button";
+import { Button } from "@/features/global/components/button/button";
 import {
   Dialog,
   DialogContent,

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { getTranslations } from "next-intl/server";
 
 import HeroImage from '@/features/landing/assets/hero-section.svg';
-import { Button } from '@/features/shadcn/components/ui/button';
+import { Button } from "@/features/global/components/button/button";
 
 async function HeroSection() {
   const t = await getTranslations();
@@ -28,22 +28,13 @@ async function HeroSection() {
           </div>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Button
-              asChild
-              variant="default"
-              className="group gap-2 text-primary-foreground"
-            >
+            <Button size="lg" variant="default" canGlow endIcon={<ArrowRight />}>
               <Link href="/dashboard">
                 {t('hero.cta.primary')}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
 
-            <Button
-              asChild
-              variant="outline"
-              className="gap-2"
-            >
+            <Button size="lg" asChild variant="outline">
               <Link href="#features">
                 {t('hero.cta.secondary')}
               </Link>
