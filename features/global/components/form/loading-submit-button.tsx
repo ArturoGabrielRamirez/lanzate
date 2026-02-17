@@ -32,14 +32,15 @@ export function LoadingSubmitButton({
   disabled = false,
   className,
 }: LoadingSubmitButtonProps) {
-  const { formState: { isSubmitting } } = useFormContext();
+  const { formState: { isSubmitting , errors } } = useFormContext();
+
+  const hasErrors = Object.keys(errors).length > 0;
 
   return (
     <Button
       type="submit"
-      variant="default"
-      canGlow
-      disabled={isSubmitting || disabled}
+      variant={ hasErrors ? "secondary" : "default"}
+      disabled={hasErrors || isSubmitting || disabled}
       className={cn(
         className
       )}
