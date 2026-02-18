@@ -32,6 +32,7 @@ function LanguageSwitcher() {
       onClick={switchLocale}
       aria-label={`Switch to ${nextLocale === 'es' ? 'Spanish' : 'English'}`}
       title={`Switch to ${nextLocale === 'es' ? 'Spanish' : 'English'}`}
+      tooltip={`Switch to ${nextLocale === 'es' ? 'Spanish' : 'English'}`}
     >
       <div className="flex items-center justify-center gap-1">
         <span className="text-xs font-semibold uppercase">

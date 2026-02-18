@@ -36,6 +36,7 @@ function ThemeToggle() {
       size="icon"
       onClick={toggleTheme}
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+      tooltip={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
       <AnimatePresence mode="popLayout" initial={false}>
         {isDark ? (

@@ -18,7 +18,7 @@ export default async function StoreSubdomainLayout({
   children,
 }: StoreSubdomainLayoutProps) {
   return (
-    <div className="container mx-auto flex min-h-0 flex-1 gap-4 px-2 py-6">
+    <div className="container mx-auto flex min-h-0 flex-1 gap-4 py-6">
       <StoreAdminSidebar />
       <div className="min-w-0 flex-1">
         {children}

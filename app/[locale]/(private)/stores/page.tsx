@@ -24,12 +24,12 @@ export default async function StoresPage() {
   }
 
   return (
-    <div className="bg-[#f8f5f2] px-2 dark:bg-background">
-      <main className="container mx-auto py-8">
+    <div className="flex-1 bg-[#f8f5f2] px-2 dark:bg-background">
+      <div className="container mx-auto py-8">
         <Suspense fallback={<StoresListSkeleton />}>
           <StoresListContainer />
         </Suspense>
-      </main>
+      </div>
     </div>
   );
 }

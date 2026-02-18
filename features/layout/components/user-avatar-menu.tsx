@@ -57,6 +57,7 @@ export function UserAvatarMenu({ user }: UserAvatarMenuProps) {
           alt={user.name || 'User avatar'}
           fallback={initials}
           status="success"
+          tooltip='Click to see more options'
         />
       </DropDrawerTrigger>
 

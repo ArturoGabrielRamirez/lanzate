@@ -59,7 +59,7 @@ const GooeySidebar = React.forwardRef<HTMLDivElement, GooeySidebarProps>(
                 {/* Gooey-filtered layer: tab indicators + content background merge together */}
                 <div
                     className={cn(
-                        "absolute inset-0",
+                        "absolute inset-0 drop-shadow-2xl",
                         isVertical ? "flex flex-row" : "flex flex-col"
                     )}
                     style={{ filter: `url(#${filterId})` }}
@@ -76,7 +76,7 @@ const GooeySidebar = React.forwardRef<HTMLDivElement, GooeySidebarProps>(
                                 {activeTab === index && (
                                     <motion.div
                                         layoutId={`gooey-active-tab-${filterId}`}
-                                        className="absolute inset-0 bg-muted"
+                                        className="absolute inset-0 bg-card"
                                         transition={{
                                             type: "spring",
                                             bounce: 0.0,
@@ -89,7 +89,7 @@ const GooeySidebar = React.forwardRef<HTMLDivElement, GooeySidebarProps>(
                     </div>
 
                     {/* Content background (same color as active tab, so they merge via gooey) */}
-                    <div className={cn(gooeySidebarContentVariants({ orientation }), "bg-muted")} />
+                    <div className={cn(gooeySidebarContentVariants({ orientation }), "bg-card")} />
                 </div>
 
                 {/* Interactive overlay (no filter, keeps text crisp) */}
