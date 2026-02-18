@@ -30,4 +30,7 @@ export interface EntityBannerProps extends React.HTMLAttributes<HTMLDivElement> 
     contentClassName?: string
     actionsClassName?: string
     bannerClassName?: string
+    innerClassName?: string
+    coverSrc?: string
+    coverAlt?: string
 }

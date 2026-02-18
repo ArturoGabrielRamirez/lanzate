@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import Image from "next/image"
 import { MoreHorizontal } from "lucide-react"
 
 import {
@@ -46,6 +47,9 @@ function EntityBanner({
     descriptionNode,
     actionItems,
     actions,
+    coverSrc,
+    coverAlt,
+    innerClassName,
     ...props
 }: EntityBannerProps) {
     const [isScrollCompact, setIsScrollCompact] = React.useState(false)
@@ -137,12 +141,31 @@ function EntityBanner({
                     bannerClassName
                 )}
             >
+                {coverSrc ? (
+                    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+                        <Image
+                            src={coverSrc}
+                            alt={coverAlt ?? ""}
+                            fill
+                            className="object-cover opacity-40"
+                            priority
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-background/80 via-background/20 to-transparent" />
+                    </div>
+                ) : null}
+
                 <div
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary)/0.18),transparent_45%)]"
                 />
 
-                <div className="relative z-10 flex w-full items-end justify-between gap-3">
+                <div className={cn("relative z-10 flex w-full items-end justify-between gap-3", innerClassName)}>
+                    {isAvatarOverlap ? (
+                        <div className="absolute left-0 bottom-0 z-20 hidden translate-y-1/2 md:block">
+                            {resolvedAvatar}
+                        </div>
+                    ) : null}
+
                     <div
                         className={cn(
                             "flex min-w-0 flex-1 items-end gap-3 sm:gap-4",
@@ -250,11 +273,6 @@ function EntityBanner({
                     ) : null}
                 </div>
 
-                {isAvatarOverlap ? (
-                    <div className="absolute left-4 top-[90%] z-20 hidden -translate-y-1/2 sm:left-6 md:block">
-                        {resolvedAvatar}
-                    </div>
-                ) : null}
             </div>
         </div>
     )

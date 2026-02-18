@@ -5,8 +5,8 @@
  * This is a server component that composes the client-side
  * navigation (PrivateHeaderNav).
  *
- * The StoreHeaderBar is rendered separately in the store layout
- * to maintain server component benefits.
+ * The PrivateHeaderNav is absolutely positioned on top of the
+ * StoreHeaderBar so the banner extends behind the nav bar.
  */
 
 import { Suspense } from 'react';
@@ -17,13 +17,17 @@ import { StoreHeaderBar, StoreHeaderSkeleton } from '@/features/stores/component
 
 export function PrivateHeader() {
   return (
-    <header className="sticky top-0 z-50 group/header">
-      <PrivateHeaderNav />
-      <StoreHeaderWrapper>
-        <Suspense fallback={<StoreHeaderSkeleton />}>
-          <StoreHeaderBar subdomain={"lodemauri"} />
-        </Suspense>
-      </StoreHeaderWrapper>
+    <header className="sticky top-0 z-50">
+      <div className="relative min-h-16">
+        <StoreHeaderWrapper>
+          <Suspense fallback={<StoreHeaderSkeleton />}>
+            <StoreHeaderBar subdomain={"lodemauri"} />
+          </Suspense>
+        </StoreHeaderWrapper>
+        <div className="absolute inset-x-0 top-0">
+          <PrivateHeaderNav />
+        </div>
+      </div>
     </header>
   );
 }
