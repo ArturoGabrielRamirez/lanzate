@@ -56,7 +56,7 @@ export function StoreHeaderToolbar({
 
   return (
     <div className="flex items-center gap-2 justify-end container mx-auto mt-auto opacity-50 group-hover:opacity-100 transition-opacity">
-      {/* Desktop-only buttons */}
+      {/* Desktop: all actions as inline icon buttons */}
       {!isMobile && (
         <>
           <Button
@@ -77,24 +77,43 @@ export function StoreHeaderToolbar({
           >
             <Share2 className="h-4 w-4" />
           </Button>
+          {isOwner && (
+            <CreateProductForm
+              trigger={
+                <Button
+                  variant="outline"
+                  size="icon"
+                  aria-label="Crear producto"
+                  tooltip="Crear producto"
+                >
+                  <Package className="h-4 w-4" />
+                </Button>
+              }
+            />
+          )}
+          <Button variant="outline" size="icon" aria-label="Editar tienda" tooltip="Editar tienda" disabled>
+            <StoreIcon className="h-4 w-4" />
+          </Button>
+          <Button variant="outline" size="icon" aria-label="Configuración" tooltip="Configuración" disabled>
+            <Settings className="h-4 w-4" />
+          </Button>
         </>
       )}
 
-      {/* DropDrawer - visible on both mobile and desktop */}
-      <DropDrawer>
-        <DropDrawerTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            aria-label="Más opciones"
-            noTooltip
-          >
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropDrawerTrigger>
-        <DropDrawerContent>
-          {/* Mobile-only navigation items */}
-          {isMobile && (
+      {/* Mobile: only the three-dots trigger, all actions inside the drawer */}
+      {isMobile && (
+        <DropDrawer>
+          <DropDrawerTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="Más opciones"
+              noTooltip
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropDrawerTrigger>
+          <DropDrawerContent>
             <DropDrawerGroup>
               <DropDrawerItem onClick={handleGoBack}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -105,34 +124,30 @@ export function StoreHeaderToolbar({
                 Compartir
               </DropDrawerItem>
             </DropDrawerGroup>
-          )}
-
-          {/* Separator for mobile */}
-          {isMobile && <DropDrawerSeparator />}
-
-          {/* Common items */}
-          <DropDrawerGroup>
-            {isOwner && (
-              <CreateProductForm
-                trigger={
-                  <DropDrawerItem>
-                    <Package className="h-4 w-4 mr-2" />
-                    Crear producto
-                  </DropDrawerItem>
-                }
-              />
-            )}
-            <DropDrawerItem disabled>
-              <StoreIcon className="h-4 w-4 mr-2" />
-              Editar tienda
-            </DropDrawerItem>
-            <DropDrawerItem disabled>
-              <Settings className="h-4 w-4 mr-2" />
-              Configuración
-            </DropDrawerItem>
-          </DropDrawerGroup>
-        </DropDrawerContent>
-      </DropDrawer>
+            <DropDrawerSeparator />
+            <DropDrawerGroup>
+              {isOwner && (
+                <CreateProductForm
+                  trigger={
+                    <DropDrawerItem>
+                      <Package className="h-4 w-4 mr-2" />
+                      Crear producto
+                    </DropDrawerItem>
+                  }
+                />
+              )}
+              <DropDrawerItem disabled>
+                <StoreIcon className="h-4 w-4 mr-2" />
+                Editar tienda
+              </DropDrawerItem>
+              <DropDrawerItem disabled>
+                <Settings className="h-4 w-4 mr-2" />
+                Configuración
+              </DropDrawerItem>
+            </DropDrawerGroup>
+          </DropDrawerContent>
+        </DropDrawer>
+      )}
 
       {/* Share Dialog */}
       <ShareStoreDialog

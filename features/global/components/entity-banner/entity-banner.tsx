@@ -216,67 +216,69 @@ function EntityBanner({
 
                     {hasActions ? (
                         <>
-                            <div
-                                className={cn(entityBannerActionsVariants(), actionsClassName)}
-                            >
-                                {hasActionItems
-                                    ? actionItems.map((item) => (
-                                        <Button
-                                            key={item.label}
-                                            variant={item.buttonProps?.variant ?? "outline"}
-                                            size="icon"
-                                            rounded
-                                            tooltip={item.tooltip ?? item.label}
-                                            aria-label={item.label}
-                                            {...item.buttonProps}
-                                        >
-                                            {item.icon}
-                                        </Button>
-                                    ))
-                                    : actions}
-                            </div>
+                            {hasActionItems ? (
+                                <>
+                                    <div
+                                        className={cn("hidden md:flex", entityBannerActionsVariants(), actionsClassName)}
+                                    >
+                                        {actionItems.map((item) => (
+                                            <Button
+                                                key={item.label}
+                                                variant={item.buttonProps?.variant ?? "outline"}
+                                                size="icon"
+                                                rounded
+                                                tooltip={item.tooltip ?? item.label}
+                                                aria-label={item.label}
+                                                {...item.buttonProps}
+                                            >
+                                                {item.icon}
+                                            </Button>
+                                        ))}
+                                    </div>
 
-                            <div className="md:hidden">
-                                <Drawer>
-                                    <DrawerTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            rounded
-                                            noTooltip
-                                            aria-label="Open actions"
-                                        >
-                                            <MoreHorizontal className="h-4 w-4" />
-                                        </Button>
-                                    </DrawerTrigger>
-                                    <DrawerContent className="px-4 pb-4">
-                                        <DrawerHeader className="px-0">
-                                            <DrawerTitle>Actions</DrawerTitle>
-                                        </DrawerHeader>
-                                        {hasActionItems ? (
-                                            <div className="flex flex-col gap-2">
-                                                {actionItems.map((item) => (
-                                                    <DrawerClose asChild key={`drawer-${item.label}`}>
-                                                        <Button
-                                                            variant={item.buttonProps?.variant ?? "outline"}
-                                                            className={cn("w-full justify-start", item.buttonProps?.className)}
-                                                            startIcon={item.icon}
-                                                            noTooltip
-                                                            {...item.buttonProps}
-                                                        >
-                                                            {item.label}
-                                                        </Button>
-                                                    </DrawerClose>
-                                                ))}
-                                            </div>
-                                        ) : (
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                {actions}
-                                            </div>
-                                        )}
-                                    </DrawerContent>
-                                </Drawer>
-                            </div>
+                                    <div className="md:hidden">
+                                        <Drawer>
+                                            <DrawerTrigger asChild>
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    rounded
+                                                    noTooltip
+                                                    aria-label="Open actions"
+                                                >
+                                                    <MoreHorizontal className="h-4 w-4" />
+                                                </Button>
+                                            </DrawerTrigger>
+                                            <DrawerContent className="px-4 pb-4">
+                                                <DrawerHeader className="px-0">
+                                                    <DrawerTitle>Actions</DrawerTitle>
+                                                </DrawerHeader>
+                                                <div className="flex flex-col gap-2">
+                                                    {actionItems.map((item) => (
+                                                        <DrawerClose asChild key={`drawer-${item.label}`}>
+                                                            <Button
+                                                                variant={item.buttonProps?.variant ?? "outline"}
+                                                                className={cn("w-full justify-start", item.buttonProps?.className)}
+                                                                startIcon={item.icon}
+                                                                noTooltip
+                                                                {...item.buttonProps}
+                                                            >
+                                                                {item.label}
+                                                            </Button>
+                                                        </DrawerClose>
+                                                    ))}
+                                                </div>
+                                            </DrawerContent>
+                                        </Drawer>
+                                    </div>
+                                </>
+                            ) : (
+                                <div
+                                    className={cn(entityBannerActionsVariants(), actionsClassName)}
+                                >
+                                    {actions}
+                                </div>
+                            )}
                         </>
                     ) : null}
                 </div>

@@ -74,5 +74,5 @@ export const entityBannerContentVariants = cva("min-w-0 flex-1", {
 })
 
 export const entityBannerActionsVariants = cva(
-    "hidden shrink-0 flex-wrap items-center gap-2 md:flex md:w-auto md:justify-end"
+    "flex shrink-0 flex-wrap items-center gap-2 md:w-auto md:justify-end"
 )
