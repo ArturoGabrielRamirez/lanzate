@@ -34,6 +34,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Button } from '@/features/global/components/button/button'
 import { GooeySidebar } from '@/features/global/components/gooey-sidebar/gooey-sidebar'
 import { Text } from '@/features/global/components/typography/text/text'
+import { Title } from '@/features/global/components/typography/title/title'
 
 interface StoreAdminSidebarProps {
   subdomain: string
@@ -105,19 +106,22 @@ export function StoreAdminSidebar({ subdomain }: StoreAdminSidebarProps) {
   }
 
   const navContent = (
-    <div className="grid grid-cols-4 gap-2 p-3">
-      {getNavButtons().map((btn, i) => (
-        <Button
-          key={i}
-          variant={btn.active ? 'default' : 'outline'}
-          className={"aspect-square w-full flex-col gap-1 p-1 h-auto " + (btn.active ? 'bg-primary/50 hover:bg-primary' : '')}
-          onClick={() => router.push(btn.href)}
-          tooltip={btn.label}
-        >
-          {btn.icon}
-          <Text size='xs' className='truncate max-w-full'>{btn.label}</Text>
-        </Button>
-      ))}
+    <div className='p-3 flex flex-col gap-2'>
+      <Title size='sm' className='border-b border-border pb-2'>Navegación</Title>
+      <div className="grid grid-cols-4 gap-2">
+        {getNavButtons().map((btn, i) => (
+          <Button
+            key={i}
+            variant={btn.active ? 'default' : 'outline'}
+            className={"aspect-square w-full flex-col gap-1 p-1 h-auto " + (btn.active ? 'bg-primary/50 hover:bg-primary' : '')}
+            onClick={() => router.push(btn.href)}
+            tooltip={btn.label}
+          >
+            {btn.icon}
+            <Text size='xs' className='truncate max-w-full'>{btn.label}</Text>
+          </Button>
+        ))}
+      </div>
     </div>
   )
 

@@ -33,7 +33,7 @@ export default async function StoreDetailPage({ params }: StorefrontPageProps) {
   const { store, products, productCount, branchCount } = result.payload;
 
   return (
-    <div className="bg-[#f8f5f2] dark:bg-background">
+    <div className=" dark:bg-background">
       <StoreDetail
         store={store}
         products={products}

@@ -1,4 +1,5 @@
 import { StoreAdminSidebar } from '@/features/stores/components/store-admin-sidebar'
+import { StorePageHeader } from '@/features/stores/components/store-page-header'
 
 interface StoreSubdomainLayoutProps {
   children: React.ReactNode
@@ -24,6 +25,7 @@ export default async function StoreSubdomainLayout({
     <div className="container mx-auto min-h-0 flex-1 gap-4 py-6 grid grid-cols-1 lg:grid-cols-[1fr_4fr]">
       <StoreAdminSidebar subdomain={subdomain} />
       <div className="min-w-0 flex-1">
+        <StorePageHeader subdomain={subdomain} />
         {children}
       </div>
     </div>

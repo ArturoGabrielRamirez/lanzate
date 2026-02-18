@@ -74,3 +74,5 @@ export type {
   StepSetter,
   UseMultiStepFormOptions,
 } from "@/features/global/types/multi-step-form";
+
+export type { BreadcrumbEntry, PageHeaderProps } from "@/features/global/types/page-header.types";
