@@ -83,7 +83,7 @@ function AutoCompactOnScrollPreview(args: React.ComponentProps<typeof EntityBann
                     <div className="pointer-events-none fixed inset-x-6 top-3 z-40">
                         <EntityBanner
                             {...args}
-                            className="pointer-events-auto will-change-transform [animation:bannerDropIn_520ms_cubic-bezier(0.22,1.12,0.3,1)]"
+                            className="pointer-events-auto will-change-transform animate-[bannerDropIn_520ms_cubic-bezier(0.22,1.12,0.3,1)]"
                             bannerClassName="border-border/70 bg-background supports-[backdrop-filter]:bg-background/90 backdrop-blur-lg shadow-md"
                         />
                     </div>
@@ -92,13 +92,13 @@ function AutoCompactOnScrollPreview(args: React.ComponentProps<typeof EntityBann
                 <div className="-mt-4 grid gap-4 pt-4 md:grid-cols-2">
                     <div className="rounded-xl border border-border/60 bg-background p-4">
                         <Title size="sm" className="border-b-0 pb-0">Orders Summary</Title>
-                        <Text size="sm" className="[&:not(:first-child)]:mt-2">
+                        <Text size="sm" className="not-first:mt-2">
                             Scroll down: the original banner goes up with content.
                         </Text>
                     </div>
                     <div className="rounded-xl border border-border/60 bg-background p-4">
                         <Title size="sm" className="border-b-0 pb-0">Campaigns</Title>
-                        <Text size="sm" className="[&:not(:first-child)]:mt-2">
+                        <Text size="sm" className="not-first:mt-2">
                             Once hidden, a floating banner drops from top with bounce.
                         </Text>
                     </div>
