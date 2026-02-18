@@ -16,6 +16,9 @@ import { motion } from 'framer-motion';
 import { Calendar, MoreVertical, Store } from 'lucide-react';
 import Link from 'next/link';
 
+import { Button } from '@/features/global/components/button/button';
+import { Text } from '@/features/global/components/typography/text/text';
+import { Title } from '@/features/global/components/typography/title/title';
 import {
   Card,
   CardAction,
@@ -50,27 +53,32 @@ export function StoreCard({
                 <Store className="h-4 w-4 text-primary" />
               </div>
               <CardTitle className="text-base">
-                {truncateText(store.name, 20)}
+                <Title size='sm'>
+                  {truncateText(store.name, 20)}
+                </Title>
               </CardTitle>
             </div>
             <CardAction>
-              <button
-                className="text-muted-foreground hover:text-foreground"
+              <Button
                 onClick={(e) => e.preventDefault()}
+                size="icon"
+                variant="outline"
               >
                 <MoreVertical className="h-4 w-4" />
-              </button>
+              </Button>
             </CardAction>
           </CardHeader>
           <CardContent className="grow py-0">
             <CardDescription className="text-xs">
-              {truncateText(store.description, 40)}
+              <Text size='xs'>
+                {truncateText(store.description, 40)}
+              </Text>
             </CardDescription>
           </CardContent>
           <CardFooter className="py-0">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Calendar className="h-3 w-3" />
-              <span>{formatDate(store.createdAt)}</span>
+              <Text size='xs'>{formatDate(store.createdAt)}</Text>
             </div>
           </CardFooter>
         </Card>

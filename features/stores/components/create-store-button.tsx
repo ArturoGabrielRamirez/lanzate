@@ -45,8 +45,7 @@ export function CreateStoreButton({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button disabled={disabled} className={className}>
-          <PlusIcon className="h-4 w-4 mr-2" />
+        <Button disabled={disabled} className={className} startIcon={<PlusIcon />}>
           {t("button")}
         </Button>
       </DialogTrigger>

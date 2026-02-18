@@ -15,6 +15,9 @@
 import { motion } from 'framer-motion';
 import { Store } from 'lucide-react';
 
+import { Avatar } from '@/features/global/components/avatar/avatar';
+import { Text } from '@/features/global/components/typography/text/text';
+import { Title } from '@/features/global/components/typography/title/title';
 import { Card } from '@/features/shadcn/components/ui/card';
 import { CreateStoreButtonGate } from '@/features/stores/components/create-store-button-gate';
 import type { NewStoreCardProps } from '@/features/stores/types';
@@ -33,18 +36,16 @@ export function NewStoreCard({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: index * animationDelay }}
     >
-      <Card className="flex h-full min-h-[120px] items-center justify-center border-2 border-dashed border-border bg-card/50 py-3 transition-colors hover:border-primary/50 hover:bg-card">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-            <Store className="h-4 w-4 text-primary" />
-          </div>
+      <Card className="flex h-full min-h-30 items-center justify-center border-2 border-dashed border-border bg-card/50 py-3 transition-colors hover:border-primary/50 hover:bg-card">
+        <div className="flex flex-col items-center gap-2 w-full">
+          <Avatar size="sm">
+            <Store />
+          </Avatar>
           <div>
-            <h3 className="text-sm font-semibold text-foreground">Nueva tienda</h3>
-            <p className="text-xs text-muted-foreground">
-              Crea tu tienda
-              <br />
-              en segundos!
-            </p>
+            <Title size='sm' className='text-center'>Nueva tienda</Title>
+            <Text size='xs'>
+              Crea tu tienda en segundos!
+            </Text>
           </div>
           <CreateStoreButtonGate
             currentStoreCount={currentStoreCount}

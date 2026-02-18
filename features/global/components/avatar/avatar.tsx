@@ -11,7 +11,7 @@ import { cn } from "@/features/shadcn/utils/cn"
 
 
 const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-    ({ className, src, alt, fallback, size = "md", shape = "circle", status = "none", statusColor, tooltip, badge, ...props }, ref) => {
+    ({ className, src, alt, fallback, children, size = "md", shape = "circle", status = "none", statusColor, tooltip, badge, ...props }, ref) => {
         const [hasError, setHasError] = React.useState(false)
 
         const avatarContent = (
@@ -48,7 +48,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
                         />
                     ) : (
                         <div className="flex h-full w-full items-center justify-center text-muted-foreground font-medium uppercase select-none">
-                            {fallback || alt?.charAt(0) || "?"}
+                            {children ?? fallback ?? alt?.charAt(0) ?? "?"}
                         </div>
                     )}
                 </div>
