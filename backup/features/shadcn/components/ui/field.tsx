@@ -1,6 +1,5 @@
 "use client"
 
-import type { FieldErrorProps, LabelProps, TextProps } from "react-aria-components"
 import {
   FieldError as FieldErrorPrimitive,
   Label as LabelPrimitive,
@@ -8,7 +7,10 @@ import {
 } from "react-aria-components"
 import { twMerge } from "tailwind-merge"
 import { tv } from "tailwind-variants"
+
 import { cx } from "@/features/shadcn/lib/primitive"
+
+import type { FieldErrorProps, LabelProps, TextProps } from "react-aria-components"
 
 export const labelStyles = tv({
   base: "select-none text-base/6 text-fg in-disabled:opacity-50 group-disabled:opacity-50 sm:text-sm/6",

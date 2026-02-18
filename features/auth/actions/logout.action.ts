@@ -1,10 +1,11 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
+
 import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess, formatError } from '@/features/global/utils/format-response';
+import { createClient } from '@/lib/supabase/server';
 
 /**
  * Logout Server Action

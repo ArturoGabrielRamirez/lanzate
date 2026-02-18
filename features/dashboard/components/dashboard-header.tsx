@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Title } from "@/features/global/components/typography/title/title";
+
 import { Text } from "@/features/global/components/typography/text/text";
+import { Title } from "@/features/global/components/typography/title/title";
 
 interface DashboardHeaderProps {
   userName: string | null;

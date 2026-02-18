@@ -1,12 +1,13 @@
 'use server';
 
-import type { Store } from '@prisma/client';
 
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { getAuthUser } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatError, formatSuccess } from '@/features/global/utils/format-response';
 import { getOwnedStoreBySubdomainData } from '@/features/stores/data';
+
+import type { Store } from '@prisma/client';
 
 /**
  * Get Store Header Server Action

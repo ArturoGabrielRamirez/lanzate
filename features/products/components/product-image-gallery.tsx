@@ -13,9 +13,9 @@
 
 "use client";
 
-import { useState, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import Image from 'next/image';
+import { useState, useCallback } from 'react';
 
 import type { ProductImageGalleryProps } from '@/features/products/types/product-detail.types';
 

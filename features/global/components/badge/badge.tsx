@@ -1,10 +1,10 @@
 "use client"
 
+import { badgeVariants } from "@/features/global/components/badge/badge-variants"
+import { BadgeProps } from "@/features/global/types/badge.types"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-
-import { badgeVariants } from "./badge-variants"
 import { cn } from "@/features/shadcn/utils/cn"
-import { BadgeProps } from "../../types/badge.types"
+
 
 function Badge({ className, variant, size, shape, tooltip, showDot, children, ...props }: BadgeProps) {
     const badge = (

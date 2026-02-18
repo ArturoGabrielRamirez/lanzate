@@ -1,5 +1,5 @@
-import { AvatarProps } from "./avatar.types"
-import { ButtonProps } from "./button.types"
+import { AvatarProps } from "@/features/global/types/avatar.types"
+import { ButtonProps } from "@/features/global/types/button.types"
 
 export type EntityBannerSize = "base" | "lg"
 export type EntityBannerAvatarPosition = "inside" | "overlap-bottom"

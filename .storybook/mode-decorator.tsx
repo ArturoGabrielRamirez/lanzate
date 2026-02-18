@@ -1,7 +1,7 @@
 // src/decorators/modeDecorator.tsx
 import React, { useState } from "react";
 
-export const ModeDecorator = (Story: any) => {
+export function ModeDecorator(Story: any) {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const toggleMode = () => {
@@ -30,4 +30,4 @@ export const ModeDecorator = (Story: any) => {
             <Story />
         </>
     );
-};
+}

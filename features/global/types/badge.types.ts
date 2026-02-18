@@ -1,5 +1,6 @@
-import { badgeVariants } from "@/features/shadcn/components/ui/badge"
 import { VariantProps } from "class-variance-authority"
+
+import { badgeVariants } from "@/features/global/components/badge/badge-variants"
 
 export interface BadgeProps
     extends React.HTMLAttributes<HTMLDivElement>,

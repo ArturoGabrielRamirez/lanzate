@@ -1,10 +1,10 @@
-import * as React from "react"
 
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority"
+import * as React from "react"
 
-import { cn } from "@/features/shadcn/utils/cn"
 import { TypographyProps } from "@/features/global/types/typography"
+import { cn } from "@/features/shadcn/utils/cn"
 
 const typographyVariants = cva("text-foreground", {
     variants: {

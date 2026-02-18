@@ -1,7 +1,8 @@
+import * as React from "react"
+
+import { Typography } from "@/features/global/components/typography/typography/typography"
 import { TitleProps } from "@/features/global/types/title.types"
 import { TypographyVariant } from "@/features/global/types/typography"
-import * as React from "react"
-import { Typography } from "@/features/global/components/typography/typography/typography"
 
 const Title = React.forwardRef<HTMLElement, TitleProps>(
     ({ size = "md", ...props }, ref) => {

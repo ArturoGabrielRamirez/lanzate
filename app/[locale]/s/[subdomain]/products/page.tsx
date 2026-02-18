@@ -12,15 +12,16 @@
  * - Pagination with URL state
  */
 
-import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 import { getProductsAction } from '@/features/products/actions';
-import { findStoreBySubdomainData } from '@/features/stores/data';
-import { ProductGrid } from '@/features/products/components/product-grid';
 import { ProductFilters } from '@/features/products/components/product-filters';
-import { Suspense } from 'react';
+import { ProductGrid } from '@/features/products/components/product-grid';
 import type { ProductListingPageProps, ProductListingFilters } from '@/features/products/types/product-listing.types';
+import { findStoreBySubdomainData } from '@/features/stores/data';
+
+import type { Metadata } from 'next';
 
 /**
  * Generate SEO metadata for product listing page

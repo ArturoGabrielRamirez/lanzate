@@ -5,21 +5,21 @@ import { useEffect, useState, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { Button } from "@/features/global/components/button/button";
-import { Input } from "@/features/shadcn/components/ui/input";
-import { Label } from "@/features/shadcn/components/ui/label";
-import { Switch } from "@/features/shadcn/components/ui/switch";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/features/shadcn/components/ui/collapsible";
 import { useCreateProductContext } from "@/features/products/hooks";
-import { generateVariantCombinations } from "@/features/products/utils";
 import type {
   CreateProductOption,
   CreateProductOptionValue,
   CreateProductVariantForm,
 } from "@/features/products/types";
+import { generateVariantCombinations } from "@/features/products/utils";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/features/shadcn/components/ui/collapsible";
+import { Input } from "@/features/shadcn/components/ui/input";
+import { Label } from "@/features/shadcn/components/ui/label";
+import { Switch } from "@/features/shadcn/components/ui/switch";
 
 /**
  * OptionsVariantsStep - Step 3 of product creation

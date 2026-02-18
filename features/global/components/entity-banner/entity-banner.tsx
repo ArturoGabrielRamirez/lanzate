@@ -1,10 +1,14 @@
 "use client"
 
+import { MoreHorizontal } from "lucide-react"
+import Image from "next/image"
 import * as React from "react"
 
-import Image from "next/image"
-import { MoreHorizontal } from "lucide-react"
 
+import { Avatar } from "@/features/global/components/avatar/avatar"
+import { Button } from "@/features/global/components/button/button"
+import { Title } from "@/features/global/components/typography/title/title"
+import { EntityBannerProps } from "@/features/global/types/entity-banner.types"
 import {
     DrawerClose,
     Drawer,
@@ -13,6 +17,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/features/shadcn/components/ui/drawer"
+import { cn } from "@/features/shadcn/utils/cn"
 
 import {
     entityBannerActionsVariants,
@@ -20,11 +25,6 @@ import {
     entityBannerShellVariants,
     entityBannerWrapperVariants,
 } from "./entity-banner-variants"
-import { cn } from "@/features/shadcn/utils/cn"
-import { Title } from "@/features/global/components/typography/title/title"
-import { Button } from "@/features/global/components/button/button"
-import { EntityBannerProps } from "@/features/global/types/entity-banner.types"
-import { Avatar } from "@/features/global/components/avatar/avatar"
 import { Text } from "../typography/text/text"
 
 function EntityBanner({

@@ -10,8 +10,11 @@
  * Priority: HIGH - Core billing feature page
  */
 
-import { describe, it, expect, afterEach, mock, beforeEach, spyOn } from 'bun:test';
 import { render, fireEvent, cleanup, waitFor, screen } from '@testing-library/react';
+import { describe, it, expect, afterEach, mock, beforeEach, spyOn } from 'bun:test';
+
+import { BillingFilters } from '@/features/billing/components/billing-filters';
+import { BillingHistoryTable } from '@/features/billing/components/billing-history-table';
 import type { Payment, PaymentStatus } from '@/features/billing/types/billing';
 
 // Mock window.open for invoice download tests
@@ -50,8 +53,6 @@ mock.module('@/i18n/navigation', () => ({
 }));
 
 // Import components after mocking
-import { BillingHistoryTable } from '@/features/billing/components/billing-history-table';
-import { BillingFilters } from '@/features/billing/components/billing-filters';
 import { Pagination } from '@/features/global/components/pagination/pagination';
 
 // Sample payment data for testing

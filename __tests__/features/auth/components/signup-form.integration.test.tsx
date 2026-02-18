@@ -14,8 +14,9 @@
  * Priority: HIGH - Primary user onboarding interface
  */
 
-import { describe, it, expect, mock } from 'bun:test';
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect, mock } from 'bun:test';
+
 import { SignupForm } from '@/features/auth/components/SignupForm';
 
 // Mock next-intl translations

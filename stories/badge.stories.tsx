@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react"
 
-import { Badge } from "../features/global/components/badge/badge"
+import { Badge } from "@/features/global/components/badge/badge"
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 

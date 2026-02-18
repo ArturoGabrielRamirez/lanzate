@@ -7,6 +7,7 @@
  */
 
 import { describe, it, expect } from 'bun:test';
+
 import { createStoreSchema } from '@/features/stores/schemas/schemaFactory';
 
 // Mock translation function for testing

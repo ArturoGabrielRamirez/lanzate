@@ -4,6 +4,6 @@
  * Exports all utility functions for easier imports
  */
 
-export { actionWrapper } from "./action-wrapper";
-export { formatResponse, formatError, formatSuccess } from "./format-response";
-export { deepMerge } from "./deep-merge";
+export { actionWrapper } from "@/features/global/utils/action-wrapper";
+export { formatResponse, formatError, formatSuccess } from "@/features/global/utils/format-response";
+export { deepMerge } from "@/features/global/utils/deep-merge";

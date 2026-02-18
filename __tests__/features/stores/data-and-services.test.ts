@@ -11,9 +11,9 @@
  * - User stores retrieval
  */
 
-import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
-import { prisma } from '@/lib/prisma';
 import { AccountType } from '@prisma/client';
+import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
+
 import {
   createStoreData,
   findUserStoresData,
@@ -21,6 +21,7 @@ import {
   findStoreBySubdomainData,
 } from '@/features/stores/data';
 import { createStoreService } from '@/features/stores/services';
+import { prisma } from '@/lib/prisma';
 
 // Test user IDs for different account types
 const testUserIds = {

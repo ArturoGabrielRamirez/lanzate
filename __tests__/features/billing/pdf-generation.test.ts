@@ -11,7 +11,9 @@
  */
 
 import { describe, it, expect } from 'bun:test';
+
 import { generateInvoicePdf } from '@/features/billing/services/generate-invoice-pdf.service';
+
 import type { Invoice, Payment } from '@prisma/client';
 
 /**

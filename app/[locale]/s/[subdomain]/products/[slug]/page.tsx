@@ -13,15 +13,16 @@
  * - Structured data (JSON-LD)
  */
 
-import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 import { getProductBySlugAction } from '@/features/products/actions';
 import { ProductImageGallery } from '@/features/products/components/product-image-gallery';
-import { VariantSelector } from '@/features/products/components/variant-selector';
 import { ProductReviews } from '@/features/products/components/product-reviews';
-import { Suspense } from 'react';
+import { VariantSelector } from '@/features/products/components/variant-selector';
 import type { ProductDetailPageProps, ProductDetailContentProps } from '@/features/products/types/product-detail.types';
+
+import type { Metadata } from 'next';
 
 /**
  * Generate SEO metadata for product detail page

@@ -15,8 +15,9 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
-import { prisma } from '@/lib/prisma';
+
 import { handleSignupAction } from '@/features/auth/actions/handleSignup.action';
+import { prisma } from '@/lib/prisma';
 
 // Test data
 const testEmail = 'signupflow@example.com';

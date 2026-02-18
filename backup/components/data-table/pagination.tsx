@@ -6,7 +6,7 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
 } from "lucide-react";
-import type { Table } from "@tanstack/react-table";
+
 import { Button } from "@/features/shadcn/components/ui/button";
 import {
   Select,
@@ -15,6 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/features/shadcn/components/ui/select";
+
+import type { Table } from "@tanstack/react-table";
 
 const getButtonSizeClass = (size: 'sm' | 'default' | 'lg') => {
   switch (size) {

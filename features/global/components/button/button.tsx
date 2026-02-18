@@ -1,15 +1,13 @@
+import { type HTMLMotionProps } from "framer-motion"
+import { Loader2 } from "lucide-react"
+import * as motion from "motion/react-client"
 import * as React from "react"
 
-import { Loader2 } from "lucide-react"
-import { type HTMLMotionProps } from "framer-motion"
 
-import * as motion from "motion/react-client"
-
+import { ButtonProps } from "@/features/global/types/button.types"
 import { buttonVariants } from "@/features/shadcn/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
-
 import { cn } from "@/features/shadcn/utils/cn"
-import { ButtonProps } from "@/features/global/types/button.types"
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({

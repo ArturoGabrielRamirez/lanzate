@@ -13,18 +13,19 @@
 
 "use client";
 
-import { useState, useCallback, useEffect } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
-import { Input } from '@/features/shadcn/components/ui/input';
+import { useState, useCallback, useEffect } from 'react';
+
 import { Button } from "@/features/global/components/button/button";
+import type { ProductFiltersProps, ProductSortSelectProps } from '@/features/products/types/product-listing.types';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/features/shadcn/components/ui/dropdown-menu';
+import { Input } from '@/features/shadcn/components/ui/input';
 import { cn } from '@/features/shadcn/utils/cn';
-import type { ProductFiltersProps, ProductSortSelectProps } from '@/features/products/types/product-listing.types';
 
 /**
  * Sort select dropdown component

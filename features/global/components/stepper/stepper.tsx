@@ -2,14 +2,15 @@
 
 import { Children, useState, useCallback, Fragment } from "react";
 
-import { Separator } from "@/features/shadcn/components/ui/separator";
 import type { StepperProps, StepStatus } from "@/features/global/types";
+import { Separator } from "@/features/shadcn/components/ui/separator";
 import { cn } from "@/features/shadcn/utils/cn";
 
+import { StepConnector } from "./step-connector";
 import { StepContentWrapper } from "./step-content-wrapper";
 import { StepIndicator } from "./step-indicator";
-import { StepConnector } from "./step-connector";
 import { StepNavigation } from "./step-navigation";
+
 import "./stepper.css";
 
 /**

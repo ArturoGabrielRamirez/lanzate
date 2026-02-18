@@ -2,8 +2,8 @@
 
 import { useContext } from "react";
 
-import type { CreateProductContextType } from "@/features/products/types";
 import { CreateProductContext } from "@/features/products/components/create-form/create-product-provider";
+import type { CreateProductContextType } from "@/features/products/types";
 
 /**
  * Hook to access the create product form context

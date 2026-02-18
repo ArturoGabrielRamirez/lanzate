@@ -1,5 +1,6 @@
 
 import { Title } from "@/features/global/components/typography/title/title"
+
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {

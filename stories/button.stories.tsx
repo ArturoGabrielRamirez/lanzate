@@ -1,9 +1,10 @@
-import { expect, fn, userEvent, within } from "@storybook/test"
+import { expect, fn, within } from "@storybook/test"
 import { ArrowRight, ChevronRight, Mail } from "lucide-react"
 
 
-import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { Button } from "@/features/global/components/button/button"
+
+import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {
     title: "Core/Components/Button",

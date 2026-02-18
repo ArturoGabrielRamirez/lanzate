@@ -3,10 +3,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from "next-intl/server";
 
-import HeroImage from '@/features/landing/assets/hero-section.svg';
 import { Button } from "@/features/global/components/button/button";
 import { HeroText } from "@/features/global/components/typography/hero-text/hero-text";
 import { Typography } from "@/features/global/components/typography/typography/typography";
+import HeroImage from '@/features/landing/assets/hero-section.svg';
 
 async function HeroSection() {
   const t = await getTranslations();

@@ -1,7 +1,9 @@
 "use client";
 
-import type { Table, Column } from "@tanstack/react-table";
 import { Check, GripVertical, Settings2, RotateCcw } from "lucide-react";
+import * as React from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
+
 import { Button } from "@/features/shadcn/components/ui/button";
 import {
   Command,
@@ -18,8 +20,8 @@ import {
   PopoverTrigger,
 } from "@/features/shadcn/components/ui/popover";
 import { cn } from "@/features/shadcn/utils";
-import * as React from "react";
-import { useCallback, useEffect, useState, useMemo } from "react";
+
+import type { Table, Column } from "@tanstack/react-table";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;

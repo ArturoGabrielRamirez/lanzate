@@ -14,8 +14,9 @@
  * Priority: HIGH - Primary user access interface
  */
 
-import { describe, it, expect, mock } from 'bun:test';
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect, mock } from 'bun:test';
+
 import { LoginForm } from '@/features/auth/components/LoginForm';
 
 // Mock next-intl translations

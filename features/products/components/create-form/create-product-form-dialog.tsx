@@ -2,10 +2,9 @@
 
 import { Box } from "lucide-react";
 
-import { useCreateProductContext } from "@/features/products/components";
-import { CreateProductFormContent } from "@/features/products/components/create-form/create-product-form-content";
-import type { CreateProductFormDialogProps } from "@/features/products/types";
 import { Button } from "@/features/global/components/button/button";
+import { useCreateProductContext } from "@/features/products/components";
+import type { CreateProductFormDialogProps } from "@/features/products/types";
 import {
   Dialog,
   DialogTrigger,
@@ -19,7 +18,6 @@ import {
  */
 export function CreateProductFormDialog({
   trigger,
-  storeId,
 }: CreateProductFormDialogProps) {
   const { isOpen, openDialog, closeDialog } = useCreateProductContext();
 

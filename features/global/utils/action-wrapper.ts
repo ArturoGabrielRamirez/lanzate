@@ -6,10 +6,11 @@
  * across the application.
  */
 
+import { Prisma } from "@prisma/client";
+import { ValidationError } from "yup";
+
 import { ActionFunction, ServerResponse } from "@/features/global/types";
 import { formatError } from "@/features/global/utils/format-response";
-import { ValidationError } from "yup";
-import { Prisma } from "@prisma/client";
 
 /**
  * Wraps a Server Action with error handling

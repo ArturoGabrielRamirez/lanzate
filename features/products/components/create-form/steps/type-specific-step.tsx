@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
 import { Package, FileDown } from "lucide-react";
+import { useEffect } from "react";
 
+import { useCreateProductContext } from "@/features/products/hooks";
 import { Input } from "@/features/shadcn/components/ui/input";
 import { Label } from "@/features/shadcn/components/ui/label";
 import {
@@ -16,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/features/shadcn/components/ui/select";
-import { useCreateProductContext } from "@/features/products/hooks";
 
 /**
  * TypeSpecificStep - Step 4 of product creation

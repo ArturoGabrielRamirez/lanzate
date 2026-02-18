@@ -1,11 +1,6 @@
 "use client";
 
 // ** import types
-import type * as React from "react";
-import type { ColumnDef, ColumnResizeMode, Row, ExpandedState } from "@tanstack/react-table";
-import type { TableConfig } from "./utils/table-config";
-import type { CaseFormatConfig } from "./utils/case-utils";
-import type { DataTransformFunction, ExportableData } from "./utils/export-utils";
 
 // ** import core packages
 import {
@@ -20,10 +15,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useEffect, useCallback, useMemo, useRef, useState } from "react";
 import { AlertCircle } from "lucide-react";
+import { useEffect, useCallback, useMemo, useRef, useState } from "react";
 
 // ** import components
+import { Alert, AlertDescription, AlertTitle } from "@/features/shadcn/components/ui/alert";
+import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -32,17 +29,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/features/shadcn/components/ui/table";
-import { Skeleton } from "@/features/shadcn/components/ui/skeleton";
-import { Alert, AlertDescription, AlertTitle } from "@/features/shadcn/components/ui/alert";
+import { cn } from "@/features/shadcn/utils";
+
+import { DataTableResizer } from "./data-table-resizer";
+import { useTableColumnResize } from "./hooks/use-table-column-resize";
 import { DataTablePagination } from "./pagination";
 import { DataTableToolbar } from "./toolbar";
-import { DataTableResizer } from "./data-table-resizer";
 
 // ** import utils
-import { cn } from "@/features/shadcn/utils";
-import { useTableConfig } from "./utils/table-config";
-import { useTableColumnResize } from "./hooks/use-table-column-resize";
+
+import {
+  initializeColumnSizes,
+  trackColumnResizing,
+  cleanupColumnResizing
+} from "./utils/column-sizing";
+import { createConditionalStateHook } from "./utils/conditional-state";
+import { createKeyboardNavigationHandler } from "./utils/keyboard-navigation";
 import { preprocessSearch } from "./utils/search";
+import { useTableConfig } from "./utils/table-config";
 import {
   createSortingHandler,
   createColumnFiltersHandler,
@@ -51,13 +55,12 @@ import {
   createColumnSizingHandler,
   createSortingState
 } from "./utils/table-state-handlers";
-import { createKeyboardNavigationHandler } from "./utils/keyboard-navigation";
-import { createConditionalStateHook } from "./utils/conditional-state";
-import {
-  initializeColumnSizes,
-  trackColumnResizing,
-  cleanupColumnResizing
-} from "./utils/column-sizing";
+
+import type { CaseFormatConfig } from "./utils/case-utils";
+import type { DataTransformFunction, ExportableData } from "./utils/export-utils";
+import type { TableConfig } from "./utils/table-config";
+import type { ColumnDef, ColumnResizeMode, Row, ExpandedState } from "@tanstack/react-table";
+import type * as React from "react";
 
 // Define types for the data fetching function params and result
 interface DataFetchParams {

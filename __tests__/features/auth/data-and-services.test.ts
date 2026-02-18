@@ -12,14 +12,15 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
-import { prisma } from '@/lib/prisma';
-import { generateUsername } from '@/features/auth/utils/generateUsername';
+
 import {
   createUserData,
   findUserByEmailData,
   findUserByIdData,
 } from '@/features/auth/data';
 import { createUserService } from '@/features/auth/services';
+import { generateUsername } from '@/features/auth/utils/generateUsername';
+import { prisma } from '@/lib/prisma';
 
 // Test data
 const testEmail = 'testuser@example.com';

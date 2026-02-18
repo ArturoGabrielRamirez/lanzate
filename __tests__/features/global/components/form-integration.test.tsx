@@ -16,11 +16,13 @@
  * Priority: HIGH - Core form interaction pattern used across all auth forms
  */
 
-import { describe, it, expect, mock } from 'bun:test';
-import { render, screen } from '@testing-library/react';
-import { Form } from '@/features/global/components/form/Form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect, mock } from 'bun:test';
 import * as yup from 'yup';
+
+import { Form } from '@/features/global/components/form/Form';
+
 
 // Mock next/navigation
 mock.module('next/navigation', () => ({

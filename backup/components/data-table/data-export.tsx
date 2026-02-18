@@ -1,14 +1,10 @@
 "use client";
 
 // ** import types
-import type { JSX } from "react";
-import type { Table } from "@tanstack/react-table";
-import type { ExportableData, DataTransformFunction } from "./utils/export-utils";
-import type { TableConfig } from "./utils/table-config";
 
 // ** import core packages
-import { useState } from "react";
 import { DownloadIcon, Loader2 } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 // ** import components
@@ -22,6 +18,11 @@ import {
 
 // ** import utils
 import { exportData, exportToCSV, exportToExcel } from "./utils/export-utils";
+
+import type { ExportableData, DataTransformFunction } from "./utils/export-utils";
+import type { TableConfig } from "./utils/table-config";
+import type { Table } from "@tanstack/react-table";
+import type { JSX } from "react";
 
 interface DataTableExportProps<TData extends ExportableData> {
   table: Table<TData>;

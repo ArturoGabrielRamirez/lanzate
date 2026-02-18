@@ -4,8 +4,8 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 
 import { handleGoogleLoginAction } from "@/features/auth/actions/handleGoogleLogin.action";
-import { GoogleLogo } from "@/features/global/components/icons";
 import { Button } from "@/features/global/components/button/button";
+import { GoogleLogo } from "@/features/global/components/icons";
 
 /**
  * GoogleAuthButton Component

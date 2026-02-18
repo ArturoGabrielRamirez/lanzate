@@ -1,15 +1,15 @@
-import type { ReactNode } from "react";
 
+import { Title } from "@/features/global/components/typography/title/title";
+import { Typography } from "@/features/global/components/typography/typography/typography";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from "@/features/shadcn/components/ui/card";
-import { Title } from "@/features/global/components/typography/title/title";
-import { Typography } from "@/features/global/components/typography/typography/typography";
 
 import type { AuthCardProps } from "../types/components";
+import type { ReactNode } from "react";
 
 /**
  * AuthCard Component

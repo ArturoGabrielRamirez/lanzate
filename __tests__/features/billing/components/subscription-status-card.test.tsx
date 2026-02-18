@@ -9,8 +9,9 @@
  * Priority: HIGH - Core billing feature component
  */
 
-import { describe, it, expect, afterEach, mock } from 'bun:test';
 import { render, cleanup } from '@testing-library/react';
+import { describe, it, expect, afterEach, mock } from 'bun:test';
+
 import type { SubscriptionStatus } from '@/features/billing/types/billing';
 
 // Mock the next-intl navigation Link component

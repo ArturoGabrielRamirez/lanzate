@@ -1,5 +1,5 @@
-import { Window } from 'happy-dom';
 import { configure } from '@testing-library/react';
+import { Window } from 'happy-dom';
 
 // Create a new Window instance
 const window = new Window({

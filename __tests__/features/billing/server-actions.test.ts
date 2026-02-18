@@ -11,8 +11,9 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
-import { prisma } from '@/lib/prisma';
+
 import type { PaymentFilters } from '@/features/billing/types/billing';
+import { prisma } from '@/lib/prisma';
 
 // Test data
 const testUserEmail = 'billing-actions-test@example.com';

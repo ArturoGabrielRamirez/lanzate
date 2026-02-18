@@ -15,6 +15,7 @@
  */
 
 import { describe, it, expect } from 'bun:test';
+
 import { getCurrentUserAction } from '@/features/auth/actions/getCurrentUser.action';
 import { updateProfileAction } from '@/features/auth/actions/updateProfile.action';
 

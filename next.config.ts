@@ -1,5 +1,6 @@
-import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+
+import type { NextConfig } from "next";
 
 // Configure next-intl plugin to load translations
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");

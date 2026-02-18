@@ -11,12 +11,13 @@
  * - Mobile-responsive layout
  */
 
-import { Link } from 'next/link';
 import { Search, ShoppingCart, Star } from 'lucide-react';
+import { Link } from 'next/link';
+import { Suspense } from 'react';
 
 import { getProductsAction } from '@/features/products/actions';
 import { ProductGrid } from '@/features/products/components/product-grid';
-import { Suspense } from 'react';
+
 import type { Store } from '@prisma/client';
 
 /**

@@ -14,9 +14,9 @@ export {
   PRODUCT_UI_MESSAGES,
   getProductMessage,
   formatBulkMessage,
-} from './messages';
+} from '@/features/products/constants/messages';
 
 export {
   CREATE_PRODUCT_TOTAL_STEPS,
   CREATE_PRODUCT_INITIAL_VALUES,
-} from './create-product-form';
+} from '@/features/products/constants/create-product-form';

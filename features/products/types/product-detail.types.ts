@@ -5,15 +5,13 @@
  * Used for public product pages in the storefront.
  */
 
+import type { ProductWithAllRelations } from '@/features/products/types/product.types';
+
 import type {
-  Product,
   ProductVariant,
   ProductImage,
   ProductReview,
-  ProductAttribute,
-  ProductAttributeValue,
 } from '@prisma/client';
-import type { ProductWithAllRelations } from './product.types';
 
 /**
  * Props for ProductDetailPage component

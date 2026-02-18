@@ -1,7 +1,8 @@
-import { TypographyVariant } from "@/features/global/types/typography"
 import * as React from "react"
+
 import { Typography } from "@/features/global/components/typography/typography/typography"
 import { TextProps } from "@/features/global/types/text.types"
+import { TypographyVariant } from "@/features/global/types/typography"
 
 
 const Text = React.forwardRef<HTMLElement, TextProps>(

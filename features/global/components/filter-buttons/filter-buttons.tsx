@@ -16,9 +16,9 @@
  */
 
 // ** import types
+import { Button } from "@/features/global/components/button/button";
 import type { FilterButtonsProps } from "@/features/global/types/filter-buttons";
 // ** import components
-import { Button } from "@/features/global/components/button/button";
 // ** import utils
 import { cn } from "@/features/shadcn/utils/cn";
 

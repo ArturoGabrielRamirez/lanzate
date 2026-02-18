@@ -13,7 +13,7 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
-import { prisma } from '@/lib/prisma';
+
 import {
   createPaymentData,
   updatePaymentStatusData,
@@ -30,6 +30,7 @@ import type {
   CreateInvoiceInput,
   CreatePlanChangeLogInput,
 } from '@/features/billing/types/billing';
+import { prisma } from '@/lib/prisma';
 
 // Test data
 const testUserEmail = 'billing-data-test@example.com';

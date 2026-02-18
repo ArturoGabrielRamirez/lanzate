@@ -112,8 +112,8 @@ export function AccountShortcuts() {
         },
     ]
 
-    const ShortcutItem = ({ shortcut }: { shortcut: { label: string; key: string; icon: React.ReactNode; description: string } }) => (
-        <div className="flex items-center justify-between group hover:bg-muted/50 p-2 rounded-md transition-colors">
+    function ShortcutItem({ shortcut }: { shortcut: { label: string; key: string; icon: React.ReactNode; description: string } }) {
+  return <div className="flex items-center justify-between group hover:bg-muted/50 p-2 rounded-md transition-colors">
             <div className="flex items-center gap-2 flex-1 min-w-0">
                 <div className="text-muted-foreground">
                     {shortcut.icon}
@@ -131,7 +131,7 @@ export function AccountShortcuts() {
                 {shortcut.key}
             </kbd>
         </div>
-    )
+}
 
     return (
         <SectionContainer title="Atajos de teclado" className="@container">

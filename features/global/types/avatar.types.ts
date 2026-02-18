@@ -1,4 +1,4 @@
-import { BadgeProps } from "./badge.types"
+import { BadgeProps } from "@/features/global/types/badge.types"
 
 export type AvatarSize = "sm" | "md" | "lg" | "xl"
 export type AvatarShape = "circle" | "square"

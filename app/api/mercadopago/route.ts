@@ -15,7 +15,6 @@ import {
   handlePaymentUpdated,
   handleSubscriptionPreapprovalUpdated,
 } from '@/features/billing/services';
-
 import type { WebhookNotification } from '@/features/billing/types/billing';
 
 /**

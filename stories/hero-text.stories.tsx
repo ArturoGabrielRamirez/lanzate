@@ -1,5 +1,6 @@
 
 import { HeroText } from "@/features/global/components/typography/hero-text/hero-text"
+
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {

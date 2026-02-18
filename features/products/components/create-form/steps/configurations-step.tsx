@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import { Package, Sparkles, Tag, Star, Megaphone } from "lucide-react";
+import { useEffect } from "react";
 
+import { useCreateProductContext } from "@/features/products/hooks";
 import { Label } from "@/features/shadcn/components/ui/label";
 import { Switch } from "@/features/shadcn/components/ui/switch";
-import { useCreateProductContext } from "@/features/products/hooks";
 
 /**
  * ConfigurationsStep - Step 5 of product creation
@@ -105,7 +105,7 @@ export function ConfigurationsStep() {
             <div className="space-y-0.5">
               <Label htmlFor="is-new">Marcar como nuevo</Label>
               <p className="text-sm text-muted-foreground">
-                Muestra un badge de "Nuevo" en el producto.
+                Muestra un badge de &quote;Nuevo&quote; en el producto.
               </p>
             </div>
           </div>
@@ -123,7 +123,7 @@ export function ConfigurationsStep() {
             <div className="space-y-0.5">
               <Label htmlFor="is-on-sale">En oferta</Label>
               <p className="text-sm text-muted-foreground">
-                Muestra un badge de "Oferta" en el producto.
+                Muestra un badge de &quote;Oferta&quote; en el producto.
               </p>
             </div>
           </div>

@@ -1,19 +1,19 @@
 "use client";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { ChevronDown } from "lucide-react";
 
 import { InputField } from "@/features/global/components/form";
+import { useCreateProductContext } from "@/features/products/hooks";
+import type { CreateProductBasicInfo } from "@/features/products/types";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/features/shadcn/components/ui/collapsible";
-import { useCreateProductContext } from "@/features/products/hooks";
-import type { CreateProductBasicInfo } from "@/features/products/types";
 
 /**
  * Validation schema for basic info step
@@ -62,7 +62,7 @@ function slugify(text: string): string {
  * - SEO fields (title, description, OG image)
  */
 export function BasicInfoStep() {
-  const { values, setValues, setStepValid, step } = useCreateProductContext();
+  const { values, setValues, setStepValid } = useCreateProductContext();
   const { basicInfo } = values;
 
   const methods = useForm<CreateProductBasicInfo>({
@@ -74,7 +74,7 @@ export function BasicInfoStep() {
   const {
     watch,
     setValue,
-    formState: { isValid, errors },
+    formState: { isValid },
   } = methods;
 
   // Watch name for auto-slug generation

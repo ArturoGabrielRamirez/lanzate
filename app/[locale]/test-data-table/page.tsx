@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { DataTable } from "@/features/global/components/table";
 import type { ColumnDef, SortConfig } from "@/features/global/types/data-table";
 

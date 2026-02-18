@@ -12,9 +12,10 @@
  * - Path revalidation after creation
  */
 
-import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
-import { prisma } from '@/lib/prisma';
 import { AccountType } from '@prisma/client';
+import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
+
+import { prisma } from '@/lib/prisma';
 
 // Test user IDs for different scenarios
 const testUserIds = {

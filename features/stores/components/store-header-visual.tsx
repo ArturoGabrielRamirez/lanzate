@@ -10,8 +10,8 @@
 
 import { Store as StoreIcon } from 'lucide-react';
 
-import { EntityBanner } from '@/features/global/components/entity-banner/entity-banner';
 import { Badge } from '@/features/global/components/badge/badge';
+import { EntityBanner } from '@/features/global/components/entity-banner/entity-banner';
 import { StoreHeaderToolbar } from '@/features/stores/components/store-header-toolbar';
 import type { StoreHeaderVisualProps } from '@/features/stores/types';
 

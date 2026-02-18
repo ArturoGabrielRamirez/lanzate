@@ -1,5 +1,6 @@
 
 import { Text } from "@/features/global/components/typography/text/text"
+
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {

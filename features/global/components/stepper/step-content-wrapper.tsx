@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useState } from "react";
 
 import type { StepContentWrapperProps } from "@/features/global/types";
 import { cn } from "@/features/shadcn/utils/cn";

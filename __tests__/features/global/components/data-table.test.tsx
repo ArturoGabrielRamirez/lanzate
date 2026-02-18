@@ -11,8 +11,9 @@
  * Priority: HIGH - Core reusable component for billing feature
  */
 
-import { describe, it, expect, mock, beforeEach, afterEach } from 'bun:test';
 import { render, fireEvent, cleanup } from '@testing-library/react';
+import { describe, it, expect, mock, beforeEach, afterEach } from 'bun:test';
+
 import { DataTable } from '@/features/global/components/table/data-table';
 import type { ColumnDef } from '@/features/global/types/data-table';
 

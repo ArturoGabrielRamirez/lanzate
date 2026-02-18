@@ -11,10 +11,10 @@
 import { useTranslations } from 'next-intl';
 
 import { Button } from "@/features/global/components/button/button";
+import type { DesktopNavLinksProps } from '@/features/layout/types';
 import { cn } from '@/features/shadcn/utils/cn';
 import { Link, usePathname } from '@/i18n/navigation';
 
-import type { DesktopNavLinksProps } from '@/features/layout/types';
 
 export function DesktopNavLinks({ className }: DesktopNavLinksProps) {
   const t = useTranslations('nav');

@@ -6,7 +6,6 @@ import {
   useState,
   useCallback,
   useMemo,
-  type ReactNode,
 } from "react";
 
 import { useStep } from "@/features/global/hooks/use-step";

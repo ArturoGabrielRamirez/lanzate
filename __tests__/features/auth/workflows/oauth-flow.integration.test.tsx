@@ -14,6 +14,7 @@
  */
 
 import { describe, it, expect } from 'bun:test';
+
 import { handleGoogleLoginAction } from '@/features/auth/actions/handleGoogleLogin.action';
 
 describe('Google OAuth Flow', () => {

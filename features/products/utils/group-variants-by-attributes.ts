@@ -5,8 +5,9 @@
  * for display in variant selector component.
  */
 
-import type { ProductVariant } from '@prisma/client';
 import type { VariantAttributeGroup } from '@/features/products/types/product-detail.types';
+
+import type { ProductVariant } from '@prisma/client';
 
 /**
  * Group variants by their attribute values
@@ -46,7 +47,6 @@ export function groupVariantsByAttributes(
   variants.forEach((variant) => {
     variant.attributeValues.forEach((attrValue) => {
       const attributeName = attrValue.attribute.name;
-      const attributeType = attrValue.attribute.type;
       const value = attrValue.value;
 
       if (!attributeMap.has(attributeName)) {

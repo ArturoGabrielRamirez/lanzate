@@ -4,9 +4,9 @@
 import { ChevronRight } from "lucide-react";
 
 // ** import types
+import { Button } from "@/features/global/components/button/button";
 import type { ExpandIconProps } from "@/features/global/types/expand-icon";
 // ** import ui components
-import { Button } from "@/features/global/components/button/button";
 import { cn } from "@/features/shadcn/utils/cn";
 
 export function ExpandIcon<TData>({

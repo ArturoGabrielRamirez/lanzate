@@ -10,8 +10,9 @@
  * Priority: HIGH - Core reusable component for billing feature
  */
 
-import { describe, it, expect, mock, afterEach } from 'bun:test';
 import { render, fireEvent, cleanup } from '@testing-library/react';
+import { describe, it, expect, mock, afterEach } from 'bun:test';
+
 import { FilterButtons } from '@/features/global/components/filter-buttons/filter-buttons';
 
 // Cleanup after each test to prevent element leakage

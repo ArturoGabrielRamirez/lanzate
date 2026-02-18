@@ -1,4 +1,5 @@
 import { Typography } from "@/features/global/components/typography/typography/typography"
+
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 const meta = {

@@ -5,11 +5,12 @@
  * and returns consistent ServerResponse format across all scenarios.
  */
 
+import { Prisma } from "@prisma/client";
 import { describe, expect, it } from "bun:test";
+import * as yup from "yup";
+
 import { actionWrapper } from "@/features/global/utils/action-wrapper";
 import { formatSuccess } from "@/features/global/utils/format-response";
-import * as yup from "yup";
-import { Prisma } from "@prisma/client";
 
 describe("actionWrapper", () => {
   it("should return success response when action succeeds", async () => {

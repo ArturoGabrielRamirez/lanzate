@@ -14,15 +14,12 @@
 "use client";
 
 import { useState, useCallback, useMemo } from 'react';
-import { Check } from 'lucide-react';
 
-import { cn } from '@/features/shadcn/utils/cn';
 import type { 
   VariantSelectorProps, 
   VariantOptionProps,
-  VariantAttributeGroup,
-  VariantWithRelations 
-} from '@/features/products/types/product-detail.types';
+  VariantAttributeGroup} from '@/features/products/types/product-detail.types';
+import { cn } from '@/features/shadcn/utils/cn';
 
 /**
  * Individual variant option button

@@ -3,7 +3,6 @@ import { Suspense } from "react";
 
 import CartProvider from "@/features/cart/components/cart-provider";
 import { Footer } from "@/features/layout/components/public-store/footer";
-
 import { Header } from "@/features/layout/components/public-store/header";
 import { MainContainer } from "@/features/layout/components/public-store/main-container";
 import { StoreProvider } from "@/features/layout/components/public-store/store-provider";

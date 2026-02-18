@@ -17,10 +17,10 @@
 
 import { describe, it, expect } from 'bun:test';
 
-import { generateVariantCombinations } from '@/features/products/utils/generate-variant-combinations';
-import { mapFormStateToActionInput } from '@/features/products/utils/map-form-state-to-action-input';
 import { CREATE_PRODUCT_INITIAL_VALUES } from '@/features/products/constants/create-product-form';
 import type { CreateProductOption, CreateProductFormState } from '@/features/products/types';
+import { generateVariantCombinations } from '@/features/products/utils/generate-variant-combinations';
+import { mapFormStateToActionInput } from '@/features/products/utils/map-form-state-to-action-input';
 
 describe('generateVariantCombinations', () => {
   it('should generate correct cartesian product from two options', () => {

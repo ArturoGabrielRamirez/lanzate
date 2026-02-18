@@ -1,12 +1,13 @@
-import * as React from "react"
 
 import { Bell, Pencil, Share2, UserPlus } from "lucide-react"
+import * as React from "react"
 
+
+import { EntityBanner } from "@/features/global/components/entity-banner/entity-banner"
+import { Text } from "@/features/global/components/typography/text/text"
+import { Title } from "@/features/global/components/typography/title/title"
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
-import { EntityBanner } from "@/features/global/components/entity-banner/entity-banner"
-import { Title } from "@/features/global/components/typography/title/title"
-import { Text } from "@/features/global/components/typography/text/text"
 
 const meta = {
     title: "Core/Components/EntityBanner",

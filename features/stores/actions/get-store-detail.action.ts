@@ -1,6 +1,5 @@
 'use server';
 
-import type { Product, ProductImage, ProductVariant, Store } from '@prisma/client';
 
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { getAuthUser } from '@/features/auth/utils';
@@ -12,6 +11,8 @@ import {
   getStoreProductsPreviewData,
 } from '@/features/stores/data';
 import { prisma } from '@/lib/prisma';
+
+import type { Product, ProductImage, ProductVariant, Store } from '@prisma/client';
 
 /**
  * Product with images and variants for store detail page

@@ -21,7 +21,7 @@ export {
   inventoryUpdateSchema,
   reviewSchema,
   bundleSchema,
-} from './product.schema';
+} from '@/features/products/schemas/product.schema';
 
 // Re-export field validators for reuse
 export {
@@ -42,7 +42,7 @@ export {
   reviewTitleField,
   reviewBodyField,
   attributeTypeField,
-} from './productFields';
+} from '@/features/products/schemas/productFields';
 
 // Export inferred types
 export type {
@@ -55,4 +55,4 @@ export type {
   ReviewInput,
   BundleItemInput,
   BundleInput,
-} from './product.schema';
+} from '@/features/products/schemas/product.schema';

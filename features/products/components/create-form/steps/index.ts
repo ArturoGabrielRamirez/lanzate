@@ -1,5 +1,5 @@
-export { BasicInfoStep } from "./basic-info-step";
-export { MediaStep } from "./media-step";
-export { OptionsVariantsStep } from "./options-variants-step";
-export { TypeSpecificStep } from "./type-specific-step";
-export { ConfigurationsStep } from "./configurations-step";
+export { BasicInfoStep } from "@/features/products/components/create-form/steps/basic-info-step";
+export { MediaStep } from "@/features/products/components/create-form/steps/media-step";
+export { OptionsVariantsStep } from "@/features/products/components/create-form/steps/options-variants-step";
+export { TypeSpecificStep } from "@/features/products/components/create-form/steps/type-specific-step";
+export { ConfigurationsStep } from "@/features/products/components/create-form/steps/configurations-step";

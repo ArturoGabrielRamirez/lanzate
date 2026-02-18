@@ -3,8 +3,8 @@
 import { Loader } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
-import { LoadingSubmitButtonProps } from "@/features/global/types/form";
 import { Button } from "@/features/global/components/button/button";
+import { LoadingSubmitButtonProps } from "@/features/global/types/form";
 import { cn } from "@/features/shadcn/utils/cn";
 
 /**

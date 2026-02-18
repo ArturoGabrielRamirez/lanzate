@@ -2,8 +2,8 @@
 
 import { ArrowLeft, ArrowRight, Check, Loader2 } from "lucide-react";
 
-import type { StepNavigationProps } from "@/features/global/types";
 import { Button } from "@/features/global/components/button/button";
+import type { StepNavigationProps } from "@/features/global/types";
 import {
   Tooltip,
   TooltipContent,

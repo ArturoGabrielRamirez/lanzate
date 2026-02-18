@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useLayoutEffect, useEffect } from "react";
 import { motion, type Variants } from "motion/react";
+import { useRef, useLayoutEffect, useEffect } from "react";
 
 import type { SlideTransitionProps } from "@/features/global/types";
 

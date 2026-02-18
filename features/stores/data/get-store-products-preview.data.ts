@@ -5,9 +5,10 @@
  * for display on the store detail page preview.
  */
 
+import { prisma } from '@/lib/prisma';
+
 import type { Product, ProductImage, ProductVariant } from '@prisma/client';
 
-import { prisma } from '@/lib/prisma';
 
 export type ProductWithRelations = Product & {
   images: ProductImage[];

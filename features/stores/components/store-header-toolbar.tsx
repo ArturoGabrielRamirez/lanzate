@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import type { Store } from "@prisma/client";
 import {
   ArrowLeft,
   MoreHorizontal,
@@ -10,9 +8,10 @@ import {
   Store as StoreIcon,
   Settings,
 } from "lucide-react";
+import { useState } from "react";
 
-import { useIsMobile } from "@/features/global/hooks/use-mobile";
 import { Button } from "@/features/global/components/button/button";
+import { useIsMobile } from "@/features/global/hooks/use-mobile";
 import { CreateProductForm } from "@/features/products/components/create-form";
 import {
   DropDrawer,
@@ -22,9 +21,11 @@ import {
   DropDrawerGroup,
   DropDrawerSeparator,
 } from "@/features/shadcn/components/ui/dropdrawer";
+import { ShareStoreDialog } from "@/features/stores/components/share-store-dialog";
 import { useRouter } from "@/i18n/navigation";
 
-import { ShareStoreDialog } from "./share-store-dialog";
+
+import type { Store } from "@prisma/client";
 
 interface StoreHeaderToolbarProps {
   store: Store;

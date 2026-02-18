@@ -4,9 +4,8 @@ import {
   Filter,
   EyeOff,
 } from "lucide-react";
-import type { Column } from "@tanstack/react-table";
 
-import { cn } from "@/lib/utils";
+
 import { Button } from "@/features/shadcn/components/ui/button";
 import {
   DropdownMenu,
@@ -15,6 +14,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/features/shadcn/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+
+import type { Column } from "@tanstack/react-table";
 
 
 interface DataTableColumnHeaderProps<TData, TValue>

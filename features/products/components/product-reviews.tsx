@@ -13,14 +13,15 @@
 
 "use client";
 
-import { useState, useCallback } from 'react';
 import { Star, StarHalf } from 'lucide-react';
+import { useState, useCallback } from 'react';
+
 import { Button } from "@/features/global/components/button/button";
-import { cn } from '@/features/shadcn/utils/cn';
 import type { 
   ProductReviewsProps, 
   ReviewSummaryProps 
 } from '@/features/products/types/product-detail.types';
+import { cn } from '@/features/shadcn/utils/cn';
 
 /**
  * Star rating component

@@ -1,7 +1,8 @@
 import '@/app/globals.css'
 
-import type { Preview } from '@storybook/nextjs-vite'
 import { ModeDecorator } from "./mode-decorator";
+
+import type { Preview } from '@storybook/nextjs-vite'
 
 export const decorators = [ModeDecorator];
 

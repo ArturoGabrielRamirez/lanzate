@@ -12,11 +12,12 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
-import { prisma } from '@/lib/prisma';
-import { handleSignupAction } from '@/features/auth/actions/handleSignup.action';
+
 import { handleLoginAction } from '@/features/auth/actions/handleLogin.action';
-import { logoutAction } from '@/features/auth/actions/logout.action';
 import { handleResetPasswordRequestAction } from '@/features/auth/actions/handleResetPasswordRequest.action';
+import { handleSignupAction } from '@/features/auth/actions/handleSignup.action';
+import { logoutAction } from '@/features/auth/actions/logout.action';
+import { prisma } from '@/lib/prisma';
 
 // Test data
 const testEmail = 'actiontest@example.com';

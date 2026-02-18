@@ -13,8 +13,8 @@
  */
 import { notFound } from 'next/navigation';
 
-import { getStoreBySubdomainAction } from '@/features/stores/actions';
 import { StorefrontHome } from '@/features/products/components';
+import { getStoreBySubdomainAction } from '@/features/stores/actions';
 import type { StorefrontPageProps } from '@/features/stores/types/store';
 
 export default async function StorefrontPage({ params }: StorefrontPageProps) {
