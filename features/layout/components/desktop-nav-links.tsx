@@ -36,7 +36,7 @@ export function DesktopNavLinks({ className }: DesktopNavLinksProps) {
       {navLinks.map((link) => (
         <Button
           key={link.key}
-          variant="ghost"
+          variant="link"
           asChild
           className={
             isActive(link.href)

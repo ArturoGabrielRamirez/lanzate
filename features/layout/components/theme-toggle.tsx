@@ -19,7 +19,7 @@ function ThemeToggle() {
   if (!mounted) {
     return (
       <Button variant="outline" size="icon" aria-label="Toggle theme">
-        <Sun className="h-[1.2rem] w-[1.2rem]" />
+        <Sun />
       </Button>
     );
   }
@@ -37,7 +37,7 @@ function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence mode="popLayout" initial={false}>
         {isDark ? (
           <motion.div
             key="sun"
@@ -46,7 +46,7 @@ function ThemeToggle() {
             exit={{ scale: 0, rotate: 180 }}
             transition={{ duration: 0.2 }}
           >
-            <Sun className="h-[1.2rem] w-[1.2rem]" />
+            <Sun />
           </motion.div>
         ) : (
           <motion.div
@@ -56,7 +56,7 @@ function ThemeToggle() {
             exit={{ scale: 0, rotate: -180 }}
             transition={{ duration: 0.2 }}
           >
-            <Moon className="h-[1.2rem] w-[1.2rem]" />
+            <Moon />
           </motion.div>
         )}
       </AnimatePresence>
