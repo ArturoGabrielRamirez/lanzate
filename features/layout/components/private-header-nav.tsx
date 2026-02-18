@@ -21,7 +21,7 @@ import { Link } from '@/i18n/navigation';
 
 export function PrivateHeaderNav() {
   return (
-    <nav className="h-16 z-10 relative bg-background/80 backdrop-blur-sm px-2">
+    <nav className="h-16 z-10 relative bg-background/20 backdrop-blur-sm px-2">
       <div className="flex w-full items-center justify-between container mx-auto h-16">
         {/* Logo/Brand */}
         <Link href="/dashboard" className="flex items-center gap-2">

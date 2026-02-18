@@ -12,6 +12,8 @@ import { Store as StoreIcon } from 'lucide-react';
 
 import { Badge } from '@/features/global/components/badge/badge';
 import { EntityBanner } from '@/features/global/components/entity-banner/entity-banner';
+import { Text } from '@/features/global/components/typography/text/text';
+import { Title } from '@/features/global/components/typography/title/title';
 import { StoreHeaderToolbar } from '@/features/stores/components/store-header-toolbar';
 import type { StoreHeaderVisualProps } from '@/features/stores/types';
 
@@ -25,15 +27,12 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
 
   const titleNode = (
     <div className="flex flex-wrap items-center gap-2">
-      <h1 className="text-3xl font-bold leading-tight text-foreground/95 md:text-4xl">
+      <Title size="lg" className='border-none'>
         {store.name}
-      </h1>
+      </Title>
       {isOwner && (
-        <Badge
-          variant="secondary"
-          className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
-        >
-          PROPIETARIO
+        <Badge variant="outline" size="sm" tooltip='Sos el dueño de la tienda'>
+          <Text size='xs'>propietario</Text>
         </Badge>
       )}
     </div>

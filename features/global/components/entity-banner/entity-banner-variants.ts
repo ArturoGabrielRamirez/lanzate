@@ -20,7 +20,7 @@ export const entityBannerWrapperVariants = cva("relative w-full", {
         {
             size: "lg",
             avatarPosition: "overlap-bottom",
-            className: "md:pb-14",
+            className: "md:pb-12",
         },
     ],
     defaultVariants: {
@@ -30,7 +30,7 @@ export const entityBannerWrapperVariants = cva("relative w-full", {
 })
 
 export const entityBannerShellVariants = cva(
-    "relative flex flex-col justify-end overflow-visible rounded-2xl border border-border/60 bg-gradient-to-br from-background via-muted/25 to-muted/45 shadow-sm transition-[min-height,padding] duration-200 ease-out",
+    "relative flex flex-col justify-end overflow-visible rounded-2xl border border-border/60 bg-gradient-to-br from-background via-orange-500/[0.06] to-amber-500/[0.20] shadow-sm transition-[min-height,padding] duration-200 ease-out",
     {
         variants: {
             size: {
