@@ -13,8 +13,9 @@ import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
 import { handleLogoutAction } from '@/features/auth/actions/handleLogout.action';
+import { Avatar } from '@/features/global/components/avatar/avatar';
 import type { UserAvatarMenuProps } from '@/features/layout/types';
-import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar';
+/* import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar'; */
 import {
   DropDrawer,
   DropDrawerContent,
@@ -55,14 +56,21 @@ export function UserAvatarMenu({ user }: UserAvatarMenuProps) {
           className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           aria-label="Open user menu"
         >
-          <Avatar className="h-8 w-8 cursor-pointer transition-opacity hover:opacity-80">
+          {/* <Avatar className="h-8 w-8 cursor-pointer transition-opacity hover:opacity-80">
             {user.image ? (
               <AvatarImage src={user.image} alt={user.name || 'User avatar'} />
             ) : null}
             <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
               {initials}
             </AvatarFallback>
-          </Avatar>
+          </Avatar> */}
+          <Avatar
+            size='sm'
+            src={user.image || ''}
+            alt={user.name || 'User avatar'}
+            fallback={initials}
+            status="success"
+          />
         </button>
       </DropDrawerTrigger>
 

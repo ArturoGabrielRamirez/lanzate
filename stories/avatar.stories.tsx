@@ -1,4 +1,4 @@
-import { Avatar } from "./avatar"
+import { Avatar } from "@/features/global/components/avatar/avatar"
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 

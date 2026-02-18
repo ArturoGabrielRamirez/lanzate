@@ -3,12 +3,12 @@
 import Image from "next/image"
 import * as React from "react"
 
+import { avatarVariants } from "@/features/global/components/avatar/avatar-variants"
 import { Badge } from "@/features/global/components/badge/badge"
 import { AvatarProps } from "@/features/global/types/avatar.types"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/features/shadcn/components/ui/tooltip"
 import { cn } from "@/features/shadcn/utils/cn"
 
-import { avatarVariants } from "./avatar-variants"
 
 const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
     ({ className, src, alt, fallback, size = "md", shape = "circle", status = "none", statusColor, tooltip, badge, ...props }, ref) => {
