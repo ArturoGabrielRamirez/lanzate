@@ -7,7 +7,15 @@ import * as React from "react"
 
 import { Avatar } from "@/features/global/components/avatar/avatar"
 import { Button } from "@/features/global/components/button/button"
+import {
+    entityBannerActionsVariants,
+    entityBannerContentVariants,
+    entityBannerShellVariants,
+    entityBannerWrapperVariants,
+} from "@/features/global/components/entity-banner/entity-banner-variants"
+import { Text } from "@/features/global/components/typography/text/text"
 import { Title } from "@/features/global/components/typography/title/title"
+import { AvatarSize } from "@/features/global/types/avatar.types"
 import { EntityBannerProps } from "@/features/global/types/entity-banner.types"
 import {
     DrawerClose,
@@ -19,13 +27,7 @@ import {
 } from "@/features/shadcn/components/ui/drawer"
 import { cn } from "@/features/shadcn/utils/cn"
 
-import {
-    entityBannerActionsVariants,
-    entityBannerContentVariants,
-    entityBannerShellVariants,
-    entityBannerWrapperVariants,
-} from "./entity-banner-variants"
-import { Text } from "../typography/text/text"
+
 
 function EntityBanner({
     className,
@@ -94,12 +96,16 @@ function EntityBanner({
             : isScrollCompact
                 ? "md:pl-[7rem]"
                 : "md:pl-[9.5rem]"
-    const desktopAvatarSizeClassMap: Record<NonNullable<typeof avatarSizeByBanner>, string> = {
+    const desktopAvatarSizeClassMap: Record<AvatarSize, string> = {
+        sm: "md:h-10 md:w-10 md:min-h-10 md:min-w-10",
+        md: "md:h-14 md:w-14 md:min-h-14 md:min-w-14",
         lg: "md:h-20 md:w-20 md:min-h-20 md:min-w-20",
         xl: "md:h-32 md:w-32 md:min-h-32 md:min-w-32",
     }
     const resolvedDesktopAvatarSize = avatar?.size ?? avatarSizeByBanner
-    const compactDesktopAvatarSizeClassMap: Record<NonNullable<typeof avatarSizeByBanner>, string> = {
+    const compactDesktopAvatarSizeClassMap: Record<AvatarSize, string> = {
+        sm: "md:h-6 md:w-6 md:min-h-6 md:min-w-6",
+        md: "md:h-10 md:w-10 md:min-h-10 md:min-w-10",
         lg: "md:h-14 md:w-14 md:min-h-14 md:min-w-14",
         xl: "md:h-20 md:w-20 md:min-h-20 md:min-w-20",
     }
