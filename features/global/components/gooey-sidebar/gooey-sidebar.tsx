@@ -25,7 +25,7 @@ const GooeySidebar = React.forwardRef<HTMLDivElement, GooeySidebarProps>(
             defaultActiveTab = 0,
             activeTab: controlledActiveTab,
             onTabChange,
-            gooeyStrength = 10,
+            gooeyStrength = 6,
             filterId: filterIdProp,
             ...props
         },

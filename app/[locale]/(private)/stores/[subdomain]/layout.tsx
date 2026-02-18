@@ -16,10 +16,13 @@ interface StoreSubdomainLayoutProps {
  */
 export default async function StoreSubdomainLayout({
   children,
+  params,
 }: StoreSubdomainLayoutProps) {
+  const { subdomain } = await params
+
   return (
-    <div className="container mx-auto flex min-h-0 flex-1 gap-4 py-6">
-      <StoreAdminSidebar />
+    <div className="container mx-auto min-h-0 flex-1 gap-4 py-6 grid grid-cols-1 lg:grid-cols-[1fr_4fr]">
+      <StoreAdminSidebar subdomain={subdomain} />
       <div className="min-w-0 flex-1">
         {children}
       </div>

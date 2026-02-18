@@ -114,6 +114,7 @@ function EntityBanner({
 
     const resolvedAvatar = hasAvatar ? (
         <Avatar
+            shape="square"
             {...avatar}
             src={avatarSrc ?? avatar?.src}
             alt={avatarAlt ?? avatar?.alt}

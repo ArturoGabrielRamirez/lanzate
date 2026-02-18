@@ -40,8 +40,8 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
 
   return (
     <EntityBanner
-      size="lg"
-      avatarPosition="overlap-bottom"
+      size="base"
+      avatarPosition="inside"
       avatarSrc={store.logoUrl ?? undefined}
       avatarAlt={store.name}
       avatarFallback={initials || <StoreIcon className="h-10 w-10" />}
@@ -52,7 +52,7 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
       actions={<StoreHeaderToolbar store={store} isOwner={isOwner} />}
       innerClassName="container mx-auto"
       className="rounded-none group"
-      bannerClassName="rounded-none border-x-0 border-t-0 pt-16"
+      bannerClassName="rounded-none border-x-0 border-t-0 pt-20!"
     />
   );
 }

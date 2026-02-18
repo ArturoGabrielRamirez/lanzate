@@ -66,24 +66,22 @@ export default async function ProductListPage({ params }: ProductListPageProps) 
   }
 
   return (
-    <div className="bg-[#f8f5f2] px-2 dark:bg-background">
-      <main className="container mx-auto py-8">
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Productos</h1>
-            <p className="text-muted-foreground">
-              Gestiona los productos de tu tienda
-            </p>
-          </div>
-          <CreateProductForm storeId={store.id} />
+    <main className="container mx-auto pt-12">
+      {/* <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Productos</h1>
+          <p className="text-muted-foreground">
+            Gestiona los productos de tu tienda
+          </p>
         </div>
+        <CreateProductForm storeId={store.id} />
+      </div> */}
 
-        <ProductDataTable
-          initialData={productsResult.payload.data}
-          totalItems={productsResult.payload.total}
-          storeId={store.id}
-        />
-      </main>
-    </div>
+      <ProductDataTable
+        initialData={productsResult.payload.data}
+        totalItems={productsResult.payload.total}
+        storeId={store.id}
+      />
+    </main>
   );
 }

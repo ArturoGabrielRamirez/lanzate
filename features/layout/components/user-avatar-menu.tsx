@@ -58,6 +58,7 @@ export function UserAvatarMenu({ user }: UserAvatarMenuProps) {
           fallback={initials}
           status="success"
           tooltip='Click to see more options'
+          shape='square'
         />
       </DropDrawerTrigger>
 

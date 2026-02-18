@@ -25,7 +25,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
                     <div
                         className={cn(
                             "absolute z-10 -inset-1 border-2",
-                            shape === "circle" ? "rounded-full" : "rounded-2xl",
+                            shape === "circle" ? "rounded-full" : "rounded-xl",
                             status === "success" && "border-success",
                             status === "error" && "border-destructive"
                         )}
@@ -36,7 +36,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
                 {/* Main Avatar Content */}
                 <div className={cn(
                     "relative z-20 flex h-full w-full items-center justify-center overflow-hidden bg-muted",
-                    shape === "circle" ? "rounded-full" : "rounded-xl"
+                    shape === "circle" ? "rounded-full" : "rounded-lg"
                 )}>
                     {src && !hasError ? (
                         <Image
