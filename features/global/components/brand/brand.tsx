@@ -1,12 +1,13 @@
-import { Store } from "lucide-react"
-import { cn } from "@/features/shadcn/utils/cn"
+import { Rocket } from "lucide-react"
+
 import {
     brandContainerVariants,
     brandIconContainerVariants,
     brandIconVariants,
     brandTextVariants,
-} from "./brand-variants"
+} from "@/features/global/components/brand/brand-variants"
 import type { BrandProps } from "@/features/global/types/brand.types"
+import { cn } from "@/features/shadcn/utils/cn"
 
 function Brand({
     direction = "horizontal",
@@ -26,7 +27,7 @@ function Brand({
             {...props}
         >
             <div className={brandIconContainerVariants({ color, size })}>
-                <Store className={brandIconVariants({ color, size })} />
+                <Rocket className={brandIconVariants({ color, size })} />
             </div>
             {showText && (
                 <span className={brandTextVariants({ color, size })}>
