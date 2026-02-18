@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority"
 
 export const avatarVariants = cva(
-    "relative inline-flex shrink-0 transition-all",
+    "relative inline-flex shrink-0 transition-all leading-[0]",
     {
         variants: {
             size: {

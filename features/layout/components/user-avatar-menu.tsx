@@ -51,27 +51,13 @@ export function UserAvatarMenu({ user }: UserAvatarMenuProps) {
   return (
     <DropDrawer>
       <DropDrawerTrigger asChild>
-        <button
-          type="button"
-          className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          aria-label="Open user menu"
-        >
-          {/* <Avatar className="h-8 w-8 cursor-pointer transition-opacity hover:opacity-80">
-            {user.image ? (
-              <AvatarImage src={user.image} alt={user.name || 'User avatar'} />
-            ) : null}
-            <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
-              {initials}
-            </AvatarFallback>
-          </Avatar> */}
-          <Avatar
-            size='sm'
-            src={user.image || ''}
-            alt={user.name || 'User avatar'}
-            fallback={initials}
-            status="success"
-          />
-        </button>
+        <Avatar
+          size='sm'
+          src={user.image || ''}
+          alt={user.name || 'User avatar'}
+          fallback={initials}
+          status="success"
+        />
       </DropDrawerTrigger>
 
       <DropDrawerContent>
