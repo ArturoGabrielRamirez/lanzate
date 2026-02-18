@@ -136,6 +136,7 @@ function EntityBanner({
     return (
         <div
             className={cn(
+                "backdrop-blur-lg",
                 entityBannerWrapperVariants({ size, avatarPosition: resolvedAvatarPosition }),
                 isScrollCompact && isAvatarOverlap && "md:pb-8",
                 className

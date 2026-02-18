@@ -75,7 +75,7 @@ export function SubscriptionStatusCard({
           {!isEnterprisePlan(planType) && (
             <div className="pt-3 border-t space-y-2">
               <p className="text-sm font-medium text-foreground">Mejorar plan</p>
-              <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="grid grid-cols-2 gap-2 sm:flex-row">
                 {isFreePlan(planType) && (
                   <SubscriptionUpgradeButton
                     currentPlan={planType}

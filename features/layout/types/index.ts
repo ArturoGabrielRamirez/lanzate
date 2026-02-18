@@ -6,6 +6,7 @@ export type {
     NavLink,
     PrivateHeaderProps,
     StoreHeaderWrapperProps,
+    ProfileHeaderWrapperProps,
 } from '@/features/layout/types/private-header.types';
 
 export type {

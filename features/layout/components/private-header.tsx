@@ -6,13 +6,15 @@
  * navigation (PrivateHeaderNav).
  *
  * The PrivateHeaderNav is absolutely positioned on top of the
- * StoreHeaderBar so the banner extends behind the nav bar.
+ * StoreHeaderBar/ProfileHeaderBar so the banner extends behind the nav bar.
  */
 
 import { Suspense } from 'react';
 
 import { PrivateHeaderNav } from '@/features/layout/components/private-header-nav';
+import { ProfileHeaderWrapper } from '@/features/layout/components/profile-header-wrapper';
 import { StoreHeaderWrapper } from '@/features/layout/components/store-header-wrapper';
+import { ProfileHeaderBar, ProfileHeaderSkeleton } from '@/features/profile/components';
 import { StoreHeaderBar, StoreHeaderSkeleton } from '@/features/stores/components';
 
 export function PrivateHeader() {
@@ -24,6 +26,11 @@ export function PrivateHeader() {
             <StoreHeaderBar subdomain={"lodemauri"} />
           </Suspense>
         </StoreHeaderWrapper>
+        <ProfileHeaderWrapper>
+          <Suspense fallback={<ProfileHeaderSkeleton />}>
+            <ProfileHeaderBar />
+          </Suspense>
+        </ProfileHeaderWrapper>
         <div className="absolute inset-x-0 top-0">
           <PrivateHeaderNav />
         </div>

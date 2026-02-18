@@ -36,3 +36,13 @@ export interface PrivateHeaderProps {
 export interface StoreHeaderWrapperProps {
   children: ReactNode;
 }
+
+/**
+ * Props for ProfileHeaderWrapper component
+ *
+ * Client component that conditionally renders the profile header
+ * based on the current route.
+ */
+export interface ProfileHeaderWrapperProps {
+  children: ReactNode;
+}
