@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { useIsMobile } from "@/features/global/hooks/use-mobile";
+import { Button } from "@/features/global/components/button/button";
 import { CreateProductForm } from "@/features/products/components/create-form";
 import {
   DropDrawer,
@@ -52,43 +53,43 @@ export function StoreHeaderToolbar({
     setIsShareOpen(true);
   };
 
-  const buttonBaseClasses =
-    "flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-colors hover:bg-black/50";
-
   return (
-    <div className="flex items-center gap-2 justify-end container mx-auto mt-auto opacity-50 group-hover/header:opacity-100 transition-opacity">
+    <div className="flex items-center gap-2 justify-end container mx-auto mt-auto opacity-50 group-hover:opacity-100 transition-opacity">
       {/* Desktop-only buttons */}
       {!isMobile && (
         <>
-          <button
-            type="button"
+          <Button
+            variant="outline"
+            size="icon"
             onClick={handleGoBack}
-            className={buttonBaseClasses}
             aria-label="Volver"
+            tooltip="Volver"
           >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
             onClick={handleShare}
-            className={buttonBaseClasses}
             aria-label="Compartir"
+            tooltip="Compartir"
           >
-            <Share2 className="h-5 w-5" />
-          </button>
+            <Share2 className="h-4 w-4" />
+          </Button>
         </>
       )}
 
       {/* DropDrawer - visible on both mobile and desktop */}
       <DropDrawer>
         <DropDrawerTrigger asChild>
-          <button
-            type="button"
-            className={buttonBaseClasses}
+          <Button
+            variant="outline"
+            size="icon"
             aria-label="Más opciones"
+            noTooltip
           >
-            <MoreHorizontal className="h-5 w-5" />
-          </button>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
         </DropDrawerTrigger>
         <DropDrawerContent>
           {/* Mobile-only navigation items */}

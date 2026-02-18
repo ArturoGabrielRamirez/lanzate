@@ -114,7 +114,7 @@ function EntityBanner({
             fallback={avatarFallback ?? avatar?.fallback}
             size={resolvedDesktopAvatarSize}
             className={cn(
-                "shrink-0 origin-bottom-left transition-[width,height,min-width,min-height,transform] duration-200 ease-out",
+                "shrink-0 origin-bottom-left shadow-[0_8px_20px_-4px_rgba(0,0,0,0.18)] transition-[width,height,min-width,min-height,transform] duration-200 ease-out",
                 avatar?.className,
                 isScrollCompact
                     ? compactDesktopAvatarSizeClassMap[resolvedDesktopAvatarSize]

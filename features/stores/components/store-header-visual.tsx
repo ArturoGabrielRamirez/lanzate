@@ -52,7 +52,7 @@ export function StoreHeaderVisual({ store, isOwner = true }: StoreHeaderVisualPr
       description={store.description ?? 'Sin descripción'}
       actions={<StoreHeaderToolbar store={store} isOwner={isOwner} />}
       innerClassName="container mx-auto"
-      className="rounded-none"
+      className="rounded-none group"
       bannerClassName="rounded-none border-x-0 border-t-0 pt-16"
     />
   );
