@@ -1,5 +1,6 @@
 "use client"
 
+import { AnimatePresence, motion } from 'framer-motion'
 import {
   Bell,
   BookOpen,
@@ -42,9 +43,19 @@ export function StoreAdminSidebar({ subdomain }: StoreAdminSidebarProps) {
         title="Navegación"
         buttons={getFixedNavButtons(storesListHref, storeBase, segment)}
       />
-      {shortcuts.length > 0 && (
-        <SidebarSection title="Atajos" buttons={shortcuts} />
-      )}
+      <AnimatePresence>
+        {shortcuts.length > 0 && (
+          <motion.div
+            key="shortcuts"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+          >
+            <SidebarSection title="Atajos" buttons={shortcuts} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 
