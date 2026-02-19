@@ -1,11 +1,21 @@
 "use client"
 
+import { X } from "lucide-react"
 import * as React from "react"
 
-import { X } from "lucide-react"
 
-import { DialogContext } from "@/features/core/contexts/dialog-context"
-import { useDialogContext } from "@/features/core/hooks/use-dialog-context"
+import { dialogContentVariants } from "@/features/global/components/dialog/dialog-variants"
+import { DialogContext } from "@/features/global/contexts/dialog-context"
+import { useDialogContext } from "@/features/global/hooks/use-dialog-context"
+import type {
+    DialogCloseProps,
+    DialogContentProps,
+    DialogDescriptionProps,
+    DialogFooterProps,
+    DialogHeaderProps,
+    DialogProps,
+    DialogTitleProps,
+} from "@/features/global/types/dialog.types"
 import {
     Dialog as ShadcnDialog,
     DialogClose as ShadcnDialogClose,
@@ -29,19 +39,8 @@ import {
     DrawerTrigger,
 } from "@/features/shadcn/components/ui/drawer"
 import { useIsMobile } from "@/features/shadcn/hooks/use-mobile"
-import { cn } from "@/features/shadcn/lib/utils"
+import { cn } from "@/features/shadcn/utils/cn"
 
-import { dialogContentVariants } from "./dialog-variants"
-
-import type {
-    DialogCloseProps,
-    DialogContentProps,
-    DialogDescriptionProps,
-    DialogFooterProps,
-    DialogHeaderProps,
-    DialogProps,
-    DialogTitleProps,
-} from "@/features/core/types"
 
 // ---- Root ----
 

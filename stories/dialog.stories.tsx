@@ -1,7 +1,6 @@
 import { fn } from "@storybook/test"
 
-import { Button } from "@/features/core/components/button/button"
-
+import { Button } from "@/features/global/components/button/button"
 import {
     Dialog,
     DialogClose,
@@ -11,7 +10,8 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "./dialog"
+} from "@/features/global/components/dialog/dialog"
+
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
