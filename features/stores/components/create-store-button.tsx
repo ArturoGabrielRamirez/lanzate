@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/features/shadcn/components/ui/dialog";
+} from "@/features/global/components/dialog/dialog";
 import { CreateStoreForm } from "@/features/stores/components/create-store-form";
 import type { CreateStoreButtonProps } from "@/features/stores/types";
 
@@ -43,7 +43,7 @@ export function CreateStoreButton({
   const [open, setOpen] = useState(false);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog responsive="drawer-mobile" open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button disabled={disabled} className={className} startIcon={<PlusIcon />}>
           {t("button")}
