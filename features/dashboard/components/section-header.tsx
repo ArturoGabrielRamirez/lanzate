@@ -48,7 +48,7 @@ export function SectionHeader({
       </Title>
       {href && (
         <Link href={href}>
-          <Button variant="link" className="text-primary hover:text-primary/80">
+          <Button variant="link" className="text-primary hover:text-primary/80 pr-0">
             {linkText}
           </Button>
         </Link>
