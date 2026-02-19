@@ -12,6 +12,7 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
             base: "p",
             sm: "small",
             xs: "muted",
+            "2xs": "2xs",
         }
 
         return (

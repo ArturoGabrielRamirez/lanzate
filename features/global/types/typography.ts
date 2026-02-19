@@ -10,6 +10,7 @@ export type TypographyVariant =
     | "large"
     | "small"
     | "muted"
+    | "2xs"
 
 export type TypographyWeight = "light" | "normal" | "medium" | "semibold" | "bold"
 export type TypographyAlign = "left" | "center" | "right" | "justify"

@@ -7,7 +7,6 @@
  * Note: StoreHeader is rendered in the store layout (PrivateHeader).
  */
 
-import { StoreConfigLink } from '@/features/stores/components/store-config-link';
 import { StoreTabs } from '@/features/stores/components/store-tabs';
 import type { StoreDetailProps } from '@/features/stores/types';
 
@@ -20,7 +19,6 @@ export function StoreDetail({
       <div className="rounded-3xl bg-card p-4 shadow-sm">
         <StoreTabs storeSubdomain={store.subdomain} products={products} />
       </div>
-      <StoreConfigLink subdomain={store.subdomain} />
     </div>
   );
 }

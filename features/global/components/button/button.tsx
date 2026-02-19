@@ -14,7 +14,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className,
         variant,
         size,
-        asChild = false,
         startIcon,
         endIcon,
         isLoading,
@@ -24,12 +23,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         canGlow,
         children,
         ...props
-    }, ref) => {
+    }) => {
         const getVariantClasses = () => {
             const classes: string[] = []
 
             if (variant === "secondary") {
-                classes.push("bg-primary/20 text-primary hover:bg-primary/30 dark:bg-primary/30 dark:hover:bg-primary/40")
+                classes.push("bg-primary/10 text-primary hover:bg-primary/30 dark:bg-primary/10 dark:hover:bg-primary/40")
             }
 
             if (variant === "ghost") {
@@ -68,8 +67,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
         const button = (
             <motion.button
-                whileTap={{ scale: 0.95 }}
-                className={cn(baseClasses, "cursor-pointer", className, variantClasses, rounded && "rounded-full")}
+                whileTap={{ scale: 0.90 , transition: { duration: 0.1 } }}
+                className={cn(baseClasses, "cursor-pointer", className, variantClasses, rounded && "rounded-full" , "transition-none")}
                 disabled={isLoading || props.disabled}
                 {...(props as HTMLMotionProps<"button">)}
             >

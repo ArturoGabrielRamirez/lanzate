@@ -20,7 +20,6 @@ export { StoresGrid } from "@/features/stores/components/stores-grid";
 // Store detail components
 export { AdminCard } from "@/features/stores/components/admin-card";
 export { AdminPanelSection } from "@/features/stores/components/admin-panel-section";
-export { StoreConfigLink } from "@/features/stores/components/store-config-link";
 export { StoreHeaderVisual } from "@/features/stores/components/store-header-visual";
 export { StoreHeaderBar } from "@/features/stores/components/store-header-bar";
 export { StoreHeaderSkeleton } from "@/features/stores/components/store-header-skeleton";

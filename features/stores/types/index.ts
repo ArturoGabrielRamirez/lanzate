@@ -33,3 +33,5 @@ export type {
   FirstStoreCTAProps,
   StorefrontPageProps,
 } from '@/features/stores/types/store';
+
+export type { NavBtn } from '@/features/stores/types/sidebar.types';

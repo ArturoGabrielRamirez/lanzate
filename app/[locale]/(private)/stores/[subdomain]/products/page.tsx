@@ -3,7 +3,6 @@ import { notFound, redirect } from 'next/navigation';
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { getAuthUser } from '@/features/auth/utils';
 import { getProductsAction } from '@/features/products/actions';
-import { CreateProductForm } from '@/features/products/components/create-form';
 import { ProductDataTable } from '@/features/products/components/product-data-table';
 import type { ProductListPageProps } from '@/features/products/types/product.types';
 import { getOwnedStoreBySubdomainData } from '@/features/stores/data';
@@ -54,34 +53,24 @@ export default async function ProductListPage({ params }: ProductListPageProps) 
   if (productsResult.hasError || !productsResult.payload) {
     return (
       <div className="bg-[#f8f5f2] px-2 dark:bg-background">
-        <main className="container mx-auto py-8">
+        <div className="container mx-auto py-8">
           <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
             <p className="text-destructive">
               Error al cargar los productos. Por favor intenta nuevamente.
             </p>
           </div>
-        </main>
+        </div>
       </div>
     );
   }
 
   return (
-    <main className="container mx-auto pt-12">
-      {/* <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Productos</h1>
-          <p className="text-muted-foreground">
-            Gestiona los productos de tu tienda
-          </p>
-        </div>
-        <CreateProductForm storeId={store.id} />
-      </div> */}
-
+    <div className="container mx-auto">
       <ProductDataTable
         initialData={productsResult.payload.data}
         totalItems={productsResult.payload.total}
         storeId={store.id}
       />
-    </main>
+    </div>
   );
 }

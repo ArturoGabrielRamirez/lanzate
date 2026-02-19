@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 
 import "@/app/globals.css";
+import { ProgressBar } from "@/features/global/components/progress-bar/progress-bar";
 import { ThemeProvider } from '@/features/layout/components/theme-provider';
 import type { LocaleLayoutProps } from "@/features/layout/types";
 import { Toaster } from '@/features/shadcn/components/ui/toaster';
@@ -57,12 +58,14 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-dvh`}>
-        <ThemeProvider>
-          <NextIntlClientProvider messages={messages}>
-            {children}
-            <Toaster />
-          </NextIntlClientProvider>
-        </ThemeProvider>
+        <ProgressBar>
+          <ThemeProvider>
+            <NextIntlClientProvider messages={messages}>
+              {children}
+              <Toaster />
+            </NextIntlClientProvider>
+          </ThemeProvider>
+        </ProgressBar>
       </body>
     </html>
   );

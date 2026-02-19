@@ -20,6 +20,7 @@ const typographyVariants = cva("text-foreground", {
             large: "text-lg font-semibold",
             small: "text-sm font-medium leading-none",
             muted: "text-sm text-muted-foreground",
+            "2xs": "text-xs text-muted-foreground",
         },
         weight: {
             light: "font-light",
