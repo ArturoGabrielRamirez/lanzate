@@ -1,3 +1,4 @@
+import { getStoreBySubdomainAction } from '@/features/stores/actions'
 import { StoreAdminSidebar } from '@/features/stores/components/store-admin-sidebar'
 import { StorePageHeader } from '@/features/stores/components/store-page-header'
 
@@ -20,10 +21,12 @@ export default async function StoreSubdomainLayout({
   params,
 }: StoreSubdomainLayoutProps) {
   const { subdomain } = await params
+  const storeResult = await getStoreBySubdomainAction(subdomain)
+  const storeId = storeResult.payload?.id
 
   return (
     <div className="container mx-auto min-h-0 flex-1 gap-4 py-6 grid grid-cols-1 lg:grid-cols-[1fr_4fr]">
-      <StoreAdminSidebar subdomain={subdomain} />
+      <StoreAdminSidebar subdomain={subdomain} storeId={storeId} />
       <div className="min-w-0 flex-1">
         <StorePageHeader subdomain={subdomain} />
         {children}

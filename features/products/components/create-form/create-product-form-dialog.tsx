@@ -1,8 +1,5 @@
 "use client";
 
-import { Box } from "lucide-react";
-
-import { Button } from "@/features/global/components/button/button";
 import { useCreateProductContext } from "@/features/products/components";
 import { CreateProductFormContent } from "@/features/products/components/create-form/create-product-form-content";
 import type { CreateProductFormDialogProps } from "@/features/products/types";
@@ -25,14 +22,7 @@ export function CreateProductFormDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => (open ? openDialog() : closeDialog())}>
-      <DialogTrigger asChild>
-        {trigger || (
-          <Button>
-            <Box className="w-4 h-4 mr-2" />
-            Crear Producto
-          </Button>
-        )}
-      </DialogTrigger>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <CreateProductFormContent storeId={storeId} />
     </Dialog>
   );

@@ -10,6 +10,7 @@ import {
   LayoutList,
   MapPin,
   Package,
+  PackagePlus,
   ShoppingCart,
   Tags,
   Truck,
@@ -63,10 +64,23 @@ export function getFixedNavButtons(
   ]
 }
 
-export function getShortcutButtons(storeBase: string, segment: string): NavBtn[] {
+export function getShortcutButtons(
+  storeBase: string,
+  segment: string,
+  callbacks?: { onCreateProduct?: () => void },
+): NavBtn[] {
+  const createProductBtn: NavBtn = {
+    icon: <PackagePlus className="size-4.5" />,
+    label: 'Crear Producto',
+    onClick: callbacks?.onCreateProduct,
+  }
+
   switch (segment) {
+    case '':
+      return [createProductBtn]
     case 'products':
       return [
+        createProductBtn,
         {
           icon: <LayoutList className="size-4.5" />,
           label: 'Todos los productos',

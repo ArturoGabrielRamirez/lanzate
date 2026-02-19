@@ -17,6 +17,9 @@ import {
 import { usePathname } from 'next/navigation'
 
 import { GooeySidebar } from '@/features/global/components/gooey-sidebar/gooey-sidebar'
+import { CreateProductFormDialog } from '@/features/products/components/create-form/create-product-form-dialog'
+import { CreateProductProvider } from '@/features/products/components/create-form/create-product-provider'
+import { useCreateProductContext } from '@/features/products/hooks'
 import { SidebarSection } from '@/features/stores/components/sidebar-section'
 import {
   getFixedNavButtons,
@@ -25,17 +28,28 @@ import {
 
 interface StoreAdminSidebarProps {
   subdomain: string
+  storeId?: string
 }
 
-export function StoreAdminSidebar({ subdomain }: StoreAdminSidebarProps) {
+export function StoreAdminSidebar({ subdomain, storeId }: StoreAdminSidebarProps) {
+  return (
+    <CreateProductProvider>
+      <StoreAdminSidebarContent subdomain={subdomain} storeId={storeId} />
+      {storeId && <CreateProductFormDialog storeId={storeId} />}
+    </CreateProductProvider>
+  )
+}
+
+function StoreAdminSidebarContent({ subdomain }: StoreAdminSidebarProps) {
   const pathname = usePathname()
+  const { openDialog } = useCreateProductContext()
 
   const storeBase = pathname.split(`/stores/${subdomain}`)[0] + `/stores/${subdomain}`
   const storesListHref = pathname.split(`/stores/${subdomain}`)[0] + '/stores'
   const afterBase = pathname.split(`/stores/${subdomain}`)[1] ?? ''
   const segment = afterBase.replace(/^\//, '').split('/')[0] ?? ''
 
-  const shortcuts = getShortcutButtons(storeBase, segment)
+  const shortcuts = getShortcutButtons(storeBase, segment, { onCreateProduct: openDialog })
 
   const navContent = (
     <div className="p-3 flex flex-col gap-4">
@@ -43,16 +57,16 @@ export function StoreAdminSidebar({ subdomain }: StoreAdminSidebarProps) {
         title="Navegación"
         buttons={getFixedNavButtons(storesListHref, storeBase, segment)}
       />
-      <AnimatePresence>
+      <AnimatePresence mode='wait'>
         {shortcuts.length > 0 && (
           <motion.div
-            key="shortcuts"
+            key={`shortcuts-${segment}`}
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
           >
-            <SidebarSection title="Atajos" buttons={shortcuts} />
+            <SidebarSection title="Atajos" buttons={shortcuts} cols={2} />
           </motion.div>
         )}
       </AnimatePresence>

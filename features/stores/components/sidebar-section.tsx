@@ -55,7 +55,7 @@ export function SidebarSection({ title, buttons, cols = 4 }: SidebarSectionProps
                 'aspect-square w-full flex-col gap-1 p-1 h-auto ' +
                 (btn.active ? 'bg-primary/50 hover:bg-primary' : '')
               }
-              onClick={btn.href ? () => router.push(btn.href) : undefined}
+              onClick={btn.onClick ?? (btn.href ? () => router.push(btn.href) : undefined)}
               tooltip={btn.label}
             >
               {btn.icon}
