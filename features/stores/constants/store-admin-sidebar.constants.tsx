@@ -1,5 +1,6 @@
 import {
   Archive,
+  ArrowLeft,
   Boxes,
   CheckCircle2,
   ClipboardList,
@@ -25,8 +26,8 @@ export function getFixedNavButtons(
 ): NavBtn[] {
   return [
     {
-      icon: <ShoppingCart className="size-4.5" />,
-      label: 'Mis tiendas',
+      icon: <ArrowLeft className="size-4.5" />,
+      label: 'Volver',
       href: storesListHref,
     },
     {
