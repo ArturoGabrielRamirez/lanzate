@@ -100,7 +100,7 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
         if (responsive === "fullscreen-mobile" && isMobile) {
             return (
                 <ShadcnDialogPortal>
-                    <ShadcnDialogOverlay />
+                    <ShadcnDialogOverlay className="backdrop-blur-2xl"/>
                     <div
                         ref={ref}
                         role="dialog"

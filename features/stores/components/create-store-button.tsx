@@ -54,7 +54,7 @@ export function CreateStoreButton({
           <DialogTitle>{t("dialog.title")}</DialogTitle>
           <DialogDescription>{t("dialog.description")}</DialogDescription>
         </DialogHeader>
-        <CreateStoreForm />
+        <CreateStoreForm className="px-2 pb-2"/>
       </DialogContent>
     </Dialog>
   );
