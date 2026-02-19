@@ -16,7 +16,7 @@ export function StoreDetail({
 }: StoreDetailProps) {
   return (
     <div className="space-y-4">
-      <div className="rounded-3xl bg-card p-4 shadow-sm">
+      <div className="rounded-lg bg-card p-4 shadow-sm">
         <StoreTabs storeSubdomain={store.subdomain} products={products} />
       </div>
     </div>

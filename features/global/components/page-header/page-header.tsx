@@ -14,7 +14,7 @@ import {
 
 export function PageHeader({ title, breadcrumbs, actions }: PageHeaderProps) {
   return (
-    <div className="mb-6 flex items-center justify-between gap-4">
+    <div className="mb-4 flex items-center justify-between gap-4">
       <Title size="md">{title}</Title>
       <div className="flex items-center gap-4">
         <Breadcrumb>
