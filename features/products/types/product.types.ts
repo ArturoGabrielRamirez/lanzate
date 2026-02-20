@@ -163,6 +163,7 @@ export type ProductWithAllRelations = Product & {
  */
 export interface ProductListPageProps {
   params: Promise<{ subdomain: string; locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 /**
@@ -184,6 +185,71 @@ export interface ProductDataTableProps {
   /** Store ID for fetching more products */
   storeId: string;
 }
+
+/**
+ * Props for ProductListContainer component
+ *
+ * Client component that displays products using BaseCard in row layout
+ * with nuqs URL state management for search, filters, and pagination.
+ */
+export interface ProductListContainerProps {
+  /** Initial product data loaded from server */
+  products: Product[];
+  /** Total number of products for pagination */
+  total: number;
+  /** Store ID for the current store */
+  storeId: string;
+  /** Store subdomain for navigation */
+  subdomain: string;
+}
+
+/**
+ * Props for ProductCardRow component
+ *
+ * Single product row using BaseCard with layout="row".
+ * Displays product info with checkbox for bulk selection.
+ */
+export interface ProductCardRowProps {
+  /** Product data to display */
+  product: Product;
+  /** Whether this product is selected for bulk actions */
+  isSelected: boolean;
+  /** Callback when selection checkbox is toggled */
+  onToggleSelect: (productId: string) => void;
+  /** Store subdomain for navigation */
+  subdomain: string;
+}
+
+/**
+ * Product List Search Params Type
+ *
+ * Type for nuqs parsers used in ProductListContainer
+ */
+export interface ProductListSearchParams {
+  search: string;
+  status: ProductStatus | null;
+  sort: 'name' | 'createdAt' | 'updatedAt' | 'price' | 'stock';
+  page: number;
+  pageSize: number;
+}
+
+/**
+ * Product List Filters Type
+ *
+ * Type for filter state in ProductListContainer
+ */
+export interface ProductListFilters {
+  search: string;
+  status: ProductStatus | null;
+  sort: 'name' | 'createdAt' | 'updatedAt' | 'price' | 'stock';
+}
+
+/**
+ * Product Bulk Actions Type
+ *
+ * Type for bulk action operations
+ */
+export type ProductBulkAction = 'delete' | 'archive' | 'activate' | 'draft';
 
 /**
  * Props for ProductCard component

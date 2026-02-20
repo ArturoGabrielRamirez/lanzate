@@ -22,8 +22,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         noTooltip,
         canGlow,
         children,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        asChild: _asChild,
         ...props
-    }) => {
+    }, ref) => {
         const getVariantClasses = () => {
             const classes: string[] = []
 
@@ -67,6 +69,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
         const button = (
             <motion.button
+                ref={ref}
                 whileTap={{ scale: 0.90 , transition: { duration: 0.1 } }}
                 className={cn(baseClasses, "cursor-pointer", className, variantClasses, rounded && "rounded-full" , "transition-none")}
                 disabled={isLoading || props.disabled}

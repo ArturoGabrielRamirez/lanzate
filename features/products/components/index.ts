@@ -13,6 +13,10 @@ export { ProductReviews } from '@/features/products/components/product-reviews';
 export { ProductFilters } from '@/features/products/components/product-filters';
 export { StorefrontHome } from '@/features/products/components/storefront-home';
 
+// Product List components (BaseCard-based)
+export { ProductListContainer } from '@/features/products/components/product-list-container';
+export { ProductCardRow } from '@/features/products/components/product-card-row';
+
 // Create Product Form components
 export {
   CreateProductProvider,

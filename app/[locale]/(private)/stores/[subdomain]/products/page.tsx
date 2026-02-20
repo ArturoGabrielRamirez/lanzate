@@ -3,20 +3,32 @@ import { notFound, redirect } from 'next/navigation';
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { getAuthUser } from '@/features/auth/utils';
 import { getProductsAction } from '@/features/products/actions';
-import { ProductDataTable } from '@/features/products/components/product-data-table';
-import type { ProductListPageProps } from '@/features/products/types/product.types';
+import { ProductListContainer } from '@/features/products/components/product-list-container';
+import type { ProductListPageProps, ProductStatus } from '@/features/products/types';
 import { getOwnedStoreBySubdomainData } from '@/features/stores/data';
 
 /**
  * Product List Page
  *
  * Server component that displays the product listing dashboard for a store.
- * Fetches products using getProductsAction and passes data to DataTable component.
+ * Fetches products using getProductsAction with search params from URL.
+ * Uses nuqs-compatible search params parsing.
  *
  * Route: /app/[locale]/(private)/stores/[subdomain]/products
+ *
+ * Search Params (synced via nuqs in client component):
+ * - search: string (filter by product name/SKU)
+ * - status: ProductStatus (filter by status)
+ * - sort: string (sort field)
+ * - page: number (current page)
+ * - pageSize: number (items per page)
  */
-export default async function ProductListPage({ params }: ProductListPageProps) {
+export default async function ProductListPage({
+  params,
+  searchParams,
+}: ProductListPageProps) {
   const { subdomain } = await params;
+  const resolvedSearchParams = await searchParams;
 
   // Check authentication status
   const user = await getAuthUser();
@@ -40,12 +52,43 @@ export default async function ProductListPage({ params }: ProductListPageProps) 
     notFound();
   }
 
-  // Fetch initial products for the store
+  // Parse search params
+  const search = typeof resolvedSearchParams.search === 'string'
+    ? resolvedSearchParams.search
+    : '';
+
+  const statusParam = typeof resolvedSearchParams.status === 'string'
+    ? resolvedSearchParams.status
+    : '';
+
+  const status = statusParam && ['ACTIVE', 'DRAFT', 'ARCHIVED'].includes(statusParam)
+    ? (statusParam as ProductStatus)
+    : undefined;
+
+  const sortParam = typeof resolvedSearchParams.sort === 'string'
+    ? resolvedSearchParams.sort
+    : 'createdAt';
+
+  const sortBy = ['name', 'createdAt', 'updatedAt'].includes(sortParam)
+    ? (sortParam as 'name' | 'createdAt' | 'updatedAt')
+    : 'createdAt';
+
+  const page = typeof resolvedSearchParams.page === 'string'
+    ? parseInt(resolvedSearchParams.page, 10)
+    : 1;
+
+  const pageSize = typeof resolvedSearchParams.pageSize === 'string'
+    ? parseInt(resolvedSearchParams.pageSize, 10)
+    : 10;
+
+  // Fetch products with filters
   const productsResult = await getProductsAction({
     storeId: store.id,
-    page: 1,
-    pageSize: 10,
-    sortBy: 'createdAt',
+    page: !isNaN(page) && page > 0 ? page : 1,
+    pageSize: !isNaN(pageSize) && pageSize > 0 ? pageSize : 10,
+    search: search || undefined,
+    status,
+    sortBy,
     sortOrder: 'desc',
   });
 
@@ -65,11 +108,12 @@ export default async function ProductListPage({ params }: ProductListPageProps) 
   }
 
   return (
-    <div className="container mx-auto">
-      <ProductDataTable
-        initialData={productsResult.payload.data}
-        totalItems={productsResult.payload.total}
+    <div className="container mx-auto py-6">
+      <ProductListContainer
+        products={productsResult.payload.data}
+        total={productsResult.payload.total}
         storeId={store.id}
+        subdomain={subdomain}
       />
     </div>
   );

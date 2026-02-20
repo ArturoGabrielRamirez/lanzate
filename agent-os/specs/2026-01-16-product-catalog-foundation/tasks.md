@@ -247,41 +247,84 @@ This spec implements a complete product management system including:
 
 ### Frontend - Merchant Dashboard
 
-#### Task Group 7: Product Listing Dashboard
+#### Task Group 7: Product Listing Dashboard (with BaseCard)
 **Dependencies:** Task Group 5
 
-- [ ] 7.0 Complete merchant product listing dashboard
+- [ ] 7.0 Complete merchant product listing dashboard using BaseCard
   - [ ] 7.1 Write 2-8 focused tests for product listing components
-    - Test ProductListPage renders product data table
-    - Test search by name/SKU functionality
-    - Test filter by status (active/draft/archived)
-    - Test bulk selection actions
+    - Test ProductListPage renders product cards in row layout
+    - Test search by name/SKU functionality with nuqs URL sync
+    - Test filter by status (active/draft/archived) with nuqs URL sync
+    - Test bulk selection with checkboxes
+    - Test pagination with nuqs URL sync
   - [x] 7.2 Create ProductListPage server component
-    - Fetch products using getProductsAction
-    - Pass data to DataTable component
+    - Fetch products using getProductsAction with search params
+    - Parse nuqs search params (search, status, sort, page, pageSize)
+    - Pass data and total count to ProductListContainer
     - Route: /app/[locale]/(private)/stores/[subdomain]/products
-  - [ ] 7.3 Adapt DataTable for products
-    - Reuse from backup/components/data-table/
-    - Configure columns: image, name, SKU, status, price, stock, actions
-    - Implement fetchDataFn for product pagination
-    - Add exportConfig for product data export
-  - [ ] 7.4 Implement search and filters
-    - Search input for name and SKU
-    - Status filter dropdown (ACTIVE, DRAFT, ARCHIVED)
-    - Sorting by name, date, price, stock
-  - [ ] 7.5 Implement bulk actions
-    - Bulk selection checkboxes
-    - Bulk delete, archive, change status actions
-    - Bulk price update modal
-  - [ ] 7.6 Create product list types
-    - ProductListPageProps, ProductTableColumn types in features/products/types/
-  - [ ] 7.7 Ensure product listing tests pass
+  - [x] 7.3 Create ProductListContainer client component
+    - "use client" directive
+    - Use nuqs for URL state management (useQueryStates from nuqs)
+    - Define parsers: search (string), status (enum), sort (enum), page (number), pageSize (number)
+    - Render header row with column labels (Product, SKU, Status, Price, Stock, Actions)
+    - Render products using ProductCardRow components
+    - Implement client-side state for bulk selection
+    - Show empty state when no products found
+  - [x] 7.4 Create ProductCardRow component
+    - Use BaseCard with layout="row", divided, size="sm", hover="default"
+    - Follow pattern from stories/base-card.stories.tsx > TableRows story
+    - BaseCardHeader:
+      - Checkbox for bulk selection (controlled by parent)
+      - Product image (40x40px rounded) or placeholder icon
+      - Title: product name (truncate if long)
+      - Description: brand name
+    - BaseCardContent (column 2): SKU with copy-to-clipboard button
+    - BaseCardContent (column 3): Status badge with color variants (ACTIVE=success, DRAFT=secondary, ARCHIVED=muted)
+    - BaseCardContent (column 4):
+      - Price display with formatting
+      - Show promotional_price with strikethrough on original price if available
+    - BaseCardContent (column 5):
+      - Stock quantity display
+      - Inventory status badge (in_stock=success, low_stock=warning, out_of_stock=destructive)
+    - BaseCardFooter:
+      - Edit button (navigates to edit page)
+      - More actions dropdown (view, duplicate, archive, delete)
+  - [ ] 7.5 Implement search and filters UI with nuqs
+    - Search input with debounce (300ms) that updates nuqs "search" param
+    - Status filter dropdown that updates nuqs "status" param
+    - Sort dropdown (name, createdAt, price, stock) that updates nuqs "sort" param
+    - Clear all filters button (resets nuqs params to defaults)
+    - Show active filter count badge
+  - [ ] 7.6 Implement bulk selection and actions
+    - Checkbox in each ProductCardRow for selection
+    - "Select all" checkbox in header row (selects current page)
+    - Bulk action toolbar (fixed at bottom, appears when items selected)
+    - Actions: bulk delete, bulk archive, bulk change status
+    - Confirmation dialog for destructive actions
+    - Toast feedback on bulk action completion
+  - [ ] 7.7 Add pagination controls with nuqs
+    - Use nuqs "page" and "pageSize" params
+    - Page size selector (10, 25, 50, 100 items)
+    - Previous/Next buttons (disabled at boundaries)
+    - Page number display (e.g., "Showing 1-25 of 240")
+    - Total products count
+    - Jump to page input for large datasets
+  - [x] 7.8 Create product list types
+    - ProductListPageProps, ProductCardRowProps in features/products/types/
+    - ProductListFilters, ProductBulkActions types
+    - ProductListSearchParams type for nuqs parsers
+  - [ ] 7.9 Ensure product listing tests pass
     - Run ONLY the 2-8 tests written in 7.1
 
 **Acceptance Criteria:**
-- Product listing displays in DataTable with all columns
-- Search, filter, and sort work correctly
-- Bulk actions function properly
+- Product listing displays using BaseCard in row layout (not DataTable)
+- Each row shows: checkbox, image, name, brand, SKU, status badge, price, stock, actions
+- Search, filter, and sort use nuqs for URL state synchronization
+- URL params persist on page refresh
+- Bulk selection with checkboxes functions properly
+- Bulk actions (delete, archive, status change) work with confirmation
+- Pagination uses nuqs and navigates correctly through product pages
+- Responsive design works on different screen sizes
 - Tests from 7.1 pass
 
 ---
