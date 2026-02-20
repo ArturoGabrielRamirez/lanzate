@@ -52,22 +52,19 @@ export function SidebarSection({ title, buttons, cols = 4, variant = 'nav' }: Si
           <motion.div key={i} variants={itemVariants}>
             {variant === 'actions' ? (
               <Button
-                variant={btn.active ? 'outline' : 'default'}
-                className={
-                  'w-full justify-start gap-2 ' +
-                  (btn.active ? 'bg-primary/50 hover:bg-primary' : '')
-                }
+                variant="default"
+                startIcon={btn.icon}
+                className="w-full"
                 onClick={btn.onClick ?? (btn.href ? () => router.push(btn.href!) : undefined)}
               >
-                {btn.icon}
-                <Text size="sm">{btn.label}</Text>
+                {btn.label}
               </Button>
             ) : (
               <Button
-                variant={btn.active ? 'outline' : 'secondary'}
+                variant={btn.active ? 'secondary' : 'outline'}
                 className={
-                  'aspect-square w-full flex-col gap-1 p-1 h-auto ' +
-                  (btn.active ? 'bg-primary/50 hover:bg-primary' : '')
+                  'aspect-square w-full flex-col gap-1 p-1 h-auto transition-opacity ' +
+                  (btn.active ? '' : 'opacity-50 hover:opacity-100')
                 }
                 onClick={btn.onClick ?? (btn.href ? () => router.push(btn.href!) : undefined)}
                 tooltip={btn.label}
