@@ -3,6 +3,11 @@
 import { startTransition, useCallback } from "react";
 import { toast } from "sonner";
 
+import {
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/features/global/components/dialog/dialog";
 import { Stepper, Step } from "@/features/global/components/stepper";
 import { createProductAction } from "@/features/products/actions";
 import { CustomStepIndicator, STEP_CONFIGS } from "@/features/products/components/create-form/custom-step-indicator";
@@ -17,11 +22,6 @@ import { PRODUCT_SUCCESS_MESSAGES, PRODUCT_ERROR_MESSAGES } from "@/features/pro
 import { useCreateProductContext } from "@/features/products/hooks";
 import type { CreateProductFormContentProps } from "@/features/products/types";
 import { mapFormStateToActionInput } from "@/features/products/utils";
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/features/shadcn/components/ui/dialog";
 
 /**
  * CreateProductFormContent - Form content for the create product dialog
@@ -106,7 +106,7 @@ export function CreateProductFormContent({ storeId }: CreateProductFormContentPr
   }, [closeDialog]);
 
   return (
-    <DialogContent className="w-dvw h-dvh max-w-none max-h-none sm:max-h-[90vh] sm:h-auto sm:rounded-lg rounded-none overflow-hidden flex flex-col p-0 inset-0 max-sm:transform-none max-sm:top-0 max-sm:left-0 max-sm:translate-none sm:top-1/2 sm:left-1/2">
+    <DialogContent size="xl" className="overflow-hidden flex flex-col p-0 max-h-[90vh] h-fit inset-0 max-sm:transform-none max-sm:top-0 max-sm:left-0 max-sm:translate-none sm:top-1/2 sm:left-1/2">
       <DialogHeader className="px-6 pt-6 pb-2">
         <DialogTitle>Crear Nuevo Producto</DialogTitle>
       </DialogHeader>

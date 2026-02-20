@@ -1,12 +1,12 @@
 "use client";
 
-import { useCreateProductContext } from "@/features/products/components";
-import { CreateProductFormContent } from "@/features/products/components/create-form/create-product-form-content";
-import type { CreateProductFormDialogProps } from "@/features/products/types";
 import {
   Dialog,
   DialogTrigger,
-} from "@/features/shadcn/components/ui/dialog";
+} from "@/features/global/components/dialog/dialog";
+import { useCreateProductContext } from "@/features/products/components";
+import { CreateProductFormContent } from "@/features/products/components/create-form/create-product-form-content";
+import type { CreateProductFormDialogProps } from "@/features/products/types";
 
 /**
  * CreateProductFormDialog - Dialog wrapper for the product creation form
@@ -21,7 +21,7 @@ export function CreateProductFormDialog({
   const { isOpen, openDialog, closeDialog } = useCreateProductContext();
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => (open ? openDialog() : closeDialog())}>
+    <Dialog open={isOpen} onOpenChange={(open) => (open ? openDialog() : closeDialog())} responsive="drawer-mobile">
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <CreateProductFormContent storeId={storeId} />
     </Dialog>

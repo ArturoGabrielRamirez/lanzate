@@ -2,16 +2,14 @@
 
 import { Children, useState, useCallback, Fragment } from "react";
 
+import { StepConnector } from "@/features/global/components/stepper/step-connector";
+import { StepContentWrapper } from "@/features/global/components/stepper/step-content-wrapper";
+import { StepIndicator } from "@/features/global/components/stepper/step-indicator";
+import { StepNavigation } from "@/features/global/components/stepper/step-navigation";
+import "@/features/global/components/stepper/stepper.css";
 import type { StepperProps, StepStatus } from "@/features/global/types";
 import { Separator } from "@/features/shadcn/components/ui/separator";
 import { cn } from "@/features/shadcn/utils/cn";
-
-import { StepConnector } from "./step-connector";
-import { StepContentWrapper } from "./step-content-wrapper";
-import { StepIndicator } from "./step-indicator";
-import { StepNavigation } from "./step-navigation";
-
-import "./stepper.css";
 
 /**
  * Stepper - main orchestrator component for multi-step forms
@@ -191,7 +189,7 @@ export function Stepper({
         className={classNames.content}
         disableAnimations={disableAnimations}
       >
-        <div className="w-full overflow-y-auto max-h-[calc(100dvh-15rem)] md:max-h-[400px]">
+        <div className="w-full overflow-y-auto max-h-[calc(100dvh-15rem)] md:max-h-100">
           {stepsArray[currentStep - 1]}
         </div>
       </StepContentWrapper>
