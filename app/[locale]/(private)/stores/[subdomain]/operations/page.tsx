@@ -1,8 +1,10 @@
-export default function OperationsPage() {
-  return (
-    <div className="py-8">
-      <h1 className="text-2xl font-bold">Operaciones</h1>
-      <p className="mt-2 text-muted-foreground">Próximamente</p>
-    </div>
-  )
+import { redirect } from 'next/navigation'
+
+interface OperationsPageProps {
+  params: Promise<{ subdomain: string; locale: string }>
+}
+
+export default async function OperationsPage({ params }: OperationsPageProps) {
+  const { subdomain, locale } = await params
+  redirect(`/${locale}/stores/${subdomain}/operations/branches`)
 }

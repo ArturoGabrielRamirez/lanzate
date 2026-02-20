@@ -23,7 +23,8 @@ import { useCreateProductContext } from '@/features/products/hooks'
 import { SidebarSection } from '@/features/stores/components/sidebar-section'
 import {
   getFixedNavButtons,
-  getShortcutButtons,
+  getQuickActionButtons,
+  getSubNavButtons,
 } from '@/features/stores/constants/store-admin-sidebar.constants'
 
 interface StoreAdminSidebarProps {
@@ -47,9 +48,12 @@ function StoreAdminSidebarContent({ subdomain }: StoreAdminSidebarProps) {
   const storeBase = pathname.split(`/stores/${subdomain}`)[0] + `/stores/${subdomain}`
   const storesListHref = pathname.split(`/stores/${subdomain}`)[0] + '/stores'
   const afterBase = pathname.split(`/stores/${subdomain}`)[1] ?? ''
-  const segment = afterBase.replace(/^\//, '').split('/')[0] ?? ''
+  const segments = afterBase.replace(/^\//, '').split('/')
+  const segment = segments[0] ?? ''
+  const subsegment = segments[1] ?? ''
 
-  const shortcuts = getShortcutButtons(storeBase, segment, { onCreateProduct: openDialog })
+  const subNav = getSubNavButtons(storeBase, segment, subsegment)
+  const quickActions = getQuickActionButtons(storeBase, segment, { onCreateProduct: openDialog })
 
   const navContent = (
     <div className="p-3 flex flex-col gap-4">
@@ -57,16 +61,29 @@ function StoreAdminSidebarContent({ subdomain }: StoreAdminSidebarProps) {
         title="Navegación"
         buttons={getFixedNavButtons(storesListHref, storeBase, segment)}
       />
-      <AnimatePresence mode='wait'>
-        {shortcuts.length > 0 && (
+      <AnimatePresence mode="wait">
+        {subNav.length > 0 && (
           <motion.div
-            key={`shortcuts-${segment}`}
+            key={`subnav-${segment}`}
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
           >
-            <SidebarSection title="Atajos" buttons={shortcuts} cols={2} />
+            <SidebarSection title="Sub-navegación" buttons={subNav} cols={4} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence mode="wait">
+        {quickActions.length > 0 && (
+          <motion.div
+            key={`actions-${segment}`}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut', delay: 0.05 }}
+          >
+            <SidebarSection title="Acciones" buttons={quickActions} variant="actions" />
           </motion.div>
         )}
       </AnimatePresence>

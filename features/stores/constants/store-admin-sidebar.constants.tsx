@@ -2,9 +2,8 @@ import {
   Archive,
   ArrowLeft,
   Boxes,
-  CheckCircle2,
   ClipboardList,
-  Clock,
+  Download,
   History,
   LayoutDashboard,
   LayoutList,
@@ -15,7 +14,10 @@ import {
   Tags,
   Truck,
   Users,
-  XCircle,
+  PackageSearch,
+  UserPlus,
+  Building2,
+  ShoppingBag,
 } from 'lucide-react'
 
 import type { NavBtn } from '@/features/stores/types/sidebar.types'
@@ -64,62 +66,31 @@ export function getFixedNavButtons(
   ]
 }
 
-export function getShortcutButtons(
+export function getSubNavButtons(
   storeBase: string,
   segment: string,
-  callbacks?: { onCreateProduct?: () => void },
+  subsegment: string,
 ): NavBtn[] {
-  const createProductBtn: NavBtn = {
-    icon: <PackagePlus className="size-4.5" />,
-    label: 'Crear Producto',
-    onClick: callbacks?.onCreateProduct,
-  }
-
   switch (segment) {
-    case '':
-      return [createProductBtn]
     case 'products':
       return [
-        createProductBtn,
         {
           icon: <LayoutList className="size-4.5" />,
-          label: 'Todos los productos',
+          label: 'Todos',
           href: `${storeBase}/products`,
-          active: true,
+          active: subsegment === '',
         },
         {
           icon: <Tags className="size-4.5" />,
           label: 'Categorías',
-          href: `${storeBase}/products`,
+          href: `${storeBase}/products/categories`,
+          active: subsegment === 'categories',
         },
         {
           icon: <Archive className="size-4.5" />,
           label: 'Inventario',
-          href: `${storeBase}/products`,
-        },
-      ]
-    case 'orders':
-      return [
-        {
-          icon: <ClipboardList className="size-4.5" />,
-          label: 'Todas las órdenes',
-          href: `${storeBase}/orders`,
-          active: true,
-        },
-        {
-          icon: <Clock className="size-4.5" />,
-          label: 'Pendientes',
-          href: `${storeBase}/orders`,
-        },
-        {
-          icon: <CheckCircle2 className="size-4.5" />,
-          label: 'Completadas',
-          href: `${storeBase}/orders`,
-        },
-        {
-          icon: <XCircle className="size-4.5" />,
-          label: 'Canceladas',
-          href: `${storeBase}/orders`,
+          href: `${storeBase}/products/inventory`,
+          active: subsegment === 'inventory',
         },
       ]
     case 'operations':
@@ -127,46 +98,100 @@ export function getShortcutButtons(
         {
           icon: <MapPin className="size-4.5" />,
           label: 'Sucursales',
-          href: `${storeBase}/operations`,
+          href: `${storeBase}/operations/branches`,
+          active: subsegment === 'branches',
         },
         {
           icon: <Users className="size-4.5" />,
           label: 'Empleados',
-          href: `${storeBase}/operations`,
+          href: `${storeBase}/operations/employees`,
+          active: subsegment === 'employees',
         },
         {
           icon: <Truck className="size-4.5" />,
           label: 'Proveedores',
-          href: `${storeBase}/operations`,
+          href: `${storeBase}/operations/suppliers`,
+          active: subsegment === 'suppliers',
         },
         {
           icon: <ClipboardList className="size-4.5" />,
-          label: 'Órdenes a proveedor',
-          href: `${storeBase}/operations`,
+          label: 'Órds. proveedor',
+          href: `${storeBase}/operations/purchase-orders`,
+          active: subsegment === 'purchase-orders',
+        },
+      ]
+    default:
+      return []
+  }
+}
+
+export function getQuickActionButtons(
+  storeBase: string,
+  segment: string,
+  callbacks?: {
+    onCreateProduct?: () => void
+  },
+): NavBtn[] {
+  const createProductBtn: NavBtn = {
+    icon: <PackagePlus className="size-4.5" />,
+    label: 'Crear Producto',
+    onClick: callbacks?.onCreateProduct,
+  }
+
+  const newSaleBtn: NavBtn = {
+    icon: <ShoppingCart className="size-4.5" />,
+    label: 'Nueva Venta',
+    href: `${storeBase}/orders/new`,
+  }
+
+  switch (segment) {
+    case '':
+      return [createProductBtn, newSaleBtn]
+    case 'products':
+      return [
+        createProductBtn,
+        {
+          icon: <Tags className="size-4.5" />,
+          label: 'Crear Categoría',
+          href: `${storeBase}/products/categories/new`,
+        },
+        {
+          icon: <PackageSearch className="size-4.5" />,
+          label: 'Actualizar Stock',
+          href: `${storeBase}/products/inventory`,
+        },
+      ]
+    case 'orders':
+      return [newSaleBtn]
+    case 'operations':
+      return [
+        {
+          icon: <Building2 className="size-4.5" />,
+          label: 'Agregar Sucursal',
+          href: `${storeBase}/operations/branches/new`,
+        },
+        {
+          icon: <UserPlus className="size-4.5" />,
+          label: 'Agregar Empleado',
+          href: `${storeBase}/operations/employees/new`,
+        },
+        {
+          icon: <Truck className="size-4.5" />,
+          label: 'Agregar Proveedor',
+          href: `${storeBase}/operations/suppliers/new`,
+        },
+        {
+          icon: <ShoppingBag className="size-4.5" />,
+          label: 'Nueva orden proveedor',
+          href: `${storeBase}/operations/purchase-orders/new`,
         },
       ]
     case 'history':
       return [
         {
-          icon: <History className="size-4.5" />,
-          label: 'Todo el historial',
-          href: `${storeBase}/history`,
-          active: true,
-        },
-        {
-          icon: <Package className="size-4.5" />,
-          label: 'Historial productos',
-          href: `${storeBase}/history`,
-        },
-        {
-          icon: <ShoppingCart className="size-4.5" />,
-          label: 'Historial ventas',
-          href: `${storeBase}/history`,
-        },
-        {
-          icon: <Users className="size-4.5" />,
-          label: 'Historial personal',
-          href: `${storeBase}/history`,
+          icon: <Download className="size-4.5" />,
+          label: 'Exportar Historial',
+          href: `${storeBase}/history/export`,
         },
       ]
     default:
