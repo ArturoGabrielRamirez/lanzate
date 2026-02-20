@@ -1,8 +1,7 @@
 'use client';
 
 import { Copy, Edit, MoreHorizontal, Package } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+/* import Link from 'next/link'; */
 
 import { Badge } from '@/features/global/components/badge/badge';
 import {
@@ -13,17 +12,18 @@ import {
 } from '@/features/global/components/base-card';
 import { Button } from '@/features/global/components/button/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/features/shadcn/components/ui/dropdown-menu';
-import {
   INVENTORY_STATUS_MESSAGES,
   PRODUCT_STATUS_MESSAGES,
 } from '@/features/products/constants';
 import type { ProductCardRowProps } from '@/features/products/types';
+import {
+  DropDrawer,
+  DropDrawerContent,
+  DropDrawerGroup,
+  DropDrawerItem,
+  DropDrawerSeparator,
+  DropDrawerTrigger,
+} from '@/features/shadcn/components/ui/dropdrawer';
 
 /**
  * ProductCardRow Component
@@ -44,12 +44,12 @@ export function ProductCardRow({
   product,
   isSelected,
   onToggleSelect,
-  subdomain,
+  /* subdomain, */
 }: ProductCardRowProps) {
   // Status badge variant mapping
   const statusVariants = {
     ACTIVE: 'default',
-    DRAFT: 'secondary',
+    DRAFT: 'outline',
     ARCHIVED: 'outline',
   } as const;
 
@@ -105,7 +105,7 @@ export function ProductCardRow({
       divided
       size="sm"
       variant="default"
-      hover="default"
+      hover="primary"
       columnGap="none"
     >
       {/* Column 1: Product info with checkbox, image, name, brand */}
@@ -151,7 +151,7 @@ export function ProductCardRow({
       </BaseCardContent>
 
       {/* Column 3: Status badge */}
-      <BaseCardContent className="flex items-center">
+      <BaseCardContent className="flex items-center justify-center">
         <Badge variant={statusVariants[product.status]} size="sm">
           {PRODUCT_STATUS_MESSAGES[product.status].es}
         </Badge>
@@ -159,67 +159,63 @@ export function ProductCardRow({
 
       {/* Column 4: Price display */}
       <BaseCardContent className="flex flex-col">
-        {/* TODO: Add promotional price display when available */}
-        <span className="text-sm font-semibold">
-          ${startingPrice.toFixed(2)}
-        </span>
-        {/* Example of promotional price display (when available):
-        {product.promotionalPrice && (
-          <span className="text-xs text-muted-foreground line-through">
-            ${product.price.toFixed(2)}
+        {startingPrice > 0 ? (
+          <span className="text-sm font-semibold">
+            ${startingPrice.toFixed(2)}
           </span>
+        ) : (
+          <span className="text-sm text-muted-foreground">—</span>
         )}
-        */}
       </BaseCardContent>
 
       {/* Column 5: Stock quantity and status */}
-      <BaseCardContent className="flex flex-col gap-1">
-        <span className="text-sm text-foreground">{totalStock} unidades</span>
-        <Badge variant={inventoryBadgeVariants[inventoryStatus]} size="sm">
-          {INVENTORY_STATUS_MESSAGES[inventoryStatus].es}
-        </Badge>
+      <BaseCardContent className="flex items-center justify-center">
+        {inventoryStatus === 'OUT_OF_STOCK' ? (
+          <Badge variant="destructive" size="sm">
+            {INVENTORY_STATUS_MESSAGES.OUT_OF_STOCK.es}
+          </Badge>
+        ) : (
+          <>
+            <span className="text-sm text-foreground">{totalStock} uds.</span>
+            {inventoryStatus === 'LOW_STOCK' && (
+              <Badge variant={inventoryBadgeVariants.LOW_STOCK} size="sm">
+                {INVENTORY_STATUS_MESSAGES.LOW_STOCK.es}
+              </Badge>
+            )}
+          </>
+        )}
       </BaseCardContent>
 
       {/* Column 6 (Footer): Actions */}
       <BaseCardFooter align="end" className="w-auto flex-none gap-2">
         {/* Edit button */}
         <Button
-          size="sm"
+          size="icon"
           variant="outline"
           asChild
         >
-          <Link href={`/app/es/stores/${subdomain}/products/${product.id}/edit`}>
-            <Edit className="mr-1.5 h-3.5 w-3.5" />
-            Editar
-          </Link>
+          <Edit />
         </Button>
 
-        {/* More actions dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon-sm" variant="ghost" aria-label="Más acciones">
+        {/* More actions dropdrawer */}
+        <DropDrawer>
+          <DropDrawerTrigger asChild>
+            <Button size="icon" variant="outline" aria-label="Más acciones">
               <MoreHorizontal className="h-3.5 w-3.5" />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={handleView}>
-              Ver detalles
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDuplicate}>
-              Duplicar
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleArchive}>
-              Archivar
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={handleDelete}
-              className="text-destructive focus:text-destructive"
-            >
-              Eliminar
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </DropDrawerTrigger>
+          <DropDrawerContent>
+            <DropDrawerGroup>
+              <DropDrawerItem onClick={handleView}>Ver detalles</DropDrawerItem>
+              <DropDrawerItem onClick={handleDuplicate}>Duplicar</DropDrawerItem>
+            </DropDrawerGroup>
+            <DropDrawerSeparator />
+            <DropDrawerGroup>
+              <DropDrawerItem onClick={handleArchive}>Archivar</DropDrawerItem>
+              <DropDrawerItem variant="destructive" onClick={handleDelete}>Eliminar</DropDrawerItem>
+            </DropDrawerGroup>
+          </DropDrawerContent>
+        </DropDrawer>
       </BaseCardFooter>
     </BaseCard>
   );
