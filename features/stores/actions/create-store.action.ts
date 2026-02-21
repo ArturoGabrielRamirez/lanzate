@@ -5,6 +5,8 @@ import { getLocale } from 'next-intl/server';
 
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
+import { formatSuccess } from '@/features/global/utils/format-response';
+import { STORE_ERROR_MESSAGES, STORE_SUCCESS_MESSAGES } from '@/features/stores/constants';
 import { createStoreSchema } from '@/features/stores/schemas/schemaFactory';
 import { createStoreService } from '@/features/stores/services';
 import { redirect } from '@/i18n/navigation';
@@ -19,19 +21,18 @@ import type { Store } from '@prisma/client';
  * Creates a store for the authenticated user, enforcing limits based on their subscription.
  *
  * Flow:
- * 1. Get current authenticated user
- * 2. Extract and validate form data with createStoreSchema
- * 3. Call createStoreService (enforces account limits: FREE=2, PRO=5, ENTERPRISE=unlimited)
- * 4. Revalidate dashboard and stores paths
- * 5. Return success response
+ * 1. Get current authenticated user from Supabase
+ * 2. Fetch database user record by Supabase ID
+ * 3. Extract and validate form data with createStoreSchema
+ * 4. Call createStoreService (enforces account limits: FREE=2, PRO=5, ENTERPRISE=unlimited)
+ * 5. Revalidate dashboard and stores paths
+ * 6. Redirect to the new store page
  *
  * @param formData - Form data containing store creation fields (name, description, subdomain)
  * @returns ServerResponse with created store or error
  *
  * @example
  * ```tsx
- * import { createStoreAction } from '@/features/stores/actions/createStore.action';
- *
  * const formData = new FormData();
  * formData.append('name', 'My Store');
  * formData.append('subdomain', 'my-store');
@@ -40,19 +41,19 @@ import type { Store } from '@prisma/client';
  * const result = await createStoreAction(formData);
  *
  * if (!result.hasError) {
- *   // Store created successfully
- *   redirect(`/store/${result.payload.subdomain}`);
+ *   // Store created successfully — redirect is handled by the action
  * }
  * ```
  */
 export async function createStoreAction(formData: FormData) {
-  return actionWrapper<Store>(async () => {
+  let storeSubdomain: string | undefined;
+  let locale: string | undefined;
 
-    const locale = await getLocale()
-    // Create Supabase client
+  const result = await actionWrapper<Store>(async () => {
+    locale = await getLocale();
+
     const supabase = await createClient();
 
-    // Get current authenticated user
     const {
       data: { user: authUser },
       error: authError,
@@ -63,77 +64,41 @@ export async function createStoreAction(formData: FormData) {
     }
 
     if (!authUser) {
-      throw new Error('User not authenticated');
+      throw new Error(STORE_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Fetch database user to get user ID
     const dbUser = await getUserBySupabaseId(authUser.id);
 
-    // Extract data from FormData
     const name = formData.get('name') as string;
     const subdomain = formData.get('subdomain') as string;
     const description = formData.get('description') as string | undefined;
 
-    // Create translation function that returns English messages
-    // Validation errors will be caught by actionWrapper and formatted
-    const t = (key: string) => {
-      // Return English messages for server-side validation
-      // Client-side forms will use proper i18n
-      const messages: Record<string, string> = {
-        'validation.store.name.required': 'Store name is required',
-        'validation.store.name.min': 'Store name must be at least 1 character',
-        'validation.store.name.max': 'Store name must not exceed 100 characters',
-        'validation.store.subdomain.required': 'Subdomain is required',
-        'validation.store.subdomain.format':
-          'Subdomain must contain only lowercase letters, numbers, and hyphens',
-        'validation.store.subdomain.min': 'Subdomain must be at least 3 characters',
-        'validation.store.subdomain.max': 'Subdomain must not exceed 63 characters',
-        'validation.store.description.max': 'Description must not exceed 500 characters',
-      };
-      return messages[key] || key;
-    };
+    // Validation messages for createStoreSchema — the schema requires a t() function
+    // to build messages. We pass i18n keys directly since validation errors propagate
+    // through actionWrapper.
+    const t = (key: string) => key;
 
-    // Validate input with schema
     const validatedData = await createStoreSchema(t).validate({
       name,
       subdomain,
       description: description || undefined,
     });
 
-    // Create store via service layer (enforces account limits)
-    // Service may throw errors for limit violations
-    let store;
-    try {
-      store = await createStoreService(validatedData, dbUser.id);
-    } catch (error) {
-      // Handle service layer errors (limit violations)
-      if (error instanceof Error) {
-        // Translate error keys to user-friendly messages
-        const errorMessages: Record<string, string> = {
-          'errors.store.limitReached.free':
-            'You have reached the maximum of 2 stores for your FREE account. Upgrade to PRO for up to 5 stores.',
-          'errors.store.limitReached.pro':
-            'You have reached the maximum of 5 stores for your PRO account. Upgrade to ENTERPRISE for unlimited stores.',
-        };
+    const store = await createStoreService(validatedData, dbUser.id);
 
-        const translatedMessage = errorMessages[error.message] || error.message;
-        throw new Error(translatedMessage);
-      }
-      throw error;
-    }
-
-    // Revalidate paths to ensure fresh data
     revalidatePath('/[locale]/dashboard');
     revalidatePath('/[locale]/stores');
 
-    // Redirect to the new store page
-    // Note: redirect() throws a special error, so this must be outside try-catch
-    redirect({ href: `/stores/${store.subdomain}`, locale: locale });
+    storeSubdomain = store.subdomain;
 
-    return {
-      hasError: false,
-      message: 'Store created successfully',
-      payload: store,
-    };
+    return formatSuccess(STORE_SUCCESS_MESSAGES.CREATED, store);
   });
+
+  // redirect() throws a special Next.js error and must be called OUTSIDE of
+  // actionWrapper so it is not caught and swallowed by the wrapper's try/catch.
+  if (!result.hasError && storeSubdomain && locale) {
+    redirect({ href: `/stores/${storeSubdomain}`, locale });
+  }
+
+  return result;
 }

@@ -1,5 +1,13 @@
 'use server';
 
+import { BILLING_ERROR_MESSAGES, BILLING_SUCCESS_MESSAGES } from '@/features/billing/constants';
+import { createSubscriptionCheckout } from '@/features/billing/services/createSubscriptionCheckout.service';
+import type { ServerResponse } from '@/features/global/types';
+import { actionWrapper } from '@/features/global/utils/action-wrapper';
+import { formatSuccess } from '@/features/global/utils/format-response';
+import { isPaidPlan, type PaidPlan } from '@/features/subscriptions/config';
+import { createClient } from '@/lib/supabase/server';
+
 /**
  * Create Subscription Checkout Server Action
  *
@@ -8,7 +16,7 @@
  *
  * Flow:
  * 1. Validate target plan is valid (PRO or ENTERPRISE)
- * 2. Get current authenticated user
+ * 2. Get current authenticated user from Supabase
  * 3. Call service to create MercadoPago PreApproval
  * 4. Return checkout URL
  *
@@ -23,34 +31,23 @@
  * }
  * ```
  */
-
-import { createSubscriptionCheckout } from '@/features/billing/services/createSubscriptionCheckout.service';
-import type { ServerResponse } from '@/features/global/types';
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatSuccess, formatError } from '@/features/global/utils/format-response';
-import { isPaidPlan, type PaidPlan } from '@/features/subscriptions/config';
-import { createClient } from '@/lib/supabase/server';
-
 export async function createSubscriptionCheckoutAction(
   targetPlan: PaidPlan
 ): Promise<ServerResponse<string>> {
   return actionWrapper(async () => {
-    // Validate target plan is a paid plan
     if (!isPaidPlan(targetPlan)) {
-      return formatError('Plan inválido. Debe ser PRO o ENTERPRISE.');
+      throw new Error(BILLING_ERROR_MESSAGES.PLAN_INVALID);
     }
 
-    // Get current authenticated user
     const supabase = await createClient();
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (error || !user || !user.email) {
-      return formatError('Usuario no autenticado');
+      throw new Error(BILLING_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Create MercadoPago checkout
     const checkoutUrl = await createSubscriptionCheckout(targetPlan, user.email);
 
-    return formatSuccess('Checkout creado exitosamente', checkoutUrl);
+    return formatSuccess(BILLING_SUCCESS_MESSAGES.CHECKOUT_CREATED, checkoutUrl);
   });
 }

@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
+import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
 import {
   productBasicInfoSchema,
   productMediaSchema,
@@ -23,21 +24,31 @@ import { createClient } from '@/lib/supabase/server';
  * Creates a new product with all related data (variants, images, attributes, etc.)
  *
  * Flow:
- * 1. Authenticate user
- * 2. Validate input data with Yup schemas
- * 3. Call createProductService (enforces attribute limits per subscription tier)
- * 4. Revalidate paths
- * 5. Return created product
+ * 1. Authenticate user via Supabase
+ * 2. Fetch database user record by Supabase ID
+ * 3. Validate input data with Yup schemas (basicInfo, media, variants)
+ * 4. Call createProductService (enforces attribute limits per subscription tier)
+ * 5. Revalidate product list path
+ * 6. Return created product
  *
  * @param input - Full product creation input
  * @returns ServerResponse with created product or error
+ *
+ * @example
+ * ```tsx
+ * const result = await createProductAction({
+ *   basicInfo: { name: 'My Product', slug: 'my-product', price: 9.99 },
+ *   storeId: 'store-id'
+ * });
+ * if (!result.hasError) {
+ *   console.log('Created:', result.payload.id);
+ * }
+ * ```
  */
 export async function createProductAction(input: CreateFullProductInput) {
   return actionWrapper<ProductWithAllRelations>(async () => {
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Get current authenticated user
     const {
       data: { user: authUser },
       error: authError,
@@ -48,33 +59,27 @@ export async function createProductAction(input: CreateFullProductInput) {
     }
 
     if (!authUser) {
-      throw new Error('Usuario no autenticado');
+      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Fetch database user to get user ID
     const dbUser = await getUserBySupabaseId(authUser.id);
 
-    // Validate basic info
     await productBasicInfoSchema.validate(input.basicInfo, { abortEarly: false });
 
-    // Validate media if provided
     if (input.images && input.images.length > 0) {
       await productMediaSchema.validate({ images: input.images }, { abortEarly: false });
     }
 
-    // Validate variants if provided
     if (input.variants && input.variants.length > 0) {
       for (const variant of input.variants) {
         await productVariantSchema.validate(variant, { abortEarly: false });
       }
     }
 
-    // Create product via service layer
     const product = await createProductService(input, dbUser.id);
 
-    // Revalidate paths
     revalidatePath('/[locale]/dashboard/[storeSlug]/products');
 
-    return formatSuccess('Producto creado exitosamente', product);
+    return formatSuccess(PRODUCT_SUCCESS_MESSAGES.CREATE, product);
   });
 }

@@ -1,5 +1,13 @@
 'use server';
 
+import { BILLING_SUCCESS_MESSAGES } from '@/features/billing/constants';
+import { createPlanChangeLogData } from '@/features/billing/data';
+import { planChangeInputSchema } from '@/features/billing/schemas/billing.schema';
+import type { AccountType, InitiatorType, PlanChangeLog } from '@/features/billing/types/billing';
+import type { ServerResponse } from '@/features/global/types';
+import { actionWrapper } from '@/features/global/utils/action-wrapper';
+import { formatSuccess } from '@/features/global/utils/format-response';
+
 /**
  * Log Plan Change Server Action
  *
@@ -8,7 +16,7 @@
  * actions to maintain a history of all plan changes.
  *
  * Flow:
- * 1. Validate input parameters with Yup schema
+ * 1. Validate all input parameters with Yup schema
  * 2. Call data layer to create plan change log
  * 3. Return ServerResponse with created log
  *
@@ -21,8 +29,6 @@
  *
  * @example
  * ```tsx
- * import { logPlanChangeAction } from '@/features/billing/actions/log-plan-change.action';
- *
  * // Log a plan upgrade initiated by account owner
  * const result = await logPlanChangeAction(
  *   subscriptionId,
@@ -45,14 +51,6 @@
  * }
  * ```
  */
-
-import { createPlanChangeLogData } from '@/features/billing/data';
-import { planChangeInputSchema } from '@/features/billing/schemas/billing.schema';
-import type { AccountType, InitiatorType, PlanChangeLog } from '@/features/billing/types/billing';
-import type { ServerResponse } from '@/features/global/types';
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatSuccess } from '@/features/global/utils/format-response';
-
 export async function logPlanChangeAction(
   subscriptionId: string,
   previousPlan: AccountType,
@@ -61,7 +59,6 @@ export async function logPlanChangeAction(
   initiatorId?: string | null
 ): Promise<ServerResponse<PlanChangeLog>> {
   return actionWrapper(async () => {
-    // Validate all input parameters
     const validatedInput = await planChangeInputSchema.validate({
       subscriptionId,
       previousPlan,
@@ -70,7 +67,6 @@ export async function logPlanChangeAction(
       initiatorId: initiatorId ?? null,
     });
 
-    // Call data layer to create the plan change log
     const planChangeLog = await createPlanChangeLogData({
       subscriptionId: validatedInput.subscriptionId,
       previousPlan: validatedInput.previousPlan,
@@ -79,6 +75,6 @@ export async function logPlanChangeAction(
       initiatorId: validatedInput.initiatorId,
     });
 
-    return formatSuccess('Cambio de plan registrado exitosamente', planChangeLog);
+    return formatSuccess(BILLING_SUCCESS_MESSAGES.PLAN_CHANGE_LOGGED, planChangeLog);
   });
 }

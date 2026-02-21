@@ -4,20 +4,12 @@ import { revalidatePath } from 'next/cache';
 
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
+import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
 import {
   bulkDeleteProductsService,
   bulkUpdateProductStatusService,
 } from '@/features/products/services';
-
-/**
- * Bulk operation types for products
- */
-export type BulkProductOperation =
-  | { type: 'delete' }
-  | { type: 'archive' }
-  | { type: 'activate' }
-  | { type: 'draft' }
-  | { type: 'status'; status: 'ACTIVE' | 'DRAFT' | 'ARCHIVED' };
+import type { BulkProductOperation } from '@/features/products/types/product.types';
 
 /**
  * Bulk Update Products Server Action
@@ -29,10 +21,28 @@ export type BulkProductOperation =
  * - Bulk draft: Sets status to DRAFT
  * - Bulk status: Sets custom status
  *
+ * Flow:
+ * 1. Validate at least one product ID is provided
+ * 2. Execute the requested bulk operation via the appropriate service
+ * 3. Revalidate product list path
+ * 4. Return success response with affected product count
+ *
  * @param productIds - Array of product IDs to operate on
  * @param storeId - The store ID (for ownership validation)
  * @param operation - The bulk operation to perform
  * @returns ServerResponse with count of affected products
+ *
+ * @example
+ * ```tsx
+ * const result = await bulkUpdateProductsAction(
+ *   ['id1', 'id2'],
+ *   'store-id',
+ *   { type: 'archive' }
+ * );
+ * if (!result.hasError) {
+ *   console.log(`${result.payload.count} products archived`);
+ * }
+ * ```
  */
 export async function bulkUpdateProductsAction(
   productIds: string[],
@@ -41,7 +51,7 @@ export async function bulkUpdateProductsAction(
 ) {
   return actionWrapper<{ count: number }>(async () => {
     if (productIds.length === 0) {
-      throw new Error('Debes seleccionar al menos un producto');
+      throw new Error(PRODUCT_ERROR_MESSAGES.BULK_NO_SELECTION);
     }
 
     let count: number;
@@ -50,34 +60,33 @@ export async function bulkUpdateProductsAction(
     switch (operation.type) {
       case 'delete':
         count = await bulkDeleteProductsService(productIds, storeId);
-        message = `${count} producto(s) eliminado(s) exitosamente`;
+        message = PRODUCT_SUCCESS_MESSAGES.BULK_DELETE;
         break;
 
       case 'archive':
         count = await bulkUpdateProductStatusService(productIds, storeId, 'ARCHIVED');
-        message = `${count} producto(s) archivado(s) exitosamente`;
+        message = PRODUCT_SUCCESS_MESSAGES.BULK_ARCHIVE;
         break;
 
       case 'activate':
         count = await bulkUpdateProductStatusService(productIds, storeId, 'ACTIVE');
-        message = `${count} producto(s) activado(s) exitosamente`;
+        message = PRODUCT_SUCCESS_MESSAGES.BULK_ACTIVATE;
         break;
 
       case 'draft':
         count = await bulkUpdateProductStatusService(productIds, storeId, 'DRAFT');
-        message = `${count} producto(s) marcado(s) como borrador`;
+        message = PRODUCT_SUCCESS_MESSAGES.BULK_DRAFT;
         break;
 
       case 'status':
         count = await bulkUpdateProductStatusService(productIds, storeId, operation.status);
-        message = `${count} producto(s) actualizado(s) exitosamente`;
+        message = PRODUCT_SUCCESS_MESSAGES.BULK_STATUS_UPDATE;
         break;
 
       default:
-        throw new Error('Operación no válida');
+        throw new Error(PRODUCT_ERROR_MESSAGES.BULK_OPERATION_INVALID);
     }
 
-    // Revalidate product list
     revalidatePath('/[locale]/dashboard/[storeSlug]/products');
 
     return formatSuccess(message, { count });

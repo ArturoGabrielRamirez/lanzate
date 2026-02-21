@@ -1,6 +1,6 @@
 'use server';
 
-import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
+import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
 import {
   resetPasswordSchema,
   type ResetPasswordInput,
@@ -17,8 +17,9 @@ import { createClient } from '@/lib/supabase/server';
  *
  * Flow:
  * 1. Validate new password with resetPasswordSchema (password + confirmPassword)
- * 2. Update password via Supabase Auth updateUser method
- * 3. Return success response
+ * 2. Create Supabase client
+ * 3. Update password via Supabase Auth updateUser method
+ * 4. Return success response
  *
  * Security Note:
  * - User must have a valid reset token in their session from the email link
@@ -29,8 +30,6 @@ import { createClient } from '@/lib/supabase/server';
  *
  * @example
  * ```tsx
- * import { handleResetPasswordAction } from '@/features/auth/actions/handleResetPassword.action';
- *
  * const result = await handleResetPasswordAction({
  *   password: 'NewPassword123',
  *   confirmPassword: 'NewPassword123'
@@ -44,18 +43,12 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function handleResetPasswordAction(input: ResetPasswordInput) {
   return actionWrapper(async () => {
-    // Validate input with Yup schema
-    // This will throw ValidationError if invalid, caught by actionWrapper
     const validatedData = await resetPasswordSchema.validate(input);
 
     const { password } = validatedData;
 
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Update user's password
-    // The user must have a valid reset token in their session
-    // from clicking the link in their email
     const { error } = await supabase.auth.updateUser({
       password,
     });
@@ -64,7 +57,6 @@ export async function handleResetPasswordAction(input: ResetPasswordInput) {
       throw new Error(error.message);
     }
 
-    // Return success response
-    return formatSuccess(AUTH_SUCCESS_MESSAGES.PASSWORD_RESET.en, null);
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.PASSWORD_RESET, null);
   });
 }

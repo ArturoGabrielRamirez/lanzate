@@ -2,9 +2,10 @@
 
 import { AccountType } from '@prisma/client';
 
+import { DASHBOARD_ERROR_MESSAGES, DASHBOARD_SUCCESS_MESSAGES } from '@/features/dashboard/constants';
 import { getUserDashboardData } from '@/features/dashboard/data/get-user-dashboard-data.data';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatError, formatSuccess } from '@/features/global/utils/format-response';
+import { formatSuccess } from '@/features/global/utils/format-response';
 import { getUserSubscriptionData } from '@/features/subscriptions/data';
 import { createClient } from '@/lib/supabase/server';
 
@@ -14,12 +15,14 @@ import { createClient } from '@/lib/supabase/server';
  * Fetches the current authenticated user's dashboard data including:
  * - User information from Supabase
  * - User database record
- * - User's stores
+ * - User's stores count
+ * - User's account type from their subscription
  *
- * This action:
- * - Checks authentication via Supabase
- * - Returns user metadata and database information
- * - Handles cases where user doesn't exist in database
+ * Flow:
+ * 1. Check authentication via Supabase
+ * 2. Fetch user database record via getUserDashboardData
+ * 3. Fetch subscription to determine account type
+ * 4. Return combined user metadata and stores count
  *
  * @returns ServerResponse with user data and stores count
  *
@@ -34,29 +37,25 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function getDashboardDataAction() {
   return actionWrapper(async () => {
-    // Check authentication
     const supabase = await createClient();
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return formatError('User not authenticated');
+      throw new Error(DASHBOARD_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Fetch user data from database
     const userData = await getUserDashboardData(user.id);
 
-    // Fetch user subscription to get account type
     const subscription = await getUserSubscriptionData(user.id);
     const accountType = subscription?.accountType ?? AccountType.FREE;
 
-    // Prepare response data
     const userName = user.user_metadata?.name || user.user_metadata?.full_name || null;
     const userEmail = user.email || 'User';
     const storesCount = userData?.stores?.length || 0;
 
-    return formatSuccess('Dashboard data fetched successfully', {
+    return formatSuccess(DASHBOARD_SUCCESS_MESSAGES.DATA_FETCHED, {
       userName,
       userEmail,
       storesCount,

@@ -12,8 +12,6 @@ export {
   INVENTORY_STATUS_MESSAGES,
   PRODUCT_STATUS_MESSAGES,
   PRODUCT_UI_MESSAGES,
-  getProductMessage,
-  formatBulkMessage,
 } from '@/features/products/constants/messages';
 
 export {

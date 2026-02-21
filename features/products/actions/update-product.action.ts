@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
+import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
 import {
   productBasicInfoSchema,
   productMediaSchema,
@@ -23,25 +24,34 @@ import { createClient } from '@/lib/supabase/server';
  * Updates an existing product with all related data.
  *
  * Flow:
- * 1. Authenticate user
- * 2. Validate input data with Yup schemas
- * 3. Call updateProductService
- * 4. Revalidate paths
- * 5. Return updated product
+ * 1. Authenticate user via Supabase
+ * 2. Fetch database user record by Supabase ID
+ * 3. Validate input data with Yup schemas (basicInfo, media, variants)
+ * 4. Call updateProductService to persist changes
+ * 5. Revalidate product list and detail paths
+ * 6. Return updated product
  *
  * @param productId - The product ID to update
- * @param input - Product update input
+ * @param input - Product update input (basicInfo?, attributes?, variants?, images?, etc.)
  * @returns ServerResponse with updated product or error
+ *
+ * @example
+ * ```tsx
+ * const result = await updateProductAction('prod-id', {
+ *   basicInfo: { name: 'Updated Name', price: 19.99 }
+ * });
+ * if (!result.hasError) {
+ *   console.log('Updated:', result.payload.name);
+ * }
+ * ```
  */
 export async function updateProductAction(
   productId: string,
   input: UpdateFullProductInput
 ) {
   return actionWrapper<ProductWithAllRelations>(async () => {
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Get current authenticated user
     const {
       data: { user: authUser },
       error: authError,
@@ -52,38 +62,31 @@ export async function updateProductAction(
     }
 
     if (!authUser) {
-      throw new Error('Usuario no autenticado');
+      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Fetch database user to get user ID
     const dbUser = await getUserBySupabaseId(authUser.id);
 
-    // Validate basic info if provided
     if (input.basicInfo) {
-      // Use partial validation for updates
       const partialSchema = productBasicInfoSchema.partial();
       await partialSchema.validate(input.basicInfo, { abortEarly: false });
     }
 
-    // Validate media if provided
     if (input.images && input.images.length > 0) {
       await productMediaSchema.validate({ images: input.images }, { abortEarly: false });
     }
 
-    // Validate variants if provided
     if (input.variants && input.variants.length > 0) {
       for (const variant of input.variants) {
         await productVariantSchema.validate(variant, { abortEarly: false });
       }
     }
 
-    // Update product via service layer
     const product = await updateProductService(productId, input, dbUser.id);
 
-    // Revalidate paths
     revalidatePath('/[locale]/dashboard/[storeSlug]/products');
     revalidatePath(`/[locale]/dashboard/[storeSlug]/products/${productId}`);
 
-    return formatSuccess('Producto actualizado exitosamente', product);
+    return formatSuccess(PRODUCT_SUCCESS_MESSAGES.UPDATE, product);
   });
 }

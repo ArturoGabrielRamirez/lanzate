@@ -1,5 +1,14 @@
 'use server';
 
+import { BILLING_ERROR_MESSAGES, BILLING_SUCCESS_MESSAGES } from '@/features/billing/constants';
+import { getPaymentWithInvoiceData } from '@/features/billing/data/getPaymentWithInvoice.data';
+import { paymentIdSchema } from '@/features/billing/schemas/billing.schema';
+import { generateInvoicePdf } from '@/features/billing/services/generateInvoicePdf.service';
+import { InvoicePdfResult } from '@/features/billing/types/billing';
+import type { ServerResponse } from '@/features/global/types';
+import { actionWrapper } from '@/features/global/utils/action-wrapper';
+import { formatSuccess } from '@/features/global/utils/format-response';
+
 /**
  * Download Invoice Server Action
  *
@@ -19,8 +28,6 @@
  *
  * @example
  * ```tsx
- * import { downloadInvoiceAction } from '@/features/billing/actions/download-invoice.action';
- *
  * const result = await downloadInvoiceAction(paymentId);
  *
  * if (!result.hasError && result.payload) {
@@ -29,40 +36,24 @@
  * }
  * ```
  */
-
-import { getPaymentWithInvoiceData } from '@/features/billing/data/getPaymentWithInvoice.data';
-import { paymentIdSchema } from '@/features/billing/schemas/billing.schema';
-import {
-  generateInvoicePdf,
-} from '@/features/billing/services/generateInvoicePdf.service';
-import { InvoicePdfResult } from '@/features/billing/types/billing';
-import type { ServerResponse } from '@/features/global/types';
-import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatSuccess, formatError } from '@/features/global/utils/format-response';
-
 export async function downloadInvoiceAction(
   paymentId: string
 ): Promise<ServerResponse<InvoicePdfResult>> {
   return actionWrapper(async () => {
-    // Validate payment ID
     const validatedPaymentId = await paymentIdSchema.validate(paymentId);
 
-    // Fetch payment with invoice from data layer
     const payment = await getPaymentWithInvoiceData(validatedPaymentId);
 
-    // Validate payment exists
     if (!payment) {
-      return formatError('Pago no encontrado');
+      throw new Error(BILLING_ERROR_MESSAGES.PAYMENT_NOT_FOUND);
     }
 
-    // Validate payment has an associated invoice
     if (!payment.invoice) {
-      return formatError('Este pago no tiene una factura asociada');
+      throw new Error(BILLING_ERROR_MESSAGES.INVOICE_NOT_FOUND);
     }
 
-    // Generate PDF using service layer
     const pdfResult = await generateInvoicePdf(payment.invoice, payment);
 
-    return formatSuccess('Factura generada exitosamente', pdfResult);
+    return formatSuccess(BILLING_SUCCESS_MESSAGES.INVOICE_GENERATED, pdfResult);
   });
 }

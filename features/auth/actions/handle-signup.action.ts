@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
+import { AUTH_ERROR_MESSAGES, AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
 import { signupSchema, type SignupInput } from '@/features/auth/schemas/auth.schema';
 import { createUserService } from '@/features/auth/services';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
@@ -27,8 +27,6 @@ import { createClient } from '@/lib/supabase/server';
  *
  * @example
  * ```tsx
- * import { handleSignupAction } from '@/features/auth/actions/handleSignup.action';
- *
  * const result = await handleSignupAction({
  *   email: 'user@example.com',
  *   password: 'Password123',
@@ -43,16 +41,12 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function handleSignupAction(input: SignupInput) {
   return actionWrapper(async () => {
-    // Validate input with Yup schema
-    // This will throw ValidationError if invalid, caught by actionWrapper
     const validatedData = await signupSchema.validate(input);
 
     const { email, password } = validatedData;
 
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Create Supabase auth user
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
@@ -63,21 +57,17 @@ export async function handleSignupAction(input: SignupInput) {
     }
 
     if (!authData.user) {
-      throw new Error('No user returned from Supabase signup');
+      throw new Error(AUTH_ERROR_MESSAGES.GENERIC_ERROR);
     }
 
-    // Create database user record via service layer
-    // Service layer auto-generates username from email
     const dbUser = await createUserService({
       email,
       supabaseId: authData.user.id,
     });
 
-    // Revalidate dashboard path to ensure fresh data
     revalidatePath('/dashboard');
 
-    // Return success response
-    return formatSuccess(AUTH_SUCCESS_MESSAGES.SIGNUP.en, {
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.SIGNUP, {
       user: dbUser,
       authUser: authData.user,
     });

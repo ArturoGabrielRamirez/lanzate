@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
+import { AUTH_ERROR_MESSAGES, AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
 import { loginSchema, type LoginInput } from '@/features/auth/schemas/auth.schema';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
@@ -25,8 +25,6 @@ import { createClient } from '@/lib/supabase/server';
  *
  * @example
  * ```tsx
- * import { handleLoginAction } from '@/features/auth/actions/handleLogin.action';
- *
  * const result = await handleLoginAction({
  *   email: 'user@example.com',
  *   password: 'Password123'
@@ -40,16 +38,12 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function handleLoginAction(input: LoginInput) {
   return actionWrapper(async () => {
-    // Validate input with Yup schema
-    // This will throw ValidationError if invalid, caught by actionWrapper
     const validatedData = await loginSchema.validate(input);
 
     const { email, password } = validatedData;
 
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Sign in with Supabase Auth
     const { data: authData, error: authError } =
       await supabase.auth.signInWithPassword({
         email,
@@ -61,14 +55,12 @@ export async function handleLoginAction(input: LoginInput) {
     }
 
     if (!authData.user) {
-      throw new Error('No user returned from Supabase login');
+      throw new Error(AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
 
-    // Revalidate dashboard path to ensure fresh data
     revalidatePath('/dashboard');
 
-    // Return success response
-    return formatSuccess(AUTH_SUCCESS_MESSAGES.LOGIN.en, {
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.LOGIN, {
       user: authData.user,
       session: authData.session,
     });

@@ -1,36 +1,17 @@
 'use server';
 
-
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { getAuthUser } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatError, formatSuccess } from '@/features/global/utils/format-response';
+import { formatSuccess } from '@/features/global/utils/format-response';
+import { STORE_ERROR_MESSAGES, STORE_SUCCESS_MESSAGES } from '@/features/stores/constants';
 import {
   countStoreBranchesData,
+  countStoreActiveProductsData,
   getOwnedStoreBySubdomainData,
   getStoreProductsPreviewData,
 } from '@/features/stores/data';
-import { prisma } from '@/lib/prisma';
-
-import type { Product, ProductImage, ProductVariant, Store } from '@prisma/client';
-
-/**
- * Product with images and variants for store detail page
- */
-export type ProductWithRelations = Product & {
-  images: ProductImage[];
-  variants: ProductVariant[];
-};
-
-/**
- * Complete data for the store detail page
- */
-export interface StoreDetailPageData {
-  store: Store;
-  products: ProductWithRelations[];
-  productCount: number;
-  branchCount: number;
-}
+import type { StoreDetailPageData } from '@/features/stores/types/store';
 
 /**
  * Get Store Detail Page Server Action
@@ -38,49 +19,58 @@ export interface StoreDetailPageData {
  * Fetches all data needed for the store detail page:
  * - Store with ownership verification
  * - Products preview with images and variants
- * - Product count
+ * - Active product count
  * - Branch count
+ *
+ * Flow:
+ * 1. Validate subdomain is provided
+ * 2. Get authenticated user via getAuthUser
+ * 3. Fetch database user record by Supabase ID
+ * 4. Fetch store with ownership verification
+ * 5. Fetch products, product count, and branch count in parallel
+ * 6. Return complete store detail page data
  *
  * @param subdomain - The subdomain of the store to fetch
  * @returns ServerResponse with complete store detail page data
+ *
+ * @example
+ * ```tsx
+ * const result = await getStoreDetailAction('my-store');
+ * if (!result.hasError && result.payload) {
+ *   const { store, products, productCount, branchCount } = result.payload;
+ * }
+ * ```
  */
 export async function getStoreDetailAction(subdomain: string) {
   return actionWrapper<StoreDetailPageData | null>(async () => {
-    // Validate subdomain is provided
     if (!subdomain || subdomain.trim() === '') {
-      return formatError('Subdomain is required');
+      throw new Error(STORE_ERROR_MESSAGES.SUBDOMAIN_REQUIRED);
     }
 
-    // Get authenticated user
     const authUser = await getAuthUser();
 
     if (!authUser) {
-      return formatError('User not authenticated');
+      throw new Error(STORE_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Get database user
     const dbUser = await getUserBySupabaseId(authUser.id);
 
-    // Fetch store with ownership verification
     const store = await getOwnedStoreBySubdomainData(
       subdomain.toLowerCase(),
       dbUser.id
     );
 
     if (!store) {
-      return formatError('Store not found');
+      throw new Error(STORE_ERROR_MESSAGES.NOT_FOUND);
     }
 
-    // Fetch all additional data in parallel
     const [products, productCount, branchCount] = await Promise.all([
       getStoreProductsPreviewData(store.id, 10),
-      prisma.product.count({
-        where: { storeId: store.id, status: 'ACTIVE' },
-      }),
+      countStoreActiveProductsData(store.id),
       countStoreBranchesData(store.id),
     ]);
 
-    return formatSuccess('Store detail loaded', {
+    return formatSuccess(STORE_SUCCESS_MESSAGES.DATA_LOADED, {
       store,
       products,
       productCount,

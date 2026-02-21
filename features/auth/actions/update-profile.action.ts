@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
+import { AUTH_ERROR_MESSAGES, AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
 import { getUserBySupabaseId } from '@/features/auth/data';
 import {
   updateProfileSchema,
@@ -21,7 +21,7 @@ import { createClient } from '@/lib/supabase/server';
  *
  * Flow:
  * 1. Validate input with updateProfileSchema
- * 2. Get current authenticated user
+ * 2. Get current authenticated user from Supabase
  * 3. Fetch database user via getUserBySupabaseId
  * 4. Update via updateUserProfileService (handles Supabase and database)
  * 5. Revalidate /profile path
@@ -37,8 +37,6 @@ import { createClient } from '@/lib/supabase/server';
  *
  * @example
  * ```tsx
- * import { updateProfileAction } from '@/features/auth/actions/updateProfile.action';
- *
  * // Update only email
  * const result = await updateProfileAction({
  *   email: 'newemail@example.com'
@@ -46,13 +44,6 @@ import { createClient } from '@/lib/supabase/server';
  *
  * // Update only password
  * const result = await updateProfileAction({
- *   password: 'NewPassword123',
- *   confirmPassword: 'NewPassword123'
- * });
- *
- * // Update both email and password
- * const result = await updateProfileAction({
- *   email: 'newemail@example.com',
  *   password: 'NewPassword123',
  *   confirmPassword: 'NewPassword123'
  * });
@@ -65,16 +56,12 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function updateProfileAction(input: UpdateProfileInput) {
   return actionWrapper(async () => {
-    // Validate input with Yup schema
-    // This will throw ValidationError if invalid, caught by actionWrapper
     const validatedData = await updateProfileSchema.validate(input);
 
     const { email, password } = validatedData;
 
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Get current authenticated user
     const {
       data: { user: authUser },
       error: authError,
@@ -85,13 +72,11 @@ export async function updateProfileAction(input: UpdateProfileInput) {
     }
 
     if (!authUser) {
-      throw new Error('No authenticated user found');
+      throw new Error(AUTH_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Fetch database user record via data layer
     const dbUser = await getUserBySupabaseId(authUser.id);
 
-    // Prepare update parameters
     const updateParams: { email?: string; password?: string } = {};
 
     if (email) {
@@ -102,26 +87,14 @@ export async function updateProfileAction(input: UpdateProfileInput) {
       updateParams.password = password;
     }
 
-    // Update user profile via service layer
-    // Service handles both Supabase auth and database updates
     const updatedUser = await updateUserProfileService(
       dbUser.id,
       updateParams
     );
 
-    // Revalidate profile path to ensure fresh data
     revalidatePath('/profile');
 
-    // Determine success message based on what was updated
-    let successMessage: string = AUTH_SUCCESS_MESSAGES.PROFILE_UPDATE.en;
-    if (email && !password) {
-      successMessage = AUTH_SUCCESS_MESSAGES.EMAIL_UPDATE.en;
-    } else if (password && !email) {
-      successMessage = AUTH_SUCCESS_MESSAGES.PASSWORD_UPDATE.en;
-    }
-
-    // Return success response
-    return formatSuccess(successMessage, {
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.PROFILE_UPDATE, {
       user: updatedUser,
       authUser,
     });

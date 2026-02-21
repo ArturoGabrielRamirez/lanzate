@@ -1,5 +1,6 @@
 'use server';
 
+import { AUTH_ERROR_MESSAGES, AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
@@ -20,8 +21,6 @@ import { createClient } from '@/lib/supabase/server';
  *
  * @example
  * ```tsx
- * import { getCurrentUserAction } from '@/features/auth/actions/getCurrentUser.action';
- *
  * const result = await getCurrentUserAction();
  *
  * if (!result.hasError && result.payload) {
@@ -32,10 +31,8 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function getCurrentUserAction() {
   return actionWrapper(async () => {
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Get current auth user
     const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
 
     if (authError) {
@@ -43,14 +40,12 @@ export async function getCurrentUserAction() {
     }
 
     if (!authUser) {
-      throw new Error('No authenticated user found');
+      throw new Error(AUTH_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Fetch database user record by Supabase ID
     const dbUser = await getUserBySupabaseId(authUser.id);
 
-    // Return success response with both auth user and database user
-    return formatSuccess('User retrieved successfully', {
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.PROFILE_UPDATE, {
       authUser,
       user: dbUser,
     });

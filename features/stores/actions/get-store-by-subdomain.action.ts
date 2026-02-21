@@ -1,7 +1,8 @@
 'use server';
 
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatError, formatSuccess } from '@/features/global/utils/format-response';
+import { formatSuccess } from '@/features/global/utils/format-response';
+import { STORE_ERROR_MESSAGES, STORE_SUCCESS_MESSAGES } from '@/features/stores/constants';
 import { findStoreBySubdomainData } from '@/features/stores/data';
 
 import type { Store } from '@prisma/client';
@@ -15,7 +16,8 @@ import type { Store } from '@prisma/client';
  * Flow:
  * 1. Validate subdomain is provided
  * 2. Call findStoreBySubdomainData to fetch store from database
- * 3. Return success with store data or error if not found
+ * 3. Validate store was found
+ * 4. Return success with store data
  *
  * @param subdomain - The subdomain to search for
  * @returns ServerResponse with store data or error
@@ -32,18 +34,16 @@ import type { Store } from '@prisma/client';
  */
 export async function getStoreBySubdomainAction(subdomain: string) {
   return actionWrapper<Store | null>(async () => {
-    // Validate subdomain is provided
     if (!subdomain || subdomain.trim() === '') {
-      return formatError('Subdomain is required');
+      throw new Error(STORE_ERROR_MESSAGES.SUBDOMAIN_REQUIRED);
     }
 
-    // Fetch store from database
     const store = await findStoreBySubdomainData(subdomain.toLowerCase());
 
     if (!store) {
-      return formatError('Store not found');
+      throw new Error(STORE_ERROR_MESSAGES.NOT_FOUND);
     }
 
-    return formatSuccess('Store found', store);
+    return formatSuccess(STORE_SUCCESS_MESSAGES.FOUND, store);
   });
 }

@@ -1,6 +1,6 @@
 'use server';
 
-import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
+import { AUTH_ERROR_MESSAGES, AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { createClient } from '@/lib/supabase/server';
@@ -14,17 +14,14 @@ import { createClient } from '@/lib/supabase/server';
  * Flow:
  * 1. Create Supabase client
  * 2. Initiate OAuth flow with Google provider
- * 3. Return redirect URL for OAuth
- * 4. User completes OAuth on Google's site
- * 5. Google redirects to /auth/callback with locale preserved
+ * 3. Validate that a redirect URL was returned
+ * 4. Return redirect URL for OAuth
  *
  * @param locale - The user's locale preference ('es' or 'en')
  * @returns ServerResponse with OAuth redirect URL
  *
  * @example
  * ```tsx
- * import { handleGoogleLoginAction } from '@/features/auth/actions/handleGoogleLogin.action';
- *
  * const result = await handleGoogleLoginAction('en');
  *
  * if (!result.hasError && result.payload?.url) {
@@ -35,15 +32,11 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function handleGoogleLoginAction(locale: string = 'es') {
   return actionWrapper(async () => {
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Get the base URL for the redirect
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    // Include locale as query parameter to preserve user's language preference
     const redirectUrl = `${baseUrl}/auth/callback?locale=${locale}`;
 
-    // Initiate OAuth flow with Google
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -56,11 +49,10 @@ export async function handleGoogleLoginAction(locale: string = 'es') {
     }
 
     if (!data.url) {
-      throw new Error('No redirect URL returned from OAuth provider');
+      throw new Error(AUTH_ERROR_MESSAGES.NO_REDIRECT_URL);
     }
 
-    // Return success response with redirect URL
-    return formatSuccess(AUTH_SUCCESS_MESSAGES.OAUTH_INITIATED.en, {
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.OAUTH_INITIATED, {
       url: data.url,
     });
   });

@@ -5,7 +5,8 @@ import { revalidatePath } from 'next/cache';
 import { getUserBySupabaseId } from '@/features/auth/data';
 import { getAuthUser } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
-import { formatError, formatSuccess } from '@/features/global/utils/format-response';
+import { formatSuccess } from '@/features/global/utils/format-response';
+import { STORE_ERROR_MESSAGES, STORE_SUCCESS_MESSAGES } from '@/features/stores/constants';
 import { deleteStoreService } from '@/features/stores/services/delete-store.service';
 
 /**
@@ -14,33 +15,45 @@ import { deleteStoreService } from '@/features/stores/services/delete-store.serv
  * Deletes a store by ID, verifying the authenticated user is the owner.
  * Revalidates dashboard and stores pages after successful deletion.
  *
+ * Flow:
+ * 1. Validate storeId is provided
+ * 2. Get authenticated user via getAuthUser
+ * 3. Fetch database user record by Supabase ID
+ * 4. Delete store via deleteStoreService (handles ownership verification)
+ * 5. Revalidate affected pages
+ * 6. Return success response
+ *
  * @param storeId - The ID of the store to delete
  * @returns ServerResponse with success or error message
+ *
+ * @example
+ * ```tsx
+ * const result = await deleteStoreAction(storeId);
+ * if (!result.hasError) {
+ *   // Store deleted, redirect to dashboard
+ *   redirect('/dashboard');
+ * }
+ * ```
  */
 export async function deleteStoreAction(storeId: string) {
   return actionWrapper<null>(async () => {
-    // Validate storeId is provided
     if (!storeId || storeId.trim() === '') {
-      return formatError('Store ID is required');
+      throw new Error(STORE_ERROR_MESSAGES.STORE_ID_REQUIRED);
     }
 
-    // Get authenticated user
     const authUser = await getAuthUser();
 
     if (!authUser) {
-      return formatError('User not authenticated');
+      throw new Error(STORE_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 
-    // Get database user
     const dbUser = await getUserBySupabaseId(authUser.id);
 
-    // Delete store (service handles ownership verification)
     await deleteStoreService(storeId, dbUser.id);
 
-    // Revalidate affected pages
     revalidatePath('/[locale]/dashboard', 'page');
     revalidatePath('/[locale]/stores', 'page');
 
-    return formatSuccess('Store deleted successfully', null);
+    return formatSuccess(STORE_SUCCESS_MESSAGES.DELETED, null);
   });
 }

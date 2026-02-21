@@ -2,7 +2,7 @@
 
 import { headers } from 'next/headers';
 
-import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants/messages';
+import { AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
 import {
   resetPasswordRequestSchema,
   type ResetPasswordRequestInput,
@@ -20,8 +20,9 @@ import { createClient } from '@/lib/supabase/server';
  * Flow:
  * 1. Validate email with resetPasswordRequestSchema
  * 2. Extract host from headers to build redirect URL
- * 3. Send reset email via Supabase resetPasswordForEmail
- * 4. Return success response
+ * 3. Create Supabase client
+ * 4. Send reset email via Supabase resetPasswordForEmail
+ * 5. Return success response
  *
  * Security Note:
  * - Always returns success even if email doesn't exist in system
@@ -32,8 +33,6 @@ import { createClient } from '@/lib/supabase/server';
  *
  * @example
  * ```tsx
- * import { handleResetPasswordRequestAction } from '@/features/auth/actions/handleResetPasswordRequest.action';
- *
  * const result = await handleResetPasswordRequestAction({
  *   email: 'user@example.com'
  * });
@@ -48,23 +47,17 @@ export async function handleResetPasswordRequestAction(
   input: ResetPasswordRequestInput
 ) {
   return actionWrapper(async () => {
-    // Validate input with Yup schema
-    // This will throw ValidationError if invalid, caught by actionWrapper
     const validatedData = await resetPasswordRequestSchema.validate(input);
 
     const { email } = validatedData;
 
-    // Get host from headers to build redirect URL dynamically
     const headersList = await headers();
     const host = headersList.get('host') || '';
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
     const baseUrl = `${protocol}://${host}`;
 
-    // Create Supabase client
     const supabase = await createClient();
 
-    // Send password reset email
-    // The user will receive an email with a link to reset their password
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${baseUrl}/reset-password/update`,
     });
@@ -73,9 +66,8 @@ export async function handleResetPasswordRequestAction(
       throw new Error(error.message);
     }
 
-    // Return success response
-    // Note: We always return success even if email doesn't exist
+    // Always return success even if email doesn't exist
     // This prevents email enumeration attacks
-    return formatSuccess(AUTH_SUCCESS_MESSAGES.PASSWORD_RESET_REQUEST.en, null);
+    return formatSuccess(AUTH_SUCCESS_MESSAGES.PASSWORD_RESET_REQUEST, null);
   });
 }
