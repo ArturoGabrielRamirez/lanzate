@@ -34,6 +34,8 @@ export type {
   StorefrontPageProps,
   StoreTheme,
   StorePublicData,
+  ProductWithRelations,
+  StoreDetailPageData,
 } from '@/features/stores/types/store';
 
 export type { NavBtn } from '@/features/stores/types/sidebar.types';

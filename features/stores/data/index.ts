@@ -15,3 +15,4 @@ export { deleteStoreData } from '@/features/stores/data/delete-store.data';
 export { getStoreProductsPreviewData } from '@/features/stores/data/get-store-products-preview.data';
 export { countStoreBranchesData } from '@/features/stores/data/count-store-branches.data';
 export { getStorePublicDataData } from '@/features/stores/data/get-store-public-data.data';
+export { countStoreActiveProductsData } from '@/features/stores/data/count-store-active-products.data';

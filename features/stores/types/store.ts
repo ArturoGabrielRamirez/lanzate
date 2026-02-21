@@ -121,3 +121,21 @@ export interface StorePublicData {
     /** Ordered list of configurable page sections for the storefront home page */
     homeSections: AnyPageSection[];
 }
+
+/**
+ * Product with images and variants for store detail page
+ */
+export type ProductWithRelations = import('@prisma/client').Product & {
+    images: import('@prisma/client').ProductImage[];
+    variants: import('@prisma/client').ProductVariant[];
+};
+
+/**
+ * Complete data for the store detail page
+ */
+export interface StoreDetailPageData {
+    store: Store;
+    products: ProductWithRelations[];
+    productCount: number;
+    branchCount: number;
+}

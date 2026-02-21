@@ -268,6 +268,19 @@ export interface ProductListFilters {
 export type ProductBulkAction = 'delete' | 'archive' | 'activate' | 'draft';
 
 /**
+ * Bulk Product Operation
+ *
+ * Discriminated union for bulk operations on multiple products.
+ * Used in the bulk-update-products action.
+ */
+export type BulkProductOperation =
+  | { type: 'delete' }
+  | { type: 'archive' }
+  | { type: 'activate' }
+  | { type: 'draft' }
+  | { type: 'status'; status: 'ACTIVE' | 'DRAFT' | 'ARCHIVED' };
+
+/**
  * Props for ProductCard component
  *
  * Card displaying a product with image, name, price, and cart button.
