@@ -5,7 +5,7 @@ import { LockIcon, MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-import { getCurrentUserAction } from "@/features/auth/actions/getCurrentUser.action";
+import { getCurrentUserAction } from "@/features/auth/actions/get-current-user.action";
 import { updateProfileAction } from "@/features/auth/actions/updateProfile.action";
 import { createUpdateProfileSchema, type UpdateProfileInput } from "@/features/auth/schemas/schemaFactory";
 import { Form } from "@/features/global/components/form";

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { getCurrentUserAction } from "@/features/auth/actions/getCurrentUser.action";
+import { getCurrentUserAction } from "@/features/auth/actions/get-current-user.action";
 import { ProfileEditForm } from "@/features/auth/components/ProfileEditForm";
 import { getUserSubscriptionStatusAction } from "@/features/billing/actions";
 import { SubscriptionStatusCard } from "@/features/billing/components";

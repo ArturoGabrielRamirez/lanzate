@@ -5,7 +5,7 @@
  * Used with Suspense for loading states.
  */
 
-import { getCurrentUserAction } from '@/features/auth/actions/getCurrentUser.action';
+import { getCurrentUserAction } from '@/features/auth/actions/get-current-user.action';
 import { UserAvatarMenu } from '@/features/layout/components/user-avatar-menu';
 import { UserAvatarSkeleton } from '@/features/layout/components/user-avatar-skeleton';
 import type { UserAvatarData } from '@/features/layout/types';

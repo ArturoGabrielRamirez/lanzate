@@ -1,6 +1,7 @@
 "use client"
 
-import { createContext, useContext, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
+import { createContext, useContext, useMemo, useEffect } from 'react'
 
 import type {
   UserSession,
@@ -355,16 +356,25 @@ export function SessionGuard({
   onSessionExpired
 }: SessionGuardProps) {
   const { user, isSessionValid } = useAccessManager()
+  const router = useRouter()
 
   const sessionValid = isSessionValid()
+  const isAuthorized = user && sessionValid
 
-  if (!user || !sessionValid) {
-    if (onSessionExpired) {
-      onSessionExpired()
+  useEffect(() => {
+    if (!isAuthorized) {
+      if (onSessionExpired) {
+        onSessionExpired()
+      }
+
+      if (redirectTo) {
+        router.push(redirectTo)
+      }
     }
+  }, [isAuthorized, onSessionExpired, redirectTo, router])
 
-    if (redirectTo && typeof window !== 'undefined') {
-      window.location.href = redirectTo
+  if (!isAuthorized) {
+    if (redirectTo) {
       return null
     }
 

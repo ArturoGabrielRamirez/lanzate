@@ -16,7 +16,7 @@
 
 import { describe, it, expect } from 'bun:test';
 
-import { getCurrentUserAction } from '@/features/auth/actions/getCurrentUser.action';
+import { getCurrentUserAction } from '@/features/auth/actions/get-current-user.action';
 import { updateProfileAction } from '@/features/auth/actions/updateProfile.action';
 
 describe('Profile Update Flow', () => {
