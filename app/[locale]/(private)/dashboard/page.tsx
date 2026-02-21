@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
 import { getDashboardDataAction } from '@/features/dashboard/actions';
@@ -6,7 +5,6 @@ import { DashboardHeader } from '@/features/dashboard/components/dashboard-heade
 import { SectionHeader } from '@/features/dashboard/components/section-header';
 import { StoreStatsContainer } from '@/features/dashboard/components/store-stats-container';
 import { StoreStatsSkeleton } from '@/features/dashboard/components/store-stats-skeleton';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Protected Dashboard Page
@@ -31,16 +29,7 @@ import { createClient } from '@/lib/supabase/server';
  * - Logout functionality
  */
 export default async function DashboardPage() {
-  // Check authentication status
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // Redirect to login if not authenticated
-  if (!user) {
-    redirect('/login');
-  }
+  // Auth is handled by the parent layout
 
   // Fetch dashboard data using Server Action
   const result = await getDashboardDataAction();

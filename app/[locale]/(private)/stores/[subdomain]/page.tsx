@@ -1,6 +1,5 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
-import { getAuthUser } from '@/features/auth/utils';
 import { getStoreDetailAction } from '@/features/stores/actions/get-store-detail.action';
 import { StoreDetail } from '@/features/stores/components/store-detail';
 import type { StorefrontPageProps } from '@/features/stores/types';
@@ -14,13 +13,7 @@ import type { StorefrontPageProps } from '@/features/stores/types';
 export default async function StoreDetailPage({ params }: StorefrontPageProps) {
   const { subdomain } = await params;
 
-  // Check authentication status
-  const user = await getAuthUser();
-
-  // Redirect to login if not authenticated
-  if (!user) {
-    redirect('/login');
-  }
+  // Auth is handled by the parent layout
 
   // Fetch all store detail page data
   const result = await getStoreDetailAction(subdomain);

@@ -9,9 +9,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
+import { requireAuth } from '@/features/auth/utils';
 import { getPaymentWithInvoiceData } from '@/features/billing/data/getPaymentWithInvoice.data';
 import { generateInvoicePdf } from '@/features/billing/services/generate-invoice-pdf.service';
-import { createClient } from '@/lib/supabase/server';
 
 interface RouteParams {
   params: Promise<{
@@ -30,18 +30,7 @@ export async function GET(
 ): Promise<NextResponse> {
   try {
     // Get authenticated user
-    const supabase = await createClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-      return NextResponse.json(
-        { error: 'No autorizado' },
-        { status: 401 }
-      );
-    }
+    await requireAuth();
 
     // Get payment ID from params
     const { paymentId } = await params;

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
+import { requireAuth } from '@/features/auth/utils';
 import { getBillingHistoryAction } from '@/features/billing/actions';
 import {
   BillingFilters,
@@ -9,7 +9,6 @@ import {
   BillingPageHeader,
 } from '@/features/billing/components';
 import { getSubscriptionByUserEmailData } from '@/features/billing/data';
-import { createClient } from '@/lib/supabase/server';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('billing.history');
@@ -22,14 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BillingPage() {
   const t = await getTranslations('billing.history');
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user || !user.email) {
-    redirect('/login');
-  }
+  const { dbUser: user } = await requireAuth();
 
   const subscription = await getSubscriptionByUserEmailData(user.email);
 

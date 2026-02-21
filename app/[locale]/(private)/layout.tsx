@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 
 import { AccessManagerProvider } from '@/features/access/components';
 import type { UserSession } from '@/features/access/types/access';
-import { getAuthUser } from '@/features/auth/utils/getAuthUser';
+import { requireAuth } from '@/features/auth/utils';
 import { PrivateHeader } from '@/features/layout/components';
 import { TooltipProvider } from '@/features/shadcn/components/ui/tooltip';
 import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
@@ -26,11 +26,20 @@ interface PrivateLayoutProps {
  * - Renders PrivateHeader navigation
  */
 export default async function PrivateLayout({ children }: PrivateLayoutProps) {
-  // Get authenticated user from Supabase
-  const authUser = await getAuthUser();
+  // Get authenticated user and db data
+  let authUser;
+  let dbUser;
 
-  // Redirect to login if not authenticated
-  if (!authUser) {
+  try {
+    const { authUser: resultAuth, dbUser: resultDb } = await requireAuth();
+    authUser = resultAuth;
+    dbUser = resultDb;
+  } catch (error) {
+    redirect('/login');
+  }
+
+  // Satisfy TypeScript compiler (redirect handles failure)
+  if (!authUser || !dbUser) {
     redirect('/login');
   }
 
@@ -40,8 +49,8 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
 
   // Build user session for AccessManagerProvider
   const userSession: UserSession = {
-    id: authUser.id,
-    email: authUser.email,
+    id: dbUser.id,
+    email: dbUser.email,
     roles: [accountType],
     permissions: [],
   };

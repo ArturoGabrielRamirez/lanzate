@@ -1,7 +1,6 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
-import { getUserBySupabaseId } from '@/features/auth/data';
-import { getAuthUser } from '@/features/auth/utils';
+import { requireAuth } from '@/features/auth/utils';
 import { getProductsAction } from '@/features/products/actions';
 import { ProductListContainer } from '@/features/products/components/product-list-container';
 import type { ProductListPageProps, ProductStatus } from '@/features/products/types';
@@ -30,16 +29,8 @@ export default async function ProductListPage({
   const { subdomain } = await params;
   const resolvedSearchParams = await searchParams;
 
-  // Check authentication status
-  const user = await getAuthUser();
-
-  // Redirect to login if not authenticated
-  if (!user) {
-    redirect('/login');
-  }
-
-  // Get database user
-  const dbUser = await getUserBySupabaseId(user.id);
+  // Auth is handled by the parent layout, but we need dbUser for ownership verification
+  const { dbUser } = await requireAuth();
 
   // Fetch store with ownership verification
   const store = await getOwnedStoreBySubdomainData(
