@@ -11,10 +11,8 @@ export { getProductByIdAction } from '@/features/products/actions/get-product-by
 export { getProductBySlugAction } from '@/features/products/actions/get-product-by-slug.action';
 export { updateProductAction } from '@/features/products/actions/update-product.action';
 export { deleteProductAction } from '@/features/products/actions/delete-product.action';
-export {
-  bulkUpdateProductsAction,
-  type BulkProductOperation,
-} from '@/features/products/actions/bulk-update-products.action';
+export { bulkUpdateProductsAction } from '@/features/products/actions/bulk-update-products.action';
+export type { BulkProductOperation } from '@/features/products/types/product.types';
 
 // Inventory actions
 export { updateInventoryAction } from '@/features/products/actions/update-inventory.action';

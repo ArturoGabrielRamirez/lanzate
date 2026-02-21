@@ -3,7 +3,7 @@
 import { LogOut } from 'lucide-react';
 import { useState, useTransition } from 'react';
 
-import { logoutAction } from '@/features/auth/actions/logout.action';
+import { handleLogoutAction } from '@/features/auth/actions/handle-logout.action';
 import { Button } from "@/features/global/components/button/button";
 
 /**
@@ -25,7 +25,7 @@ export function LogoutButton() {
   const handleLogout = () => {
     startTransition(async () => {
       try {
-        const result = await logoutAction();
+        const result = await handleLogoutAction();
         if (result.hasError) {
           setError(result.message);
         }
