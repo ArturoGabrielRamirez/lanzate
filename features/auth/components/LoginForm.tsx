@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { LockIcon, MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { handleLoginAction } from "@/features/auth/actions/handleLogin.action";
+import { handleLoginAction } from "@/features/auth/actions/handle-login.action";
 import { createLoginSchema, type LoginInput } from "@/features/auth/schemas/schemaFactory";
 import { Form } from "@/features/global/components/form";
 import { InputField } from "@/features/global/components/form";

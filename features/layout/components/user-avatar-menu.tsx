@@ -12,7 +12,7 @@ import { LogOut, Settings, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
-import { handleLogoutAction } from '@/features/auth/actions/handleLogout.action';
+import { handleLogoutAction } from '@/features/auth/actions/handle-logout.action';
 import { Avatar } from '@/features/global/components/avatar/avatar';
 import type { UserAvatarMenuProps } from '@/features/layout/types';
 /* import { Avatar, AvatarFallback, AvatarImage } from '@/features/shadcn/components/ui/avatar'; */

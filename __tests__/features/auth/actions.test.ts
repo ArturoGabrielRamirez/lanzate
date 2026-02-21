@@ -13,7 +13,7 @@
 
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
 
-import { handleLoginAction } from '@/features/auth/actions/handleLogin.action';
+import { handleLoginAction } from '@/features/auth/actions/handle-login.action';
 import { handleResetPasswordRequestAction } from '@/features/auth/actions/handleResetPasswordRequest.action';
 import { handleSignupAction } from '@/features/auth/actions/handleSignup.action';
 import { logoutAction } from '@/features/auth/actions/logout.action';
