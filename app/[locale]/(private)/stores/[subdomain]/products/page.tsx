@@ -108,7 +108,7 @@ export default async function ProductListPage({
   }
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto">
       <ProductListContainer
         products={productsResult.payload.data}
         total={productsResult.payload.total}

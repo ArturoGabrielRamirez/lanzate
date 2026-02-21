@@ -4,6 +4,7 @@
  * Public product catalog for a store accessed via subdomain.
  * Reads search/sort/page from URL searchParams (set by nuqs client container),
  * fetches products on the server, and passes data to the client container.
+ * The shell (header + footer + CSS theme) is provided by layout.tsx.
  *
  * Route: /[locale]/s/[subdomain]/products
  * Accessed as: mystore.localhost:3000/products (proxy rewrites)
@@ -18,12 +19,7 @@
 import { notFound } from 'next/navigation';
 
 import { getProductsAction } from '@/features/products/actions';
-import {
-  StorefrontFooter,
-  StorefrontHeader,
-  StorefrontLayout,
-  StorefrontProductListContainer,
-} from '@/features/storefront/components';
+import { StorefrontProductListContainer } from '@/features/storefront/components';
 import { type ProductListingPageProps } from '@/features/storefront/types/storefront.types';
 import { getStorePublicDataAction } from '@/features/stores/actions';
 
@@ -60,14 +56,13 @@ export default async function StorefrontProductsPage({
   const { subdomain } = await params;
   const { search, sort, page } = await searchParams;
 
-  // action → service → data
   const storeResult = await getStorePublicDataAction(subdomain);
 
   if (storeResult.hasError || !storeResult.payload) {
     notFound();
   }
 
-  const { store, theme } = storeResult.payload;
+  const { store } = storeResult.payload;
 
   // Parse sort into sortBy + sortOrder
   const sortParts = sort?.split('-') ?? [];
@@ -92,39 +87,49 @@ export default async function StorefrontProductsPage({
   const totalCount = productsResult.payload?.total ?? 0;
 
   return (
-    <StorefrontLayout store={store} theme={theme}>
-      <StorefrontHeader store={store} theme={theme} />
+    <main className="flex-1 container mx-auto px-4 py-10">
+      <div className="mb-8">
+        <h1
+          className="text-3xl font-bold tracking-tight"
+          style={{ color: 'var(--sf-text)' }}
+        >
+          Todos los productos
+        </h1>
+        <p
+          className="mt-1 text-base"
+          style={{ color: 'color-mix(in srgb, var(--sf-text) 65%, transparent)' }}
+        >
+          {store.name}
+        </p>
+      </div>
 
-      <main className="flex-1 container mx-auto px-4 py-10">
-        <div className="mb-8">
-          <h1
-            className="text-3xl font-bold tracking-tight"
-            style={{ color: 'var(--sf-text)' }}
-          >
-            Todos los productos
-          </h1>
-          <p
-            className="mt-1 text-base"
-            style={{ color: 'color-mix(in srgb, var(--sf-text) 65%, transparent)' }}
-          >
-            {store.name}
-          </p>
-        </div>
-
-        {/* Client container handles search/sort/pagination via nuqs */}
-        <StorefrontProductListContainer
-          initialProducts={products as any}
-          totalPages={totalPages}
-          totalCount={totalCount}
-          storeSubdomain={subdomain}
-          initialSearch={search ?? ''}
-          initialSort={sort ?? 'createdAt-desc'}
-          initialPage={currentPage}
-        />
-      </main>
-
-      {theme.showFooter && <StorefrontFooter store={store} />}
-    </StorefrontLayout>
+      {/* Client container handles search/sort/pagination via nuqs */}
+      <StorefrontProductListContainer
+        initialProducts={products.map((p) => ({
+          id: p.id,
+          name: p.name,
+          slug: p.slug,
+          isNew: p.isNew,
+          isOnSale: p.isOnSale,
+          isFeatured: p.isFeatured,
+          images: p.images.map((img) => ({
+            url: img.url,
+            altText: img.altText,
+            isPrimary: img.isPrimary,
+          })),
+          variants: p.variants.map((v) => ({
+            price: v.price.toString(),
+            promotionalPrice: v.promotionalPrice?.toString() ?? null,
+          })),
+        }))}
+        totalPages={totalPages}
+        totalCount={totalCount}
+        storeSubdomain={subdomain}
+        initialSearch={search ?? ''}
+        initialSort={sort ?? 'createdAt-desc'}
+        initialPage={currentPage}
+      />
+    </main>
   );
 }
 

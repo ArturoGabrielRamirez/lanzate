@@ -17,10 +17,11 @@ import { Star, StarHalf } from 'lucide-react';
 import { useState, useCallback } from 'react';
 
 import { Button } from "@/features/global/components/button/button";
-import type { 
-  ProductReviewsProps, 
-  ReviewSummaryProps 
+import type {
+  ProductReviewsProps,
+  ReviewSummaryProps
 } from '@/features/products/types/product-detail.types';
+import type { ProductReviewWithUser } from '@/features/products/types/product.types';
 import { cn } from '@/features/shadcn/utils/cn';
 
 /**
@@ -37,12 +38,12 @@ function StarRating({ rating, size = 16 }: { rating: number; size?: number }) {
       {Array.from({ length: fullStars }).map((_, i) => (
         <Star key={`full-${i}`} size={size} className="fill-yellow-400 text-yellow-400" />
       ))}
-      
+
       {/* Half star */}
       {hasHalfStar && (
         <StarHalf size={size} className="fill-yellow-400 text-yellow-400" />
       )}
-      
+
       {/* Empty stars */}
       {Array.from({ length: emptyStars }).map((_, i) => (
         <Star key={`empty-${i}`} size={size} className="text-muted-foreground/30" />
@@ -63,7 +64,7 @@ function ReviewSummary({ averageRating, totalReviews, className = "" }: ReviewSu
           {averageRating.toFixed(1)}
         </span>
       </div>
-      
+
       <span className="text-muted-foreground">
         ({totalReviews} {totalReviews === 1 ? 'reseña' : 'reseñas'})
       </span>
@@ -74,20 +75,11 @@ function ReviewSummary({ averageRating, totalReviews, className = "" }: ReviewSu
 /**
  * Individual review component
  */
-function ReviewItem({ 
-  review, 
-  isLast = false 
-}: { 
-  review: {
-    id: string;
-    title: string;
-    body: string;
-    rating: number;
-    createdAt: Date;
-    user?: {
-      name: string;
-    };
-  };
+function ReviewItem({
+  review,
+  isLast = false
+}: {
+  review: ProductReviewWithUser;
   isLast?: boolean;
 }) {
   return (
@@ -102,7 +94,7 @@ function ReviewItem({
             {review.title}
           </h4>
           <p className="text-sm text-muted-foreground">
-            Por {review.user?.name || 'Cliente anónimo'}
+            Por {review.user?.username || 'Cliente anónimo'}
           </p>
         </div>
         <time className="text-sm text-muted-foreground" dateTime={review.createdAt.toISOString()}>
@@ -113,10 +105,12 @@ function ReviewItem({
           })}
         </time>
       </div>
-      
-      <div className="prose prose-sm max-w-none">
-        <p>{review.body}</p>
-      </div>
+
+      {review.body && (
+        <div className="prose prose-sm max-w-none">
+          <p>{review.body}</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -124,27 +118,29 @@ function ReviewItem({
 /**
  * Product reviews list component
  */
-export function ProductReviews({ 
-  productId, 
-  initialReviews = [], 
-  averageRating = 0, 
+export function ProductReviews({
+  productId,
+  initialReviews = [],
+  averageRating = 0,
   totalReviews = 0,
-  className = "" 
+  className = ""
 }: ProductReviewsProps) {
-  const [reviews, setReviews] = useState(initialReviews);
+  const [reviews] = useState(initialReviews);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore] = useState(true);
 
   const handleLoadMore = useCallback(async () => {
     if (loadingMore || !hasMore) return;
-    
+
     setLoadingMore(true);
-    
+
     try {
       // TODO: Implement pagination with real API
-      // const moreReviews = await getProductReviewsAction(productId, reviews.length, 5);
-      // setReviews(prev => [...prev, ...moreReviews]);
-      // setHasMore(moreReviews.length === 5);
+      // const response = await getProductReviewsAction(productId, reviews.length, 5);
+      // if (!response.hasError && response.payload) {
+      //   setReviews(prev => [...prev, ...response.payload.reviews]);
+      //   setHasMore(response.payload.reviews.length === 5);
+      // }
     } catch (error) {
       console.error('Error loading more reviews:', error);
     } finally {
@@ -157,8 +153,8 @@ export function ProductReviews({
       {/* Summary */}
       {totalReviews > 0 && (
         <div className="mb-6">
-          <ReviewSummary 
-            averageRating={averageRating} 
+          <ReviewSummary
+            averageRating={averageRating}
             totalReviews={totalReviews}
           />
         </div>
@@ -177,9 +173,9 @@ export function ProductReviews({
           </div>
         ) : (
           reviews.map((review, index) => (
-            <ReviewItem 
-              key={review.id} 
-              review={review} 
+            <ReviewItem
+              key={review.id}
+              review={review}
               isLast={index === reviews.length - 1}
             />
           ))

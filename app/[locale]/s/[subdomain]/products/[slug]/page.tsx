@@ -19,8 +19,8 @@ import { Suspense } from 'react';
 import { getProductBySlugAction } from '@/features/products/actions';
 import { ProductImageGallery } from '@/features/products/components/product-image-gallery';
 import { ProductReviews } from '@/features/products/components/product-reviews';
-import { VariantSelector } from '@/features/products/components/variant-selector';
-import type { ProductDetailPageProps, ProductDetailContentProps } from '@/features/products/types/product-detail.types';
+import { ProductVariantSection } from '@/features/products/components/product-variant-section';
+import type { ProductDetailPageProps, ProductDetailContentProps, VariantWithRelations } from '@/features/products/types/product-detail.types';
 
 import type { Metadata } from 'next';
 
@@ -34,10 +34,10 @@ export async function generateMetadata({
   params,
 }: ProductDetailPageProps): Promise<Metadata> {
   const { subdomain, slug } = await params;
-  
+
   // Get product data for metadata generation
   const productResult = await getProductBySlugAction(slug, subdomain);
-  
+
   if (productResult.hasError || !productResult.payload) {
     return {
       title: 'Producto no encontrado',
@@ -54,7 +54,7 @@ export async function generateMetadata({
   return {
     title: product.seoTitle || product.name,
     description: product.seoDescription || product.description,
-    openGraph: {
+    /* openGraph: {
       title: product.name,
       description: product.seoDescription || product.description,
       type: 'product',
@@ -68,15 +68,15 @@ export async function generateMetadata({
         : [],
       url: `https://${subdomain}.lanzate.app/s/${subdomain}/products/${slug}`,
       siteName: product.store?.name || 'Tienda',
-    },
-    twitter: {
+    }, */
+    /* twitter: {
       card: 'summary_large_image',
       title: product.name,
       description: product.seoDescription || product.description,
       images: product.images && product.images.length > 0 
         ? [product.images[0].url]
         : [],
-    },
+    }, */
     alternates: {
       canonical: `/s/${subdomain}/products/${slug}`,
     },
@@ -120,7 +120,6 @@ function ProductDetailSkeleton() {
  * Main product detail content component
  */
 function ProductDetailContent({ product, storeSubdomain }: ProductDetailContentProps) {
-  const selectedVariant = product.variants?.[0];
   const averageRating = 4.5; // TODO: Calculate from reviews
   const totalReviews = 23; // TODO: Get from reviews count
 
@@ -129,7 +128,7 @@ function ProductDetailContent({ product, storeSubdomain }: ProductDetailContentP
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Left Column - Images and Gallery */}
         <div className="space-y-4">
-          <Suspense 
+          <Suspense
             fallback={<div className="aspect-square w-full animate-pulse rounded-lg bg-muted" />}
           >
             <ProductImageGallery
@@ -137,69 +136,18 @@ function ProductDetailContent({ product, storeSubdomain }: ProductDetailContentP
               productName={product.name}
             />
           </Suspense>
-          
-          {/* Mobile Variant Selector */}
-          <div className="lg:hidden">
-            <Suspense 
-              fallback={<div className="h-20 w-full animate-pulse rounded bg-muted" />}
-            >
-              <VariantSelector
-                variants={product.variants || []}
-                onVariantChange={(variant) => {
-                  // TODO: Handle variant change
-                }}
-              />
-            </Suspense>
-          </div>
         </div>
 
         {/* Right Column - Product Info */}
         <div className="space-y-6">
-          {/* Product Name and Price */}
+          {/* Product Name, Price, and Variant Selectors */}
           <div>
             <h1 className="text-2xl font-bold text-foreground">
               {product.name}
             </h1>
-            
-            {/* Price */}
-            <div className="mt-2">
-              {selectedVariant ? (
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-bold text-primary">
-                    ${Number(selectedVariant.price).toFixed(2)}
-                  </span>
-                  {selectedVariant.promotionalPrice && 
-                    Number(selectedVariant.promotionalPrice) < Number(selectedVariant.price) && (
-                    <>
-                      <span className="text-lg text-muted-foreground line-through">
-                        ${Number(selectedVariant.price).toFixed(2)}
-                      </span>
-                      <span className="text-lg font-semibold text-red-500">
-                        ${Number(selectedVariant.promotionalPrice).toFixed(2)}
-                      </span>
-                    </>
-                  )}
-                </div>
-              ) : (
-                <span className="text-3xl font-bold text-muted-foreground">
-                  Precio no disponible
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Desktop Variant Selector */}
-          <div className="hidden lg:block">
-            <Suspense 
-              fallback={<div className="h-20 w-full animate-pulse rounded bg-muted" />}
-            >
-              <VariantSelector
-                variants={product.variants || []}
-                onVariantChange={(variant) => {
-                  // TODO: Handle variant change
-                }}
-              />
-            </Suspense>
+            <ProductVariantSection
+              variants={(product.variants || []) as VariantWithRelations[]}
+            />
           </div>
 
           {/* Description */}
@@ -216,7 +164,7 @@ function ProductDetailContent({ product, storeSubdomain }: ProductDetailContentP
 
           {/* Reviews */}
           <div>
-            <Suspense 
+            <Suspense
               fallback={<div className="space-y-2 animate-pulse"><div className="h-4 w-full rounded bg-muted" /></div>}
             >
               <ProductReviews
@@ -249,8 +197,8 @@ export default async function ProductDetailPage({
   }
 
   return (
-    <ProductDetailContent 
-      product={productResult.payload} 
+    <ProductDetailContent
+      product={productResult.payload}
       storeSubdomain={subdomain}
     />
   );

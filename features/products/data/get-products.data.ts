@@ -69,6 +69,14 @@ export async function getProductsData(
       skip,
       take: pageSize,
       orderBy,
+      include: {
+        images: {
+          orderBy: {
+            position: 'asc',
+          },
+        },
+        variants: true,
+      },
     }),
   ]);
 

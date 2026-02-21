@@ -5,12 +5,11 @@
  * Used for public product pages in the storefront.
  */
 
-import type { ProductWithAllRelations } from '@/features/products/types/product.types';
+import type { ProductWithAllRelations, ProductReviewWithUser } from '@/features/products/types/product.types';
 
 import type {
   ProductVariant,
   ProductImage,
-  ProductReview,
 } from '@prisma/client';
 
 /**
@@ -64,7 +63,7 @@ export type VariantWithRelations = ProductVariant & {
  */
 export interface VariantSelectorProps {
   variants: VariantWithRelations[];
-  onVariantChange: (variant: ProductVariant) => void;
+  onVariantChange: (variant: VariantWithRelations) => void;
   className?: string;
 }
 
@@ -97,7 +96,7 @@ export interface VariantOptionProps {
  */
 export interface ProductReviewsProps {
   productId: string;
-  initialReviews?: ProductReview[];
+  initialReviews?: ProductReviewWithUser[];
   averageRating?: number;
   totalReviews?: number;
   className?: string;
@@ -122,6 +121,15 @@ export interface ReviewSummaryProps {
 export interface ProductDetailContentProps {
   product: ProductDetail;
   storeSubdomain: string;
+}
+
+/**
+ * Props for ProductVariantSection component
+ *
+ * Client component that manages variant selection state and price display.
+ */
+export interface ProductVariantSectionProps {
+  variants: VariantWithRelations[];
 }
 
 /**

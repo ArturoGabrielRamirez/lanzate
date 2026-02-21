@@ -15,3 +15,20 @@ export {
   bulkUpdateProductsAction,
   type BulkProductOperation,
 } from '@/features/products/actions/bulk-update-products.action';
+
+// Inventory actions
+export { updateInventoryAction } from '@/features/products/actions/update-inventory.action';
+export { getInventoryStatusAction } from '@/features/products/actions/get-inventory-status.action';
+
+// Review actions
+export { createReviewAction } from '@/features/products/actions/create-review.action';
+export { getProductReviewsAction } from '@/features/products/actions/get-product-reviews.action';
+
+// Bundle actions
+export { createBundleAction } from '@/features/products/actions/create-bundle.action';
+export { updateBundleAction } from '@/features/products/actions/update-bundle.action';
+export { deleteBundleAction } from '@/features/products/actions/delete-bundle.action';
+export { getBundlesAction } from '@/features/products/actions/get-bundles.action';
+
+// Digital product actions
+export { getDownloadUrlAction } from '@/features/products/actions/get-download-url.action';

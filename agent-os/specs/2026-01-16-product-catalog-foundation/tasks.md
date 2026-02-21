@@ -219,20 +219,20 @@ This spec implements a complete product management system including:
     - Test review creation with order validation
     - Test bundle CRUD operations
     - Test digital product download URL validation
-  - [ ] 6.2 Create inventory server actions
+  - [x] 6.2 Create inventory server actions
     - updateInventoryAction: update quantity for variant/branch combination
     - getInventoryStatusAction: return in_stock/low_stock/out_of_stock states
-  - [ ] 6.3 Create review server actions
+  - [x] 6.3 Create review server actions
     - createReviewAction: validate user purchased product via order_item_id
     - getProductReviewsAction: fetch reviews with pagination, calculate average rating
-  - [ ] 6.4 Create bundle server actions
+  - [x] 6.4 Create bundle server actions
     - createBundleAction: create bundle with items
     - updateBundleAction, deleteBundleAction
     - getBundlesAction: list store bundles
-  - [ ] 6.5 Create digital product server actions
+  - [x] 6.5 Create digital product server actions
     - getDownloadUrlAction: validate expiration, increment download_count, check download_limit
-  - [ ] 6.6 Create additional Yup schemas
-    - inventoryUpdateSchema, reviewSchema, bundleSchema
+  - [x] 6.6 Create additional Yup schemas
+    - inventoryUpdateSchema, reviewSchema, bundleSchema (already existed in schema file)
   - [ ] 6.7 Ensure supporting action tests pass
     - Run ONLY the 2-8 tests written in 6.1
 
@@ -391,7 +391,7 @@ This spec implements a complete product management system including:
     - Test variant selector updates price display
     - Test product listing page with grid layout
     - Test search and filter functionality
-  - [ ] 9.2 Create public product detail page
+  - [x] 9.2 Create public product detail page
     - Route: /products/[slug]
     - Server component fetching product data
     - Display: image gallery, description, pricing, variant selector

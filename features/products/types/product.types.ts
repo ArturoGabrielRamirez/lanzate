@@ -18,6 +18,7 @@ import type {
   ProductAttributeValue,
   ProductStatus,
   AttributeType,
+  ProductReview,
 } from '@prisma/client';
 
 /**
@@ -50,8 +51,16 @@ export interface GetProductsFilters {
  * Paginated response types
  */
 
+/**
+ * Product shape for list views (admin/storefront)
+ */
+export type ProductListItem = Product & {
+  images: ProductImage[];
+  variants: ProductVariant[];
+};
+
 export interface PaginatedProducts {
-  data: Product[];
+  data: ProductListItem[];
   total: number;
   page: number;
   pageSize: number;
@@ -98,6 +107,13 @@ export interface InventoryInput {
   branchId: string;
   quantity: number;
   lowStockThreshold?: number;
+}
+
+export interface UpdateInventoryInput {
+  variantId: string;
+  branchId: string;
+  quantity: number;
+  lowStockThreshold: number;
 }
 
 export interface CreateFullProductInput {
@@ -194,7 +210,7 @@ export interface ProductDataTableProps {
  */
 export interface ProductListContainerProps {
   /** Initial product data loaded from server */
-  products: Product[];
+  products: ProductListItem[];
   /** Total number of products for pagination */
   total: number;
   /** Store ID for the current store */
@@ -211,7 +227,7 @@ export interface ProductListContainerProps {
  */
 export interface ProductCardRowProps {
   /** Product data to display */
-  product: Product;
+  product: ProductListItem;
   /** Whether this product is selected for bulk actions */
   isSelected: boolean;
   /** Callback when selection checkbox is toggled */
@@ -279,6 +295,93 @@ export interface ProductGridProps {
 }
 
 /**
+ * Inventory Types
+ */
+
+export type InventoryStatus = 'in_stock' | 'low_stock' | 'out_of_stock';
+
+export interface InventoryStatusResponse {
+  status: InventoryStatus;
+  quantity: number;
+  lowStockThreshold: number;
+}
+
+/**
+ * Review Types
+ */
+
+export interface CreateReviewInput {
+  productId: string;
+  orderItemId: string;
+  rating: number;
+  title: string;
+  body?: string;
+}
+
+export interface CreateReviewDataInput extends CreateReviewInput {
+  userId: string;
+  orderId: string;
+}
+
+/**
+ * Review with user relation
+ */
+export type ProductReviewWithUser = ProductReview & {
+  user: {
+    username: string;
+    email: string;
+  };
+};
+
+export interface PaginatedReviews {
+  reviews: ProductReviewWithUser[];
+  total: number;
+  averageRating: number;
+  page: number;
+  limit: number;
+}
+
+/**
+ * Bundle Types
+ */
+
+export interface CreateBundleInput {
+  name: string;
+  description?: string;
+  price: number;
+  isActive: boolean;
+  items: {
+    productId: string;
+    variantId?: string;
+    quantity: number;
+  }[];
+}
+
+export interface CreateBundleDataInput extends CreateBundleInput {
+  storeId: string;
+}
+
+export interface UpdateBundleInput extends CreateBundleInput {
+  id: string;
+}
+
+/**
+ * Digital Product Types
+ */
+
+export interface GetDownloadUrlInput {
+  productId: string;
+  orderItemId: string;
+}
+
+export interface DownloadUrlResponse {
+  downloadUrl: string;
+  fileName: string;
+  fileSize: number;
+  downloadsRemaining?: number;
+}
+
+/**
  * Re-export Prisma types for convenience
  */
 export type {
@@ -290,4 +393,5 @@ export type {
   ProductAttributeValue,
   ProductStatus,
   AttributeType,
+  ProductReview,
 };

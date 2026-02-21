@@ -11,6 +11,7 @@
  * @param subdomain - The store subdomain to look up
  * @returns StorePublicData with store + theme, or null if not found
  */
+import { DEFAULT_HOME_SECTIONS } from '@/features/storefront/types/storefront-sections.types';
 import type { StorePublicData, StoreTheme } from '@/features/stores/types';
 import { prisma } from '@/lib/prisma';
 
@@ -44,8 +45,13 @@ export async function getStorePublicDataData(
     // const themeRow = await prisma.storeTheme.findUnique({ where: { storeId: store.id } });
     // const theme = themeRow ? mapThemeRowToTheme(themeRow) : DEFAULT_THEME;
 
+    // TODO: Replace with actual DB query when store_appearances table exists:
+    // const appearance = await prisma.storeAppearance.findUnique({ where: { storeId: store.id } });
+    // const homeSections = appearance?.homeSections ?? DEFAULT_HOME_SECTIONS;
+
     return {
         store,
         theme: DEFAULT_THEME,
+        homeSections: DEFAULT_HOME_SECTIONS,
     };
 }

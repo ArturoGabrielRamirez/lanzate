@@ -38,6 +38,12 @@ export type {
   // Product list types
   ProductListSearchParams,
   ProductListFilters,
+  CreateBundleInput,
+  UpdateBundleInput,
+  CreateBundleDataInput,
+  UpdateInventoryInput,
+  CreateReviewInput,
+  CreateReviewDataInput,
   ProductBulkAction,
 
   // Prisma types re-exports

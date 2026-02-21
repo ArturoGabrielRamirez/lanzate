@@ -11,18 +11,19 @@
  */
 
 import Image from 'next/image';
-import Link from 'next/link';
 
 import {
     BaseCard,
     /* BaseCardContent, */
     BaseCardHeader,
 } from '@/features/global/components/base-card/base-card';
+import { STOREFRONT_MESSAGES } from '@/features/storefront/constants/messages';
 import type { StorefrontProductCardProps } from '@/features/storefront/types/storefront.types';
+import { Link } from '@/i18n/navigation';
 
 export function StorefrontProductCard({
     product,
-    storeSubdomain,
+    /* storeSubdomain, */
 }: StorefrontProductCardProps) {
     // Resolve the display image (prefer primary, fallback to first)
     const displayImage =
@@ -38,11 +39,13 @@ export function StorefrontProductCard({
     );
 
     const priceText =
-        lowestPrice !== null ? `Desde $${lowestPrice.toFixed(2)}` : 'Sin precio';
+        lowestPrice !== null
+            ? `${STOREFRONT_MESSAGES.PRODUCT.STARTING_AT} $${lowestPrice.toFixed(2)}`
+            : STOREFRONT_MESSAGES.PRODUCT.NO_PRICE;
 
     return (
         <Link
-            href={`/s/${storeSubdomain}/products/${product.slug}`}
+            href={`/products/${product.slug}`}
             className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl"
             style={{ borderRadius: 'var(--sf-radius)' }}
         >
@@ -76,12 +79,12 @@ export function StorefrontProductCard({
                         <div className="absolute left-2 top-2 flex flex-col gap-1">
                             {product.isNew && (
                                 <span className="rounded-full bg-blue-500 px-2 py-0.5 text-xs font-semibold text-white shadow-sm">
-                                    Nuevo
+                                    {STOREFRONT_MESSAGES.PRODUCT.NEW_BADGE}
                                 </span>
                             )}
                             {product.isOnSale && (
                                 <span className="rounded-full bg-red-500 px-2 py-0.5 text-xs font-semibold text-white shadow-sm">
-                                    Oferta
+                                    {STOREFRONT_MESSAGES.PRODUCT.SALE_BADGE}
                                 </span>
                             )}
                         </div>

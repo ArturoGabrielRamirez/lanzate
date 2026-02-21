@@ -74,10 +74,10 @@ export const productMediaSchema = yup.object({
       isPrimary: yup.boolean().default(false),
     })
   ).min(1, 'Debes agregar al menos una imagen')
-  .test('unique-primary', 'Solo puede haber una imagen primaria', function(images) {
-    const primaryImages = images?.filter(img => img.isPrimary) || [];
-    return primaryImages.length <= 1;
-  }),
+    .test('unique-primary', 'Solo puede haber una imagen primaria', function (images) {
+      const primaryImages = images?.filter(img => img.isPrimary) || [];
+      return primaryImages.length <= 1;
+    }),
 });
 
 /**
@@ -162,7 +162,48 @@ export const bundleSchema = yup.object({
   description: descriptionField.optional(),
   price: priceField.required('El precio del bundle es obligatorio'),
   isActive: yup.boolean().default(true),
-  items: yup.array().of(bundleItemSchema).min(2, 'El bundle debe tener al menos 2 productos'),
+  items: yup.array().of(bundleItemSchema).min(2, 'El bundle debe tener al menos 2 productos').required('Los productos son obligatorios'),
+});
+
+/**
+ * Delete Bundle Schema
+ */
+export const deleteBundleSchema = yup.object({
+  id: yup.string().required('ID del paquete es requerido'),
+});
+
+/**
+ * Update Bundle Schema
+ */
+export const updateBundleSchema = yup.object({
+  id: yup.string().required('ID del paquete es requerido'),
+  name: yup.string().required('Nombre es requerido'),
+  description: yup.string().optional(),
+  price: yup.number().positive('Precio debe ser positivo').required('Precio es requerido'),
+  isActive: yup.boolean().required('Estado activo es requerido'),
+  items: yup
+    .array()
+    .of(
+      yup.object({
+        productId: yup.string().required('ID del producto es requerido'),
+        variantId: yup.string().optional(),
+        quantity: yup
+          .number()
+          .integer()
+          .positive('Cantidad debe ser positiva')
+          .required('Cantidad es requerida'),
+      })
+    )
+    .min(2, 'El paquete debe contener al menos 2 productos')
+    .required('Items son requeridos'),
+});
+
+/**
+ * Get Download URL Schema
+ */
+export const getDownloadUrlSchema = yup.object({
+  productId: yup.string().required('ID del producto es requerido'),
+  orderItemId: yup.string().required('ID del artículo de pedido es requerido'),
 });
 
 /**

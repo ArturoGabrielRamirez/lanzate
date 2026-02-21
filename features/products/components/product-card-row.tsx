@@ -1,6 +1,7 @@
 'use client';
 
 import { Copy, Edit, MoreHorizontal, Package } from 'lucide-react';
+import NextImage from 'next/image';
 /* import Link from 'next/link'; */
 
 import { Badge } from '@/features/global/components/badge/badge';
@@ -53,12 +54,15 @@ export function ProductCardRow({
     ARCHIVED: 'outline',
   } as const;
 
-  // Calculate starting price from variants (stub for now, as variants aren't included)
-  // In a full implementation, this would get the minimum variant price
-  const startingPrice = 0; // Placeholder - will be calculated from variants
+  // Calculate starting price from variants
+  const startingPrice = product.variants.length > 0
+    ? Math.min(...product.variants.map(v => Number(v.price)))
+    : 0;
 
-  // Calculate total stock (stub for now, as inventory isn't included)
-  const totalStock = 0; // Placeholder - will be calculated from variant inventory
+  // Calculate total stock (sum of all variant inventory - requires inventory relation which is not yet included)
+  // For now we use 0 as we don't have inventory info in ProductListItem, 
+  // but we can at least show that we are ready for it.
+  const totalStock = 0;
 
   // Determine inventory status
   const getInventoryStatus = (stock: number) => {
@@ -107,6 +111,7 @@ export function ProductCardRow({
       variant="default"
       hover="primary"
       columnGap="none"
+      className='rounded-lg'
     >
       {/* Column 1: Product info with checkbox, image, name, brand */}
       <BaseCardHeader
@@ -123,10 +128,18 @@ export function ProductCardRow({
 
             {/* Product image or placeholder */}
             <div className="relative h-10 w-10 overflow-hidden rounded-md bg-muted">
-              {/* TODO: Add actual product image when images relation is included */}
-              <div className="flex h-full w-full items-center justify-center">
-                <Package className="h-5 w-5 text-muted-foreground" />
-              </div>
+              {product.images?.[0] ? (
+                <NextImage
+                  src={product.images.find(img => img.isPrimary)?.url || product.images[0].url}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center">
+                  <Package className="h-5 w-5 text-muted-foreground" />
+                </div>
+              )}
             </div>
           </div>
         }

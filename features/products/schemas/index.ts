@@ -21,6 +21,9 @@ export {
   inventoryUpdateSchema,
   reviewSchema,
   bundleSchema,
+  deleteBundleSchema,
+  updateBundleSchema,
+  getDownloadUrlSchema,
 } from '@/features/products/schemas/product.schema';
 
 // Re-export field validators for reuse

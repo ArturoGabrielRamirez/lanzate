@@ -5,7 +5,10 @@
  * following models.md pattern for Prisma type reuse
  */
 
+import type { AnyPageSection } from '@/features/storefront/types/storefront-sections.types';
+
 import type { AccountType, Store as PrismaStore, User } from '@prisma/client';
+
 
 /**
  * Base Store type from Prisma
@@ -115,4 +118,6 @@ export interface StoreTheme {
 export interface StorePublicData {
     store: Store;
     theme: StoreTheme;
+    /** Ordered list of configurable page sections for the storefront home page */
+    homeSections: AnyPageSection[];
 }

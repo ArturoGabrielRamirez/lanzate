@@ -34,8 +34,12 @@ export interface ProductListingPageProps {
 export interface ProductFiltersProps {
   search: string;
   sort: string;
+  status: string;
   onSearchChange: (search: string) => void;
   onSortChange: (sort: string) => void;
+  onStatusChange: (status: string) => void;
+  onClearFilters: () => void;
+  isPending?: boolean;
   className?: string;
 }
 
