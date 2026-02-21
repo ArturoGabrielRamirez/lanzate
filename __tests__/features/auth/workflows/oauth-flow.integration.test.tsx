@@ -15,7 +15,7 @@
 
 import { describe, it, expect } from 'bun:test';
 
-import { handleGoogleLoginAction } from '@/features/auth/actions/handleGoogleLogin.action';
+import { handleGoogleLoginAction } from '@/features/auth/actions/handle-google-login.action';
 
 describe('Google OAuth Flow', () => {
   it('should initiate OAuth flow and return redirect URL', async () => {

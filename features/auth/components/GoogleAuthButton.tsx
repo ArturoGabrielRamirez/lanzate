@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-import { handleGoogleLoginAction } from "@/features/auth/actions/handleGoogleLogin.action";
+import { handleGoogleLoginAction } from "@/features/auth/actions/handle-google-login.action";
 import { Button } from "@/features/global/components/button/button";
 import { GoogleLogo } from "@/features/global/components/icons";
 
