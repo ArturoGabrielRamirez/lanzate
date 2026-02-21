@@ -39,7 +39,7 @@ export async function getDownloadUrlService(
   }
 
   if (orderItem.order.userId !== userId) {
-    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED.es);
+    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED);
   }
 
   // Verify the order item contains this product
