@@ -1,12 +1,12 @@
 'use server';
 
+import { requireAuth } from '@/features/auth/utils';
 import { BILLING_ERROR_MESSAGES, BILLING_SUCCESS_MESSAGES } from '@/features/billing/constants';
 import { getUserSubscriptionStatus } from '@/features/billing/services';
 import type { SubscriptionStatus } from '@/features/billing/types/billing';
 import type { ServerResponse } from '@/features/global/types';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Get User Subscription Status Server Action
@@ -35,12 +35,7 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function getUserSubscriptionStatusAction(): Promise<ServerResponse<SubscriptionStatus>> {
   return actionWrapper(async () => {
-    const supabase = await createClient();
-    const { data: { user }, error } = await supabase.auth.getUser();
-
-    if (error || !user) {
-      throw new Error(BILLING_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
+    const { authUser: user } = await requireAuth(BILLING_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     const subscriptionStatus = await getUserSubscriptionStatus(user.email || '');
 

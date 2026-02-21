@@ -2,12 +2,12 @@
 
 import { AccountType } from '@prisma/client';
 
+import { requireAuth } from '@/features/auth/utils';
 import { DASHBOARD_ERROR_MESSAGES, DASHBOARD_SUCCESS_MESSAGES } from '@/features/dashboard/constants';
 import { getUserDashboardData } from '@/features/dashboard/data/get-user-dashboard-data.data';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { getUserSubscriptionData } from '@/features/subscriptions/data';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Get Dashboard Data Server Action
@@ -37,14 +37,7 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function getDashboardDataAction() {
   return actionWrapper(async () => {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      throw new Error(DASHBOARD_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
+    const { authUser: user } = await requireAuth(DASHBOARD_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     const userData = await getUserDashboardData(user.id);
 

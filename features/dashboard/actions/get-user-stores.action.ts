@@ -1,5 +1,6 @@
 'use server';
 
+import { requireAuth } from '@/features/auth/utils';
 import {
   DASHBOARD_ERROR_MESSAGES,
   DASHBOARD_SUCCESS_MESSAGES,
@@ -11,7 +12,6 @@ import type { ServerResponse } from '@/features/global/types';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Get User Stores Server Action
@@ -42,14 +42,7 @@ export async function getUserStoresAction(
   limit: number | undefined = DASHBOARD_STORE_LIMIT
 ): Promise<ServerResponse<UserStoresData>> {
   return actionWrapper(async () => {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      throw new Error(DASHBOARD_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
+    const { authUser: user } = await requireAuth(DASHBOARD_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     const data = await getUserStoresData(user.id, limit);
 

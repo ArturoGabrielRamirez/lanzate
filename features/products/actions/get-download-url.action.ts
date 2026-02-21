@@ -1,12 +1,12 @@
 'use server';
 
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
 import { getDownloadUrlSchema } from '@/features/products/schemas';
 import { getDownloadUrlService } from '@/features/products/services/get-download-url.service';
 import type { GetDownloadUrlInput, DownloadUrlResponse } from '@/features/products/types/product.types';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Get Download URL Server Action
@@ -36,19 +36,7 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function getDownloadUrlAction(input: GetDownloadUrlInput) {
   return actionWrapper<DownloadUrlResponse>(async () => {
-    const supabase = await createClient();
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
+    const { authUser } = await requireAuth(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     await getDownloadUrlSchema.validate(input, { abortEarly: false });
 

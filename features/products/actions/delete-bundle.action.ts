@@ -2,12 +2,12 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
 import { deleteBundleSchema } from '@/features/products/schemas';
 import { deleteBundleService } from '@/features/products/services/delete-bundle.service';
-import { createClient } from '@/lib/supabase/server';
 
 import type { ProductBundle } from '@prisma/client';
 
@@ -36,19 +36,7 @@ import type { ProductBundle } from '@prisma/client';
  */
 export async function deleteBundleAction(bundleId: string) {
   return actionWrapper<ProductBundle>(async () => {
-    const supabase = await createClient();
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
+    const { authUser } = await requireAuth(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     await deleteBundleSchema.validate({ id: bundleId }, { abortEarly: false });
 

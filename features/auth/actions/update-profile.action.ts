@@ -3,15 +3,14 @@
 import { revalidatePath } from 'next/cache';
 
 import { AUTH_ERROR_MESSAGES, AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
-import { getUserBySupabaseId } from '@/features/auth/data';
 import {
   updateProfileSchema,
   type UpdateProfileInput,
 } from '@/features/auth/schemas/auth.schema';
 import { updateUserProfileService } from '@/features/auth/services';
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Update Profile Server Action
@@ -60,22 +59,7 @@ export async function updateProfileAction(input: UpdateProfileInput) {
 
     const { email, password } = validatedData;
 
-    const supabase = await createClient();
-
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(AUTH_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
-
-    const dbUser = await getUserBySupabaseId(authUser.id);
+    const { authUser, dbUser } = await requireAuth(AUTH_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     const updateParams: { email?: string; password?: string } = {};
 

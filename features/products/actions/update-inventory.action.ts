@@ -2,12 +2,12 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
 import { inventoryUpdateSchema, type InventoryUpdateInput } from '@/features/products/schemas';
 import { updateInventoryService } from '@/features/products/services/update-inventory.service';
-import { createClient } from '@/lib/supabase/server';
 
 import type { VariantInventory } from '@prisma/client';
 
@@ -42,19 +42,7 @@ import type { VariantInventory } from '@prisma/client';
  */
 export async function updateInventoryAction(input: InventoryUpdateInput) {
   return actionWrapper<VariantInventory>(async () => {
-    const supabase = await createClient();
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
+    const { authUser } = await requireAuth(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     await inventoryUpdateSchema.validate(input, { abortEarly: false });
 

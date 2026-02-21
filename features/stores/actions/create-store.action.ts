@@ -3,14 +3,13 @@
 import { revalidatePath } from 'next/cache';
 import { getLocale } from 'next-intl/server';
 
-import { getUserBySupabaseId } from '@/features/auth/data';
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { STORE_ERROR_MESSAGES, STORE_SUCCESS_MESSAGES } from '@/features/stores/constants';
 import { createStoreSchema } from '@/features/stores/schemas/schemaFactory';
 import { createStoreService } from '@/features/stores/services';
 import { redirect } from '@/i18n/navigation';
-import { createClient } from '@/lib/supabase/server';
 
 import type { Store } from '@prisma/client';
 
@@ -52,22 +51,7 @@ export async function createStoreAction(formData: FormData) {
   const result = await actionWrapper<Store>(async () => {
     locale = await getLocale();
 
-    const supabase = await createClient();
-
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(STORE_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
-
-    const dbUser = await getUserBySupabaseId(authUser.id);
+    const { dbUser } = await requireAuth(STORE_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     const name = formData.get('name') as string;
     const subdomain = formData.get('subdomain') as string;

@@ -2,13 +2,13 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
 import { updateBundleSchema } from '@/features/products/schemas';
 import { updateBundleService } from '@/features/products/services';
 import type { UpdateBundleInput } from '@/features/products/types';
-import { createClient } from '@/lib/supabase/server';
 
 import type { ProductBundle } from '@prisma/client';
 
@@ -43,19 +43,7 @@ import type { ProductBundle } from '@prisma/client';
  */
 export async function updateBundleAction(input: UpdateBundleInput) {
   return actionWrapper<ProductBundle>(async () => {
-    const supabase = await createClient();
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
+    const { authUser } = await requireAuth(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     await updateBundleSchema.validate(input, { abortEarly: false });
 

@@ -2,12 +2,12 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
 import { reviewSchema, type ReviewInput } from '@/features/products/schemas/product.schema';
 import { createReviewService } from '@/features/products/services/create-review.service';
-import { createClient } from '@/lib/supabase/server';
 
 import type { ProductReview } from '@prisma/client';
 
@@ -41,19 +41,7 @@ import type { ProductReview } from '@prisma/client';
  */
 export async function createReviewAction(input: ReviewInput) {
   return actionWrapper<ProductReview>(async () => {
-    const supabase = await createClient();
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
+    const { authUser } = await requireAuth(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     await reviewSchema.validate(input, { abortEarly: false });
 

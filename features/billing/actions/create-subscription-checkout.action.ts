@@ -1,12 +1,12 @@
 'use server';
 
+import { requireAuth } from '@/features/auth/utils';
 import { BILLING_ERROR_MESSAGES, BILLING_SUCCESS_MESSAGES } from '@/features/billing/constants';
 import { createSubscriptionCheckout } from '@/features/billing/services/create-subscription-checkout.service';
 import type { ServerResponse } from '@/features/global/types';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { isPaidPlan, type PaidPlan } from '@/features/subscriptions/config';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Create Subscription Checkout Server Action
@@ -39,10 +39,9 @@ export async function createSubscriptionCheckoutAction(
       throw new Error(BILLING_ERROR_MESSAGES.PLAN_INVALID);
     }
 
-    const supabase = await createClient();
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const { authUser: user } = await requireAuth(BILLING_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
-    if (error || !user || !user.email) {
+    if (!user.email) {
       throw new Error(BILLING_ERROR_MESSAGES.NOT_AUTHENTICATED);
     }
 

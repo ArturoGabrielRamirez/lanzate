@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { getUserBySupabaseId } from '@/features/auth/data';
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
@@ -16,7 +16,6 @@ import type {
   CreateFullProductInput,
   ProductWithAllRelations,
 } from '@/features/products/types/product.types';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Create Product Server Action
@@ -47,22 +46,7 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function createProductAction(input: CreateFullProductInput) {
   return actionWrapper<ProductWithAllRelations>(async () => {
-    const supabase = await createClient();
-
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
-
-    const dbUser = await getUserBySupabaseId(authUser.id);
+    const { dbUser } = await requireAuth(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     await productBasicInfoSchema.validate(input.basicInfo, { abortEarly: false });
 

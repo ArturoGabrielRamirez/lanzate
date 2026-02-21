@@ -1,10 +1,9 @@
 'use server';
 
 import { AUTH_ERROR_MESSAGES, AUTH_SUCCESS_MESSAGES } from '@/features/auth/constants';
-import { getUserBySupabaseId } from '@/features/auth/data';
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Get Current User Server Action
@@ -31,19 +30,7 @@ import { createClient } from '@/lib/supabase/server';
  */
 export async function getCurrentUserAction() {
   return actionWrapper(async () => {
-    const supabase = await createClient();
-
-    const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(AUTH_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
-
-    const dbUser = await getUserBySupabaseId(authUser.id);
+    const { authUser, dbUser } = await requireAuth(AUTH_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     return formatSuccess(AUTH_SUCCESS_MESSAGES.PROFILE_UPDATE, {
       authUser,

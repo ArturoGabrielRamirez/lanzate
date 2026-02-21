@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { getUserBySupabaseId } from '@/features/auth/data';
+import { requireAuth } from '@/features/auth/utils';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
 import { PRODUCT_ERROR_MESSAGES, PRODUCT_SUCCESS_MESSAGES } from '@/features/products/constants';
@@ -16,7 +16,6 @@ import type {
   UpdateFullProductInput,
   ProductWithAllRelations,
 } from '@/features/products/types/product.types';
-import { createClient } from '@/lib/supabase/server';
 
 /**
  * Update Product Server Action
@@ -50,22 +49,7 @@ export async function updateProductAction(
   input: UpdateFullProductInput
 ) {
   return actionWrapper<ProductWithAllRelations>(async () => {
-    const supabase = await createClient();
-
-    const {
-      data: { user: authUser },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError) {
-      throw new Error(authError.message);
-    }
-
-    if (!authUser) {
-      throw new Error(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
-    }
-
-    const dbUser = await getUserBySupabaseId(authUser.id);
+    const { dbUser } = await requireAuth(PRODUCT_ERROR_MESSAGES.NOT_AUTHENTICATED);
 
     if (input.basicInfo) {
       const partialSchema = productBasicInfoSchema.partial();
