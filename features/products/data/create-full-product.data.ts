@@ -42,7 +42,10 @@ export async function createFullProductData(
                         type: attr.type,
                         productId: createdProduct.id,
                         values: {
-                            create: attr.values.map((value) => ({ value })),
+                            create: attr.values.map((v) => ({
+                                id: v.id,
+                                value: v.value,
+                            })),
                         },
                     },
                 });

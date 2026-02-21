@@ -51,7 +51,10 @@ export async function updateFullProductData(
                         type: attr.type,
                         productId,
                         values: {
-                            create: attr.values.map((value) => ({ value })),
+                            create: attr.values.map((v) => ({
+                                id: v.id,
+                                value: v.value,
+                            })),
                         },
                     },
                 });

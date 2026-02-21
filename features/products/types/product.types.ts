@@ -72,10 +72,15 @@ export interface PaginatedProducts {
  * These are used by service functions to create complete products
  */
 
+export interface AttributeValueInput {
+  id: string;
+  value: string;
+}
+
 export interface AttributeInput {
   name: string;
   type: AttributeType;
-  values: string[];
+  values: AttributeValueInput[];
 }
 
 export interface VariantInput {

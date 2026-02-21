@@ -39,25 +39,25 @@ export function mapFormStateToActionInput(
   // Map attributes from options
   const attributes: AttributeInput[] = variants.hasVariants
     ? variants.options
-        .filter((opt) => opt.name && opt.values.length > 0)
-        .map((opt) => ({
-          name: opt.name,
-          type: opt.type,
-          values: opt.values.map((v) => v.value),
-        }))
+      .filter((opt) => opt.name && opt.values.length > 0)
+      .map((opt) => ({
+        name: opt.name,
+        type: opt.type,
+        values: opt.values.map((v) => ({ id: v.id, value: v.value })),
+      }))
     : [];
 
   // Map variants
   const variantInputs: VariantInput[] = variants.hasVariants
     ? variants.variants
-        .filter((v) => v.isEnabled)
-        .map((v) => ({
-          sku: v.sku || `SKU-${v.id.slice(0, 8).toUpperCase()}`,
-          price: v.price,
-          promotionalPrice: v.promotionalPrice ?? undefined,
-          cost: v.cost ?? undefined,
-          attributeValueIds: v.attributeValueIds,
-        }))
+      .filter((v) => v.isEnabled)
+      .map((v) => ({
+        sku: v.sku || `SKU-${v.id.slice(0, 8).toUpperCase()}`,
+        price: v.price,
+        promotionalPrice: v.promotionalPrice ?? undefined,
+        cost: v.cost ?? undefined,
+        attributeValueIds: v.attributeValueIds,
+      }))
     : [];
 
   // Map images
@@ -94,13 +94,13 @@ export function mapFormStateToActionInput(
     digitalProduct:
       configurations.isDigital && configurations.digital
         ? {
-            downloadUrl: configurations.digital.downloadUrl,
-            fileName: configurations.digital.fileName,
-            fileType: configurations.digital.fileType,
-            fileSize: configurations.digital.fileSize,
-            expirationDate: configurations.digital.expirationDate ?? undefined,
-            downloadLimit: configurations.digital.downloadLimit ?? undefined,
-          }
+          downloadUrl: configurations.digital.downloadUrl,
+          fileName: configurations.digital.fileName,
+          fileType: configurations.digital.fileType,
+          fileSize: configurations.digital.fileSize,
+          expirationDate: configurations.digital.expirationDate ?? undefined,
+          downloadLimit: configurations.digital.downloadLimit ?? undefined,
+        }
         : undefined,
   };
 
