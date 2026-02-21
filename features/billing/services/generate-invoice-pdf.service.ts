@@ -76,19 +76,20 @@ export async function generateInvoicePdf(
           buffer,
           filename: getInvoiceFilename(invoice.invoiceNumber),
         });
-        doc.on('error', (err: Error) => reject(err));
+      });
+      doc.on('error', (err: Error) => reject(err));
 
-        // Generate PDF content
-        drawHeader(doc, invoiceData);
-        drawCustomerSection(doc, invoiceData);
-        drawLineItems(doc, planName, payment, invoiceData);
-        drawTotals(doc, invoiceData);
-        drawAfipSection(doc, invoiceData);
-        drawFooter(doc);
+      // Generate PDF content
+      drawHeader(doc, invoiceData);
+      drawCustomerSection(doc, invoiceData);
+      drawLineItems(doc, planName, payment, invoiceData);
+      drawTotals(doc, invoiceData);
+      drawAfipSection(doc, invoiceData);
+      drawFooter(doc);
 
-        doc.end();
-      } catch (error) {
-        reject(error);
-      }
-    });
+      doc.end();
+    } catch (error) {
+      reject(error);
+    }
+  });
 }

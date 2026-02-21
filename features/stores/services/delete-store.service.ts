@@ -14,6 +14,7 @@
  * await deleteStoreService('store-id-123', 'user-id-456');
  */
 
+import { STORE_ERROR_MESSAGES } from '@/features/stores/constants/messages';
 import { deleteStoreData } from '@/features/stores/data/delete-store.data';
 import { getOwnedStoreByIdData } from '@/features/stores/data/get-owned-store-by-id.data';
 
@@ -25,7 +26,7 @@ export async function deleteStoreService(
   const store = await getOwnedStoreByIdData(storeId, userId);
 
   if (!store) {
-    throw new Error('errors.store.notFoundOrNotOwned');
+    throw new Error(STORE_ERROR_MESSAGES.NOT_FOUND);
   }
 
   // Delete the store

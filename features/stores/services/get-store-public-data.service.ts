@@ -12,6 +12,7 @@
  * @returns StorePublicData (store + theme)
  * @throws Error if store is not found
  */
+import { STORE_ERROR_MESSAGES } from '@/features/stores/constants/messages';
 import { getStorePublicDataData } from '@/features/stores/data';
 import type { StorePublicData } from '@/features/stores/types';
 
@@ -21,7 +22,7 @@ export async function getStorePublicDataService(
     const data = await getStorePublicDataData(subdomain);
 
     if (!data) {
-        throw new Error(`Store not found: ${subdomain}`);
+        throw new Error(STORE_ERROR_MESSAGES.NOT_FOUND);
     }
 
     return data;

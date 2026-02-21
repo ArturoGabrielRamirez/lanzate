@@ -1,8 +1,10 @@
 import { PRODUCT_ERROR_MESSAGES } from '@/features/products/constants/messages';
-import { getDigitalProductData } from '@/features/products/data/get-digital-product.data';
-import { incrementDownloadCountData } from '@/features/products/data/increment-download-count.data';
+import {
+  getDigitalProductData,
+  incrementDownloadCountData,
+  getOrderItemWithOrderData,
+} from '@/features/products/data';
 import type { DownloadUrlResponse } from '@/features/products/types/product.types';
-import { prisma } from '@/lib/prisma';
 
 /**
  * Business logic for download URL generation
@@ -17,25 +19,18 @@ export async function getDownloadUrlService(
   orderItemId: string,
   userId: string
 ): Promise<DownloadUrlResponse> {
-  // Get digital product
+  // Get digital product via data layer
   const digitalProduct = await getDigitalProductData(productId);
 
   if (!digitalProduct) {
-    throw new Error('Producto digital no encontrado');
+    throw new Error(PRODUCT_ERROR_MESSAGES.DIGITAL_PRODUCT_NOT_FOUND);
   }
 
-  // Verify user owns an order containing this product via orderItemId
-  const orderItem = await prisma.orderItem.findUnique({
-    where: { id: orderItemId },
-    include: {
-      order: true,
-      product: true,
-      variant: true,
-    },
-  });
+  // Verify user owns an order containing this product via orderItemId (data layer)
+  const orderItem = await getOrderItemWithOrderData(orderItemId);
 
   if (!orderItem) {
-    throw new Error('Artículo de pedido no encontrado');
+    throw new Error(PRODUCT_ERROR_MESSAGES.ORDER_ITEM_NOT_FOUND);
   }
 
   if (orderItem.order.userId !== userId) {
@@ -44,7 +39,7 @@ export async function getDownloadUrlService(
 
   // Verify the order item contains this product
   if (orderItem.productId !== productId) {
-    throw new Error('El artículo de pedido no corresponde al producto');
+    throw new Error(PRODUCT_ERROR_MESSAGES.ORDER_ITEM_MISMATCH);
   }
 
   // Check expiration date
@@ -60,7 +55,7 @@ export async function getDownloadUrlService(
     throw new Error(PRODUCT_ERROR_MESSAGES.DOWNLOAD_LIMIT_REACHED);
   }
 
-  // Increment download count
+  // Increment download count via data layer
   await incrementDownloadCountData(digitalProduct.id);
 
   // Calculate downloads remaining

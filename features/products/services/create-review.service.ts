@@ -1,9 +1,8 @@
 import { Prisma } from '@prisma/client';
 
 import { PRODUCT_ERROR_MESSAGES } from '@/features/products/constants/messages';
-import { createReviewData } from '@/features/products/data/create-review.data';
+import { createReviewData, getOrderItemWithOrderData } from '@/features/products/data';
 import type { CreateReviewInput } from '@/features/products/types/product.types';
-import { prisma } from '@/lib/prisma';
 
 /** 
  * Business logic for review creation
@@ -16,18 +15,11 @@ export async function createReviewService(
   input: CreateReviewInput,
   userId: string
 ) {
-  // Fetch order item to validate ownership and get order ID
-  const orderItem = await prisma.orderItem.findUnique({
-    where: { id: input.orderItemId },
-    include: {
-      order: true,
-      product: true,
-      variant: true,
-    },
-  });
+  // Fetch order item to validate ownership and get order ID via data layer
+  const orderItem = await getOrderItemWithOrderData(input.orderItemId);
 
   if (!orderItem) {
-    throw new Error('Artículo de pedido no encontrado');
+    throw new Error(PRODUCT_ERROR_MESSAGES.ORDER_ITEM_NOT_FOUND);
   }
 
   // Verify user owns the order
@@ -37,11 +29,11 @@ export async function createReviewService(
 
   // Verify the order item matches the product being reviewed
   if (orderItem.productId !== input.productId) {
-    throw new Error('El artículo de pedido no corresponde al producto');
+    throw new Error(PRODUCT_ERROR_MESSAGES.ORDER_ITEM_MISMATCH);
   }
 
   try {
-    // Create review with all required data
+    // Create review with all required data via data layer
     return await createReviewData({
       productId: input.productId,
       userId,
@@ -55,7 +47,7 @@ export async function createReviewService(
     // Handle unique constraint violation (duplicate review)
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2002') {
-        throw new Error('Ya has creado una reseña para este producto');
+        throw new Error(PRODUCT_ERROR_MESSAGES.REVIEW_ALREADY_EXISTS);
       }
     }
     throw error;

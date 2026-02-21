@@ -30,6 +30,18 @@ export { getBundlesData } from '@/features/products/data/get-bundles.data';
 export { getDigitalProductData } from '@/features/products/data/get-digital-product.data';
 export { incrementDownloadCountData } from '@/features/products/data/increment-download-count.data';
 
+// Full product transactions
+export { createFullProductData } from '@/features/products/data/create-full-product.data';
+export { updateFullProductData } from '@/features/products/data/update-full-product.data';
+
+// Product queries
+export {
+  getOrderItemWithOrderData,
+  checkProductOwnershipData,
+  bulkUpdateProductStatusData,
+  bulkDeleteProductsData,
+} from '@/features/products/data/product-queries.data';
+
 // Export types
 export type {
   CreateProductInput,

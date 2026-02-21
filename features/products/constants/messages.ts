@@ -86,6 +86,8 @@ export const PRODUCT_ERROR_MESSAGES = {
   UNAUTHORIZED: 'products.errors.unauthorized',
   NOT_AUTHENTICATED: 'products.errors.notAuthenticated',
   STORE_NOT_FOUND: 'products.errors.storeNotFound',
+  ORDER_ITEM_NOT_FOUND: 'products.errors.orderItemNotFound',
+  ORDER_ITEM_MISMATCH: 'products.errors.orderItemMismatch',
 
   // Product operations
   CREATE_FAILED: 'products.errors.createFailed',
