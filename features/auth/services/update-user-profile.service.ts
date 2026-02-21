@@ -15,12 +15,13 @@
  *   password: 'NewSecurePass123'
  * });
  */
+import { AUTH_ERROR_MESSAGES } from '@/features/auth/constants';
 import { updateUserData } from '@/features/auth/data';
 import type { UpdateUserProfileParams } from '@/features/auth/types';
 import { createClient } from '@/lib/supabase/server';
 
-export async function updateUserProfileService(userId: string,params: UpdateUserProfileParams) {
-  
+export async function updateUserProfileService(userId: string, params: UpdateUserProfileParams) {
+
   const { email, password } = params;
   const supabase = await createClient();
 
@@ -40,7 +41,7 @@ export async function updateUserProfileService(userId: string,params: UpdateUser
     const { error } = await supabase.auth.updateUser(authUpdateData);
 
     if (error) {
-      throw new Error(`Failed to update auth user: ${error.message}`);
+      throw new Error(AUTH_ERROR_MESSAGES.GENERIC_ERROR);
     }
   }
 

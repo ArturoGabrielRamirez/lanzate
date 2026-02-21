@@ -11,6 +11,7 @@
 
 import { PreApproval } from 'mercadopago';
 
+import { BILLING_ERROR_MESSAGES } from '@/features/billing/constants';
 import { getMercadoPagoConfig } from '@/features/billing/utils/mercadopagoConfig';
 import {
   getPlanPrice,
@@ -22,6 +23,11 @@ import {
 
 /**
  * Creates a MercadoPago PreApproval subscription and returns the checkout URL
+ * 
+ * @param targetPlan - The plan to upgrade to (PRO or ENTERPRISE)
+ * @param userEmail - The user's email for the subscription
+ * @returns The MercadoPago checkout URL (init_point)
+ * @throws Error if payment link generation fails
  */
 export async function createSubscriptionCheckout(
   targetPlan: PaidPlan,
@@ -52,7 +58,7 @@ export async function createSubscriptionCheckout(
   });
 
   if (!subscription.init_point) {
-    throw new Error('No se pudo obtener el enlace de pago de MercadoPago');
+    throw new Error(BILLING_ERROR_MESSAGES.GENERIC_ERROR);
   }
 
   return subscription.init_point;

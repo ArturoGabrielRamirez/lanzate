@@ -17,6 +17,7 @@
  * });
  * // user.username will be 'john' (auto-generated)
  */
+import { AUTH_ERROR_MESSAGES } from '@/features/auth/constants';
 import { createUserData, findUserByEmailData } from '@/features/auth/data';
 import type { CreateUserServiceParams } from '@/features/auth/types';
 import { generateUsername } from '@/features/auth/utils';
@@ -28,7 +29,7 @@ export async function createUserService(params: CreateUserServiceParams) {
   const existingUser = await findUserByEmailData(email);
 
   if (existingUser) {
-    throw new Error('A user with this email already exists');
+    throw new Error(AUTH_ERROR_MESSAGES.USER_ALREADY_EXISTS);
   }
 
   // Auto-generate username from email

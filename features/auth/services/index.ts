@@ -3,6 +3,6 @@
  *
  * Exports all business logic functions for authentication.
  */
-export { createUserService } from '@/features/auth/services/createUser.service';
-export { validateCredentialsService } from '@/features/auth/services/validateCredentials.service';
-export { updateUserProfileService } from '@/features/auth/services/updateUserProfile.service';
+export { createUserService } from '@/features/auth/services/create-user.service';
+export { validateCredentialsService } from '@/features/auth/services/validate-credentials.service';
+export { updateUserProfileService } from '@/features/auth/services/update-user-profile.service';

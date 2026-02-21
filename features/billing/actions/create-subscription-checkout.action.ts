@@ -1,7 +1,7 @@
 'use server';
 
 import { BILLING_ERROR_MESSAGES, BILLING_SUCCESS_MESSAGES } from '@/features/billing/constants';
-import { createSubscriptionCheckout } from '@/features/billing/services/createSubscriptionCheckout.service';
+import { createSubscriptionCheckout } from '@/features/billing/services/create-subscription-checkout.service';
 import type { ServerResponse } from '@/features/global/types';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';
 import { formatSuccess } from '@/features/global/utils/format-response';
