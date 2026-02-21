@@ -12,11 +12,11 @@
  */
 
 import { Search, ShoppingCart, Star } from 'lucide-react';
-import { Link } from 'next/link';
 import { Suspense } from 'react';
 
 import { getProductsAction } from '@/features/products/actions';
 import { ProductGrid } from '@/features/products/components/product-grid';
+import { Link } from '@/i18n/navigation';
 
 import type { Store } from '@prisma/client';
 
@@ -55,7 +55,7 @@ function StorefrontHomeSkeleton() {
         <h2 className="mb-8 text-2xl font-bold text-center">
           <div className="h-8 w-48 mx-auto animate-pulse rounded bg-muted" />
         </h2>
-        
+
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="space-y-3">
@@ -91,22 +91,22 @@ async function StorefrontHomeContent({ store }: StorefrontHomeProps) {
       <header className="bg-card border-b sticky top-0 z-40">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <Link 
+            <Link
               href={`/s/${store.subdomain}`}
               className="flex items-center gap-2 text-2xl font-bold text-foreground hover:text-primary transition-colors"
             >
               {store.name}
             </Link>
-            
+
             <nav className="flex items-center gap-4">
-              <Link 
+              <Link
                 href={`/s/${store.subdomain}/products`}
                 className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Search className="h-4 w-4" />
                 <span className="hidden sm:inline">Productos</span>
               </Link>
-              
+
               <button className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
                 <ShoppingCart className="h-5 w-5" />
                 {/* TODO: Add cart count badge */}
@@ -126,7 +126,7 @@ async function StorefrontHomeContent({ store }: StorefrontHomeProps) {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               {store.description || 'Descubre nuestros productos destacados y ofertas especiales.'}
             </p>
-            <Link 
+            <Link
               href={`/s/${store.subdomain}/products`}
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors"
             >
@@ -148,7 +148,7 @@ async function StorefrontHomeContent({ store }: StorefrontHomeProps) {
               Los mejores productos seleccionados especialmente para ti
             </p>
           </div>
-          
+
           <Suspense fallback={<StorefrontHomeSkeleton />}>
             <ProductGrid
               products={featuredProductsResult.hasError ? [] : (featuredProductsResult.payload?.data || [])}

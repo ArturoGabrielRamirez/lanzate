@@ -7,3 +7,4 @@
 
 export { createStoreService } from '@/features/stores/services/create-store.service';
 export { deleteStoreService } from '@/features/stores/services/delete-store.service';
+export { getStorePublicDataService } from '@/features/stores/services/get-store-public-data.service';

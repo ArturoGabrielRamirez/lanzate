@@ -1,226 +1,131 @@
 /**
- * Product Listing Page
+ * Storefront Product Listing Page
  *
- * Server component for displaying product listing/grid.
- * Uses ISR for performance with 1-hour revalidation.
- * Supports search, sorting, and pagination.
+ * Public product catalog for a store accessed via subdomain.
+ * Reads search/sort/page from URL searchParams (set by nuqs client container),
+ * fetches products on the server, and passes data to the client container.
  *
- * Features:
- * - Search functionality
- * - Sort options (newest, price)
- * - Responsive grid layout
- * - Pagination with URL state
+ * Route: /[locale]/s/[subdomain]/products
+ * Accessed as: mystore.localhost:3000/products (proxy rewrites)
+ *
+ * Architecture:
+ * - Server Component: reads searchParams, fetches, renders
+ * - StorefrontProductListContainer: "use client" nuqs state management
+ * - No prop-drilling of callbacks — server re-fetches on URL change
+ * - ISR with 1-hour revalidation
  */
 
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 
 import { getProductsAction } from '@/features/products/actions';
-import { ProductFilters } from '@/features/products/components/product-filters';
-import { ProductGrid } from '@/features/products/components/product-grid';
-import type { ProductListingPageProps, ProductListingFilters } from '@/features/products/types/product-listing.types';
-import { findStoreBySubdomainData } from '@/features/stores/data';
+import {
+  StorefrontFooter,
+  StorefrontHeader,
+  StorefrontLayout,
+  StorefrontProductListContainer,
+} from '@/features/storefront/components';
+import { type ProductListingPageProps } from '@/features/storefront/types/storefront.types';
+import { getStorePublicDataAction } from '@/features/stores/actions';
 
 import type { Metadata } from 'next';
 
-/**
- * Generate SEO metadata for product listing page
- */
 export async function generateMetadata({
   params,
 }: ProductListingPageProps): Promise<Metadata> {
   const { subdomain } = await params;
-  
-  // Get store info for metadata
-  const store = await findStoreBySubdomainData(subdomain);
-  
-  if (!store) {
-    return {
-      title: 'Tienda no encontrada',
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
+  const result = await getStorePublicDataAction(subdomain);
+
+  if (result.hasError || !result.payload) {
+    return { title: 'Tienda no encontrada', robots: { index: false, follow: false } };
   }
+
+  const { store } = result.payload;
 
   return {
-    title: `Productos - ${store.name}`,
-    description: `Explora nuestro catálogo de productos en ${store.name}`,
+    title: `Productos — ${store.name}`,
+    description: `Explora el catálogo completo de ${store.name}`,
     openGraph: {
-      title: `Productos - ${store.name}`,
-      description: `Explora nuestro catálogo de productos en ${store.name}`,
+      title: `Productos — ${store.name}`,
+      description: `Explora el catálogo completo de ${store.name}`,
       type: 'website',
-      url: `https://${subdomain}.lanzate.app/s/${subdomain}/products`,
-      siteName: store.name,
     },
-    twitter: {
-      card: 'summary',
-      title: `Productos - ${store.name}`,
-      description: `Explora nuestro catálogo de productos en ${store.name}`,
-    },
-    alternates: {
-      canonical: `/s/${subdomain}/products`,
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    robots: { index: true, follow: true },
   };
 }
 
-/**
- * Loading skeleton for product listing page
- */
-function ProductListingSkeleton() {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Search and Filters */}
-      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center">
-        <div className="h-10 w-full md:w-64 animate-pulse rounded bg-muted" />
-        <div className="h-10 w-32 animate-pulse rounded bg-muted" />
-      </div>
-
-      {/* Products Grid */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <div key={i} className="space-y-3">
-            <div className="aspect-square w-full animate-pulse rounded-lg bg-muted" />
-            <div className="h-4 w-3/4 animate-pulse rounded bg-muted" />
-            <div className="h-10 w-full animate-pulse rounded bg-muted" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/**
- * Product listing content component
- */
-async function ProductListingContent({ 
-  subdomain, 
-  searchParams 
-}: { 
-  subdomain: string; 
-  searchParams: ProductListingFilters; 
-}) {
-  // Prepare filters for API call
-  const sortBy = searchParams.sort === 'updatedAt-desc' ? 'updatedAt' :
-                searchParams.sort === 'createdAt-desc' ? 'createdAt' :
-                searchParams.sort === 'price-desc' ? 'price' :
-                searchParams.sort === 'name-desc' ? 'name' :
-                searchParams.sort === 'updatedAt-asc' ? 'updatedAt' :
-                searchParams.sort === 'createdAt-asc' ? 'createdAt' :
-                searchParams.sort === 'price-asc' ? 'price' :
-                searchParams.sort === 'name-asc' ? 'name' : 'updatedAt';
-
-  const sortOrder = searchParams.sort === 'updatedAt-asc' || searchParams.sort === 'createdAt-asc' || 
-                  searchParams.sort === 'price-asc' || searchParams.sort === 'name-asc' ? 'asc' : 'desc';
-
-  const filters: ProductListingFilters = {
-    storeId: '', // Will be populated from store data
-    ...searchParams,
-    status: 'ACTIVE', // Only show active products
-    page: searchParams.page ? parseInt(searchParams.page, 10) : 1,
-    pageSize: 12,
-    sortBy,
-    sortOrder,
-  };
-
-  // Get store ID
-  const store = await findStoreBySubdomainData(subdomain);
-  if (!store) {
-    notFound();
-  }
-  
-  filters.storeId = store.id;
-
-  // Fetch products
-  const productsResult = await getProductsAction(filters);
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">
-          Todos los productos
-        </h1>
-        <p className="text-muted-foreground">
-          Explora nuestro catálogo completo de productos
-        </p>
-      </div>
-
-      {/* Search and Filters */}
-      <Suspense fallback={<ProductListingSkeleton />}>
-        <ProductFilters
-          search={searchParams.search || ''}
-          sort={`${searchParams.sortBy || 'updatedAt'}-${searchParams.sortOrder || 'desc'}`}
-          onSearchChange={(value) => {
-            // TODO: Implement search URL update
-          }}
-          onSortChange={(value) => {
-            // TODO: Implement sort URL update
-          }}
-        />
-      </Suspense>
-
-      {/* Products Grid */}
-      <div className="mt-8">
-        {productsResult.hasError || !productsResult.payload ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">
-              No se pudieron cargar los productos. Por favor, intenta nuevamente.
-            </p>
-          </div>
-        ) : (
-          <Suspense fallback={<ProductListingSkeleton />}>
-            <ProductGrid
-              products={productsResult.payload.data || []}
-              storeSubdomain={subdomain}
-              emptyMessage="No se encontraron productos con los filtros seleccionados."
-            />
-          </Suspense>
-        )}
-      </div>
-
-      {/* TODO: Pagination */}
-      {productsResult.payload && productsResult.payload.totalPages > 1 && (
-        <div className="mt-12 flex justify-center">
-          <div className="text-sm text-muted-foreground">
-            Página {filters.page} de {productsResult.payload.totalPages}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * Product listing page with ISR
- */
-export default async function ProductListingPage({
+export default async function StorefrontProductsPage({
   params,
   searchParams,
 }: ProductListingPageProps) {
   const { subdomain } = await params;
-  const resolvedSearchParams = await searchParams;
+  const { search, sort, page } = await searchParams;
+
+  // action → service → data
+  const storeResult = await getStorePublicDataAction(subdomain);
+
+  if (storeResult.hasError || !storeResult.payload) {
+    notFound();
+  }
+
+  const { store, theme } = storeResult.payload;
+
+  // Parse sort into sortBy + sortOrder
+  const sortParts = sort?.split('-') ?? [];
+  const sortBy = (sortParts[0] as 'name' | 'createdAt' | 'updatedAt') ?? 'createdAt';
+  const sortOrder = (sortParts[1] as 'asc' | 'desc') ?? 'desc';
+  const currentPage = page ? Math.max(1, parseInt(page, 10)) : 1;
+  const PAGE_SIZE = 20;
+
+  // Fetch paginated products
+  const productsResult = await getProductsAction({
+    storeId: store.id,
+    status: 'ACTIVE',
+    search: search ?? undefined,
+    sortBy,
+    sortOrder,
+    page: currentPage,
+    pageSize: PAGE_SIZE,
+  });
+
+  const products = productsResult.payload?.data ?? [];
+  const totalPages = productsResult.payload?.totalPages ?? 1;
+  const totalCount = productsResult.payload?.total ?? 0;
 
   return (
-    <ProductListingContent 
-      subdomain={subdomain}
-      searchParams={{
-        search: resolvedSearchParams.search,
-        page: resolvedSearchParams.page,
-        sortBy: resolvedSearchParams.sort,
-        sortOrder: resolvedSearchParams.order,
-      }}
-    />
+    <StorefrontLayout store={store} theme={theme}>
+      <StorefrontHeader store={store} theme={theme} />
+
+      <main className="flex-1 container mx-auto px-4 py-10">
+        <div className="mb-8">
+          <h1
+            className="text-3xl font-bold tracking-tight"
+            style={{ color: 'var(--sf-text)' }}
+          >
+            Todos los productos
+          </h1>
+          <p
+            className="mt-1 text-base"
+            style={{ color: 'color-mix(in srgb, var(--sf-text) 65%, transparent)' }}
+          >
+            {store.name}
+          </p>
+        </div>
+
+        {/* Client container handles search/sort/pagination via nuqs */}
+        <StorefrontProductListContainer
+          initialProducts={products as any}
+          totalPages={totalPages}
+          totalCount={totalCount}
+          storeSubdomain={subdomain}
+          initialSearch={search ?? ''}
+          initialSort={sort ?? 'createdAt-desc'}
+          initialPage={currentPage}
+        />
+      </main>
+
+      {theme.showFooter && <StorefrontFooter store={store} />}
+    </StorefrontLayout>
   );
 }
 
-/**
- * Enable ISR for product listing pages
- * Revalidate every hour to keep product list fresh
- */
-export const revalidate = 3600; // 1 hour in seconds
+export const revalidate = 3600; // ISR: revalidate every hour
