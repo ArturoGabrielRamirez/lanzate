@@ -16,8 +16,8 @@
 
 import { describe, it, expect } from 'bun:test';
 
-import { handleResetPasswordAction } from '@/features/auth/actions/handleResetPassword.action';
-import { handleResetPasswordRequestAction } from '@/features/auth/actions/handleResetPasswordRequest.action';
+import { handleResetPasswordAction } from '@/features/auth/actions/handle-reset-password.action';
+import { handleResetPasswordRequestAction } from '@/features/auth/actions/handle-reset-password-request.action';
 
 describe('Password Reset Request Flow', () => {
   it('should validate email format in reset request', async () => {

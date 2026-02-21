@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { handleResetPasswordRequestAction } from "@/features/auth/actions/handleResetPasswordRequest.action";
+import { handleResetPasswordRequestAction } from "@/features/auth/actions/handle-reset-password-request.action";
 import {
   createResetPasswordRequestSchema,
   type ResetPasswordRequestInput,

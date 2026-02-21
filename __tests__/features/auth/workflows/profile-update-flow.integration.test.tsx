@@ -17,7 +17,7 @@
 import { describe, it, expect } from 'bun:test';
 
 import { getCurrentUserAction } from '@/features/auth/actions/get-current-user.action';
-import { updateProfileAction } from '@/features/auth/actions/updateProfile.action';
+import { updateProfileAction } from '@/features/auth/actions/update-profile.action';
 
 describe('Profile Update Flow', () => {
   it('should return current user data with correct structure', async () => {

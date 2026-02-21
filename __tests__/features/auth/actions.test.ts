@@ -14,8 +14,8 @@
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
 
 import { handleLoginAction } from '@/features/auth/actions/handle-login.action';
-import { handleResetPasswordRequestAction } from '@/features/auth/actions/handleResetPasswordRequest.action';
-import { handleSignupAction } from '@/features/auth/actions/handleSignup.action';
+import { handleResetPasswordRequestAction } from '@/features/auth/actions/handle-reset-password-request.action';
+import { handleSignupAction } from '@/features/auth/actions/handle-signup.action';
 import { logoutAction } from '@/features/auth/actions/logout.action';
 import { prisma } from '@/lib/prisma';
 
@@ -171,7 +171,7 @@ describe('Password Reset Request Action', () => {
 
 describe('Password Reset Action', () => {
   it('should validate password format and strength', async () => {
-    const { handleResetPasswordAction } = await import('@/features/auth/actions/handleResetPassword.action');
+    const { handleResetPasswordAction } = await import('@/features/auth/actions/handle-reset-password.action');
     
     const result = await handleResetPasswordAction({
       password: 'weak',
@@ -183,7 +183,7 @@ describe('Password Reset Action', () => {
   });
 
   it('should reject non-matching password confirmation', async () => {
-    const { handleResetPasswordAction } = await import('@/features/auth/actions/handleResetPassword.action');
+    const { handleResetPasswordAction } = await import('@/features/auth/actions/handle-reset-password.action');
     
     const result = await handleResetPasswordAction({
       password: 'Password123',

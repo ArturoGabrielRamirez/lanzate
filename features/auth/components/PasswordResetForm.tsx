@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { LockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { handleResetPasswordAction } from "@/features/auth/actions/handleResetPassword.action";
+import { handleResetPasswordAction } from "@/features/auth/actions/handle-reset-password.action";
 import {
   createResetPasswordSchema,
   type ResetPasswordInput,

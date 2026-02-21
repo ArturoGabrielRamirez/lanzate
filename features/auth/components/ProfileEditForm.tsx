@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { getCurrentUserAction } from "@/features/auth/actions/get-current-user.action";
-import { updateProfileAction } from "@/features/auth/actions/updateProfile.action";
+import { updateProfileAction } from "@/features/auth/actions/update-profile.action";
 import { createUpdateProfileSchema, type UpdateProfileInput } from "@/features/auth/schemas/schemaFactory";
 import { Form } from "@/features/global/components/form";
 import { InputField } from "@/features/global/components/form";

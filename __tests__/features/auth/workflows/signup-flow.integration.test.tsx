@@ -16,7 +16,7 @@
 
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
 
-import { handleSignupAction } from '@/features/auth/actions/handleSignup.action';
+import { handleSignupAction } from '@/features/auth/actions/handle-signup.action';
 import { prisma } from '@/lib/prisma';
 
 // Test data
