@@ -2,6 +2,7 @@
 
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs';
 import { useState, useTransition } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { ProductCardRow } from '@/features/products/components/product-card-row';
 import { ProductFilters } from '@/features/products/components/product-filters';
@@ -21,6 +22,7 @@ export function ProductListContainer({
   storeId: _storeId,
   subdomain,
 }: ProductListContainerProps) {
+  const t = useTranslations();
   // Bulk selection state
   const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set());
   const [isPending, startTransition] = useTransition();
@@ -113,12 +115,12 @@ export function ProductListContainer({
               </svg>
             </div>
             <h3 className="mb-1 text-lg font-semibold">
-              {PRODUCT_UI_MESSAGES.NO_PRODUCTS.es}
+              {t(PRODUCT_UI_MESSAGES.NO_PRODUCTS)}
             </h3>
             <p className="text-sm text-muted-foreground">
               {searchParams.search || searchParams.status
                 ? "No se encontraron productos con los filtros aplicados"
-                : PRODUCT_UI_MESSAGES.NO_PRODUCTS_DESCRIPTION.es}
+                : t(PRODUCT_UI_MESSAGES.NO_PRODUCTS_DESCRIPTION)}
             </p>
           </div>
         ) : (

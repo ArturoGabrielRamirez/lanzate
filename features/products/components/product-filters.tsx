@@ -2,6 +2,7 @@
 
 import { Search, ChevronDown, X } from 'lucide-react';
 import { useState, useEffect, useTransition, useOptimistic } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from "@/features/global/components/button/button";
 import { PRODUCT_STATUS_MESSAGES } from '@/features/products/constants';
@@ -86,11 +87,12 @@ function ProductSortSelect({ value, onChange, className = "" }: ProductSortSelec
  * Status select dropdown component
  */
 function ProductStatusSelect({ value, onChange, className = "" }: { value: string; onChange: (value: string) => void; className?: string }) {
+  const t = useTranslations();
   const statusOptions = [
     { value: '', label: 'Todos los estados' },
-    { value: 'ACTIVE', label: PRODUCT_STATUS_MESSAGES.ACTIVE.es },
-    { value: 'DRAFT', label: PRODUCT_STATUS_MESSAGES.DRAFT.es },
-    { value: 'ARCHIVED', label: PRODUCT_STATUS_MESSAGES.ARCHIVED.es },
+    { value: 'ACTIVE', label: t(PRODUCT_STATUS_MESSAGES.ACTIVE) },
+    { value: 'DRAFT', label: t(PRODUCT_STATUS_MESSAGES.DRAFT) },
+    { value: 'ARCHIVED', label: t(PRODUCT_STATUS_MESSAGES.ARCHIVED) },
   ];
 
   const currentOption = statusOptions.find(option => option.value === value) || statusOptions[0];

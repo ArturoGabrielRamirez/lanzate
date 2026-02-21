@@ -2,6 +2,7 @@
 
 import { startTransition, useCallback } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import {
   DialogContent,
@@ -31,6 +32,7 @@ import { mapFormStateToActionInput } from "@/features/products/utils";
  * Integrates with createProductAction for real product creation.
  */
 export function CreateProductFormContent({ storeId }: CreateProductFormContentProps) {
+  const t = useTranslations();
   const {
     step,
     setStep,
@@ -83,15 +85,15 @@ export function CreateProductFormContent({ storeId }: CreateProductFormContentPr
         const result = await createProductAction(actionInput);
 
         if (result.hasError) {
-          toast.error(result.message || PRODUCT_ERROR_MESSAGES.CREATE_FAILED.es);
+          toast.error(result.message || t(PRODUCT_ERROR_MESSAGES.CREATE_FAILED));
           return;
         }
 
-        toast.success(PRODUCT_SUCCESS_MESSAGES.CREATE.es);
+        toast.success(t(PRODUCT_SUCCESS_MESSAGES.CREATE));
         closeDialog();
         resetForm();
       } catch {
-        toast.error(PRODUCT_ERROR_MESSAGES.CREATE_FAILED.es);
+        toast.error(t(PRODUCT_ERROR_MESSAGES.CREATE_FAILED));
       } finally {
         setIsSubmitting(false);
       }

@@ -48,6 +48,7 @@ export function ProductCardRow({
   onToggleSelect,
   /* subdomain, */
 }: ProductCardRowProps) {
+  const t = useTranslations();
   // Status badge variant mapping
   const statusVariants = {
     ACTIVE: 'default',
@@ -167,7 +168,7 @@ export function ProductCardRow({
       {/* Column 3: Status badge */}
       <BaseCardContent className="flex items-center justify-center">
         <Badge variant={statusVariants[product.status]} size="sm">
-          {PRODUCT_STATUS_MESSAGES[product.status].es}
+          {t(PRODUCT_STATUS_MESSAGES[product.status])}
         </Badge>
       </BaseCardContent>
 
@@ -186,14 +187,14 @@ export function ProductCardRow({
       <BaseCardContent className="flex items-center justify-center">
         {inventoryStatus === 'OUT_OF_STOCK' ? (
           <Badge variant="destructive" size="sm">
-            {INVENTORY_STATUS_MESSAGES.OUT_OF_STOCK.es}
+            {t(INVENTORY_STATUS_MESSAGES.OUT_OF_STOCK)}
           </Badge>
         ) : (
           <>
             <span className="text-sm text-foreground">{totalStock} uds.</span>
             {inventoryStatus === 'LOW_STOCK' && (
               <Badge variant={inventoryBadgeVariants.LOW_STOCK} size="sm">
-                {INVENTORY_STATUS_MESSAGES.LOW_STOCK.es}
+                {t(INVENTORY_STATUS_MESSAGES.LOW_STOCK)}
               </Badge>
             )}
           </>
