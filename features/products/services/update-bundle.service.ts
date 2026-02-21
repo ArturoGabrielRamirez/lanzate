@@ -26,7 +26,7 @@ export async function updateBundleService(
   }
 
   if (bundle.store.ownerId !== userId) {
-    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED.es);
+    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED);
   }
 
   // Validate all products exist and belong to the store

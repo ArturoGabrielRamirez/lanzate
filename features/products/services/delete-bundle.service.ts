@@ -21,7 +21,7 @@ export async function deleteBundleService(bundleId: string, userId: string) {
   }
 
   if (bundle.store.ownerId !== userId) {
-    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED.es);
+    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED);
   }
 
   // Delete bundle (cascade deletes items)

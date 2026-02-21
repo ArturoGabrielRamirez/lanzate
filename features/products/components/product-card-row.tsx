@@ -2,6 +2,7 @@
 
 import { Copy, Edit, MoreHorizontal, Package } from 'lucide-react';
 import NextImage from 'next/image';
+import { useTranslations } from 'next-intl';
 /* import Link from 'next/link'; */
 
 import { Badge } from '@/features/global/components/badge/badge';

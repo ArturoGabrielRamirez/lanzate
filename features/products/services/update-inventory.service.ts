@@ -30,7 +30,7 @@ export async function updateInventoryService(
   }
 
   if (variant.product.store.ownerId !== userId) {
-    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED.es);
+    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED);
   }
 
   // Verify branch exists and belongs to the user's store
@@ -46,7 +46,7 @@ export async function updateInventoryService(
   }
 
   if (branch.store.ownerId !== userId) {
-    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED.es);
+    throw new Error(PRODUCT_ERROR_MESSAGES.UNAUTHORIZED);
   }
 
   // Update or create inventory record

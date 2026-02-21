@@ -32,7 +32,7 @@ export async function createReviewService(
 
   // Verify user owns the order
   if (orderItem.order.userId !== userId) {
-    throw new Error(PRODUCT_ERROR_MESSAGES.REVIEW_PURCHASE_REQUIRED.es);
+    throw new Error(PRODUCT_ERROR_MESSAGES.REVIEW_PURCHASE_REQUIRED);
   }
 
   // Verify the order item matches the product being reviewed

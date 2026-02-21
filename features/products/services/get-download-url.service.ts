@@ -49,7 +49,7 @@ export async function getDownloadUrlService(
 
   // Check expiration date
   if (digitalProduct.expirationDate && digitalProduct.expirationDate < new Date()) {
-    throw new Error(PRODUCT_ERROR_MESSAGES.DOWNLOAD_EXPIRED.es);
+    throw new Error(PRODUCT_ERROR_MESSAGES.DOWNLOAD_EXPIRED);
   }
 
   // Check download limit
@@ -57,7 +57,7 @@ export async function getDownloadUrlService(
     digitalProduct.downloadLimit !== null &&
     digitalProduct.downloadCount >= digitalProduct.downloadLimit
   ) {
-    throw new Error(PRODUCT_ERROR_MESSAGES.DOWNLOAD_LIMIT_REACHED.es);
+    throw new Error(PRODUCT_ERROR_MESSAGES.DOWNLOAD_LIMIT_REACHED);
   }
 
   // Increment download count
