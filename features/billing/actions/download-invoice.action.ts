@@ -3,7 +3,7 @@
 import { BILLING_ERROR_MESSAGES, BILLING_SUCCESS_MESSAGES } from '@/features/billing/constants';
 import { getPaymentWithInvoiceData } from '@/features/billing/data/getPaymentWithInvoice.data';
 import { paymentIdSchema } from '@/features/billing/schemas/billing.schema';
-import { generateInvoicePdf } from '@/features/billing/services/generateInvoicePdf.service';
+import { generateInvoicePdf } from '@/features/billing/services/generate-invoice-pdf.service';
 import { InvoicePdfResult } from '@/features/billing/types/billing';
 import type { ServerResponse } from '@/features/global/types';
 import { actionWrapper } from '@/features/global/utils/action-wrapper';

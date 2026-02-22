@@ -14,3 +14,6 @@ export type {
     UserAvatarMenuProps,
     DesktopNavLinksProps,
 } from '@/features/layout/types/user-avatar.types';
+export type {
+    PrivateLayoutProps,
+} from '@/features/layout/types/private-layout.types';

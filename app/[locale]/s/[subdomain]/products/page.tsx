@@ -20,7 +20,9 @@ import { notFound } from 'next/navigation';
 
 import { getProductsAction } from '@/features/products/actions';
 import { StorefrontProductListContainer } from '@/features/storefront/components';
+import { STOREFRONT_PAGE_SIZE } from '@/features/storefront/config';
 import { type ProductListingPageProps } from '@/features/storefront/types/storefront.types';
+import { mapProductsToStorefront } from '@/features/storefront/utils';
 import { getStorePublicDataAction } from '@/features/stores/actions';
 
 import type { Metadata } from 'next';
@@ -69,7 +71,6 @@ export default async function StorefrontProductsPage({
   const sortBy = (sortParts[0] as 'name' | 'createdAt' | 'updatedAt') ?? 'createdAt';
   const sortOrder = (sortParts[1] as 'asc' | 'desc') ?? 'desc';
   const currentPage = page ? Math.max(1, parseInt(page, 10)) : 1;
-  const PAGE_SIZE = 20;
 
   // Fetch paginated products
   const productsResult = await getProductsAction({
@@ -79,7 +80,7 @@ export default async function StorefrontProductsPage({
     sortBy,
     sortOrder,
     page: currentPage,
-    pageSize: PAGE_SIZE,
+    pageSize: STOREFRONT_PAGE_SIZE,
   });
 
   const products = productsResult.payload?.data ?? [];
@@ -105,23 +106,7 @@ export default async function StorefrontProductsPage({
 
       {/* Client container handles search/sort/pagination via nuqs */}
       <StorefrontProductListContainer
-        initialProducts={products.map((p) => ({
-          id: p.id,
-          name: p.name,
-          slug: p.slug,
-          isNew: p.isNew,
-          isOnSale: p.isOnSale,
-          isFeatured: p.isFeatured,
-          images: p.images.map((img) => ({
-            url: img.url,
-            altText: img.altText,
-            isPrimary: img.isPrimary,
-          })),
-          variants: p.variants.map((v) => ({
-            price: v.price.toString(),
-            promotionalPrice: v.promotionalPrice?.toString() ?? null,
-          })),
-        }))}
+        initialProducts={mapProductsToStorefront(products)}
         totalPages={totalPages}
         totalCount={totalCount}
         storeSubdomain={subdomain}

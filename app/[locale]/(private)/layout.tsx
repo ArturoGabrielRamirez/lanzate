@@ -4,13 +4,10 @@ import { AccessManagerProvider } from '@/features/access/components';
 import type { UserSession } from '@/features/access/types/access';
 import { requireAuth } from '@/features/auth/utils';
 import { PrivateHeader } from '@/features/layout/components';
+import { PrivateLayoutProps } from '@/features/layout/types';
 import { TooltipProvider } from '@/features/shadcn/components/ui/tooltip';
 import { DEFAULT_ACCOUNT_TYPE } from '@/features/subscriptions/config';
 import { getUserSubscriptionData } from '@/features/subscriptions/data';
-
-interface PrivateLayoutProps {
-  children: React.ReactNode;
-}
 
 /**
  * Private Layout

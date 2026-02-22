@@ -20,12 +20,8 @@ import {
     StorefrontLayout,
 } from '@/features/storefront/components';
 import { StorefrontContextProvider } from '@/features/storefront/context/storefront-context';
+import { StorefrontShellLayoutProps } from '@/features/storefront/types/layout.types';
 import { getStorePublicDataAction } from '@/features/stores/actions';
-
-interface StorefrontShellLayoutProps {
-    params: Promise<{ subdomain: string; locale: string }>;
-    children: React.ReactNode;
-}
 
 export default async function StorefrontShellLayout({
     params,

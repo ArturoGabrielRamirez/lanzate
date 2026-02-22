@@ -6,3 +6,4 @@
 
 export { generateVariantCombinations } from '@/features/products/utils/generate-variant-combinations';
 export { mapFormStateToActionInput } from '@/features/products/utils/map-form-state-to-action-input';
+export { parseProductQueryParams } from '@/features/products/utils/params';
